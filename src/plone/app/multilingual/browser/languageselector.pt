@@ -1,0 +1,47 @@
+<span tal:omit-tag="" tal:condition="view/available">
+<tal:language
+    tal:define="languages view/languages;
+                showFlags python: 0;">
+    <ul id="portal-languageselector"
+        tal:condition="python: len(languages)>1">
+
+        <li tal:condition="showFlags"
+            tal:repeat="lang languages">
+            <span tal:define="code lang/code;
+                              selected lang/selected"
+                  tal:omit-tag="selected">
+
+                <a href=""
+                   tal:define="flag lang/flag;
+                               name lang/name"
+                   tal:attributes="href lang/url;
+                                   title name">
+                    <tal:flag condition="flag">
+                        <img width="14"
+                             height="11"
+                             alt=""
+                             tal:attributes="src string:${view/portal_url}${flag};
+                                             title python: name;
+                                             class python: selected and 'currentItem' or '';" />
+                    </tal:flag>
+                    <tal:nonflag condition="not: flag">
+                        <span tal:replace="code">language code</span>
+                    </tal:nonflag>
+                </a>
+
+            </span>
+        </li>
+
+        <li tal:condition="not: showFlags">
+            <select style="font-size: 94%;"
+                    onchange=""
+                    tal:attributes="onchange string:window.location=this.options[this.selectedIndex].value">
+                <option tal:repeat="lang languages"
+                        tal:content="lang/name"
+                        tal:attributes="selected lang/selected;
+                                        value lang/url">Language</option>
+            </select>
+        </li>
+    </ul>
+</tal:language>
+</span>

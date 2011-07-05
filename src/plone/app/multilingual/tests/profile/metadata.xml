@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<metadata>
+    <version>0.1 alpha</version>
+    <dependencies>
+        <dependency>profile-plone.app.multilingual:dexterity</dependency>
+        <dependency>profile-plone.app.multilingual:archetypes</dependency>
+    </dependencies>
+</metadata>
+

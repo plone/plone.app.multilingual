@@ -1,0 +1,53 @@
+testing language-independent content
+====================================
+::
+
+    >>> from plone.app.testing import ( 
+    ...     TEST_USER_ID, 
+    ...     TEST_USER_NAME, 
+    ...     TEST_USER_PASSWORD,
+    ...     login,
+    ...     setRoles
+    ... )
+
+    >>> from plone.testing.z2 import Browser
+
+    >>> browser = Browser(layer['app'])
+    >>> browser.handleErrors = False
+    >>> portal = layer['portal']
+    >>> portal_url = portal.absolute_url()
+    >>> from Products.CMFCore.utils import getToolByName
+    >>> lang_tool = getToolByName(portal, 'portal_languages')
+    >>> lang_tool.supported_langs = ['en', 'it', 'de']
+    >>> lang_tool.start_neutral = 1
+    >>> import transaction
+    >>> transaction.commit()
+    >>> browser.addHeader('Authorization', 'Basic %s:%s' %(TEST_USER_NAME, TEST_USER_PASSWORD))
+    >>> setRoles(portal, TEST_USER_ID, ['Manager'])
+    >>> login(portal, TEST_USER_NAME)
+
+create some content::
+        
+    >>> content_id = portal.invokeFactory(type_name='Document', id="neutral_sample")
+    >>> portal[content_id].setTitle("Sample Content")
+    >>> from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
+    >>> from plone.multilingual.interfaces import ILanguage
+    >>> ILanguage(portal[content_id]).get_language() == LANGUAGE_INDEPENDENT
+    True
+    >>> transaction.commit()
+
+now we translate this content::
+
+    >>> browser.open(portal[content_id].absolute_url() + '/translate')
+    >>> browser.getControl(name="form.widgets.language:list").value = ['de']
+    >>> browser.getControl(name="form.buttons.create").click()
+    >>> browser.getControl(name="title").value = "sample title de"
+    >>> browser.getControl(name="form.button.save").click()
+
+the prior language-independent content should now have the portals default-language::
+
+    >>> from Products.CMFCore.utils import getToolByName
+    >>> lang_tool = getToolByName(portal, 'portal_languages')
+    >>> ILanguage(portal[content_id]).get_language() == lang_tool.getDefaultLanguage()
+    True
+

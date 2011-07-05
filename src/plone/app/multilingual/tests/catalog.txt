@@ -1,0 +1,51 @@
+the catalog-patch
+=================
+::
+    >>> from Products.CMFCore.utils import getToolByName
+    >>> portal = layer['portal']
+    >>> from plone.multilingual.interfaces import ILanguage
+    >>> from zope.lifecycleevent import ObjectAddedEvent
+    >>> from zope.event import notify
+
+samplecontent::
+
+    >>> documents = []
+    >>> for i in range(0,3):
+    ...     content_id = portal.invokeFactory(type_name='Document', id='sampledocument_%d' % i)
+    ...     content = portal[content_id]
+    ...     notify(ObjectAddedEvent(content))
+    ...     documents.append(content)
+    >>> import transaction
+    >>> transaction.commit()
+    
+    >>> for cnt,lang in enumerate(['', 'it', 'en']):
+    ...     ILanguage(documents[cnt]).set_language(lang)
+    ...     documents[cnt].reindexObject()
+    
+    >>> catalog = getToolByName(layer['portal'], 'portal_catalog')
+    >>> request = layer['request']
+
+query with all::
+
+    >>> kw = {'language': 'all'}
+    >>> [x.language for x in catalog.searchResults(request,**kw)]
+    ['no_language', 'it', 'en']
+
+query for language-independent content::
+
+    >>> kw = {'language': ''}
+    >>> [x.language for x in catalog.searchResults(request,**kw)]
+    ['no_language']
+
+query for a language::
+
+    >>> kw = {'language': 'it'}
+    >>> [x.language for x in catalog.searchResults(request,**kw)]
+    ['it']
+
+query without language set (result should contain default_language and independent content)::
+    
+    >>> [x.language for x in catalog.searchResults(request)]
+    ['no_language', 'en']
+
+

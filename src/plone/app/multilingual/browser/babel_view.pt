@@ -1,0 +1,101 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      tal:define="objToTranslate view/objToTranslate"
+      i18n:domain="plone">
+
+  <head><title></title></head>
+
+  <metal:block use-macro="here/global_defines/macros/defines" />
+
+<!-- Javascripts -->
+    <tal:block define="macro here/archetypes_custom_js/macros/javascript_head | nothing"
+               condition="macro">
+      <metal:block use-macro="macro" />
+    </tal:block>
+    <tal:comment replace="nothing">
+      Many of the following defines duplicated from the tal:defines in the
+      main slot. With base_edit, edit_macros could be reused as it was defined
+      for the entire document. base_view uses main_template and thus must
+      create additional defines for each slot it fills.
+    </tal:comment>
+    <tal:js define="fields python:objToTranslate.Schema().viewableFields(objToTranslate);
+                    js python:objToTranslate.getUniqueWidgetAttr(fields, 'helper_js')"
+            condition="js"
+            repeat="item js">
+      <script type="text/javascript"
+              charset="iso-8859-1"
+              tal:condition="python:exists('portal/%s' % item)"
+              tal:attributes="src string:$portal_url/$item">
+      </script>
+    </tal:js>
+    <tal:block define="portal_type python:objToTranslate.getPortalTypeName().lower().replace(' ', '_');
+                       view_template python:'%s_view' % portal_type;
+                       view_macros python:path('objToTranslate/%s/macros|nothing' % view_template);
+                       macro view_macros/js | nothing"
+               condition="macro">
+      <metal:block use-macro="macro" />
+    </tal:block>
+
+<!-- CSS -->
+
+    <tal:comment replace="nothing">
+      Many of the following defines duplicated from the tal:defines in the
+      main slot. With base_edit, edit_macros could be reused as it was defined
+      for the entire document. base_view uses main_template and thus must
+      create additional defines for each slot it fills.
+    </tal:comment>
+    <tal:css define="fields python:objToTranslate.Schema().viewableFields(objToTranslate);
+                     css python:objToTranslate.getUniqueWidgetAttr(fields, 'helper_css')"
+             condition="css"
+             repeat="item css">
+      <style type="text/css"
+             media="all"
+             tal:condition="python:exists('portal/%s' % item)"
+             tal:content="structure string:<!-- @import url($portal_url/$item); -->">
+      </style>
+    </tal:css>
+ 
+  <body>
+      <tal:fields tal:define="field_macro field_macro | objToTranslate/widgets/field/macros/view"
+                  tal:repeat="field python:objToTranslate.Schema().filterFields(isMetadata=0)">
+
+        <tal:if_visible define="mode string:view;
+                                visState python:field.widget.isVisible(here, mode);
+                                visCondition python:field.widget.testCondition(context.aq_inner.aq_parent, portal, context);"
+                        condition="python:visState == 'visible' and visCondition">
+
+                        <div tal:define="fieldtypename python:field.getType().split('.')[-1];"
+                            tal:attributes="class string:field ArchetypesField-${fieldtypename};
+                                            id string:archetypes-fieldname-${field/getName}">
+
+                            <tal:base_view_macro
+
+                                tal:define="widget_view python:objToTranslate.widget(field.getName(), mode=mode, use_label=1);
+                                            field_macros here/widgets/field/macros;
+                                            label_macro view_macros/label | label_macro | field_macros/label;
+                                            data_macro view_macros/data | data_macro | field_macros/data;
+                                            visState python:widget.isVisible(here, mode);
+                                            visCondition python:field.widget.testCondition(context.aq_inner.getParentNode(), portal, context);">
+                              <tal:condition
+                                  condition="python:visState == 'visible' and visCondition">
+                                <tal:if_perm
+                                    condition="python:'view' in widget.modes and 'r' in field.mode and field.checkPermission('r',here)">
+                                  <tal:if_use_label condition="use_label | nothing">
+                                    <metal:use_label use-macro="label_macro" />
+                                  </tal:if_use_label>
+                                  <metal:use_data use-macro="data_macro|default" />
+                                </tal:if_perm>
+                              </tal:condition>
+                            </tal:base_view_macro>
+
+                        </div>
+
+        </tal:if_visible>
+      </tal:fields>
+              
+  </body>
+</html>

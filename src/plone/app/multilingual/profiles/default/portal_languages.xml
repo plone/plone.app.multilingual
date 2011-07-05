@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<object name="portal_languages">
+ <default_language value="en"/>
+ <use_cookie_negotiation value="True"/>
+ <use_request_negotiation value="False"/>
+ <start_neutral value="False"/>
+</object>

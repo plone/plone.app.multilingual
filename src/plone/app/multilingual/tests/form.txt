@@ -1,0 +1,140 @@
+translation-form
+================
+::
+    >>> from plone.app.testing import ( 
+    ...     TEST_USER_NAME, 
+    ...     TEST_USER_PASSWORD,
+    ... )
+
+    >>> from plone.testing.z2 import Browser
+
+    >>> browser = Browser(layer['app'])
+    >>> browser.handleErrors = False
+    >>> portal = layer['portal']
+    >>> portal_url = portal.absolute_url()
+    >>> from Products.CMFCore.utils import getToolByName
+    >>> lang_tool = getToolByName(portal, 'portal_languages')
+    >>> lang_tool.supported_langs = ['en', 'it', 'de']
+    >>> import transaction
+    >>> transaction.commit()
+    >>> browser.addHeader('Authorization', 'Basic %s:%s' %(TEST_USER_NAME, TEST_USER_PASSWORD))
+
+translating content (AT)::
+	
+	>>> from zope.lifecycleevent import ObjectAddedEvent
+	>>> from zope.event import notify  
+    >>> content_id = portal.invokeFactory(type_name="Document", id="sampledocument-form")
+    >>> content = portal[content_id]
+	>>> notify(ObjectAddedEvent(content))
+    >>> import transaction
+    >>> transaction.commit()
+	>>> browser.open(content.absolute_url() + '/@@translate')
+	>>> browser.getControl(name="form.widgets.language:list").value = ['de']
+	>>> browser.getControl(name="form.buttons.create").click()
+
+we should see now the translations edit-form::
+   
+    
+    >>> browser.getControl(name="title").value = "sample title de"
+    >>> browser.getControl(name="form.button.save").click()
+    >>> transaction.commit()
+    >>> content_id_de = "%s-de" % content_id 
+    >>> content_de = portal[content_id_de]
+
+translating content (dexterity)::
+
+    >>> content_id_dexterity = portal.invokeFactory(type_name="samplecontent", id="dextdocument")
+    >>> content_dexterity = portal[content_id_dexterity]
+    >>> transaction.commit()
+    >>> browser.open(content_dexterity.absolute_url() + '/@@translate')
+    >>> browser.getControl(name="form.widgets.language:list").value = ['de']
+    >>> browser.getControl(name="form.buttons.create").click()
+
+translation-menu
+================
+::
+
+    >>> browser.open(content.absolute_url())
+    >>> 'plone-contentmenu-translate' in browser.contents
+    True
+    >>> 'translate_into_it' in browser.contents
+    True
+    >>> 'translate_into_de' in browser.contents
+    False
+    
+remove / unregister translations
+================================ 
+::    
+    >>> browser.open(content.absolute_url() + '/remove_translations')
+    >>> browser.getControl(name="form.widgets.languages:list").value
+    ['de']
+    >>> browser.getControl("unlink selected").click()
+
+now we should see the remove_translations form, but there are no more translations to move::
+
+    >>> browser.getControl(name="form.widgets.languages:list").value
+    []
+
+nothing deleted::
+
+    >>> 'sampledocument-form-de' in portal.contentIds()
+    True
+
+let's reregister the translation::
+
+    >>> browser.open(content.absolute_url() + '/add_translations')
+    >>> browser.getControl(name="form.widgets.language:list").options
+    ['it', 'de']
+
+    >>> form = browser.getForm(index=1)
+    >>> form.mech_form.new_control(
+    ...     type='radio',
+    ...     name='form.widgets.content:list',
+    ...     attrs=dict(checked='checked', value='/%s' %content_id_de, id='form-widgets-content-0'))
+
+    >>> browser.getControl(name="form.widgets.language:list").value = ['de']
+    >>> browser.getControl('add translations').click()
+
+    >>> browser.getControl(name="form.widgets.language:list").options
+    ['it']
+
+lets's see if the reregistered translation is there::
+    
+    >>> browser.open(content.absolute_url() + '/remove_translations')
+    >>> browser.getControl(name="form.widgets.languages:list").value
+    ['de']
+
+remove translation with deleting content::
+
+    >>> browser.open(content.absolute_url() + '/remove_translations')
+    >>> browser.getControl("remove selected").click()
+
+    >>> browser.getControl(name="form.widgets.languages:list").value
+    []
+
+    >>> content_id_de in portal.contentIds()
+    False
+
+translating folderish content::
+
+    >>> folder_id = portal.invokeFactory(type_name="Folder", id="samplefolder")
+    >>> notify(ObjectAddedEvent(portal.samplefolder))
+    >>> transaction.commit()
+    >>> browser.open(portal_url + '/samplefolder/@@translate')
+    >>> browser.getControl(name="form.widgets.language:list").value = ['de']
+    >>> browser.getControl(name="form.buttons.create").click()
+    >>> browser.getControl(name="title").value = "sample folder title de"
+    >>> browser.getControl(name="form.button.save").click()
+
+translating content in folders::
+
+    >>> folder = portal[folder_id]
+    >>> content_id = folder.invokeFactory(type_name="Document", id="sampledocument_in_folder")
+    >>> notify(ObjectAddedEvent(folder[content_id]))
+    >>> transaction.commit()
+    >>> browser.open(folder.absolute_url() + '/' + content_id + '/@@translate')
+    >>> browser.getControl(name="form.widgets.language:list").value = ['de']
+    >>> browser.getControl(name="form.buttons.create").click()
+    >>> '%s-de' % folder_id in browser.url
+    True
+

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<metadata>
+  <version>1.0 Beta 1</version>
+  <dependencies>
+    <dependency>profile-plone.app.z3cform:default</dependency>
+    <dependency>profile-plone.app.registry:default</dependency>
+    <dependency>profile-plone.formwidget.contenttree:default</dependency>
+  </dependencies>
+</metadata>

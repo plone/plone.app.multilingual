@@ -1,0 +1,9 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+    i18n_domain="plone.app.multilingual">
+
+    <permission
+        id="plone.app.multilingual.ManageTranslations"
+        title="plone.app.multilingual: Manage Translations"
+    />
+
+</configure>

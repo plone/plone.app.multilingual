@@ -1,0 +1,58 @@
+translation-menu
+================
+::
+    >>> portal = layer['portal']
+    >>> from zope import component
+    >>> from zope.app.publisher.interfaces.browser import IBrowserMenu
+    >>> from plone.app.testing import ( 
+    ...     SITE_OWNER_NAME, 
+    ...     SITE_OWNER_PASSWORD,
+    ... )
+    >>> from plone.testing.z2 import Browser
+    >>> browser = Browser(layer['app'])
+    >>> browser.handleErrors = False
+    >>> browser.addHeader('Authorization', 'Basic %s:%s' %(SITE_OWNER_NAME, SITE_OWNER_PASSWORD))
+    >>> portal = layer['portal']
+    >>> portal_url = portal.absolute_url()
+    >>> from Products.CMFCore.utils import getToolByName
+    >>> lang_tool = getToolByName(portal, 'portal_languages')
+    >>> lang_tool.supported_langs = ['en', 'it', 'de']
+
+samplecontent::
+
+	>>> from zope.lifecycleevent import ObjectAddedEvent
+	>>> from zope.event import notify
+    >>> content_id = portal.invokeFactory(type_name='Document', id='sampledocument-form')
+    >>> content = portal[content_id]
+	>>> notify(ObjectAddedEvent(content))
+    >>> import transaction
+    >>> transaction.commit()
+
+menu:: 
+
+    >>> menu = component.getUtility(IBrowserMenu, name="plone_contentmenu_translate", context=content)
+
+We should see our menu::
+
+    >>> browser.open(content.absolute_url())
+    >>> 'Translate into...' in browser.contents
+    True
+
+We should see menu entries::
+
+    >>> 'translate_into_it' in browser.contents
+    True
+    >>> 'translate_into_de' in browser.contents
+    True
+
+We should not see::
+
+    >>> 'translate_into_en' in browser.contents
+    False
+
+The menu should not appear if ITranslatable isn't provided by context ::
+
+    >>> browser.open(portal.absolute_url() + '/folder_listing')
+    >>> 'Translate into...' in browser.contents
+    False
+

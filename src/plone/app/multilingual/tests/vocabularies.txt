@@ -1,0 +1,34 @@
+vocabulary - test 
+=================
+
+creating some sample_content::
+
+    >>> portal = layer['portal']
+    >>> from zope.lifecycleevent import ObjectAddedEvent
+    >>> from zope.event import notify
+    >>> content_id = portal.invokeFactory(type_name="Document", id="sampledocument")
+    >>> content = portal[content_id]
+    >>> notify(ObjectAddedEvent(content))
+
+
+content-language is 'en' and 'en' is the only language supported::
+
+    >>> from plone.app.multilingual.browser.vocabularies import untranslated_languages
+    >>> len(untranslated_languages(content)) == 0
+    True 
+
+supporting some more languages::
+
+    >>> portal.portal_languages.supported_langs = ['en', 'de', 'it', 'es']
+    >>> languages = untranslated_languages(content).by_token.keys()
+    >>> len(languages) 
+    3
+    >>> 'de' in languages
+    True
+    >>> 'es' in languages
+    True
+    >>> 'it' in languages
+    True
+
+
+  

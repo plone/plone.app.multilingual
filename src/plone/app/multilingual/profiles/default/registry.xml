@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<registry>
+  <record interface="plone.app.multilingual.interfaces.IMultilinguaSettings" field="show_selector_always">
+    <value purge="False">True</value>
+  </record>
+</registry>
