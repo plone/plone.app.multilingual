@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<object name="portal_properties">
+ <object name="linguaplone_properties" meta_type="Plone Property Sheet">
+  <property name="title">LinguaPlone properties</property>
+  <property name="hide_right_column_on_translate_form" type="boolean">True</property>
+ </object>
+</object>

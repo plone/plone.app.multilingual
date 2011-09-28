@@ -4,21 +4,39 @@
     xmlns:plone="http://namespaces.plone.org/plone">
 
   <!-- Menu for translations on content -->
-  <browser:menu
-     id="plone_contentmenu_translate"
-     title="Translate menu - contains translation-related actions"
-     class=".menu.TranslateMenu"
-     />
+    <browser:menu
+      id="plone_contentmenu_translate"
+      title="Translate menu - contains translation-related actions"
+      class=".menu.TranslateMenu"
+      />
 
-   <adapter for="plone.multilingual.interfaces.ITranslatable plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled"
-     name="plone.contentmenu.translate"
-     factory=".menu.TranslateSubMenuItem"
-     provides="plone.app.contentmenu.interfaces.IContentMenuItem"
-     />
+    <adapter for="plone.multilingual.interfaces.ITranslatable plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled"
+      name="plone.contentmenu.translate"
+      factory=".menu.TranslateSubMenuItem"
+      provides="plone.app.contentmenu.interfaces.IContentMenuItem"
+      />
 
-   <!-- Viewlet for switching language -->
+  <!-- Control panel -->
+    <browser:page
+      name="language-controlpanel"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".controlpanel.LanguageControlPanel"
+      permission="plone.app.controlpanel.Language"
+      layer="plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled"
+      />
 
-   <browser:viewlet
+    <adapter factory=".controlpanel.MultiLanguageControlPanelAdapter" />
+
+  <!-- Vocabulary all languages -->
+
+  <utility
+    component=".vocabularies.AllContentLanguageVocabularyFactory"
+    name="plone.app.multilingual.vocabularies.AllContentLanguageVocabulary"
+    />
+
+  <!-- Viewlet for switching language -->
+
+    <browser:viewlet
      name="plone.app.multilingual.languageselector"
      template="languageselector.pt"
      manager="plone.app.layout.viewlets.interfaces.IPortalHeader"

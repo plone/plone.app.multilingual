@@ -9,6 +9,10 @@
     i18n_domain="plone.app.multilingual"
     >
 
+    <include package="grokcore.component" file="meta.zcml" />
+
+    <include package="zope.app.pagetemplate" file="meta.zcml" />
+
     <includeDependencies package="." />
 
     <include file="permissions.zcml" />
@@ -34,7 +38,7 @@
 
     <genericsetup:registerProfile
         name="default"
-        title="plone.app.multilingual-(default)"
+        title="plone.app.multilingual-(core)"
         description="plone.app.multilingual"
         directory="profiles/default"
         provides="Products.GenericSetup.interfaces.EXTENSION"

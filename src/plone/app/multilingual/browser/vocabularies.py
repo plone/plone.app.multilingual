@@ -38,3 +38,46 @@ def deletable_languages(context):
             languages.append(SimpleVocabulary.createTerm(lang, lang, \
                 language_infos[lang].get('name', lang)))
     return SimpleVocabulary(languages)
+
+
+
+from plone.i18n.locales.interfaces import ILanguageAvailability
+from zope.component import getGlobalSiteManager
+from zope.i18nmessageid import Message, MessageFactory
+from zope.interface import implements
+from zope.schema.interfaces import IVocabularyFactory
+from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
+
+from Products.CMFCore.utils import getToolByName
+
+_ = MessageFactory('plone.app.multilingual')
+
+
+def sort_key(language):
+    return language[1]
+
+
+class AllContentLanguageVocabulary(object):
+    """Vocabulary factory for all content languages in the portal.
+    """
+    implements(IVocabularyFactory)
+
+    def __call__(self, context):
+        context = getattr(context, 'context', context)
+        ltool = getToolByName(context, 'portal_languages')
+        gsm = getGlobalSiteManager()
+        util = gsm.queryUtility(ILanguageAvailability)
+        if ltool.use_combined_language_codes:
+            languages = util.getLanguages(combined=True)
+        else:
+            languages = util.getLanguages()
+
+        items = [(l, languages[l].get('name', l)) for l in languages]
+        items.sort(key=sort_key)
+        items = [SimpleTerm(i[0], i[0], i[1]) for i in items]
+        return SimpleVocabulary(items)
+
+AllContentLanguageVocabularyFactory = AllContentLanguageVocabulary()
+
+
+

@@ -1,0 +1,4 @@
+What does an object translatable ?
+==================================
+
+The marker interface plone.multilingual.interfaces.ITranslatable and the global marker interface plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled
