@@ -3,6 +3,7 @@ from zope.interface import implementsOnly
 from zope.schema import Choice
 from zope.schema import Tuple, Bool
 from zope.formlib.form import FormFields
+from plone.fieldsets.fieldsets import FormFieldsets
 from plone.app.controlpanel.language import LanguageControlPanel as BasePanel
 from plone.app.controlpanel.language import LanguageControlPanelAdapter
 
@@ -13,6 +14,7 @@ _ = MessageFactory('plone.app.multilingual')
 
 
 class IMultiLanguageSelectionSchema(Interface):
+
 
     default_language = Choice(
         title=_(u"heading_site_language",
@@ -40,7 +42,132 @@ class IMultiLanguageSelectionSchema(Interface):
         description=_(u"description_show_original_on_translation",
                 default=u"Show the left column on translation"),
         )
+
+
+class IMultiLanguageOptionsSchema(Interface):
+
+
+    use_content_negotiation = Bool(
+        title=_(u"heading_language_of_the_content",
+                default=u"Use the language of the content item."),
+        description=_(u"description_language_of_the_content",
+                default=u"Use the language of the content item."),
+        )
         
+    use_path_negotiation = Bool(
+        title=_(u"heading_language_codes_in_URL",
+                default=u"Use language codes in URL path for manual override."),
+        description=_(u"description_language_codes_in_URL",
+                default=u"Use language codes in URL path for manual override."),
+        )
+
+    use_cookie_negotiation = Bool(
+        title=_(u"heading_cookie_manual_override",
+                default=u"Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"),
+        description=_(u"description_cookie_manual_override",
+                default=u"Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"),
+        )
+
+    authenticated_users_only = Bool(
+        title=_(u"heading_auth_cookie_manual_override",
+                default=u"Authenticated users only."),
+        description=_(u"description_auth_ookie_manual_override",
+                default=u"Authenticated users only. Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"),
+        )
+
+    set_cookie_everywhere = Bool(
+        title=_(u"heading_set_language_cookie_always",
+                default=u"Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."),
+        description=_(u"description_set_language_cookie_always",
+                default=u"Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."),
+        )
+    
+    use_subdomain_negotiation = Bool(
+        title=_(u"heading_use_subdomain",
+                default=u"Use subdomain (e.g.: de.plone.org)."),
+        description=_(u"description_use_subdomain",
+                default=u"Use subdomain (e.g.: de.plone.org)."),
+        )
+    
+    use_cctld_negotiation = Bool(
+        title=_(u"heading_top_level_domain",
+                default=u"Use top-level domain (e.g.: www.plone.de)."),
+        description=_(u"description_top_level_domain",
+                default=u"Use top-level domain (e.g.: www.plone.de)."),
+        )
+    
+    use_request_negotiation = Bool(
+        title=_(u"heading_browser_language_request_negotiation",
+                default=u"Use browser language request negotiation."),
+        description=_(u"description_browser_language_request_negotiation",
+                default=u"Use browser language request negotiation."),
+        )
+
+
+
+class MultiLanguageOptionsControlPanelAdapter(LanguageControlPanelAdapter):
+    implementsOnly(IMultiLanguageOptionsSchema)
+
+    def __init__(self, context):
+        super(MultiLanguageOptionsControlPanelAdapter, self).__init__(context)
+        self.tool = getToolByName(self.context, 'portal_languages')
+    
+    def get_use_content_negotiation(self):
+        return self.tool.use_content_negotiation
+
+    def set_use_content_negotiation(self, value):
+        self.tool.use_content_negotiation = value
+
+    def get_use_path_negotiation(self):
+        return self.tool.use_path_negotiation
+
+    def set_use_path_negotiation(self, value):
+        self.tool.use_path_negotiation = value
+
+    def get_use_cookie_negotiation(self):
+        return self.tool.use_cookie_negotiation
+
+    def set_use_cookie_negotiation(self, value):
+        self.tool.use_cookie_negotiation = value
+
+    def get_authenticated_users_only(self):
+        return self.tool.authenticated_users_only
+
+    def set_authenticated_users_only(self, value):
+        self.tool.authenticated_users_only = value
+
+    def get_set_cookie_everywhere(self):
+        return self.tool.set_cookie_everywhere
+
+    def set_set_cookie_everywhere(self, value):
+        self.tool.set_cookie_everywhere = value
+
+    def get_use_subdomain_negotiation(self):
+        return self.tool.use_subdomain_negotiation
+
+    def set_use_subdomain_negotiation(self, value):
+        self.tool.use_subdomain_negotiation = value
+
+    def get_use_cctld_negotiation(self):
+        return self.tool.use_cctld_negotiation
+
+    def set_use_cctld_negotiation(self, value):
+        self.tool.use_cctld_negotiation = value
+
+    def get_use_request_negotiation(self):
+        return self.tool.use_request_negotiation
+
+    def set_use_request_negotiation(self, value):
+        self.tool.use_request_negotiation = value
+
+    use_content_negotiation = property(get_use_content_negotiation, set_use_content_negotiation)
+    use_path_negotiation = property(get_use_path_negotiation, set_use_path_negotiation)
+    use_cookie_negotiation = property(get_use_cookie_negotiation, set_use_cookie_negotiation)
+    authenticated_users_only = property(get_authenticated_users_only, set_authenticated_users_only)
+    set_cookie_everywhere = property(get_set_cookie_everywhere, set_set_cookie_everywhere)
+    use_subdomain_negotiation = property(get_use_subdomain_negotiation, set_use_subdomain_negotiation)
+    use_cctld_negotiation = property(get_use_cctld_negotiation, set_use_cctld_negotiation)
+    use_request_negotiation = property(get_use_request_negotiation, set_use_request_negotiation)
 
 
 class MultiLanguageControlPanelAdapter(LanguageControlPanelAdapter):
@@ -74,4 +201,10 @@ class LanguageControlPanel(BasePanel):
     """A modified language control panel, allows selecting multiple languages.
     """
 
-    form_fields = FormFields(IMultiLanguageSelectionSchema)
+    selection = FormFieldsets(IMultiLanguageSelectionSchema)
+    selection.label = _(u'Options multilingual')
+
+    options = FormFieldsets(IMultiLanguageOptionsSchema)
+    options.label = _(u'Negotiation Scheme')
+
+    form_fields = FormFieldsets(selection, options)
