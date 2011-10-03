@@ -1,0 +1,6 @@
+include *.txt
+
+recursive-include docs *
+recursive-include plone/app/multilingual/locales *
+
+global-exclude *.pyc
