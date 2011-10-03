@@ -10,3 +10,5 @@ develop-eggs/*
 .mr.developer.cfg
 var/*
 .DS_Store
+build/*
+dist/*
