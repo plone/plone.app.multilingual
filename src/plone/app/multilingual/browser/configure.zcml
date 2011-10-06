@@ -24,6 +24,7 @@
       permission="plone.app.controlpanel.Language"
       layer="plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled"
       />
+    
 
     <adapter factory=".controlpanel.MultiLanguageControlPanelAdapter" />
     <adapter factory=".controlpanel.MultiLanguageOptionsControlPanelAdapter" />

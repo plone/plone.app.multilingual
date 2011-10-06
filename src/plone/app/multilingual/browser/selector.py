@@ -7,15 +7,25 @@ from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.app.multilingual.interfaces import IMultilinguaSettings
+from plone.app.i18n.locales.browser.selector import LanguageSelector
 
-class LanguageSelectorViewlet(ViewletBase):
+class LanguageSelectorViewlet(LanguageSelector):
     """Language selector for translatable content.
     """
 
+    set_language = True
+
     def available(self):
-        language_tool = getToolByName(self.context, 'portal_languages')
-        supported_languages = language_tool.getSupportedLanguages()
-        return len(supported_languages) > 1
+        if self.tool is not None:
+            selector = self.tool.showSelector()
+            languages = len(self.tool.getSupportedLanguages()) > 1
+            return selector and languages
+        return False
+
+#    def available(self):
+#        language_tool = getToolByName(self.context, 'portal_languages')
+#        supported_languages = language_tool.getSupportedLanguages()
+#        return len(supported_languages) > 1
 
     def languages(self):
         result = []

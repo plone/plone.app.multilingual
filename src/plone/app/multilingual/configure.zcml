@@ -16,6 +16,9 @@
     <includeDependencies package="." />
 
     <include file="permissions.zcml" />
+
+    <include package="plone.app.controlpanel" />
+    <include package="Products.CMFCore" file="permissions.zcml" />
     
     <grok:grok package="." />
 

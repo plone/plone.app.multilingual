@@ -1,6 +1,7 @@
 include *.txt
+include *.zcml
 
-recursive-include docs *
-recursive-include plone/app/multilingual/locales *
+recursive-include src/plone *
 
 global-exclude *.pyc
+global-exclude .DS_Store
