@@ -1,0 +1,12 @@
+Changelog
+=========
+
+0.1a2 - unrealesed
+------------------
+
+- Moving languageselector viewlet from LP [ramon]
+
+0.1a1 - 2011-10-3
+-----------------
+
+- Initial version [ramon, awello, sneridagh]
