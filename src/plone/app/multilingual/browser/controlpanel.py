@@ -9,6 +9,8 @@ from plone.app.controlpanel.language import LanguageControlPanelAdapter
 
 from Products.CMFCore.utils import getToolByName
 
+from plone.app.multilingual.interfaces import IMultilinguaRootFolder
+
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('plone.app.multilingual')
 
@@ -104,7 +106,6 @@ class IMultiLanguageOptionsSchema(Interface):
         )
 
 
-
 class MultiLanguageOptionsControlPanelAdapter(LanguageControlPanelAdapter):
     implementsOnly(IMultiLanguageOptionsSchema)
 
@@ -170,6 +171,19 @@ class MultiLanguageOptionsControlPanelAdapter(LanguageControlPanelAdapter):
     use_request_negotiation = property(get_use_request_negotiation, set_use_request_negotiation)
 
 
+class IMultilinguaRootFolderAdapter(LanguageControlPanelAdapter):
+    implementsOnly(IMultilinguaRootFolder)
+
+    def __init__(self, context):
+        super(IMultilinguaRootFolderAdapter, self).__init__(context)
+
+    def get_url_languages(self):
+        return {'en':'/','es':'/en'}
+    
+    def set_url_languages(self, value):
+        pass
+
+
 class MultiLanguageControlPanelAdapter(LanguageControlPanelAdapter):
     implementsOnly(IMultiLanguageSelectionSchema)
 
@@ -207,4 +221,7 @@ class LanguageControlPanel(BasePanel):
     options = FormFieldsets(IMultiLanguageOptionsSchema)
     options.label = _(u'Negotiation Scheme')
 
-    form_fields = FormFieldsets(selection, options)
+    languages = FormFieldsets(IMultilinguaRootFolder)
+    languages.label = _(u'Default language URLs')
+
+    form_fields = FormFieldsets(selection, options, languages)

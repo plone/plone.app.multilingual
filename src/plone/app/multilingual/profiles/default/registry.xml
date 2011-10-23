@@ -3,4 +3,9 @@
   <record interface="plone.app.multilingual.interfaces.IMultilinguaSettings" field="show_selector_always">
     <value purge="False">True</value>
   </record>
+  <record interface="plone.app.multilingual.interfaces.IMultilinguaRootFolder" field="default_layout_languages">
+    <value>
+        <element key="en">/</element>
+    </value>
+  </record>
 </registry>
