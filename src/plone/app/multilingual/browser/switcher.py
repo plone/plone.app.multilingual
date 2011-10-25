@@ -1,6 +1,8 @@
 from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
+from plone.registry.interfaces import IRegistry
+from plone.app.multilingual.interfaces import IMultilinguaSettings
 
 class LanguageSwitcher(BrowserView):
 
@@ -14,9 +16,16 @@ class LanguageSwitcher(BrowserView):
         plt = getToolByName(context, 'portal_languages')
         pref = plt.getPreferredLanguage()
         default = plt.getDefaultLanguage()
-        ids = self.context.keys()
-        target = (pref in ids) and pref or default
-        url = "%s/%s" % (context.absolute_url(), target)
+        registry = getUtility(IRegistry)
+        root_folder = registry.forInterface(IMultilinguaSettings)
+        if pref in root_folder.default_layout_languages.keys():
+            target = pref
+            target_url = root_folder.default_layout_languages[pref]
+        else:
+            target = default
+            target_url = "/"
+
+        url = "%s/%s" % (context.absolute_url(), target_url)
 
         # We need to set the language cookie on the first response or it will
         # be set on the frontpage itself, making it uncachable
