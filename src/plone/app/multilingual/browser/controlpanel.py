@@ -1,22 +1,32 @@
 from zope.interface import Interface
 from zope.interface import implementsOnly
-from zope.schema import Choice
-from zope.schema import Tuple, Bool
+from zope.interface import implements
+from zope.schema import Choice, ASCII, Object
+from zope.schema import Tuple, Bool, List, TextLine
+
 from zope.formlib.form import FormFields
 from plone.fieldsets.fieldsets import FormFieldsets
+
+from plone.app.multilingual.interfaces import IMultilinguaSettings
+
 from plone.app.controlpanel.language import LanguageControlPanel as BasePanel
 from plone.app.controlpanel.language import LanguageControlPanelAdapter
 
 from Products.CMFCore.utils import getToolByName
-
-from plone.app.multilingual.interfaces import IMultilinguaRootFolder
+from zope.component import getUtility
+from plone.registry.interfaces import IRegistry
+    
+from zope.app.form import CustomWidgetFactory
+from zope.app.form.browser import ObjectWidget
+from zope.app.form.browser import ListSequenceWidget
 
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('plone.app.multilingual')
 
 
 class IMultiLanguageSelectionSchema(Interface):
-
+    """ Interface for language selection - control panel fieldset
+    """
 
     default_language = Choice(
         title=_(u"heading_site_language",
@@ -47,7 +57,8 @@ class IMultiLanguageSelectionSchema(Interface):
 
 
 class IMultiLanguageOptionsSchema(Interface):
-
+    """ Interface for language options - control panel fieldset
+    """
 
     use_content_negotiation = Bool(
         title=_(u"heading_language_of_the_content",
@@ -104,6 +115,25 @@ class IMultiLanguageOptionsSchema(Interface):
         description=_(u"description_browser_language_request_negotiation",
                 default=u"Use browser language request negotiation."),
         )
+
+
+
+class ILangAttrPair(Interface):
+    """ Lang/url pair for mapping root folder - control panel widget
+    """
+    lang = TextLine(title=u"lang-code", max_length=5, readonly=True)
+    url = TextLine(title=u"URL")
+
+
+class IMultilinguaRootFolderForm(Interface):
+    """ Lang/url pair list for mapping root folder - control panel fieldset
+    """
+    default_layout_languages = List(
+        title=_(u'Layouts'),
+        description=_(u"This languages are mapped at Root Folder"),
+        default=[],
+        value_type=Object(ILangAttrPair, title=u"map"),
+        required=False)
 
 
 class MultiLanguageOptionsControlPanelAdapter(LanguageControlPanelAdapter):
@@ -171,17 +201,32 @@ class MultiLanguageOptionsControlPanelAdapter(LanguageControlPanelAdapter):
     use_request_negotiation = property(get_use_request_negotiation, set_use_request_negotiation)
 
 
-class IMultilinguaRootFolderAdapter(LanguageControlPanelAdapter):
-    implementsOnly(IMultilinguaRootFolder)
+
+class LangAttrPair:
+    implements(ILangAttrPair)
+    def __init__(self, lang='', url=''):
+        self.lang = lang
+        self.url = url
+
+class MultilinguaRootFolderAdapter(LanguageControlPanelAdapter):
+    implementsOnly(IMultilinguaRootFolderForm)
 
     def __init__(self, context):
-        super(IMultilinguaRootFolderAdapter, self).__init__(context)
+        super(MultilinguaRootFolderAdapter, self).__init__(context)
 
     def get_url_languages(self):
-        return {'en':'/','es':'/en'}
-    
+        import pdb; pdb.set_trace()
+        registry = getUtility(IRegistry)
+        root_folder = registry.forInterface(IMultilinguaSettings)
+        l = []
+        for key in root_folder.default_layout_languages.keys():
+            l.append(LangAttrPair(lang=key, url=root_folder.default_layout_languages[key]))
+        return l
+
     def set_url_languages(self, value):
         pass
+
+    default_layout_languages = property(get_url_languages, set_url_languages)
 
 
 class MultiLanguageControlPanelAdapter(LanguageControlPanelAdapter):
@@ -211,17 +256,32 @@ class MultiLanguageControlPanelAdapter(LanguageControlPanelAdapter):
     show_original_on_translation = property(get_show_original_on_translation,
                                             set_show_original_on_translation)
 
+
+selection = FormFieldsets(IMultiLanguageSelectionSchema)
+selection.label = _(u'Options multilingual')
+
+options = FormFieldsets(IMultiLanguageOptionsSchema)
+options.label = _(u'Negotiation Scheme')
+
+languages = FormFieldsets(IMultilinguaRootFolderForm)
+languages.label = _(u'Default language URLs')
+
+
+langattr_widget = CustomWidgetFactory(ObjectWidget, LangAttrPair)
+combination_widget = CustomWidgetFactory(ListSequenceWidget,
+                                         subwidget=langattr_widget)
+
 class LanguageControlPanel(BasePanel):
     """A modified language control panel, allows selecting multiple languages.
     """
 
-    selection = FormFieldsets(IMultiLanguageSelectionSchema)
-    selection.label = _(u'Options multilingual')
-
-    options = FormFieldsets(IMultiLanguageOptionsSchema)
-    options.label = _(u'Negotiation Scheme')
-
-    languages = FormFieldsets(IMultilinguaRootFolder)
-    languages.label = _(u'Default language URLs')
+    languages['default_layout_languages'].custom_widget = combination_widget
 
     form_fields = FormFieldsets(selection, options, languages)
+
+    label = _("Multilingual Settings")
+    description = _("All the configuration of P.A.M.")
+    form_name = _("Multilingual Settings")
+
+
+

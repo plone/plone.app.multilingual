@@ -8,13 +8,12 @@ class IPloneAppMultilingualInstalled(Interface):
 
 
 class IMultilinguaSettings(Interface):
+    """ Selector at plone.registry
+    """
 
     show_selector_always = schema.Bool(
         title=_(u"show selector always"),
     )
-
-
-class IMultilinguaRootFolder(Interface):
 
     default_layout_languages = schema.Dict(
         min_length=0, max_length=10,
@@ -22,3 +21,5 @@ class IMultilinguaRootFolder(Interface):
         value_type=schema.TextLine(title=u"Value"),
         title=_(u"Select diferent urls for each differnt language"),
     )
+
+

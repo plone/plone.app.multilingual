@@ -1,7 +1,8 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:plone="http://namespaces.plone.org/plone">
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:z3c="http://namespaces.zope.org/z3c">
 
   <!-- Menu for translations on content -->
     <browser:menu
@@ -26,17 +27,25 @@
       />
 
   <!-- Dictionary widget dispatcher -->
-  <view type="zope.publisher.interfaces.browser.IBrowserRequest"
-    provides="zope.app.form.interfaces.IInputWidget"
-    for="zope.schema.interfaces.IDict
-         plone.app.multilingual.interfaces.IMultilinguaRootFolder"
-    factory=".widgets.DictionaryWidgetFactory"
-    permission="zope.Public" />
+<!--
+   <z3c:widgetTemplate
+      mode="display"
+      widget=".widgets.interfaces.ILanguageDictWidget"
+      layer="z3c.form.interfaces.IFormLayer"
+      template="widgets/lddisplay.pt"
+      />
 
+  <z3c:widgetTemplate
+      mode="input"
+      widget=".widgets.interfaces.ILanguageDictWidget"
+      layer="z3c.form.interfaces.IFormLayer"
+      template="widgets/ldinput.pt"
+      />
+-->
 
     <adapter factory=".controlpanel.MultiLanguageControlPanelAdapter" />
     <adapter factory=".controlpanel.MultiLanguageOptionsControlPanelAdapter" />
-    <adapter factory=".controlpanel.IMultilinguaRootFolderAdapter" />
+    <adapter factory=".controlpanel.MultilinguaRootFolderAdapter" />
 
   <!-- Vocabulary all languages -->
 

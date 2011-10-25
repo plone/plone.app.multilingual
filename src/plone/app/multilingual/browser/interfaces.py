@@ -60,6 +60,5 @@ class IRemoveTranslation(form.Schema):
     )
     form.widget(languages='z3c.form.browser.select.SelectFieldWidget')
 
-
 interface.alsoProvides(IAddTranslation, form.IFormFieldProvider)
 interface.alsoProvides(IRemoveTranslation, form.IFormFieldProvider)
