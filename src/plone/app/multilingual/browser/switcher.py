@@ -3,6 +3,8 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from plone.registry.interfaces import IRegistry
 from plone.app.multilingual.interfaces import IMultilinguaSettings
+from zope.component import getUtility
+from plone.registry.interfaces import IRegistry
 
 class LanguageSwitcher(BrowserView):
 

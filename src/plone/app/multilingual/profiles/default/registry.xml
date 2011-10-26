@@ -3,7 +3,7 @@
   <records interface="plone.app.multilingual.interfaces.IMultilinguaSettings">
     <value purge="False" key="show_selector_always">True</value>
     <value purge="False" key="default_layout_languages">
-        <element key="en">/</element>
+        <element key="en">front-page</element>
     </value>
   </records>
 </registry>

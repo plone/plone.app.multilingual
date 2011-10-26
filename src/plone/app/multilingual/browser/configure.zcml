@@ -26,23 +26,6 @@
       layer="plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled"
       />
 
-  <!-- Dictionary widget dispatcher -->
-<!--
-   <z3c:widgetTemplate
-      mode="display"
-      widget=".widgets.interfaces.ILanguageDictWidget"
-      layer="z3c.form.interfaces.IFormLayer"
-      template="widgets/lddisplay.pt"
-      />
-
-  <z3c:widgetTemplate
-      mode="input"
-      widget=".widgets.interfaces.ILanguageDictWidget"
-      layer="z3c.form.interfaces.IFormLayer"
-      template="widgets/ldinput.pt"
-      />
--->
-
     <adapter factory=".controlpanel.MultiLanguageControlPanelAdapter" />
     <adapter factory=".controlpanel.MultiLanguageOptionsControlPanelAdapter" />
     <adapter factory=".controlpanel.MultilinguaRootFolderAdapter" />

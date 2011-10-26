@@ -213,18 +213,20 @@ class MultilinguaRootFolderAdapter(LanguageControlPanelAdapter):
 
     def __init__(self, context):
         super(MultilinguaRootFolderAdapter, self).__init__(context)
+        registry = getUtility(IRegistry)
+        self.root_folder = registry.forInterface(IMultilinguaSettings)
+
 
     def get_url_languages(self):
-        import pdb; pdb.set_trace()
-        registry = getUtility(IRegistry)
-        root_folder = registry.forInterface(IMultilinguaSettings)
         l = []
-        for key in root_folder.default_layout_languages.keys():
-            l.append(LangAttrPair(lang=key, url=root_folder.default_layout_languages[key]))
+        for key in self.root_folder.default_layout_languages.keys():
+            l.append(LangAttrPair(lang=key, url=self.root_folder.default_layout_languages[key]))
         return l
 
     def set_url_languages(self, value):
-        pass
+        for v in value:
+            if v.lang in self.root_folder.default_layout_languages.keys():
+                self.root_folder.default_layout_languages[v.lang]=v.url
 
     default_layout_languages = property(get_url_languages, set_url_languages)
 
@@ -239,6 +241,11 @@ class MultiLanguageControlPanelAdapter(LanguageControlPanelAdapter):
         return [unicode(l) for l in self.context.getSupportedLanguages()]
 
     def set_available_languages(self, value):
+        registry = getUtility(IRegistry)
+        root_folder = registry.forInterface(IMultilinguaSettings)
+        for l in value:
+            if l not in root_folder.default_layout_languages.keys():
+                root_folder.default_layout_languages[l]='front-page-'+l
         languages = [str(l) for l in value]
         self.context.supported_langs = languages
 
