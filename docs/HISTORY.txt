@@ -4,6 +4,7 @@ Changelog
 0.1a2 - unrealesed
 ------------------
 
+- Adding a control panel fieldset and a default view for Plone Site Root [ramon]
 - Moving languageselector viewlet from LP [ramon]
 
 0.1a1 - 2011-10-3

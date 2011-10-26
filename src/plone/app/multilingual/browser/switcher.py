@@ -25,7 +25,7 @@ class LanguageSwitcher(BrowserView):
             target_url = root_folder.default_layout_languages[pref]
         else:
             target = default
-            target_url = "/"
+            target_url = "/front-page"
 
         url = "%s/%s" % (context.absolute_url(), target_url)
 
