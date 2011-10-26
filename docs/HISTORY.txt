@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.1a2 - unrealesed
+0.1a2 - unreleased
 ------------------
 
 - Adding a control panel fieldset and a default view for Plone Site Root [ramon]
