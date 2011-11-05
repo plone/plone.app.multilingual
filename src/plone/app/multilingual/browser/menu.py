@@ -85,7 +85,7 @@ class TranslateMenu(BrowserMenu):
                            default=u"Language settings..."),
                 "description": _(u"description_language_settings", default=u""),
                 "action": portal_state.portal_url() + \
-                          "/@language-controlpanel",
+                          "/@@language-controlpanel",
                 "selected": False,
                 "icon": None,
                 "extra": {"id": "_language_settings",
