@@ -77,4 +77,4 @@ def I18nAwareCatalog():
     CatalogTool.manage_catalogView = DTMLFile('www/catalogView', globals())
 
 
-I18nAwareCatalog()
+#I18nAwareCatalog()
