@@ -13,21 +13,16 @@ class LanguageSwitcher(BrowserView):
 
         If no folder for preferred language exists, redirect to default
         language.
+
+        Copy from LinguaPlone
         """
         context = aq_inner(self.context)
         plt = getToolByName(context, 'portal_languages')
         pref = plt.getPreferredLanguage()
         default = plt.getDefaultLanguage()
-        registry = getUtility(IRegistry)
-        root_folder = registry.forInterface(IMultilinguaSettings)
-        if pref in root_folder.default_layout_languages.keys():
-            target = pref
-            target_url = root_folder.default_layout_languages[pref]
-        else:
-            target = default
-            target_url = "/front-page"
-
-        url = "%s/%s" % (context.absolute_url(), target_url)
+        ids = self.context.keys()
+        target = (pref in ids) and pref or default
+        url = "%s/%s" % (context.absolute_url(), target)
 
         # We need to set the language cookie on the first response or it will
         # be set on the frontpage itself, making it uncachable

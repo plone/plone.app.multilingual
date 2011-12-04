@@ -39,14 +39,7 @@
         factory=".catalog.language"
     />
 
-    <genericsetup:registerProfile
-        name="default"
-        title="plone.app.multilingual-(core)"
-        description="plone.app.multilingual"
-        directory="profiles/default"
-        provides="Products.GenericSetup.interfaces.EXTENSION"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    />
+
 
     <genericsetup:registerProfile
         name="dexterity"
@@ -62,6 +55,15 @@
         title="plone.app.multilingual-(archetypes)"
         description="plone.app.multilingual"
         directory="profiles/archetypes"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    />
+
+    <genericsetup:registerProfile
+        name="default"
+        title="plone.app.multilingual-(core)"
+        description="plone.app.multilingual"
+        directory="profiles/default"
         provides="Products.GenericSetup.interfaces.EXTENSION"
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     />
