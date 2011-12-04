@@ -1,11 +1,15 @@
 Changelog
 =========
 
-0.1a2 - unreleased
-------------------
+0.1a2 - 2011-12-4
+-----------------
 
-- Adding a control panel fieldset and a default view for Plone Site Root [ramon]
-- Moving languageselector viewlet from LP [ramon]
+- Improved Control Panel [ramon]
+- Improved Language Control Panel site languages selector widget to be more usable
+- Setup the root folder layout for each configured site languages on languages control panel save settings [ramon, sneridagh]
+- Adapt languageselector viewlet from LP [ramon]
+- Re-enable and adapt the searchResults patch again [ramon]
+- Cleaning description of packages and registerProfile of paml [sneridagh]
 
 0.1a1 - 2011-10-3
 -----------------

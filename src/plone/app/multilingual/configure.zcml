@@ -39,30 +39,10 @@
         factory=".catalog.language"
     />
 
-
-
-    <genericsetup:registerProfile
-        name="dexterity"
-        title="plone.app.multilingual-(dexterity)"
-        description="plone.app.multilingual"
-        directory="profiles/dexterity"
-        provides="Products.GenericSetup.interfaces.EXTENSION"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    />
-
-    <genericsetup:registerProfile
-        name="archetypes"
-        title="plone.app.multilingual-(archetypes)"
-        description="plone.app.multilingual"
-        directory="profiles/archetypes"
-        provides="Products.GenericSetup.interfaces.EXTENSION"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    />
-
     <genericsetup:registerProfile
         name="default"
-        title="plone.app.multilingual-(core)"
-        description="plone.app.multilingual"
+        title="plone.app.multilingual"
+        description="Install to enable multilingual support on the site"
         directory="profiles/default"
         provides="Products.GenericSetup.interfaces.EXTENSION"
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
