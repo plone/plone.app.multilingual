@@ -1,0 +1,37 @@
+<h1 tal:replace="structure here/manage_page_header"/>
+<h2 tal:replace="structure context/manage_tabs"/>
+
+<style type="text/css">
+.histogram {
+    width: 100%;
+}
+.histogram td.key {
+    text-align: right;
+    width: 20%;
+}
+.histogram td.bar {
+    text-align: left;
+}
+.histo-bar {
+    float           : left;
+    height          : 0.8em;
+    border          : 1px solid #000099;
+    background-color: #0000FF;
+    color           : white;
+    font-size       : 80%;
+    line-height     : 0.8em;
+    padding-left    : 0.1em;
+}
+</style>
+<table class="histogram"
+       tal:define="size context/numObjects">
+<tr tal:repeat="entry python:here.uniqueValues(withLengths=True)">
+  <td class="key" tal:content="python:entry[0]">key</td>
+  <td class="bar"><span class="histo-bar" style="width: 20%"
+            tal:define="width python:int((entry[1] * 100)/size)"
+            tal:attributes="style string:width: $width%"
+            tal:content="python:entry[1]">20</span></td>
+</tr>
+</table>
+    
+<h1 tal:replace="structure here/manage_page_footer"/>

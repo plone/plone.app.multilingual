@@ -1,5 +1,6 @@
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from zope.interface import alsoProvides
+from plone.multilingual.interfaces import ITranslationManager
 
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
@@ -19,14 +20,15 @@ class SetupView(BrowserView):
 class SetupMultilingualSite(object):
 
     def __init__(self):
-        self.previosDefaultPageId = None
+        self.previousDefaultPageId = None
         self.context = None
 
     def setupSite(self, context, forceOneLanguage=False):
         """
         This method is called from the control panel to setup a site in order
         to have root language folders and a redirect view.
-        It needs to be executed everytime a new language is added to the Available Languages.
+        It needs to be executed everytime a new language is added to the
+        Available Languages.
         """
         self.context = context
         result = []
@@ -59,11 +61,12 @@ class SetupMultilingualSite(object):
         """
         result = []
         doneSomething = False
-        canonical = self.folders[self.defaultLanguage]
+        canonical = ITranslationManager(self.folders[self.defaultLanguage])
         for language in self.languages:
             if ((language != self.defaultLanguage) and (not
-                canonical.hasTranslation(language))):
-                self.folders[language].addTranslationReference(canonical)
+                canonical.has_translation(language))):
+                canonical.register_translation(language,
+                                               self.folders[language])
                 doneSomething = True
         if doneSomething:
             result.append("Translations linked.")
@@ -91,7 +94,7 @@ class SetupMultilingualSite(object):
         self.folders[code] = folder
         if not INavigationRoot.providedBy(folder):
             alsoProvides(folder, INavigationRoot)
-            result.append("INavigationRoot setup on folder '%s'" % code )
+            result.append("INavigationRoot setup on folder '%s'" % code)
         return result
 
     def removePortalDefaultPage(self):

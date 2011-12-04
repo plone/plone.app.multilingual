@@ -1,0 +1,139 @@
+<dtml-comment>
+Most of this template was copy/pasted from the catalogView from
+Zope2.7  This template is licensed under the ZPL 2.0 as stated here:
+http://www.zope.org/Resources/ZPL
+Zope Public License (ZPL) Version 2.0
+This software is Copyright (c) Zope Corporation (tm) and Contributors. All rights reserved.
+</dtml-comment>
+
+<dtml-var manage_page_header>
+<dtml-var manage_tabs>
+
+<dtml-let path="REQUEST.get('path', '') or '/'"
+          Language="REQUEST.get('Language', '') or 'all'"
+          portal_type="REQUEST.get('portal_type', '') or ''"
+          kwargs="portal_type and {'portal_type': portal_type} or {}"
+          searchResults="searchResults(path=path, Language=Language, **kwargs)">
+
+<script type="text/javascript">
+<!--
+
+isSelected = false;
+
+function toggleSelect() {
+  if (isSelected == false) {
+    for (i = 0; i < document.objectItems.length; i++)
+      document.objectItems.elements[i].checked = true ;
+      isSelected = true;
+      document.objectItems.selectButton.value = "Deselect All";
+      return isSelected;
+  }
+  else {
+    for (i = 0; i < document.objectItems.length; i++)
+      document.objectItems.elements[i].checked = false ;
+      isSelected = false;
+      document.objectItems.selectButton.value = "Select All";
+      return isSelected;
+  }
+}
+
+//-->
+</script>
+
+<form action="&dtml-URL1;" name="objectItems">
+
+  <dtml-if "'Language' in indexes()">
+    <select name="Language">
+    <option value="all">All languages</option>
+    <dtml-in "[l for l in uniqueValuesFor('Language') if l]">
+        <option value="&dtml-sequence-item;"
+                <dtml-if "_['sequence-item'] == REQUEST.get('Language',None)"> selected="selected" </dtml-if>>&dtml-sequence-item;</option>
+    </dtml-in>
+    </select>
+  </dtml-if>
+
+  <select name="portal_type">
+    <option value="">All portal types</option>
+    <dtml-in "uniqueValuesFor('portal_type')">
+        <option value="&dtml-sequence-item;"
+                <dtml-if "_['sequence-item'] == REQUEST.get('portal_type',None)"> selected="selected" </dtml-if>>&dtml-sequence-item;</option>
+    </dtml-in>
+  </select>
+  
+  <dtml-if "'path' in indexes()">
+      <span class="form-text">Path:</span> <input type="text" name="path" value="&dtml.html_quote-path;"/>
+  </dtml-if>
+  
+  <input type="submit"
+         name="manage_catalogView:method"
+         value="Set Filter" />
+
+<p class="form-text">
+&dtml-id; contains <dtml-var searchResults fmt=collection-length thousands_commas> record(s)<dtml-if
+"path != '/' or Language != 'all' or portal_type"> matching the constraints</dtml-if>.
+</p>
+
+  <div class="form-text">
+  <dtml-in searchResults previous size=20 start=query_start >
+    <a href="&dtml-URL;?query_start=&dtml-previous-sequence-start-number;&path=&dtml-path;&portal_type=&dtml-portal_type;&Language=&dtml-Language;">
+      [Previous <dtml-var previous-sequence-size> entries]
+    </a>
+  </dtml-in>
+  <dtml-in searchResults next size=20 start=query_start >
+    <a href="&dtml-URL;?query_start=&dtml-next-sequence-start-number;&path=&dtml-path;&portal_type=&dtml-portal_type;&Language=&dtml-Language;">
+      [Next <dtml-var next-sequence-size> entries]
+    </a>
+  </dtml-in>
+  </div>
+<table width="100%" cellspacing="0" cellpadding="2" border="0">
+<dtml-in searchResults size=20 start=query_start >
+  <dtml-if name="sequence-start">
+  <tr class="list-header">
+    <td width="5%" align="right" colspan="2" valign="top">&nbsp;</td>
+    <td width="80%" align="left" valign="top">
+      <div class="list-item">Object Identifier</div></td>
+    <td width="15%" align="left" valign="top">
+      <div class="list-item">Type</div></td>
+  </tr>
+  </dtml-if>
+  <dtml-if name="sequence-odd"><tr class="row-normal">
+  <dtml-else><tr class="row-hilite"></dtml-if>
+    <td align="right" valign="top">
+    <input type="checkbox" NAME="urls:list" VALUE="&dtml-getPath;">
+    </td>
+    <td align="left" valign="top">&nbsp;</td>
+    <td align="left" valign="top">
+    <div class="form-text">
+    <a href="&dtml-URL1;/manage_objectInformation?rid=&dtml-getRID;"
+     target="_objectinfo_&dtml-getRID;">&dtml-getPath;</a>
+    </div>
+    </td>
+    <td align="left" valign="top">
+    <div class="form-text">
+      <dtml-if expr="has_key('meta_type') and meta_type">
+        <dtml-var name="meta_type" size="15" html_quote>
+      <dtml-else>
+        <i>Unknown</i>
+      </dtml-if>
+    </div>
+    </td>
+  </tr>
+</dtml-in>
+</table>
+
+<div class="form-element">
+<input class="form-element" type="submit" value="Remove"
+ name="manage_uncatalogObject:method">
+<input class="form-element" type="submit" value="Update"
+ name="manage_catalogObject:method">
+<script type="text/javascript">
+<!--
+if (document.forms[0]) {
+  document.write('<input class="form-element" type="submit" name="selectButton" value="Select All" onClick="toggleSelect(); return false">')
+  }
+//-->
+</script>
+</div>
+</form>
+</dtml-let>
+<dtml-var manage_page_footer>
