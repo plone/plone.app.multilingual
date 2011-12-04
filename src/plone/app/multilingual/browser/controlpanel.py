@@ -11,11 +11,12 @@ from plone.app.multilingual.interfaces import IMultilinguaSettings
 
 from plone.app.controlpanel.language import LanguageControlPanel as BasePanel
 from plone.app.controlpanel.language import LanguageControlPanelAdapter
+from plone.app.multilingual.browser.setup import SetupMultilingualSite
 
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
-    
+
 from zope.app.form import CustomWidgetFactory
 from zope.app.form.browser import ObjectWidget
 from zope.app.form.browser import ListSequenceWidget
@@ -37,7 +38,7 @@ class IMultiLanguageSelectionSchema(Interface):
         required=True,
         vocabulary="plone.app.multilingual.vocabularies.AllContentLanguageVocabulary")
 
-    available_languages = Tuple(
+    available_languages = List(
         title=_(u"heading_available_languages",
                 default=u"Available languages"),
         description=_(u"description_available_languages",
@@ -66,7 +67,7 @@ class IMultiLanguageOptionsSchema(Interface):
         description=_(u"description_language_of_the_content",
                 default=u"Use the language of the content item."),
         )
-        
+
     use_path_negotiation = Bool(
         title=_(u"heading_language_codes_in_URL",
                 default=u"Use language codes in URL path for manual override."),
@@ -94,28 +95,27 @@ class IMultiLanguageOptionsSchema(Interface):
         description=_(u"description_set_language_cookie_always",
                 default=u"Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."),
         )
-    
+
     use_subdomain_negotiation = Bool(
         title=_(u"heading_use_subdomain",
                 default=u"Use subdomain (e.g.: de.plone.org)."),
         description=_(u"description_use_subdomain",
                 default=u"Use subdomain (e.g.: de.plone.org)."),
         )
-    
+
     use_cctld_negotiation = Bool(
         title=_(u"heading_top_level_domain",
                 default=u"Use top-level domain (e.g.: www.plone.de)."),
         description=_(u"description_top_level_domain",
                 default=u"Use top-level domain (e.g.: www.plone.de)."),
         )
-    
+
     use_request_negotiation = Bool(
         title=_(u"heading_browser_language_request_negotiation",
                 default=u"Use browser language request negotiation."),
         description=_(u"description_browser_language_request_negotiation",
                 default=u"Use browser language request negotiation."),
         )
-
 
 
 class ILangAttrPair(Interface):
@@ -142,7 +142,7 @@ class MultiLanguageOptionsControlPanelAdapter(LanguageControlPanelAdapter):
     def __init__(self, context):
         super(MultiLanguageOptionsControlPanelAdapter, self).__init__(context)
         self.tool = getToolByName(self.context, 'portal_languages')
-    
+
     def get_use_content_negotiation(self):
         return self.tool.use_content_negotiation
 
@@ -201,12 +201,13 @@ class MultiLanguageOptionsControlPanelAdapter(LanguageControlPanelAdapter):
     use_request_negotiation = property(get_use_request_negotiation, set_use_request_negotiation)
 
 
-
 class LangAttrPair:
     implements(ILangAttrPair)
+
     def __init__(self, lang='', url=''):
         self.lang = lang
         self.url = url
+
 
 class MultilinguaRootFolderAdapter(LanguageControlPanelAdapter):
     implementsOnly(IMultilinguaRootFolderForm)
@@ -215,7 +216,6 @@ class MultilinguaRootFolderAdapter(LanguageControlPanelAdapter):
         super(MultilinguaRootFolderAdapter, self).__init__(context)
         registry = getUtility(IRegistry)
         self.root_folder = registry.forInterface(IMultilinguaSettings)
-
 
     def get_url_languages(self):
         l = []
@@ -226,7 +226,7 @@ class MultilinguaRootFolderAdapter(LanguageControlPanelAdapter):
     def set_url_languages(self, value):
         for v in value:
             if v.lang in self.root_folder.default_layout_languages.keys():
-                self.root_folder.default_layout_languages[v.lang]=v.url
+                self.root_folder.default_layout_languages[v.lang] = v.url
 
     default_layout_languages = property(get_url_languages, set_url_languages)
 
@@ -241,20 +241,18 @@ class MultiLanguageControlPanelAdapter(LanguageControlPanelAdapter):
         return [unicode(l) for l in self.context.getSupportedLanguages()]
 
     def set_available_languages(self, value):
-        registry = getUtility(IRegistry)
-        root_folder = registry.forInterface(IMultilinguaSettings)
-        for l in value:
-            if l not in root_folder.default_layout_languages.keys():
-                root_folder.default_layout_languages[l]='front-page-'+l
+        import ipdb;ipdb.set_trace()
+        setupTool = SetupMultilingualSite()
+        setupTool.setupSite(self.context)
         languages = [str(l) for l in value]
         self.context.supported_langs = languages
 
     def set_show_original_on_translation(self, value):
-        prop = getToolByName(self.context,'portal_properties').linguaplone_properties
+        prop = getToolByName(self.context, 'portal_properties').linguaplone_properties
         prop.hide_right_column_on_translate_form = value
 
     def get_show_original_on_translation(self):
-        prop = getToolByName(self.context,'portal_properties').linguaplone_properties
+        prop = getToolByName(self.context, 'portal_properties').linguaplone_properties
         return prop.hide_right_column_on_translate_form
 
     available_languages = property(get_available_languages,
@@ -265,7 +263,7 @@ class MultiLanguageControlPanelAdapter(LanguageControlPanelAdapter):
 
 
 selection = FormFieldsets(IMultiLanguageSelectionSchema)
-selection.label = _(u'Options multilingual')
+selection.label = _(u'Site Languages')
 
 options = FormFieldsets(IMultiLanguageOptionsSchema)
 options.label = _(u'Negotiation Scheme')
@@ -278,6 +276,7 @@ langattr_widget = CustomWidgetFactory(ObjectWidget, LangAttrPair)
 combination_widget = CustomWidgetFactory(ListSequenceWidget,
                                          subwidget=langattr_widget)
 
+
 class LanguageControlPanel(BasePanel):
     """A modified language control panel, allows selecting multiple languages.
     """
@@ -289,6 +288,3 @@ class LanguageControlPanel(BasePanel):
     label = _("Multilingual Settings")
     description = _("All the configuration of P.A.M.")
     form_name = _("Multilingual Settings")
-
-
-

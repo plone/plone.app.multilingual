@@ -4,6 +4,7 @@ from zope.interface import alsoProvides
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 
+
 # Setup view imported from LinguaPlone
 class SetupView(BrowserView):
 
@@ -12,8 +13,7 @@ class SetupView(BrowserView):
 
     def __call__(self, forceOneLanguage=False):
         setupTool = SetupMultilingualSite()
-        return setupTool.setupSite()
-
+        return setupTool.setupSite(self.context, forceOneLanguage)
 
 
 class SetupMultilingualSite(object):
@@ -22,7 +22,7 @@ class SetupMultilingualSite(object):
         self.previosDefaultPageId = None
         self.context = None
 
-    def setupSite(self, context):
+    def setupSite(self, context, forceOneLanguage=False):
         """
         This method is called from the control panel to setup a site in order
         to have root language folders and a redirect view.
