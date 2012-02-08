@@ -6,7 +6,6 @@
     <dependency>profile-plone.app.registry:default</dependency>
     <dependency>profile-plone.formwidget.contenttree:default</dependency>
     <dependency>profile-plone.app.multilingual:default</dependency>
-    <dependency>profile-plone.multilingualbehavior:default</dependency>
-    <dependency>profile-archetypes.multilingual:default</dependency>
+    <dependency>profile-plone.multilingual:default</dependency>
   </dependencies>
 </metadata>

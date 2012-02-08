@@ -1,5 +1,6 @@
 include *.txt
 include *.zcml
+include *.rst
 
 recursive-include src/plone *
 
