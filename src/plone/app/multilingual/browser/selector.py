@@ -1,20 +1,19 @@
-# from zope import component
-# from plone.multilingual.interfaces import ITranslationManager, ITranslatable
-# from zope.security import checkPermission
-# from plone.registry.interfaces import IRegistry
-# from Products.CMFCore.utils import getToolByName
-# from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
-# from plone.app.multilingual.interfaces import IMultilinguaSettings
+from zope.component import getMultiAdapter
+
+from Acquisition import aq_chain
+from Acquisition import aq_inner
+from AccessControl.SecurityManagement import getSecurityManager
+from ZTUtils import make_query
+
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.app.layout.navigation.interfaces import INavigationRoot
 
 from plone.multilingual.interfaces import ITranslationManager
-from zope.component import getMultiAdapter
-from AccessControl.SecurityManagement import getSecurityManager
-from Acquisition import aq_chain
-from Acquisition import aq_inner
+
+from borg.localrole.interfaces import IFactoryTempFolder
+
 from Products.CMFCore.interfaces import ISiteRoot
-from ZTUtils import make_query
+from Products.CMFPlone.interfaces.factory import IFactoryTool
 
 
 class LanguageSelectorViewlet(LanguageSelector):
@@ -52,6 +51,11 @@ class LanguageSelectorViewlet(LanguageSelector):
                 for c in missing:
                     translations[c] = (item, first_pass, has_view_permission)
                 break
+
+            elif IFactoryTempFolder.providedBy(item) or \
+                    IFactoryTool.providedBy(item):
+                # TempFolder or portal_factory, can't have a translation
+                continue
 
             canonical = ITranslationManager(item, None)
 
