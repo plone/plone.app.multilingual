@@ -11,7 +11,7 @@ This module provides the user interface for managing content translations. It's 
 Usage
 =====
 
-For using this package with Dexterity content types you should add to your *eggs* buildout section::
+To use this package with Dexterity content types you should add to your *eggs* buildout section::
 
     eggs =
         plone.app.multilingual [dexterity]

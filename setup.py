@@ -1,12 +1,11 @@
 from setuptools import setup, find_packages
-import sys
 import os
 
 version = '0.1a2'
 
 setup(name='plone.app.multilingual',
       version=version,
-      description="Multilingual plone ui package, it allows to maintain translations on Dexterity types and Archetypes",
+      description="Multilingual Plone UI package, enables maintenance of translations for both Dexterity types and Archetypes",
       long_description=open("README.rst").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       classifiers=[
