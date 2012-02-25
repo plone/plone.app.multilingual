@@ -39,4 +39,4 @@ class TranslationForm(form.SchemaForm):
             translation_manager.add_translation(language)
             translated = translation_manager.get_translation(language)
             return self.request.response.redirect(translated.absolute_url() \
-                + '/edit')
+                + '/edit?set_language=%s' % language)
