@@ -31,7 +31,6 @@ setup(name='plone.app.multilingual',
         'plone.directives.form',
         'plone.formwidget.contenttree',
         'Products.PloneLanguageTool',
-        'archetypes.multilingual', # required while archteypes is default in Plone
       ],
       extras_require={
           'dexterity': ['plone.multilingualbehavior'],

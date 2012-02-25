@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <object name="uid_catalog">
-  <index name="Language" meta_type="FieldIndex">
-    <indexed_attr value="Language"/>
+  <index name="language" meta_type="FieldIndex">
+    <indexed_attr value="language"/>
   </index>
 </object>

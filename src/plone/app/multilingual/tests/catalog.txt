@@ -6,6 +6,7 @@ the catalog-patch
     >>> from plone.multilingual.interfaces import ILanguage
     >>> from zope.lifecycleevent import ObjectAddedEvent
     >>> from zope.event import notify
+    >>> from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
 
 samplecontent::
 
@@ -28,14 +29,22 @@ samplecontent::
 query with all::
 
     >>> kw = {'language': 'all'}
-    >>> [x.language for x in catalog.searchResults(request,**kw)]
-    ['no_language', 'it', 'en']
+    >>> used_langs = [x.language for x in catalog.searchResults(request,**kw)]
+    >>> LANGUAGE_INDEPENDENT in used_langs
+    True
+    >>> 'it' in used_langs
+    True
+    >>> 'en' in used_langs
+    True
 
 query for language-independent content::
 
-    >>> kw = {'language': ''}
-    >>> [x.language for x in catalog.searchResults(request,**kw)]
-    ['no_language']
+    >>> kw = {'language': LANGUAGE_INDEPENDENT}
+    >>> lang_independent = [x.language for x in catalog.searchResults(request,**kw)]
+    >>> LANGUAGE_INDEPENDENT in lang_independent
+    True
+    >>> len(lang_independent) == 1
+    True
 
 query for a language::
 
@@ -45,7 +54,10 @@ query for a language::
 
 query without language set (result should contain default_language and independent content)::
     
-    >>> [x.language for x in catalog.searchResults(request)]
-    ['no_language', 'en']
+    >>> used_langs = [x.language for x in catalog.searchResults(request)]
+    >>> LANGUAGE_INDEPENDENT in used_langs
+    True
+    >>> 'en' in used_langs
+    True
 
 

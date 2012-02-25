@@ -17,9 +17,10 @@ class AddTranslationsForm(form.SchemaForm):
     grok.require("plone.app.multilingual.ManageTranslations")
     schema = form.IFormFieldProvider(IAddTranslation)
     ignoreContext = True
-    label = _(u"label_add_translations")
+    label = _(u"label_add_translations", default=u"Add translations")
 
-    @button.buttonAndHandler(_(u"add translations"))
+    @button.buttonAndHandler(_(u"add_translations",
+                               default=u"Add translations"))
     def handle_add(self, action):
         data, errors = self.extractData()
         if not errors:

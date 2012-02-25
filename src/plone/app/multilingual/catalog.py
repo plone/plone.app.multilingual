@@ -2,13 +2,13 @@ from zope.app.component.hooks import getSite
 from Products.CMFPlone.CatalogTool import CatalogTool
 from Products.CMFCore.utils import getToolByName
 from plone.multilingual.interfaces import ILanguage, ITranslatable
-# from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
+from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.indexer import indexer
 
 from App.special_dtml import DTMLFile
 
 
-NO_FILTER = ['Language', 'UID', 'id', 'getId']
+NO_FILTER = ['language', 'UID', 'id', 'getId']
 _enabled = []
 
 @indexer(ITranslatable)
@@ -22,13 +22,13 @@ def language_filter(query):
     languageTool = getToolByName(site, 'portal_languages', None)
     if languageTool is None:
         return
-    if query.get('Language') == 'all':
-        del query['Language']
+    if query.get('language') == 'all':
+        del query['language']
         return
     for key in NO_FILTER:    # any "nofilter" indexing prevent mangling
         if key in query:
             return
-    query['Language'] = [languageTool.getPreferredLanguage(), '']
+    query['language'] = [languageTool.getPreferredLanguage(), LANGUAGE_INDEPENDENT]
     # site = getSite()
     # add_language = True
     # language_tool = getToolByName(site, 'portal_languages', None)
@@ -65,7 +65,7 @@ def I18nAwareCatalog():
         return
 
     def searchResults(self, REQUEST=None, **kw):
-        if REQUEST is not None and kw.get('Language', '') != 'all':
+        if REQUEST is not None and kw.get('language', '') != 'all':
             language_filter(REQUEST)
         else:
             language_filter(kw)
@@ -77,4 +77,4 @@ def I18nAwareCatalog():
     CatalogTool.manage_catalogView = DTMLFile('www/catalogView', globals())
 
 
-#I18nAwareCatalog()
+I18nAwareCatalog()

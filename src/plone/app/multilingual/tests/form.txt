@@ -90,10 +90,10 @@ let's reregister the translation::
     >>> form.mech_form.new_control(
     ...     type='radio',
     ...     name='form.widgets.content:list',
-    ...     attrs=dict(checked='checked', value='/%s' %content_id_de, id='form-widgets-content-0'))
+    ...     attrs=dict(checked='checked', value='%s' %'/'.join(content_de.getPhysicalPath()), id='form-widgets-content-0'))
 
     >>> browser.getControl(name="form.widgets.language:list").value = ['de']
-    >>> browser.getControl('add translations').click()
+    >>> browser.getControl(name='form.buttons.add_translations').click()
 
     >>> browser.getControl(name="form.widgets.language:list").options
     ['it']
