@@ -38,7 +38,7 @@ create some content::
 
 now we translate this content::
 
-    >>> browser.open(portal[content_id].absolute_url() + '/translate')
+    >>> browser.open(portal[content_id].absolute_url() + '/@@create_translation')
     >>> browser.getControl(name="form.widgets.language:list").value = ['de']
     >>> browser.getControl(name="form.buttons.create").click()
     >>> browser.getControl(name="title").value = "sample title de"

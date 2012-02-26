@@ -28,7 +28,7 @@ translating content (AT)::
 	>>> notify(ObjectAddedEvent(content))
     >>> import transaction
     >>> transaction.commit()
-	>>> browser.open(content.absolute_url() + '/@@translate')
+	>>> browser.open(content.absolute_url() + '/@@create_translation')
 	>>> browser.getControl(name="form.widgets.language:list").value = ['de']
 	>>> browser.getControl(name="form.buttons.create").click()
 
@@ -46,7 +46,7 @@ translating content (dexterity)::
     >>> content_id_dexterity = portal.invokeFactory(type_name="samplecontent", id="dextdocument")
     >>> content_dexterity = portal[content_id_dexterity]
     >>> transaction.commit()
-    >>> browser.open(content_dexterity.absolute_url() + '/@@translate')
+    >>> browser.open(content_dexterity.absolute_url() + '/@@create_translation')
     >>> browser.getControl(name="form.widgets.language:list").value = ['de']
     >>> browser.getControl(name="form.buttons.create").click()
 
@@ -55,7 +55,7 @@ translation-menu
 ::
 
     >>> browser.open(content.absolute_url())
-    >>> 'plone-contentmenu-translate' in browser.contents
+    >>> 'plone-contentmenu-multilingual' in browser.contents
     True
     >>> 'translate_into_it' in browser.contents
     True
@@ -120,7 +120,7 @@ translating folderish content::
     >>> folder_id = portal.invokeFactory(type_name="Folder", id="samplefolder")
     >>> notify(ObjectAddedEvent(portal.samplefolder))
     >>> transaction.commit()
-    >>> browser.open(portal_url + '/samplefolder/@@translate')
+    >>> browser.open(portal_url + '/samplefolder/@@create_translation')
     >>> browser.getControl(name="form.widgets.language:list").value = ['de']
     >>> browser.getControl(name="form.buttons.create").click()
     >>> browser.getControl(name="title").value = "sample folder title de"
@@ -132,7 +132,7 @@ translating content in folders::
     >>> content_id = folder.invokeFactory(type_name="Document", id="sampledocument_in_folder")
     >>> notify(ObjectAddedEvent(folder[content_id]))
     >>> transaction.commit()
-    >>> browser.open(folder.absolute_url() + '/' + content_id + '/@@translate')
+    >>> browser.open(folder.absolute_url() + '/' + content_id + '/@@create_translation')
     >>> browser.getControl(name="form.widgets.language:list").value = ['de']
     >>> browser.getControl(name="form.buttons.create").click()
     >>> '%s-de' % folder_id in browser.url
