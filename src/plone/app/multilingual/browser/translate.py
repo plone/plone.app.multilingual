@@ -17,7 +17,7 @@ from plone.app.multilingual import _
 class TranslationForm(form.SchemaForm):
     """ Translation Form """
 
-    grok.name('translate')
+    grok.name('create_translation')
     grok.context(ITranslatable)
     grok.require('plone.app.multilingual.ManageTranslations')
     schema = ICreateTranslation

@@ -34,7 +34,7 @@ class TranslateMenu(BrowserMenu):
                 "description": _(u"description_translate_into",
                                     default=u"Translate into ${lang_name}",
                                     mapping={"lang_name": lang_name}),
-                "action": url + "/@@translate?form.widgets.language"\
+                "action": url + "/@@create_translation?form.widgets.language"\
                             "=%s&form.buttons.create=1" % lang_id,
                 "selected": False,
                 "icon": icon,
@@ -105,7 +105,7 @@ class TranslateSubMenuItem(BrowserSubMenuItem):
                     default="Manage translations for your content.")
     submenuId = "plone_contentmenu_multilingual" 
     order = 5
-    extra = {"id": "plone-contentmenu-translate"}
+    extra = {"id": "plone-contentmenu-multilingual"}
 
     @property
     def action(self):
