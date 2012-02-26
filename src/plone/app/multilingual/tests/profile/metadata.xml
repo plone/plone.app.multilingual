@@ -2,6 +2,8 @@
 <metadata>
     <version>0.1 alpha</version>
     <dependencies>
+        <dependency>profile-archetypes.multilingual:default</dependency>
+        <dependency>profile-plone.multilingualbehavior:default</dependency>
         <dependency>profile-plone.app.multilingual:default</dependency>
     </dependencies>
 </metadata>
