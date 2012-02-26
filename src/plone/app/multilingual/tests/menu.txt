@@ -30,7 +30,7 @@ samplecontent::
 
 menu:: 
 
-    >>> menu = component.getUtility(IBrowserMenu, name="plone_contentmenu_translate", context=content)
+    >>> menu = component.getUtility(IBrowserMenu, name="plone_contentmenu_multilingual", context=content)
 
 We should see our menu::
 
