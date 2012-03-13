@@ -161,9 +161,15 @@ class LanguageSelectorViewlet(LanguageSelector):
                 state = getMultiAdapter((trans, self.request),
                         name='plone_context_state')
                 if direct:
-                    data['url'] = state.canonical_object_url() + appendtourl
+                    try:
+                        data['url'] = state.canonical_object_url() + appendtourl
+                    except AttributeError:
+                        data['url'] = context.absolute_url() + appendtourl
                 else:
-                    data['url'] = state.canonical_object_url() + set_language
+                    try:
+                        data['url'] = state.canonical_object_url() + set_language
+                    except AttributeError:
+                        data['url'] = context.absolute_url() + set_language
             else:
                 has_view_permission = bool(_checkPermission('View', context))
                 # Ideally, we should also check the View permission of default
