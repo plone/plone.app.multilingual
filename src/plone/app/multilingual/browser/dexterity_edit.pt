@@ -1,0 +1,27 @@
+
+
+<div class='row' id='babel-edit'>
+    <div class='cell width-8 position-0'>
+        <div id="trans-selector"
+             tal:define="languages view/languages;">
+            <h1>ORIGINAL</h1>
+            <select id="lang-select">
+                <tal:block repeat="lang view/languages">
+                    <option value="" tal:attributes="value lang/url" tal:content="lang/name">
+                        Language
+                    </option>
+                </tal:block>
+            </select>
+        </div>
+        <div id="frame-content">
+            The content should be there
+        </div>
+    </div>
+    <div class='cell width-8 position-8'>
+    <div id="header-translation">
+        <h1>TRANSLATION TO <span tal:replace="context/language"></span></h1>
+    </div>
+    <tal:block content="structure view/babel_content">Contingut</tal:block>
+    </div>
+</div>
+     

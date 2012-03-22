@@ -1,0 +1,216 @@
+<tal:block metal:define-macro="master"
+           xmlns:tal="http://xml.zope.org/namespaces/tal"
+           xmlns:metal="http://xml.zope.org/namespaces/metal"
+           xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+           define="dummy python:view.isTemporaryObject() and request.set('disable_border', True);
+                   lifecycle context/@@at_lifecycle_view;
+                   lock_info context/@@plone_lock_info;
+                   dummy lifecycle/begin_edit;
+                   errors options/state/getErrors | nothing;
+                   schematas context/Schemata;
+                   allow_tabbing python: not view.isMultiPageSchema();
+                   fieldsets python:[key for key in schematas.keys() if (schematas[key].editableFields(context, visible_only=True))];
+                   default_fieldset python:(not schematas or schematas.has_key('default')) and 'default' or fieldsets[0];
+                   fieldset request/fieldset|options/fieldset|default_fieldset;
+                   fields python:[f for key in fieldsets for f in schematas[key].editableFields(context)];
+                   dummy python:context.at_isEditable(fields);
+                   portal_type python:context.getPortalTypeName().lower().replace(' ', '_');
+                   type_name context/getPortalTypeName|context/archetype_name;
+                   base_macros here/edit_macros/macros;
+                   edit_template python:'%s_edit' % portal_type;
+                   edit_macros python:path('here/%s/macros | nothing' % edit_template);
+                   header_macro edit_macros/header | header_macro | base_macros/header;
+                   typedescription_macro edit_macros/typedescription | typedescription_macro | base_macros/typedescription;
+                   body_macro edit_macros/body | body_macro | base_macros/body;
+                   footer_macro edit_macros/footer | footer_macro | base_macros/footer;
+                   isLocked isLocked | lock_info/is_locked_for_current_user;
+                   css python:context.getUniqueWidgetAttr(fields, 'helper_css');
+                   js python:context.getUniqueWidgetAttr(fields, 'helper_js');
+                   objToTranslate view/objToTranslate;
+                   other view/objToTranslate;
+                   dummy python: request.set('controller_state',  {'kwargs':{}});
+                   editTemplateId string:base_edit;
+        ">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+
+      <metal:block fill-slot="column_one_slot" />
+      <metal:block fill-slot="column_two_slot" />
+
+  <metal:head fill-slot="top_slot">
+    <tal:block define="macro edit_macros/topslot | nothing"
+                    condition="macro">
+      <metal:block use-macro="macro" />
+    </tal:block>
+  </metal:head>
+
+  <metal:javascript_head fill-slot="javascript_head_slot">
+    <tal:block define="macro context/archetypes_custom_js/macros/javascript_head | nothing"
+               condition="macro">
+      <metal:block use-macro="macro" />
+    </tal:block>
+    <tal:js condition="js"
+            repeat="item js">
+      <script type="text/javascript"
+              charset="iso-8859-1"
+              tal:condition="python:exists('portal/%s' % item)"
+              tal:attributes="src string:$portal_url/$item">
+      </script>
+    </tal:js>
+    <tal:block define="macro edit_macros/javascript_head | nothing"
+                    condition="macro">
+      <metal:block use-macro="macro" />
+    </tal:block>
+  </metal:javascript_head>
+
+  <metal:css fill-slot="css_slot">
+    <tal:css condition="css"
+             repeat="item css">
+      <style type="text/css"
+             media="all"
+             tal:condition="python:exists('portal/%s' % item)"
+             tal:content="structure string:&lt;!-- @import url($portal_url/$item); --&gt;">
+      </style>
+    </tal:css>
+    <tal:block define="macro edit_macros/css | nothing"
+                    condition="macro">
+      <metal:block use-macro="macro" />
+    </tal:block>
+  </metal:css>
+    
+    <body>
+
+      <metal:fill fill-slot="main">
+        <metal:main define-macro="main"
+            tal:define="lang_name nocall:context/portal_languages/getNameForLanguageCode">
+          <metal:use_header use-macro="header_macro" />
+          <metal:use_typedescription use-macro="typedescription_macro" />
+
+    <div class="objToTranslateBlock" style="width: 50%; float:left; padding-right:10px;">
+        <fieldset>
+            <legend>Content to translate from</legend>
+         <div class="dropdownLanguageContentToTranslate">
+             <p class="documentDescription"
+                i18n:translate="description_translating_from_to"
+                tal:define="langs view/getTranslatedLanguages">
+                 Translating from
+                 <span i18n:name="from">
+                     <select id="selec" name="lp_translating_from"
+                             tal:define="lp_translating_from request/lp_translating_from | python:'ca'">
+                         <option selected="selected"
+                                 tal:define="code python:'ca'"
+                                 tal:content="python:lang_name(code)"
+                                 tal:attributes="selected python:lp_translating_from == code;
+                                                 value code">Language</option>
+                         <option tal:repeat="lang langs"
+                                 tal:content="python:lang_name(lang)"
+                                 tal:attributes="selected python:lp_translating_from == lang;
+                                                 value python:lang">Language</option>
+                     </select>
+                 </span>
+             </p>
+         </div>
+
+
+
+          <div id="contentToTranslate">
+              <div tal:replace="structure objToTranslate/babel_view" /> 
+          </div>
+        </fieldset>
+   </div>
+ 
+   <script type="text/javascript" src="/++resource++loadContentToTranslateFrom.js">   
+   </script>
+
+   <div class="targetLanguage">   
+   <metal:use_body use-macro="body_macro">
+    <metal:block metal:fill-slot="widgets">
+
+      <tal:tabbed tal:condition="allow_tabbing | nothing">
+       <fieldset tal:repeat="fieldset fieldsets"
+                 tal:attributes="id string:fieldset-${fieldset}">
+       <legend id=""
+               tal:content="python: view.getTranslatedSchemaLabel(fieldset)"
+               tal:attributes="id string:fieldsetlegend-${fieldset}" />
+        <table>
+        <tr tal:repeat="field python:schematas[fieldset].editableFields(here, visible_only=True)">
+                <tal:block define="fieldname field/getName;
+                                   errors python: errors and errors or {}">
+                    <td class="canonicalLanguage" style="width: 50%"
+                         tal:define="otherfield python:other.Schemata()[fieldset][fieldname];
+                                     otherwidget python:otherfield.widget;
+                                     textformat python:otherfield.getContentType(other);
+                                     textareafields python:('TextField','LinesField');
+                                     renderableMimeTypes view/mimetypesToRenderInTranslationForm;
+                                     renderablefield python:textformat in renderableMimeTypes">
+                            <!-- This is the canonical content -->
+
+                        <div tal:define="target_language other/Language">
+                            <label tal:content="python:otherwidget.Label(here, target_language=target_language)">
+                                Field
+                            </label>
+                            <div class="discreet"
+                                 tal:content="python:otherwidget.Description(here, target_language=target_language)">
+                                Description
+                            </div>
+                        </div>
+
+                        <div>
+                            <div tal:condition="renderablefield"
+                                 style="height:35em; overflow:scroll"
+                                 content="structure python:otherfield.getAccessor(other)()">
+                                <metal:fieldMacro use-macro="python:other.widget(otherfield.getName(), mode='view')"/>
+                                <!-- if a renderable field, use the accessor and have scrollbars-->
+                            </div>
+
+                            <div tal:condition="not: renderablefield">
+                                <metal:fieldMacro use-macro="python:other.widget(otherfield.getName(), mode='view')"/>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="targetLanguage" style="width: 50%"
+                        tal:define="read_only python:field.isLanguageIndependent(context)">
+                        <tal:block condition="python:not read_only">
+                          <metal:fieldMacro use-macro="python:here.widget(fieldname, mode='edit')" />
+                        </tal:block>
+                        <tal:block condition="python:read_only">
+                          <metal:fieldMacro use-macro="python:here.widget(fieldname)" />
+                        </tal:block>
+                        
+                    </td>
+                </tal:block>
+      </tr>
+      </table>
+     </fieldset>
+    </tal:tabbed>
+
+    
+    <tal:nottabbed tal:condition="not: allow_tabbing | nothing">
+        <tal:fields repeat="field python:schematas[fieldset].editableFields(here, visible_only=True)">
+          <metal:fieldMacro use-macro="python:here.widget(field.getName(), mode='edit')" />
+        </tal:fields>
+    </tal:nottabbed>
+    
+        
+    
+     </metal:block>
+    </metal:use_body>
+    </div>
+
+     
+      <metal:use_footer use-macro="footer_macro" />
+    </metal:main>
+  </metal:fill>
+
+</body>
+
+</html>
+
+</tal:block>

@@ -1,0 +1,51 @@
+#babel-edit #trans-selector {
+    margin-top: 3px;
+    min-height: 26px;
+}
+
+#babel-edit #frame-content {
+    line-height: 1.5em;
+    margin: 1em 0;
+    padding: 0 1em 1em;
+    width: auto;
+}
+
+#babel-edit #lang-select {
+    float: right;
+    margin-right: 20px;
+}
+
+#babel-edit label {
+    font-size: 1.3em;
+    color: #999999;
+    font-weight: 300;
+    text-transform:capitalize;
+}
+
+#babel-edit #fieldset-default .field, #babel-edit #frame-content .field  {
+    background-color: #f1f1f1;
+    padding: 20px;
+}
+
+#babel-edit #fieldset-default .selected, #babel-edit #frame-content .selected{
+    background-color: #205c90;
+    color: #ccc;
+}
+
+#babel-edit #fieldset-default .selected .formHelp {
+    color: white;   
+}
+
+#babel-edit .richtext-field {
+    background-color: white;
+    color: black;
+}
+
+#babel-edit .languageindependent {
+    opacity: 0.5;
+}
+
+.overml {
+    position: relative;
+    float: right;
+}

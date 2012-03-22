@@ -58,4 +58,51 @@
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
 
+
+  <!-- Javascript -->
+
+
+  <browser:resourceDirectory
+      name="plone.app.multilingual.javascript"
+      directory="javascript"
+      layer="..interfaces.IPloneAppMultilingualInstalled"
+      />
+
+  <browser:resourceDirectory
+      name="plone.app.multilingual.stylesheet"
+      directory="stylesheet"
+      layer="..interfaces.IPloneAppMultilingualInstalled"
+      />
+
+  <!-- Edit form -->
+
+  <browser:page
+    for="plone.dexterity.interfaces.IDexterityContent"
+    name="babel_edit"
+    class=".edit.DefaultMultilingualEditView"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
+    for="Products.Archetypes.atapi.BaseObject"
+    name="babel_edit"
+    class=".babel_view.BabelEdit"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
+    for="plone.dexterity.interfaces.IDexterityItem"
+    name="babel_view"
+    class="plone.dexterity.browser.view.DefaultView"
+    template="item.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    for="Products.Archetypes.atapi.BaseObject"
+    name="babel_view"
+    class=".babel_view.BabelView"
+    permission="cmf.ModifyPortalContent"
+    />    
+
 </configure>

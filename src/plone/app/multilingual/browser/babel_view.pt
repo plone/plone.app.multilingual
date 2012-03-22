@@ -4,7 +4,9 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      tal:define="objToTranslate view/objToTranslate"
+      tal:define="objToTranslate view/objToTranslate;
+                  portal_url view/getPortal;
+                  portal portal_url/getPortalObject;"
       i18n:domain="plone">
 
   <head><title></title></head>
@@ -22,8 +24,8 @@
       for the entire document. base_view uses main_template and thus must
       create additional defines for each slot it fills.
     </tal:comment>
-    <tal:js define="fields python:objToTranslate.Schema().viewableFields(objToTranslate);
-                    js python:objToTranslate.getUniqueWidgetAttr(fields, 'helper_js')"
+    <tal:js define="fields python:context.Schema().viewableFields(context);
+                    js python:context.getUniqueWidgetAttr(fields, 'helper_js')"
             condition="js"
             repeat="item js">
       <script type="text/javascript"
@@ -32,7 +34,7 @@
               tal:attributes="src string:$portal_url/$item">
       </script>
     </tal:js>
-    <tal:block define="portal_type python:objToTranslate.getPortalTypeName().lower().replace(' ', '_');
+    <tal:block define="portal_type python:context.getPortalTypeName().lower().replace(' ', '_');
                        view_template python:'%s_view' % portal_type;
                        view_macros python:path('objToTranslate/%s/macros|nothing' % view_template);
                        macro view_macros/js | nothing"
@@ -48,8 +50,8 @@
       for the entire document. base_view uses main_template and thus must
       create additional defines for each slot it fills.
     </tal:comment>
-    <tal:css define="fields python:objToTranslate.Schema().viewableFields(objToTranslate);
-                     css python:objToTranslate.getUniqueWidgetAttr(fields, 'helper_css')"
+    <tal:css define="fields python:context.Schema().viewableFields(context);
+                     css python:context.getUniqueWidgetAttr(fields, 'helper_css')"
              condition="css"
              repeat="item css">
       <style type="text/css"
@@ -60,8 +62,8 @@
     </tal:css>
  
   <body>
-      <tal:fields tal:define="field_macro field_macro | objToTranslate/widgets/field/macros/view"
-                  tal:repeat="field python:objToTranslate.Schema().filterFields(isMetadata=0)">
+      <tal:fields tal:define="field_macro field_macro | context/widgets/field/macros/view"
+                  tal:repeat="field python:context.Schema().filterFields(isMetadata=0)">
 
         <tal:if_visible define="mode string:view;
                                 visState python:field.widget.isVisible(here, mode);
@@ -74,7 +76,7 @@
 
                             <tal:base_view_macro
 
-                                tal:define="widget_view python:objToTranslate.widget(field.getName(), mode=mode, use_label=1);
+                                tal:define="widget_view python:context.widget(field.getName(), mode=mode, use_label=1);
                                             field_macros here/widgets/field/macros;
                                             label_macro view_macros/label | label_macro | field_macros/label;
                                             data_macro view_macros/data | data_macro | field_macros/data;
