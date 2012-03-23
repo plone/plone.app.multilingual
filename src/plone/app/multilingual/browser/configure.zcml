@@ -11,7 +11,7 @@
         class=".menu.TranslateMenu"
         />
 
-   <adapter for="plone.multilingual.interfaces.ITranslatable 
+   <adapter for="plone.multilingual.interfaces.ITranslatable
                  ..interfaces.IPloneAppMultilingualInstalled"
         name="plone.contentmenu.multilingual"
         factory=".menu.TranslateSubMenuItem"
@@ -103,6 +103,13 @@
     name="babel_view"
     class=".babel_view.BabelView"
     permission="cmf.ModifyPortalContent"
-    />    
+    />
+
+  <browser:page
+    for="Products.Archetypes.atapi.BaseObject"
+    name="babel_utils"
+    class=".babel_view.BabelUtils"
+    permission="zope2.View"
+    />
 
 </configure>

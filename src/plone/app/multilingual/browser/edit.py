@@ -12,6 +12,7 @@ from plone.app.i18n.locales.browser.selector import LanguageSelector
 
 from plone.multilingualbehavior.interfaces import ILanguageIndependentField
 
+
 class MultilingualEditForm(DefaultEditForm):
 
     babel = ViewPageTemplateFile("dexterity_edit.pt")
@@ -30,7 +31,7 @@ class MultilingualEditForm(DefaultEditForm):
         translations = lsv._translations(missing)
 
         # We want to see the babel_view
-        append_path = ('','babel_view',)
+        append_path = ('', 'babel_view',)
         _checkPermission = getSecurityManager().checkPermission
 
         non_viewable = set()
@@ -89,8 +90,7 @@ class MultilingualEditForm(DefaultEditForm):
             if field in self.schema:
                 if ILanguageIndependentField.providedBy(self.schema[field]):
                     self.widgets[field].addClass('languageindependent')
-        self.babel_content = super(MultilingualEditForm,self).render()
+        self.babel_content = super(MultilingualEditForm, self).render()
         return self.babel()
-
 
 DefaultMultilingualEditView = layout.wrap_form(MultilingualEditForm)
