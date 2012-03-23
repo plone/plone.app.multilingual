@@ -1,0 +1,215 @@
+# Jonathan Lewis <jonathan_lewis@mac.com, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.2b3\n"
+"POT-Creation-Date: 2012-03-23 15:41+0000\n"
+"PO-Revision-Date: 2012-03-23 16:45 +0000\n"
+"Last-Translator: jonathan_lewis@mac.com>\n"
+"Language-Team: plone-cat <plone-cat@plone.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: ja\n"
+"Language-Name: Japanese\n"
+"Preferred-Encodings: utf-8\n"
+"Domain: plone.app.multilingual\n"
+
+#: ./browser/controlpanel.py:221
+msgid "All the configuration of P.A.M"
+msgstr "P.A.M.の全設定"
+
+#: ./browser/translate.py:26
+msgid "Create"
+msgstr "作成"
+
+#: ./browser/controlpanel.py:220
+msgid "Multilingual Settings"
+msgstr "多言語設定"
+
+#: ./browser/controlpanel.py:211
+msgid "Negotiation Scheme"
+msgstr "言語ネゴシエーション設定
+
+#: ./browser/controlpanel.py:208
+msgid "Site Languages"
+msgstr "サイトで利用される言語"
+
+#. Default: "Add translations"
+#: ./browser/add_translation_form.py:22
+msgid "add_translations"
+msgstr "翻訳を追加"
+
+#: ./browser/interfaces.py:45
+msgid "content"
+msgstr "コンテンツ"
+
+#: ./browser/menu.py:52
+msgid "description_add_translations"
+msgstr "翻訳を追加する"
+
+#. Default: "Authenticated users only. Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
+#: ./browser/controlpanel.py:79
+msgid "description_auth_ookie_manual_override"
+msgstr "Sobre-escriure la cookie manualment"
+
+#. Default: "The languages in which the site should be translatable."
+#: ./browser/controlpanel.py:35
+msgid "description_available_languages"
+msgstr "このサイトで利用できる言語"
+
+#. Default: "Use browser language request negotiation."
+#: ./browser/controlpanel.py:107
+msgid "description_browser_language_request_negotiation"
+msgstr "ブラウザーの言語リクエストネゴシエーションを利用する"
+
+#. Default: "Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
+#: ./browser/controlpanel.py:72
+msgid "description_cookie_manual_override"
+msgstr ""
+
+#. Default: "Use language codes in URL path for manual override."
+#: ./browser/controlpanel.py:65
+msgid "description_language_codes_in_URL"
+msgstr "URLパスにある言語コードを手動優先用に利用する"
+
+#. Default: "Use the language of the content item."
+#: ./browser/controlpanel.py:58
+msgid "description_language_of_the_content"
+msgstr "コンテンツアイテムの言語を利用する"
+
+#: ./browser/menu.py:86
+msgid "description_language_settings"
+msgstr ""
+
+#. Default: "Delete translations or remove the relations"
+#: ./browser/menu.py:66
+msgid "description_remove_translations"
+msgstr "翻訳を削除・リレーションを取り除く"
+
+#. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
+#: ./browser/controlpanel.py:86
+msgid "description_set_language_cookie_always"
+msgstr "言語クッキーを常に設定する（set_languageリクエストパラメータがない場合にも）"
+
+#. Default: "The default language used for the content and the UI of this site."
+#: ./browser/controlpanel.py:26
+msgid "description_site_language"
+msgstr "サイトのコンテンツ及びインタフェイースのデフォルト言語"
+
+#. Default: "Use top-level domain (e.g.: www.plone.de)."
+#: ./browser/controlpanel.py:100
+msgid "description_top_level_domain"
+msgstr "トップレベルドメイン（例えば、www.plone.jp）を利用する"
+
+#. Default: "Translate into ${lang_name}"
+#: ./browser/menu.py:34
+msgid "description_translate_into"
+msgstr "${lang_name}に翻訳"
+
+#. Default: "Use subdomain (e.g.: de.plone.org)."
+#: ./browser/controlpanel.py:93
+msgid "description_use_subdomain"
+msgstr "サブドメイン（例えば、de.plone.org）を利用する"
+
+#. Default: "Authenticated users only."
+#: ./browser/controlpanel.py:77
+msgid "heading_auth_cookie_manual_override"
+msgstr "認証されているユーザのみ"
+
+#. Default: "Available languages"
+#: ./browser/controlpanel.py:33
+msgid "heading_available_languages"
+msgstr "利用できる言語"
+
+#. Default: "Use browser language request negotiation."
+#: ./browser/controlpanel.py:105
+msgid "heading_browser_language_request_negotiation"
+msgstr "ブラウザーの言語リクエストネゴシエーションを利用する"
+
+#. Default: "Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
+#: ./browser/controlpanel.py:70
+msgid "heading_cookie_manual_override"
+msgstr "クッキーでを手動優先に利用する。（言語選択ビューレッとの表示に必要。）"
+
+#. Default: "Use language codes in URL path for manual override."
+#: ./browser/controlpanel.py:63
+msgid "heading_language_codes_in_URL"
+msgstr "URLパスにある言語コードを手動優先用に利用する"
+
+#. Default: "Use the language of the content item."
+#: ./browser/controlpanel.py:56
+msgid "heading_language_of_the_content"
+msgstr "コンテンツアイテムの言語を利用する"
+
+#. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
+#: ./browser/controlpanel.py:84
+msgid "heading_set_language_cookie_always"
+"言語クッキーを常に設定する（set_languageリクエストパラメータがない場合にも）"
+
+#. Default: "Default site language"
+#: ./browser/controlpanel.py:24
+msgid "heading_site_language"
+msgstr "サイトのデフォルト言語"
+
+#. Default: "Use top-level domain (e.g.: www.plone.de)."
+#: ./browser/controlpanel.py:98
+msgid "heading_top_level_domain"
+msgstr "トップレベルドメイン（例えば、www.plone.jp）を利用する"
+
+#. Default: "Use subdomain (e.g.: de.plone.org)."
+#: ./browser/controlpanel.py:91
+msgid "heading_use_subdomain"
+msgstr "サブドメイン（例えば、de.plone.org）を利用する"
+
+#. Default: "Add translations"
+#: ./browser/add_translation_form.py:20
+msgid "label_add_translations"
+msgstr "翻訳を追加"
+
+#: ./browser/remove_translation_form.py:20
+msgid "label_remove_translations"
+msgstr "翻訳を取り除く"
+
+#. Default: "Translate into..."
+#: ./browser/menu.py:103
+msgid "label_translate_menu"
+msgstr "翻訳する"
+
+#: ./browser/remove_translation_form.py:32
+msgid "remove selected"
+msgstr "選択したアイテムを取り除く"
+
+#. Default: "Add translations..."
+#: ./browser/menu.py:50
+msgid "title_add_translations"
+msgstr "翻訳を追加..."
+
+#. Default: "Language"
+#: ./browser/interfaces.py:32
+msgid "title_language"
+msgstr "言語"
+
+#. Default: "Language settings..."
+#: ./browser/menu.py:84
+msgid "title_language_settings"
+msgstr "言語設定"
+
+#: ./browser/interfaces.py:54
+msgid "title_languages"
+msgstr "言語"
+
+#. Default: "Remove translations..."
+#: ./browser/menu.py:64
+msgid "title_remove_translations"
+msgstr "翻訳を取り除く"
+
+#. Default: "Manage translations for your content."
+#: ./browser/menu.py:104
+msgid "title_translate_menu"
+msgstr "コンテンツの翻訳を管理"
+
+#: ./browser/remove_translation_form.py:22
+msgid "unlink selected"
+msgstr "選択したアイテムのリンクを取り除く"
+
