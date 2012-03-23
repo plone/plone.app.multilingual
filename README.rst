@@ -34,7 +34,7 @@ Whichever of the above changes you make to your *eggs* section, you also need to
     	plone.app.multilingual
 
 
-After re-running your buildout, go to the languages section of your Site Setup and select two or more languages for your site. You will now be able to create translations of Plone's default content types, or to link existing content as translations.
+After re-running your buildout and installing the newly available add-ons, go to the languages section of your Site Setup and select two or more languages for your site. You will now be able to create translations of Plone's default content types, or to link existing content as translations.
 
 plone.app.multilingual will create folders for each of your site's languages and put translated content into the appropriate folders.
 
