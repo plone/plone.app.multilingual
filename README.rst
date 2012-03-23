@@ -11,17 +11,34 @@ This module provides the user interface for managing content translations. It's 
 Usage
 =====
 
-To use this package with Dexterity content types you should add to your *eggs* buildout section::
+To use this package with both Dexterity and Archetypes based content types you should add the following two lines to your *eggs* buildout section:
 
-    eggs =
-        plone.app.multilingual [dexterity]
+	eggs =
+		plone.app.multilingual [archetypes]
+		plone.app.multilingual [dexterity]
 
-If you want to use it with Archetypes based content types::
+Alternatively, you can write it like this:
 
-    eggs =
-        plone.app.multilingual [archetypes]
+	eggs =
+    	plone.app.multilingual
+    	plone.multilingualbehavior
 
-[...] (WIP)
+(plone.multilingualbehavior adds multilingual functionality for Dexterity content types)
+
+If you need to use this package only with Archetypes based content types you only need the following line:
+	eggs =
+		plone.app.multilingual [archetypes]
+
+Whichever of the above changes you make to your *eggs* section, you also need to add the following to your *zcml* buildout section:
+	zcml =
+    	plone.app.multilingual
+
+
+After re-running your buildout and installing the newly available add-ons, go to the languages section of your Site Setup and select two or more languages for your site. You will now be able to create translations of Plone's default content types, or to link existing content as translations.
+
+plone.app.multilingual will create folders for each of your site's languages and put translated content into the appropriate folders.
+
+For information about making your Dexterity content type translatable, see the plone.multilingualbehavior documentation.
 
 
 Translation Engine Design
