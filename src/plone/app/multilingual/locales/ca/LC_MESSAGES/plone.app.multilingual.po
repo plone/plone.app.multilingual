@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.2b3\n"
-"POT-Creation-Date: 2012-03-23 15:41+0000\n"
+"POT-Creation-Date: 2012-03-23 16:37+0000\n"
 "PO-Revision-Date: 2012-03-23 16:45 +0000\n"
 "Last-Translator: ramon.nb@gmail.com>\n"
 "Language-Team: plone-cat <plone-cat@plone.org>\n"
@@ -23,6 +23,10 @@ msgstr "Tota la configuració de P.A.M."
 msgid "Create"
 msgstr "Crear"
 
+#: ./browser/item.pt:15
+msgid "Description"
+msgstr ""
+
 #: ./browser/controlpanel.py:220
 msgid "Multilingual Settings"
 msgstr "Configuració Multilingual"
@@ -34,6 +38,10 @@ msgstr "Esquema negociació"
 #: ./browser/controlpanel.py:208
 msgid "Site Languages"
 msgstr "Llenguatges del site"
+
+#: ./browser/item.pt:10
+msgid "Title"
+msgstr ""
 
 #. Default: "Add translations"
 #: ./browser/add_translation_form.py:22
@@ -176,6 +184,11 @@ msgstr ""
 msgid "label_translate_menu"
 msgstr "Tradueix a..."
 
+#. Default: "ORIGINAL"
+#: ./browser/dexterity_edit.pt:13
+msgid "original"
+msgstr ""
+
 #: ./browser/remove_translation_form.py:32
 msgid "remove selected"
 msgstr "Esborrar la seleccionada"
@@ -208,6 +221,11 @@ msgstr "Esborrar traduccions"
 #: ./browser/menu.py:104
 msgid "title_translate_menu"
 msgstr "Administra les traduccions del teu contingut"
+
+#. Default: "TRANSLATION TO ${DYNAMIC_CONTENT}"
+#: ./browser/dexterity_edit.pt:28
+msgid "translation_to"
+msgstr ""
 
 #: ./browser/remove_translation_form.py:22
 msgid "unlink selected"

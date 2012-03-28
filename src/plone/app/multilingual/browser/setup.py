@@ -4,6 +4,7 @@ from plone.multilingual.interfaces import ITranslationManager
 
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
+from Acquisition import aq_inner
 
 
 # Setup view imported from LinguaPlone
@@ -12,9 +13,9 @@ class SetupView(BrowserView):
     def __init__(self, context, request):
         super(SetupView, self).__init__(context, request)
 
-    def __call__(self, forceOneLanguage=False):
+    def __call__(self, forceOneLanguage=False, forceMovingAndSetting=True):
         setupTool = SetupMultilingualSite()
-        return setupTool.setupSite(self.context, forceOneLanguage)
+        return setupTool.setupSite(self.context, forceOneLanguage, forceMovingAndSetting)
 
 
 class SetupMultilingualSite(object):
@@ -23,7 +24,7 @@ class SetupMultilingualSite(object):
         self.previousDefaultPageId = None
         self.context = None
 
-    def setupSite(self, context, forceOneLanguage=False):
+    def setupSite(self, context, forceOneLanguage=False, forceMovingAndSetting=True):
         """
         This method is called from the control panel to setup a site in order
         to have root language folders and a redirect view.
@@ -48,6 +49,9 @@ class SetupMultilingualSite(object):
         if self.previousDefaultPageId:
             result.extend(self.resetDefaultPage())
         result.extend(self.setupLanguageSwitcher())
+        if forceMovingAndSetting:
+            result.extend(self.set_default_language_content())
+            result.extend(self.move_default_language_content())
         if not result:
             return "Nothing done."
         else:
@@ -70,6 +74,38 @@ class SetupMultilingualSite(object):
                 doneSomething = True
         if doneSomething:
             result.append("Translations linked.")
+        return result
+
+    def set_default_language_content(self):
+        # Check if the content has language
+        result = []
+        context = aq_inner(self.context)
+        pc = getToolByName(context, "portal_catalog")
+        path = '/'.join(context.getPhysicalPath())
+        objects = pc.searchResults(path=path, language='all')
+        for brain in objects:
+            obj = brain.getObject()
+            if obj.language == '':
+                obj.language = self.defaultLanguage
+                obj.reindexObject()
+                result.append("Set languge %s on object %s" % (self.defaultLanguage, '/'.join(obj.getPhysicalPath())))
+        return result
+
+    def move_default_language_content(self):
+        # Move the content at defaultLanguge on the root folder
+        result = []
+        folderId = "%s" % self.defaultLanguage
+        folder = getattr(self.context, folderId, None)
+        context = aq_inner(self.context)
+        pc = getToolByName(context, "portal_catalog")
+        path = '/'.join(context.getPhysicalPath())
+        objects = pc.searchResults(path={'query': path, 'depth': 1}, language=self.defaultLanguage)
+        for brain in objects:
+            if brain.id != self.defaultLanguage:
+                old_path = brain.getPath()
+                cutted = self.context.manage_cutObjects(brain.id)
+                folder.manage_pasteObjects(cutted)
+                result.append("Moved object %s to lang folder %s" % (old_path, self.defaultLanguage))
         return result
 
     def setUpLanguage(self, code, name):

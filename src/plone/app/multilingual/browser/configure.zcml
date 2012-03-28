@@ -29,6 +29,7 @@
 
   <adapter factory=".controlpanel.MultiLanguageControlPanelAdapter" />
   <adapter factory=".controlpanel.MultiLanguageOptionsControlPanelAdapter" />
+  <adapter factory=".controlpanel.MultiLanguageExtraOptionsAdapter" />
 
   <!-- Vocabulary all languages -->
   <utility

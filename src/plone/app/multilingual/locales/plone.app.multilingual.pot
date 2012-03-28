@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-03-23 15:41+0000\n"
+"POT-Creation-Date: 2012-03-23 16:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,6 +25,10 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
+#: ./browser/item.pt:15
+msgid "Description"
+msgstr ""
+
 #: ./browser/controlpanel.py:220
 msgid "Multilingual Settings"
 msgstr ""
@@ -35,6 +39,10 @@ msgstr ""
 
 #: ./browser/controlpanel.py:208
 msgid "Site Languages"
+msgstr ""
+
+#: ./browser/item.pt:10
+msgid "Title"
 msgstr ""
 
 #. Default: "Add translations"
@@ -178,6 +186,11 @@ msgstr ""
 msgid "label_translate_menu"
 msgstr ""
 
+#. Default: "ORIGINAL"
+#: ./browser/dexterity_edit.pt:13
+msgid "original"
+msgstr ""
+
 #: ./browser/remove_translation_form.py:32
 msgid "remove selected"
 msgstr ""
@@ -209,6 +222,11 @@ msgstr ""
 #. Default: "Manage translations for your content."
 #: ./browser/menu.py:104
 msgid "title_translate_menu"
+msgstr ""
+
+#. Default: "TRANSLATION TO ${DYNAMIC_CONTENT}"
+#: ./browser/dexterity_edit.pt:28
+msgid "translation_to"
 msgstr ""
 
 #: ./browser/remove_translation_form.py:22

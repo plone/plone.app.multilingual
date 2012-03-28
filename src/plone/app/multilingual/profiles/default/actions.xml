@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<object name="portal_actions" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+ <object name="user">
+  <object name="review-comments" meta_type="CMF Action" i18n:domain="plone"
+  insert-before="logout">
+   <property name="title" i18n:translate="">Moderate comments</property>
+   <property name="description" i18n:translate=""></property>
+   <property name="url_expr">string:${globals_view/navigationRootUrl}/@@moderate-comments</property>
+   <property name="icon_expr">string:${globals_view/navigationRootUrl}/discussionitem_icon.gif</property>
+   <property name="available_expr">portal/@@moderate-comments-enabled|nothing</property>
+   <property name="permissions">
+    <element value="Review comments"/>
+   </property>
+   <property name="visible">True</property>
+  </object>
+ </object>
+</object>

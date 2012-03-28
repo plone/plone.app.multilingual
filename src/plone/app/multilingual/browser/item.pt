@@ -3,16 +3,16 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
-      i18n:domain="plone.app.dexterity">
+      i18n:domain="plone.app.multilingual">
 <body>
 
 <div class="field">
-  <label>Title</label>
+  <label i18n:translate="Title">Title</label>
   <h2 tal:content="context/Title" />
 </div>
 
 <div class="field">
-  <label>Description</label>
+  <label i18n:translate="Description">Description</label>
   <h2 tal:content="context/Description" />
 </div>
 

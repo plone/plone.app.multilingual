@@ -29,27 +29,6 @@ def language_filter(query):
         if key in query:
             return
     query['language'] = [languageTool.getPreferredLanguage(), LANGUAGE_INDEPENDENT]
-    # site = getSite()
-    # add_language = True
-    # language_tool = getToolByName(site, 'portal_languages', None)
-    # if language_tool is not None:
-
-    #     for key in NO_FILTER:
-    #         if key in query:
-    #             add_language = False
-
-    #     if query.get('Language') == 'all':
-    #         del query['Language']
-
-    #     if query.get('Language') == '':
-    #         query['Language'] = LANGUAGE_INDEPENDENT
-
-    #     if add_language:
-    #         query['Language'] = [language_tool.getPreferredLanguage(), \
-    #             LANGUAGE_INDEPENDENT]
-    # return
-
-
 
 
 def AlreadyApplied(patch):
@@ -58,6 +37,11 @@ def AlreadyApplied(patch):
     _enabled.append(patch)
     return False
 
+def IsAlreadyRemoved(patch):
+    if patch not in _enabled:
+        return True
+    _enabled.remove(patch)
+    return False
 
 def I18nAwareCatalog():
     # Patches the catalog tool to filter languages
@@ -75,6 +59,15 @@ def I18nAwareCatalog():
     CatalogTool.searchResults = searchResults
     CatalogTool.__call__ = searchResults
     CatalogTool.manage_catalogView = DTMLFile('www/catalogView', globals())
+
+def I18nDeAwareCatalog():
+    # Patches the catalog tool to filter languages
+    if IsAlreadyRemoved('I18nAwareCatalog'):
+        return
+
+    CatalogTool.searchResults = CatalogTool.__pam_old_searchResults
+    CatalogTool.__call__ = CatalogTool.__pam_old_searchResults
+
 
 
 I18nAwareCatalog()
