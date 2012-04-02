@@ -11,7 +11,9 @@ from plone.app.multilingual.browser.interfaces import (
     ITranslateMenu,
     ITranslateSubMenuItem,
 )
-from plone.app.multilingual.browser.vocabularies import untranslated_languages
+from plone.app.multilingual.browser.vocabularies import (untranslated_languages, 
+                                                        translated_languages,
+                                                        translated_urls)
 from plone.app.multilingual import _
 
 
@@ -39,6 +41,28 @@ class TranslateMenu(BrowserMenu):
                 "selected": False,
                 "icon": icon,
                 "extra": {"id": "translate_into_%s" % lang_id,
+                           "separator": None,
+                           "class": ""},
+                "submenu": None,
+                }
+
+            menu.append(item)
+
+        langs = translated_languages(context)
+        urls = translated_urls(context)
+        for lang in langs:
+            lang_name = lang.title
+            lang_id = lang.value
+            icon = showflags and lt.getFlagForLanguageCode(lang_id) or None
+            item = {
+                "title": lang_name,
+                "description": _(u"description_babeledit_menu",
+                                    default=u"Babel edit ${lang_name}",
+                                    mapping={"lang_name": lang_name}),
+                "action": urls.getTerm(lang_id).title + "/babel_edit",
+                "selected": False,
+                "icon": icon,
+                "extra": {"id": "babel_edit_%s" % lang_id,
                            "separator": None,
                            "class": ""},
                 "submenu": None,

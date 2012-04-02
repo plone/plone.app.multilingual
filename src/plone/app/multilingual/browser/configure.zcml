@@ -37,6 +37,11 @@
     name="plone.app.multilingual.vocabularies.AllContentLanguageVocabulary"
     />
 
+  <utility
+    component=".vocabularies.AllAvailableLanguageVocabularyFactory"
+    name="plone.app.multilingual.vocabularies.AllAvailableLanguageVocabulary"
+    />
+
   <!-- Default browser view -->
   <browser:view
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
@@ -74,6 +79,21 @@
       directory="stylesheet"
       layer="..interfaces.IPloneAppMultilingualInstalled"
       />
+
+  <browser:resourceDirectory
+      name="plone.app.multilingual.images"
+      directory="images"
+      layer="..interfaces.IPloneAppMultilingualInstalled"
+      />
+
+  <!-- GTranslate Service -->
+
+  <browser:page
+    for="*"
+    name="gtranslation_service"
+    class=".translate.gtranslation_service"
+    permission="cmf.ModifyPortalContent"
+    />
 
   <!-- Edit form -->
 

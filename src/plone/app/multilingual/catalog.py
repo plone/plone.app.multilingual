@@ -5,6 +5,13 @@ from plone.multilingual.interfaces import ILanguage, ITranslatable
 from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.indexer import indexer
 
+from plone.app.content.browser.foldercontents import (FolderContentsView,
+                                                     FolderContentsTable)
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from Acquisition import aq_inner
+from zope.component import getUtility
+from plone.registry.interfaces import IRegistry
+
 from App.special_dtml import DTMLFile
 
 
@@ -37,11 +44,6 @@ def AlreadyApplied(patch):
     _enabled.append(patch)
     return False
 
-def IsAlreadyRemoved(patch):
-    if patch not in _enabled:
-        return True
-    _enabled.remove(patch)
-    return False
 
 def I18nAwareCatalog():
     # Patches the catalog tool to filter languages
@@ -60,14 +62,24 @@ def I18nAwareCatalog():
     CatalogTool.__call__ = searchResults
     CatalogTool.manage_catalogView = DTMLFile('www/catalogView', globals())
 
-def I18nDeAwareCatalog():
-    # Patches the catalog tool to filter languages
-    if IsAlreadyRemoved('I18nAwareCatalog'):
+
+def I18nAwareFolderContents():
+
+    if AlreadyApplied('I18nAwareFolderContents'):
         return
 
-    CatalogTool.searchResults = CatalogTool.__pam_old_searchResults
-    CatalogTool.__call__ = CatalogTool.__pam_old_searchResults
+    def contents_table(self):
+        settings = getUtility(IRegistry).forInterface(IMultiLanguageExtraOptionsSchema)
+        if settings.filter_content:
+            table = FolderContentsTable(aq_inner(self.context), self.request)
+        else:
+            table = FolderContentsTable(aq_inner(self.context), self.request, contentFilter={'language':'all'})            
+        return table.render()
+
+    FolderContentsView.__pam_old_contents_table = FolderContentsView.contents_table    
+    FolderContentsView.contents_table = contents_table
 
 
 
 I18nAwareCatalog()
+I18nAwareFolderContents()

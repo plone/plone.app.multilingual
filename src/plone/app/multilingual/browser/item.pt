@@ -6,22 +6,27 @@
       i18n:domain="plone.app.multilingual">
 <body>
 
-<div class="field">
-  <label i18n:translate="Title">Title</label>
-  <h2 tal:content="context/Title" />
+<div id="view_language" tal:content="context/language">
 </div>
 
-<div class="field">
+<div class="field" id="title">
+  <label i18n:translate="Title">Title</label>
+  <h2 class="value localstatic-field" tal:content="context/Title" />
+</div>
+
+<div class="field" id="description">
   <label i18n:translate="Description">Description</label>
-  <h2 tal:content="context/Description" />
+  <h2  class="value localstatic-field" tal:content="context/Description" />
 </div>
 
 
 <tal:block repeat="widget view/widgets/values">
-    <div class="field" tal:condition="python:widget.__name__ not in ('IBasic.title', 'IBasic.description', 'title', 'description',)">
+    <div class="field"  id=""
+         tal:attributes="id python:widget.__name__"
+         tal:condition="python:widget.__name__ not in ('IBasic.title', 'IBasic.description', 'title', 'description',)">
         <label tal:content="widget/label" />
         <br />
-        <div tal:content="structure widget/render" />
+        <div class="value" tal:content="structure widget/render" />
     </div>
 </tal:block>
         

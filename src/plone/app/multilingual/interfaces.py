@@ -16,7 +16,16 @@ class IMultiLanguageExtraOptionsSchema(Interface):
         title=_(u"heading_filter_content",
                 default=u"Filter content by language."),
         description=_(u"description_filter_content",
-                default=u"See the content that is in the same language as the actual one"),
+                default=u"Filter using language the content on folder_contents"),
+        default=True,
+        required=False,
+        )
+
+    redirect_babel_view = schema.Bool(
+        title=_(u"heading_redirect_babel_view",
+                default=u"Redirect on creation to babel view."),
+        description=_(u"description_filter_content",
+                default=u"After creating a new translation redirecto to babel view"),
         default=True,
         required=False,
         )
@@ -28,3 +37,4 @@ class IMultiLanguageExtraOptionsSchema(Interface):
                 default=u"Is a paying API to use google translation service"),
         required=False,
         )
+

@@ -49,3 +49,15 @@
     position: relative;
     float: right;
 }
+
+#view_language {
+    display: none;
+}
+
+.translator-widget {
+    position: relative;
+    float: right;
+    background: url('++resource++plone.app.multilingual.images/gtranslate.png');
+    min-height: 50px;
+    min-width: 50px;
+}

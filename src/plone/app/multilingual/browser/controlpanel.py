@@ -1,6 +1,6 @@
 from zope.interface import Interface
 from zope.interface import implementsOnly
-from zope.schema import Choice, TextLine
+from zope.schema import Choice
 from zope.schema import Bool, List
 from Products.statusmessages.interfaces import IStatusMessage
 from zope.component import getMultiAdapter
@@ -16,13 +16,8 @@ from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.protect import CheckAuthenticator
 
-from Products.CMFCore.utils import getToolByName
-
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
-
-from Products.CMFPlone.CatalogTool import CatalogTool
-from plone.app.multilingual import catalog 
 
 from Products.CMFPlone import PloneMessageFactory as _Plone
 from zope.i18nmessageid import MessageFactory
@@ -135,55 +130,54 @@ class MultiLanguageOptionsControlPanelAdapter(LanguageControlPanelAdapter):
 
     def __init__(self, context):
         super(MultiLanguageOptionsControlPanelAdapter, self).__init__(context)
-        self.tool = getToolByName(self.context, 'portal_languages')
 
     def get_use_content_negotiation(self):
-        return self.tool.use_content_negotiation
+        return self.context.use_content_negotiation
 
     def set_use_content_negotiation(self, value):
-        self.tool.use_content_negotiation = value
+        self.context.use_content_negotiation = value
 
     def get_use_path_negotiation(self):
-        return self.tool.use_path_negotiation
+        return self.context.use_path_negotiation
 
     def set_use_path_negotiation(self, value):
-        self.tool.use_path_negotiation = value
+        self.context.use_path_negotiation = value
 
     def get_use_cookie_negotiation(self):
-        return self.tool.use_cookie_negotiation
+        return self.context.use_cookie_negotiation
 
     def set_use_cookie_negotiation(self, value):
-        self.tool.use_cookie_negotiation = value
+        self.context.use_cookie_negotiation = value
 
     def get_authenticated_users_only(self):
-        return self.tool.authenticated_users_only
+        return self.context.authenticated_users_only
 
     def set_authenticated_users_only(self, value):
-        self.tool.authenticated_users_only = value
+        self.context.authenticated_users_only = value
 
     def get_set_cookie_everywhere(self):
-        return self.tool.set_cookie_everywhere
+        return self.context.set_cookie_everywhere
 
     def set_set_cookie_everywhere(self, value):
-        self.tool.set_cookie_everywhere = value
+        self.context.set_cookie_everywhere = value
 
     def get_use_subdomain_negotiation(self):
-        return self.tool.use_subdomain_negotiation
+        return self.context.use_subdomain_negotiation
 
     def set_use_subdomain_negotiation(self, value):
-        self.tool.use_subdomain_negotiation = value
+        self.context.use_subdomain_negotiation = value
 
     def get_use_cctld_negotiation(self):
-        return self.tool.use_cctld_negotiation
+        return self.context.use_cctld_negotiation
 
     def set_use_cctld_negotiation(self, value):
-        self.tool.use_cctld_negotiation = value
+        self.context.use_cctld_negotiation = value
 
     def get_use_request_negotiation(self):
-        return self.tool.use_request_negotiation
+        return self.context.use_request_negotiation
 
     def set_use_request_negotiation(self, value):
-        self.tool.use_request_negotiation = value
+        self.context.use_request_negotiation = value
 
     use_content_negotiation = property(get_use_content_negotiation, set_use_content_negotiation)
     use_path_negotiation = property(get_use_path_negotiation, set_use_path_negotiation)
@@ -216,19 +210,15 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
     implementsOnly(IMultiLanguageExtraOptionsSchema)
 
     def __init__(self, context):
+        super(MultiLanguageExtraOptionsAdapter, self).__init__(context)
         self.registry = getUtility(IRegistry)
         self.settings = self.registry.forInterface(IMultiLanguageExtraOptionsSchema)
-        self.context = context
 
     def get_filter_content(self):
         return self.settings.filter_content
 
     def set_filter_content(self, value):
         self.settings.filter_content = value
-        if not value:
-            catalog.I18nDeAwareCatalog()
-        else:
-            catalog.I18nAwareCatalog()
 
     def get_google_translation_key(self):
         return self.settings.google_translation_key
@@ -236,11 +226,20 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
     def set_google_translation_key(self, value):
         self.settings.google_translation_key = value
 
+    def get_redirect_babel_view(self):
+        return self.settings.redirect_babel_view
+
+    def set_redirect_babel_view(self, value):
+        self.settings.redirect_babel_view = value
+
     google_translation_key = property(get_google_translation_key,
                               set_google_translation_key)
 
     filter_content = property(get_filter_content,
                               set_filter_content)
+
+    redirect_babel_view = property(get_redirect_babel_view,
+                                   set_redirect_babel_view)
 
 selection = FormFieldsets(IMultiLanguageSelectionSchema)
 selection.label = _(u'Site Languages')
@@ -250,6 +249,7 @@ options.label = _(u'Negotiation Scheme')
 
 extras = FormFieldsets(IMultiLanguageExtraOptionsSchema)
 extras.label = _(u'Extra options')
+
 
 class LanguageControlPanel(BasePanel):
     """A modified language control panel, allows selecting multiple languages.

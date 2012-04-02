@@ -8,10 +8,49 @@ from plone.multilingual.interfaces import (
     ITranslatable,
 )
 from plone.multilingual.interfaces import ILanguage
+from zope.component import getUtility
+from plone.registry.interfaces import IRegistry
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 
 from plone.app.multilingual.browser.interfaces import ICreateTranslation
 from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.app.multilingual import _
+from Products.Five import BrowserView
+from plone.multilingual.interfaces import ITranslationManager
+
+import urllib
+
+
+class gtranslation_service(BrowserView):
+
+    def __call__(self):
+        if (self.request.method != 'POST' and
+            not ('field' in self.request.form.keys() and
+                'lang_source' in self.request.form.keys())):
+            return _("Need a field")
+        else:
+            manager = ITranslationManager(self.context)
+            registry = getUtility(IRegistry)
+            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+            lang_target = self.context.language
+            lang_source = self.request.form['lang_source']
+            orig_object = manager.get_translation(lang_source)
+            if hasattr(orig_object, self.request.form['field']):
+                question = getattr(orig_object, self.request.form['field'], '')
+                if hasattr(question, 'raw'):
+                    question = question.raw
+            else:
+                return _("Invalid field")
+            data = {'key': settings.google_translation_key,
+                        'target': lang_target,
+                        'source': lang_source,
+                        'q': question}
+            params = urllib.urlencode(data)
+
+            url = 'https://www.googleapis.com/language/translate/v2'
+            retorn = urllib.urlopen(url + '?' + params)
+            return retorn.read()
+
 
 
 class TranslationForm(form.SchemaForm):
@@ -38,5 +77,11 @@ class TranslationForm(form.SchemaForm):
 
             translation_manager.add_translation(language)
             translated = translation_manager.get_translation(language)
-            return self.request.response.redirect(translated.absolute_url() \
-                + '/edit?set_language=%s' % language)
+            registry = getUtility(IRegistry)
+            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+            if settings.redirect_babel_view:
+                return self.request.response.redirect(translated.absolute_url() \
+                    + '/babel_edit')
+            else:
+                return self.request.response.redirect(translated.absolute_url() \
+                    + '/edit?set_language=%s' % language)

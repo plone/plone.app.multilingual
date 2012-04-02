@@ -29,11 +29,6 @@ class LanguageSelectorViewlet(LanguageSelector):
             return selector and languages
         return False
 
-#    def available(self):
-#        language_tool = getToolByName(self.context, 'portal_languages')
-#        supported_languages = language_tool.getSupportedLanguages()
-#        return len(supported_languages) > 1
-
     def _translations(self, missing):
         # Figure out the "closest" translation in the parent chain of the
         # context. We stop at both an INavigationRoot or an ISiteRoot to look
@@ -134,6 +129,7 @@ class LanguageSelectorViewlet(LanguageSelector):
         _checkPermission = getSecurityManager().checkPermission
 
         non_viewable = set()
+
         for data in results:
             code = str(data['code'])
             data['translated'] = code in translations.keys()
@@ -196,35 +192,3 @@ class LanguageSelectorViewlet(LanguageSelector):
         return results
 
 
-    # def languages(self):
-    #     result = []
-    #     translations = {}
-    #     language_tool = getToolByName(self.context, 'portal_languages')
-    #     languages = language_tool.getAvailableLanguages()
-    #     manager = component.queryAdapter(self.context, ITranslationManager)
-    #     if manager is not None:
-    #         translations = manager.get_translations()
-    #         for key in translations.keys():
-    #             if checkPermission('zope2.View', translations[key]):
-    #                 if key != LANGUAGE_INDEPENDENT:
-    #                     result.append({
-    #                         'code': key,
-    #                         'flag': languages[key].get('flag', ''),
-    #                         'name': languages[key].get('name', key),
-    #                         'url': "%s/switchLanguage?set_language=%s" % (translations[key].absolute_url(),key),
-    #                         'selected': translations[key] == self.context,
-    #                     })
-    #     settings = component.getUtility(IRegistry).forInterface(IMultilinguaSettings)
-    #     if settings.show_selector_always:
-    #         supported_languages = language_tool.getSupportedLanguages()
-    #         for key in supported_languages:
-    #             if key not in translations.keys():
-    #                 result.append({
-    #                     'code': key,
-    #                     'flag': languages[key].get('flag', ''),
-    #                     'name': languages[key].get('name', key),
-    #                     'url': "%s/switchLanguage?set_language=%s" % (self.context.absolute_url(), key),
-    #                     'selected': self.request.get('LANGUAGE') == key,
-    #                 })
-
-    #     return result
