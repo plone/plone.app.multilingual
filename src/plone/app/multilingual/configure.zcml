@@ -48,4 +48,13 @@
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     />
 
+  <genericsetup:importStep
+      name="pam_reindex"
+      title="Multilingual Reindex catalog"
+      description=""
+      handler=".setuphandlers.importReindexLanguageIndex">
+    <depends name="content"/>
+    <depends name="toolset"/>
+  </genericsetup:importStep>
+
 </configure>

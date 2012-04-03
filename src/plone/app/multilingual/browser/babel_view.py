@@ -10,6 +10,10 @@ from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from AccessControl.SecurityManagement import getSecurityManager
 
+from zope.component import getUtility
+from plone.registry.interfaces import IRegistry
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+
 
 class BabelView(BrowserView):
     __call__ = ViewPageTemplateFile('babel_view.pt')
@@ -47,6 +51,11 @@ class BabelUtils(BrowserView):
     def objToTranslate(self):
         return self.context
 
+    def gtenabled(self):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        return settings.google_translation_key != ''
+
     def languages(self):
         context = aq_inner(self.context)
 
@@ -63,7 +72,6 @@ class BabelUtils(BrowserView):
         # We want to see the babel_view
         append_path = ('', 'babel_view',)
         _checkPermission = getSecurityManager().checkPermission
-
         non_viewable = set()
         for data in results:
             code = str(data['code'])
@@ -77,33 +85,9 @@ class BabelUtils(BrowserView):
                     # shortcut if the user cannot see the item
                     non_viewable.add((data['code']))
                     continue
-
-                state = getMultiAdapter((trans, self.request),
-                        name='plone_context_state')
-                try:
-                    data['url'] = state.canonical_object_url() + appendtourl
-                except AttributeError:
-                    data['url'] = context.absolute_url() + appendtourl
+                data['url'] = trans.absolute_url() + appendtourl
             else:
-                has_view_permission = bool(_checkPermission('View', context))
-                # Ideally, we should also check the View permission of default
-                # items of folderish objects.
-                # However, this would be expensive at it would mean that the
-                # default item should be loaded as well.
-                #
-                # IOW, it is a conscious decision to not take in account the
-                # use case where a user has View permission a folder but not on
-                # its default item.
-                if not has_view_permission:
-                    non_viewable.add((data['code']))
-                    continue
-
-                state = getMultiAdapter((context, self.request),
-                        name='plone_context_state')
-                try:
-                    data['url'] = state.canonical_object_url() + appendtourl
-                except AttributeError:
-                    data['url'] = context.absolute_url() + appendtourl
+                non_viewable.add((data['code']))
 
         # filter out non-viewable items
         results = [r for r in results if r['code'] not in non_viewable]

@@ -89,11 +89,19 @@
   <!-- GTranslate Service -->
 
   <browser:page
-    for="*"
+    for="plone.dexterity.interfaces.IDexterityContent"
     name="gtranslation_service"
-    class=".translate.gtranslation_service"
+    class=".translate.gtranslation_service_dexterity"
     permission="cmf.ModifyPortalContent"
     />
+
+  <browser:page
+    for="Products.Archetypes.atapi.BaseObject"
+    name="gtranslation_service"
+    class=".translate.gtranslation_service_at"
+    permission="cmf.ModifyPortalContent"
+    />
+
 
   <!-- Edit form -->
 

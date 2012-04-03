@@ -49,6 +49,15 @@ See plone.multilingual README:
 http://github.com/plone/plone.multilingual
 
 
+License
+=======
+
+GNU General Public License, version 2
+
+
+Sponsoring
+==========
+
 Roadmap
 =======
 

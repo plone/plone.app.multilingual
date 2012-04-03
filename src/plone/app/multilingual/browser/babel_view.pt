@@ -19,14 +19,17 @@
             folderlisting_macro view_macros/folderlisting | folderlisting | base_macros/folderlisting;
             errors python:request.get('errors', {})">
 
-          <div class="field">
-            <label>Title</label>
-            <h2 tal:content="context/Title" />
+          <div id="view_language" tal:content="context/language">
           </div>
 
-          <div class="field">
-            <label>Description</label>
-            <h2 tal:content="context/Description" />
+          <div class="field" id="title">
+            <label i18n:translate="Title">Title</label>
+            <h2 class="value localstatic-field" tal:content="context/Title" />
+          </div>
+
+          <div class="field" id="description">
+            <label i18n:translate="Description">Description</label>
+            <h2 class="value localstatic-field" tal:content="context/Description" />
           </div>
 
           <tal:fields tal:define="field_macro field_macro | context/widgets/field/macros/view"
@@ -38,7 +41,9 @@
                                       visState python:field.widget.isVisible(here, mode);
                                       visCondition python:field.widget.testCondition(None, portal, context);"
                               condition="python:visState == 'visible' and visCondition">
+              <div class="value">
                 <metal:use_field use-macro="field_macro" />
+              </div>
               </tal:if_visible>
             </div>
           </tal:fields>

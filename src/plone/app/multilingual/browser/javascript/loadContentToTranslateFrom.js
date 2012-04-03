@@ -2,11 +2,15 @@
 
 function reload_height() {
   orig = $('#frame-content .field');
-  desti = $('#form .field');
+  desti = $('#form-target .field');
   order = 1;
   $.each(orig, function(index, value) { 
-    $(value).height($(desti[index]).height());
-    if (($(value).find('.richtext-field').length>0) || ($(value).find('.textline-field').length>0) || ($(value).find('.localstatic-field').length>0)) {
+    if ($(value).height()>$(desti[index]).height()) {
+      $(desti[index]).height($(value).height());
+    } else {
+      $(value).height($(desti[index]).height());
+    }
+    if (($(value).find('.richtext-field').length>0) || ($(value).find('.textline-field').length>0) || ($(value).find('.localstatic-field').length>0) || ($(value).find('.ArchetypesField-TextField').length>0)) {
       $(value).prepend("<div class='translator-widget' id='item_translation_"+order+"'></div>");
       $(value).children('.translator-widget').click(function() {
         var langSource = $('#frame-content #view_language')[0].innerHTML;
@@ -80,7 +84,7 @@ jq(document).ready(function() {
     }
     babel_selectec = this;
     $(this).toggleClass("selected");
-    index = $('#form .field').index($(this));
+    index = $('#form-target .field').index($(this));
     orig_babel_select = $('#frame-content .field')[index];
     $(orig_babel_select).toggleClass("selected");
     $(orig_babel_select).children('.translator-widget').show()

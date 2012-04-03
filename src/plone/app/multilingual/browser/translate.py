@@ -16,12 +16,11 @@ from plone.app.multilingual.browser.interfaces import ICreateTranslation
 from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.app.multilingual import _
 from Products.Five import BrowserView
-from plone.multilingual.interfaces import ITranslationManager
-
+from plone.multilingual.interfaces import ITranslationManager, ILanguage
 import urllib
 
 
-class gtranslation_service(BrowserView):
+class gtranslation_service_dexterity(BrowserView):
 
     def __call__(self):
         if (self.request.method != 'POST' and
@@ -32,7 +31,7 @@ class gtranslation_service(BrowserView):
             manager = ITranslationManager(self.context)
             registry = getUtility(IRegistry)
             settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
-            lang_target = self.context.language
+            lang_target = ILanguage(self.context).get_language()
             lang_source = self.request.form['lang_source']
             orig_object = manager.get_translation(lang_source)
             if hasattr(orig_object, self.request.form['field']):
@@ -41,6 +40,8 @@ class gtranslation_service(BrowserView):
                     question = question.raw
             else:
                 return _("Invalid field")
+            if len(question)>1600:
+                return _("Too long field")
             data = {'key': settings.google_translation_key,
                         'target': lang_target,
                         'source': lang_source,
@@ -51,6 +52,36 @@ class gtranslation_service(BrowserView):
             retorn = urllib.urlopen(url + '?' + params)
             return retorn.read()
 
+
+class gtranslation_service_at(BrowserView):
+
+    def __call__(self):
+        if (self.request.method != 'POST' and
+            not ('field' in self.request.form.keys() and
+                'lang_source' in self.request.form.keys())):
+            return _("Need a field")
+        else:
+            manager = ITranslationManager(self.context)
+            registry = getUtility(IRegistry)
+            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+            lang_target = ILanguage(self.context).get_language()
+            lang_source = self.request.form['lang_source']
+            orig_object = manager.get_translation(lang_source)
+            try:
+                question = orig_object.getField(self.request.form['field']).get(orig_object)
+            except AttributeError:
+                return _("Invalid field")
+            if len(question)>1600:
+                return _("Too long field")
+            data = {'key': settings.google_translation_key,
+                        'target': lang_target,
+                        'source': lang_source,
+                        'q': question}
+            params = urllib.urlencode(data)
+
+            url = 'https://www.googleapis.com/language/translate/v2'
+            retorn = urllib.urlopen(url + '?' + params)
+            return retorn.read()
 
 
 class TranslationForm(form.SchemaForm):

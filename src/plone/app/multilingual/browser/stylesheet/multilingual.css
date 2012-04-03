@@ -61,3 +61,7 @@
     min-height: 50px;
     min-width: 50px;
 }
+
+.currentLanguage {
+    font-weight: bold;
+}
