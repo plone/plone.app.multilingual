@@ -69,7 +69,11 @@ def I18nAwareFolderContents():
         return
 
     def contents_table(self):
-        settings = getUtility(IRegistry).forInterface(IMultiLanguageExtraOptionsSchema)
+        try:
+            settings = getUtility(IRegistry).forInterface(IMultiLanguageExtraOptionsSchema)
+        except KeyError:
+            table = FolderContentsTable(aq_inner(self.context), self.request)
+            return table.render()
         if settings.filter_content:
             table = FolderContentsTable(aq_inner(self.context), self.request)
         else:
