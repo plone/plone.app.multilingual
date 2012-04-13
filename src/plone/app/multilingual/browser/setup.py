@@ -51,7 +51,8 @@ class SetupMultilingualSite(object):
         result.extend(self.setupLanguageSwitcher())
         if forceMovingAndSetting:
             result.extend(self.set_default_language_content())
-            result.extend(self.move_default_language_content())
+            # TOO RISKY
+            #result.extend(self.move_default_language_content())
         if not result:
             return "Nothing done."
         else:
@@ -77,7 +78,9 @@ class SetupMultilingualSite(object):
         return result
 
     def set_default_language_content(self):
-        # Check if the content has language
+        """
+        Check if the content has language
+        """
         result = []
         context = aq_inner(self.context)
         pc = getToolByName(context, "portal_catalog")
