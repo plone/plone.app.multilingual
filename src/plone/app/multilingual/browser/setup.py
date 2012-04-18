@@ -92,7 +92,7 @@ class SetupMultilingualSite(object):
             if obj.language == '':
                 obj.language = defaultLanguage
                 obj.reindexObject()
-                LOG.info("Set languge %s on object %s" % (self.defaultLanguage, '/'.join(obj.getPhysicalPath())))
+                LOG.info("Set languge %s on object %s" % (defaultLanguage, '/'.join(obj.getPhysicalPath())))
 
     def move_default_language_content(self):
         # Move the content at defaultLanguge on the root folder
