@@ -56,6 +56,27 @@ class IMultiLanguageSelectionSchema(Interface):
     #     )
 
 
+class IMultiLanguageExtraOptionsSetupSchema(IMultiLanguageExtraOptionsSchema):
+
+    set_default_language = Bool(
+        title=_(u"heading_set_default_language",
+                default=u"Set the default language"),
+        description=_(u"description_set_default_language",
+                default=u"Set the default language on all content without language defined. This value is not stored so you need to check every time you want to run it"),
+        default=False,
+        required=False,
+        )
+
+    move_content_to_language_folder = Bool(
+        title=_(u"heading_move_content_to_language_folder",
+                default=u"Move root content to default language folder"),
+        description=_(u"description_move_content_to_language_folder",
+                default=u"Move the content that is on the root folder to the default language folder. This value is not stored so you need to check every time you want to run it"),
+        default=False,
+        required=False,
+        )
+
+
 class IMultiLanguageOptionsSchema(Interface):
     """ Interface for language options - control panel fieldset
     """
@@ -207,7 +228,7 @@ class MultiLanguageControlPanelAdapter(LanguageControlPanelAdapter):
 
 
 class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
-    implementsOnly(IMultiLanguageExtraOptionsSchema)
+    implementsOnly(IMultiLanguageExtraOptionsSetupSchema)
 
     def __init__(self, context):
         super(MultiLanguageExtraOptionsAdapter, self).__init__(context)
@@ -232,6 +253,20 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
     def set_redirect_babel_view(self, value):
         self.settings.redirect_babel_view = value
 
+    def get_set_default_language(self):
+        return False
+
+    def set_set_default_language(self, value):
+        if value:
+            SetupMultilingualSite(self.context).set_default_language_content()
+
+    def get_move_content_to_language_folder(self):
+        return False
+
+    def set_move_content_to_language_folder(self, value):
+        if value:
+            SetupMultilingualSite(self.context).move_default_language_content()
+
     google_translation_key = property(get_google_translation_key,
                               set_google_translation_key)
 
@@ -241,13 +276,19 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
     redirect_babel_view = property(get_redirect_babel_view,
                                    set_redirect_babel_view)
 
+    set_default_language = property(get_set_default_language,
+                                    set_set_default_language)
+
+    move_content_to_language_folder = property(get_move_content_to_language_folder,
+                                               set_move_content_to_language_folder)
+
 selection = FormFieldsets(IMultiLanguageSelectionSchema)
 selection.label = _(u'Site Languages')
 
 options = FormFieldsets(IMultiLanguageOptionsSchema)
 options.label = _(u'Negotiation Scheme')
 
-extras = FormFieldsets(IMultiLanguageExtraOptionsSchema)
+extras = FormFieldsets(IMultiLanguageExtraOptionsSetupSchema)
 extras.label = _(u'Extra options')
 
 
@@ -265,7 +306,7 @@ class LanguageControlPanel(BasePanel):
                        use the 'Save and not move/set content'""")
     form_name = _("Multilingual Settings")
 
-    @form.action(_(u'label_save_and_move_set_content', default=u'Save, set and move'), name=u'save_set_move')
+    @form.action(_(u'label_save', default=u'Save'), name=u'save')
     def handle_save_action(self, action, data):
         CheckAuthenticator(self.request)
         if form.applyChanges(self.context, self.form_fields, data,
@@ -275,21 +316,7 @@ class LanguageControlPanel(BasePanel):
         else:
             self.status = _Plone("No changes made.")
         setupTool = SetupMultilingualSite()
-        output = setupTool.setupSite(self.context, forceOneLanguage=True)
-        self.status += output
-
-
-    @form.action(_(u'Save and not move/set content'), name=u'not_content')
-    def handle_safe_save_action(self, action, data):
-        CheckAuthenticator(self.request)
-        if form.applyChanges(self.context, self.form_fields, data,
-                             self.adapters):
-            self.status = _Plone("Changes saved.")
-            self._on_save(data)
-        else:
-            self.status = _Plone("No changes made.")
-        setupTool = SetupMultilingualSite()
-        output = setupTool.setupSite(self.context, forceMovingAndSetting=False)
+        output = setupTool.setupSite(self.context)
         self.status += output
 
     @form.action(_Plone(u'label_cancel', default=u'Cancel'),

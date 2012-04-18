@@ -24,7 +24,7 @@ class IMultiLanguageExtraOptionsSchema(Interface):
     redirect_babel_view = schema.Bool(
         title=_(u"heading_redirect_babel_view",
                 default=u"Redirect on creation to babel view."),
-        description=_(u"description_filter_content",
+        description=_(u"description_redirect_babel_view",
                 default=u"After creating a new translation redirecto to babel view"),
         default=True,
         required=False,
@@ -33,8 +33,10 @@ class IMultiLanguageExtraOptionsSchema(Interface):
     google_translation_key = schema.TextLine(
         title=_(u"heading_google_translation_key",
                 default=u"Google Translation API Key"),
-        description=_(u"description_language_codes_in_URL",
-                default=u"Is a paying API to use google translation service"),
+        description=_(u"description_google_translation_key",
+                default=u"Is a paying API in order to use google translation service"),
         required=False,
         )
+
+
 
