@@ -10,7 +10,7 @@
     <script src="++resource++plone.app.multilingual.javascript/loadContentToTranslateFrom.js">
     </script>
     <input type="hidden" id="url_translate" value="" tal:attributes="value context/absolute_url"/>
-    <input type="hidden" id="gtanslate_service" value="" tal:attributes="value pamview/gtenabled"/>
+    <input type="hidden" id="gtanslate_service" value="" tal:attributes="value view/gtenabled"/>
     <div class='cell width-8 position-0'>
         <div id="trans-selector"
              tal:define="languages view/languages;">
