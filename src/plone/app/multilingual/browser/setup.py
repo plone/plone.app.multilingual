@@ -82,8 +82,10 @@ class SetupMultilingualSite(object):
         context = aq_inner(self.context)
         pc = getToolByName(context, "portal_catalog")
         pl = getToolByName(context, "portal_languages")
+        pu = getToolByName(context, "portal_url")
+        portal = pu.getPortalObject()
+        path = '/'.join(portal.getPhysicalPath())
         defaultLanguage = pl.getDefaultLanguage()
-        path = '/'.join(context.getPhysicalPath())
         objects = pc.searchResults(path=path, language='all')
         for brain in objects:
             obj = brain.getObject()
