@@ -19,7 +19,7 @@
 
     <include package="plone.app.controlpanel" />
     <include package="Products.CMFCore" file="permissions.zcml" />
-    
+
     <grok:grok package="." />
 
     <i18n:registerTranslations directory="locales" />

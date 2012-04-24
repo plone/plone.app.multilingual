@@ -77,10 +77,10 @@ def I18nAwareFolderContents():
         if settings.filter_content:
             table = FolderContentsTable(aq_inner(self.context), self.request)
         else:
-            table = FolderContentsTable(aq_inner(self.context), self.request, contentFilter={'language':'all'})            
+            table = FolderContentsTable(aq_inner(self.context), self.request, contentFilter={'language':'all'})
         return table.render()
 
-    FolderContentsView.__pam_old_contents_table = FolderContentsView.contents_table    
+    FolderContentsView.__pam_old_contents_table = FolderContentsView.contents_table
     FolderContentsView.contents_table = contents_table
 
 

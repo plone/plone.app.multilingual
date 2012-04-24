@@ -1,7 +1,7 @@
 <h1 tal:replace="structure here/manage_page_header"/>
 <h2 tal:define="form_title string:Add LanguageIndex"
     tal:replace="structure context/manage_form_title">Form Title</h2>
-    
+
 <p class="form-help">
 A <em>LanguageIndex</em> indexes the Language field of ITranslatable content
 in a catalog. It allowes you to search for content matching a given
@@ -14,7 +14,7 @@ content only available in British English or New Zealand English.
 <p class="form-help">
 This behaviour can be switched off (returning to matching only precise language
 tag matches) for this index by disabling the <em>fallback</em> option below.
-The index also accepts a boolean <em>fallback</em> query parameter that can 
+The index also accepts a boolean <em>fallback</em> query parameter that can
 switch this behaviour on and off.
 </p>
 
@@ -58,8 +58,8 @@ switch this behaviour on and off.
     </td>
     <td align="left" valign="top">
     <div class="form-element">
-    <input class="form-element" type="submit" name="submit" 
-     value=" Add " /> 
+    <input class="form-element" type="submit" name="submit"
+     value=" Add " />
     </div>
     </td>
   </tr>
