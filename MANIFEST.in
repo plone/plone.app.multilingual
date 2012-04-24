@@ -3,6 +3,7 @@ include *.zcml
 include *.rst
 
 recursive-include src/plone *
+recursive-include docs *
 
 global-exclude *.pyc
 global-exclude .DS_Store
