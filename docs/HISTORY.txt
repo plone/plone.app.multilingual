@@ -11,21 +11,37 @@ Changelog
 ------------------
 
 - Added Google Translation Service ajax service [ramon]
+
 - Added babel view on AT [sneridagh]
+
 - Added babel view on dexterity [ramon]
-- Added the option to not filter language on folder_contents view [ramon]
+
+- Added the option to not filter language on folder_contents view
+  [ramon]
+
 - Added to translation menu to edit a translated language [ramon]
+
 - Initial setup of a site moving content to language folders [ramon]
+
 
 0.1a2 - 2011-12-04
 ------------------
 
 - Improved Control Panel [ramon]
-- Improved Language Control Panel site languages selector widget to be more usable
-- Setup the root folder layout for each configured site languages on languages control panel save settings [ramon, sneridagh]
+
+- Improved Language Control Panel site languages selector widget to be
+  more usable.
+
+- Setup the root folder layout for each configured site languages on
+  languages control panel save settings [ramon, sneridagh]
+
 - Adapt languageselector viewlet from LP [ramon]
+
 - Re-enable and adapt the searchResults patch again [ramon]
-- Cleaning description of packages and registerProfile of paml [sneridagh]
+
+- Cleaning description of packages and registerProfile of paml
+  [sneridagh]
+
 
 0.1a1 - 2011-10-03
 ------------------
