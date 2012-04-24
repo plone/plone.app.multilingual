@@ -29,7 +29,7 @@ msgstr "多言語設定"
 
 #: ./browser/controlpanel.py:211
 msgid "Negotiation Scheme"
-msgstr "言語ネゴシエーション設定
+msgstr "言語ネゴシエーション設定"
 
 #: ./browser/controlpanel.py:208
 msgid "Site Languages"
@@ -145,7 +145,7 @@ msgstr "コンテンツアイテムの言語を利用する"
 #. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
 #: ./browser/controlpanel.py:84
 msgid "heading_set_language_cookie_always"
-"言語クッキーを常に設定する（set_languageリクエストパラメータがない場合にも）"
+msgstr "言語クッキーを常に設定する（set_languageリクエストパラメータがない場合にも）"
 
 #. Default: "Default site language"
 #: ./browser/controlpanel.py:24
