@@ -100,7 +100,6 @@ class SetupMultilingualSite(object):
         pc = getToolByName(context, "portal_catalog")
         pl = getToolByName(context, "portal_languages")
         pu = getToolByName(context, "portal_url")
-        languages = pl.getSupportedLanguages()
         defaultLanguage = pl.getDefaultLanguage()
         folderId = "%s" % defaultLanguage
         folder = getattr(self.context, folderId, None)

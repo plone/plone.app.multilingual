@@ -1,23 +1,21 @@
-from five import grok
-from z3c.form import button
-from plone.directives import form
+import urllib
+
 from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
-from plone.multilingual.interfaces import (
-    ITranslationManager,
-    ITranslatable,
-)
-from plone.multilingual.interfaces import ILanguage
-from zope.component import getUtility
-from plone.registry.interfaces import IRegistry
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
-
-from plone.app.multilingual.browser.interfaces import ICreateTranslation
-from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
-from plone.app.multilingual import _
 from Products.Five import BrowserView
-from plone.multilingual.interfaces import ITranslationManager, ILanguage
-import urllib
+from five import grok
+from plone.directives import form
+from plone.multilingual.interfaces import ILanguage
+from plone.multilingual.interfaces import ITranslatable
+from plone.multilingual.interfaces import ITranslationManager
+from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
+from plone.registry.interfaces import IRegistry
+from z3c.form import button
+from zope.component import getUtility
+
+from plone.app.multilingual import _
+from plone.app.multilingual.browser.interfaces import ICreateTranslation
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 
 
 class gtranslation_service_dexterity(BrowserView):

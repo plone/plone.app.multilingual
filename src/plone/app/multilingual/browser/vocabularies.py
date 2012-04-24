@@ -1,9 +1,17 @@
-from plone.multilingual.interfaces import ITranslationManager, ILanguage
-from zope.schema.interfaces import IContextSourceBinder
-from zope.schema.vocabulary import SimpleVocabulary
 from Products.CMFCore.utils import getToolByName
 from five import grok
+from plone.i18n.locales.interfaces import ILanguageAvailability
+from plone.multilingual.interfaces import ILanguage
+from plone.multilingual.interfaces import ITranslationManager
 from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
+from zope.component import getGlobalSiteManager
+from zope.i18nmessageid import MessageFactory
+from zope.interface import implements
+from zope.schema.interfaces import IContextSourceBinder
+from zope.schema.interfaces import IVocabularyFactory
+from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
+
+_ = MessageFactory('plone.app.multilingual')
 
 
 @grok.provider(IContextSourceBinder)
@@ -70,19 +78,6 @@ def deletable_languages(context):
     return SimpleVocabulary(languages)
 
 
-
-from plone.i18n.locales.interfaces import ILanguageAvailability
-from zope.component import getGlobalSiteManager
-from zope.i18nmessageid import Message, MessageFactory
-from zope.interface import implements
-from zope.schema.interfaces import IVocabularyFactory
-from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
-
-from Products.CMFCore.utils import getToolByName
-
-_ = MessageFactory('plone.app.multilingual')
-
-
 def sort_key(language):
     return language[1]
 
@@ -109,6 +104,7 @@ class AllContentLanguageVocabulary(object):
 
 AllContentLanguageVocabularyFactory = AllContentLanguageVocabulary()
 
+
 class AllAvailableLanguageVocabulary(object):
     """Vocabulary factory for all enabled languages in the portal.
     """
@@ -132,4 +128,3 @@ class AllAvailableLanguageVocabulary(object):
         return SimpleVocabulary(items)
 
 AllAvailableLanguageVocabularyFactory = AllAvailableLanguageVocabulary()
-

@@ -8,7 +8,6 @@ from zope.component import getMultiAdapter
 from Acquisition import aq_inner
 from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
 from plone.app.i18n.locales.browser.selector import LanguageSelector
-from AccessControl.SecurityManagement import getSecurityManager
 
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
@@ -59,19 +58,18 @@ class BabelUtils(BrowserView):
     def languages(self):
         context = aq_inner(self.context)
 
-        ls = LanguageSelector(self.context, self.request, None, None)
+        ls = LanguageSelector(context, self.request, None, None)
         ls.update()
         results = ls.languages()
 
         supported_langs = [v['code'] for v in results]
         missing = set([str(c) for c in supported_langs])
 
-        lsv = LanguageSelectorViewlet(self.context, self.request, None, None)
+        lsv = LanguageSelectorViewlet(context, self.request, None, None)
         translations = lsv._translations(missing)
 
         # We want to see the babel_view
         append_path = ('', 'babel_view',)
-        _checkPermission = getSecurityManager().checkPermission
         non_viewable = set()
         for data in results:
             code = str(data['code'])
