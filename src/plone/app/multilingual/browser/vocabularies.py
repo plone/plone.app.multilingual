@@ -121,7 +121,8 @@ class AllAvailableLanguageVocabulary(object):
             languages = util.getLanguages()
 
         supported_languages = ltool.supported_langs
-        items = [(l, languages[l].get('name', l)) for l in languages if l in supported_languages]
+        items = [(l, languages[l].get('name', l)) for l in languages
+                 if l in supported_languages]
 
         items.sort(key=sort_key)
         items = [SimpleTerm(i[0], i[0], i[1]) for i in items]

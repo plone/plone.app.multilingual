@@ -11,9 +11,8 @@ from plone.app.multilingual.browser.interfaces import (
     ITranslateMenu,
     ITranslateSubMenuItem,
 )
-from plone.app.multilingual.browser.vocabularies import (untranslated_languages,
-                                                        translated_languages,
-                                                        translated_urls)
+from plone.app.multilingual.browser.vocabularies import (
+    untranslated_languages, translated_languages, translated_urls)
 from plone.app.multilingual import _
 
 
@@ -87,8 +86,9 @@ class TranslateMenu(BrowserMenu):
         menu.append({
             "title": _(u"title_remove_translations",
                        default=u"Remove translations..."),
-            "description": _(u"description_remove_translations",
-                             default=u"Delete translations or remove the relations"),
+            "description": _(
+                u"description_remove_translations",
+                default=u"Delete translations or remove the relations"),
             "action": url + "/remove_translations",
             "selected": False,
             "icon": None,
@@ -107,7 +107,8 @@ class TranslateMenu(BrowserMenu):
             menu.append({
                 "title": _(u"title_language_settings",
                            default=u"Language settings..."),
-                "description": _(u"description_language_settings", default=u""),
+                "description": _(u"description_language_settings",
+                                   default=u""),
                 "action": portal_state.portal_url() + \
                           "/@@language-controlpanel",
                 "selected": False,

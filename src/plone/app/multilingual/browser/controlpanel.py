@@ -35,7 +35,8 @@ class IMultiLanguageSelectionSchema(Interface):
                       default=u"The default language used for the content "
                               u"and the UI of this site."),
         required=True,
-        vocabulary="plone.app.multilingual.vocabularies.AllContentLanguageVocabulary")
+        vocabulary=("plone.app.multilingual.vocabularies."
+                    "AllContentLanguageVocabulary"))
 
     available_languages = List(
         title=_(u"heading_available_languages",
@@ -46,7 +47,8 @@ class IMultiLanguageSelectionSchema(Interface):
         required=True,
         missing_value=set(),
         value_type=Choice(
-            vocabulary="plone.app.multilingual.vocabularies.AllContentLanguageVocabulary"))
+            vocabulary=("plone.app.multilingual.vocabularies."
+                        "AllContentLanguageVocabulary")))
 
     # show_original_on_translation = Bool(
     #     title=_(u"heading_show_original_on_translation",
@@ -61,8 +63,11 @@ class IMultiLanguageExtraOptionsSetupSchema(IMultiLanguageExtraOptionsSchema):
     set_default_language = Bool(
         title=_(u"heading_set_default_language",
                 default=u"Set the default language"),
-        description=_(u"description_set_default_language",
-                default=u"Set the default language on all content without language defined. This value is not stored so you need to check every time you want to run it"),
+        description=_(
+            u"description_set_default_language",
+            default=(u"Set the default language on all content without "
+                     u"language defined. This value is not stored so you need "
+                     u"to check every time you want to run it")),
         default=False,
         required=False,
         )
@@ -70,8 +75,11 @@ class IMultiLanguageExtraOptionsSetupSchema(IMultiLanguageExtraOptionsSchema):
     move_content_to_language_folder = Bool(
         title=_(u"heading_move_content_to_language_folder",
                 default=u"Move root content to default language folder"),
-        description=_(u"description_move_content_to_language_folder",
-                default=u"Move the content that is on the root folder to the default language folder. This value is not stored so you need to check every time you want to run it"),
+        description=_(
+            u"description_move_content_to_language_folder",
+            default=(u"Move the content that is on the root folder to the "
+                     u"default language folder. This value is not stored so "
+                     u"you need to check every time you want to run it")),
         default=False,
         required=False,
         )
@@ -90,34 +98,46 @@ class IMultiLanguageOptionsSchema(Interface):
         )
 
     use_path_negotiation = Bool(
-        title=_(u"heading_language_codes_in_URL",
-                default=u"Use language codes in URL path for manual override."),
-        description=_(u"description_language_codes_in_URL",
-                default=u"Use language codes in URL path for manual override."),
+        title=_(
+            u"heading_language_codes_in_URL",
+            default=u"Use language codes in URL path for manual override."),
+        description=_(
+            u"description_language_codes_in_URL",
+            default=u"Use language codes in URL path for manual override."),
         required=False,
         )
 
     use_cookie_negotiation = Bool(
         title=_(u"heading_cookie_manual_override",
-                default=u"Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"),
-        description=_(u"description_cookie_manual_override",
-                default=u"Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"),
+                default=(u"Use cookie for manual override. (Required for "
+                         u"the language selector viewlet to be rendered.)")),
+        description=_(
+            u"description_cookie_manual_override",
+            default=(u"Use cookie for manual override. (Required for the "
+                     u"language selector viewlet to be rendered.)")),
         required=False,
         )
 
     authenticated_users_only = Bool(
         title=_(u"heading_auth_cookie_manual_override",
                 default=u"Authenticated users only."),
-        description=_(u"description_auth_ookie_manual_override",
-                default=u"Authenticated users only. Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"),
+        description=_(
+            u"description_auth_ookie_manual_override",
+            default=(u"Authenticated users only. Use cookie for manual "
+                     u"override. (Required for the language selector viewlet "
+                     u"to be rendered.)")),
         required=False,
         )
 
     set_cookie_everywhere = Bool(
-        title=_(u"heading_set_language_cookie_always",
-                default=u"Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."),
-        description=_(u"description_set_language_cookie_always",
-                default=u"Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."),
+        title=_(
+            u"heading_set_language_cookie_always",
+            default=(u"Set the language cookie always, i.e. also when the "
+                     u"'set_language' request parameter is absent.")),
+        description=_(
+            u"description_set_language_cookie_always",
+            default=(u"Set the language cookie always, i.e. also when the "
+                     u"'set_language' request parameter is absent.")),
         required=False,
         )
 
@@ -200,14 +220,22 @@ class MultiLanguageOptionsControlPanelAdapter(LanguageControlPanelAdapter):
     def set_use_request_negotiation(self, value):
         self.context.use_request_negotiation = value
 
-    use_content_negotiation = property(get_use_content_negotiation, set_use_content_negotiation)
-    use_path_negotiation = property(get_use_path_negotiation, set_use_path_negotiation)
-    use_cookie_negotiation = property(get_use_cookie_negotiation, set_use_cookie_negotiation)
-    authenticated_users_only = property(get_authenticated_users_only, set_authenticated_users_only)
-    set_cookie_everywhere = property(get_set_cookie_everywhere, set_set_cookie_everywhere)
-    use_subdomain_negotiation = property(get_use_subdomain_negotiation, set_use_subdomain_negotiation)
-    use_cctld_negotiation = property(get_use_cctld_negotiation, set_use_cctld_negotiation)
-    use_request_negotiation = property(get_use_request_negotiation, set_use_request_negotiation)
+    use_content_negotiation = property(get_use_content_negotiation,
+                                       set_use_content_negotiation)
+    use_path_negotiation = property(get_use_path_negotiation,
+                                    set_use_path_negotiation)
+    use_cookie_negotiation = property(get_use_cookie_negotiation,
+                                      set_use_cookie_negotiation)
+    authenticated_users_only = property(get_authenticated_users_only,
+                                        set_authenticated_users_only)
+    set_cookie_everywhere = property(get_set_cookie_everywhere,
+                                     set_set_cookie_everywhere)
+    use_subdomain_negotiation = property(get_use_subdomain_negotiation,
+                                         set_use_subdomain_negotiation)
+    use_cctld_negotiation = property(get_use_cctld_negotiation,
+                                     set_use_cctld_negotiation)
+    use_request_negotiation = property(get_use_request_negotiation,
+                                       set_use_request_negotiation)
 
 
 class MultiLanguageControlPanelAdapter(LanguageControlPanelAdapter):
@@ -233,7 +261,8 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
     def __init__(self, context):
         super(MultiLanguageExtraOptionsAdapter, self).__init__(context)
         self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        self.settings = self.registry.forInterface(
+            IMultiLanguageExtraOptionsSchema)
 
     def get_filter_content(self):
         return self.settings.filter_content
@@ -279,8 +308,9 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
     set_default_language = property(get_set_default_language,
                                     set_set_default_language)
 
-    move_content_to_language_folder = property(get_move_content_to_language_folder,
-                                               set_move_content_to_language_folder)
+    move_content_to_language_folder = property(
+        get_move_content_to_language_folder,
+        set_move_content_to_language_folder)
 
 selection = FormFieldsets(IMultiLanguageSelectionSchema)
 selection.label = _(u'Site Languages')
@@ -301,8 +331,8 @@ class LanguageControlPanel(BasePanel):
     label = _("Multilingual Settings")
     description = _("""All the configuration of P.A.M. If you want to set
                        the default language to all the content without language
-                       and move all the content on the root folder to the default
-                       language folder, go to Extra Options section""")
+                       and move all the content on the root folder to the
+                       default language folder, go to Extra Options section""")
     form_name = _("Multilingual Settings")
 
     @form.action(_(u'label_save', default=u'Save'), name=u'save')
@@ -322,8 +352,8 @@ class LanguageControlPanel(BasePanel):
                  validator=null_validator,
                  name=u'cancel')
     def handle_cancel_action(self, action, data):
-        IStatusMessage(self.request).addStatusMessage(_Plone("Changes canceled."),
-                                                      type="info")
+        IStatusMessage(self.request).addStatusMessage(
+            _Plone("Changes canceled."), type="info")
         url = getMultiAdapter((self.context, self.request),
                               name='absolute_url')()
         self.request.response.redirect(url + '/plone_control_panel')

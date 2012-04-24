@@ -158,12 +158,14 @@ class LanguageSelectorViewlet(LanguageSelector):
                         name='plone_context_state')
                 if direct:
                     try:
-                        data['url'] = state.canonical_object_url() + appendtourl
+                        data['url'] = state.canonical_object_url() + \
+                            appendtourl
                     except AttributeError:
                         data['url'] = context.absolute_url() + appendtourl
                 else:
                     try:
-                        data['url'] = state.canonical_object_url() + set_language
+                        data['url'] = state.canonical_object_url() + \
+                            set_language
                     except AttributeError:
                         data['url'] = context.absolute_url() + set_language
             else:
@@ -190,5 +192,3 @@ class LanguageSelectorViewlet(LanguageSelector):
         # filter out non-viewable items
         results = [r for r in results if r['code'] not in non_viewable]
         return results
-
-

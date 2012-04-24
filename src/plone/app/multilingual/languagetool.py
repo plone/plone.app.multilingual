@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 # vim: set ts=4 sw=4:
 
-def setLanguageBindingsCookieWins(self, usePath=1, useContent=1, useCookie=1, useRequest=1, useDefault=1,
-                        useCcTLD=0, useSubdomain=0, authOnly=0):
+
+def setLanguageBindingsCookieWins(self, usePath=1, useContent=1, useCookie=1,
+                                  useRequest=1, useDefault=1,
+                                  useCcTLD=0, useSubdomain=0, authOnly=0):
     """Setup the current language stuff."""
     langs = []
     if usePath:
@@ -51,7 +53,8 @@ def setLanguageBindingsCookieWins(self, usePath=1, useContent=1, useCookie=1, us
 
     # Build list
     # patched here - cookie should win
-    langs = langsPath+langsCookie+langsContent+langsSubdomain+langsCcTLD+langsRequest+langsDefault
+    langs = langsPath + langsCookie + langsContent + langsSubdomain + \
+        langsCcTLD + langsRequest + langsDefault
 
     # Filter None languages
     langs = [lang for lang in langs if lang is not None]

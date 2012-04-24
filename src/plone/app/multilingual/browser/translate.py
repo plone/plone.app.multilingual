@@ -38,7 +38,7 @@ class gtranslation_service_dexterity(BrowserView):
                     question = question.raw
             else:
                 return _("Invalid field")
-            if len(question)>1600:
+            if len(question) > 1600:
                 return _("Too long field")
             data = {'key': settings.google_translation_key,
                         'target': lang_target,
@@ -66,10 +66,11 @@ class gtranslation_service_at(BrowserView):
             lang_source = self.request.form['lang_source']
             orig_object = manager.get_translation(lang_source)
             try:
-                question = orig_object.getField(self.request.form['field']).get(orig_object)
+                question = orig_object.getField(
+                    self.request.form['field']).get(orig_object)
             except AttributeError:
                 return _("Invalid field")
-            if len(question)>1600:
+            if len(question) > 1600:
                 return _("Too long field")
             data = {'key': settings.google_translation_key,
                         'target': lang_target,
@@ -109,8 +110,9 @@ class TranslationForm(form.SchemaForm):
             registry = getUtility(IRegistry)
             settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
             if settings.redirect_babel_view:
-                return self.request.response.redirect(translated.absolute_url() \
-                    + '/babel_edit')
+                return self.request.response.redirect(
+                    translated.absolute_url() + '/babel_edit')
             else:
-                return self.request.response.redirect(translated.absolute_url() \
-                    + '/edit?set_language=%s' % language)
+                return self.request.response.redirect(
+                    translated.absolute_url() + '/edit?set_language=%s' %
+                    language)

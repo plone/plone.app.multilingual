@@ -57,7 +57,8 @@ class SetupMultilingualSite(object):
         if not doneSomething:
             return "Nothing done."
         else:
-            return "Setup of language root folders on Plone site '%s'" % self.context.getId()
+            return "Setup of language root folders on Plone site '%s'" % (
+                self.context.getId())
 
     def linkTranslations(self):
         """
@@ -92,7 +93,8 @@ class SetupMultilingualSite(object):
             if obj.language == '':
                 obj.language = defaultLanguage
                 obj.reindexObject()
-                LOG.info("Set languge %s on object %s" % (defaultLanguage, '/'.join(obj.getPhysicalPath())))
+                LOG.info("Set languge %s on object %s" % (
+                    defaultLanguage, '/'.join(obj.getPhysicalPath())))
 
     def move_default_language_content(self):
         # Move the content at defaultLanguge on the root folder
@@ -105,13 +107,15 @@ class SetupMultilingualSite(object):
         folder = getattr(self.context, folderId, None)
         portal = pu.getPortalObject()
         path = '/'.join(portal.getPhysicalPath())
-        objects = pc.searchResults(path={'query': path, 'depth': 1}, language=defaultLanguage)
+        objects = pc.searchResults(path={'query': path, 'depth': 1},
+                                   language=defaultLanguage)
         for brain in objects:
             if brain.id != defaultLanguage:
                 old_path = brain.getPath()
                 cutted = self.context.manage_cutObjects(brain.id)
                 folder.manage_pasteObjects(cutted)
-                LOG.info("Moved object %s to lang folder %s" % (old_path, defaultLanguage))
+                LOG.info("Moved object %s to lang folder %s" % (
+                    old_path, defaultLanguage))
 
     def setUpLanguage(self, code, name):
         """

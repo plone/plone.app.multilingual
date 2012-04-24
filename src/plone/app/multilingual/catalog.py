@@ -18,6 +18,7 @@ from App.special_dtml import DTMLFile
 NO_FILTER = ['language', 'UID', 'id', 'getId']
 _enabled = []
 
+
 @indexer(ITranslatable)
 def language(object, **kw):
     language = ILanguage(object).get_language()
@@ -35,7 +36,8 @@ def language_filter(query):
     for key in NO_FILTER:    # any "nofilter" indexing prevent mangling
         if key in query:
             return
-    query['language'] = [languageTool.getPreferredLanguage(), LANGUAGE_INDEPENDENT]
+    query['language'] = [languageTool.getPreferredLanguage(),
+                         LANGUAGE_INDEPENDENT]
 
 
 def AlreadyApplied(patch):
@@ -70,19 +72,21 @@ def I18nAwareFolderContents():
 
     def contents_table(self):
         try:
-            settings = getUtility(IRegistry).forInterface(IMultiLanguageExtraOptionsSchema)
+            settings = getUtility(IRegistry).forInterface(
+                IMultiLanguageExtraOptionsSchema)
         except KeyError:
             table = FolderContentsTable(aq_inner(self.context), self.request)
             return table.render()
         if settings.filter_content:
             table = FolderContentsTable(aq_inner(self.context), self.request)
         else:
-            table = FolderContentsTable(aq_inner(self.context), self.request, contentFilter={'language':'all'})
+            table = FolderContentsTable(aq_inner(self.context), self.request,
+                                        contentFilter={'language': 'all'})
         return table.render()
 
-    FolderContentsView.__pam_old_contents_table = FolderContentsView.contents_table
+    FolderContentsView.__pam_old_contents_table = \
+        FolderContentsView.contents_table
     FolderContentsView.contents_table = contents_table
-
 
 
 I18nAwareCatalog()

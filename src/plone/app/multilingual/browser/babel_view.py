@@ -25,7 +25,8 @@ class BabelEdit(BrowserView):
         self.request = request
 
     def __call__(self):
-        self.request.RESPONSE.redirect(self.context.absolute_url() + '/at_babel_edit')
+        self.request.RESPONSE.redirect(self.context.absolute_url() +
+                                       '/at_babel_edit')
 
 
 class BabelUtils(BrowserView):
@@ -33,7 +34,8 @@ class BabelUtils(BrowserView):
     def __init__(self, context, request):
         self.context = context
         self.request = request
-        portal_state = getMultiAdapter((context, request), name="plone_portal_state")
+        portal_state = getMultiAdapter((context, request),
+                                       name="plone_portal_state")
         self.portal_url = portal_state.portal_url()
         self.group = ITranslationManager(self.context)
 

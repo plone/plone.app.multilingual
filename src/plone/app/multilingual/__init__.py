@@ -8,4 +8,4 @@ from languagetool import setLanguageBindingsCookieWins
 LanguageBinding.setLanguageBindings = setLanguageBindingsCookieWins
 
 from plone.app.multilingual import catalog
-catalog # pyflakes
+catalog  # pyflakes
