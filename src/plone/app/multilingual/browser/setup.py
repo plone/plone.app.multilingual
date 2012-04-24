@@ -172,7 +172,14 @@ class SetupMultilingualSite(object):
             language = self.defaultLanguage
         target = self.folders[language]
         objects = self.context.manage_cutObjects(pageId)
-        target.manage_pasteObjects(objects)
+        try:
+            target.manage_pasteObjects(objects)
+        except ValueError, exc:
+            # This portal_type may not be allowed.  This should not be
+            # fatal, so we only log a warning.
+            LOG.warn("Could not move default page '%s' to folder '%s': %s"
+                     % (pageId, target.getId(), exc))
+            return False
         target.setDefaultPage(pageId)
         target.reindexObject()
         defaultPage = getattr(target, pageId)

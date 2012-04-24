@@ -4,6 +4,10 @@ Changelog
 1.0b2 (unreleased)
 ------------------
 
+- Do not fail when the front-page cannot be moved to a new folder
+  during setup.
+  [maurits]
+
 - Make it possible to override the portal_type that is used when
   creating a root language folder.
   [maurits]
