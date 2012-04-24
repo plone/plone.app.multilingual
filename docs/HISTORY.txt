@@ -4,7 +4,9 @@ Changelog
 1.0b2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Make it possible to override the portal_type that is used when
+  creating a root language folder.
+  [maurits]
 
 
 1.0b1 - 2012-04-03

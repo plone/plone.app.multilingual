@@ -25,6 +25,9 @@ class SetupView(BrowserView):
 
 class SetupMultilingualSite(object):
 
+    # portal_type that is added as root language folder:
+    folder_type = 'Folder'
+
     def __init__(self, context=None):
         self.previousDefaultPageId = None
         self.context = context
@@ -126,7 +129,7 @@ class SetupMultilingualSite(object):
         folder = getattr(self.context, folderId, None)
         wftool = getToolByName(self.context, 'portal_workflow')
         if folder is None:
-            self.context.invokeFactory('Folder', folderId)
+            self.context.invokeFactory(self.folder_type, folderId)
             folder = getattr(self.context, folderId)
             folder.setLanguage(code)
             folder.setTitle(name)
