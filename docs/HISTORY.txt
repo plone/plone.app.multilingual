@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.0b1 - 2012-4-3
-----------------
+1.0b1 - 2012-04-03
+------------------
 
 - Added Google Translation Service ajax service [ramon]
 - Added babel view on AT [sneridagh]
@@ -11,8 +11,8 @@ Changelog
 - Added to translation menu to edit a translated language [ramon]
 - Initial setup of a site moving content to language folders [ramon]
 
-0.1a2 - 2011-12-4
------------------
+0.1a2 - 2011-12-04
+------------------
 
 - Improved Control Panel [ramon]
 - Improved Language Control Panel site languages selector widget to be more usable
@@ -21,7 +21,7 @@ Changelog
 - Re-enable and adapt the searchResults patch again [ramon]
 - Cleaning description of packages and registerProfile of paml [sneridagh]
 
-0.1a1 - 2011-10-3
------------------
+0.1a1 - 2011-10-03
+------------------
 
 - Initial version [ramon, awello, sneridagh]
