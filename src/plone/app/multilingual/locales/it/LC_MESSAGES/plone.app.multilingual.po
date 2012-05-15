@@ -1,0 +1,306 @@
+# Giorgio Borelli <giorgio@giorgioborelli.it, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.2b3\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"PO-Revision-Date: 2012-05-15 16:37+0000\n"
+"Last-Translator: Giorgio Borelli <giorgio@giorgioborelli.it>\n"
+"Language-Team: Plone italian translation group <plone-italian-translation-discussion@lists.coactivate.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: it\n"
+"Language-Name: Italian\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone.app.multilingual\n"
+"X-Is-Fallback-For: it-ch it-it\n"
+
+#: ../browser/translate.py:95
+msgid "Create"
+msgstr "Crea"
+
+#: ../browser/item.pt:18
+msgid "Description"
+msgstr "Descrizione"
+
+#: ../browser/controlpanel.py:322
+msgid "Extra options"
+msgstr "Opzioni extra"
+
+#: ../browser/translate.py:40
+msgid "Invalid field"
+msgstr "Campo non valido"
+
+#: ../browser/controlpanel.py:331
+msgid "Multilingual Settings"
+msgstr "Impostazioni linuga"
+
+#: ../browser/translate.py:27
+msgid "Need a field"
+msgstr ""
+
+#: ../browser/controlpanel.py:319
+msgid "Negotiation Scheme"
+msgstr ""
+
+#: ../browser/controlpanel.py:316
+msgid "Site Languages"
+msgstr "Lingue del sito"
+
+#: ../browser/item.pt:13
+msgid "Title"
+msgstr "Titolo"
+
+#: ../browser/translate.py:42
+msgid "Too long field"
+msgstr "Campo troppo lungo"
+
+#. Default: "Add translations"
+#: ../browser/add_translation_form.py:22
+msgid "add_translations"
+msgstr "Aggiungi traduzioni"
+
+#: ../browser/interfaces.py:45
+msgid "content"
+msgstr "Contenuto"
+
+#: ../browser/menu.py:75
+msgid "description_add_translations"
+msgstr ""
+
+#. Default: "Authenticated users only. Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
+#: ../browser/controlpanel.py:124
+msgid "description_auth_ookie_manual_override"
+msgstr ""
+
+#. Default: "The languages in which the site should be translatable."
+#: ../browser/controlpanel.py:44
+msgid "description_available_languages"
+msgstr "Lingue disponibili per la traduzione del sito"
+
+#. Default: "Babel edit ${lang_name}"
+#: ../browser/menu.py:58
+msgid "description_babeledit_menu"
+msgstr ""
+
+#. Default: "Use browser language request negotiation."
+#: ../browser/controlpanel.py:163
+msgid "description_browser_language_request_negotiation"
+msgstr ""
+
+#. Default: "Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
+#: ../browser/controlpanel.py:114
+msgid "description_cookie_manual_override"
+msgstr ""
+
+#. Default: "Filter using language the content on folder_contents"
+#: ../interfaces.py:18
+msgid "description_filter_content"
+msgstr ""
+
+#. Default: "Is a paying API in order to use google translation service"
+#: ../interfaces.py:41
+msgid "description_google_translation_key"
+msgstr ""
+
+#. Default: "Use language codes in URL path for manual override."
+#: ../browser/controlpanel.py:104
+msgid "description_language_codes_in_URL"
+msgstr ""
+
+#. Default: "Use the language of the content item."
+#: ../browser/controlpanel.py:95
+msgid "description_language_of_the_content"
+msgstr "Usa la lingua del contenuto."
+
+#: ../browser/menu.py:110
+msgid "description_language_settings"
+msgstr ""
+
+#. Default: "Move the content that is on the root folder to the default language folder. This value is not stored so you need to check every time you want to run it"
+#: ../browser/controlpanel.py:78
+msgid "description_move_content_to_language_folder"
+msgstr ""
+
+#. Default: "After creating a new translation redirecto to babel view"
+#: ../interfaces.py:29
+msgid "description_redirect_babel_view"
+msgstr ""
+
+#. Default: "Delete translations or remove the relations"
+#: ../browser/menu.py:89
+msgid "description_remove_translations"
+msgstr "Cancella le traduzioni o rimuovi le relazioni tra i contenuti tradotti."
+
+#. Default: "Set the default language on all content without language defined. This value is not stored so you need to check every time you want to run it"
+#: ../browser/controlpanel.py:66
+msgid "description_set_default_language"
+msgstr ""
+
+#. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
+#: ../browser/controlpanel.py:137
+msgid "description_set_language_cookie_always"
+msgstr ""
+
+#. Default: "The default language used for the content and the UI of this site."
+#: ../browser/controlpanel.py:34
+msgid "description_site_language"
+msgstr "La lingua usata per il contenuto e l'interfaccia utente del sito."
+
+#. Default: "Use top-level domain (e.g.: www.plone.de)."
+#: ../browser/controlpanel.py:155
+msgid "description_top_level_domain"
+msgstr "Usa i domini per le lingue (es.: www.plone.it)."
+
+#. Default: "Translate into ${lang_name}"
+#: ../browser/menu.py:35
+msgid "description_translate_into"
+msgstr "Traduci in ${lang_name}"
+
+#. Default: "Use subdomain (e.g.: de.plone.org)."
+#: ../browser/controlpanel.py:147
+msgid "description_use_subdomain"
+msgstr "Usa i sottodomini (es.: it.plone.org)."
+
+#. Default: "Authenticated users only."
+#: ../browser/controlpanel.py:122
+msgid "heading_auth_cookie_manual_override"
+msgstr "Solo utenti autenticati."
+
+#. Default: "Available languages"
+#: ../browser/controlpanel.py:42
+msgid "heading_available_languages"
+msgstr "Lingue disponibili"
+
+#. Default: "Use browser language request negotiation."
+#: ../browser/controlpanel.py:161
+msgid "heading_browser_language_request_negotiation"
+msgstr ""
+
+#. Default: "Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
+#: ../browser/controlpanel.py:111
+msgid "heading_cookie_manual_override"
+msgstr ""
+
+#. Default: "Filter content by language."
+#: ../interfaces.py:15
+msgid "heading_filter_content"
+msgstr ""
+
+#. Default: "Google Translation API Key"
+#: ../interfaces.py:38
+msgid "heading_google_translation_key"
+msgstr ""
+
+#. Default: "Use language codes in URL path for manual override."
+#: ../browser/controlpanel.py:101
+msgid "heading_language_codes_in_URL"
+msgstr ""
+
+#. Default: "Use the language of the content item."
+#: ../browser/controlpanel.py:93
+msgid "heading_language_of_the_content"
+msgstr "Usa la lingua del contenuto."
+
+#. Default: "Move root content to default language folder"
+#: ../browser/controlpanel.py:76
+msgid "heading_move_content_to_language_folder"
+msgstr ""
+
+#. Default: "Redirect on creation to babel view."
+#: ../interfaces.py:26
+msgid "heading_redirect_babel_view"
+msgstr ""
+
+#. Default: "Set the default language"
+#: ../browser/controlpanel.py:64
+msgid "heading_set_default_language"
+msgstr ""
+
+#. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
+#: ../browser/controlpanel.py:133
+msgid "heading_set_language_cookie_always"
+msgstr ""
+
+#. Default: "Default site language"
+#: ../browser/controlpanel.py:32
+msgid "heading_site_language"
+msgstr "Lingua di default del sito"
+
+#. Default: "Use top-level domain (e.g.: www.plone.de)."
+#: ../browser/controlpanel.py:153
+msgid "heading_top_level_domain"
+msgstr "Usa il dominio per le lingue (es.: www.plone.it)"
+
+#. Default: "Use subdomain (e.g.: de.plone.org)."
+#: ../browser/controlpanel.py:145
+msgid "heading_use_subdomain"
+msgstr "Usa i sottodomini per le lingue (e.g. it.plone.org)"
+
+#. Default: "Add translations"
+#: ../browser/add_translation_form.py:20
+msgid "label_add_translations"
+msgstr "Aggiungi traduzioni"
+
+#: ../browser/remove_translation_form.py:20
+msgid "label_remove_translations"
+msgstr ""
+
+#. Default: "Save"
+#: ../browser/controlpanel.py:338
+msgid "label_save"
+msgstr ""
+
+#. Default: "Translate into..."
+#: ../browser/menu.py:128
+msgid "label_translate_menu"
+msgstr "Traduci in..."
+
+#. Default: "ORIGINAL"
+#: ../browser/dexterity_edit.pt:17
+msgid "original"
+msgstr "Originale"
+
+#: ../browser/remove_translation_form.py:32
+msgid "remove selected"
+msgstr "Rimuovi la traduzione selezionata"
+
+#. Default: "Add translations..."
+#: ../browser/menu.py:73
+msgid "title_add_translations"
+msgstr "Aggiungi traduzione..."
+
+#. Default: "Language"
+#: ../browser/interfaces.py:32
+msgid "title_language"
+msgstr "Lingue"
+
+#. Default: "Language settings..."
+#: ../browser/menu.py:108
+msgid "title_language_settings"
+msgstr "Imposazioni lingua"
+
+#: ../browser/interfaces.py:54
+msgid "title_languages"
+msgstr ""
+
+#. Default: "Remove translations..."
+#: ../browser/menu.py:87
+msgid "title_remove_translations"
+msgstr "Rimuovi le trauzioni..."
+
+#. Default: "Manage translations for your content."
+#: ../browser/menu.py:129
+msgid "title_translate_menu"
+msgstr "Gestisci le traduzioni del contenuto"
+
+#. Default: "TRANSLATION TO ${DYNAMIC_CONTENT}"
+#: ../browser/dexterity_edit.pt:32
+msgid "translation_to"
+msgstr "Traduci in ${DYNAMIC_CONTENT}"
+
+#: ../browser/remove_translation_form.py:22
+msgid "unlink selected"
+msgstr ""
+
