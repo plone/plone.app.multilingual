@@ -4,7 +4,14 @@ Changelog
 1.0b2 (unreleased)
 ------------------
 
-- Added italian translation [gborelli]
+- updated .po files
+  [gborelli]
+
+- Added rebuild.sh script in order to simplify updating translations
+  [gborelli]
+
+- Added italian translation
+  [gborelli]
 
 - Do not fail when the front-page cannot be moved to a new folder
   during setup.
