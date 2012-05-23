@@ -68,7 +68,10 @@ class SetupMultilingualSite(object):
         Links the translations of the default language Folders
         """
         doneSomething = False
-        canonical = ITranslationManager(self.folders[self.defaultLanguage])
+        try:
+            canonical = ITranslationManager(self.folders[self.defaultLanguage])
+        except TypeError, e:
+            raise TypeError(str(e) + " Are your folders ITranslatable?")
         for language in self.languages:
             if ((language != self.defaultLanguage) and (not
                 canonical.has_translation(language))):
