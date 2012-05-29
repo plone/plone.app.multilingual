@@ -120,7 +120,7 @@
     />
 
   <browser:page
-    for="plone.dexterity.interfaces.IDexterityItem"
+    for="plone.dexterity.interfaces.IDexterityContent"
     name="babel_view"
     class="plone.dexterity.browser.view.DefaultView"
     template="item.pt"
