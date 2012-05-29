@@ -3,40 +3,33 @@
     "use strict";
 
     function reload_height() {
-        var orig = $('#frame-content .field'),
-            desti = $('#form-target .field'),
-            order = 1;
-        $.each(orig, function (index, value) {
-            if ($(value).height() > $(desti[index]).height()) {
-                $(desti[index]).height($(value).height());
+        var original_fields = $('#frame-content .field'),
+            destination_fields = $('#form-target .field'),
+            order = 1,
+            url_translate = $('input#url_translate').val(),
+            langSource = $('#frame-content #view_language')[0].innerHTML;
+
+        $.each(original_fields, function (index, value) {
+            var original_field = $(value),
+                destination_field = $(destination_fields[index]),
+                original_height = original_field.height(),
+                destination_height = destination_field.height();
+            if (original_height > destination_height) {
+                destination_field.height(original_height);
             } else {
-                $(value).height($(desti[index]).height());
+                original_field.height(destination_height);
             }
-            if (($(value).find('.richtext-field').length > 0) || ($(value).find('.textline-field').length > 0) || ($(value).find('.localstatic-field').length > 0) || ($(value).find('.ArchetypesField-TextField').length > 0)) {
-                $(value).prepend("<div class='translator-widget' id='item_translation_" + order + "'></div>");
-                $(value).children('.translator-widget').click(function () {
-                    var langSource = $('#frame-content #view_language')[0].innerHTML,
-                        field = $(value).attr("id"),
+            if (original_field.find('.richtext-field, textline-field, .localstatic-field, .ArchetypesField-TextField').length > 0) {
+                original_field.prepend("<div class='translator-widget' id='item_translation_" + order + "'></div>");
+                original_field.children('.translator-widget').click(function () {
+                    var field = $(value).attr("id"),
                         // Fetch source of text to translate.
                         jsondata = {
                             'field': field,
                             'lang_source': langSource
                         },
-                        url_translate = $('input#url_translate').val(),
-                        is_tiny = false,
-                        targetelement = false,
-                        editor = false;
-                    if ($(desti[index]).find('input').length) {
-                        // Input field
-                        targetelement = $(desti[index]).find('input');
-                    } else if ($(desti[index]).find('textarea.mce_editable').length) {
-                        // mceEditor
-                        editor = $(desti[index]).find('textarea.mce_editable').attr('id');
-                        is_tiny = true;
-                    } else if ($(desti[index]).find('textarea').length) {
-                        // Textarea field
-                        targetelement = $(desti[index]).find('textarea');
-                    }
+                        targetelement = destination_field.find('input') || destination_field.find("textarea"),
+                        tiny_editor = destination_field.find("textarea.mce_editable");
                     // Now we call the data
                     $.ajax({
                         url: url_translate + '/gtranslation_service',
@@ -44,18 +37,16 @@
                         dataType: 'json',
                         type: 'POST',
                         success: function (data) {
-                            // console.log(data);
                             var text_target = data.data.translations[0].translatedText;
-                            // console.log(text_target);
-                            if (is_tiny) {
-                                tinyMCE.get(editor).setContent(text_target);
+                            if (tiny_editor) {
+                                tinyMCE.get(tiny_editor.attr('id')).setContent(text_target);
                             } else {
                                 targetelement.val(text_target); // Inserts translated text.
                             }
                         }
                     });
                 });
-                $(value).children('.translator-widget').hide();
+                original_field.children('.translator-widget').hide();
                 order += 1;
             }
         });
@@ -81,25 +72,22 @@
         $('#trans-selector').height($('#header-translation').height() + 13 + $('.formTabs').height());
 
         /* select a field on both sides and change the color */
-        var babel_selectec = null,
+        var babel_selected = null,
             orig_babel_select = null;
         $('#babel-edit #fieldset-default .field').click(function () {
             var index = $('#form-target .field').index($(this));
-            if (babel_selectec) {
-                $(babel_selectec).toggleClass("selected");
+            if (babel_selected) {
+                $(babel_selected).toggleClass("selected");
                 $(orig_babel_select).toggleClass("selected");
                 $(orig_babel_select).children('.translator-widget').hide();
             }
-            babel_selectec = this;
+            babel_selected = this;
             $(this).toggleClass("selected");
             orig_babel_select = $('#frame-content .field')[index];
             $(orig_babel_select).toggleClass("selected");
             $(orig_babel_select).children('.translator-widget').show();
         });
 
-    });
-
-    $(window).load(function () { /* initial load the default language left side */
         var url = $('#lang-select option:selected').val();
         $('#frame-content').load(url, function () {
             reload_height();
