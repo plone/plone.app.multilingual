@@ -9,17 +9,6 @@
 <div id="view_language" tal:content="context/language">
 </div>
 
-<div class="field" id="title">
-  <label i18n:translate="Title">Title</label>
-  <h2 class="value localstatic-field" tal:content="context/Title" />
-</div>
-
-<div class="field" id="description">
-  <label i18n:translate="Description">Description</label>
-  <h2  class="value localstatic-field" tal:content="context/Description" />
-</div>
-
-
 <tal:block repeat="widget view/widgets/values">
     <div class="field"  id=""
          tal:attributes="id python:widget.__name__"

@@ -122,9 +122,9 @@
   <browser:page
     for="plone.dexterity.interfaces.IDexterityContent"
     name="babel_view"
-    class="plone.dexterity.browser.view.DefaultView"
+    class=".view.DexterityBabelView"
     template="item.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
