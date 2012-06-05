@@ -1,24 +1,67 @@
 /*global tinyMCE: false, document: false, window: false, jQuery: false */
 (function ($) {
     "use strict";
+    var original_fields = [],
+        destination_fields = [];
 
-    function reload_height() {
-        var original_fields = $('#frame-content .field'),
-            destination_fields = $('#form-target .field'),
-            order = 1,
+    function sync_element(original, destination) {
+        var default_props = {
+            position: "",
+            top: ""
+        },
+            original_top = 0,
+            destination_top = 0,
+            shift = 0;
+        if (destination.is(":visible")) {
+            original.show();
+            if (original.css("position") === "relative") {
+                original.css(default_props);
+            }
+            if (destination.css("position") === "relative") {
+                destination.css(default_props);
+            }
+            original_top = original.position().top;
+            destination_top = destination.position().top;
+            shift = Math.abs(original_top - destination_top);
+            if (original_top > destination_top) {
+                destination.css({
+                    position: 'relative',
+                    top: shift
+                });
+                original.css(default_props);
+            } else {
+                original.css({
+                    position: 'relative',
+                    top: shift
+                });
+                destination.css(default_props);
+            }
+        } else {
+            original.hide();
+            destination.css(default_props);
+            original.css(default_props);
+        }
+    }
+
+    function sync_elements() {
+        var i = 0;
+        $.each(original_fields, function (i) {
+            sync_element($(original_fields[i]), $(destination_fields[i]));
+        });
+    }
+
+    function update_view() {
+        var order = 1,
             url_translate = $('input#url_translate').val(),
             langSource = $('#frame-content #view_language')[0].innerHTML;
 
+        original_fields = $('#frame-content .field');
+        destination_fields = $('#form-target fieldset > .field');
+
         $.each(original_fields, function (index, value) {
             var original_field = $(value),
-                destination_field = $(destination_fields[index]),
-                original_height = original_field.height(),
-                destination_height = destination_field.height();
-            if (original_height > destination_height) {
-                destination_field.height(original_height);
-            } else {
-                original_field.height(destination_height);
-            }
+                destination_field = $(destination_fields[index]);
+            sync_element(original_field, destination_field);
             if (original_field.find('.richtext-field, textline-field, .localstatic-field, .ArchetypesField-TextField').length > 0) {
                 original_field.prepend("<div class='translator-widget' id='item_translation_" + order + "'></div>");
                 original_field.children('.translator-widget').click(function () {
@@ -64,12 +107,10 @@
         $('#lang-select').change(function () {
             var url = $('#lang-select option:selected').val();
             $('#frame-content').load(url, function () {
-                reload_height();
+                $("#frame-content fieldset legend").unwrap().remove();
+                update_view();
             });
         });
-
-        /* header height */
-        $('#trans-selector').height($('#header-translation').height() + 13 + $('.formTabs').height());
 
         /* select a field on both sides and change the color */
         var babel_selected = null,
@@ -90,7 +131,10 @@
 
         var url = $('#lang-select option:selected').val();
         $('#frame-content').load(url, function () {
-            reload_height();
+            $("#frame-content fieldset legend").unwrap().remove();
+            update_view();
         });
+
+        $(".formTabs").click(sync_elements);
     });
 }(jQuery));
