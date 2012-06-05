@@ -8,7 +8,7 @@ from ZTUtils import make_query
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.app.layout.navigation.interfaces import INavigationRoot
 
-from plone.multilingual.interfaces import ITranslationManager
+from plone.multilingual.interfaces import ITranslationManager, ITranslatable
 
 from borg.localrole.interfaces import IFactoryTempFolder
 
@@ -52,7 +52,14 @@ class LanguageSelectorViewlet(LanguageSelector):
                 # TempFolder or portal_factory, can't have a translation
                 continue
 
-            canonical = ITranslationManager(item)
+            try:
+                canonical = ITranslationManager(item)
+            except TypeError:
+                if not ITranslatable.providedBy(item):
+                    raise TypeError('The object "%s", of type "%s" available in %s is not translatable, but needs to be translatable' % \
+                        (item, item.portal_type, item.absolute_url()))
+                else:
+                    raise
 
             item_trans = canonical.get_translations()
             for code, trans in item_trans.items():
