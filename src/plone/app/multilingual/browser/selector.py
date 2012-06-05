@@ -52,7 +52,7 @@ class LanguageSelectorViewlet(LanguageSelector):
                 # TempFolder or portal_factory, can't have a translation
                 continue
 
-            canonical = ITranslationManager(item, None)
+            canonical = ITranslationManager(item)
 
             item_trans = canonical.get_translations()
             for code, trans in item_trans.items():
