@@ -68,16 +68,18 @@ class MultilingualEditForm(DefaultEditForm):
         return None
 
     def render(self):
-        # XXX I don't really know what I am doing here.
-        # Is it safe to split the fieldname and use the info like this? [do3cc]
         for field in self.fields.keys():
             if field in self.schema:
                 if ILanguageIndependentField.providedBy(self.schema[field]):
                     self.widgets[field].addClass('languageindependent')
+            # With plone.autoform, fieldnames from additional schematas
+            # reference their schema by prefixing their fieldname
+            # with schema.__identifier__ and then a dot as a separator
+            # See autoform.txt in the autoform package
             if '.' in field:
                 schemaname, fieldname = field.split('.')
                 for schema in self.additionalSchemata:
-                    if schemaname == schema.__name__ and fieldname in schema:
+                    if schemaname == schema.__identifier__ and fieldname in schema:
                         if ILanguageIndependentField.providedBy(\
                             schema[fieldname]):
                             self.widgets[field].addClass('languageindependent')
