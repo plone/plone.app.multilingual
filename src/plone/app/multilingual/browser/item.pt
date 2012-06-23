@@ -11,8 +11,7 @@
 
 <tal:block repeat="widget view/widgets/values">
     <div class="field"  id=""
-         tal:attributes="id python:widget.__name__"
-         tal:condition="python:widget.__name__ not in ('IBasic.title', 'IBasic.description', 'title', 'description',)">
+         tal:attributes="id python:widget.__name__">
         <label tal:content="widget/label" />
         <br />
         <div class="value" tal:content="structure widget/render" />
