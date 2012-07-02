@@ -48,17 +48,14 @@
 
             // The next calculation of padding is necessary if both elements
             // have to be shifted down.
-
             if (!first && original.prev().is(":visible")) {
                 // Calulate distance between bottom of prev element and top
                 // of current element. add Padding. If > 0, add to more_padding
-                more_padding = Math.max(-1 * (distance(original.prev(), \
-                original) + original_padding - padding), 0);
-                more_padding += Math.max(-1 * (distance(destination.prev(), \
-                destination) + destination_padding - padding), 0);
+                more_padding = Math.max(-1 * (distance(original.prev(), original) + original_padding - padding), 0);
+                more_padding += Math.max(-1 * (distance(destination.prev(), destination) + destination_padding - padding), 0);
             }
             original_padding += more_padding;
-            destination_padding += more_padding
+            destination_padding += more_padding;
             if (original_padding) {
                 original.css({
                     position: 'relative',
@@ -87,9 +84,9 @@
             var $item = $(item),
                 outer_padding = 0,
                 parent = $item.parent();
-            outer_padding = Math.max($item.position().top + $item.height() - (parent.position().top + parent.height()) + padding, 0)
+            outer_padding = Math.max($item.position().top + $item.height() - (parent.position().top + parent.height()) + padding, 0);
             if (outer_padding) {
-                parent.height(parent.height() + outer_padding)
+                parent.height(parent.height() + outer_padding);
             }
         });
     }
@@ -100,8 +97,7 @@
         // the padding.
         var i = 0;
         $.each(original_fields, function (i) {
-            sync_element($(original_fields[i]), $(destination_fields[i]), \
-            padding, i === 0);
+            sync_element($(original_fields[i]), $(destination_fields[i]), padding, i === 0);
         });
     }
 
@@ -114,9 +110,7 @@
         destination_fields = $('#form-target fieldset > .field');
 
         if (original_fields.length > 1) {
-            padding = ($(original_fields[1]).position().top - \
-            $(original_fields[0]).position().top - \
-            $(original_fields[0]).height());
+            padding = ($(original_fields[1]).position().top - $(original_fields[0]).position().top - $(original_fields[0]).height());
         }
         $.each(original_fields, function (index, value) {
             var original_field = $(value),
@@ -131,7 +125,7 @@
                             'field': field,
                             'lang_source': langSource
                         },
-                        targetelement = destination_field.find('input')\ || destination_field.find("textarea"),
+                        targetelement = destination_field.find('input') || destination_field.find("textarea"),
                         tiny_editor = destination_field.find("textarea.mce_editable");
                     // Now we call the data
                     $.ajax({
