@@ -50,11 +50,12 @@
 
   <genericsetup:importStep
       name="pam_reindex"
-      title="Multilingual Reindex catalog"
+      title="Setup indexes for plone.app.multilingual"
       description=""
-      handler=".setuphandlers.importReindexLanguageIndex">
+      handler=".setuphandlers.setup_various">
     <depends name="content"/>
     <depends name="toolset"/>
+    <depends name="catalog"/>
   </genericsetup:importStep>
 
 </configure>
