@@ -3,13 +3,6 @@ from Products.CMFCore.utils import getToolByName
 # The profile id of your package:
 PROFILE_ID = 'profile-plone.app.multilingual:default'
 
-
-def importReindexLanguageIndex(context, logger):
-    catalog = getToolByName(context, 'portal_catalog')
-    logger.info("Rebuilding catalog. This might take very long on large sites.")
-    catalog.manage_catalogRebuild()
-
-
 def add_catalog_indexes(context, logger):
     '''Add index 'language' to portal_catalog and uid_catalog
     '''
@@ -50,6 +43,3 @@ def setup_various(context):
     logger = context.getLogger('plone.app.multiligual')
     site = context.getSite()
     add_catalog_indexes(site, logger)
-    # TODO: Do we really need to clear and rebuild? It might be enough that the 
-    # new indexes are reindexed in add_catalog_indexes
-    importReindexLanguageIndex(site, logger)
