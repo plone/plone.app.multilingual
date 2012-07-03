@@ -4,6 +4,15 @@ Changelog
 1.0b2 (unreleased)
 ------------------
 
+- don't rebuild the complete catalog on installing
+  [pbauer]
+
+- add indexes via setuphandler instead of xml to prevents purging on reinstall
+  [pbauer]
+
+- make babel-view align fields next to each other
+  [do3cc]
+
 - updated .po files
   [gborelli]
 
