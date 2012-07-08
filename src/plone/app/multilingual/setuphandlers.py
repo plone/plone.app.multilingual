@@ -8,7 +8,7 @@ def add_catalog_indexes(context, logger):
     '''
     catalog = getToolByName(context, 'portal_catalog')
     indexes = catalog.indexes()
-    wanted = (('language', 'FieldIndex'),)
+    wanted = (('Language', 'FieldIndex'),)
     
     indexables = []
     for (name, meta_type) in wanted:

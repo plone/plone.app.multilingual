@@ -35,8 +35,8 @@
     <include package=".browser" />
 
     <adapter
-        name="language"
-        factory=".catalog.language"
+        name="Language"
+        factory=".catalog.Language"
     />
 
     <genericsetup:registerProfile

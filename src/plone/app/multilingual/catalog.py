@@ -15,12 +15,12 @@ from plone.registry.interfaces import IRegistry
 from App.special_dtml import DTMLFile
 
 
-NO_FILTER = ['language', 'UID', 'id', 'getId']
+NO_FILTER = ['Language', 'UID', 'id', 'getId']
 _enabled = []
 
 
 @indexer(ITranslatable)
-def language(object, **kw):
+def Language(object, **kw):
     language = ILanguage(object).get_language()
     return language
 
@@ -30,13 +30,13 @@ def language_filter(query):
     languageTool = getToolByName(site, 'portal_languages', None)
     if languageTool is None:
         return
-    if query.get('language') == 'all':
-        del query['language']
+    if query.get('Language') == 'all':
+        del query['Language']
         return
     for key in NO_FILTER:    # any "nofilter" indexing prevent mangling
         if key in query:
             return
-    query['language'] = [languageTool.getPreferredLanguage(),
+    query['Language'] = [languageTool.getPreferredLanguage(),
                          LANGUAGE_INDEPENDENT]
 
 
@@ -53,7 +53,7 @@ def I18nAwareCatalog():
         return
 
     def searchResults(self, REQUEST=None, **kw):
-        if REQUEST is not None and kw.get('language', '') != 'all':
+        if REQUEST is not None and kw.get('Language', '') != 'all':
             language_filter(REQUEST)
         else:
             language_filter(kw)
@@ -81,7 +81,7 @@ def I18nAwareFolderContents():
             table = FolderContentsTable(aq_inner(self.context), self.request)
         else:
             table = FolderContentsTable(aq_inner(self.context), self.request,
-                                        contentFilter={'language': 'all'})
+                                        contentFilter={'Language': 'all'})
         return table.render()
 
     FolderContentsView.__pam_old_contents_table = \

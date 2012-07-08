@@ -19,7 +19,7 @@ samplecontent::
     >>> import transaction
     >>> transaction.commit()
     
-    >>> for cnt,lang in enumerate(['', 'it', 'en']):
+    >>> for cnt,lang in enumerate(['no_language', 'it', 'en']):
     ...     ILanguage(documents[cnt]).set_language(lang)
     ...     documents[cnt].reindexObject()
     
@@ -28,8 +28,9 @@ samplecontent::
 
 query with all::
 
-    >>> kw = {'language': 'all'}
-    >>> used_langs = [x.language for x in catalog.searchResults(request,**kw)]
+    >>> kw = {'Language': 'all'}
+    >>> used_langs = [x.Language for x in catalog.searchResults(request,**kw)]
+    >>> import pdb; pdb.set_trace()
     >>> LANGUAGE_INDEPENDENT in used_langs
     True
     >>> 'it' in used_langs
@@ -39,8 +40,8 @@ query with all::
 
 query for language-independent content::
 
-    >>> kw = {'language': LANGUAGE_INDEPENDENT}
-    >>> lang_independent = [x.language for x in catalog.searchResults(request,**kw)]
+    >>> kw = {'Language': LANGUAGE_INDEPENDENT}
+    >>> lang_independent = [x.Language for x in catalog.searchResults(request,**kw)]
     >>> LANGUAGE_INDEPENDENT in lang_independent
     True
     >>> len(lang_independent) == 1
@@ -48,13 +49,13 @@ query for language-independent content::
 
 query for a language::
 
-    >>> kw = {'language': 'it'}
-    >>> [x.language for x in catalog.searchResults(request,**kw)]
+    >>> kw = {'Language': 'it'}
+    >>> [x.Language for x in catalog.searchResults(request,**kw)]
     ['it']
 
 query without language set (result should contain default_language and independent content)::
     
-    >>> used_langs = [x.language for x in catalog.searchResults(request)]
+    >>> used_langs = [x.Language for x in catalog.searchResults(request)]
     >>> LANGUAGE_INDEPENDENT in used_langs
     True
     >>> 'en' in used_langs

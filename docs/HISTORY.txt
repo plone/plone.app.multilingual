@@ -1,8 +1,15 @@
 Changelog
 =========
 
-1.0b2 (unreleased)
+1.0b3 (unreleased)
 ------------------
+
+
+1.0b2 - 2012-07-08
+------------------
+
+- change language index to Language to LinguaPlone coexistance
+  [ramon]
 
 - don't rebuild the complete catalog on installing
   [pbauer]
