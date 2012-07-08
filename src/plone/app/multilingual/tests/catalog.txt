@@ -18,11 +18,11 @@ samplecontent::
     ...     documents.append(content)
     >>> import transaction
     >>> transaction.commit()
-    
+
     >>> for cnt,lang in enumerate(['no_language', 'it', 'en']):
     ...     ILanguage(documents[cnt]).set_language(lang)
     ...     documents[cnt].reindexObject()
-    
+
     >>> catalog = getToolByName(layer['portal'], 'portal_catalog')
     >>> request = layer['request']
 
@@ -30,7 +30,6 @@ query with all::
 
     >>> kw = {'Language': 'all'}
     >>> used_langs = [x.Language for x in catalog.searchResults(request,**kw)]
-    >>> import pdb; pdb.set_trace()
     >>> LANGUAGE_INDEPENDENT in used_langs
     True
     >>> 'it' in used_langs
@@ -54,7 +53,7 @@ query for a language::
     ['it']
 
 query without language set (result should contain default_language and independent content)::
-    
+
     >>> used_langs = [x.Language for x in catalog.searchResults(request)]
     >>> LANGUAGE_INDEPENDENT in used_langs
     True
