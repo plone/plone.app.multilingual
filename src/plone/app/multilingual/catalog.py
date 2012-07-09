@@ -88,6 +88,9 @@ def I18nAwareFolderContents():
         FolderContentsView.contents_table
     FolderContentsView.contents_table = contents_table
 
+try:
+    from Products.LinguaPlone import patches
+except ImportError:
+    I18nAwareCatalog()
 
-I18nAwareCatalog()
 I18nAwareFolderContents()

@@ -38,7 +38,8 @@ setup(name='plone.app.multilingual',
           'archetypes': ['archetypes.multilingual'],
           'test': ['plone.app.testing',
                    'plone.multilingualbehavior',
-                   'archetypes.multilingual'],
+                   'archetypes.multilingual',
+                   'Products.LinguaPlone'],
       },
       entry_points="""
       # -*- Entry points: -*-
