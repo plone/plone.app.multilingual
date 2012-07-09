@@ -19,7 +19,7 @@ samplecontent::
     >>> import transaction
     >>> transaction.commit()
 
-    >>> for cnt,lang in enumerate(['no_language', 'it', 'en']):
+    >>> for cnt,lang in enumerate(['', 'it', 'en']):
     ...     ILanguage(documents[cnt]).set_language(lang)
     ...     documents[cnt].reindexObject()
 
