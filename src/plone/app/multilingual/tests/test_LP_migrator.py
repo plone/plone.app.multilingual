@@ -38,6 +38,4 @@ class migrationLPToPAM(unittest.TestCase):
 
     def testMigration(self):
         pc = getToolByName(self.portal, 'portal_catalog')
-        import ipdb;ipdb.set_trace()
         results = pc.searchResults(object_provides=ITranslatable.__identifier__)
-        print results
