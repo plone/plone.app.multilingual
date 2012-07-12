@@ -13,6 +13,7 @@ from plone.app.testing import applyProfile
 
 from Products.LinguaPlone.tests.utils import makeContent, makeTranslation
 from Products.LinguaPlone.interfaces import ITranslatable
+from plone.multilingual.interfaces import ITranslationManager
 
 
 class migrationLPToPAM(unittest.TestCase):
@@ -21,6 +22,7 @@ class migrationLPToPAM(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
+        self.request = self.layer['request']
         language_tool = getToolByName(self.portal, 'portal_languages')
         language_tool.addSupportedLanguage('ca')
         language_tool.addSupportedLanguage('es')
@@ -28,14 +30,15 @@ class migrationLPToPAM(unittest.TestCase):
         self.doc1 = makeContent(self.portal, 'Document', id='doc1')
         self.doc1.setLanguage('en')
         self.doc1_ca = makeTranslation(self.doc1, 'ca')
-        self.doc1_ca.setLanguage('ca')
+        self.doc1_ca.edit(title="Foo", language='ca')
         self.doc1_es = makeTranslation(self.doc1, 'es')
-        self.doc1_es.setLanguage('es')
+        self.doc1_es.edit(title="Foo", language='es')
 
     def testSupportedLanguages(self):
         language_tool = getToolByName(self.portal, 'portal_languages')
         self.failUnless(language_tool.getSupportedLanguages(), ['en', 'ca', 'es'])
 
     def testMigration(self):
-        pc = getToolByName(self.portal, 'portal_catalog')
-        results = pc.searchResults(object_provides=ITranslatable.__identifier__)
+        migration_view = getMultiAdapter((self.portal, self.request), name='migration-view')
+        migration_view()
+        self.assertEqual(ITranslationManager(self.doc1).get_translations(), {'ca': self.doc1_ca, 'en': self.doc1, 'es': self.doc1_es})

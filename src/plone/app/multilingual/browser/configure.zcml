@@ -141,4 +141,12 @@
     permission="zope2.View"
     />
 
+  <!-- Migration View -->
+  <browser:page
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    class=".migrator.LP2PAMView"
+    name="migration-view"
+    permission="cmf.ManagePortal"
+    />
+
 </configure>
