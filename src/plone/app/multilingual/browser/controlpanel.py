@@ -4,6 +4,9 @@ from zope.schema import Choice
 from zope.schema import Bool, List
 from Products.statusmessages.interfaces import IStatusMessage
 from zope.component import getMultiAdapter
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from Products.Five import BrowserView
+
 from plone.app.form.validators import null_validator
 
 from plone.fieldsets.fieldsets import FormFieldsets
@@ -326,6 +329,8 @@ class LanguageControlPanel(BasePanel):
     """A modified language control panel, allows selecting multiple languages.
     """
 
+    template = ViewPageTemplateFile('controlpanel.pt')
+
     form_fields = FormFieldsets(selection, options, extras)
 
     label = _("Multilingual Settings")
@@ -358,3 +363,22 @@ class LanguageControlPanel(BasePanel):
                               name='absolute_url')()
         self.request.response.redirect(url + '/plone_control_panel')
         return ''
+
+    def isLPinstalled(self):
+        try:
+            from Products.LinguaPlone import patches
+            return True
+        except ImportError:
+            return False
+
+
+class migrationView(BrowserView):
+    """ The view for display the migration information, actions and results """
+    __call__ = ViewPageTemplateFile('migration.pt')
+
+    def isLPinstalled(self):
+        try:
+            from Products.LinguaPlone import patches
+            return True
+        except ImportError:
+            return False

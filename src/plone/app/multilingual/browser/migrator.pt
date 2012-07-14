@@ -1,0 +1,12 @@
+<div class="visualClear"><!-- --></div>
+
+<div class="resultInfo">
+    <span i18n:translate="label_total_objects_translated">
+        Total objects translated migrated:
+    </span>
+    <span tal:content="python: len(view.results)">Number of objects</span>
+</div>
+
+<tal:block repeat="result view/results">
+    <div class="result" tal:content="result"></div>
+</tal:block>

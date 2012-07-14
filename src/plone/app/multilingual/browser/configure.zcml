@@ -27,6 +27,14 @@
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
 
+  <browser:page
+    name="lp-migration"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    class=".controlpanel.migrationView"
+    permission="plone.app.controlpanel.Language"
+    layer="..interfaces.IPloneAppMultilingualInstalled"
+    />
+
   <adapter factory=".controlpanel.MultiLanguageControlPanelAdapter" />
   <adapter factory=".controlpanel.MultiLanguageOptionsControlPanelAdapter" />
   <adapter factory=".controlpanel.MultiLanguageExtraOptionsAdapter" />
