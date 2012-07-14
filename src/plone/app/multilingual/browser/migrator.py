@@ -1,9 +1,13 @@
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
-from Products.LinguaPlone.interfaces import ITranslatable
 from plone.multilingual.interfaces import ITranslationManager
 import logging
+
+try:
+    from Products.LinguaPlone.interfaces import ITranslatable
+except ImportError:
+    from plone.multilingual.interfaces import ITranslatable
 
 
 class LP2PAMView(BrowserView):

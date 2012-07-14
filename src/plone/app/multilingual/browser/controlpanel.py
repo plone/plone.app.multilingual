@@ -22,6 +22,8 @@ from plone.protect import CheckAuthenticator
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 
+from plone.app.multilingual import isLPinstalled
+
 from Products.CMFPlone import PloneMessageFactory as _Plone
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('plone.app.multilingual')
@@ -364,21 +366,11 @@ class LanguageControlPanel(BasePanel):
         self.request.response.redirect(url + '/plone_control_panel')
         return ''
 
-    def isLPinstalled(self):
-        try:
-            from Products.LinguaPlone import patches
-            return True
-        except ImportError:
-            return False
+    isLPinstalled = isLPinstalled
 
 
 class migrationView(BrowserView):
     """ The view for display the migration information, actions and results """
     __call__ = ViewPageTemplateFile('migration.pt')
 
-    def isLPinstalled(self):
-        try:
-            from Products.LinguaPlone import patches
-            return True
-        except ImportError:
-            return False
+    isLPinstalled = isLPinstalled
