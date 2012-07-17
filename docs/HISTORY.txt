@@ -4,6 +4,9 @@ Changelog
 1.0b3 (unreleased)
 ------------------
 
+- Add after migration action on view
+  [do3cc]
+
 
 1.0b2 - 2012-07-08
 ------------------

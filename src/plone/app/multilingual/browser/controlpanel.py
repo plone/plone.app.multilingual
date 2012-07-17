@@ -374,3 +374,10 @@ class MigrationView(BrowserView):
     __call__ = ViewPageTemplateFile('migration.pt')
 
     isLPinstalled = isLPinstalled
+
+
+class MigrationViewAfter(BrowserView):
+    """ The view for display the migration information, actions and results """
+    __call__ = ViewPageTemplateFile('migration-after.pt')
+
+    isLPinstalled = isLPinstalled

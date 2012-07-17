@@ -134,7 +134,7 @@ class SetupMultilingualSite(object):
         if folder is None:
             self.context.invokeFactory(self.folder_type, folderId)
             folder = getattr(self.context, folderId)
-           ILanguage(folder).set_language(code)
+            ILanguage(folder).set_language(code)
             folder.setTitle(name)
             state = wftool.getInfoFor(folder, 'review_state', None)
             # This assumes a direct 'publish' transition from the initial state
