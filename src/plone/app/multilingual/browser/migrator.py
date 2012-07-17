@@ -26,7 +26,7 @@ class LP2PAMView(BrowserView):
                 Language=language_supported)
             for brain in translated_objects:
                 obj = brain.getObject()
-                if hasattr(obj, 'isCanonical') and obj.isCanonical():
+                if obj.isCanonical():
                     translations = obj.getTranslations(include_canonical=False)
                     manager = ITranslationManager(obj)
                     if translations:
