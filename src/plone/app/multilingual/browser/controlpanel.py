@@ -369,7 +369,7 @@ class LanguageControlPanel(BasePanel):
     isLPinstalled = isLPinstalled
 
 
-class migrationView(BrowserView):
+class MigrationView(BrowserView):
     """ The view for display the migration information, actions and results """
     __call__ = ViewPageTemplateFile('migration.pt')
 

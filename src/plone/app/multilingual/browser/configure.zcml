@@ -30,7 +30,7 @@
   <browser:page
     name="lp-migration"
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    class=".controlpanel.migrationView"
+    class=".controlpanel.MigrationView"
     permission="plone.app.controlpanel.Language"
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
