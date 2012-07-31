@@ -5,7 +5,7 @@
         destination_fields = [],
         padding = 0;
 
-    function sync_element(original, destination, padding, first) {
+    function sync_element_vertically(original, destination, padding, first) {
         var default_props = {
             position: "",
             top: ""
@@ -16,13 +16,14 @@
             destination_padding = 0,
             shift = 0,
             more_padding = 0,
-            images;
+            images, new_distance;
 
         function distance(a, b) {
             return b.position().top - a.position().top - a.height();
         }
         if (destination.is(":visible")) {
             original.show();
+            // reset fields
             if (original.css("position") === "relative") {
                 original.css(default_props);
             }
@@ -31,6 +32,7 @@
             }
             original_top = original.position().top;
 
+            // Make images smaller
             images = original.find('img');
             images.each(function (index, img) {
                 var qimg = $(img);
@@ -38,6 +40,7 @@
                     qimg.width(original.width() * 0.8);
                 }
             });
+
             destination_top = destination.position().top;
             shift = Math.abs(original_top - destination_top);
             if (original_top > destination_top) {
@@ -51,8 +54,16 @@
             if (!first && original.prev().is(":visible")) {
                 // Calulate distance between bottom of prev element and top
                 // of current element. add Padding. If > 0, add to more_padding
-                more_padding = Math.max(-1 * (distance(original.prev(), original) + original_padding - padding), 0);
-                more_padding += Math.max(-1 * (distance(destination.prev(), destination) + destination_padding - padding), 0);
+                new_distance = distance(original.prev(), original);
+                new_distance += original_padding;
+                if (new_distance < padding) {
+                    more_padding += padding - new_distance;
+                }
+                new_distance = distance(destination.prev(), destination);
+                new_distance += destination_padding + more_padding;
+                if (new_distance < padding) {
+                    more_padding += padding - new_distance;
+                }
             }
             original_padding += more_padding;
             destination_padding += more_padding;
@@ -91,13 +102,13 @@
         });
     }
 
-    function sync_elements() {
+    function sync_elements_vertically() {
         // We do NOT calculate padding here again, because we might get
         // to high padding because fields might have been shifted, increasing
         // the padding.
         var i = 0;
         $.each(original_fields, function (i) {
-            sync_element($(original_fields[i]), $(destination_fields[i]), padding, i === 0);
+            sync_element_vertically($(original_fields[i]), $(destination_fields[i]), padding, i === 0);
         });
     }
 
@@ -109,13 +120,14 @@
         original_fields = $('#frame-content .field');
         destination_fields = $('#form-target fieldset > .field');
 
+        // Calculate the padding between fields as intended by css
         if (original_fields.length > 1) {
             padding = ($(original_fields[1]).position().top - $(original_fields[0]).position().top - $(original_fields[0]).height());
         }
         $.each(original_fields, function (index, value) {
             var original_field = $(value),
                 destination_field = $(destination_fields[index]);
-            sync_element(original_field, destination_field, padding, index === 0);
+            sync_element_vertically(original_field, destination_field, padding, index === 0);
             if (original_field.find('.richtext-field, textline-field, .localstatic-field, .ArchetypesField-TextField').length > 0) {
                 original_field.prepend("<div class='translator-widget' id='item_translation_" + order + "'></div>");
                 original_field.children('.translator-widget').click(function () {
@@ -189,6 +201,6 @@
             update_view();
         });
 
-        $(".formTabs").click(sync_elements);
+        $(".formTabs").click(sync_elements_vertically);
     });
 }(jQuery));
