@@ -16,7 +16,7 @@
     $().ready(function() {
         $('.formControls input').click(function (event) {
           event.preventDefault();
-          $.get('@@migration-view', function(data) {
+          $.get('@@migration-view-after', function(data) {
             $('.results').html(data)
           });
         });
@@ -37,18 +37,18 @@
           <li>
             <a href=""
                tal:attributes="href string:${portal_url}/@@multilingual-map"
-               i18n:translate="label_translation_map">Translation Map</a>
+               i18n:translate="label_ramcache">Translation Map</a>
           </li>
           <li>
             <a href=""
                tal:attributes="href string:${portal_url}/@@multilingual-backup"
-               i18n:translate="label_backup">Backup</a>
+               i18n:translate="label_purging">Backup</a>
           </li>
           <li class="selected">
             <a href=""
-               tal:attributes="href string:${portal_url}/@@lp-migration"
-               i18n:translate="label_migration">Migration</a>
-          </li>
+              tal:attributes="href string:${portal_url}/@@lp-migration-after"
+              i18n:translate="label_import2">After Migration actions</a>
+          </li>          
         </ul>
     </div>
 
@@ -76,7 +76,11 @@
             </a>
 
             <p i18n:translate="description_migrate">
-                Description of the migration process.
+                It can happen that there are relations left that contain
+                LinguaPlone relations. By executing this step, the catalog
+                gets reset and rebuilt. It CAN happen that things go bad.
+                In that case relations get lost. It is therefor important that
+                you have a backup!
             </p>
 
             <form name="migration" tal:attributes="action request/URL" method="post">

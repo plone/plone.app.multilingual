@@ -30,7 +30,15 @@
   <browser:page
     name="lp-migration"
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    class=".controlpanel.migrationView"
+    class=".controlpanel.MigrationView"
+    permission="plone.app.controlpanel.Language"
+    layer="..interfaces.IPloneAppMultilingualInstalled"
+    />
+
+  <browser:page
+    name="lp-migration-after"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    class=".controlpanel.MigrationViewAfter"
     permission="plone.app.controlpanel.Language"
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
@@ -162,6 +170,13 @@
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     class=".migrator.LP2PAMView"
     name="migration-view"
+    permission="cmf.ManagePortal"
+    />
+
+  <browser:page
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    class=".migrator.LP2PAMAfterView"
+    name="migration-view-after"
     permission="cmf.ManagePortal"
     />
 

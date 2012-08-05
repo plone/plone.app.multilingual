@@ -369,9 +369,16 @@ class LanguageControlPanel(BasePanel):
     isLPinstalled = isLPinstalled
 
 
-class migrationView(BrowserView):
+class MigrationView(BrowserView):
     """ The view for display the migration information, actions and results """
     __call__ = ViewPageTemplateFile('migration.pt')
+
+    isLPinstalled = isLPinstalled
+
+
+class MigrationViewAfter(BrowserView):
+    """ The view for display the migration information, actions and results """
+    __call__ = ViewPageTemplateFile('migration-after.pt')
 
     isLPinstalled = isLPinstalled
 
@@ -379,5 +386,3 @@ class migrationView(BrowserView):
 class multilingualMapView(BrowserView):
     """ The view for display the current multilingual map for the site """
     __call__ = ViewPageTemplateFile('mmap.pt')
-
-    isLPinstalled = isLPinstalled

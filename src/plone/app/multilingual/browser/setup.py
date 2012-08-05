@@ -1,6 +1,6 @@
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from zope.interface import alsoProvides
-from plone.multilingual.interfaces import ITranslationManager
+from plone.multilingual.interfaces import ITranslationManager, ILanguage
 
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
@@ -93,7 +93,7 @@ class SetupMultilingualSite(object):
         portal = pu.getPortalObject()
         path = '/'.join(portal.getPhysicalPath())
         defaultLanguage = pl.getDefaultLanguage()
-        objects = pc.searchResults(path=path, language='all')
+        objects = pc.searchResults(path=path, Language='all')
         for brain in objects:
             obj = brain.getObject()
             if obj.language == '':
@@ -114,7 +114,7 @@ class SetupMultilingualSite(object):
         portal = pu.getPortalObject()
         path = '/'.join(portal.getPhysicalPath())
         objects = pc.searchResults(path={'query': path, 'depth': 1},
-                                   language=defaultLanguage)
+                                   Language=defaultLanguage)
         for brain in objects:
             if brain.id != defaultLanguage:
                 old_path = brain.getPath()
@@ -134,7 +134,7 @@ class SetupMultilingualSite(object):
         if folder is None:
             self.context.invokeFactory(self.folder_type, folderId)
             folder = getattr(self.context, folderId)
-            folder.setLanguage(code)
+            ILanguage(folder).set_language(code)
             folder.setTitle(name)
             state = wftool.getInfoFor(folder, 'review_state', None)
             # This assumes a direct 'publish' transition from the initial state
@@ -168,7 +168,7 @@ class SetupMultilingualSite(object):
         Maintain the default page of the site on the language it was defined
         """
         previousDefaultPage = getattr(self.context, self.previousDefaultPageId)
-        language = previousDefaultPage.Language()
+        language = ILanguage(previousDefaultPage).get_language()
         pageId = self.previousDefaultPageId
         # test language neutral
         if language == '':

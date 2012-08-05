@@ -1,0 +1,18 @@
+<div class="visualClear"><!-- --></div>
+
+<div class="resultInfo">
+    <span i18n:translate="label_total_relations">
+        Number of relations touched:
+    </span>
+    <span tal:content="view/total">Number of objects</span>
+</div>
+<div tal:condition="view/bad">
+    <span i18n:translate="label_bad_relations">
+        Unfortunately a number of relations could not be translated and
+        are lost!
+        here is some debug information:
+    </span>
+    <span tal:repeat="one_bad view/bad" tal:content="one_bad">
+        Bad relation
+    </span>
+</div>
