@@ -34,7 +34,7 @@
                tal:attributes="href string:${portal_url}/@@language-controlpanel"
                i18n:translate="label_general">General</a>
           </li>
-          <li>
+          <li class="selected">
             <a href=""
                tal:attributes="href string:${portal_url}/@@multilingual-map"
                i18n:translate="label_translation_map">Translation Map</a>
@@ -44,7 +44,7 @@
                tal:attributes="href string:${portal_url}/@@multilingual-backup"
                i18n:translate="label_backup">Backup</a>
           </li>
-          <li class="selected" tal:condition="view/isLPinstalled">
+          <li tal:condition="view/isLPinstalled">
             <a href=""
                tal:attributes="href string:${portal_url}/@@lp-migration"
                i18n:translate="label_migration">Migration</a>

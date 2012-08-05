@@ -35,6 +35,14 @@
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
 
+  <browser:page
+    name="multilingual-map"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    class=".controlpanel.multilingualMapView"
+    permission="plone.app.controlpanel.Language"
+    layer="..interfaces.IPloneAppMultilingualInstalled"
+    />
+
   <adapter factory=".controlpanel.MultiLanguageControlPanelAdapter" />
   <adapter factory=".controlpanel.MultiLanguageOptionsControlPanelAdapter" />
   <adapter factory=".controlpanel.MultiLanguageExtraOptionsAdapter" />

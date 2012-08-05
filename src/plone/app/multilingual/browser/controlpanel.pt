@@ -25,17 +25,17 @@
           <li>
             <a href=""
                tal:attributes="href string:${portal_url}/@@multilingual-map"
-               i18n:translate="label_ramcache">Translation Map</a>
+               i18n:translate="label_translation_map">Translation Map</a>
           </li>
           <li>
             <a href=""
                tal:attributes="href string:${portal_url}/@@multilingual-backup"
-               i18n:translate="label_purging">Backup</a>
+               i18n:translate="label_backup">Backup</a>
           </li>
           <li tal:condition="view/isLPinstalled">
             <a href=""
                tal:attributes="href string:${portal_url}/@@lp-migration"
-               i18n:translate="label_import">Migration</a>
+               i18n:translate="label_migration">Migration</a>
           </li>
         </ul>
     </div>
