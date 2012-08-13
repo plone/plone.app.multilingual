@@ -17,7 +17,7 @@
             <h1 i18n:translate="original">ORIGINAL</h1>
             <select id="lang-select">
                 <tal:block repeat="lang view/languages">
-                    <option value="" tal:attributes="value lang/url" tal:content="lang/name">
+                    <option value="" tal:attributes="value lang/url; selected python:lang['selected'] and 'selected'" tal:content="lang/name">
                         Language
                     </option>
                 </tal:block>

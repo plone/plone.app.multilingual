@@ -4,6 +4,9 @@ Changelog
 1.0b3 (unreleased)
 ------------------
 
+- Select the original language in the dexterity babel edit form.
+  [maurits]
+
 - Add after migration action on view
   [do3cc]
 
