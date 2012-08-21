@@ -2,5 +2,5 @@
 <object name="portal_catalog">
     <!-- Add indexes here on penalty of death or worse.
          See add_catalog_indexes in setuphandlers.py instead. -->
-    <column value="Language"/> 
+    <column value="Language"/>
 </object>
