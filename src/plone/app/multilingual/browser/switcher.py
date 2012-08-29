@@ -24,7 +24,7 @@ class LanguageSwitcher(BrowserView):
         # We need to set the language cookie on the first response or it will
         # be set on the frontpage itself, making it uncachable
         langCookie = self.request.cookies.get('I18N_LANGUAGE')
-        if not langCookie:
+        if not langCookie or langCookie != target:
             self.request.response.setCookie('I18N_LANGUAGE', target, path='/')
 
         self.request.response.redirect(url, status=301)
