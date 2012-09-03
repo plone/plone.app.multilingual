@@ -16,3 +16,4 @@ dist/*
 MKcodeintel
 coverage
 *.mo
+docs/_build
