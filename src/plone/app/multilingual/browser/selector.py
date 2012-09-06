@@ -56,8 +56,9 @@ class LanguageSelectorViewlet(LanguageSelector):
                 canonical = ITranslationManager(item)
             except TypeError:
                 if not ITranslatable.providedBy(item):
-                    raise TypeError('The object "%s", of type "%s" available in %s is not translatable, but needs to be translatable' % \
-                        (item, item.portal_type, item.absolute_url()))
+                    # In case there it's not translatable go to parent
+                    # This solves the problem when a parent is not ITranslatable
+                    continue
                 else:
                     raise
 
