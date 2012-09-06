@@ -9,7 +9,21 @@ plone.app.multilingual
 Introduction
 ============
 
-After more than 4 years, a GSOC, redesigns, new versions, outdated libraries ... we are able to say that plone.app.multilingual is here.
+Talking about multi-language support in Plone is talk about
+Products.LinguaPlone. It's been the defacto standard for managing translations
+of Archetypes-based content in Plone through the years. Somehow its
+functionality never made its way into the Plone core. Nowadays, Plone faces the
+rising of Dexterity content types and its incoming adoption into the Plone core
+in the near future (4.3) and complete the transition to Plone default content
+types in Plone 5.
+
+plone.app.multilingual was designed originally to provide Plone a whole
+multilingual story. Using ZCA technologies, enables translations to Dexterity
+and Archetypes content types as well.
+
+After more than 4 years, a GSOC, redesigns, new versions, reimplementations due
+to deprecated libraries, two major Plone versions finally we are able to say
+that plone.app.multilingual is here.
 
 
 Features
@@ -22,12 +36,12 @@ Features
  5. Google Translate service support
 
 
-Internal design plone.multilingual
-==================================
+Internal design of plone.multilingual
+======================================
 
-All the internal features are implementated on the package : plone.multilingual
+All the internal features are implementated on the package plone.multilingual.
 
-The key points are :
+The key points are:
 
  1. Each translation is a different content object.
  2. There is no canonical object
@@ -39,10 +53,11 @@ The key points are :
 No canonical content object
 ---------------------------
 
-Having a canonical object on the content space produces a dependency which is not ortogonal
-with the normal behavior of Plone. All content objects should be autonomous and you should be
-able to remove it. Because of that we removed the canonical content object. There is a canonical
-object on the translation infrastructure but is not on the content space.
+Having a canonical object on the content space produces a dependency which is
+not orthogonal with the normal behavior of Plone. All content objects should be
+autonomous and you should be able to remove it. This is the reason because we
+removed the canonical content object. There is a canonical object on the
+translation infrastructure but is not on the content space.
 
 
 Translation reference infrastructure
