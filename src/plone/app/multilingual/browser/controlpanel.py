@@ -386,3 +386,5 @@ class MigrationViewAfter(BrowserView):
 class multilingualMapView(BrowserView):
     """ The view for display the current multilingual map for the site """
     __call__ = ViewPageTemplateFile('mmap.pt')
+
+    isLPinstalled = isLPinstalled
