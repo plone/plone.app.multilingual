@@ -66,7 +66,7 @@
         <div class="configlet">
 
             <h1 class="documentFirstHeading"
-                i18n:translate="heading_migration">Products.LinguaPlone Migration</h1>
+                i18n:translate="heading_translation_map">Products.LinguaPlone Translation Map</h1>
 
             <a href=""
                 class="link-parent"
@@ -75,28 +75,39 @@
                     Up to Site Setup
             </a>
 
-            <p i18n:translate="description_migrate">
-                Description of the migration process.
+            <p i18n:translate="description_translation_map">
+                Translation map.
             </p>
 
-            <form name="migration" tal:attributes="action request/URL" method="post">
-
-                <div class="formControls">
-                    <input
-                        type="submit"
-                        name="form.button.Import"
-                        class="destructive"
-                        value="Migrate"
-                        i18n:attributes="value" />
-                </div>
-
-                <input tal:replace="structure context/@@authenticator/authenticator" />
-
-            </form>
-
-            <div class="results">
-              <!-- The migration results -->
+            <div tal:define="not_full_translated view/canonicals">
+              <ul>
+              <tal:block repeat="canonical not_full_translated">
+                <li>
+                <span tal:content="canonical/id">Id</span>
+                <ul tal:define="last_url canonical/last_url">
+                  <li>
+                    <span i18n:translate="missing_languages">Missing languages: </span>
+                    <tal:block2 repeat="missing canonical/missing">
+                      <a href="" tal:attributes="href string:$last_url/@@create_translation?form.widgets.language=$missing&form.buttons.create=1" tal:content="missing">
+                        lang
+                      </a>
+                    </tal:block2>
+                  </li>
+                  <li>
+                    <span i18n:translate="translation">Translations: </span>
+                    <tal:block2 repeat="missing canonical/translated">
+                      <a href="" tal:attributes="href missing/url">
+                        <span tal:content="missing/path">Path</span>
+                        <span tal:content="missing/lang">Lang</span>
+                      </a>
+                    </tal:block2>
+                  </li>
+                </ul>
+                </li>
+              </tal:block>
+              </ul>
             </div>
+
         </div>
       </div>
     </div>

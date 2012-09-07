@@ -21,8 +21,12 @@ from plone.protect import CheckAuthenticator
 
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
+from Products.CMFCore.utils import getToolByName
+
+from plone.app.uuid.utils import uuidToObject
 
 from plone.app.multilingual import isLPinstalled
+from plone.multilingual.interfaces import IMultilingualStorage
 
 from Products.CMFPlone import PloneMessageFactory as _Plone
 from zope.i18nmessageid import MessageFactory
@@ -386,5 +390,37 @@ class MigrationViewAfter(BrowserView):
 class multilingualMapView(BrowserView):
     """ The view for display the current multilingual map for the site """
     __call__ = ViewPageTemplateFile('mmap.pt')
+
+    def canonicals(self):
+        """ We get all the canonicals and see which translations are missing """
+        # Get the language
+        tool = getToolByName(self.context, 'portal_languages', None)
+        languages = tool.getSupportedLanguages()
+        num_lang = len(languages)
+        # Get the canonicals
+        storage = getUtility(IMultilingualStorage)
+        canonicals = storage.get_canonicals()
+        # Needs to be optimized
+        not_full_translations = []
+        already_added_canonicals = []
+        for canonical in canonicals.keys():
+            canonical_object = canonicals[canonical]
+            canonical_languages = canonical_object.get_keys()
+            if len(canonical_languages) < num_lang and id(canonical_object) not in already_added_canonicals:
+                missing_languages = [lang for lang in languages if lang not in canonical_languages]
+                translations = []
+                last_url = ''
+                for canonical_language in canonical_languages:
+                    obj = uuidToObject(canonical_object.get_item(canonical_language))
+                    last_url = obj.absolute_url()
+                    translations.append({'url': obj.absolute_url(),
+                                         'path': '/'.join(obj.getPhysicalPath()),
+                                         'lang': canonical_language})
+                already_added_canonicals.append(id(canonical_object))
+                not_full_translations.append({'id': canonical,
+                                              'last_url': last_url,
+                                              'missing': missing_languages,
+                                              'translated': translations})
+        return not_full_translations
 
     isLPinstalled = isLPinstalled
