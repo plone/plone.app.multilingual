@@ -5,34 +5,35 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      i18n:domain="plone.app.multilingual">
+      i18n:domain="plone.app.multilingual"
+      tal:define="pamutils context/@@babel_utils;">
 
-    <script src="++resource++plone.app.multilingual.javascript/loadContentToTranslateFrom.js">
-    </script>
+    <script src="++resource++plone.app.multilingual.javascript/dx_helper.js"></script>
     <input type="hidden" id="url_translate" value="" tal:attributes="value context/absolute_url"/>
     <input type="hidden" id="gtanslate_service" value="" tal:attributes="value view/gtenabled"/>
     <div class='cell width-8 position-0'>
+        <h1 i18n:translate="original">Available translations for this content</h1>
         <div id="trans-selector"
-             tal:define="languages view/languages;">
-            <h1 i18n:translate="original">ORIGINAL</h1>
-            <select id="lang-select">
-                <tal:block repeat="lang view/languages">
-                    <option value="" tal:attributes="value lang/url; selected python:lang['selected'] and 'selected'" tal:content="lang/name">
-                        Language
-                    </option>
-                </tal:block>
-            </select>
+             tal:define="languages pamutils/translated_languages;">
+          <div class="btn-group">
+            <tal:block repeat="lang languages">
+              <button class="btn"
+                      tal:attributes="data-url string:${lang/obj/absolute_url}/babel_view;
+                                      class python:lang['isDefault'] and 'btn active' or 'btn'"
+                      tal:content="lang/info/name">Language</button>
+            </tal:block>
+          </div>
         </div>
         <div id="frame-content">
-            The content should be there
+            The available translations for this content should be here
         </div>
     </div>
     <div class='cell width-8 position-8'>
     <div id="header-translation">
-        <h1 i18n:translate="translation_to">TRANSLATION TO <span tal:replace="context/language"></span></h1>
+        <h1 i18n:translate="translation_to">Translation to <span tal:replace="context/language"></span></h1>
     </div>
     <div id="form-target">
-      <tal:block content="structure view/babel_content">Contingut</tal:block>
+      <tal:block content="structure view/babel_content">Content edit</tal:block>
     </div>
     </div>
 </div>

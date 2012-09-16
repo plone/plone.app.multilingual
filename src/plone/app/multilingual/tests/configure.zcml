@@ -4,7 +4,7 @@
     i18n_domain="plone.app.multilingual"
     >
 
-    <includeDependencies package="." />
+    <includeDependencies package="plone.app.multilingual" />
 
   	<genericsetup:registerProfile
     	name="testing"

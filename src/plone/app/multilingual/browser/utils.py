@@ -1,5 +1,5 @@
+from AccessControl.SecurityManagement import getSecurityManager
 from Products.Five import BrowserView
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from plone.multilingual.interfaces import ITranslationManager
 from Products.CMFCore.utils import getToolByName
@@ -12,21 +12,6 @@ from plone.app.i18n.locales.browser.selector import LanguageSelector
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
-
-
-class BabelView(BrowserView):
-    __call__ = ViewPageTemplateFile('babel_view.pt')
-
-
-class BabelEdit(BrowserView):
-
-    def __init__(self, context, request):
-        self.context = context
-        self.request = request
-
-    def __call__(self):
-        self.request.RESPONSE.redirect(self.context.absolute_url() +
-                                       '/at_babel_edit')
 
 
 class BabelUtils(BrowserView):
@@ -58,6 +43,7 @@ class BabelUtils(BrowserView):
         return settings.google_translation_key != ''
 
     def languages(self):
+        """ Deprecated """
         context = aq_inner(self.context)
 
         ls = LanguageSelector(context, self.request, None, None)
@@ -91,4 +77,36 @@ class BabelUtils(BrowserView):
 
         # filter out non-viewable items
         results = [r for r in results if r['code'] not in non_viewable]
+
         return results
+
+    def translated_languages(self):
+        context = aq_inner(self.context)
+        tool = getToolByName(context, 'portal_languages', None)
+        checkPermission = getSecurityManager().checkPermission
+
+        translations = self.group.get_translations()
+        translated_info = [dict(code=key, info=tool.getAvailableLanguageInformation()[key], obj=translations[key]) for key in translations]
+
+        default_language = tool.getDefaultLanguage()
+
+        translated_shown = []
+
+        for lang_info in translated_info:
+            # Mark the default language as the first translation shown
+            if lang_info['code'] == default_language:
+                lang_info['isDefault'] = True
+            else:
+                lang_info['isDefault'] = False
+
+            # Remove the translation of the content currently being translated
+            if lang_info['code'] == context.Language():
+                continue
+
+            # Remove the translation in case the translator user does not have permissions over it
+            has_view_permission = bool(checkPermission('View', lang_info['obj']))
+            if not has_view_permission:
+                continue
+
+            translated_shown.append(lang_info)
+        return translated_shown

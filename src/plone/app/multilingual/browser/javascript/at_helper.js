@@ -89,7 +89,7 @@
             destination.css(default_props);
             original.css(default_props);
         }
-        // With all that padding, the form might need to be pushed down in 
+        // With all that padding, the form might need to be pushed down in
         // some cases.
         $([original, destination]).each(function (index, item) {
             var $item = $(item),
@@ -119,6 +119,8 @@
 
         original_fields = $('#frame-content .field');
         destination_fields = $('#form-target fieldset > .field');
+        // console.log(original_fields);
+        // console.log(destination_fields);
 
         // Calculate the padding between fields as intended by css
         if (original_fields.length > 1) {
@@ -127,6 +129,7 @@
         $.each(original_fields, function (index, value) {
             var original_field = $(value),
                 destination_field = $(destination_fields[index]);
+
             sync_element_vertically(original_field, destination_field, padding, index === 0);
             if (original_field.find('.richtext-field, textline-field, .localstatic-field, .ArchetypesField-TextField').length > 0) {
                 original_field.prepend("<div class='translator-widget' id='item_translation_" + order + "'></div>");
@@ -170,18 +173,20 @@
         });
 
         /* change the language trigger */
-        $('#lang-select').change(function () {
-            var url = $('#lang-select option:selected').val();
+        $('#trans-selector button').click(function () {
+            var url = $(this).data('url');
             $('#frame-content').load(url, function () {
                 $("#frame-content fieldset legend").unwrap().remove();
                 update_view();
             });
+            $('#trans-selector button.active').removeClass('active');
+            $(this).addClass('active');
         });
 
         /* select a field on both sides and change the color */
         var babel_selected = null,
             orig_babel_select = null;
-        $('#babel-edit #fieldset-default .field').click(function () {
+        $('#fieldset-default .field').click(function () {
             var index = $('#form-target .field').index($(this));
             if (babel_selected) {
                 $(babel_selected).toggleClass("selected");
@@ -195,8 +200,9 @@
             $(orig_babel_select).children('.translator-widget').show();
         });
 
-        var url = $('#lang-select option:selected').val();
-        $('#frame-content').load(url, function () {
+        // Fetch default content
+        var initialFetch = $('#trans-selector button.active').data('url');
+        $('#frame-content').load(initialFetch, function () {
             $("#frame-content fieldset legend").unwrap().remove();
             update_view();
         });

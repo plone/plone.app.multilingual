@@ -139,29 +139,30 @@
   <browser:page
     for="Products.Archetypes.atapi.BaseObject"
     name="babel_edit"
-    class=".babel_view.BabelEdit"
+    class=".at_babel_view.ATBabelEdit"
     permission="cmf.ModifyPortalContent"
     />
 
+  <!-- Templates for translation fields info visualization via AJAX -->
   <browser:page
     for="plone.dexterity.interfaces.IDexterityContent"
     name="babel_view"
     class=".view.DexterityBabelView"
-    template="item.pt"
+    template="dx_babel_view.pt"
     permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
     for="Products.Archetypes.atapi.BaseObject"
     name="babel_view"
-    class=".babel_view.BabelView"
+    class=".at_babel_view.ATBabelView"
     permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
-    for="Products.Archetypes.atapi.BaseObject"
+    for="*"
     name="babel_utils"
-    class=".babel_view.BabelUtils"
+    class=".utils.BabelUtils"
     permission="zope2.View"
     />
 

@@ -25,6 +25,7 @@ class MultilingualEditForm(DefaultEditForm):
         return settings.google_translation_key != ''
 
     def languages(self):
+        """ Deprecated """
         context = aq_inner(self.context)
 
         ls = LanguageSelector(context, self.request, None, None)
@@ -68,6 +69,8 @@ class MultilingualEditForm(DefaultEditForm):
         return None
 
     def render(self):
+        self.request['disable_border'] = True
+
         for field in self.fields.keys():
             if field in self.schema:
                 if ILanguageIndependentField.providedBy(self.schema[field]):
