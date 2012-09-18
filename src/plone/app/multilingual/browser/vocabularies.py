@@ -28,8 +28,10 @@ def untranslated_languages(context):
     for lang in available_portal_languages:
         if lang not in translated_languages:
             if not (filter_default and lang == default_language):
+                native = language_infos[lang].get('native', None)
+                name = language_infos[lang].get('name', lang)
                 languages.append(SimpleVocabulary.createTerm(lang, lang, \
-                    language_infos[lang].get('name', lang)))
+                    native or name))
     return SimpleVocabulary(languages)
 
 
@@ -44,8 +46,10 @@ def translated_languages(context):
         translated_languages.remove(content_language)
     languages = []
     for lang in translated_languages:
+        native = language_infos[lang].get('native', None)
+        name = language_infos[lang].get('name', lang)
         languages.append(SimpleVocabulary.createTerm(lang, lang, \
-            language_infos[lang].get('name', lang)))
+            native or name))
     return SimpleVocabulary(languages)
 
 
@@ -73,8 +77,10 @@ def deletable_languages(context):
     languages = []
     for lang in translated_languages:
         if lang not in content_language:
+            native = language_infos[lang].get('native', None)
+            name = language_infos[lang].get('name', lang)
             languages.append(SimpleVocabulary.createTerm(lang, lang, \
-                language_infos[lang].get('name', lang)))
+                native or name))
     return SimpleVocabulary(languages)
 
 
@@ -97,7 +103,7 @@ class AllContentLanguageVocabulary(object):
         else:
             languages = util.getLanguages()
 
-        items = [(l, languages[l].get('name', l)) for l in languages]
+        items = [(l, languages[l].get('native', languages[l].get('name', l))) for l in languages]
         items.sort(key=sort_key)
         items = [SimpleTerm(i[0], i[0], i[1]) for i in items]
         return SimpleVocabulary(items)
@@ -121,7 +127,7 @@ class AllAvailableLanguageVocabulary(object):
             languages = util.getLanguages()
 
         supported_languages = ltool.supported_langs
-        items = [(l, languages[l].get('name', l)) for l in languages
+        items = [(l, languages[l].get('native', languages[l].get('name', l))) for l in languages
                  if l in supported_languages]
 
         items.sort(key=sort_key)
