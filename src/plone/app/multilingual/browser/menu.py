@@ -73,7 +73,7 @@ class TranslateMenu(BrowserMenu):
             "title": _(u"title_add_translations",
                        default=u"Add translations..."),
             "description": _(u"description_add_translations",
-                                default=u""),
+                                default=u"Add existing content as translation"),
             "action": url + "/add_translations",
             "selected": False,
             "icon": None,
@@ -108,7 +108,7 @@ class TranslateMenu(BrowserMenu):
                 "title": _(u"title_language_settings",
                            default=u"Language settings..."),
                 "description": _(u"description_language_settings",
-                                   default=u""),
+                                   default=u"Go to language settings control panel."),
                 "action": portal_state.portal_url() + \
                           "/@@language-controlpanel",
                 "selected": False,

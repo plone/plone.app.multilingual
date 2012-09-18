@@ -27,7 +27,7 @@
 
   <div id="region-content" class="documentEditable">
 
-    <div id="edit-bar">
+    <div id="edit-bar" i18n:domain="plone.app.multilingual">>
         <ul class="contentViews" id="content-views">
           <li>
             <a href=""

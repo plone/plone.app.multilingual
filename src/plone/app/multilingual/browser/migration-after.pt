@@ -27,7 +27,7 @@
 
   <div id="region-content" class="documentEditable">
 
-    <div id="edit-bar">
+    <div id="edit-bar" i18n:domain="plone.app.multilingual">
         <ul class="contentViews" id="content-views">
           <li>
             <a href=""
@@ -37,12 +37,12 @@
           <li>
             <a href=""
                tal:attributes="href string:${portal_url}/@@multilingual-map"
-               i18n:translate="label_ramcache">Translation Map</a>
+               i18n:translate="label_translation_map">Translation Map</a>
           </li>
           <li>
             <a href=""
                tal:attributes="href string:${portal_url}/@@multilingual-backup"
-               i18n:translate="label_purging">Backup</a>
+               i18n:translate="label_backup">Backup</a>
           </li>
           <li class="selected">
             <a href=""
@@ -66,7 +66,8 @@
         <div class="configlet">
 
             <h1 class="documentFirstHeading"
-                i18n:translate="heading_migration">Products.LinguaPlone After Migration</h1>
+                i18n:domain="plone.app.multilingual"
+                i18n:translate="heading_migration_after">Products.LinguaPlone After Migration</h1>
 
             <a href=""
                 class="link-parent"
@@ -75,7 +76,8 @@
                     Up to Site Setup
             </a>
 
-            <p i18n:translate="description_migrate">
+            <p i18n:translate="description_migrate_after"
+              i18n:domain="plone.app.multilingual">
                 It can happen that there are relations left that contain
                 LinguaPlone relations. By executing this step, the catalog
                 gets reset and rebuilt. It CAN happen that things go bad.
