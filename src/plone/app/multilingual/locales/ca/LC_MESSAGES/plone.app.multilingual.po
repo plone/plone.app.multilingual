@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.2b3\n"
-"POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"POT-Creation-Date: 2012-09-18 15:01+0000\n"
 "PO-Revision-Date: 2012-03-23 16:45 +0000\n"
 "Last-Translator: ramon.nb@gmail.com>\n"
 "Language-Team: plone-cat <plone-cat@plone.org>\n"
@@ -15,15 +15,15 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone.app.multilingual\n"
 
+#: ../browser/controlpanel.py:343
+msgid "All the configuration of P.A.M. If you want to set the default language to all the content without language and move all the content on the root folder to the default language folder, go to Extra Options section "
+msgstr ""
+
 #: ../browser/translate.py:95
 msgid "Create"
 msgstr "Crear"
 
-#: ../browser/item.pt:18
-msgid "Description"
-msgstr ""
-
-#: ../browser/controlpanel.py:322
+#: ../browser/controlpanel.py:331
 msgid "Extra options"
 msgstr ""
 
@@ -31,7 +31,12 @@ msgstr ""
 msgid "Invalid field"
 msgstr ""
 
-#: ../browser/controlpanel.py:331
+#: ../browser/migration-after.pt:91
+#: ../browser/migration.pt:85
+msgid "Migrate"
+msgstr ""
+
+#: ../browser/controlpanel.py:342
 msgid "Multilingual Settings"
 msgstr "Configuració Multilingual"
 
@@ -39,17 +44,13 @@ msgstr "Configuració Multilingual"
 msgid "Need a field"
 msgstr ""
 
-#: ../browser/controlpanel.py:319
+#: ../browser/controlpanel.py:328
 msgid "Negotiation Scheme"
 msgstr "Esquema negociació"
 
-#: ../browser/controlpanel.py:316
+#: ../browser/controlpanel.py:325
 msgid "Site Languages"
 msgstr "Llenguatges del site"
-
-#: ../browser/item.pt:13
-msgid "Title"
-msgstr ""
 
 #: ../browser/translate.py:42
 msgid "Too long field"
@@ -64,17 +65,18 @@ msgstr "Afegir traduccions"
 msgid "content"
 msgstr "Contingut"
 
+#. Default: "Add existing content as translation"
 #: ../browser/menu.py:75
 msgid "description_add_translations"
 msgstr "Per afegir traduccions"
 
 #. Default: "Authenticated users only. Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
-#: ../browser/controlpanel.py:124
+#: ../browser/controlpanel.py:133
 msgid "description_auth_ookie_manual_override"
 msgstr "Sobre-escriure la cookie manualment"
 
 #. Default: "The languages in which the site should be translatable."
-#: ../browser/controlpanel.py:44
+#: ../browser/controlpanel.py:53
 msgid "description_available_languages"
 msgstr "Llengües disponibles"
 
@@ -84,12 +86,12 @@ msgid "description_babeledit_menu"
 msgstr ""
 
 #. Default: "Use browser language request negotiation."
-#: ../browser/controlpanel.py:163
+#: ../browser/controlpanel.py:172
 msgid "description_browser_language_request_negotiation"
 msgstr ""
 
 #. Default: "Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
-#: ../browser/controlpanel.py:114
+#: ../browser/controlpanel.py:123
 msgid "description_cookie_manual_override"
 msgstr ""
 
@@ -104,21 +106,32 @@ msgid "description_google_translation_key"
 msgstr ""
 
 #. Default: "Use language codes in URL path for manual override."
-#: ../browser/controlpanel.py:104
+#: ../browser/controlpanel.py:113
 msgid "description_language_codes_in_URL"
 msgstr ""
 
 #. Default: "Use the language of the content item."
-#: ../browser/controlpanel.py:95
+#: ../browser/controlpanel.py:104
 msgid "description_language_of_the_content"
 msgstr ""
 
+#. Default: "Go to language settings control panel."
 #: ../browser/menu.py:110
 msgid "description_language_settings"
 msgstr ""
 
+#. Default: "Description of the migration process."
+#: ../browser/migration.pt:78
+msgid "description_migrate"
+msgstr ""
+
+#. Default: "It can happen that there are relations left that contain LinguaPlone relations. By executing this step, the catalog gets reset and rebuilt. It CAN happen that things go bad. In that case relations get lost. It is therefor important that you have a backup!"
+#: ../browser/migration-after.pt:79
+msgid "description_migrate_after"
+msgstr ""
+
 #. Default: "Move the content that is on the root folder to the default language folder. This value is not stored so you need to check every time you want to run it"
-#: ../browser/controlpanel.py:78
+#: ../browser/controlpanel.py:87
 msgid "description_move_content_to_language_folder"
 msgstr ""
 
@@ -133,22 +146,22 @@ msgid "description_remove_translations"
 msgstr ""
 
 #. Default: "Set the default language on all content without language defined. This value is not stored so you need to check every time you want to run it"
-#: ../browser/controlpanel.py:66
+#: ../browser/controlpanel.py:75
 msgid "description_set_default_language"
 msgstr ""
 
 #. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
-#: ../browser/controlpanel.py:137
+#: ../browser/controlpanel.py:146
 msgid "description_set_language_cookie_always"
 msgstr ""
 
 #. Default: "The default language used for the content and the UI of this site."
-#: ../browser/controlpanel.py:34
+#: ../browser/controlpanel.py:43
 msgid "description_site_language"
 msgstr ""
 
 #. Default: "Use top-level domain (e.g.: www.plone.de)."
-#: ../browser/controlpanel.py:155
+#: ../browser/controlpanel.py:164
 msgid "description_top_level_domain"
 msgstr ""
 
@@ -157,28 +170,38 @@ msgstr ""
 msgid "description_translate_into"
 msgstr ""
 
+#. Default: "Translation map."
+#: ../browser/mmap.pt:78
+msgid "description_translation_map"
+msgstr ""
+
 #. Default: "Use subdomain (e.g.: de.plone.org)."
-#: ../browser/controlpanel.py:147
+#: ../browser/controlpanel.py:156
 msgid "description_use_subdomain"
 msgstr ""
 
 #. Default: "Authenticated users only."
-#: ../browser/controlpanel.py:122
+#: ../browser/controlpanel.py:131
 msgid "heading_auth_cookie_manual_override"
 msgstr ""
 
 #. Default: "Available languages"
-#: ../browser/controlpanel.py:42
+#: ../browser/controlpanel.py:51
 msgid "heading_available_languages"
 msgstr ""
 
+#. Default: "Available translations for this content"
+#: ../browser/dexterity_edit.pt:15
+msgid "heading_available_translations"
+msgstr ""
+
 #. Default: "Use browser language request negotiation."
-#: ../browser/controlpanel.py:161
+#: ../browser/controlpanel.py:170
 msgid "heading_browser_language_request_negotiation"
 msgstr ""
 
 #. Default: "Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
-#: ../browser/controlpanel.py:111
+#: ../browser/controlpanel.py:120
 msgid "heading_cookie_manual_override"
 msgstr ""
 
@@ -193,17 +216,27 @@ msgid "heading_google_translation_key"
 msgstr ""
 
 #. Default: "Use language codes in URL path for manual override."
-#: ../browser/controlpanel.py:101
+#: ../browser/controlpanel.py:110
 msgid "heading_language_codes_in_URL"
 msgstr ""
 
 #. Default: "Use the language of the content item."
-#: ../browser/controlpanel.py:93
+#: ../browser/controlpanel.py:102
 msgid "heading_language_of_the_content"
 msgstr ""
 
+#. Default: "Products.LinguaPlone Migration"
+#: ../browser/migration.pt:68
+msgid "heading_migration"
+msgstr ""
+
+#. Default: "Products.LinguaPlone After Migration"
+#: ../browser/migration-after.pt:68
+msgid "heading_migration_after"
+msgstr ""
+
 #. Default: "Move root content to default language folder"
-#: ../browser/controlpanel.py:76
+#: ../browser/controlpanel.py:85
 msgid "heading_move_content_to_language_folder"
 msgstr ""
 
@@ -213,27 +246,32 @@ msgid "heading_redirect_babel_view"
 msgstr ""
 
 #. Default: "Set the default language"
-#: ../browser/controlpanel.py:64
+#: ../browser/controlpanel.py:73
 msgid "heading_set_default_language"
 msgstr ""
 
 #. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
-#: ../browser/controlpanel.py:133
+#: ../browser/controlpanel.py:142
 msgid "heading_set_language_cookie_always"
 msgstr ""
 
 #. Default: "Default site language"
-#: ../browser/controlpanel.py:32
+#: ../browser/controlpanel.py:41
 msgid "heading_site_language"
 msgstr ""
 
 #. Default: "Use top-level domain (e.g.: www.plone.de)."
-#: ../browser/controlpanel.py:153
+#: ../browser/controlpanel.py:162
 msgid "heading_top_level_domain"
 msgstr ""
 
+#. Default: "Products.LinguaPlone Translation Map"
+#: ../browser/mmap.pt:68
+msgid "heading_translation_map"
+msgstr ""
+
 #. Default: "Use subdomain (e.g.: de.plone.org)."
-#: ../browser/controlpanel.py:145
+#: ../browser/controlpanel.py:154
 msgid "heading_use_subdomain"
 msgstr ""
 
@@ -242,12 +280,39 @@ msgstr ""
 msgid "label_add_translations"
 msgstr ""
 
+#. Default: "Backup"
+#: ../browser/controlpanel.pt:31
+#: ../browser/migration-after.pt:43
+#: ../browser/migration.pt:43
+msgid "label_backup"
+msgstr ""
+
+#. Default: "General"
+#: ../browser/controlpanel.pt:21
+#: ../browser/migration-after.pt:33
+#: ../browser/migration.pt:33
+msgid "label_general"
+msgstr ""
+
+#. Default: "After Migration actions"
+#: ../browser/controlpanel.pt:41
+#: ../browser/migration-after.pt:48
+msgid "label_import2"
+msgstr ""
+
+#. Default: "Migration"
+#: ../browser/controlpanel.pt:36
+#: ../browser/migration.pt:48
+#: ../browser/mmap.pt:48
+msgid "label_migration"
+msgstr ""
+
 #: ../browser/remove_translation_form.py:20
 msgid "label_remove_translations"
 msgstr ""
 
 #. Default: "Save"
-#: ../browser/controlpanel.py:338
+#: ../browser/controlpanel.py:349
 msgid "label_save"
 msgstr ""
 
@@ -256,9 +321,23 @@ msgstr ""
 msgid "label_translate_menu"
 msgstr "Tradueix a..."
 
-#. Default: "ORIGINAL"
-#: ../browser/dexterity_edit.pt:17
-msgid "original"
+#. Default: "Translation Map"
+#: ../browser/controlpanel.pt:26
+#: ../browser/migration-after.pt:38
+#: ../browser/migration.pt:38
+msgid "label_translation_map"
+msgstr ""
+
+#. Default: "Up to Site Setup"
+#: ../browser/migration-after.pt:72
+#: ../browser/migration.pt:71
+#: ../browser/mmap.pt:71
+msgid "label_up_to_plone_setup"
+msgstr ""
+
+#. Default: "Missing languages:"
+#: ../browser/mmap.pt:89
+msgid "missing_languages"
 msgstr ""
 
 #: ../browser/remove_translation_form.py:32
@@ -294,8 +373,13 @@ msgstr "Esborrar traduccions"
 msgid "title_translate_menu"
 msgstr "Administra les traduccions del teu contingut"
 
-#. Default: "TRANSLATION TO ${DYNAMIC_CONTENT}"
-#: ../browser/dexterity_edit.pt:32
+#. Default: "Translations:"
+#: ../browser/mmap.pt:97
+msgid "translation"
+msgstr ""
+
+#. Default: "Translation to ${language}"
+#: ../browser/dexterity_edit.pt:33
 msgid "translation_to"
 msgstr ""
 
