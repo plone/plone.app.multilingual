@@ -340,10 +340,10 @@ class LanguageControlPanel(BasePanel):
     form_fields = FormFieldsets(selection, options, extras)
 
     label = _("Multilingual Settings")
-    description = _("""All the configuration of P.A.M. If you want to set
-                       the default language to all the content without language
-                       and move all the content on the root folder to the
-                       default language folder, go to Extra Options section""")
+    description = _("All the configuration of P.A.M. If you want to set "
+                    "the default language to all the content without language "
+                    "and move all the content on the root folder to the "
+                    "default language folder, go to Extra Options section ")
     form_name = _("Multilingual Settings")
 
     @form.action(_(u'label_save', default=u'Save'), name=u'save')
