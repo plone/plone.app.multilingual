@@ -12,7 +12,7 @@
     <input type="hidden" id="url_translate" value="" tal:attributes="value context/absolute_url"/>
     <input type="hidden" id="gtanslate_service" value="" tal:attributes="value view/gtenabled"/>
     <div class='cell width-8 position-0'>
-        <h1 i18n:translate="original">Available translations for this content</h1>
+        <h1 i18n:translate="heading_available_translations">Available translations for this content</h1>
         <div id="trans-selector"
              tal:define="languages pamutils/translated_languages;">
           <div class="btn-group">
