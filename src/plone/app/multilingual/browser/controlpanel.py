@@ -23,10 +23,15 @@ from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 
+from zope.schema.interfaces import IVocabularyFactory
+
 from plone.app.uuid.utils import uuidToObject
+from plone.uuid.interfaces import IUUID
+
+import json
 
 from plone.app.multilingual import isLPinstalled
-from plone.multilingual.interfaces import IMultilingualStorage
+from plone.multilingual.interfaces import IMultilingualStorage, ITranslationManager, ILanguage
 
 from Products.CMFPlone import PloneMessageFactory as _Plone
 from zope.i18nmessageid import MessageFactory
@@ -387,14 +392,71 @@ class MigrationViewAfter(BrowserView):
     isLPinstalled = isLPinstalled
 
 
+class multilingualMapViewJSON(BrowserView):
+    """ Helper view to get json translations """
+
+    def __call__(self):
+        lang = ''
+        if 'lang' in self.request:
+            lang = self.request['lang']
+
+        if lang == '':
+            tool = getToolByName(self.context, 'portal_languages', None)
+            lang = tool.getDefaultLanguage()
+
+        if 'all' in self.request:
+            get_all = (self.request['all'] == 'true')
+        else:
+            get_all = True
+
+        if 'nodeId' in self.request:
+            # We get the used UUID
+            nodeId = (self.request['nodeId'])
+            if (nodeId == 'root'):
+                root = getToolByName(self.context, 'portal_url')
+                root = root.getPortalObject()
+                folder_path = '/'.join(root.getPhysicalPath())
+            else:
+                new_root = uuidToObject(nodeId)
+                if ILanguage(new_root).get_language() == lang:
+                    folder_path = '/'.join(new_root.getPhysicalPath())
+                else:
+                    root = getToolByName(self.context, 'portal_url')
+                    root = root.getPortalObject()
+                    folder_path = '/'.join(root.getPhysicalPath())
+        else:
+            root = getToolByName(self.context, 'portal_url')
+            root = root.getPortalObject()
+            folder_path = '/'.join(root.getPhysicalPath())
+
+        self.request.response.setHeader("Content-type", "application/json; charset=utf-8")
+        pcatalog = getToolByName(self.context, 'portal_catalog')
+        query = {}
+        query['path'] = {'query': folder_path, 'depth': 1}
+        query['sort_on'] = "sortable_title"
+        query['sort_order'] = "ascending"
+        query['Language'] = lang
+        search_results = pcatalog.searchResults(query)
+        resultat = {'id': 'root', 'name': folder_path, 'data': {}, 'children': []}
+        for sr in search_results:
+            # we get the trasnaltion information
+
+            resultat['children'].append({'id': sr['UID'], 'name': sr['Title'], 'data': {}, 'children': []})
+        return json.dumps(resultat)
+
+
 class multilingualMapView(BrowserView):
     """ The view for display the current multilingual map for the site """
     __call__ = ViewPageTemplateFile('mmap.pt')
 
+    def languages(self):
+        langs = getUtility(IVocabularyFactory, name=u"plone.app.multilingual.vocabularies.AllAvailableLanguageVocabulary")
+        return langs(self.context)
+
     def canonicals(self):
         """ We get all the canonicals and see which translations are missing """
         # Get the language
-        tool = getToolByName(self.context, 'portal_languages', None)
+        tool = getUtility(self.context, 'portal_languages', None)
         languages = tool.getSupportedLanguages()
         num_lang = len(languages)
         # Get the canonicals

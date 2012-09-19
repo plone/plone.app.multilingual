@@ -51,6 +51,17 @@
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
 
+  <!-- Multilingual Map ajax helper -->
+
+  <browser:page
+    name="multilingual-map-ajax"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    class=".controlpanel.multilingualMapViewJSON"
+    permission="plone.app.controlpanel.Language"
+    layer="..interfaces.IPloneAppMultilingualInstalled"
+    />
+    
+
   <adapter factory=".controlpanel.MultiLanguageControlPanelAdapter" />
   <adapter factory=".controlpanel.MultiLanguageOptionsControlPanelAdapter" />
   <adapter factory=".controlpanel.MultiLanguageExtraOptionsAdapter" />
@@ -89,8 +100,7 @@
     />
 
 
-  <!-- Javascript -->
-
+  <!-- Resource Directories -->
 
   <browser:resourceDirectory
       name="plone.app.multilingual.javascript"

@@ -10,10 +10,16 @@
 
 <div metal:fill-slot="prefs_configlet_content">
 
+  <script type="text/javascript" src="++resource++plone.app.multilingual.javascript/jit-yc.js"></script>
+  <script type="text/javascript" src="++resource++plone.app.multilingual.javascript/mmap_helper.js"></script>
+
 <script type="text/javascript">
+
+
 (function($) {
 
     $().ready(function() {
+        get_data();
         $('.formControls input').click(function (event) {
           event.preventDefault();
           $.get('@@migration-view', function(data) {
@@ -66,7 +72,7 @@
         <div class="configlet">
 
             <h1 class="documentFirstHeading"
-                i18n:translate="heading_translation_map">Products.LinguaPlone Translation Map</h1>
+                i18n:translate="heading_translation_map">plone.app.multilingual translation map</h1>
 
             <a href=""
                 class="link-parent"
@@ -78,6 +84,30 @@
             <p i18n:translate="description_translation_map">
                 Translation map.
             </p>
+
+            <div id="pam_language_buttons">
+              <tal:block repeat="languages view/languages">
+                <button id="" tal:attributes="id languages/value" tal:content="languages/title">Lang</button>
+              </tal:block>
+            </div>
+
+            <div id="actual_language">
+            </div>
+            <div id="pam_ajax_buttons">
+              <button id="call_missing_translations" i18n:translate="label_missing_translations">Missing translations</button>
+              <button id="call_all_translations" i18n:translate="label_all_translations">All translations</button>
+            </div>
+
+            <div id="data_translation">
+            </div>
+
+            <div id="translation_map_canvas" style="height: 400px; width: 600px;">
+
+            </div>
+            <div id="log">
+            </div>
+<!--
+
 
             <div tal:define="not_full_translated view/canonicals">
               <ul>
@@ -107,7 +137,7 @@
               </tal:block>
               </ul>
             </div>
-
+-->
         </div>
       </div>
     </div>
