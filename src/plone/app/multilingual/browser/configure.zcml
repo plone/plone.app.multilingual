@@ -60,11 +60,12 @@
     permission="plone.app.controlpanel.Language"
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
-    
+
 
   <adapter factory=".controlpanel.MultiLanguageControlPanelAdapter" />
   <adapter factory=".controlpanel.MultiLanguageOptionsControlPanelAdapter" />
   <adapter factory=".controlpanel.MultiLanguageExtraOptionsAdapter" />
+  <adapter factory=".controlpanel.MultiLanguagePoliciesAdapter" />
 
   <!-- Vocabulary all languages -->
   <utility

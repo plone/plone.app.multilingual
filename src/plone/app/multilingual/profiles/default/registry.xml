@@ -4,4 +4,7 @@
     <value key="filter_content">True</value>
     <value key="google_translation_key"></value>
  </records>
+ <records interface="plone.app.multilingual.browser.controlpanel.IMultiLanguagePolicies">
+    <value key="selector_lookup_translations_policy">closest</value>
+ </records>
 </registry>

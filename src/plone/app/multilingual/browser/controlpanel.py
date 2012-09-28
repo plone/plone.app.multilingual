@@ -12,6 +12,7 @@ from plone.app.form.validators import null_validator
 from plone.fieldsets.fieldsets import FormFieldsets
 
 from zope.formlib import form
+from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 
 from plone.app.controlpanel.language import LanguageControlPanel as BasePanel
 from plone.app.controlpanel.language import LanguageControlPanelAdapter
@@ -179,6 +180,28 @@ class IMultiLanguageOptionsSchema(Interface):
         required=False,
         )
 
+selector_policies = SimpleVocabulary(
+    [SimpleTerm(value=u'closest', title=_(u'Search for closest translation in parent\'s content chain.')),
+     SimpleTerm(value=u'dialog', title=_(u'Show user dialog with information about the available translations.'))
+    ]
+)
+
+
+class IMultiLanguagePolicies(Interface):
+    """ Interface for language policies - control panel fieldset
+    """
+
+    selector_lookup_translations_policy = Choice(
+        title=_(u"heading_selector_lookup_translations_policy",
+                default=u"The policy used to determine how the lookup for available "
+                         "translations will be made by the language selector."),
+        description=_(u"description_selector_lookup_translations_policy",
+                      default=u"The default language used for the content "
+                              u"and the UI of this site."),
+        required=True,
+        vocabulary=selector_policies
+    )
+
 
 class MultiLanguageOptionsControlPanelAdapter(LanguageControlPanelAdapter):
     implementsOnly(IMultiLanguageOptionsSchema)
@@ -326,6 +349,24 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
         get_move_content_to_language_folder,
         set_move_content_to_language_folder)
 
+
+class MultiLanguagePoliciesAdapter(LanguageControlPanelAdapter):
+    implementsOnly(IMultiLanguagePolicies)
+
+    def __init__(self, context):
+        super(MultiLanguagePoliciesAdapter, self).__init__(context)
+        self.registry = getUtility(IRegistry)
+        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+
+    def get_selector_lookup_translations_policy(self):
+        return self.settings.selector_lookup_translations_policy
+
+    def set_selector_lookup_translations_policy(self, value):
+        self.settings.selector_lookup_translations_policy = value
+
+    selector_lookup_translations_policy = property(get_selector_lookup_translations_policy,
+                                                   set_selector_lookup_translations_policy)
+
 selection = FormFieldsets(IMultiLanguageSelectionSchema)
 selection.label = _(u'Site Languages')
 
@@ -335,6 +376,9 @@ options.label = _(u'Negotiation Scheme')
 extras = FormFieldsets(IMultiLanguageExtraOptionsSetupSchema)
 extras.label = _(u'Extra options')
 
+policies = FormFieldsets(IMultiLanguagePolicies)
+policies.label = _(u'Policies')
+
 
 class LanguageControlPanel(BasePanel):
     """A modified language control panel, allows selecting multiple languages.
@@ -342,7 +386,7 @@ class LanguageControlPanel(BasePanel):
 
     template = ViewPageTemplateFile('controlpanel.pt')
 
-    form_fields = FormFieldsets(selection, options, extras)
+    form_fields = FormFieldsets(selection, options, policies, extras)
 
     label = _("Multilingual Settings")
     description = _("All the configuration of P.A.M. If you want to set "

@@ -1,19 +1,22 @@
-from zope.component import getMultiAdapter
-
 from Acquisition import aq_chain
 from Acquisition import aq_inner
 from AccessControl.SecurityManagement import getSecurityManager
 from ZTUtils import make_query
 
-from plone.app.i18n.locales.browser.selector import LanguageSelector
-from plone.app.layout.navigation.interfaces import INavigationRoot
-
-from plone.multilingual.interfaces import ITranslationManager, ITranslatable
+from zope.component import getMultiAdapter
+from zope.component import getUtility
 
 from borg.localrole.interfaces import IFactoryTempFolder
 
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFPlone.interfaces.factory import IFactoryTool
+
+from plone.registry.interfaces import IRegistry
+from plone.app.i18n.locales.browser.selector import LanguageSelector
+from plone.app.layout.navigation.interfaces import INavigationRoot
+
+from plone.multilingual.interfaces import ITranslationManager, ITranslatable
+from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
 
 
 class LanguageSelectorViewlet(LanguageSelector):
@@ -29,12 +32,35 @@ class LanguageSelectorViewlet(LanguageSelector):
             return selector and languages
         return False
 
-    def _translations(self, missing):
-        # Figure out the "closest" translation in the parent chain of the
-        # context. We stop at both an INavigationRoot or an ISiteRoot to look
-        # for translations. We do want to find something that is definitely
-        # in the language the user asked for.
+    def _get_translations_by_dialog(self, supported_langs):
+        """
+        """
         context = aq_inner(self.context)
+        _checkPermission = getSecurityManager().checkPermission
+        translations = {}
+
+        if ISiteRoot.providedBy(context):
+        # We have a site root, which works as a fallback
+            for code in supported_langs:
+                has_view_permission = bool(_checkPermission('View', context))
+                translations[code] = (context, True, has_view_permission)
+        else:
+            for code, content in ITranslationManager(context).get_translations().items():
+                code = str(code)
+                has_view_permission = bool(_checkPermission('View', content))
+                translations[code] = (content, True, has_view_permission)
+
+        return translations
+
+    def _get_translations_by_closest(self, supported_langs):
+        """ Return the translations information by
+            figuring out the 'closest' translation in the parent chain of the
+            context. We stop at both an INavigationRoot or an ISiteRoot to look
+            for translations. We do want to find something that is definitely
+            in the language the user asked for regardless anything else.
+        """
+        context = aq_inner(self.context)
+        missing = set([str(c) for c in supported_langs])
         translations = {}
         chain = aq_chain(context)
         first_pass = True
@@ -125,10 +151,17 @@ class LanguageSelectorViewlet(LanguageSelector):
 
     def languages(self):
         context = aq_inner(self.context)
-        results = LanguageSelector.languages(self)
-        supported_langs = [v['code'] for v in results]
-        missing = set([str(c) for c in supported_langs])
-        translations = self._translations(missing)
+        registry = getUtility(IRegistry)
+        find_translations_policy = registry.forInterface(IMultiLanguagePolicies).selector_lookup_translations_policy
+
+        languages_info = super(LanguageSelectorViewlet, self).languages()
+        supported_langs = [v['code'] for v in languages_info]
+
+        if find_translations_policy == 'closest':
+            translations = self._get_translations_by_closest(supported_langs)
+        else:
+            translations = self._get_translations_by_dialog(supported_langs)
+
         # We want to preserve the current template / view as used for the
         # current object and also use it for the other languages
         append_path = self._findpath(context.getPhysicalPath(),
@@ -138,10 +171,15 @@ class LanguageSelectorViewlet(LanguageSelector):
 
         non_viewable = set()
 
-        for data in results:
+        results = []
+
+        for lang_info in languages_info:
+            # Avoid to modify the original language dict
+            data = lang_info.copy()
             code = str(data['code'])
             data['translated'] = code in translations.keys()
             set_language = '?set_language=%s' % code
+            not_translated_yet_template = '/nottranslatedyet'
 
             try:
                 appendtourl = '/'.join(append_path)
@@ -192,10 +230,18 @@ class LanguageSelectorViewlet(LanguageSelector):
 
                 state = getMultiAdapter((context, self.request),
                         name='plone_context_state')
-                try:
-                    data['url'] = state.canonical_object_url() + appendtourl
-                except AttributeError:
-                    data['url'] = context.absolute_url() + appendtourl
+                if find_translations_policy == 'closest':
+                    try:
+                        data['url'] = state.canonical_object_url() + appendtourl
+                    except AttributeError:
+                        data['url'] = context.absolute_url() + appendtourl
+                else:
+                    try:
+                        data['url'] = state.canonical_object_url() + not_translated_yet_template + appendtourl
+                    except AttributeError:
+                        data['url'] = context.absolute_url() + not_translated_yet_template + appendtourl
+
+            results.append(data)
 
         # filter out non-viewable items
         results = [r for r in results if r['code'] not in non_viewable]
