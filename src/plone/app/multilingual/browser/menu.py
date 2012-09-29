@@ -15,6 +15,7 @@ from plone.app.multilingual.browser.vocabularies import (
     untranslated_languages, translated_languages, translated_urls)
 from plone.app.multilingual import _
 from plone.uuid.interfaces import IUUID
+from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT, ILanguage
 
 
 class TranslateMenu(BrowserMenu):
@@ -28,93 +29,109 @@ class TranslateMenu(BrowserMenu):
         portal_state = getMultiAdapter((context, request), name=u'plone_portal_state')
         portal_url = portal_state.portal_url()
         showflags = lt.showFlags()
-        context_id = IUUID(context)
-        langs = untranslated_languages(context)
-        for lang in langs:
-            lang_name = lang.title
-            lang_id = lang.value
-            icon = showflags and lt.getFlagForLanguageCode(lang_id) or None
-            item = {
-                "title": _(u"Create") + " " + lang_name,
-                "description": _(u"description_translate_into",
+        # In case is neutral language show set language menu only
+        if LANGUAGE_INDEPENDENT != ILanguage(context).get_language():
+            context_id = IUUID(context)
+            langs = untranslated_languages(context)
+            for lang in langs:
+                lang_name = lang.title
+                lang_id = lang.value
+                icon = showflags and lt.getFlagForLanguageCode(lang_id) or None
+                item = {
+                    "title": _(u"Create") + " " + lang_name,
+                    "description": _(u"description_translate_into",
                                     default=u"Translate into ${lang_name}",
                                     mapping={"lang_name": lang_name}),
-                "action": url + "/@@create_translation?form.widgets.language"\
+                    "action": url + "/@@create_translation?form.widgets.language"\
                             "=%s&form.buttons.create=1" % lang_id,
-                "selected": False,
-                "icon": icon,
-                "extra": {"id": "translate_into_%s" % lang_id,
+                    "selected": False,
+                    "icon": icon,
+                    "extra": {"id": "translate_into_%s" % lang_id,
                            "separator": None,
                            "class": ""},
-                "submenu": None,
-                }
+                    "submenu": None,
+                    }
 
-            menu.append(item)
+                menu.append(item)
 
-        langs = translated_languages(context)
-        urls = translated_urls(context)
-        for lang in langs:
-            lang_name = lang.title
-            lang_id = lang.value
-            icon = showflags and lt.getFlagForLanguageCode(lang_id) or None
-            item = {
-                "title": _(u"Edit") + " " + lang_name,
-                "description": _(u"description_babeledit_menu",
+            langs = translated_languages(context)
+            urls = translated_urls(context)
+            for lang in langs:
+                lang_name = lang.title
+                lang_id = lang.value
+                icon = showflags and lt.getFlagForLanguageCode(lang_id) or None
+                item = {
+                    "title": _(u"Edit") + " " + lang_name,
+                    "description": _(u"description_babeledit_menu",
                                     default=u"Babel edit ${lang_name}",
                                     mapping={"lang_name": lang_name}),
-                "action": urls.getTerm(lang_id).title + "/babel_edit",
-                "selected": False,
-                "icon": icon,
-                "extra": {"id": "babel_edit_%s" % lang_id,
+                    "action": urls.getTerm(lang_id).title + "/babel_edit",
+                    "selected": False,
+                    "icon": icon,
+                    "extra": {"id": "babel_edit_%s" % lang_id,
                            "separator": None,
                            "class": ""},
-                "submenu": None,
-                }
+                    "submenu": None,
+                    }
 
-            menu.append(item)
+                menu.append(item)
 
-        menu.append({
-            "title": _(u"title_add_translations",
+            menu.append({
+                "title": _(u"title_add_translations",
                        default=u"Add translations..."),
-            "description": _(u"description_add_translations",
+                "description": _(u"description_add_translations",
                                 default=u"Add existing content as translation"),
-            "action": url + "/add_translations",
-            "selected": False,
-            "icon": None,
-            "extra": {"id": "_add_translations",
+                "action": url + "/add_translations",
+                "selected": False,
+                "icon": None,
+                "extra": {"id": "_add_translations",
                        "separator": langs and "actionSeparator" or None,
                        "class": ""},
-            "submenu": None,
-            })
+                "submenu": None,
+                })
 
-        menu.append({
-            "title": _(u"title_remove_translations",
+            menu.append({
+                "title": _(u"title_remove_translations",
                        default=u"Remove translations..."),
-            "description": _(
-                u"description_remove_translations",
-                default=u"Delete translations or remove the relations"),
-            "action": url + "/remove_translations",
-            "selected": False,
-            "icon": None,
-            "extra": {"id": "_remove_translations",
+                "description": _(
+                    u"description_remove_translations",
+                    default=u"Delete translations or remove the relations"),
+                "action": url + "/remove_translations",
+                "selected": False,
+                "icon": None,
+                "extra": {"id": "_remove_translations",
                        "separator": langs and "actionSeparator" or None,
                        "class": ""},
-            "submenu": None,
-            })
+                "submenu": None,
+                })
+
+            menu.append({
+                "title": _(u"universal_link",
+                       default=u"Universal Link"),
+                "description": _(
+                    u"description_universal_link",
+                    default=u"Universal Language content link"),
+                "action": portal_url + "/multilingual-universal-link?uid=" + context_id,
+                "selected": False,
+                "icon": None,
+                "extra": {"id": "_universal_link",
+                       "separator": langs and "actionSeparator" or None,
+                       "class": ""},
+                "submenu": None,
+                })
 
         menu.append({
-            "title": _(u"universal_link",
-                       default=u"Universal Link"),
-            "description": _(
-                u"description_universal_link",
-                default=u"Universal Language content link"),
-            "action": portal_url + "/multilingual-universal-link?uid=" + context_id,
+            "title": _(u"title_set_language",
+                   default=u"Set language"),
+            "description": _(u"description_add_translations",
+                   default=u"Set/change context language"),
+            "action": url + "/update_language",
             "selected": False,
             "icon": None,
-            "extra": {"id": "_remove_translations",
-                       "separator": langs and "actionSeparator" or None,
-                       "class": ""},
-            "submenu": None,
+            "extra": {"id": "_set_language",
+               "separator": langs and "actionSeparator" or None,
+                   "class": ""},
+                 "submenu": None,
             })
 
         site = getUtility(ISiteRoot)

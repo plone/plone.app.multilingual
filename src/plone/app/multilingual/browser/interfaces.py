@@ -33,6 +33,14 @@ class ICreateTranslation(interface.Interface):
         source=untranslated_languages,
     )
 
+class IUpdateLanguage(form.Schema):
+
+    language = schema.Choice(
+        title=_(u"title_language", default=u"Language"),
+            source=untranslated_languages,
+            required=True,
+    )
+
 
 class IAddTranslation(form.Schema):
 
@@ -60,5 +68,6 @@ class IRemoveTranslation(form.Schema):
     )
     form.widget(languages='z3c.form.browser.select.SelectFieldWidget')
 
+interface.alsoProvides(IUpdateLanguage, form.IFormFieldProvider)
 interface.alsoProvides(IAddTranslation, form.IFormFieldProvider)
 interface.alsoProvides(IRemoveTranslation, form.IFormFieldProvider)
