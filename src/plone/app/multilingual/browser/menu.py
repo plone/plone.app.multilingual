@@ -28,7 +28,6 @@ class TranslateMenu(BrowserMenu):
         portal_state = getMultiAdapter((context, request), name=u'plone_portal_state')
         portal_url = portal_state.portal_url()
         showflags = lt.showFlags()
-        import pdb; pdb.set_trace()
         context_id = IUUID(context)
         langs = untranslated_languages(context)
         for lang in langs:

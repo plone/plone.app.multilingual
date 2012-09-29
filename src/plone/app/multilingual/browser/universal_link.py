@@ -23,7 +23,6 @@ class universal_link(BrowserView):
             # The negotiated language
             ltool = getToolByName(self.context, 'portal_languages')
             language = ltool.getRequestLanguages()[0]
-            import pdb; pdb.set_trace()
             target_uuid = canonical.get_item(language)
             if target_uuid:
                 target_object = uuidToObject(target_uuid)
