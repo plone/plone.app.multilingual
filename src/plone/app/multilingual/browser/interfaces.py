@@ -33,12 +33,15 @@ class ICreateTranslation(interface.Interface):
         source=untranslated_languages,
     )
 
+
 class IUpdateLanguage(form.Schema):
 
     language = schema.Choice(
-        title=_(u"title_language", default=u"Language"),
-            source=untranslated_languages,
-            required=True,
+        title=_(u"title_language", default=u"Available languages"),
+        description=_(u"description_update_language",
+            default=u"Untranslated languages from the current content"),
+        source=untranslated_languages,
+        required=True,
     )
 
 
