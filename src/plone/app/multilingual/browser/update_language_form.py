@@ -22,7 +22,7 @@ class UpdateLanguageForm(form.SchemaForm):
     def handle_update(self, action):
         data, errors = self.extractData()
         new_object = self.context
-        import pdb; pdb.set_trace()
+
         if not errors:
             language = data['language']
             # We need to move the object to its place!!
