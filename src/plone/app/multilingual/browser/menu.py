@@ -134,27 +134,6 @@ class TranslateMenu(BrowserMenu):
                  "submenu": None,
             })
 
-        site = getUtility(ISiteRoot)
-        mt = getToolByName(context, "portal_membership")
-        if mt.checkPermission(ManagePortal, site):
-            portal_state = getMultiAdapter((context, request),\
-                name="plone_portal_state")
-
-            menu.append({
-                "title": _(u"title_language_settings",
-                           default=u"Language settings..."),
-                "description": _(u"description_language_settings",
-                                   default=u"Go to language settings control panel."),
-                "action": portal_state.portal_url() + \
-                          "/@@language-controlpanel",
-                "selected": False,
-                "icon": None,
-                "extra": {"id": "_language_settings",
-                          "separator": None,
-                          "class": ""},
-                "submenu": None,
-                })
-
         return menu
 
 
