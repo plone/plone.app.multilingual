@@ -14,6 +14,7 @@ from plone.app.multilingual.browser.interfaces import (
 from plone.app.multilingual.browser.vocabularies import (
     untranslated_languages, translated_languages, translated_urls)
 from plone.app.multilingual import _
+from plone.uuid.interfaces import IUUID
 
 
 class TranslateMenu(BrowserMenu):
@@ -24,14 +25,18 @@ class TranslateMenu(BrowserMenu):
         menu = []
         url = context.absolute_url()
         lt = getToolByName(context, "portal_languages")
+        portal_state = getMultiAdapter((context, request), name=u'plone_portal_state')
+        portal_url = portal_state.portal_url()
         showflags = lt.showFlags()
+        import pdb; pdb.set_trace()
+        context_id = IUUID(context)
         langs = untranslated_languages(context)
         for lang in langs:
             lang_name = lang.title
             lang_id = lang.value
             icon = showflags and lt.getFlagForLanguageCode(lang_id) or None
             item = {
-                "title": lang_name,
+                "title": _(u"Create") + " " + lang_name,
                 "description": _(u"description_translate_into",
                                     default=u"Translate into ${lang_name}",
                                     mapping={"lang_name": lang_name}),
@@ -54,7 +59,7 @@ class TranslateMenu(BrowserMenu):
             lang_id = lang.value
             icon = showflags and lt.getFlagForLanguageCode(lang_id) or None
             item = {
-                "title": lang_name,
+                "title": _(u"Edit") + " " + lang_name,
                 "description": _(u"description_babeledit_menu",
                                     default=u"Babel edit ${lang_name}",
                                     mapping={"lang_name": lang_name}),
@@ -90,6 +95,21 @@ class TranslateMenu(BrowserMenu):
                 u"description_remove_translations",
                 default=u"Delete translations or remove the relations"),
             "action": url + "/remove_translations",
+            "selected": False,
+            "icon": None,
+            "extra": {"id": "_remove_translations",
+                       "separator": langs and "actionSeparator" or None,
+                       "class": ""},
+            "submenu": None,
+            })
+
+        menu.append({
+            "title": _(u"universal_link",
+                       default=u"Universal Link"),
+            "description": _(
+                u"description_universal_link",
+                default=u"Universal Language content link"),
+            "action": portal_url + "/multilingual-universal-link?uid=" + context_id,
             "selected": False,
             "icon": None,
             "extra": {"id": "_remove_translations",

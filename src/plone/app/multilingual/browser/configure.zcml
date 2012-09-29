@@ -51,6 +51,16 @@
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
 
+  <!-- Universal Link -->
+
+  <browser:page
+    name="multilingual-universal-link"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    class=".universal_link.universal_link"
+    permission="zope.Public"
+    layer="..interfaces.IPloneAppMultilingualInstalled"
+    />
+
   <!-- Multilingual Map ajax helper -->
 
   <browser:page
@@ -99,7 +109,6 @@
     for="plone.multilingual.interfaces.ITranslatable"
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
-
 
   <!-- Resource Directories -->
 
