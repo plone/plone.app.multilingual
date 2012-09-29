@@ -16,6 +16,8 @@ class UpdateLanguageForm(form.SchemaForm):
     schema = form.IFormFieldProvider(IUpdateLanguage)
     ignoreContext = True
     label = _(u"label_update_language", default=u"Update Language")
+    status = _(u"label_alert_update",
+        default=u"""By updating the content language will trigger its move to the correct language folder in the site's hierarchy""")
 
     @button.buttonAndHandler(_(u"update_language",
                                default=u"Update Language"))
