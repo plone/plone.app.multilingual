@@ -24,11 +24,12 @@ from plone.app.multilingual.tests.utils import makeContent
 from plone.app.multilingual.tests.utils import makeTranslation
 from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
 from plone.app.multilingual import browser
+from plone.uuid.interfaces import IAttributeUUID
 
 
 class Dummy(Explicit):
 
-    implements(ITranslatable)
+    implements(IAttributeUUID, ITranslatable)
 
     # This avoids issues with tests that run without a
     # full-fledged securityManager
@@ -194,7 +195,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
              u'native': u'Catal\xe0'},
              {'code': u'es',
              u'name': u'Spanish',
-             'url': 'http://nohost/plone/partial/nottranslatedyet?set_language=es',
+             'url': 'http://nohost/plone/partial/not_translated_yet?set_language=es',
              'selected': False,
              u'flag': u'/++resource++country-flags/es.gif',
              'translated': False,
@@ -202,14 +203,25 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         ])
 
     # def test_languages_vhr(self):
-    #     # self.context.physicalpath = ['', 'fake', 'path']
+    #     provideAdapter(DummyState, adapts=(Dummy, DummyRequest),
+    #                    provides=Interface, name="plone_context_state")
+    #     context = Dummy()
+    #     context.portal_url = Dummy()
+    #     container = Dummy()
+    #     context = context.__of__(container)
+    #     request = DummyRequest()
+    #     selector = LanguageSelectorViewlet(context, request, None, None)
+
+    #     context.physicalpath = ['', 'fake', 'path']
     #     vbase = '/VirtualHostBase/http/127.0.0.1/'
-    #     # self.request.PATH_INFO = vbase + 'fake/path/VirtualHostRoot/to/object'
-    #     self.request.form['uni'] = u'pres\xd8rved'
-    #     self.request.form['int'] = '1'
-    #     import ipdb;ipdb.set_trace()
-    #     self.selector.update()
-    #     # base = 'object_url/to/object?int=1&uni='
+    #     request.PATH_INFO = vbase + 'fake/path/VirtualHostRoot/to/object'
+    #     request.form['uni'] = u'pres\xd8rved'
+    #     request.form['int'] = '1'
+
+    #     selector.update()
+    #     selector.tool = MockLanguageTool()
+
+    #     base = 'object_url/to/object?int=1&uni='
     #     expected = [
     #         {'code': 'nl',
     #          'translated': True,
@@ -223,7 +235,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
     #          'translated': False,
     #          'selected': False,
     #          'url': base + 'pres%C3%98rved&set_language=no'}]
-    #     self.assertEqual(self.selector.languages(), expected)
+    #     self.assertEqual(selector.languages(), expected)
 
     # def test_languages_preserve_view_and_query(self):
     #     self.context.physicalpath = ['', 'fake', 'path']

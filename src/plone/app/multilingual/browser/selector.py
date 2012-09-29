@@ -19,6 +19,9 @@ from plone.multilingual.interfaces import ITranslationManager, ITranslatable
 from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
 
 
+NOT_TRANSLATED_YET_TEMPLATE = '/not_translated_yet'
+
+
 class LanguageSelectorViewlet(LanguageSelector):
     """Language selector for translatable content.
     """
@@ -179,7 +182,6 @@ class LanguageSelectorViewlet(LanguageSelector):
             code = str(data['code'])
             data['translated'] = code in translations.keys()
             set_language = '?set_language=%s' % code
-            not_translated_yet_template = '/nottranslatedyet'
 
             try:
                 appendtourl = '/'.join(append_path)
@@ -237,9 +239,9 @@ class LanguageSelectorViewlet(LanguageSelector):
                         data['url'] = context.absolute_url() + appendtourl
                 else:
                     try:
-                        data['url'] = state.canonical_object_url() + not_translated_yet_template + appendtourl
+                        data['url'] = state.canonical_object_url() + NOT_TRANSLATED_YET_TEMPLATE + '?' + make_query(dict(set_language=code))
                     except AttributeError:
-                        data['url'] = context.absolute_url() + not_translated_yet_template + appendtourl
+                        data['url'] = context.absolute_url() + NOT_TRANSLATED_YET_TEMPLATE + appendtourl
 
             results.append(data)
 

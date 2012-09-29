@@ -56,7 +56,17 @@
   <browser:page
     name="multilingual-universal-link"
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    class=".universal_link.universal_link"
+    class=".helper_views.universal_link"
+    permission="zope.Public"
+    layer="..interfaces.IPloneAppMultilingualInstalled"
+    />
+
+  <!-- Not Translated Yet -->
+
+  <browser:page
+    name="not_translated_yet"
+    for="plone.multilingual.interfaces.ITranslatable"
+    class=".helper_views.not_translated_yet"
     permission="zope.Public"
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />

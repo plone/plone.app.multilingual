@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone.app.multilingual">
+<body>
+
+<metal:content-core fill-slot="content-core">
+    <metal:content-core define-macro="content-core">
+      <div class="documentDescription" id="parent-fieldname-description" i18n:translate="">
+        This content is not translated yet to the language requested.
+      </div>
+      <section>
+        <tal:anytranslation condition="view/has_any_translation">
+          <p i18n:translate="">However, this is the list of the already translated languages for the requested content.</p>
+          <ul>
+            <tal:list repeat="trans_content view/already_translated">
+              <tal:defines define="code python: trans_content[0];
+                              trans_obj python: trans_content[1]">
+              <li tal:condition="python:trans_obj.Title()">
+                <a tal:attributes="href python:trans_obj.absolute_url() + '?set_language=' + code"
+                   tal:content="python:trans_obj.Title()">Translation Link</a></li>
+              <li tal:condition="python:not trans_obj.Title()">
+                <a tal:attributes="href python:trans_obj.absolute_url() + '?set_language=' + code">
+                  (No Title)</a></li>
+              </tal:defines>
+            </tal:list>
+          </ul>
+        </tal:anytranslation>
+        <tal:anytranslation condition="not: view/has_any_translation">
+          <p i18n:translate="">This item doesn't have any translation yet. You can return to the original language:</p>
+            <ul>
+              <li><a tal:attributes="href python:context.absolute_url()"
+                     tal:content="python:context.Title()">Content Link</a></li>
+            </ul>
+        </tal:anytranslation>
+      </section>
+    </metal:content-core>
+</metal:content-core>
+
+</body>
+</html>
