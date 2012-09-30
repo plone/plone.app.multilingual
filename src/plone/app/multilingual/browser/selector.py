@@ -204,6 +204,7 @@ class LanguageSelectorViewlet(LanguageSelector):
 
                 state = getMultiAdapter((trans, self.request),
                         name='plone_context_state')
+
                 if direct:
                     try:
                         data['url'] = state.canonical_object_url() + \

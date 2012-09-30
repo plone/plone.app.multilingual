@@ -1,15 +1,21 @@
+from Acquisition import aq_parent, aq_inner
 from AccessControl.SecurityManagement import getSecurityManager
-from Products.Five import BrowserView
 
-from plone.multilingual.interfaces import ITranslationManager
-from Products.CMFCore.utils import getToolByName
+from zope.event import notify
+from zope.component import getUtility
 from zope.component import getMultiAdapter
+from zope.lifecycleevent import ObjectModifiedEvent
 
-from Acquisition import aq_inner
+from Products.Five import BrowserView
+from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.interfaces._content import IFolderish
+
+from plone.app.folder.utils import findObjects
+from plone.multilingual.interfaces import ITranslationManager
+from plone.multilingual.interfaces import ITranslationLocator, ILanguage
 from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 
-from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 
@@ -110,3 +116,26 @@ class BabelUtils(BrowserView):
 
             translated_shown.append(lang_info)
         return translated_shown
+
+
+def multilingualMoveObject(content, language):
+    """
+        Move content object and its contained objects to a new language folder
+        Also set the language on all the content moved
+    """
+    target_folder = ITranslationLocator(content)(language)
+    ILanguage(content).set_language(language)
+    # We need to check if it's IFolderish to change languages recursive
+    if IFolderish.providedBy(content):
+        for path, obj in findObjects(content):
+            ILanguage(obj).set_language(language)
+    parent = aq_parent(content)
+    cb_copy_data = parent.manage_cutObjects(content.getId())
+    list_ids = target_folder.manage_pasteObjects(cb_copy_data)
+    new_id = list_ids[0]['new_id']
+    new_object = target_folder[new_id]
+    # Trigger ObjectModified Event
+    new_object.reindexObject()
+    # This will reallocate the TranslationManager
+    notify(ObjectModifiedEvent(new_object))
+    return new_object

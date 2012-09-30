@@ -1,7 +1,7 @@
 from five import grok
 from z3c.form import button
 from plone.directives import form
-from plone.multilingual.utils import multilingualMoveObject
+from plone.app.multilingual.browser.utils import multilingualMoveObject
 from plone.multilingual.interfaces import ITranslatable
 
 from plone.app.multilingual import _

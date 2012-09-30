@@ -4,7 +4,7 @@ import unittest2 as unittest
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 
-from plone.app.multilingual.tests._testing import PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
+from plone.app.multilingual.tests._testing import PLONEAPPMULTILINGUAL_INTEGRATION_TESTING, PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from zope.component import provideAdapter
@@ -12,6 +12,8 @@ from zope.interface import directlyProvides
 from zope.interface import implements
 from zope.interface import Interface
 # from zope.testing import cleanup
+from zope.event import notify
+from zope.lifecycleevent import ObjectCreatedEvent
 
 from Acquisition import Explicit
 from Products.CMFCore.utils import getToolByName
@@ -25,6 +27,8 @@ from plone.app.multilingual.tests.utils import makeTranslation
 from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
 from plone.app.multilingual import browser
 from plone.uuid.interfaces import IAttributeUUID
+from plone.uuid.interfaces import IUUID
+from plone.testing.z2 import Browser
 
 
 class Dummy(Explicit):
@@ -34,6 +38,8 @@ class Dummy(Explicit):
     # This avoids issues with tests that run without a
     # full-fledged securityManager
     _View_Permission = ('Anonymous', )
+
+    portal_type = 'Dummy'
 
     def getTranslations(self, review_state=False):
         return {'en': self, 'nl': self}
@@ -203,13 +209,22 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         ])
 
     # def test_languages_vhr(self):
+    #     registry = getUtility(IRegistry)
+    #     settings = registry.forInterface(IMultiLanguagePolicies)
+    #     settings.selector_lookup_translations_policy = 'dialog'
+
+    #     from Products.CMFCore.interfaces import ISiteRoot
+    #     from zope.interface import alsoProvides
     #     provideAdapter(DummyState, adapts=(Dummy, DummyRequest),
     #                    provides=Interface, name="plone_context_state")
     #     context = Dummy()
+    #     context.__parent__ = self.portal
     #     context.portal_url = Dummy()
     #     container = Dummy()
     #     context = context.__of__(container)
+    #     alsoProvides(container, ISiteRoot)
     #     request = DummyRequest()
+    #     import ipdb;ipdb.set_trace()
     #     selector = LanguageSelectorViewlet(context, request, None, None)
 
     #     context.physicalpath = ['', 'fake', 'path']
@@ -217,6 +232,9 @@ class TestLanguageSelectorBasics(unittest.TestCase):
     #     request.PATH_INFO = vbase + 'fake/path/VirtualHostRoot/to/object'
     #     request.form['uni'] = u'pres\xd8rved'
     #     request.form['int'] = '1'
+
+    #     notify(ObjectCreatedEvent(context))
+    #     IUUID(context, None)
 
     #     selector.update()
     #     selector.tool = MockLanguageTool()
@@ -235,6 +253,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
     #          'translated': False,
     #          'selected': False,
     #          'url': base + 'pres%C3%98rved&set_language=no'}]
+
     #     self.assertEqual(selector.languages(), expected)
 
     # def test_languages_preserve_view_and_query(self):
@@ -338,16 +357,13 @@ class TestLanguageSelectorFormVariables(unittest.TestCase):
         self.assertEquals(self.fv(form), form)
 
 
-
-
-
 # class TestLanguageSelectorRendering(unittest.TestCase):
 
 #     layer = PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
 
 #     def setUp(self):
-#         self.addLanguage('de')
-#         self.addLanguage('no')
+#         self.language_tool.addSupportedLanguage('de')
+#         self.language_tool.addSupportedLanguage('no')
 #         self.setLanguage('en')
 #         self.english = makeContent(self.folder, 'SimpleType', 'doc')
 #         self.english.setLanguage('en')
