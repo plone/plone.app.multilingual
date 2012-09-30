@@ -2,6 +2,8 @@ from zope.interface import Interface
 from zope import schema
 from plone.app.multilingual import _
 
+SHARED_NAME = 'shared'
+
 
 class IPloneAppMultilingualInstalled(Interface):
     """ layer """
