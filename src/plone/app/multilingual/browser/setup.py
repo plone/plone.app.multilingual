@@ -1,6 +1,10 @@
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from zope.interface import alsoProvides
-from plone.multilingual.interfaces import ITranslationManager, ILanguage
+from plone.multilingual.interfaces import (
+    ITranslationManager, 
+    ILanguage,
+    LANGUAGE_INDEPENDENT
+    )
 
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
@@ -56,6 +60,7 @@ class SetupMultilingualSite(object):
         doneSomething += self.removePortalDefaultPage()
         if self.previousDefaultPageId:
             doneSomething += self.resetDefaultPage()
+        doneSomething += self.setupSharedFolder()
         doneSomething += self.setupLanguageSwitcher()
         if not doneSomething:
             return "Nothing done."
@@ -148,6 +153,31 @@ class SetupMultilingualSite(object):
             alsoProvides(folder, INavigationRoot)
             doneSomething = True
             LOG.info("INavigationRoot setup on folder '%s'" % code)
+        return doneSomething
+
+    def setupSharedFolder(self):
+        """
+        Create the shared neutral language folder
+        """
+        folderId = "shared"
+        folder = getattr(self.context, folderId, None)
+        wftool = getToolByName(self.context, 'portal_workflow')
+        if folder is None:
+            self.context.invokeFactory(self.folder_type, folderId)
+            folder = getattr(self.context, folderId)
+            ILanguage(folder).set_language(LANGUAGE_INDEPENDENT)
+            folder.setTitle("Language Shared")
+            state = wftool.getInfoFor(folder, 'review_state', None)
+            # This assumes a direct 'publish' transition from the initial state
+            if state != 'published':
+                wftool.doActionFor(folder, 'publish')
+            folder.reindexObject()
+            doneSomething = True
+            LOG.info("Added LANGUAGE_INDEPENDENT folder: %s" % (folderId))
+        if not INavigationRoot.providedBy(folder):
+            alsoProvides(folder, INavigationRoot)
+            doneSomething = True
+            LOG.info("INavigationRoot setup on shared folder ")
         return doneSomething
 
     def removePortalDefaultPage(self):

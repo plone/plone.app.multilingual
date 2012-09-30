@@ -7,12 +7,14 @@ from plone.indexer import indexer
 
 from plone.app.content.browser.foldercontents import (FolderContentsView,
                                                      FolderContentsTable)
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema, SHARED_NAME
 from Acquisition import aq_inner
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 
 from App.special_dtml import DTMLFile
+
+from plone.i18n.locales.languages import _languagelist
 
 
 NO_FILTER = ['Language', 'UID', 'id', 'getId']
@@ -26,18 +28,33 @@ def Language(object, **kw):
 
 
 def language_filter(query):
+    for key in NO_FILTER:    # any "nofilter" indexing prevent mangling
+        if key in query:
+            return
+    if query.get('Language') == 'all':
+        del query['Language']
+        return
     site = getSite()
     languageTool = getToolByName(site, 'portal_languages', None)
     if languageTool is None:
         return
-    if query.get('Language') == 'all':
-        del query['Language']
-        return
-    for key in NO_FILTER:    # any "nofilter" indexing prevent mangling
-        if key in query:
-            return
     query['Language'] = [languageTool.getPreferredLanguage(),
                          LANGUAGE_INDEPENDENT]
+    old_path = query.get('path', None)
+    # In case is a depth path search
+    if isinstance(old_path, dict) and 'query' in old_path:
+        old_path_url = old_path['query']
+        # We are going to check if is language root
+        root_path = '/'.join(site.getPhysicalPath())
+        query_list = old_path['query'].split('/')
+
+        # Check is a language root folder to add the shared folder
+        if old_path['query'].split('/')[-1] in _languagelist:
+            old_path['query'] = [old_path_url, root_path + '/' + SHARED_NAME]
+
+        # Check if its shared folder to add the root path
+        #elif old_path['query'].split('/')[-1] == SHARED_NAME:
+        #    old_path['query'] = [old_path_url, root_path + '/' + languageTool.getPreferredLanguage()]
 
 
 def AlreadyApplied(patch):

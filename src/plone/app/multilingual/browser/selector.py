@@ -15,6 +15,8 @@ from plone.registry.interfaces import IRegistry
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.app.layout.navigation.interfaces import INavigationRoot
 
+from plone.multilingual.interfaces import ILanguage
+from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.multilingual.interfaces import ITranslationManager, ITranslatable
 from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
 
@@ -160,7 +162,12 @@ class LanguageSelectorViewlet(LanguageSelector):
         languages_info = super(LanguageSelectorViewlet, self).languages()
         supported_langs = [v['code'] for v in languages_info]
 
-        if find_translations_policy == 'closest':
+        results = []
+
+        # If it's neutral language don't do anything
+        if ILanguage(context).get_language() == LANGUAGE_INDEPENDENT:
+            translations = {}
+        elif find_translations_policy == 'closest':
             translations = self._get_translations_by_closest(supported_langs)
         else:
             translations = self._get_translations_by_dialog(supported_langs)
@@ -173,8 +180,6 @@ class LanguageSelectorViewlet(LanguageSelector):
         _checkPermission = getSecurityManager().checkPermission
 
         non_viewable = set()
-
-        results = []
 
         for lang_info in languages_info:
             # Avoid to modify the original language dict

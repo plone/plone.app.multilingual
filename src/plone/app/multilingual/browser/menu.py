@@ -16,6 +16,7 @@ from plone.app.multilingual.browser.vocabularies import (
 from plone.app.multilingual import _
 from plone.uuid.interfaces import IUUID
 from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT, ILanguage
+from plone.app.multilingual.interfaces import SHARED_NAME
 
 
 class TranslateMenu(BrowserMenu):
@@ -120,6 +121,36 @@ class TranslateMenu(BrowserMenu):
                 "submenu": None,
                 })
 
+            menu.append({
+                "title": _(u"shared_folder",
+                       default=u"Shared Folder"),
+                "description": _(
+                    u"description_shared_folder",
+                    default=u"Shared Folder content link"),
+                "action": portal_url + '/' + SHARED_NAME,
+                "selected": False,
+                "icon": None,
+                "extra": {"id": "_shared_folder",
+                       "separator": None,
+                       "class": ""},
+                "submenu": None,
+                })
+        else:
+            menu.append({
+                "title": _(u"language_folder",
+                       default=u"Language Folder"),
+                "description": _(
+                    u"description_shared_folder",
+                    default=u"Actual Language Folder"),
+                "action": portal_url + '/' + lt.getPreferredLanguage(),
+                "selected": False,
+                "icon": None,
+                "extra": {"id": "_shared_folder",
+                       "separator": None,
+                       "class": ""},
+                "submenu": None,
+                })
+
         menu.append({
             "title": _(u"title_set_language",
                    default=u"Set language"),
@@ -129,7 +160,7 @@ class TranslateMenu(BrowserMenu):
             "selected": False,
             "icon": None,
             "extra": {"id": "_set_language",
-               "separator": langs and "actionSeparator" or None,
+               "separator": None,
                    "class": ""},
                  "submenu": None,
             })
