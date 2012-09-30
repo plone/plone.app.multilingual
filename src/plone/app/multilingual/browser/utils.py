@@ -129,6 +129,7 @@ def multilingualMoveObject(content, language):
     if IFolderish.providedBy(content):
         for path, obj in findObjects(content):
             ILanguage(obj).set_language(language)
+            notify(ObjectModifiedEvent(obj))
     parent = aq_parent(content)
     cb_copy_data = parent.manage_cutObjects(content.getId())
     list_ids = target_folder.manage_pasteObjects(cb_copy_data)

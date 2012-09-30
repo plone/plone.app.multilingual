@@ -97,13 +97,15 @@ class PAMIntTestHelperViews(unittest.TestCase):
         self.portal.en.invokeFactory('Folder', 'new1', title=u"An archetypes based folder")
         new1 = self.portal.en['new1']
         new1.invokeFactory('Document', 'doc1', title=u"An archetypes based doc")
+        import ipdb;ipdb.set_trace()
         doc1_ca = makeTranslation(self.portal.en.new1.doc1, 'ca')
         doc1_ca.edit(title="Foo", language='ca')
         transaction.commit()
 
         # Change the content language of the created folder to 'ca'
+
         multilingualMoveObject(new1, 'ca')
-        import ipdb;ipdb.set_trace()
+
         self.assertTrue(self.portal.ca.new1)
         self.assertTrue(self.portal.ca.new1.doc1)
         self.assertEqual(ITranslationManager(self.portal.ca.new1.doc1).get_translations(),
