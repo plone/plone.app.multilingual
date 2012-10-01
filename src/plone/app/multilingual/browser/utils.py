@@ -124,19 +124,21 @@ def multilingualMoveObject(content, language):
         Also set the language on all the content moved
     """
     target_folder = ITranslationLocator(content)(language)
-    ILanguage(content).set_language(language)
-    # We need to check if it's IFolderish to change languages recursive
-    if IFolderish.providedBy(content):
-        for path, obj in findObjects(content):
-            ILanguage(obj).set_language(language)
-            notify(ObjectModifiedEvent(obj))
     parent = aq_parent(content)
     cb_copy_data = parent.manage_cutObjects(content.getId())
     list_ids = target_folder.manage_pasteObjects(cb_copy_data)
     new_id = list_ids[0]['new_id']
     new_object = target_folder[new_id]
-    # Trigger ObjectModified Event
-    new_object.reindexObject()
-    # This will reallocate the TranslationManager
-    notify(ObjectModifiedEvent(new_object))
+    ILanguage(new_object).set_language(language)
+    # We need to check if it's IFolderish to change languages recursive
+    if IFolderish.providedBy(new_object):
+        for path, obj in findObjects(new_object):
+            ILanguage(obj).set_language(language)
+            obj.reindexObject()
+            notify(ObjectModifiedEvent(obj))
+    else:
+        # Trigger ObjectModified Event
+        new_object.reindexObject()
+        # This will reallocate the TranslationManager
+        notify(ObjectModifiedEvent(new_object))
     return new_object

@@ -165,7 +165,7 @@ class LanguageSelectorViewlet(LanguageSelector):
         results = []
 
         # If it's neutral language don't do anything
-        if ILanguage(context).get_language() == LANGUAGE_INDEPENDENT:
+        if ITranslatable.providedBy(context) and ILanguage(context).get_language() == LANGUAGE_INDEPENDENT:
             translations = {}
         elif find_translations_policy == 'closest':
             translations = self._get_translations_by_closest(supported_langs)

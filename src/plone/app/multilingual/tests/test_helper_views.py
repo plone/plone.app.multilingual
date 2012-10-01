@@ -94,23 +94,22 @@ class PAMIntTestHelperViews(unittest.TestCase):
 
         self.assertTrue(getattr(self.portal, 'en'))
 
-        self.portal.en.invokeFactory('Folder', 'new1', title=u"An archetypes based folder")
-        new1 = self.portal.en['new1']
-        new1.invokeFactory('Document', 'doc1', title=u"An archetypes based doc")
-        import ipdb;ipdb.set_trace()
-        doc1_ca = makeTranslation(self.portal.en.new1.doc1, 'ca')
+        self.portal.en.invokeFactory('Folder', 'new11', title=u"An archetypes based folder")
+        new11 = self.portal.en['new11']
+        new11.invokeFactory('Document', 'doc11', title=u"An archetypes based doc")
+        doc1_ca = makeTranslation(self.portal.en.new11.doc11, 'ca')
         doc1_ca.edit(title="Foo", language='ca')
+        self.assertTrue(self.portal.ca.doc11)
         transaction.commit()
 
         # Change the content language of the created folder to 'ca'
 
-        multilingualMoveObject(new1, 'ca')
-
-        self.assertTrue(self.portal.ca.new1)
-        self.assertTrue(self.portal.ca.new1.doc1)
-        self.assertEqual(ITranslationManager(self.portal.ca.new1.doc1).get_translations(),
-                         {'ca': self.portal.ca.new1.doc1})
+        multilingualMoveObject(new11, 'ca')
+        self.assertTrue(self.portal.ca.new11)
+        self.assertTrue(self.portal.ca.new11.doc11)
+        self.assertEqual(ITranslationManager(self.portal.ca.new11.doc11).get_translations(),
+                         {'ca': self.portal.ca.new11.doc11})
         self.assertEqual(ITranslationManager(doc1_ca).get_translations(),
                          {'ca': doc1_ca})
-        self.assertEqual(ILanguage(self.portal.ca.new1).get_language(), 'ca')
-        self.assertEqual(ILanguage(self.portal.ca.new1.doc1).get_language(), 'ca')
+        self.assertEqual(ILanguage(self.portal.ca.new11).get_language(), 'ca')
+        self.assertEqual(ILanguage(self.portal.ca.new11.doc11).get_language(), 'ca')

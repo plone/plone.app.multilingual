@@ -159,6 +159,7 @@ class SetupMultilingualSite(object):
         """
         Create the shared neutral language folder
         """
+        doneSomething = False
         folderId = "shared"
         folder = getattr(self.context, folderId, None)
         wftool = getToolByName(self.context, 'portal_workflow')
