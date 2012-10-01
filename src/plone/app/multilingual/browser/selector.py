@@ -41,6 +41,8 @@ class LanguageSelectorViewlet(LanguageSelector):
         """
         """
         context = aq_inner(self.context)
+        default_view_for = getMultiAdapter((context, self.request),
+                        name='plone_context_state').canonical_object()
         _checkPermission = getSecurityManager().checkPermission
         translations = {}
 
@@ -49,6 +51,11 @@ class LanguageSelectorViewlet(LanguageSelector):
             for code in supported_langs:
                 has_view_permission = bool(_checkPermission('View', context))
                 translations[code] = (context, True, has_view_permission)
+        elif INavigationRoot.providedBy(default_view_for):
+            for code, content in ITranslationManager(default_view_for).get_translations().items():
+                code = str(code)
+                has_view_permission = bool(_checkPermission('View', content))
+                translations[code] = (content, True, has_view_permission)
         else:
             for code, content in ITranslationManager(context).get_translations().items():
                 code = str(code)

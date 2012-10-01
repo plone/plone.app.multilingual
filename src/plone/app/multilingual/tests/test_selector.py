@@ -25,6 +25,7 @@ from plone.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.tests.utils import makeContent
 from plone.app.multilingual.tests.utils import makeTranslation
 from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
+from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual import browser
 from plone.uuid.interfaces import IAttributeUUID
 from plone.uuid.interfaces import IUUID
@@ -205,6 +206,45 @@ class TestLanguageSelectorBasics(unittest.TestCase):
              'selected': False,
              u'flag': u'/++resource++country-flags/es.gif',
              'translated': False,
+             u'native': u'Espa\xf1ol'}
+        ])
+
+    def test_languages_root_folders_by_dialog(self):
+        self.registry = getUtility(IRegistry)
+        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings.selector_lookup_translations_policy = 'dialog'
+
+        workflowTool = getToolByName(self.portal, "portal_workflow")
+        workflowTool.setDefaultChain('simple_publication_workflow')
+        setupTool = SetupMultilingualSite()
+        setupTool.setupSite(self.portal)
+
+        self.selector = LanguageSelectorViewlet(self.portal.en,
+                            self.request, None, None)
+
+        self.selector.update()
+
+        self.assertEqual(self.selector.languages(), [
+            {'code': u'en',
+             u'name': u'English',
+             'url': 'http://nohost/plone/en?set_language=en',
+             'selected': True,
+             u'flag': u'/++resource++country-flags/gb.gif',
+             'translated': True,
+             u'native': u'English'},
+             {'code': u'ca',
+             u'name': u'Catalan',
+             'url': 'http://nohost/plone/ca?set_language=ca',
+             'selected': False,
+             u'flag': u'/++resource++language-flags/ca.gif',
+             'translated': True,
+             u'native': u'Catal\xe0'},
+             {'code': u'es',
+             u'name': u'Spanish',
+             'url': 'http://nohost/plone/es?set_language=es',
+             'selected': False,
+             u'flag': u'/++resource++country-flags/es.gif',
+             'translated': True,
              u'native': u'Espa\xf1ol'}
         ])
 
