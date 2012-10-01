@@ -1,0 +1,15 @@
+<dl class="portalMessage warning">
+  <dt i18n:translate="">
+    Warning
+  </dt>
+  <dd id="multilingual-languages-notice"
+      tal:define="portal_url context/portal_url">
+    Your site is not configured with more than one allowed language,
+    but the add-on that provides support for content in multiple
+    language is installed. You can add one or more additional
+    languages from the <a href="" i18n:translate=""
+    tal:attributes="href
+    string:${portal_url}/@@language-controlpanel">Language
+    tool</a>.
+  </dd>
+</dl>

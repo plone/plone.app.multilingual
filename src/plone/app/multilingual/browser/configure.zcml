@@ -51,6 +51,18 @@
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
 
+  <!-- Notices Viewlets -->
+  <browser:viewlet
+      name="plone.app.multilingual.supported-languages-notice"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      view="plone.app.controlpanel.interfaces.IPloneControlPanelView"
+      manager="plone.app.layout.viewlets.interfaces.IAboveContent"
+      class=".viewlets.oneLanguageConfiguredNoticeViewlet"
+      template="templates/languages-notice.pt"
+      layer="..interfaces.IPloneAppMultilingualInstalled"
+      permission="cmf.ManagePortal"
+      />
+
   <!-- Universal Link -->
 
   <browser:page
