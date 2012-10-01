@@ -17,6 +17,7 @@ from plone.app.multilingual import _
 from plone.uuid.interfaces import IUUID
 from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT, ILanguage
 from plone.app.multilingual.interfaces import SHARED_NAME
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 
 
 class TranslateMenu(BrowserMenu):
@@ -123,10 +124,10 @@ class TranslateMenu(BrowserMenu):
 
             menu.append({
                 "title": _(u"shared_folder",
-                       default=u"Shared Folder"),
+                       default=u"Go to shared folder"),
                 "description": _(
                     u"description_shared_folder",
-                    default=u"Shared Folder content link"),
+                    default=u"Show the language shared (neutral language) folder"),
                 "action": portal_url + '/' + SHARED_NAME,
                 "selected": False,
                 "icon": None,
@@ -138,10 +139,10 @@ class TranslateMenu(BrowserMenu):
         else:
             menu.append({
                 "title": _(u"language_folder",
-                       default=u"Language Folder"),
+                       default=u"Return to language folder"),
                 "description": _(
                     u"description_shared_folder",
-                    default=u"Actual Language Folder"),
+                    default=u"Go to the user's browser preferred language related folder"),
                 "action": portal_url + '/' + lt.getPreferredLanguage(),
                 "selected": False,
                 "icon": None,
@@ -153,9 +154,9 @@ class TranslateMenu(BrowserMenu):
 
         menu.append({
             "title": _(u"title_set_language",
-                   default=u"Set language"),
+                   default=u"Set content language"),
             "description": _(u"description_add_translations",
-                   default=u"Set/change context language"),
+                   default=u"Set or change the current content language"),
             "action": url + "/update_language",
             "selected": False,
             "icon": None,
@@ -171,7 +172,7 @@ class TranslateMenu(BrowserMenu):
 class TranslateSubMenuItem(BrowserSubMenuItem):
     implements(ITranslateSubMenuItem)
 
-    title = _(u"label_translate_menu", default=u"Translate into...")
+    title = _(u"label_translate_menu", default=u"Translate")
     description = _(u"title_translate_menu",
                     default="Manage translations for your content.")
     submenuId = "plone_contentmenu_multilingual"
@@ -184,8 +185,17 @@ class TranslateSubMenuItem(BrowserSubMenuItem):
 
     @memoize
     def available(self):
-        # this menu is only for ITranslatable,
-        # IPloneAppMultilingualInstalled available
+        if not IPloneAppMultilingualInstalled.providedBy(self.request):
+            return False
+
+        lt = getToolByName(self.context, 'portal_languages', None)
+        if lt is None:
+            return False
+
+        supported = lt.listSupportedLanguages()
+        if len(supported) < 2:
+            return False
+
         return True
 
     def selected(self):
