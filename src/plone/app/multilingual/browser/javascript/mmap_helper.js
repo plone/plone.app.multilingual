@@ -54,6 +54,7 @@ var load = function init(json){
 
         return {
               'id': nodeId,
+              'data': new_json.data,
               'children': new_json.children
         };
     };
@@ -77,7 +78,7 @@ var load = function init(json){
                       ctx.lineTo(algnPos.x + width / 2, algnPos.y + height);
                   }
                   ctx.stroke();
-              } 
+              }
           }
         }
           
@@ -117,8 +118,8 @@ var load = function init(json){
             color:'#23A4FF',
             overridable: true
         },
-        
-        //Add a request method for requesting on-demand json trees. 
+
+        //Add a request method for requesting on-demand json trees.
         //This method gets called when a node
         //is clicked and its subtree has a smaller depth
         //than the one specified by the levelsToShow parameter.
@@ -128,7 +129,7 @@ var load = function init(json){
         //Here we just use a client-side tree generator (the getTree function).
         request: function(nodeId, level, onComplete) {
           var ans = getTree(nodeId, level);
-          onComplete.onComplete(nodeId, ans);  
+          onComplete.onComplete(nodeId, ans);
         },
         
         onBeforeCompute: function(node){
@@ -143,20 +144,30 @@ var load = function init(json){
         //Use this method to add event handlers and styles to
         //your node.
         onCreateLabel: function(label, node){
-            label.id = node.id;            
+            label.id = node.id;
             label.innerHTML = node.name;
             label.onclick = function(){
-                $('#data').html("hola")
+                var html = "<div class=\"title_tb\">" + node.name + "</div>";
+                var data = node.data;
+                html += "<ul>";
+                for (var key in data) {
+                   html += "<li><b>" + key + " :</b>";
+                   html += "<a href='" + data[key].url + "''>";
+                   html += data[key].title;
+                   html += "</a></li>";
+                }
+                html += "</ul>";
+                $('#data_translation').html(html);
                 st.onClick(node.id);
             };
             //set label styles
             var style = label.style;
             style.width = 40 + 'px';
-            style.height = 17 + 'px';            
+            style.height = 17 + 'px';
             style.cursor = 'pointer';
             style.color = '#000';
             //style.backgroundColor = '#1a1a1a';
-            style.fontSize = '0.8em';
+            style.fontSize = '1em';
             style.textAlign= 'center';
             style.textDecoration = 'underline';
             style.paddingTop = '3px';
@@ -203,17 +214,20 @@ var load = function init(json){
     //end
     //Add event handlers to switch spacetree orientation.
    function get(id) {
-      return document.getElementById(id);  
+      return document.getElementById(id);
     };
 
     $('#pam_language_buttons button').click(function(){
         lang = this.id;
-        st.removeSubtree('root', false, 'animate');
-        st.compute();
-        st.onClick(st.root);
-        $('#translation_map_canvas-label').css('display', 'block')
-        $('#actual_language').html('es');
-    })
+        st.removeSubtree('root', false, 'animate',{
+            onComplete: function() {
+                st.onClick(st.root);
+            }
+        });
+        $('#pam_language_buttons button').removeClass('down');
+        $(this).addClass('down');
+
+    });
 /*
     var top = get('r-top'), 
     left = get('r-left'), 
@@ -255,3 +269,25 @@ function get_data(){
 
     });
 }
+
+(function($) {
+
+    $().ready(function() {
+        get_data();
+        $("#missing_translations").hide();
+        $("#call_missing_translations").click(function() {
+            $("#call_all_translations").removeClass('down');
+            $(this).addClass('down');
+            $("#all_translations").hide();
+            $("#missing_translations").show();
+
+        });
+        $("#call_all_translations").click(function() {
+            $("#call_missing_translations").removeClass('down');
+            $(this).addClass('down');
+            $("#missing_translations").hide();
+            $("#all_translations").show();
+        });
+    });
+
+})(jQuery);

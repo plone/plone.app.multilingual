@@ -13,23 +13,48 @@
   <script type="text/javascript" src="++resource++plone.app.multilingual.javascript/jit-yc.js"></script>
   <script type="text/javascript" src="++resource++plone.app.multilingual.javascript/mmap_helper.js"></script>
 
-<script type="text/javascript">
+
+<style>
+#pam_mmap_toolbar {
+  border: 1px solid #000;
+  padding: 20px;
+}
+
+#pam_mmap_language_toolbar {
+  width: 50%;
+}
+
+#pam_ajax_buttons {
+  width: 50%;
+  margin-bottom: 20px;
+}
+
+#data_translation {
+    background: none repeat scroll 0 0 white;
+    border: 1px solid #000000;
+    padding: 20px;
+    position: absolute;
+    right: 72px;
+    top: 200px;
+    width: 40%;
+}
+
+#pam_language_buttons button, #pam_ajax_buttons button {
+  border: 1px solid black;
+  border-radius: 0.5em;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  color: black;
+  background-color: #ccc;  
+}
+
+#pam_language_buttons button.down, #pam_ajax_buttons button.down {
+  background-color: #777;
+  color: white;
+}
 
 
-(function($) {
-
-    $().ready(function() {
-        get_data();
-        $('.formControls input').click(function (event) {
-          event.preventDefault();
-          $.get('@@migration-view', function(data) {
-            $('.results').html(data)
-          });
-        });
-    });
-
-})(jQuery);
-</script>
+</style>
 
   <div id="region-content" class="documentEditable">
 
@@ -54,6 +79,11 @@
             <a href=""
                tal:attributes="href string:${portal_url}/@@lp-migration"
                i18n:translate="label_migration">Migration</a>
+          </li>
+          <li tal:condition="not: view/isLPinstalled">
+            <a href=""
+              tal:attributes="href string:${portal_url}/@@lp-migration-after"
+              i18n:translate="label_import2">After Migration actions</a>
           </li>
         </ul>
     </div>
@@ -84,31 +114,37 @@
             <p i18n:translate="description_translation_map">
                 Translation map.
             </p>
-
-            <div id="pam_language_buttons">
-              <tal:block repeat="languages view/languages">
-                <button id="" tal:attributes="id languages/value" tal:content="languages/title">Lang</button>
-              </tal:block>
-            </div>
-
-            <div id="actual_language">
-            </div>
             <div id="pam_ajax_buttons">
               <button id="call_missing_translations" i18n:translate="label_missing_translations">Missing translations</button>
-              <button id="call_all_translations" i18n:translate="label_all_translations">All translations</button>
+              <button id="call_all_translations" class="down" i18n:translate="label_all_translations">All translations</button>
             </div>
+
+            <div id="all_translations">
+
+            <div id="pam_mmap_toolbar">
+              <div id="pam_mmap_language_toolbar">
+                <div id="pam_language_buttons" tal:define="data view/languages">
+                <tal:block repeat="languages data/languages">
+                  <button id="" tal:attributes="id languages/value; 
+                                                class python: languages.value==data['default'] and 'down' or ''" tal:content="languages/title">Lang</button>
+                </tal:block>
+                </div>
+
+                <div id="actual_language">
+                </div>
+              </div>
 
             <div id="data_translation">
             </div>
-
+          </div>
             <div id="translation_map_canvas" style="height: 400px; width: 600px;">
 
             </div>
             <div id="log">
             </div>
-<!--
 
-
+          </div>
+          <div id="missing_translations">
             <div tal:define="not_full_translated view/canonicals">
               <ul>
               <tal:block repeat="canonical not_full_translated">
@@ -137,7 +173,7 @@
               </tal:block>
               </ul>
             </div>
--->
+          </div>
         </div>
       </div>
     </div>

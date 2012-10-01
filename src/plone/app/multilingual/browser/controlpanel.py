@@ -440,35 +440,35 @@ class multilingualMapViewJSON(BrowserView):
     """ Helper view to get json translations """
 
     def __call__(self):
+        """ Get the JSON information about based on a nodeId
+        """
+
+        # We get the language we are looking for
         lang = ''
+        tool = getToolByName(self.context, 'portal_languages', None)
         if 'lang' in self.request:
             lang = self.request['lang']
 
         if lang == '':
-            tool = getToolByName(self.context, 'portal_languages', None)
             lang = tool.getDefaultLanguage()
 
+        # We want all or just the missing translations elements
         if 'all' in self.request:
             get_all = (self.request['all'] == 'true')
         else:
             get_all = True
 
+        # Which is the root nodeId
+        folder_path = ''
         if 'nodeId' in self.request:
             # We get the used UUID
             nodeId = (self.request['nodeId'])
-            if (nodeId == 'root'):
-                root = getToolByName(self.context, 'portal_url')
-                root = root.getPortalObject()
-                folder_path = '/'.join(root.getPhysicalPath())
-            else:
+            if (nodeId != 'root'):
                 new_root = uuidToObject(nodeId)
                 if ILanguage(new_root).get_language() == lang:
                     folder_path = '/'.join(new_root.getPhysicalPath())
-                else:
-                    root = getToolByName(self.context, 'portal_url')
-                    root = root.getPortalObject()
-                    folder_path = '/'.join(root.getPhysicalPath())
-        else:
+        if folder_path == '':
+            # We get the root folder
             root = getToolByName(self.context, 'portal_url')
             root = root.getPortalObject()
             folder_path = '/'.join(root.getPhysicalPath())
@@ -482,10 +482,28 @@ class multilingualMapViewJSON(BrowserView):
         query['Language'] = lang
         search_results = pcatalog.searchResults(query)
         resultat = {'id': 'root', 'name': folder_path, 'data': {}, 'children': []}
+        # Get the canonicals
+        storage = getUtility(IMultilingualStorage)
+        canonicals = storage.get_canonicals()
+        supported_languages = tool.getSupportedLanguages()
         for sr in search_results:
-            # we get the trasnaltion information
-
-            resultat['children'].append({'id': sr['UID'], 'name': sr['Title'], 'data': {}, 'children': []})
+            # We want to know the translated and missing elements
+            translations = {}
+            if sr['UID'] in canonicals:
+                # We look for the brain for each translation
+                canonical = canonicals[sr['UID']]
+                for lang in supported_languages:
+                    if lang in canonical.get_keys():
+                        translated_obj = uuidToObject(canonical.get_item(lang))
+                        translations[lang] = {'url': translated_obj.absolute_url(), 'title': translated_obj.getId()}
+                    else:
+                        url_to_create = sr.getURL() + "/@@create_translation?form.widgets.language"\
+                            "=%s&form.buttons.create=1" % lang
+                        translations[lang] = {'url': url_to_create, 'title': _(u'Not translated')}
+            if get_all:
+                resultat['children'].append({'id': sr['UID'], 'name': sr['Title'], 'data': translations, 'children': []})
+            else:
+                pass
         return json.dumps(resultat)
 
 
@@ -495,12 +513,14 @@ class multilingualMapView(BrowserView):
 
     def languages(self):
         langs = getUtility(IVocabularyFactory, name=u"plone.app.multilingual.vocabularies.AllAvailableLanguageVocabulary")
-        return langs(self.context)
+        tool = getToolByName(self.context, 'portal_languages', None)
+        lang = tool.getDefaultLanguage()
+        return {'default': lang, 'languages': langs(self.context)}
 
     def canonicals(self):
         """ We get all the canonicals and see which translations are missing """
         # Get the language
-        tool = getUtility(self.context, 'portal_languages', None)
+        tool = getToolByName(self.context, 'portal_languages', None)
         languages = tool.getSupportedLanguages()
         num_lang = len(languages)
         # Get the canonicals
