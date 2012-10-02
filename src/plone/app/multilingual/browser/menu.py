@@ -7,6 +7,7 @@ from Products.CMFCore.permissions import ManagePortal
 from zope.app.publisher.browser.menu import BrowserMenu
 from zope.app.publisher.browser.menu import BrowserSubMenuItem
 from plone.memoize.instance import memoize
+from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.multilingual.browser.interfaces import (
     ITranslateMenu,
     ITranslateSubMenuItem,
@@ -186,6 +187,9 @@ class TranslateSubMenuItem(BrowserSubMenuItem):
     @memoize
     def available(self):
         if not IPloneAppMultilingualInstalled.providedBy(self.request):
+            return False
+
+        if INavigationRoot.providedBy(self.context):
             return False
 
         lt = getToolByName(self.context, 'portal_languages', None)
