@@ -1,3 +1,4 @@
 <object name="portal_types">
-    <object name="samplecontent" meta_type="Dexterity FTI" />
+    <object name="dxdoc" meta_type="Dexterity FTI" />
+    <object name="dxfolder" meta_type="Dexterity FTI" />
 </object>

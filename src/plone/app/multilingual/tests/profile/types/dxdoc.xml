@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<object name="samplecontent" meta_type="Dexterity FTI"
+<object name="dxdoc" meta_type="Dexterity FTI"
    i18n:domain="plone.app.multilingual" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 
  <!-- Basic metadata -->
- <property name="title" i18n:translate="">samplecontent</property>
+ <property name="title" i18n:translate="">dxdoc</property>
  <property name="content_icon">document_icon.gif</property>
  <property name="allow_discussion">True</property>
  <property name="global_allow">True</property>
@@ -18,7 +18,8 @@
 
  <!-- enabled behaviors -->
  <property name="behaviors">
-     <element value="plone.multilingualbehavior.interfaces.IDexterityTranslatable" />
+    <element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>
+    <element value="plone.multilingualbehavior.interfaces.IDexterityTranslatable" />
  </property>
 
  <!-- View information -->

@@ -4,8 +4,8 @@ translation-menu
     >>> portal = layer['portal']
     >>> from zope import component
     >>> from zope.app.publisher.interfaces.browser import IBrowserMenu
-    >>> from plone.app.testing import ( 
-    ...     SITE_OWNER_NAME, 
+    >>> from plone.app.testing import (
+    ...     SITE_OWNER_NAME,
     ...     SITE_OWNER_PASSWORD,
     ... )
     >>> from plone.testing.z2 import Browser
@@ -28,14 +28,14 @@ samplecontent::
     >>> import transaction
     >>> transaction.commit()
 
-menu:: 
+menu::
 
     >>> menu = component.getUtility(IBrowserMenu, name="plone_contentmenu_multilingual", context=content)
 
 We should see our menu::
 
     >>> browser.open(content.absolute_url())
-    >>> 'Translate into...' in browser.contents
+    >>> 'Translate' in browser.contents
     True
 
 We should see menu entries::
@@ -53,6 +53,6 @@ We should not see::
 The menu should not appear if ITranslatable isn't provided by context ::
 
     >>> browser.open(portal.absolute_url() + '/folder_listing')
-    >>> 'Translate into...' in browser.contents
+    >>> 'Translate' in browser.contents
     False
 

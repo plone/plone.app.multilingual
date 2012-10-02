@@ -1,8 +1,8 @@
 translation-form
 ================
 ::
-    >>> from plone.app.testing import ( 
-    ...     TEST_USER_NAME, 
+    >>> from plone.app.testing import (
+    ...     TEST_USER_NAME,
     ...     TEST_USER_PASSWORD,
     ... )
 
@@ -20,9 +20,9 @@ translation-form
     >>> browser.addHeader('Authorization', 'Basic %s:%s' %(TEST_USER_NAME, TEST_USER_PASSWORD))
 
 translating content (AT)::
-	
+
 	>>> from zope.lifecycleevent import ObjectAddedEvent
-	>>> from zope.event import notify  
+	>>> from zope.event import notify
     >>> content_id = portal.invokeFactory(type_name="Document", id="sampledocument-form")
     >>> content = portal[content_id]
 	>>> notify(ObjectAddedEvent(content))
@@ -33,17 +33,17 @@ translating content (AT)::
 	>>> browser.getControl(name="form.buttons.create").click()
 
 we should see now the translations edit-form::
-   
-    
+
+
     >>> browser.getControl(name="title").value = "sample title de"
     >>> browser.getControl(name="form.button.save").click()
     >>> transaction.commit()
-    >>> content_id_de = "%s-de" % content_id 
+    >>> content_id_de = "%s-de" % content_id
     >>> content_de = portal[content_id_de]
 
 translating content (dexterity)::
 
-    >>> content_id_dexterity = portal.invokeFactory(type_name="samplecontent", id="dextdocument")
+    >>> content_id_dexterity = portal.invokeFactory(type_name="dxdoc", id="dextdocument")
     >>> content_dexterity = portal[content_id_dexterity]
     >>> transaction.commit()
     >>> browser.open(content_dexterity.absolute_url() + '/@@create_translation')
@@ -61,10 +61,10 @@ translation-menu
     True
     >>> 'translate_into_de' in browser.contents
     False
-    
+
 remove / unregister translations
-================================ 
-::    
+================================
+::
     >>> browser.open(content.absolute_url() + '/remove_translations')
     >>> browser.getControl(name="form.widgets.languages:list").value
     ['de']
@@ -99,7 +99,7 @@ let's reregister the translation::
     ['it']
 
 lets's see if the reregistered translation is there::
-    
+
     >>> browser.open(content.absolute_url() + '/remove_translations')
     >>> browser.getControl(name="form.widgets.languages:list").value
     ['de']
