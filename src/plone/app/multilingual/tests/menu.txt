@@ -35,7 +35,7 @@ menu::
 We should see our menu::
 
     >>> browser.open(content.absolute_url())
-    >>> 'Translate into...' in browser.contents
+    >>> 'Translate' in browser.contents
     True
 
 We should see menu entries::
