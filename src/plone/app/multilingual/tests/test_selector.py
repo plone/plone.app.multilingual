@@ -4,7 +4,7 @@ import unittest2 as unittest
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 
-from plone.app.multilingual.tests._testing import PLONEAPPMULTILINGUAL_INTEGRATION_TESTING, PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
+from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_INTEGRATION_TESTING, PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from zope.component import provideAdapter

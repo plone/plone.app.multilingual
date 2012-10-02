@@ -1,5 +1,5 @@
 import unittest2 as unittest
-from plone.app.multilingual.tests._testing import PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
+from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
 from AccessControl import Unauthorized
 from zope.component import getMultiAdapter
 from Products.CMFCore.utils import getToolByName

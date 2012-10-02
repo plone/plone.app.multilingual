@@ -11,8 +11,8 @@ from plone.app.testing import SITE_OWNER_NAME
 from plone.app.testing import login, logout
 from plone.app.testing import setRoles
 
-from plone.app.multilingual.tests._testing import PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
-from plone.app.multilingual.tests._testing import PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
+from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
+from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
 
 from plone.app.multilingual.tests.utils import makeContent, makeTranslation
 from plone.multilingual.interfaces import ITranslationManager

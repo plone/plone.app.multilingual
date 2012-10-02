@@ -1,7 +1,7 @@
 import unittest2 as unittest
 import doctest
 from plone.testing import layered
-from plone.app.multilingual.tests._testing import (
+from plone.app.multilingual.testing import (
     PLONEAPPMULTILINGUAL_INTEGRATION_TESTING,
     PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING,
     optionflags,
