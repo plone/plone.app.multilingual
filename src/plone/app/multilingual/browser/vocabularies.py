@@ -27,11 +27,10 @@ def untranslated_languages(context):
     languages = []
     for lang in available_portal_languages:
         if lang not in translated_languages:
-            if not (filter_default and lang == default_language):
-                native = language_infos[lang].get('native', None)
-                name = language_infos[lang].get('name', lang)
-                languages.append(SimpleVocabulary.createTerm(lang, lang, \
-                    native or name))
+            native = language_infos[lang].get('native', None)
+            name = language_infos[lang].get('name', lang)
+            languages.append(SimpleVocabulary.createTerm(lang, lang, \
+               native or name))
     return SimpleVocabulary(languages)
 
 

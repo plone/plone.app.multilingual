@@ -13,9 +13,42 @@ from plone.registry.interfaces import IRegistry
 from z3c.form import button
 from zope.component import getUtility
 
+import json
+
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.interfaces import ICreateTranslation
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+
+
+def google_translate(question, key, lang_target, lang_source):
+    length = len(question)
+    translated = ''
+    url = 'https://www.googleapis.com/language/translate/v2'
+    temp_question = question
+    while(length > 400):
+        temp_question = question[:399]
+        index = temp_question.rfind(' ')
+        temp_question = temp_question[:index]
+        question = question[index:]
+        length = len(question)
+        data = {'key': key,
+                'target': lang_target,
+                'source': lang_source,
+                'q': temp_question}
+        params = urllib.urlencode(data)
+
+        retorn = urllib.urlopen(url + '?' + params)
+        translated += json.loads(retorn.read())['data']['translations'][0]['translatedText']
+
+    data = {'key': key,
+            'target': lang_target,
+            'source': lang_source,
+            'q': temp_question}
+    params = urllib.urlencode(data)
+
+    retorn = urllib.urlopen(url + '?' + params)
+    translated += json.loads(retorn.read())['data']['translations'][0]['translatedText']
+    return json.dumps({'data': translated})
 
 
 class gtranslation_service_dexterity(BrowserView):
@@ -32,23 +65,14 @@ class gtranslation_service_dexterity(BrowserView):
             lang_target = ILanguage(self.context).get_language()
             lang_source = self.request.form['lang_source']
             orig_object = manager.get_translation(lang_source)
-            if hasattr(orig_object, self.request.form['field']):
-                question = getattr(orig_object, self.request.form['field'], '')
+            field = self.request.form['field'].split('.')[-1]
+            if hasattr(orig_object, field):
+                question = getattr(orig_object, field, '')
                 if hasattr(question, 'raw'):
                     question = question.raw
             else:
                 return _("Invalid field")
-            if len(question) > 1600:
-                return _("Too long field")
-            data = {'key': settings.google_translation_key,
-                        'target': lang_target,
-                        'source': lang_source,
-                        'q': question}
-            params = urllib.urlencode(data)
-
-            url = 'https://www.googleapis.com/language/translate/v2'
-            retorn = urllib.urlopen(url + '?' + params)
-            return retorn.read()
+            return google_translate(question, settings.google_translation_key, lang_target, lang_source)
 
 
 class gtranslation_service_at(BrowserView):
@@ -70,17 +94,7 @@ class gtranslation_service_at(BrowserView):
                     self.request.form['field']).get(orig_object)
             except AttributeError:
                 return _("Invalid field")
-            if len(question) > 1600:
-                return _("Too long field")
-            data = {'key': settings.google_translation_key,
-                        'target': lang_target,
-                        'source': lang_source,
-                        'q': question}
-            params = urllib.urlencode(data)
-
-            url = 'https://www.googleapis.com/language/translate/v2'
-            retorn = urllib.urlopen(url + '?' + params)
-            return retorn.read()
+            return google_translate(question, settings.google_translation_key, lang_target, lang_source)
 
 
 class TranslationForm(form.SchemaForm):
@@ -111,7 +125,7 @@ class TranslationForm(form.SchemaForm):
             settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
             if settings.redirect_babel_view:
                 return self.request.response.redirect(
-                    translated.absolute_url() + '/babel_edit')
+                    translated.absolute_url() + '/babel_edit?set_language=%s' % language)
             else:
                 return self.request.response.redirect(
                     translated.absolute_url() + '/edit?set_language=%s' %

@@ -11,7 +11,7 @@
 
 <tal:block repeat="widget view/widgets/values">
     <div class="field"  id=""
-         tal:attributes="id python:widget.__name__">
+         tal:attributes="id python:widget.__name__; rel python:widget.__name__">
         <label tal:content="widget/label" />
         <br />
         <div class="value" tal:content="structure widget/render" />
@@ -21,11 +21,13 @@
 <fieldset tal:repeat="group view/groups"
           tal:attributes="id python:''.join((group.prefix, 'groups.', group.__name__)).replace('.', '-')">
     <legend tal:content="group/label" />
-    <div class="field" tal:repeat="widget group/widgets/values">
+    <tal:block repeat="widget group/widgets/values">
+    <div class="field" rel="" id="" tal:attributes="id python:widget.__name__; rel python:widget.__name__" tal:condition="python:widget.__name__!='IDublinCore.language'">
         <label tal:content="widget/label" />
         <br />
         <div tal:content="structure widget/render" />
     </div>
+  </tal:block>
 </fieldset>
 
 </body>

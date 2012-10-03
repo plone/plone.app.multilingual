@@ -8,7 +8,7 @@
       i18n:domain="plone.app.multilingual"
       tal:define="pamutils context/@@babel_utils;">
 
-    <script src="++resource++plone.app.multilingual.javascript/dx_helper.js"></script>
+    <script src="++resource++plone.app.multilingual.javascript/babel_helper.js"></script>
     <input type="hidden" id="url_translate" value="" tal:attributes="value context/absolute_url"/>
     <input type="hidden" id="gtanslate_service" value="" tal:attributes="value view/gtenabled"/>
     <div class='cell width-8 position-0'>

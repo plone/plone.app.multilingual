@@ -3,7 +3,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 
 class ATBabelView(BrowserView):
-    __call__ = ViewPageTemplateFile('at_babel_view.pt')
+    __call__ = ViewPageTemplateFile('templates/at_babel_view.pt')
 
 
 class ATBabelEdit(BrowserView):

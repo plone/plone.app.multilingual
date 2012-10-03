@@ -190,7 +190,7 @@
     for="plone.dexterity.interfaces.IDexterityContent"
     name="babel_view"
     class=".view.DexterityBabelView"
-    template="dx_babel_view.pt"
+    template="templates/dx_babel_view.pt"
     permission="cmf.ModifyPortalContent"
     />
 

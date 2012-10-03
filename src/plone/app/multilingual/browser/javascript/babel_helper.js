@@ -1,6 +1,7 @@
 /*global tinyMCE: false, document: false, window: false, jQuery: false */
 (function ($) {
     "use strict";
+
     var original_fields = [],
         destination_fields = [],
         padding = 0;
@@ -119,29 +120,31 @@
 
         original_fields = $('#frame-content .field');
         destination_fields = $('#form-target fieldset > .field');
-        // console.log(original_fields);
-        // console.log(destination_fields);
 
         // Calculate the padding between fields as intended by css
         if (original_fields.length > 1) {
             padding = ($(original_fields[1]).position().top - $(original_fields[0]).position().top - $(original_fields[0]).height());
         }
         $.each(original_fields, function (index, value) {
-            var original_field = $(value),
-                destination_field = $(destination_fields[index]);
-
+            var original_field = $(value);
+            var destination_field = $(destination_fields[index]);
             sync_element_vertically(original_field, destination_field, padding, index === 0);
-            if (original_field.find('.richtext-field, textline-field, .localstatic-field, .ArchetypesField-TextField').length > 0) {
+
+            // Add the google translation field
+            if ((original_field.find('.richtext-field, .textline-field, .text-field, .localstatic-field, .ArchetypesField-TextField').length > 0) || ($('#at-babel-edit').length>0)) {
                 original_field.prepend("<div class='translator-widget' id='item_translation_" + order + "'></div>");
                 original_field.children('.translator-widget').click(function () {
-                    var field = $(value).attr("id"),
+                    var field = $(value).attr("rel");
                         // Fetch source of text to translate.
-                        jsondata = {
+                    var jsondata = {
                             'field': field,
                             'lang_source': langSource
-                        },
-                        targetelement = destination_field.find('input') || destination_field.find("textarea"),
-                        tiny_editor = destination_field.find("textarea.mce_editable");
+                        };
+                    var targetelement = destination_field.find('textarea');
+                    var tiny_editor = destination_field.find("textarea.mce_editable");
+                    if (!targetelement.length) {
+                        targetelement = destination_field.find("input");
+                    }
                     // Now we call the data
                     $.ajax({
                         url: url_translate + '/gtranslation_service',
@@ -149,8 +152,8 @@
                         dataType: 'json',
                         type: 'POST',
                         success: function (data) {
-                            var text_target = data.data.translations[0].translatedText;
-                            if (tiny_editor) {
+                            var text_target = data.data;
+                            if (tiny_editor.length > 0) {
                                 tinyMCE.get(tiny_editor.attr('id')).setContent(text_target);
                             } else {
                                 targetelement.val(text_target); // Inserts translated text.
@@ -168,7 +171,6 @@
 
         /* alert about language independent field */
         $('.languageindependent').click(function () {
-            alert('Is a languageindependent!');
             $(this).css('opacity', '1');
         });
 
@@ -186,7 +188,7 @@
         /* select a field on both sides and change the color */
         var babel_selected = null,
             orig_babel_select = null;
-        $('#fieldset-default .field').click(function () {
+        $('#babel-edit #fieldset-default .field').click(function () {
             var index = $('#form-target .field').index($(this));
             if (babel_selected) {
                 $(babel_selected).toggleClass("selected");

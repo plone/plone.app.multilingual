@@ -34,6 +34,19 @@ class TranslateMenu(BrowserMenu):
         showflags = lt.showFlags()
         # In case is neutral language show set language menu only
         if LANGUAGE_INDEPENDENT != ILanguage(context).get_language():
+            menu.append({
+                "title": _(u"title_babel_edit",
+                       default=u"Edit with babel view"),
+                "description": _(u"description_babel_edit",
+                                default=u"Edit with the babel_edit"),
+                "action": url + "/babel_edit",
+                "selected": False,
+                "icon": None,
+                "extra": {"id": "_edit_babel_edit",
+                       "separator": None,
+                       "class": ""},
+                "submenu": None,
+                })
             context_id = IUUID(context)
             langs = untranslated_languages(context)
             for lang in langs:

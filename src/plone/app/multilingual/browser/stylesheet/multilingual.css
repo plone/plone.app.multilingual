@@ -21,7 +21,7 @@
 
 #babel-edit label {
     font-size: 1.3em;
-    color: #999999;
+    color: #312E2E;
     font-weight: 300;
     text-transform:capitalize;
 }
@@ -32,8 +32,8 @@
 }
 
 #babel-edit #fieldset-default .selected, #babel-edit #frame-content .selected{
-    background-color: #205c90;
-    color: #ccc;
+    background-color: #99B0C4;
+    color: #0A0909;
 }
 
 #babel-edit #fieldset-default .selected .formHelp {

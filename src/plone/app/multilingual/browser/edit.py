@@ -17,7 +17,7 @@ from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 
 class MultilingualEditForm(DefaultEditForm):
 
-    babel = ViewPageTemplateFile("dexterity_edit.pt")
+    babel = ViewPageTemplateFile("templates/dexterity_edit.pt")
 
     def gtenabled(self):
         registry = getUtility(IRegistry)
