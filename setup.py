@@ -6,7 +6,8 @@ version = '1.0b2'
 setup(name='plone.app.multilingual',
       version=version,
       description="Multilingual Plone UI package, enables maintenance of translations for both Dexterity types and Archetypes",
-      long_description=open("README.rst").read() + "\n" +
+      long_description=open("README.rst").read() + "\n\n" +
+                       open(os.path.join("docs", "CREDITS.txt")).read() + "\n\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       classifiers=[
         "Framework :: Plone",

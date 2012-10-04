@@ -1,7 +1,7 @@
 Credits
 =======
 
-Plone.app.multilingual has been developed based on LinguaPlone by:
+plone.app.multilingual has been developed based on LinguaPlone by:
 
 Design and development --
   Iskra_ (Ramon Navarro Bosch, Victor Fernandez de Alba)
