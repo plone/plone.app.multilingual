@@ -1,6 +1,4 @@
-======================
-plone.app.multilingual
-======================
+.. contents::
 
 Introduction
 ============
@@ -225,12 +223,12 @@ way as in LinguaPlone::
 Dexterity
 ---------
 
-There are four ways of achieve it:
+There are four ways of achieve it.
 
 Grok directive
 ~~~~~~~~~~~~~~
 
-.. code-block:: python
+In your content type class declaration::
 
     from plone.multilingualbehavior import directives
     directives.languageindependent('field')
@@ -238,7 +236,7 @@ Grok directive
 Supermodel
 ~~~~~~~~~~
 
-.. code-block:: python
+In your content type XML file declaration::
 
     <field name="myField" type="zope.schema.TextLine" lingua:independent="true">
         <description />
@@ -248,7 +246,7 @@ Supermodel
 Native
 ~~~~~~
 
-.. code-block:: python
+In your code::
 
     from plone.multilingualbehavior.interfaces import ILanguageIndependentField
     alsoProvides(ISchema['myField'], ILanguageIndependentField)
@@ -333,20 +331,16 @@ Language get/set via an unified adapter
 ---------------------------------------
 
 In order to access and modify the language of a content type regardless the
-type (Archetypes/Dexterity) there is a interface/adapter :
+type (Archetypes/Dexterity) there is a interface/adapter::
 
     plone.multilingual.interfaces.ILanguage
 
-You can use:
-
-.. code-block:: python
+You can use::
 
     from plone.multilingual.interfaces import ILanguage
     language = ILanguage(context).get_language()
 
-or in case you want to set the language of a content:
-
-.. code-block:: python
+or in case you want to set the language of a content::
 
     language = ILanguage(context).set_language('ca')
 
