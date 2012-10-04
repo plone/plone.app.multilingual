@@ -10,8 +10,21 @@ from zope.interface import implements
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
+from zope.app.component.hooks import getSite
+from plone.formwidget.contenttree import ObjPathSourceBinder
+
 
 _ = MessageFactory('plone.app.multilingual')
+
+
+@grok.provider(IContextSourceBinder)
+def addTranslation(context):
+    path = '/'.join(getSite().getPhysicalPath())
+    query = {"path": {'query': path, 'depth': 2},
+              "Language": 'all'
+             }
+
+    return ObjPathSourceBinder(navigation_tree_query=query)(context)
 
 
 @grok.provider(IContextSourceBinder)
