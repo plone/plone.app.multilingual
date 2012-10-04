@@ -335,14 +335,14 @@ type (Archetypes/Dexterity) there is a interface/adapter :
 
     plone.multilingual.interfaces.ILanguage
 
-You can use::
+You can use:
 
 .. code-block:: python
 
     from plone.multilingual.interfaces import ILanguage
     language = ILanguage(context).get_language()
 
-or in case you want to set the language of a content::
+or in case you want to set the language of a content:
 
 .. code-block:: python
 
