@@ -6,6 +6,7 @@ from plone.app.multilingual import _
 from plone.app.multilingual.browser.vocabularies import (
     untranslated_languages,
     deletable_languages,
+    addTranslation
 )
 from plone.formwidget.contenttree import ObjPathSourceBinder
 from plone.directives import form
@@ -54,7 +55,7 @@ class IAddTranslation(form.Schema):
     )
     content = RelationChoice(
         title=_(u"content"),
-        source=ObjPathSourceBinder({'language': 'all'}),
+        source=addTranslation,
         required=True,
     )
 

@@ -28,12 +28,13 @@ def Language(object, **kw):
 
 
 def language_filter(query):
-    for key in NO_FILTER:    # any "nofilter" indexing prevent mangling
-        if key in query:
-            return
+
     if query.get('Language') == 'all':
         del query['Language']
         return
+    for key in NO_FILTER:    # any "nofilter" indexing prevent mangling
+        if key in query:
+            return
     site = getSite()
     languageTool = getToolByName(site, 'portal_languages', None)
     if languageTool is None:
