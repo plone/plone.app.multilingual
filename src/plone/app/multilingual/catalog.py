@@ -11,7 +11,7 @@ from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema, 
 from Acquisition import aq_inner
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
-
+from Products.CMFPlone.interfaces import IPloneSiteRoot
 from App.special_dtml import DTMLFile
 
 from plone.i18n.locales.languages import _languagelist
@@ -43,11 +43,10 @@ def language_filter(query):
                          LANGUAGE_INDEPENDENT]
     old_path = query.get('path', None)
     # In case is a depth path search
-    if isinstance(old_path, dict) and 'query' in old_path:
+    if isinstance(old_path, dict) and 'query' in old_path and IPloneSiteRoot.providedBy(site):
         old_path_url = old_path['query']
         # We are going to check if is language root
         root_path = '/'.join(site.getPhysicalPath())
-        query_list = old_path['query'].split('/')
 
         # Check is a language root folder to add the shared folder
         if old_path['query'].split('/')[-1] in _languagelist:

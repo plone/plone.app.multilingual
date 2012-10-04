@@ -32,8 +32,9 @@ class TranslateMenu(BrowserMenu):
         portal_state = getMultiAdapter((context, request), name=u'plone_portal_state')
         portal_url = portal_state.portal_url()
         showflags = lt.showFlags()
+        context_id = IUUID(context)
         # In case is neutral language show set language menu only
-        if LANGUAGE_INDEPENDENT != ILanguage(context).get_language():
+        if LANGUAGE_INDEPENDENT != ILanguage(context).get_language() and not INavigationRoot.providedBy(context):
             menu.append({
                 "title": _(u"title_babel_edit",
                        default=u"Edit with babel view"),
@@ -47,7 +48,6 @@ class TranslateMenu(BrowserMenu):
                        "class": ""},
                 "submenu": None,
                 })
-            context_id = IUUID(context)
             langs = untranslated_languages(context)
             for lang in langs:
                 lang_name = lang.title
@@ -121,6 +121,23 @@ class TranslateMenu(BrowserMenu):
                 "submenu": None,
                 })
 
+        elif LANGUAGE_INDEPENDENT == ILanguage(context).get_language():
+            menu.append({
+                "title": _(u"language_folder",
+                       default=u"Return to language folder"),
+                "description": _(
+                    u"description_shared_folder",
+                    default=u"Go to the user's browser preferred language related folder"),
+                "action": portal_url + '/' + lt.getPreferredLanguage(),
+                "selected": False,
+                "icon": None,
+                "extra": {"id": "_shared_folder",
+                       "separator": None,
+                       "class": ""},
+                "submenu": None,
+                })
+
+        if LANGUAGE_INDEPENDENT != ILanguage(context).get_language():
             menu.append({
                 "title": _(u"universal_link",
                        default=u"Universal Link"),
@@ -131,7 +148,7 @@ class TranslateMenu(BrowserMenu):
                 "selected": False,
                 "icon": None,
                 "extra": {"id": "_universal_link",
-                       "separator": langs and "actionSeparator" or None,
+                       "separator": None,
                        "class": ""},
                 "submenu": None,
                 })
@@ -150,21 +167,7 @@ class TranslateMenu(BrowserMenu):
                        "class": ""},
                 "submenu": None,
                 })
-        else:
-            menu.append({
-                "title": _(u"language_folder",
-                       default=u"Return to language folder"),
-                "description": _(
-                    u"description_shared_folder",
-                    default=u"Go to the user's browser preferred language related folder"),
-                "action": portal_url + '/' + lt.getPreferredLanguage(),
-                "selected": False,
-                "icon": None,
-                "extra": {"id": "_shared_folder",
-                       "separator": None,
-                       "class": ""},
-                "submenu": None,
-                })
+
 
         menu.append({
             "title": _(u"title_set_language",
@@ -200,9 +203,6 @@ class TranslateSubMenuItem(BrowserSubMenuItem):
     @memoize
     def available(self):
         if not IPloneAppMultilingualInstalled.providedBy(self.request):
-            return False
-
-        if INavigationRoot.providedBy(self.context):
             return False
 
         lt = getToolByName(self.context, 'portal_languages', None)

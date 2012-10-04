@@ -1,14 +1,47 @@
 Changelog
 =========
 
-1.0b3 (unreleased)
-------------------
+1.0b3 2012-10-04
+----------------
 
 - Select the original language in the dexterity babel edit form.
   [maurits]
 
 - Add after migration action on view
   [do3cc]
+
+- Multilingual Map
+  [ramon]
+
+- Univeral link
+  [ramon]
+
+- Catalog patch bug solving
+  [ramon]
+
+- Language selector bug solving
+  [sneridagh]
+
+- Babel view javascripts unification and optimization
+  [ramon]
+
+- Neutral language folder and menu options added
+  [ramon]
+
+- New tests
+  [sneridagh]
+
+- Moving templates to templates folder
+  [ramon]
+
+- Updating language options
+  [ramon]
+
+- Menu refactoring
+  [ramon]
+
+- Allow to see all content on adding translation
+  [ramon]
 
 
 1.0b2 - 2012-07-08
