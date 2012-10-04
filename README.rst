@@ -37,8 +37,8 @@ PAM is composed of four packages, two are mandatory:
 
 and two optionals (at least one should be installed):
 
-    * plone.multilingualbehavior (enable Dexterity support via a behavior)
-    * archetypes.multilingual (enable Archetypes support)
+    * plone.multilingualbehavior (enables Dexterity support via a behavior)
+    * archetypes.multilingual (enables Archetypes support)
 
 Usage
 =====
@@ -61,9 +61,10 @@ Setup
 =====
 
 After re-running your buildout and installing the newly available add-ons, you
-should go to the `Languages` section of your `Site Setup` and select at least
-two or more languages for your site. You will now be able to create translations
-of Plone's default content types, or to link existing content as translations.
+should go to the *Languages* section of your site's control panel and select
+at least two or more languages for your site. You will now be able to create
+translations of Plone's default content types, or to link existing content as
+translations.
 
 Features
 ========
@@ -85,7 +86,7 @@ between language folders.
 Babel view
 ----------
 
-An evolution of the LP `translate` view, unified for either Archetypes and
+An evolution of the LP *translate* view, unified for either Archetypes and
 Dexterity content types. It features an already translated content viewer for
 the current content being edited via an ajaxified dinamic selector that shows
 them on the fly on user request.
@@ -136,7 +137,7 @@ language content. However, there are some use cases we need content that does
 not belongs to any language. For example, for assets or side resources like
 images, videos and documents. There is need to maintain a language neutral
 folder for place this kind of objects. After PAM setup, there is a special
-folder called `Language shared`. All items placed in this folder will have
+folder called *Language shared*. All items placed in this folder will have
 neutral as its default language and will be visible from the other root
 language folders as they were placed there.
 
@@ -147,14 +148,14 @@ Translation map
 In order to ease the translation tasks, we devised a tool that displays in a
 useful way all the current translated objects and its current translation
 information. The map also shows a list of missing translations in case you
-want to build a `mirrored` (completely) translated site.
+want to build a *mirrored* (completely) translated site.
 
 
 Google Translation Service integration
 --------------------------------------
 
 If you are subscriber of the Google Translation service (a paid service), you
-can setup your API key on `Languages` site setup. Then, you will notice a new
+can setup your API key on *Languages* site setup. Then, you will notice a new
 icon in the babel view that takes the original field on the left side and
 using Google Translations service, translates its contents and fill the right
 side field.
@@ -163,8 +164,8 @@ side field.
 LinguaPlone migration
 ---------------------
 
-You can migrate your existing LP powered site to PAM using the `Migration` tab
-in the `languages` control panel. This non-destructive procedure will copy the
+You can migrate your existing LP powered site to PAM using the *Migration* tab
+in the *languages* control panel. This non-destructive procedure will copy the
 translation information stored in content objects used by LP to the
 translation storage structures used in PAM.
 
@@ -174,7 +175,7 @@ Backup
 
 Sometimes, it can be handy to have at hand a procedure that dumps translation
 information to an exportable format for later use. You can do so in the tab
-`Backup` in `languages` control panel.
+*Backup* in *languages* control panel.
 
 For information about making your Dexterity content type translatable, see the
 plone.multilingualbehavior documentation.
@@ -255,13 +256,13 @@ Native
 Through the web
 ~~~~~~~~~~~~~~~
 
-Via the content type definition in the `Dexterity Content Types` control panel.
+Via the content type definition in the *Dexterity Content Types* control panel.
 
 
 Internal design of plone.multilingual
 ======================================
 
-All the internal features are implementated on the package plone.multilingual.
+All the internal features are implemented on the package plone.multilingual.
 
 The key points are:
 
@@ -312,7 +313,8 @@ to create different policies for different types, sites, etc.
 
     * ITranslationLocator - Where we are going to locate the new translated content
 
-        Default : If the parent folder is translated create the content on the translated parent folder, otherwise create on the parent folder.
+        Default : If the parent folder is translated create the content on the
+        translated parent folder, otherwise create on the parent folder.
 
     * ITranslationCloner - Method to clone the original object to the new one
 
