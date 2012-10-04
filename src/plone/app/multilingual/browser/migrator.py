@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 class LP2PAMView(BrowserView):
     """View for migrating multilingual catalog from LP to PAM"""
 
-    template = ViewPageTemplateFile('migrator.pt')
+    template = ViewPageTemplateFile('templates/migrator.pt')
 
     def __call__(self):
         pc = getToolByName(self.context, 'portal_catalog')
@@ -47,7 +47,7 @@ class LP2PAMView(BrowserView):
 
 class LP2PAMAfterView(BrowserView):
 
-    template = ViewPageTemplateFile('migrator_after.pt')
+    template = ViewPageTemplateFile('templates/migrator_after.pt')
 
     def reset_relation_catalog(self):
         """

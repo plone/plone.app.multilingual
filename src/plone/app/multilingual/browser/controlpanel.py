@@ -384,7 +384,7 @@ class LanguageControlPanel(BasePanel):
     """A modified language control panel, allows selecting multiple languages.
     """
 
-    template = ViewPageTemplateFile('controlpanel.pt')
+    template = ViewPageTemplateFile('templates/controlpanel.pt')
 
     form_fields = FormFieldsets(selection, options, policies, extras)
 
@@ -424,14 +424,14 @@ class LanguageControlPanel(BasePanel):
 
 class MigrationView(BrowserView):
     """ The view for display the migration information, actions and results """
-    __call__ = ViewPageTemplateFile('migration.pt')
+    __call__ = ViewPageTemplateFile('templates/migration.pt')
 
     isLPinstalled = isLPinstalled
 
 
 class MigrationViewAfter(BrowserView):
     """ The view for display the migration information, actions and results """
-    __call__ = ViewPageTemplateFile('migration-after.pt')
+    __call__ = ViewPageTemplateFile('templates/migration-after.pt')
 
     isLPinstalled = isLPinstalled
 
@@ -509,7 +509,7 @@ class multilingualMapViewJSON(BrowserView):
 
 class multilingualMapView(BrowserView):
     """ The view for display the current multilingual map for the site """
-    __call__ = ViewPageTemplateFile('mmap.pt')
+    __call__ = ViewPageTemplateFile('templates/mmap.pt')
 
     def languages(self):
         langs = getUtility(IVocabularyFactory, name=u"plone.app.multilingual.vocabularies.AllAvailableLanguageVocabulary")

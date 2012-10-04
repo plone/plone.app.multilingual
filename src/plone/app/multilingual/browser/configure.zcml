@@ -124,7 +124,7 @@
   <!-- Viewlet for switching language -->
   <browser:viewlet
     name="plone.app.multilingual.languageselector"
-    template="languageselector.pt"
+    template="templates/languageselector.pt"
     manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
     class=".selector.LanguageSelectorViewlet"
     permission="zope2.View"
