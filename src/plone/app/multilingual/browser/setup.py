@@ -133,7 +133,7 @@ class SetupMultilingualSite(object):
         Create the language folders on top of the site
         """
         doneSomething = False
-        folderId = "%s" % code
+        folderId = "%s" % code if code != 'id' else 'id-id'
         folder = getattr(self.context, folderId, None)
         wftool = getToolByName(self.context, 'portal_workflow')
         if folder is None:
