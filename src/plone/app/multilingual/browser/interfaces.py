@@ -54,7 +54,7 @@ class IAddTranslation(form.Schema):
         required=True,
     )
     content = RelationChoice(
-        title=_(u"content"),
+        title=_(u"Content"),
         source=addTranslation,
         required=True,
     )
@@ -63,7 +63,7 @@ class IAddTranslation(form.Schema):
 class IRemoveTranslation(form.Schema):
 
     languages = schema.List(
-        title=_(u"title_languages"),
+        title=_(u"title_languages", default=u"Language"),
         value_type=schema.Choice(
             title=_(u"title_language", default=u"Language"),
             source=deletable_languages,
