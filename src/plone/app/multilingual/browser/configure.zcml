@@ -44,6 +44,14 @@
     />
 
   <browser:page
+    name="relocateContentByLanguage"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    class=".migrator.moveContentToProperRLF"
+    permission="cmf.ManagePortal"
+    layer="..interfaces.IPloneAppMultilingualInstalled"
+    />
+
+  <browser:page
     name="multilingual-map"
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     class=".controlpanel.multilingualMapView"

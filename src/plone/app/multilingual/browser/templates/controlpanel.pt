@@ -35,7 +35,7 @@
           <li tal:condition="not: view/isLPinstalled">
             <a href=""
               tal:attributes="href string:${portal_url}/@@lp-migration-after"
-              i18n:translate="label_import2">After Migration actions</a>
+              i18n:translate="label_cleanup">Cleanup actions</a>
           </li>
         </ul>
     </div>

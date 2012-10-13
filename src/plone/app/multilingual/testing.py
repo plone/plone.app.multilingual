@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# vim: set ts=4 sw=4:
 import doctest
 from plone.app.testing import (
     PLONE_FIXTURE,
@@ -28,6 +27,7 @@ class PloneAppMultilingualLayer(PloneSandboxLayer):
 
     def setUpPloneSite(self, portal):
         # install into the Plone site
+        applyProfile(portal, 'plone.app.multilingual:default')
         applyProfile(portal, 'plone.app.multilingual.tests:testing')
         setRoles(portal, TEST_USER_ID, ['Manager'])
 

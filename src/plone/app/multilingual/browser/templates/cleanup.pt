@@ -14,9 +14,15 @@
 (function($) {
 
     $().ready(function() {
-        $('.formControls input').click(function (event) {
+        $('.formControls input #resetrelations').click(function (event) {
           event.preventDefault();
           $.get('@@migration-view-after', function(data) {
+            $('.results').html(data)
+          });
+        });
+        $('.formControls input #move').click(function (event) {
+          event.preventDefault();
+          $.get('@@relocateContentByLanguage', function(data) {
             $('.results').html(data)
           });
         });
@@ -42,7 +48,7 @@
           <li class="selected">
             <a href=""
               tal:attributes="href string:${portal_url}/@@lp-migration-after"
-              i18n:translate="label_import2">After Migration actions</a>
+              i18n:translate="label_cleanup">Cleanup actions</a>
           </li>
         </ul>
     </div>
@@ -80,14 +86,25 @@
                 you have a backup!
             </p>
 
-            <form name="migration" tal:attributes="action request/URL" method="post">
+            <form name="cleanup" tal:attributes="action request/URL" method="post">
 
                 <div class="formControls">
+                  <label>Catalog reload</label>
                     <input
+                        id="resetrelations"
                         type="submit"
-                        name="form.button.Import"
+                        name="form.button.Cleanup"
                         class="destructive"
-                        value="Migrate"
+                        value="Cleanup"
+                        i18n:attributes="value" />
+
+                  <label>Move content to its corresponding language root folder</label>
+                    <input
+                        id="move"
+                        type="submit"
+                        name="form.button.Move"
+                        class="destructive"
+                        value="Move"
                         i18n:attributes="value" />
                 </div>
 
