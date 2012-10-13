@@ -119,7 +119,7 @@
             langSource = $('#frame-content #view_language')[0].innerHTML;
 
         original_fields = $('#frame-content .field');
-        destination_fields = $('#form-target fieldset > .field');
+        destination_fields = $('#form-target fieldset .field');
 
         // Calculate the padding between fields as intended by css
         if (original_fields.length > 1) {
@@ -188,9 +188,10 @@
         /* select a field on both sides and change the color */
         var babel_selected = null,
             orig_babel_select = null;
-        $('#babel-edit #fieldset-default .field').click(function () {
+        $('#babel-edit *[id^=fieldset-] .field').click(function () {
             var index = $('#form-target .field').index($(this));
             if (babel_selected) {
+                $(babel_selected).addClass('selected')
                 $(babel_selected).toggleClass("selected");
                 $(orig_babel_select).toggleClass("selected");
                 $(orig_babel_select).children('.translator-widget').hide();
