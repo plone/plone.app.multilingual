@@ -16,4 +16,5 @@ dist/*
 MKcodeintel
 coverage
 *.mo
+rebuild_i18n.log
 docs/_build

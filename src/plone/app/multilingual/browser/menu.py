@@ -54,7 +54,8 @@ class TranslateMenu(BrowserMenu):
                 lang_id = lang.value
                 icon = showflags and lt.getFlagForLanguageCode(lang_id) or None
                 item = {
-                    "title": _(u"Create") + " " + lang_name,
+                    "title": _(u"Create ${lang_name}", mapping={"lang_name":
+                                                                lang_name}),
                     "description": _(u"description_translate_into",
                                     default=u"Translate into ${lang_name}",
                                     mapping={"lang_name": lang_name}),
@@ -63,8 +64,8 @@ class TranslateMenu(BrowserMenu):
                     "selected": False,
                     "icon": icon,
                     "extra": {"id": "translate_into_%s" % lang_id,
-                           "separator": None,
-                           "class": ""},
+                              "separator": None,
+                              "class": ""},
                     "submenu": None,
                     }
 
@@ -77,7 +78,8 @@ class TranslateMenu(BrowserMenu):
                 lang_id = lang.value
                 icon = showflags and lt.getFlagForLanguageCode(lang_id) or None
                 item = {
-                    "title": _(u"Edit") + " " + lang_name,
+                    "title": _(u"Edit ${lang_name}", mapping={"lang_name":
+                                                              lang_name}),
                     "description": _(u"description_babeledit_menu",
                                     default=u"Babel edit ${lang_name}",
                                     mapping={"lang_name": lang_name}),

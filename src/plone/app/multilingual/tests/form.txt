@@ -68,7 +68,7 @@ remove / unregister translations
     >>> browser.open(content.absolute_url() + '/remove_translations')
     >>> browser.getControl(name="form.widgets.languages:list").value
     ['de']
-    >>> browser.getControl("unlink selected").click()
+    >>> browser.getControl("Unlink").click()
 
 now we should see the remove_translations form, but there are no more translations to move::
 
@@ -107,7 +107,7 @@ lets's see if the reregistered translation is there::
 remove translation with deleting content::
 
     >>> browser.open(content.absolute_url() + '/remove_translations')
-    >>> browser.getControl("remove selected").click()
+    >>> browser.getControl("Remove").click()
 
     >>> browser.getControl(name="form.widgets.languages:list").value
     []

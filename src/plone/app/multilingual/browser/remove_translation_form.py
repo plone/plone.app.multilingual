@@ -17,9 +17,9 @@ class RemoveTranslationsForm(form.SchemaForm):
     grok.require("plone.app.multilingual.ManageTranslations")
     schema = form.IFormFieldProvider(IRemoveTranslation)
     ignoreContext = True
-    label = _(u"label_remove_translations")
+    label = _(u"label_remove_translations", default=u"Remove translations")
 
-    @button.buttonAndHandler(_(u"unlink selected"))
+    @button.buttonAndHandler(_(u"Unlink"))
     def handle_unlink(self, action):
         data, errors = self.extractData()
         manager = ITranslationManager(self.context)
@@ -29,7 +29,7 @@ class RemoveTranslationsForm(form.SchemaForm):
         return self.request.response.redirect(self.context.absolute_url() \
             + '/remove_translations')
 
-    @button.buttonAndHandler(_(u"remove selected"))
+    @button.buttonAndHandler(_(u"Remove"))
     def handle_remove(self, action):
         data, errors = self.extractData()
         manager = ITranslationManager(self.context)
