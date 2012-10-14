@@ -17,3 +17,6 @@ MKcodeintel
 coverage
 *.mo
 docs/_build
+.project
+.pydevproject
+.settings

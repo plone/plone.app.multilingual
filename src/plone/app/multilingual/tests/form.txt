@@ -65,7 +65,7 @@ translation-menu
 remove / unregister translations
 ================================
 ::
-    >>> browser.open(content.absolute_url() + '/remove_translations')
+    >>> browser.open(content.absolute_url() + '/remove_translations?set_language=en')
     >>> browser.getControl(name="form.widgets.languages:list").value
     ['de']
     >>> browser.getControl("unlink selected").click()
