@@ -27,12 +27,11 @@ from Products.CMFCore.utils import getToolByName
 from zope.schema.interfaces import IVocabularyFactory
 
 from plone.app.uuid.utils import uuidToObject
-from plone.uuid.interfaces import IUUID
 
 import json
 
 from plone.app.multilingual import isLPinstalled
-from plone.multilingual.interfaces import IMultilingualStorage, ITranslationManager, ILanguage
+from plone.multilingual.interfaces import ITranslationManager, ILanguage
 
 from Products.CMFPlone import PloneMessageFactory as _Plone
 from zope.i18nmessageid import MessageFactory
@@ -482,19 +481,19 @@ class multilingualMapViewJSON(BrowserView):
         query['Language'] = lang
         search_results = pcatalog.searchResults(query)
         resultat = {'id': 'root', 'name': folder_path, 'data': {}, 'children': []}
-        # Get the canonicals
-        storage = getUtility(IMultilingualStorage)
-        canonicals = storage.get_canonicals()
         supported_languages = tool.getSupportedLanguages()
         for sr in search_results:
             # We want to know the translated and missing elements
             translations = {}
-            if sr['UID'] in canonicals:
+            if 'TranslationGroup' in sr:
                 # We look for the brain for each translation
-                canonical = canonicals[sr['UID']]
+                brains = pcatalog.searchResults(TranslationGroup=sr['TranslationGroup'])
+                languages = {}
+                for brain in brains:
+                    languages[brain.Language] = brain.UID
                 for lang in supported_languages:
-                    if lang in canonical.get_keys():
-                        translated_obj = uuidToObject(canonical.get_item(lang))
+                    if lang in languages.keys():
+                        translated_obj = uuidToObject(languages[lang])
                         translations[lang] = {'url': translated_obj.absolute_url(), 'title': translated_obj.getId()}
                     else:
                         url_to_create = sr.getURL() + "/@@create_translation?form.widgets.language"\
@@ -521,14 +520,15 @@ class multilingualMapView(BrowserView):
         """ We get all the canonicals and see which translations are missing """
         # Get the language
         tool = getToolByName(self.context, 'portal_languages', None)
+        pcatalog = getToolByName(self.context, 'portal_catalog', None)
         languages = tool.getSupportedLanguages()
         num_lang = len(languages)
         # Get the canonicals
-        storage = getUtility(IMultilingualStorage)
-        canonicals = storage.get_canonicals()
         # Needs to be optimized
         not_full_translations = []
         already_added_canonicals = []
+        import pdb; pdb.set_trace()
+        brains = pcatalog.TranslationGroup
         for canonical in canonicals.keys():
             canonical_object = canonicals[canonical]
             canonical_languages = canonical_object.get_keys()

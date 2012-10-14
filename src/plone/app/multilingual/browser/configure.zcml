@@ -66,8 +66,8 @@
   <!-- Universal Link -->
 
   <browser:page
-    name="multilingual-universal-link"
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    name="multilingual-universal_link"
+    for="*"
     class=".helper_views.universal_link"
     permission="zope.Public"
     layer="..interfaces.IPloneAppMultilingualInstalled"

@@ -21,12 +21,6 @@ NO_FILTER = ['Language', 'UID', 'id', 'getId']
 _enabled = []
 
 
-@indexer(ITranslatable)
-def Language(object, **kw):
-    language = ILanguage(object).get_language()
-    return language
-
-
 def language_filter(query):
 
     if query.get('Language') == 'all':

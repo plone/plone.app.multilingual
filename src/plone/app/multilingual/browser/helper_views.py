@@ -1,11 +1,11 @@
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
-from zope.component import getUtility
-from plone.multilingual.interfaces import IMultilingualStorage
 from plone.app.uuid.utils import uuidToObject
 from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.multilingual.interfaces import ITranslationManager
+from zope.publisher.interfaces import IPublishTraverse, NotFound
+from zope.interface import implements
 
 
 class universal_link(BrowserView):
@@ -13,15 +13,27 @@ class universal_link(BrowserView):
         based on the user preferences in the user's browser.
     """
 
-    def __call__(self):
-        uid = ''
-        if 'uid' in self.request:
-            uid = self.request['uid']
+    implements(IPublishTraverse)
+
+    def __init__(self, context, request):
+        super(universal_link, self).__init__(context, request)
+        self.tg = None
+        self.lang = None
+
+    def publishTraverse(self, request, name):
+
+        if self.lang is None:  # ../@@universal-link/translationgroup
+            self.lang = name
+        elif self.tg is None:  # ../@@universal-link/translationgroup/lang
+            self.tg = name
         else:
-            # If no uid parameter redirect to root
-            root = getToolByName(self.context, 'portal_url')
-            self.request.RESPONSE.redirect(root.url())
+            raise NotFound(self, name, request)
+
+        return self
+
+    def __call__(self):
         # Look for the element
+        
         storage = getUtility(IMultilingualStorage)
         if storage.get_canonical(uid):
             canonical = storage.get_canonical(uid)

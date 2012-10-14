@@ -15,8 +15,7 @@ from plone.app.multilingual.browser.interfaces import (
 from plone.app.multilingual.browser.vocabularies import (
     untranslated_languages, translated_languages, translated_urls)
 from plone.app.multilingual import _
-from plone.uuid.interfaces import IUUID
-from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT, ILanguage
+from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT, ITG, ILanguage
 from plone.app.multilingual.interfaces import SHARED_NAME
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 
@@ -32,7 +31,7 @@ class TranslateMenu(BrowserMenu):
         portal_state = getMultiAdapter((context, request), name=u'plone_portal_state')
         portal_url = portal_state.portal_url()
         showflags = lt.showFlags()
-        context_id = IUUID(context)
+        context_id = ITG(context)
         # In case is neutral language show set language menu only
         if LANGUAGE_INDEPENDENT != ILanguage(context).get_language() and not INavigationRoot.providedBy(context):
             menu.append({
@@ -144,7 +143,7 @@ class TranslateMenu(BrowserMenu):
                 "description": _(
                     u"description_universal_link",
                     default=u"Universal Language content link"),
-                "action": portal_url + "/multilingual-universal-link?uid=" + context_id,
+                "action": portal_url + "/@@multilingual-universal-link/" + context_id,
                 "selected": False,
                 "icon": None,
                 "extra": {"id": "_universal_link",
