@@ -66,9 +66,19 @@
   <!-- Universal Link -->
 
   <browser:page
-    name="multilingual-universal_link"
+    name="multilingual-universal-link"
     for="*"
     class=".helper_views.universal_link"
+    permission="zope.Public"
+    layer="..interfaces.IPloneAppMultilingualInstalled"
+    />
+
+  <!-- Universal Link -->
+
+  <browser:page
+    name="multilingual-selector"
+    for="*"
+    class=".helper_views.selector_view"
     permission="zope.Public"
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />

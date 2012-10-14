@@ -78,7 +78,6 @@ class SetupMultilingualSite(object):
         except TypeError, e:
             raise TypeError(str(e) + " Are your folders ITranslatable?")
         for language in self.languages:
-            import pdb; pdb.set_trace()
             if ((language != self.defaultLanguage) and (not
                 canonical.has_translation(language))):
                 canonical.register_translation(language,

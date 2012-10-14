@@ -487,7 +487,7 @@ class multilingualMapViewJSON(BrowserView):
             translations = {}
             if 'TranslationGroup' in sr:
                 # We look for the brain for each translation
-                brains = pcatalog.searchResults(TranslationGroup=sr['TranslationGroup'])
+                brains = pcatalog.unrestrictedSearchResults(TranslationGroup=sr['TranslationGroup'])
                 languages = {}
                 for brain in brains:
                     languages[brain.Language] = brain.UID

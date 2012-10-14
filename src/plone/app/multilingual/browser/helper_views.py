@@ -2,10 +2,12 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from plone.app.uuid.utils import uuidToObject
 from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.multilingual.interfaces import ITranslationManager
 from zope.publisher.interfaces import IPublishTraverse, NotFound
 from zope.interface import implements
+from zope.component import getUtility
 
 
 class universal_link(BrowserView):
@@ -31,27 +33,37 @@ class universal_link(BrowserView):
 
         return self
 
-    def __call__(self):
+    def getDestination(self):
         # Look for the element
-        
-        storage = getUtility(IMultilingualStorage)
-        if storage.get_canonical(uid):
-            canonical = storage.get_canonical(uid)
+        ptool = getToolByName(self.context, 'portal_catalog')
+        if self.lang:
+            query = {'TranslationGroup': self.tg, 'Language': self.lang}
+        else:
             # The negotiated language
             ltool = getToolByName(self.context, 'portal_languages')
             if len(ltool.getRequestLanguages()) > 0:
                 language = ltool.getRequestLanguages()[0]
-                target_uuid = canonical.get_item(language)
-                if target_uuid:
-                    target_object = uuidToObject(target_uuid)
-                    self.request.RESPONSE.redirect(target_object.absolute_url())
-                else:
-                    target_object = uuidToObject(uid)
-                    self.request.RESPONSE.redirect(target_object.absolute_url() + NOT_TRANSLATED_YET_TEMPLATE)
-        else:
-            # If no uid parameter redirect to root
+                query = {'TranslationGroup': self.tg, 'Language': language}
+        results = ptool.searchResults(query)
+        url = None
+        if len(results) > 0:
+            url = results[0].getURL()
+        return url
+
+    def __call__(self):
+        url = self.getDestination()
+        if not url:
             root = getToolByName(self.context, 'portal_url')
-            self.request.RESPONSE.redirect(root.url())
+            url = root.url()
+        self.request.RESPONSE.redirect(url)
+
+
+class selector_view(universal_link):
+
+    def getDestination(self):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        return ''
 
 
 class not_translated_yet(BrowserView):
