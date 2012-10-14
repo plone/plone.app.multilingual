@@ -70,6 +70,10 @@
     font-weight: bold;
 }
 
+a.contentmenuflags img {
+    margin-bottom: 2pt;
+}
+
 /*!
  * Custom Bootstrap v2.1.1
  * - To delete if never ever bootstrap is integrated within Plone

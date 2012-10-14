@@ -62,9 +62,11 @@ class TranslateMenu(BrowserMenu):
                             "=%s&form.buttons.create=1" % lang_id,
                     "selected": False,
                     "icon": icon,
+                    "width": "14",
+                    "height": "11",
                     "extra": {"id": "translate_into_%s" % lang_id,
                            "separator": None,
-                           "class": ""},
+                           "class": "contentmenuflags"},
                     "submenu": None,
                     }
 
@@ -84,9 +86,11 @@ class TranslateMenu(BrowserMenu):
                     "action": urls.getTerm(lang_id).title + "/babel_edit",
                     "selected": False,
                     "icon": icon,
+                    "width": "14",
+                    "height": "11",
                     "extra": {"id": "babel_edit_%s" % lang_id,
                            "separator": None,
-                           "class": ""},
+                           "class": "contentmenuflags"},
                     "submenu": None,
                     }
 
