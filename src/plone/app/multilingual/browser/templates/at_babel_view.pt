@@ -28,7 +28,7 @@
                       tal:condition="not:sole_fieldset"
                       i18n:translate=""></legend>
               <tal:fields repeat="field python:schematas[fieldset].editableFields(here, visible_only=True)">
-                <div class="field" tal:attributes="rel python:field.getName()" tal:condition="python:field.getName() not in ('id', 'tableContents')">
+                <div class="field" tal:attributes="rel python:field.getName()" tal:condition="python:field.getName() not in ('id', )">
                   <label tal:content="field/getName" />
                   <br />
                   <metal:fieldMacro use-macro="python:context.widget(field.getName(), mode='view')" />

@@ -69,6 +69,10 @@
 .currentLanguage {
     font-weight: bold;
 }
+/* Specific rule needed to fix a js error (position null in a field) */
+#archetypes-fieldname-contributors{
+    display:block;
+}
 
 /*!
  * Custom Bootstrap v2.1.1
