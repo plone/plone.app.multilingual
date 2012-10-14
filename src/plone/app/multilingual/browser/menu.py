@@ -126,7 +126,7 @@ class TranslateMenu(BrowserMenu):
                 "title": _(u"language_folder",
                        default=u"Return to language folder"),
                 "description": _(
-                    u"description_shared_folder",
+                    u"description_language_folder",
                     default=u"Go to the user's browser preferred language related folder"),
                 "action": portal_url + '/' + lt.getPreferredLanguage(),
                 "selected": False,
@@ -172,7 +172,7 @@ class TranslateMenu(BrowserMenu):
         menu.append({
             "title": _(u"title_set_language",
                    default=u"Set content language"),
-            "description": _(u"description_add_translations",
+            "description": _(u"description_set_language",
                    default=u"Set or change the current content language"),
             "action": url + "/update_language",
             "selected": False,
