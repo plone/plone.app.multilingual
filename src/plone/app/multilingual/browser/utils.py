@@ -46,7 +46,8 @@ class BabelUtils(BrowserView):
     def gtenabled(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
-        return settings.google_translation_key != ''
+        key = settings.google_translation_key
+        return key is not None and len(key.strip()) > 0
 
     def languages(self):
         """ Deprecated """

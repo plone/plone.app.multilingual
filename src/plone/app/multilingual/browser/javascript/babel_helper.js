@@ -118,8 +118,10 @@
             url_translate = $('input#url_translate').val(),
             langSource = $('#frame-content #view_language')[0].innerHTML;
 
+        $('#form-target fieldset > div > .field').unwrap()
+
         original_fields = $('#frame-content .field');
-        destination_fields = $('#form-target fieldset > .field');
+        destination_fields = $('#form-target fieldset .field');
 
         // Calculate the padding between fields as intended by css
         if (original_fields.length > 1) {
@@ -131,7 +133,7 @@
             sync_element_vertically(original_field, destination_field, padding, index === 0);
 
             // Add the google translation field
-            if ((original_field.find('.richtext-field, .textline-field, .text-field, .localstatic-field, .ArchetypesField-TextField').length > 0) || ($('#at-babel-edit').length>0)) {
+            if ($('#gtanslate_service').attr('value') == "True" && ((original_field.find('.richtext-field, .textline-field, .text-field, .localstatic-field, .ArchetypesField-TextField').length > 0) || ($('#at-babel-edit').length>0))) {
                 original_field.prepend("<div class='translator-widget' id='item_translation_" + order + "'></div>");
                 original_field.children('.translator-widget').click(function () {
                     var field = $(value).attr("rel");
@@ -188,9 +190,10 @@
         /* select a field on both sides and change the color */
         var babel_selected = null,
             orig_babel_select = null;
-        $('#babel-edit #fieldset-default .field').click(function () {
+        $('#babel-edit *[id^=fieldset] .field').click(function () {
             var index = $('#form-target .field').index($(this));
             if (babel_selected) {
+                $(babel_selected).addClass('selected')
                 $(babel_selected).toggleClass("selected");
                 $(orig_babel_select).toggleClass("selected");
                 $(orig_babel_select).children('.translator-widget').hide();
