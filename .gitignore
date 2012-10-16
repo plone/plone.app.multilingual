@@ -17,3 +17,9 @@ MKcodeintel
 coverage
 *.mo
 docs/_build
+# Emacs
+.emacs.desktop*
+# Virtualenv
+lib64
+lib
+include
