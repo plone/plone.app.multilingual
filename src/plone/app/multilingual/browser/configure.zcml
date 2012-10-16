@@ -73,7 +73,7 @@
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
 
-  <!-- Universal Link -->
+  <!-- Selector -->
 
   <browser:page
     name="multilingual-selector"
