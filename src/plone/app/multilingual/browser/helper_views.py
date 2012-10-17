@@ -18,10 +18,9 @@ from plone.registry.interfaces import IRegistry
 
 from plone.multilingual.interfaces import ITranslationManager
 from plone.multilingual.interfaces import ITranslatable
-# XXX: this should be moved here oif it doesn't break anything else
-from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
-from .utils import propagateQuery, addPostPath
+from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
+from .selector import addQuery
+from .selector import NOT_TRANSLATED_YET_TEMPLATE
 
 
 class universal_link(BrowserView):
@@ -38,10 +37,10 @@ class universal_link(BrowserView):
 
     def publishTraverse(self, request, name):
 
-        if self.lang is None:  # ../@@universal-link/translationgroup
-            self.lang = name
-        elif self.tg is None:  # ../@@universal-link/translationgroup/lang
+        if self.tg is None:  # ../@@universal-link/translationgroup
             self.tg = name
+        elif self.lang is None:  # ../@@universal-link/translationgroup/lang
+            self.lang = name
         else:
             raise NotFound(self, name, request)
 
@@ -140,21 +139,19 @@ class selector_view(universal_link):
         """Fix the translation url appending the query
         and the eventual append path.
         """
-        return propagateQuery(
+        url += self.request.form.get('post_path', '')
+        return addQuery(
             self.request,
-            addPostPath(
-                self.context,
-                self.request,
-                url
-            )
+            url,
+            exclude=('post_path')
         )
 
     def __call__(self):
         url = self.getDestination()
         if not url:
             registry = getUtility(IRegistry)
-            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
-            if settings.selector_lookup_translations_policy == 'closest':
+            policies = registry.forInterface(IMultiLanguagePolicies)
+            if policies.selector_lookup_translations_policy == 'closest':
                 url = self.getClosestDestination()
             else:
                 url = self.getDialogDestination()
