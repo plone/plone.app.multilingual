@@ -1,77 +1,30 @@
 # -*- coding: utf-8 -*-
-import re
 import unittest2 as unittest
-from zope.component import getUtility
-from plone.registry.interfaces import IRegistry
 
-from plone.app.i18n.locales.browser.selector import LanguageSelector
-from plone.app.layout.navigation.interfaces import INavigationRoot
-from zope.component import provideAdapter
-from zope.interface import directlyProvides
 from zope.interface import implements
-from zope.interface import Interface
-# from zope.testing import cleanup
-from zope.event import notify
-from zope.lifecycleevent import ObjectCreatedEvent
+from zope.component import getUtility
 
 import transaction
 from Acquisition import Explicit
 from Products.CMFCore.utils import getToolByName
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from plone.registry.interfaces import IRegistry
+from plone.testing.z2 import Browser
+from plone.app.i18n.locales.browser.selector import LanguageSelector
 
+from plone.multilingual.interfaces import ITranslatable
+from plone.multilingual.interfaces import ITG
+from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
+from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
 from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
 from plone.app.multilingual.browser.selector import getPostPath
 from plone.app.multilingual.browser.selector import addQuery
-from plone.multilingual.interfaces import ITranslatable
-from plone.multilingual.interfaces import ITG
 from plone.app.multilingual.testing import (
     PLONEAPPMULTILINGUAL_INTEGRATION_TESTING,
     PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
 )
 from plone.app.multilingual.tests.utils import makeContent
 from plone.app.multilingual.tests.utils import makeTranslation
-from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
-from plone.app.multilingual.browser.setup import SetupMultilingualSite
-from plone.app.multilingual import browser
-from plone.uuid.interfaces import IAttributeUUID
-from plone.uuid.interfaces import IUUID
-from plone.testing.z2 import Browser
-
-
-class Dummy(Explicit):
-
-    implements(IAttributeUUID, ITranslatable)
-
-    # This avoids issues with tests that run without a
-    # full-fledged securityManager
-    _View_Permission = ('Anonymous', )
-
-    portal_type = 'Dummy'
-
-    def getTranslations(self, review_state=False): # pylint: disable=W0613
-        return {'en': self, 'nl': self}
-
-    def getPhysicalPath(self):
-        return getattr(self, 'physicalpath', [])
-
-
-class DummyRequest(object):
-
-    def __init__(self):
-        self.form = {}
-
-    def get(self, key, default):
-        return self.__dict__.get(key, default)
-
-
-class DummyState(object):
-
-    def __init__(self, context, request):
-        pass
-
-    def canonical_object_url(self):
-        return 'object_url'
 
 
 class EvilObject(object):
@@ -81,25 +34,6 @@ class EvilObject(object):
 
     def __unicode__(self):
         raise UnicodeError
-
-
-class MockLanguageTool(object):
-
-    use_cookie_negotiation = True
-
-    def showSelector(self):
-        return True
-
-    def getAvailableLanguageInformation(self):
-        return dict(en={'selected': True}, de={'selected': False},
-                    nl={'selected': True}, no={'selected': True})
-
-    def getLanguageBindings(self):
-        # en = selected by user, nl = default, [] = other options
-        return ('en', 'nl', [])
-
-    def getSupportedLanguages(self):
-        return ['nl', 'en', 'no']
 
 
 SELECTOR_VIEW_TEMPLATE = ('%(url)s/@@multilingual-selector'
