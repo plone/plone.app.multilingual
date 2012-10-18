@@ -1,6 +1,7 @@
 from ZTUtils import make_query
 from zope.component import queryAdapter
 from plone.multilingual.interfaces import ITG
+from plone.multilingual.interfaces import NOTG
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 
 
@@ -61,11 +62,6 @@ def getPostPath(context, request):
 
 
 NOT_TRANSLATED_YET_TEMPLATE = '/not_translated_yet'
-# Used when no tg is found.
-# Hopefully UUIDS are just strings in indexes
-# and we do not have the catalog explode.
-# Else we have to find an invalid, "magic" UID
-INVALID = '__no_translation_group__'
 
 
 class LanguageSelectorViewlet(LanguageSelector):
@@ -77,7 +73,7 @@ class LanguageSelectorViewlet(LanguageSelector):
         results = []
         translation_group = queryAdapter(self.context, ITG)
         if translation_group is None:
-            translation_group = INVALID
+            translation_group = NOTG
         for lang_info in languages_info:
             # Avoid to modify the original language dict
             data = lang_info.copy()

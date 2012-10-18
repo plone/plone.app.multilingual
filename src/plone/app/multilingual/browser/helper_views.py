@@ -81,15 +81,20 @@ class selector_view(universal_link):
             name='plone_context_state'
         )
         dialog_view = NOT_TRANSLATED_YET_TEMPLATE
+        postpath = False
         # The dialog view shouldn't appear on the site root
         # because that is untraslatable by default.
+        # And since we are mapping the root on itself,
+        # we also do postpath insertion (@@search case)
         if ISiteRoot.providedBy(self.context):
             dialog_view = ''
+            postpath = True
         try:
-            return state.canonical_object_url() + dialog_view
+            url = state.canonical_object_url()
         # XXX: this copied over from LinguaPlone, not sure this is still needed
         except AttributeError:
-            return self.context.absolute_url() + dialog_view
+            url = self.context.absolute_url()
+        return self.wrapDestination(url+dialog_view, postpath=postpath)
 
     def getParentChain(self, context):
         # XXX: switch it over to parent pointers if needed
@@ -113,7 +118,7 @@ class selector_view(universal_link):
                 # if the whole of the portal cannot be viewed.
                 # Having a permission issue on the root is fine;
                 # not so much for everything else so that is checked there
-                return item.absolute_url()
+                return self.wrapDestination(item.absolute_url())
             elif IFactoryTempFolder.providedBy(item) or \
                     IFactoryTool.providedBy(item):
                 # TempFolder or portal_factory, can't have a translation
@@ -128,18 +133,22 @@ class selector_view(universal_link):
                 else:
                     raise
             translation = canonical.get_translation(self.lang)
-            if INavigationRoot.providedBy(item) or \
+            if INavigationRoot.providedBy(translation) or \
                     bool(checkPermission('View', translation)):
-                return item.absolute_url()
+                # Not a direct translation, therefore no postpath
+                # (the view might not exist on a different context)
+                return self.wrapDestination(translation.absolute_url(),
+                                            postpath=False)
         # Site root's the fallback
         root = getToolByName(self.context, 'portal_url')
-        return root.url()
+        return self.wrapDestination(root.url(), postpath=False)
 
-    def wrapDestination(self, url):
+    def wrapDestination(self, url, postpath=True):
         """Fix the translation url appending the query
         and the eventual append path.
         """
-        url += self.request.form.get('post_path', '')
+        if postpath:
+            url += self.request.form.get('post_path', '')
         return addQuery(
             self.request,
             url,
@@ -148,14 +157,19 @@ class selector_view(universal_link):
 
     def __call__(self):
         url = self.getDestination()
-        if not url:
+        if url:
+            # We have a direct translation, full wrapping
+            url = self.wrapDestination(url)
+        else:
             registry = getUtility(IRegistry)
             policies = registry.forInterface(IMultiLanguagePolicies)
             if policies.selector_lookup_translations_policy == 'closest':
                 url = self.getClosestDestination()
             else:
                 url = self.getDialogDestination()
-        self.request.RESPONSE.redirect(self.wrapDestination(url))
+            # No wrapping cause that's up to the policies
+            # (they should already have done that)
+        self.request.RESPONSE.redirect(url)
 
 
 class not_translated_yet(BrowserView):

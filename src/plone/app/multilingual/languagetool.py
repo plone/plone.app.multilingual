@@ -62,7 +62,6 @@ def setLanguageBindingsCookieWins(self, usePath=1, useContent=1, useCookie=1,
     # Set cookie language to language
     if useCookie and langs[0] not in langsCookie:
         self.tool.setLanguageCookie(langs[0], noredir=True)
-
     self.DEFAULT_LANGUAGE = langs[-1]
     self.LANGUAGE = langs[0]
     self.LANGUAGE_LIST = langs[1:-1]
