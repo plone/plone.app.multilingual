@@ -527,26 +527,35 @@ class multilingualMapView(BrowserView):
         # Needs to be optimized
         not_full_translations = []
         already_added_canonicals = []
-        import pdb; pdb.set_trace()
-        brains = pcatalog.TranslationGroup
-        for canonical in canonicals.keys():
-            canonical_object = canonicals[canonical]
-            canonical_languages = canonical_object.get_keys()
-            if len(canonical_languages) < num_lang and id(canonical_object) not in already_added_canonicals:
-                missing_languages = [lang for lang in languages if lang not in canonical_languages]
-                translations = []
-                last_url = ''
-                for canonical_language in canonical_languages:
-                    obj = uuidToObject(canonical_object.get_item(canonical_language))
-                    last_url = obj.absolute_url()
-                    translations.append({'url': obj.absolute_url(),
-                                         'path': '/'.join(obj.getPhysicalPath()),
-                                         'lang': canonical_language})
-                already_added_canonicals.append(id(canonical_object))
-                not_full_translations.append({'id': canonical,
+        brains = pcatalog.searchResults(Language='all')
+        for brain in brains:
+            if not isinstance(brain.TranslationGroup, str):
+                # is alone, with a Missing.Value
+                missing_languages = [lang for lang in languages if lang != brain.Language]
+                translations = [{'url': brain.getURL(), 'path': brain.getPath(), 'lang': brain.Language}]
+                not_full_translations.append({'id': 'None',
+                                              'last_url': brain.getURL(),
+                                              'missing': missing_languages,
+                                              'translated': translations})
+            elif isinstance(brain.TranslationGroup, str):
+                tg = brain.TranslationGroup
+                brains_tg = pcatalog.searchResults(Language='all', TranslationGroup=tg)
+                if len(brains_tg) < num_lang and tg not in already_added_canonicals:
+                    translated_languages = [a.Language for a in brains_tg]
+                    missing_languages = [lang for lang in languages if lang not in translated_languages]
+                    translations = []
+                    last_url = ''
+                    for brain_tg in brains_tg:
+                        last_url = brain_tg.getURL()
+                        translations.append({'url': brain_tg.getURL(),
+                                             'path': brain_tg.getPath(),
+                                             'lang': brain_tg.Language})
+
+                    not_full_translations.append({'id': tg,
                                               'last_url': last_url,
                                               'missing': missing_languages,
                                               'translated': translations})
+                already_added_canonicals.append(tg)
         return not_full_translations
 
     isLPinstalled = isLPinstalled
