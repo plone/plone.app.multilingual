@@ -3,12 +3,13 @@ from Products.CMFCore.utils import getToolByName
 # The profile id of your package:
 PROFILE_ID = 'profile-plone.app.multilingual:default'
 
+
 def add_catalog_indexes(context, logger):
     '''Add index 'language' to portal_catalog and uid_catalog
     '''
     catalog = getToolByName(context, 'portal_catalog')
     indexes = catalog.indexes()
-    wanted = (('Language', 'FieldIndex'),)
+    wanted = (('Language', 'FieldIndex'), ('TranslationGroup', 'FieldIndex'))
 
     indexables = []
     for (name, meta_type) in wanted:
@@ -19,19 +20,6 @@ def add_catalog_indexes(context, logger):
     if len(indexables) > 0:
         logger.info('Indexing new indexes %s.', ', '.join(indexables))
         catalog.manage_reindexIndex(ids=indexables)
-
-    uid_catalog = getToolByName(context, 'uid_catalog')
-    uid_indexes = uid_catalog.indexes()
-
-    indexables = []
-    for (name, meta_type) in wanted:
-        if meta_type and name not in uid_indexes:
-            uid_catalog.addIndex(name, meta_type)
-            indexables.append(name)
-            logger.info('Added %s for field %s.', meta_type, name)
-    if len(indexables) > 0:
-        logger.info('Indexing new indexes %s.', ', '.join(indexables))
-        uid_catalog.manage_reindexIndex(ids=indexables)
 
 
 def setup_various(context):

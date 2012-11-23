@@ -117,7 +117,7 @@ class TranslationForm(form.SchemaForm):
                 default_language = language_tool.getDefaultLanguage()
                 ILanguage(self.context).set_language(default_language)
                 translation_manager.update()
-                self.context.reindexObject(idxs='language')
+                self.context.reindexObject()
 
             translation_manager.add_translation(language)
             translated = translation_manager.get_translation(language)

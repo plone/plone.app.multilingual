@@ -75,8 +75,18 @@
 
   <browser:page
     name="multilingual-universal-link"
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    for="*"
     class=".helper_views.universal_link"
+    permission="zope.Public"
+    layer="..interfaces.IPloneAppMultilingualInstalled"
+    />
+
+  <!-- Selector -->
+
+  <browser:page
+    name="multilingual-selector"
+    for="*"
+    class=".helper_views.selector_view"
     permission="zope.Public"
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />

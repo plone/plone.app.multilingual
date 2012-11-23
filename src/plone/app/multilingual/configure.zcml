@@ -34,11 +34,6 @@
 
     <include package=".browser" />
 
-    <adapter
-        name="Language"
-        factory=".catalog.Language"
-    />
-
     <genericsetup:registerProfile
         name="default"
         title="plone.app.multilingual"

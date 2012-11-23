@@ -27,12 +27,11 @@ from Products.CMFCore.utils import getToolByName
 from zope.schema.interfaces import IVocabularyFactory
 
 from plone.app.uuid.utils import uuidToObject
-from plone.uuid.interfaces import IUUID
 
 import json
 
 from plone.app.multilingual import isLPinstalled
-from plone.multilingual.interfaces import IMultilingualStorage, ITranslationManager, ILanguage
+from plone.multilingual.interfaces import ITranslationManager, ILanguage
 
 from Products.CMFPlone import PloneMessageFactory as _Plone
 from zope.i18nmessageid import MessageFactory
@@ -482,19 +481,19 @@ class multilingualMapViewJSON(BrowserView):
         query['Language'] = lang
         search_results = pcatalog.searchResults(query)
         resultat = {'id': 'root', 'name': folder_path, 'data': {}, 'children': []}
-        # Get the canonicals
-        storage = getUtility(IMultilingualStorage)
-        canonicals = storage.get_canonicals()
         supported_languages = tool.getSupportedLanguages()
         for sr in search_results:
             # We want to know the translated and missing elements
             translations = {}
-            if sr['UID'] in canonicals:
+            if 'TranslationGroup' in sr:
                 # We look for the brain for each translation
-                canonical = canonicals[sr['UID']]
+                brains = pcatalog.unrestrictedSearchResults(TranslationGroup=sr['TranslationGroup'])
+                languages = {}
+                for brain in brains:
+                    languages[brain.Language] = brain.UID
                 for lang in supported_languages:
-                    if lang in canonical.get_keys():
-                        translated_obj = uuidToObject(canonical.get_item(lang))
+                    if lang in languages.keys():
+                        translated_obj = uuidToObject(languages[lang])
                         translations[lang] = {'url': translated_obj.absolute_url(), 'title': translated_obj.getId()}
                     else:
                         url_to_create = sr.getURL() + "/@@create_translation?form.widgets.language"\
@@ -521,32 +520,42 @@ class multilingualMapView(BrowserView):
         """ We get all the canonicals and see which translations are missing """
         # Get the language
         tool = getToolByName(self.context, 'portal_languages', None)
+        pcatalog = getToolByName(self.context, 'portal_catalog', None)
         languages = tool.getSupportedLanguages()
         num_lang = len(languages)
         # Get the canonicals
-        storage = getUtility(IMultilingualStorage)
-        canonicals = storage.get_canonicals()
         # Needs to be optimized
         not_full_translations = []
         already_added_canonicals = []
-        for canonical in canonicals.keys():
-            canonical_object = canonicals[canonical]
-            canonical_languages = canonical_object.get_keys()
-            if len(canonical_languages) < num_lang and id(canonical_object) not in already_added_canonicals:
-                missing_languages = [lang for lang in languages if lang not in canonical_languages]
-                translations = []
-                last_url = ''
-                for canonical_language in canonical_languages:
-                    obj = uuidToObject(canonical_object.get_item(canonical_language))
-                    last_url = obj.absolute_url()
-                    translations.append({'url': obj.absolute_url(),
-                                         'path': '/'.join(obj.getPhysicalPath()),
-                                         'lang': canonical_language})
-                already_added_canonicals.append(id(canonical_object))
-                not_full_translations.append({'id': canonical,
+        brains = pcatalog.searchResults(Language='all')
+        for brain in brains:
+            if not isinstance(brain.TranslationGroup, str):
+                # is alone, with a Missing.Value
+                missing_languages = [lang for lang in languages if lang != brain.Language]
+                translations = [{'url': brain.getURL(), 'path': brain.getPath(), 'lang': brain.Language}]
+                not_full_translations.append({'id': 'None',
+                                              'last_url': brain.getURL(),
+                                              'missing': missing_languages,
+                                              'translated': translations})
+            elif isinstance(brain.TranslationGroup, str):
+                tg = brain.TranslationGroup
+                brains_tg = pcatalog.searchResults(Language='all', TranslationGroup=tg)
+                if len(brains_tg) < num_lang and tg not in already_added_canonicals:
+                    translated_languages = [a.Language for a in brains_tg]
+                    missing_languages = [lang for lang in languages if lang not in translated_languages]
+                    translations = []
+                    last_url = ''
+                    for brain_tg in brains_tg:
+                        last_url = brain_tg.getURL()
+                        translations.append({'url': brain_tg.getURL(),
+                                             'path': brain_tg.getPath(),
+                                             'lang': brain_tg.Language})
+
+                    not_full_translations.append({'id': tg,
                                               'last_url': last_url,
                                               'missing': missing_languages,
                                               'translated': translations})
+                already_added_canonicals.append(tg)
         return not_full_translations
 
     isLPinstalled = isLPinstalled

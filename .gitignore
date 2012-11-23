@@ -20,3 +20,9 @@ docs/_build
 .project
 .pydevproject
 .settings
+# Emacs
+.emacs.desktop*
+# Virtualenv
+lib64
+lib
+include
