@@ -75,6 +75,10 @@
             </p>
 
             <form name="migration" tal:attributes="action request/URL" method="post">
+              <fieldset>
+                <legend i18n:translate="legend_migrate_multilingual_info">
+                  Migrate multilingual information from LP to PAM
+                </legend>
 
                 <div class="formControls">
                     <input
@@ -87,6 +91,7 @@
 
                 <input tal:replace="structure context/@@authenticator/authenticator" />
 
+              </fieldset>
             </form>
 
             <div class="results">

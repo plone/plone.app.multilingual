@@ -121,6 +121,7 @@ class SetupMultilingualSite(object):
         portal = pu.getPortalObject()
         path = '/'.join(portal.getPhysicalPath())
         objects = pc.searchResults(path={'query': path, 'depth': 1},
+                                   sort_on='getObjPositionInParent',
                                    Language=defaultLanguage)
         for brain in objects:
             if brain.id != defaultLanguage:
