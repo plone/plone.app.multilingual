@@ -1,5 +1,5 @@
-from zope.app.publisher.interfaces.browser import IBrowserMenu
-from zope.app.publisher.interfaces.browser import IBrowserSubMenuItem
+from zope.browsermenu.interfaces import IBrowserMenu
+from zope.browsermenu.interfaces import IBrowserSubMenuItem
 from zope import interface
 from zope import schema
 from plone.app.multilingual import _

@@ -5,12 +5,12 @@ from plone.multilingual.interfaces import ILanguage
 from plone.multilingual.interfaces import ITranslationManager
 from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from zope.component import getGlobalSiteManager
+from zope.component.hooks import getSite
 from zope.i18nmessageid import MessageFactory
 from zope.interface import implements
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
-from zope.app.component.hooks import getSite
 from plone.formwidget.contenttree import ObjPathSourceBinder
 
 

@@ -4,8 +4,8 @@ from zope.component import getUtility
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.permissions import ManagePortal
-from zope.app.publisher.browser.menu import BrowserMenu
-from zope.app.publisher.browser.menu import BrowserSubMenuItem
+from zope.browsermenu.menu import BrowserMenu
+from zope.browsermenu.menu import BrowserSubMenuItem
 from plone.memoize.instance import memoize
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.multilingual.browser.interfaces import (
