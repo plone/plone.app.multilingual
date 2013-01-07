@@ -1,4 +1,3 @@
-from zope.app.component.hooks import getSite
 from Products.CMFPlone.CatalogTool import CatalogTool
 from Products.CMFCore.utils import getToolByName
 from plone.multilingual.interfaces import ILanguage, ITranslatable
@@ -10,6 +9,7 @@ from plone.app.content.browser.foldercontents import (FolderContentsView,
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema, SHARED_NAME
 from Acquisition import aq_inner
 from zope.component import getUtility
+from zope.component.hooks import getSite
 from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from App.special_dtml import DTMLFile

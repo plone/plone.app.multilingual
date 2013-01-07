@@ -11,7 +11,7 @@
 
     <include package="grokcore.component" file="meta.zcml" />
 
-    <include package="zope.app.pagetemplate" file="meta.zcml" />
+    <include package="zope.browserpage" file="meta.zcml" />
 
     <includeDependencies package="." />
 
