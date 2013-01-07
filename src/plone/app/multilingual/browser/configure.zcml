@@ -44,14 +44,6 @@
     />
 
   <browser:page
-    name="relocateContentByLanguage"
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    class=".migrator.moveContentToProperRLF"
-    permission="cmf.ManagePortal"
-    layer="..interfaces.IPloneAppMultilingualInstalled"
-    />
-
-  <browser:page
     name="multilingual-map"
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     class=".controlpanel.multilingualMapView"
@@ -116,6 +108,7 @@
   <adapter factory=".controlpanel.MultiLanguageOptionsControlPanelAdapter" />
   <adapter factory=".controlpanel.MultiLanguageExtraOptionsAdapter" />
   <adapter factory=".controlpanel.MultiLanguagePoliciesAdapter" />
+  <adapter factory=".controlpanel.InitialCleanSiteSetupAdapter" />
 
   <!-- Vocabulary all languages -->
   <utility
@@ -226,7 +219,15 @@
     permission="zope2.View"
     />
 
-  <!-- Migration View -->
+  <!-- Migration Views -->
+  <browser:page
+    name="relocateContentByLanguage"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    class=".migrator.moveContentToProperRLF"
+    permission="cmf.ManagePortal"
+    layer="..interfaces.IPloneAppMultilingualInstalled"
+    />
+
   <browser:page
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     class=".migrator.LP2PAMView"

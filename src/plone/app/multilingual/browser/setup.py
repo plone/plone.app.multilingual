@@ -108,9 +108,8 @@ class SetupMultilingualSite(object):
                     defaultLanguage, '/'.join(obj.getPhysicalPath())))
 
     def move_default_language_content(self):
-        """ Moved to migrator.py
+        """ Move the content with default language on the root folder
         """
-        # Move the content at defaultLanguge on the root folder
         context = aq_inner(self.context)
         pc = getToolByName(context, "portal_catalog")
         pl = getToolByName(context, "portal_languages")

@@ -45,7 +45,7 @@
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   color: black;
-  background-color: #ccc;  
+  background-color: #ccc;
 }
 
 #pam_language_buttons button.down, #pam_ajax_buttons button.down {
@@ -70,7 +70,7 @@
                tal:attributes="href string:${portal_url}/@@multilingual-map"
                i18n:translate="label_translation_map">Translation Map</a>
           </li>
-          <li tal:condition="view/isLPinstalled">
+          <li>
             <a href=""
                tal:attributes="href string:${portal_url}/@@lp-migration"
                i18n:translate="label_migration">Migration</a>
@@ -81,10 +81,7 @@
               i18n:translate="label_import2">After Migration actions</a>
           </li>
         </ul>
-    </div>
-
-    <div class="contentActions">
-      &#160;
+        <div class="contentActions">&nbsp;</div>
     </div>
 
     <div class="documentContent" id="content">
@@ -120,7 +117,7 @@
               <div id="pam_mmap_language_toolbar">
                 <div id="pam_language_buttons" tal:define="data view/languages">
                 <tal:block repeat="languages data/languages">
-                  <button id="" tal:attributes="id languages/value; 
+                  <button id="" tal:attributes="id languages/value;
                                                 class python: languages.value==data['default'] and 'down' or ''" tal:content="languages/title">Lang</button>
                 </tal:block>
                 </div>

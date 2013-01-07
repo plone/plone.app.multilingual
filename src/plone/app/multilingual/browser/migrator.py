@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 class LP2PAMView(BrowserView):
     """View for migrating multilingual catalog from LP to PAM"""
 
-    template = ViewPageTemplateFile('templates/migrator.pt')
+    template = ViewPageTemplateFile('templates/migrator-results.pt')
 
     def __call__(self):
         pc = getToolByName(self.context, 'portal_catalog')

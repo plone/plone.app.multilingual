@@ -45,10 +45,7 @@
                i18n:translate="label_migration">Migration</a>
           </li>
         </ul>
-    </div>
-
-    <div class="contentActions">
-      &#160;
+        <div class="contentActions">&nbsp;</div>
     </div>
 
     <div class="documentContent" id="content">
