@@ -4,6 +4,7 @@ Changelog
 1.0b4 - Unreleased
 ------------------
 
+- fixed getClosestDestination when translation doesn't exist [gborelli]
 - Update deprecated imports to work with Plone 4.3
   [saily]
 

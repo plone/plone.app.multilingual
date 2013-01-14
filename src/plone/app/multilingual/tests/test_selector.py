@@ -19,6 +19,7 @@ from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
 from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
 from plone.app.multilingual.browser.selector import getPostPath
 from plone.app.multilingual.browser.selector import addQuery
+from plone.app.multilingual.browser.helper_views import selector_view
 from plone.app.multilingual.testing import (
     PLONEAPPMULTILINGUAL_INTEGRATION_TESTING,
     PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
@@ -210,6 +211,27 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         wftool.doActionFor(document_es, 'publish')
         transaction.commit()
         return wftool
+
+    def test_languages_untranslated_by_closest(self):
+        self.registry = getUtility(IRegistry)
+        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings.selector_lookup_translations_policy = 'closest'
+        self.setUpPAMFolders()
+
+        document = makeContent(self.portal.ca, 'Document', id='untranslated')
+        document.setLanguage('ca')
+        wftool = getToolByName(self.portal, "portal_workflow")
+        wftool.doActionFor(document, 'publish')
+        transaction.commit()
+
+        view = selector_view(document, self.layer['request'])
+        view.lang = 'es'
+        url = view.getClosestDestination()
+        self.assertEqual(url, self.portal.es.absolute_url())
+
+        view.lang = 'it'
+        url = view.getClosestDestination()
+        self.assertEqual(url, self.portal.absolute_url())
 
     def test_languages_partially_translated_by_closest(self):
         self.registry = getUtility(IRegistry)

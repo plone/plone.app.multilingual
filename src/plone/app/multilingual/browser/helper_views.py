@@ -133,8 +133,10 @@ class selector_view(universal_link):
                 else:
                     raise
             translation = canonical.get_translation(self.lang)
-            if INavigationRoot.providedBy(translation) or \
-                    bool(checkPermission('View', translation)):
+            if translation and (
+                INavigationRoot.providedBy(translation) or
+                bool(checkPermission('View', translation))
+            ):
                 # Not a direct translation, therefore no postpath
                 # (the view might not exist on a different context)
                 return self.wrapDestination(translation.absolute_url(),
