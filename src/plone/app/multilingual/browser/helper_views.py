@@ -107,7 +107,6 @@ class selector_view(universal_link):
             url = results[0].getUrl()
             return self.wrapDestination(url + dialog_view, postpath=postpath)
 
-
     def getParentChain(self, context):
         # XXX: switch it over to parent pointers if needed
         return aq_chain(context)
@@ -122,11 +121,13 @@ class selector_view(universal_link):
         # having done traversal up to this point you should
         # have the objects in memory already
 
-        # As we don't have any content object we are going to look 
+        # As we don't have any content object we are going to look
         # for the best option
 
         ltool = getToolByName(self.context, 'portal_languages')
         ptool = getToolByName(self.context, 'portal_catalog')
+        root = getToolByName(self.context, 'portal_url')
+
         query = {'TranslationGroup': self.tg, 'Language': 'all'}
         results = ptool.searchResults(query)
         context = None
@@ -174,7 +175,6 @@ class selector_view(universal_link):
                 return self.wrapDestination(translation.absolute_url(),
                                             postpath=False)
         # Site root's the fallback
-        root = getToolByName(self.context, 'portal_url')
         return self.wrapDestination(root.url(), postpath=False)
 
     def wrapDestination(self, url, postpath=True):
