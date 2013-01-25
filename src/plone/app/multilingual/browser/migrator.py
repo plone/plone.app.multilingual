@@ -8,13 +8,19 @@ from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from plone.app.layout.navigation.interfaces import INavigationRoot
-from plone.multilingual.interfaces import ITranslatable
 from zc.relation.interfaces import ICatalog
 from zope.component import getUtility
 import logging
 from Acquisition import aq_base
 
+try:
+    from Products.LinguaPlone.interfaces import ITranslatable
+except:
+    from plone.multilingual.interfaces import ITranslatable
+
 LP_TRANSLATABLE = 'Products.LinguaPlone.interfaces.ITranslatable'
+
+portal_types_blacklist = ['Collage', 'FormFolder', 'Ploneboard', 'BannerContainer']
 
 logger = logging.getLogger(__name__)
 
@@ -96,7 +102,8 @@ class moveContentToProperRLF(BrowserView):
     """
 
     def findContent(self, content, depth):
-        if hasattr(aq_base(content), 'objectIds'):
+        if hasattr(aq_base(content), 'objectIds') \
+           and content.meta_type not in portal_types_blacklist:
             for id in content.objectIds():
                 self.findContent(getattr(content, id), depth + 1)
         while len(self.content_tree) < depth + 1:
@@ -151,8 +158,8 @@ class moveContentToProperRLF(BrowserView):
                     cutted = parent.manage_cutObjects(content.getId())
                     target_folder.manage_pasteObjects(cutted)
                     info_str = "Step 2: Moved object %s to folder %s" % (
-                               content.getPhysicalPath(),
-                               target_folder.getPhysicalPath())
+                               '/'.join(content.getPhysicalPath()),
+                               '/'.join(target_folder.getPhysicalPath()))
                     logger.warning(info_str)
                     output.append(info_str)
 
@@ -161,10 +168,10 @@ class moveContentToProperRLF(BrowserView):
     def step3(self):
         """ Move the existing site content to its correspondent RLF.
         """
-        context = aq_inner(self.context)
-        pc = getToolByName(context, "portal_catalog")
-        pl = getToolByName(context, "portal_languages")
         portal = getSite()
+        pc = getToolByName(portal, "portal_catalog")
+        pl = getToolByName(portal, "portal_languages")
+
         supported_langs = pl.getSupportedLanguages()
 
         output = []
@@ -180,6 +187,7 @@ class moveContentToProperRLF(BrowserView):
             path = '/'.join(portal.getPhysicalPath())
             objects = pc.searchResults(path={'query': path, 'depth': 1},
                                        Language=lang)
+
             for brain in objects:
                 if brain.id != lang:
                     old_path = brain.getPath()
@@ -187,7 +195,7 @@ class moveContentToProperRLF(BrowserView):
                     folder.manage_pasteObjects(cutted)
                     info_str = "Moved object %s to root language folder %s" % (
                                 old_path, lang)
-                    logger.info(info_str)
+                    logger.warning(info_str)
                     output.append(info_str)
 
         return output
