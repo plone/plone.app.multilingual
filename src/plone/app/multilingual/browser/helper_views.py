@@ -67,7 +67,7 @@ class universal_link(BrowserView):
         url = self.getDestination()
         if not url:
             root = getToolByName(self.context, 'portal_url')
-            url = root.url()
+            url = root()
         self.request.RESPONSE.redirect(url)
 
 
@@ -134,7 +134,7 @@ class selector_view(universal_link):
         if len(results) == 0:
             # If there is no results there are no translations
             # we move to portal root
-            return self.wrapDestination(root.url(), postpath=False)
+            return self.wrapDestination(root(), postpath=False)
         for result in results:
             if result.Language in ltool.getRequestLanguages():
                 context = result.getObject()
@@ -175,7 +175,7 @@ class selector_view(universal_link):
                 return self.wrapDestination(translation.absolute_url(),
                                             postpath=False)
         # Site root's the fallback
-        return self.wrapDestination(root.url(), postpath=False)
+        return self.wrapDestination(root(), postpath=False)
 
     def wrapDestination(self, url, postpath=True):
         """Fix the translation url appending the query
