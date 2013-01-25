@@ -32,6 +32,7 @@ class LP2PAMView(BrowserView):
     """View for migrating multilingual catalog from LP to PAM"""
 
     template = ViewPageTemplateFile('templates/migrator-results.pt')
+    stepinfo = u"Transfer multilingual catalog information"
 
     def __call__(self):
         pc = getToolByName(self.context, 'portal_catalog')
@@ -57,8 +58,9 @@ class LP2PAMView(BrowserView):
                                     (obj.id, language,
                                         str(manager.get_translations())))
 
-                        self.results.append(manager.get_translations())
+                        self.results.append(str(manager.get_translations()))
 
+        logger.info('Finished with transferring catalog information')
         return self.template()
 
 
@@ -107,6 +109,9 @@ class moveContentToProperRLF(BrowserView):
         parent.
     """
 
+    template = ViewPageTemplateFile('templates/migrator-results.pt')
+    stepinfo = u"Relocate content to the proper root language folder"
+
     def findContent(self, content, depth):
         if hasattr(aq_base(content), 'objectIds') \
            and content.meta_type not in portal_types_blacklist:
@@ -129,8 +134,9 @@ class moveContentToProperRLF(BrowserView):
 
     def __call__(self):
         """ Note: Steps names doesn't correspond with the control panel ones """
-        self.step1andstep2()
-        self.step3()
+        self.results = self.step1andstep2()
+        self.results += self.step3()
+        return self.template()
 
     def step1andstep2(self):
         """ Explore the site's content searching for misplaced content and move
@@ -175,7 +181,7 @@ class moveContentToProperRLF(BrowserView):
                                    '/'.join(target_folder.getPhysicalPath()))
                         log = logger.warning
                     except Exception, err:
-                        info_str = "Step 2: not possible to move " \
+                        info_str = "ERROR. Step 2: not possible to move " \
                         "object %s to folder %s. Error: %s" % (
                                    '/'.join(content.getPhysicalPath()),
                                    '/'.join(target_folder.getPhysicalPath()),
@@ -184,6 +190,7 @@ class moveContentToProperRLF(BrowserView):
                     log(info_str)
                     output.append(info_str)
 
+        logger.info('Finished step 2')
         return output
 
     def step3(self):
@@ -227,11 +234,26 @@ class moveContentToProperRLF(BrowserView):
                                     old_path, lang)
                         log = logger.warning
                     except Exception, err:
-                        info_str = "Step 3 ERROR: not possible to move "\
+                        info_str = "ERROR. Step 3: not possible to move "\
                         "object %s to root language folder %s. Error: %s" % (
                             old_path, lang, err)
                         log = logger.error
                     log(info_str)
                     output.append(info_str)
 
+        logger.info('Finished step 3')
+        return output
+
+
+class LP2PAMReindexLanguageIndex(BrowserView):
+
+    def __call__(self):
+        pc = getToolByName(self.context, 'portal_catalog')
+        index = pc._catalog.getIndex('Language')
+        items_before = index.numObjects()
+        pc.manage_reindexIndex(ids=['Language'])
+        items_after = index.numObjects()
+        output = '<div class="resultInfo"><h3>Reindex language index</h3>' \
+        'The "Language" index was re-indexed. Before, it contained %d '\
+        'items, now it contains %d items.</div>' % (items_before, items_after)
         return output
