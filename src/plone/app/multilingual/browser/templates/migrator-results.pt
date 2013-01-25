@@ -1,8 +1,9 @@
 <div class="visualClear"><!-- --></div>
 
 <div class="resultInfo">
+    <h3 tal:content="view/stepinfo"></h3>
     <span i18n:translate="label_total_objects_translated">
-        Total objects translated migrated:
+        Total objects handled:
     </span>
     <span tal:content="python: len(view.results)">Number of objects</span>
 </div>

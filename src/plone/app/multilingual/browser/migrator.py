@@ -33,6 +33,7 @@ class LP2PAMView(BrowserView):
     """View for migrating multilingual catalog from LP to PAM"""
 
     template = ViewPageTemplateFile('templates/migrator-results.pt')
+    stepinfo = u"Transfer multilingual catalog information"
 
     def __call__(self):
         pc = getToolByName(self.context, 'portal_catalog')
@@ -108,6 +109,9 @@ class moveContentToProperRLF(BrowserView):
         parent.
     """
 
+    template = ViewPageTemplateFile('templates/migrator-results.pt')
+    stepinfo = u"Relocate content to the proper root language folder"
+
     def findContent(self, content, depth):
         if hasattr(aq_base(content), 'objectIds') \
            and content.meta_type not in portal_types_blacklist:
@@ -130,8 +134,9 @@ class moveContentToProperRLF(BrowserView):
 
     def __call__(self):
         """ Note: Steps names doesn't correspond with the control panel ones """
-        self.step1andstep2()
-        self.step3()
+        self.results = self.step1andstep2()
+        self.results += self.step3()
+        return self.template()
 
     def step1andstep2(self):
         """ Explore the site's content searching for misplaced content and move
@@ -247,6 +252,7 @@ class LP2PAMReindexLanguageIndex(BrowserView):
         pc.manage_reindexIndex(ids=['Language'])
         items_after = index.numObjects()
         status = IStatusMessage(self.request)
-        msg = 'The "Language" index was re-indexed. Before, it contained %d '\
-        'items, now it contains %d items.' % (items_before, items_after)
-        status.addStatusMessage(msg, type='info')
+        output = '<div class="resultInfo"><h3>Reindex language index</h3>' \
+        'The "Language" index was re-indexed. Before, it contained %d '\
+        'items, now it contains %d items.</div>' % (items_before, items_after)
+        return output

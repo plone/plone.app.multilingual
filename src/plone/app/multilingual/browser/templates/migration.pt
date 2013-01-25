@@ -40,6 +40,15 @@
         });
     });
 
+    $().ready(function() {
+       $('.formControls input[name="form.button.reindex-language-index"]').click(function (event) {
+          event.preventDefault();
+          $.get('@@reindex-language-index', function(data) {
+            $('.results').html(data)
+          });
+        });
+    });
+
 })(jQuery);
 </script>
 
