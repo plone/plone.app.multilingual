@@ -24,7 +24,7 @@ except:
 
 LP_TRANSLATABLE = 'Products.LinguaPlone.interfaces.ITranslatable'
 
-portal_types_blacklist = ['Collage', 'FormFolder', 'Ploneboard']
+portal_types_blacklist = ['Collage', 'FormFolder', 'Ploneboard', 'BannerContainer']
 
 logger = logging.getLogger(__name__)
 
@@ -178,8 +178,8 @@ class moveContentToProperRLF(BrowserView):
                     except Exception, err:
                         info_str = "Step 2: not possible to move " \
                         "object %s to folder %s. Error: %s" % (
-                                   content.getPhysicalPath(),
-                                   target_folder.getPhysicalPath(),
+                                   '/'.join(content.getPhysicalPath()),
+                                   '/'.join(target_folder.getPhysicalPath()),
                                    err)
                         log = logger.error
                     log(info_str)
@@ -208,6 +208,7 @@ class moveContentToProperRLF(BrowserView):
 
             path = '/'.join(portal.getPhysicalPath())
             objects = pc.searchResults(path={'query': path, 'depth': 1},
+                                       sort_on='getObjPositionInParent',
                                        Language=lang)
 
             for brain in objects:
