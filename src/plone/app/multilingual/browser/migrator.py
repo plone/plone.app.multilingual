@@ -177,8 +177,8 @@ class moveContentToProperRLF(BrowserView):
                     except Exception, err:
                         info_str = "Step 2: not possible to move " \
                         "object %s to folder %s. Error: %s" % (
-                                   content.getPhysicalPath(),
-                                   target_folder.getPhysicalPath(),
+                                   '/'.join(content.getPhysicalPath()),
+                                   '/'.join(target_folder.getPhysicalPath()),
                                    err)
                         log = logger.error
                     log(info_str)
