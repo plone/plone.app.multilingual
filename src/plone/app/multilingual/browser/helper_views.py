@@ -76,7 +76,6 @@ class selector_view(universal_link):
     def getDialogDestination(self):
         """Get the "not translated yet" dialog URL.
         """
-        import pdb; pdb.set_trace()
         dialog_view = NOT_TRANSLATED_YET_TEMPLATE
         postpath = False
         # The dialog view shouldn't appear on the site root
