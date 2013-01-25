@@ -10,8 +10,11 @@ from Products.CMFPlone.interfaces import IPloneSiteRoot
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from zc.relation.interfaces import ICatalog
 from zope.component import getUtility
+from zope.component.interfaces import ComponentLookupError
 import logging
 from Acquisition import aq_base
+from Products.CMFCore.exceptions import ResourceLockedError
+from plone.locking.interfaces import ILockable
 
 try:
     from Products.LinguaPlone.interfaces import ITranslatable
@@ -70,7 +73,10 @@ class LP2PAMAfterView(BrowserView):
         rid of them. (Assuming that Products.LinguaPlone is already
         uninstalled)
         """
-        catalog = getUtility(ICatalog)
+        try:
+            catalog = getUtility(ICatalog)
+        except ComponentLookupError:
+            return 0, ['A zc.relation catalog is not present.']
         relations = catalog.findRelations()
         catalog.clear()
         total = 0
@@ -155,12 +161,27 @@ class moveContentToProperRLF(BrowserView):
                     parent = aq_parent(content)
                     target_folder = self.searchNearestTranslatedParent(content)
                     # Test if the id already exist previously
-                    cutted = parent.manage_cutObjects(content.getId())
-                    target_folder.manage_pasteObjects(cutted)
-                    info_str = "Step 2: Moved object %s to folder %s" % (
-                               '/'.join(content.getPhysicalPath()),
-                               '/'.join(target_folder.getPhysicalPath()))
-                    logger.warning(info_str)
+
+                    try:
+                        cutted = parent.manage_cutObjects(content.getId())
+                    except ResourceLockedError:
+                        lockable = ILockable(content)
+                        lockable.unlock()
+                        cutted = parent.manage_cutObjects(content.getId())
+                    try:
+                        target_folder.manage_pasteObjects(cutted)
+                        info_str = "Step 2: Moved object %s to folder %s" % (
+                                   '/'.join(content.getPhysicalPath()),
+                                   '/'.join(target_folder.getPhysicalPath()))
+                        log = logger.warning
+                    except Exception, err:
+                        info_str = "Step 2: not possible to move " \
+                        "object %s to folder %s. Error: %s" % (
+                                   content.getPhysicalPath(),
+                                   target_folder.getPhysicalPath(),
+                                   err)
+                        log = logger.error
+                    log(info_str)
                     output.append(info_str)
 
         return output
@@ -191,11 +212,25 @@ class moveContentToProperRLF(BrowserView):
             for brain in objects:
                 if brain.id != lang:
                     old_path = brain.getPath()
-                    cutted = self.context.manage_cutObjects(brain.id)
-                    folder.manage_pasteObjects(cutted)
-                    info_str = "Moved object %s to root language folder %s" % (
-                                old_path, lang)
-                    logger.warning(info_str)
+
+                    try:
+                        cutted = self.context.manage_cutObjects(brain.id)
+                    except ResourceLockedError:
+                        content = brain.getObject()
+                        lockable = ILockable(content)
+                        lockable.unlock()
+                        cutted = self.context.manage_cutObjects(brain.id)
+                    try:
+                        folder.manage_pasteObjects(cutted)
+                        info_str = "Moved object %s to root language folder %s" % (
+                                    old_path, lang)
+                        log = logger.warning
+                    except Exception, err:
+                        info_str = "Step 3 ERROR: not possible to move "\
+                        "object %s to root language folder %s. Error: %s" % (
+                            old_path, lang, err)
+                        log = logger.error
+                    log(info_str)
                     output.append(info_str)
 
         return output

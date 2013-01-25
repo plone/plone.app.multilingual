@@ -2,6 +2,7 @@ from zope.interface import Interface
 from zope.interface import implementsOnly
 from zope.schema import Choice
 from zope.schema import Bool, List
+from zc.relation.interfaces import ICatalog as IRelationCatalog
 from Products.statusmessages.interfaces import IStatusMessage
 from zope.component import getMultiAdapter
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -21,6 +22,7 @@ from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.protect import CheckAuthenticator
 
 from zope.component import getUtility
+from zope.component.interfaces import ComponentLookupError
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 
@@ -448,6 +450,11 @@ class MigrationView(BrowserView):
     __call__ = ViewPageTemplateFile('templates/migration.pt')
 
     isLPinstalled = isLPinstalled
+    try:
+        catalog = getUtility(IRelationCatalog)
+        hasRelationCatalog = True
+    except ComponentLookupError:
+        hasRelationCatalog = False
 
 
 class MigrationViewAfter(BrowserView):

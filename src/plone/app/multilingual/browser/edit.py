@@ -1,4 +1,11 @@
-from plone.dexterity.browser.edit import DefaultEditForm
+from plone.app.multilingual import isDexterityInstalled
+
+if isDexterityInstalled:
+    from plone.dexterity.browser.edit import DefaultEditForm
+    from plone.multilingualbehavior.interfaces import ILanguageIndependentField
+else:
+    DefaultEditForm = object
+
 from plone.z3cform import layout
 from Products.CMFCore.utils import getToolByName
 from Acquisition import aq_inner
@@ -8,7 +15,6 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 
-from plone.multilingualbehavior.interfaces import ILanguageIndependentField
 
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
@@ -89,4 +95,5 @@ class MultilingualEditForm(DefaultEditForm):
         self.babel_content = super(MultilingualEditForm, self).render()
         return self.babel()
 
-DefaultMultilingualEditView = layout.wrap_form(MultilingualEditForm)
+if isDexterityInstalled:
+    DefaultMultilingualEditView = layout.wrap_form(MultilingualEditForm)

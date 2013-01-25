@@ -2,6 +2,7 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
     xmlns:z3c="http://namespaces.zope.org/z3c">
 
    <!-- Menu for translations on content -->
@@ -158,12 +159,14 @@
 
   <!-- GTranslate Service -->
 
-  <browser:page
-    for="plone.dexterity.interfaces.IDexterityContent"
-    name="gtranslation_service"
-    class=".translate.gtranslation_service_dexterity"
-    permission="cmf.ModifyPortalContent"
-    />
+  <configure zcml:condition="installed plone.dexterity">
+    <browser:page
+      for="plone.dexterity.interfaces.IDexterityContent"
+      name="gtranslation_service"
+      class=".translate.gtranslation_service_dexterity"
+      permission="cmf.ModifyPortalContent"
+      />
+  </configure>
 
   <browser:page
     for="Products.Archetypes.atapi.BaseObject"
@@ -175,12 +178,14 @@
 
   <!-- Edit form -->
 
-  <browser:page
-    for="plone.dexterity.interfaces.IDexterityContent"
-    name="babel_edit"
-    class=".edit.DefaultMultilingualEditView"
-    permission="cmf.ModifyPortalContent"
-    />
+  <configure zcml:condition="installed plone.dexterity">
+    <browser:page
+      for="plone.dexterity.interfaces.IDexterityContent"
+      name="babel_edit"
+      class=".edit.DefaultMultilingualEditView"
+      permission="cmf.ModifyPortalContent"
+      />
+  </configure>
 
   <browser:page
     for="Products.Archetypes.atapi.BaseObject"
@@ -190,13 +195,15 @@
     />
 
   <!-- Templates for translation fields info visualization via AJAX -->
-  <browser:page
-    for="plone.dexterity.interfaces.IDexterityContent"
-    name="babel_view"
-    class=".view.DexterityBabelView"
-    template="templates/dx_babel_view.pt"
-    permission="cmf.ModifyPortalContent"
-    />
+  <configure zcml:condition="installed plone.dexterity">
+    <browser:page
+      for="plone.dexterity.interfaces.IDexterityContent"
+      name="babel_view"
+      class=".view.DexterityBabelView"
+      template="templates/dx_babel_view.pt"
+      permission="cmf.ModifyPortalContent"
+      />
+  </configure>
 
   <browser:page
     for="Products.Archetypes.atapi.BaseObject"
