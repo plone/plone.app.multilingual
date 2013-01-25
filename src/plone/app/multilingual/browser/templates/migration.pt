@@ -78,7 +78,7 @@
             </p>
 
             <form name="relocate"
-                  tal:attributes="action string:{portal_url}/relocate-content"
+                  tal:attributes="action string:${portal_url}/relocate-content"
                   method="post">
               <fieldset>
                 <legend i18n:translate="legend_relocate_content">
@@ -113,7 +113,7 @@
             </form>
 
             <form name="transfer"
-                  tal:attributes="action string:{portal_url}/transfer-lp-catalog"
+                  tal:attributes="action string:${portal_url}/transfer-lp-catalog"
                   method="post">
               <fieldset>
                 <legend i18n:translate="legend_transfer_multilingual_catalog_info">
@@ -143,11 +143,11 @@
             </form>
 
             <form name="aftermigration"
-                  tal:attributes="action string:{portal_url}/after-migration-cleanup"
+                  tal:attributes="action string:${portal_url}/after-migration-cleanup"
                   method="post">
               <fieldset>
                 <legend i18n:translate="legend_after_migration_cleanup">
-                  Migrate multilingual information from LP to PAM
+                  Step 3 - Cleanup after migration
                 </legend>
 
                 <p i18n:translate="legend_after_migration_cleanup">
