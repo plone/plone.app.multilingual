@@ -20,27 +20,21 @@
             $('.results').html(data)
           });
         });
-    });
 
-    $().ready(function() {
         $('.formControls input[name="form.button.transfer-lp-catalog"]').click(function (event) {
           event.preventDefault();
           $.get('@@transfer-lp-catalog', function(data) {
             $('.results').html(data)
           });
         });
-    });
 
-    $().ready(function() {
         $('.formControls input[name="form.button.after-migration-cleanup"]').click(function (event) {
           event.preventDefault();
           $.get('@@after-migration-cleanup', function(data) {
             $('.results').html(data)
           });
         });
-    });
 
-    $().ready(function() {
        $('.formControls input[name="form.button.reindex-language-index"]').click(function (event) {
           event.preventDefault();
           $.get('@@reindex-language-index', function(data) {
