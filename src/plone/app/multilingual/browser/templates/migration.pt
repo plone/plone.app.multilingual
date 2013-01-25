@@ -14,9 +14,9 @@
 (function($) {
 
     $().ready(function() {
-        $('.formControls input').click(function (event) {
+        $('.formControls input[name="form.button.transfer-lp-catalog"]').click(function (event) {
           event.preventDefault();
-          $.get('@@migration-view', function(data) {
+          $.get('@@transfer_lp_catalog', function(data) {
             $('.results').html(data)
           });
         });
@@ -68,21 +68,103 @@
             </a>
 
             <p i18n:translate="description_migrate">
-                Description of the migration process.
+
+                The migration process is divided into four steps, listed
+                below. Each one of the steps has a well defined purpose
+                explained. Some of them are destructive, so please read each
+                one of it and do not try to run it on production servers
+                without testing it previously.
+
             </p>
 
-            <form name="migration" tal:attributes="action request/URL" method="post">
+            <form name="relocate"
+                  tal:attributes="action string:{portal_url}/relocate-content"
+                  method="post">
               <fieldset>
-                <legend i18n:translate="legend_migrate_multilingual_info">
-                  Migrate multilingual information from LP to PAM
+                <legend i18n:translate="legend_relocate_content">
+                  Step 1 - Relocate content to the proper root language folder
                 </legend>
+
+                <p i18n:translate="legend_relocate_content">
+
+                  This step will move the site's content to its corresponding
+                  root language folder and previously will made a search for
+                  misplaced content through the site's content tree and will
+                  move them to its nearest translated parent. This step is
+                  destructive as it will alter your content tree structure.
+                  Make sure you have previously configured your site's
+                  languages properly in the 'Site Languages' tab of the
+                  'Languages' control panel.
+
+                </p>
 
                 <div class="formControls">
                     <input
                         type="submit"
-                        name="form.button.Import"
+                        name="form.button.relocate-content"
                         class="destructive"
-                        value="Migrate"
+                        value="Relocate"
+                        i18n:attributes="value" />
+                </div>
+
+                <input tal:replace="structure context/@@authenticator/authenticator" />
+
+              </fieldset>
+            </form>
+
+            <form name="transfer"
+                  tal:attributes="action string:{portal_url}/transfer-lp-catalog"
+                  method="post">
+              <fieldset>
+                <legend i18n:translate="legend_transfer_multilingual_catalog_info">
+                  Step 2 - Transfer multilingual catalog information
+                </legend>
+
+                <p i18n:translate="legend_transfer_multilingual_catalog_info">
+
+                  This step will transfer the relations between translations
+                  stored by LinguaPlone to the PAM catalog. This step is not
+                  destructive and can be executed as many times as needed.
+
+                </p>
+
+                <div class="formControls">
+                    <input
+                        type="submit"
+                        name="form.button.transfer-lp-catalog"
+                        class="destructive"
+                        value="Transfer"
+                        i18n:attributes="value" />
+                </div>
+
+                <input tal:replace="structure context/@@authenticator/authenticator" />
+
+              </fieldset>
+            </form>
+
+            <form name="aftermigration"
+                  tal:attributes="action string:{portal_url}/after-migration-cleanup"
+                  method="post">
+              <fieldset>
+                <legend i18n:translate="legend_after_migration_cleanup">
+                  Migrate multilingual information from LP to PAM
+                </legend>
+
+                <p i18n:translate="legend_after_migration_cleanup">
+
+                  This step will fix some lost dependencies to the
+                  ITranslatable interface hidden in the relation catalog and
+                  it gets rid of them. It must be run only when LinguaPlone is
+                  already uninstalled.
+
+                </p>
+
+                <div class="formControls">
+                    <input
+                        type="submit"
+                        name="form.button.after-migration-cleanup"
+                        class="destructive"
+                        value="Cleanup"
                         i18n:attributes="value" />
                 </div>
 

@@ -58,7 +58,7 @@ class migrationLPToPAM(unittest.TestCase):
         self.b_2_1_ca.edit(id='b_2_1_ca', language='ca')
 
         relocator_view = getMultiAdapter((self.portal, self.request),
-                                          name='relocateContentByLanguage')
+                                          name='relocate-content')
         relocator_view.step1andstep2()
 
         self.assertTrue(getattr(self.portal, 'b_1_1_en', False))
@@ -86,7 +86,7 @@ class migrationLPToPAM(unittest.TestCase):
         self.doc1_ca.edit(title="Foo", language='ca')
         self.doc1_es = makeTranslation(self.doc1, 'es')
         self.doc1_es.edit(title="Foo", language='es')
-        migration_view = getMultiAdapter((self.portal, self.request), name='migration-view')
+        migration_view = getMultiAdapter((self.portal, self.request), name='transfer-lp-catalog')
         migration_view()
         self.assertEqual(ITranslationManager(self.doc1).get_translations(),
                          {'ca': self.doc1_ca,

@@ -28,18 +28,11 @@
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
 
+  <!-- Migration Tab -->
   <browser:page
     name="lp-migration"
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     class=".controlpanel.MigrationView"
-    permission="plone.app.controlpanel.Language"
-    layer="..interfaces.IPloneAppMultilingualInstalled"
-    />
-
-  <browser:page
-    name="lp-migration-after"
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    class=".controlpanel.MigrationViewAfter"
     permission="plone.app.controlpanel.Language"
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
@@ -227,26 +220,41 @@
     />
 
   <!-- Migration Views -->
+
+  <!-- Step 1 - Relocates the content if needed -->
   <browser:page
-    name="relocateContentByLanguage"
+    name="relocate-content"
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     class=".migrator.moveContentToProperRLF"
     permission="cmf.ManagePortal"
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
 
+  <!-- Step 2 - Migrate multilingual catalog info -->
   <browser:page
+    name="transfer-lp-catalog"
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     class=".migrator.LP2PAMView"
-    name="migration-view"
     permission="cmf.ManagePortal"
+    layer="..interfaces.IPloneAppMultilingualInstalled"
     />
 
+  <!-- Step 3  - Cleanup tasks after migration -->
   <browser:page
+    name="after-migration-cleanup"
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     class=".migrator.LP2PAMAfterView"
-    name="migration-view-after"
     permission="cmf.ManagePortal"
+    layer="..interfaces.IPloneAppMultilingualInstalled"
+    />
+
+  <!-- To delete -->
+  <browser:page
+    name="lp-migration-after"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    class=".controlpanel.MigrationViewAfter"
+    permission="plone.app.controlpanel.Language"
+    layer="..interfaces.IPloneAppMultilingualInstalled"
     />
 
 </configure>

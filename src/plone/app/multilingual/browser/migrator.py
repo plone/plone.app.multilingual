@@ -115,6 +115,7 @@ class moveContentToProperRLF(BrowserView):
         return parent
 
     def __call__(self):
+        """ Note: Steps names doesn't correspond with the control panel ones """
         self.step1andstep2()
         self.step3()
 
