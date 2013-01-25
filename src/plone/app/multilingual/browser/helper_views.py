@@ -130,6 +130,10 @@ class selector_view(universal_link):
         query = {'TranslationGroup': self.tg, 'Language': 'all'}
         results = ptool.searchResults(query)
         context = None
+        if len(results) == 0:
+            # If there is no results there are no translations
+            # we move to portal root
+            return self.wrapDestination(root.url(), postpath=False)
         for result in results:
             if result.Language in ltool.getRequestLanguages():
                 context = result.getObject()
