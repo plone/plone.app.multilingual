@@ -53,4 +53,10 @@
     <depends name="catalog"/>
   </genericsetup:importStep>
 
+  <utility factory="plone.app.multilingual.profile.HiddenProfiles"
+           name="plone.app.multilingual.hiddenprofiles" />
+           
+  <utility factory="plone.app.multilingual.profile.HiddenProducts"
+           name="plone.app.multilingual.hiddenproducts" />
+
 </configure>

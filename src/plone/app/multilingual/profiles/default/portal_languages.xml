@@ -3,4 +3,7 @@
  <use_cookie_negotiation value="True"/>
  <use_request_negotiation value="False"/>
  <start_neutral value="False"/>
+ <use_content_negotiation value="True"/>
+ <display_flags value="False"/>
 </object>
+

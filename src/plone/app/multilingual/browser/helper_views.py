@@ -76,6 +76,7 @@ class selector_view(universal_link):
     def getDialogDestination(self):
         """Get the "not translated yet" dialog URL.
         """
+        import pdb; pdb.set_trace()
         dialog_view = NOT_TRANSLATED_YET_TEMPLATE
         postpath = False
         # The dialog view shouldn't appear on the site root
@@ -83,9 +84,9 @@ class selector_view(universal_link):
         # And since we are mapping the root on itself,
         # we also do postpath insertion (@@search case)
 
-        if ISiteRoot.providedBy(self.context):
-            dialog_view = ''
-            postpath = True
+        #if ISiteRoot.providedBy(self.context):
+        #    dialog_view = ''
+        #    postpath = True
 
         # We first look for the content on the request language
         ltool = getToolByName(self.context, 'portal_languages')
@@ -94,7 +95,7 @@ class selector_view(universal_link):
         if url:
             return self.wrapDestination(url + dialog_view, postpath=postpath)
         # We look for the default language content
-        self.lang = ltool.getDefaultLanguages()
+        self.lang = ltool.getDefaultLanguage()
         url = self.getDestination()
         if url:
             return self.wrapDestination(url + dialog_view, postpath=postpath)
