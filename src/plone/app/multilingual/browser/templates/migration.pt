@@ -16,6 +16,7 @@
     $().ready(function() {
         $('.formControls input[name="form.button.relocate-content"]').click(function (event) {
           event.preventDefault();
+          $('.results').html('<img src="spinner.gif">');
           $.get('@@relocate-content', function(data) {
             $('.results').html(data)
           });
@@ -23,6 +24,7 @@
 
         $('.formControls input[name="form.button.transfer-lp-catalog"]').click(function (event) {
           event.preventDefault();
+          $('.results').html('<img src="spinner.gif">');
           $.get('@@transfer-lp-catalog', function(data) {
             $('.results').html(data)
           });
@@ -30,6 +32,7 @@
 
         $('.formControls input[name="form.button.after-migration-cleanup"]').click(function (event) {
           event.preventDefault();
+          $('.results').html('<img src="spinner.gif">');
           $.get('@@after-migration-cleanup', function(data) {
             $('.results').html(data)
           });
@@ -37,6 +40,7 @@
 
        $('.formControls input[name="form.button.reindex-language-index"]').click(function (event) {
           event.preventDefault();
+          $('.results').html('<img src="spinner.gif">');
           $.get('@@reindex-language-index', function(data) {
             $('.results').html(data)
           });
