@@ -13,5 +13,11 @@ try:
 except ImportError:
     isLPinstalled = False
 
+try:
+    from plone.dexterity import *
+    isDexterityInstalled = True
+except ImportError:
+    isDexterityInstalled = False
+
 from plone.app.multilingual import catalog
 catalog  # pyflakes

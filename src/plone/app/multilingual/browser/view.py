@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from plone.dexterity.browser.view import DefaultView
+try:
+    from plone.dexterity.browser.view import DefaultView
+except ImportError:
+    DefaultView = object
 from z3c.form.interfaces import IEditForm
 from zope.interface import implements
 
