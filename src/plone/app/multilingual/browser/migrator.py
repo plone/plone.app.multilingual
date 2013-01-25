@@ -13,7 +13,6 @@ from zope.component import getUtility
 from zope.component.interfaces import ComponentLookupError
 import logging
 from Acquisition import aq_base
-from Products.statusmessages.interfaces import IStatusMessage
 from Products.CMFCore.exceptions import ResourceLockedError
 from plone.locking.interfaces import ILockable
 
@@ -59,8 +58,9 @@ class LP2PAMView(BrowserView):
                                     (obj.id, language,
                                         str(manager.get_translations())))
 
-                        self.results.append(manager.get_translations())
+                        self.results.append(str(manager.get_translations()))
 
+        logger.info('Finished with transferring catalog information')
         return self.template()
 
 
@@ -253,7 +253,6 @@ class LP2PAMReindexLanguageIndex(BrowserView):
         items_before = index.numObjects()
         pc.manage_reindexIndex(ids=['Language'])
         items_after = index.numObjects()
-        status = IStatusMessage(self.request)
         output = '<div class="resultInfo"><h3>Reindex language index</h3>' \
         'The "Language" index was re-indexed. Before, it contained %d '\
         'items, now it contains %d items.</div>' % (items_before, items_after)
