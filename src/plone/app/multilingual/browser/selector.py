@@ -86,7 +86,7 @@ class LanguageSelectorViewlet(LanguageSelector):
                 query_extras['post_path'] = post_path
             data['url'] = addQuery(
                 self.request,
-                self.context.absolute_url().rstrip("/") + \
+                self.portal_url().rstrip("/") + \
                     "/@@multilingual-selector/%s/%s" % (
                         translation_group,
                         lang_info['code']

@@ -1,6 +1,5 @@
 from zope.interface import implements
 from zope.component import getUtility
-from zope.component import getMultiAdapter
 from zope.publisher.interfaces import IPublishTraverse, NotFound
 
 from Acquisition import aq_chain
@@ -49,6 +48,7 @@ class universal_link(BrowserView):
     def getDestination(self):
         # Look for the element
         ptool = getToolByName(self.context, 'portal_catalog')
+        query = {'TranslationGroup': self.tg}
         if self.lang:
             query = {'TranslationGroup': self.tg, 'Language': self.lang}
         else:
@@ -76,25 +76,37 @@ class selector_view(universal_link):
     def getDialogDestination(self):
         """Get the "not translated yet" dialog URL.
         """
-        state = getMultiAdapter(
-            (self.context, self.request),
-            name='plone_context_state'
-        )
         dialog_view = NOT_TRANSLATED_YET_TEMPLATE
         postpath = False
         # The dialog view shouldn't appear on the site root
         # because that is untraslatable by default.
         # And since we are mapping the root on itself,
         # we also do postpath insertion (@@search case)
+
         if ISiteRoot.providedBy(self.context):
             dialog_view = ''
             postpath = True
-        try:
-            url = state.canonical_object_url()
-        # XXX: this copied over from LinguaPlone, not sure this is still needed
-        except AttributeError:
-            url = self.context.absolute_url()
-        return self.wrapDestination(url+dialog_view, postpath=postpath)
+
+        # We first look for the content on the request language
+        ltool = getToolByName(self.context, 'portal_languages')
+        self.lang = ltool.getRequestLanguages()
+        url = self.getDestination()
+        if url:
+            return self.wrapDestination(url + dialog_view, postpath=postpath)
+        # We look for the default language content
+        self.lang = ltool.getDefaultLanguages()
+        url = self.getDestination()
+        if url:
+            return self.wrapDestination(url + dialog_view, postpath=postpath)
+        # We look for the first translation we find
+        ptool = getToolByName(self.context, 'portal_catalog')
+        query = {'TranslationGroup': self.tg}
+        results = ptool.searchResults(query)
+        url = None
+        if len(results) > 0:
+            url = results[0].getUrl()
+            return self.wrapDestination(url + dialog_view, postpath=postpath)
+
 
     def getParentChain(self, context):
         # XXX: switch it over to parent pointers if needed
