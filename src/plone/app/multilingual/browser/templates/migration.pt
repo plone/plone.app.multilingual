@@ -14,9 +14,27 @@
 (function($) {
 
     $().ready(function() {
+        $('.formControls input[name="form.button.relocate-content"]').click(function (event) {
+          event.preventDefault();
+          $.get('@@relocate-content', function(data) {
+            $('.results').html(data)
+          });
+        });
+    });
+
+    $().ready(function() {
         $('.formControls input[name="form.button.transfer-lp-catalog"]').click(function (event) {
           event.preventDefault();
-          $.get('@@transfer_lp_catalog', function(data) {
+          $.get('@@transfer-lp-catalog', function(data) {
+            $('.results').html(data)
+          });
+        });
+    });
+
+    $().ready(function() {
+        $('.formControls input[name="form.button.after-migration-cleanup"]').click(function (event) {
+          event.preventDefault();
+          $.get('@@after-migration-cleanup', function(data) {
             $('.results').html(data)
           });
         });
