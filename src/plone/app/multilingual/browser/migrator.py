@@ -13,6 +13,7 @@ from zope.component import getUtility
 from zope.component.interfaces import ComponentLookupError
 import logging
 from Acquisition import aq_base
+from Products.statusmessages.interfaces import IStatusMessage
 from Products.CMFCore.exceptions import ResourceLockedError
 from plone.locking.interfaces import ILockable
 
@@ -234,3 +235,17 @@ class moveContentToProperRLF(BrowserView):
                     output.append(info_str)
 
         return output
+
+
+class LP2PAMReindexLanguageIndex(BrowserView):
+
+    def __call__(self):
+        pc = getToolByName(self.context, 'portal_catalog')
+        index = pc._catalog.getIndex('Language')
+        items_before = index.numObjects()
+        pc.manage_reindexIndex(ids=['Language'])
+        items_after = index.numObjects()
+        status = IStatusMessage(self.request)
+        msg = 'The "Language" index was re-indexed. Before, it contained %d '\
+        'items, now it contains %d items.' % (items_before, items_after)
+        status.addStatusMessage(msg, type='info')

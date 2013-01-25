@@ -77,6 +77,37 @@
 
             </p>
 
+            <form name="reindex"
+                  tal:attributes="action string:${portal_url}/reindex-language-index"
+                  method="post">
+              <fieldset>
+                <legend i18n:translate="legend_reindex_language_index">
+                  Optional step - Reindex the Language index
+                </legend>
+
+                <p i18n:translate="help_reindex_language_index">
+
+                 The migration of LinguaPlone content depends on an up-to-date Language
+                 index. Use this step to refresh this index.
+                 Warning: Depending on the number of items in your site, this can take
+                 a considerable amount of time
+
+                </p>
+
+                <div class="formControls">
+                    <input
+                        type="submit"
+                        name="form.button.reindex-language-index"
+                        class="destructive"
+                        value="Reindex"
+                        i18n:attributes="value" />
+                </div>
+
+                <input tal:replace="structure context/@@authenticator/authenticator" />
+
+              </fieldset>
+            </form>
+
             <form name="relocate"
                   tal:attributes="action string:${portal_url}/relocate-content"
                   method="post">
