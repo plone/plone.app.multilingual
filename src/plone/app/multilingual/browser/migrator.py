@@ -20,7 +20,7 @@ except:
 
 LP_TRANSLATABLE = 'Products.LinguaPlone.interfaces.ITranslatable'
 
-portal_types_blacklist = ['Collage', 'FormFolder', 'Ploneboard', 'BannerContainer']
+portal_types_blacklist = ['Collage', 'FormFolder', 'Ploneboard']
 
 logger = logging.getLogger(__name__)
 
