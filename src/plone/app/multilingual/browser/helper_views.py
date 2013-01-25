@@ -121,7 +121,23 @@ class selector_view(universal_link):
         # would require a lot of queries, while technically,
         # having done traversal up to this point you should
         # have the objects in memory already
-        context = aq_inner(self.context)
+
+        # As we don't have any content object we are going to look 
+        # for the best option
+
+        ltool = getToolByName(self.context, 'portal_languages')
+        ptool = getToolByName(self.context, 'portal_catalog')
+        query = {'TranslationGroup': self.tg, 'Language': 'all'}
+        results = ptool.searchResults(query)
+        context = None
+        for result in results:
+            if result.Language in ltool.getRequestLanguages():
+                context = result.getObject()
+            elif result.Language == ltool.getDefaultLanguage():
+                context = result.getObject()
+        if context is None:
+            context = results[0].getObject()
+
         checkPermission = getSecurityManager().checkPermission
         chain = self.getParentChain(context)
         for item in chain:

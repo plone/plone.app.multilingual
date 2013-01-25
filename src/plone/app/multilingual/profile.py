@@ -10,7 +10,6 @@ class HiddenProfiles(object):
     def getNonInstallableProfiles(self):
         return [
             u'plone.multilingual',
-            u'plone.multilingual',
             u'archetypes.multilingual',
             u'archetypes.testcase',
             ]
