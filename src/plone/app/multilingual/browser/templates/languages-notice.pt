@@ -9,7 +9,6 @@
     language is installed. You can add one or more additional
     languages from the <a href="" i18n:translate=""
     tal:attributes="href
-    string:${portal_url}/@@language-controlpanel">Language
-    tool</a>.
+    string:${portal_url}/@@language-controlpanel">Language</a> control panel.
   </dd>
 </dl>
