@@ -190,6 +190,7 @@ class moveContentToProperRLF(BrowserView):
                     log(info_str)
                     output.append(info_str)
 
+        logger.info('Finished step 2')
         return output
 
     def step3(self):
@@ -240,6 +241,7 @@ class moveContentToProperRLF(BrowserView):
                     log(info_str)
                     output.append(info_str)
 
+        logger.info('Finished step 3')
         return output
 
 
