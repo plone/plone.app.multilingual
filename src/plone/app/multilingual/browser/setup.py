@@ -5,7 +5,7 @@ from plone.multilingual.interfaces import (
     ILanguage,
     LANGUAGE_INDEPENDENT
     )
-
+from Products.CMFPlone.utils import _createObjectByType
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Acquisition import aq_inner
@@ -166,7 +166,13 @@ class SetupMultilingualSite(object):
         folder = getattr(self.context, folderId, None)
         wftool = getToolByName(self.context, 'portal_workflow')
         if folder is None:
-            self.context.invokeFactory(self.folder_type, folderId)
+            # bypass all settings that don't allow creating
+            # content in the Plone root
+            _createObjectByType(self.folder_type,
+                                self.context,
+                                folderId
+            )
+            #self.context.invokeFactory(self.folder_type, folderId)
             folder = getattr(self.context, folderId)
             ILanguage(folder).set_language(LANGUAGE_INDEPENDENT)
             folder.setTitle("Language Shared")
