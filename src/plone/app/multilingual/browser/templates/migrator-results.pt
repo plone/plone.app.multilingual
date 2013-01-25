@@ -9,5 +9,7 @@
 </div>
 
 <tal:block repeat="result view/results">
-    <div class="result" tal:content="result"></div>
+    <div class="result" 
+    tal:attributes="class python:result.startswith('ERROR') and 'result error' or 'result'" 
+    tal:content="result"></div>
 </tal:block>
