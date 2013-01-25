@@ -7,6 +7,12 @@
       i18n:domain="plone.app.multilingual">
 <body>
 
+<metal:head fill-slot="top_slot"
+            tal:define="dummy python:request.set('disable_border',1);
+                        disable_column_one python:request.set('disable_plone.leftcolumn',1);
+                        disable_column_two python:request.set('disable_plone.rightcolumn',1);">
+</metal:head>
+
 <metal:content-core fill-slot="content-core">
     <metal:content-core define-macro="content-core">
       <div class="documentDescription" id="parent-fieldname-description" i18n:translate="">
