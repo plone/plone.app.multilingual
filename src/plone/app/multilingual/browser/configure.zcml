@@ -221,6 +221,15 @@
 
   <!-- Migration Views -->
 
+  <!-- Optional initial step - reindex Language index -->
+  <browser:page
+    name="reindex-language-index"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    class=".migrator.LP2PAMReindexLanguageIndex"
+    permission="cmf.ManagePortal"
+    layer="..interfaces.IPloneAppMultilingualInstalled"
+    />
+
   <!-- Step 1 - Relocates the content if needed -->
   <browser:page
     name="relocate-content"
