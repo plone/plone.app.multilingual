@@ -143,6 +143,7 @@
             </form>
 
             <form name="aftermigration"
+                  tal:condition="view/hasRelationCatalog"
                   tal:attributes="action string:${portal_url}/after-migration-cleanup"
                   method="post">
               <fieldset>
