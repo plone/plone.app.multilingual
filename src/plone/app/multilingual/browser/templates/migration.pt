@@ -143,7 +143,7 @@
                   Step 1 - Relocate content to the proper root language folder
                 </legend>
 
-                <p i18n:translate="legend_relocate_content">
+                <p i18n:translate="description_relocate_content">
                   This step will move the site's content to its corresponding
                   root language folder and previously will made a search for
                   misplaced content through the site's content tree and will
@@ -155,7 +155,8 @@
                 </p>
 
                 <div>
-                    <p>Use this field to define portal types that will not be traversed for finding content to move.
+                    <p i18n:translate="description_relocate_blacklist">
+                        Use this field to define portal types that will not be traversed for finding content to move.
                         All content of those types will be moved with all contained sub-items. This is useful
                         for content types that are themselves translatable, but contain sub-content that is not
                         translatable or does not have a language set.<br />
