@@ -23,7 +23,7 @@ except:
 
 LP_TRANSLATABLE = 'Products.LinguaPlone.interfaces.ITranslatable'
 
-portal_types_blacklist = ['Collage', 'FormFolder', 'Ploneboard', 'BannerContainer']
+portal_types_blacklist = ['Collage', 'FormFolder', 'Ploneboard']
 
 logger = logging.getLogger(__name__)
 
@@ -111,10 +111,16 @@ class moveContentToProperRLF(BrowserView):
 
     template = ViewPageTemplateFile('templates/migrator-results.pt')
     stepinfo = u"Relocate content to the proper root language folder"
+    blacklist = list()
 
     def findContent(self, content, depth):
+        # only handle portal content
+        if not getattr(content, 'portal_type', None):
+            logger.warning('SKIP non-portal content %s (%s)' %
+                (content.absolute_url(), content.meta_type))
+            return
         if hasattr(aq_base(content), 'objectIds') \
-           and content.meta_type not in portal_types_blacklist:
+            and content.portal_type not in self.blacklist:
             for id in content.objectIds():
                 self.findContent(getattr(content, id), depth + 1)
         while len(self.content_tree) < depth + 1:
@@ -133,7 +139,9 @@ class moveContentToProperRLF(BrowserView):
         return parent
 
     def __call__(self):
-        """ Note: Steps names doesn't correspond with the control panel ones """
+        """ Note: Steps names don't correspond with the control panel ones """
+        self.blacklist = [x.strip() for x in 
+            self.request.get('blacklist', list()) if x.strip() != '']
         self.results = self.step1andstep2()
         self.results += self.step3()
         return self.template()

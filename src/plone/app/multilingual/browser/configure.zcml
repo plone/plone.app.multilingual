@@ -81,7 +81,7 @@
 
   <browser:page
     name="not_translated_yet"
-    for="plone.multilingual.interfaces.ITranslatable"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     class=".helper_views.not_translated_yet"
     permission="zope.Public"
     layer="..interfaces.IPloneAppMultilingualInstalled"
