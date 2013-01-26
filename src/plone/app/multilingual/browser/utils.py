@@ -1,3 +1,4 @@
+from plone.i18n.locales.interfaces import IContentLanguageAvailability
 from Acquisition import aq_parent, aq_inner
 from AccessControl.SecurityManagement import getSecurityManager
 
@@ -117,6 +118,15 @@ class BabelUtils(BrowserView):
 
             translated_shown.append(lang_info)
         return translated_shown
+
+    def current_language_name(self):
+        """ Get the current language native name """
+        adapted = ILanguage(self.context)
+        lang_code = adapted.get_language()
+        util = getUtility(IContentLanguageAvailability)
+        data = util.getLanguages(True)
+        lang_info = data.get(lang_code)
+        return lang_info.get('native', None) or lang_info.get('name')
 
 
 def multilingualMoveObject(content, language):
