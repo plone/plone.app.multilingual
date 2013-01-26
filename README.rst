@@ -398,13 +398,12 @@ This is the planned feature list for PAM:
     * Translation map
     * Google Translation Service integration
     * LinguaPlone migration
-    * Get rid of the legacy LP catalog patches as they are no longer needed
 
 
 2.0 (PLIP 13091)
 ----------------
 
-    * The fist version compatible with PLIP 13091
+    * The first version compatible with PLIP 13091
       (https://dev.plone.org/ticket/13091)
     * Update, get rid of legacy code and transfer some of the PAM logic to the
       Plone core (plone.app.i18n)
