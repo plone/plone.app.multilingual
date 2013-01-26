@@ -36,7 +36,7 @@
           </ul>
         </tal:anytranslation>
         <tal:anytranslation condition="not: view/has_any_translation">
-          <p i18n:translate="">This item doesn't have any translation yet. You can return to the original language:</p>
+          <p i18n:translate="">This item doesn't have any translation yet. You can return to the portal site:</p>
             <ul>
               <li><a tal:attributes="href python:context.absolute_url()"
                      tal:content="python:context.Title()">Content Link</a></li>
