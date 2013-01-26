@@ -17,7 +17,14 @@ class RemoveTranslationsForm(form.SchemaForm):
     grok.require("plone.app.multilingual.ManageTranslations")
     schema = form.IFormFieldProvider(IRemoveTranslation)
     ignoreContext = True
-    label = _(u"label_remove_translations")
+    label = _(u"label_remove_translations",
+              default=u"Remove translations")
+    description = _(u"long_description_remove_translations",
+                    default=u"This form allows you to remove the existing "
+                             "translations of the current object. You can "
+                             "just delete the link between the objects "
+                             "or you can delete the object itself."
+                )
 
     @button.buttonAndHandler(_(u"unlink selected"))
     def handle_unlink(self, action):

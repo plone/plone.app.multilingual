@@ -141,7 +141,7 @@
                   Step 1 - Relocate content to the proper root language folder
                 </legend>
 
-                <p i18n:translate="legend_relocate_content">
+                <p i18n:translate="description_relocate_content">
 
                   This step will move the site's content to its correspondent
                   root language folder and previously will make a search for
@@ -176,7 +176,7 @@
                   Step 2 - Transfer multilingual catalog information
                 </legend>
 
-                <p i18n:translate="legend_transfer_multilingual_catalog_info">
+                <p i18n:translate="description_transfer_multilingual_catalog_info">
 
                   This step will transfer the relations between translations
                   stored by LinguaPlone to the PAM catalog. This step is not
@@ -207,7 +207,7 @@
                   Step 3 - Cleanup after migration
                 </legend>
 
-                <p i18n:translate="legend_after_migration_cleanup">
+                <p i18n:translate="description_after_migration_cleanup">
 
                   This step will fix some lost dependencies to the
                   ITranslatable interface hidden in the relation catalog and

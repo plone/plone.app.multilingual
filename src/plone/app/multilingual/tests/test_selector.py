@@ -97,7 +97,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 'code': u'en',
                 u'name': u'English',
                 'url': SELECTOR_VIEW_TEMPLATE % {
-                    'url': doc1.absolute_url(),
+                    'url': self.portal_url,
                     'tg': doc1_tg,
                     'lang': 'en',
                     'query': '?set_language=en'
@@ -111,7 +111,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 'code': u'ca',
                 u'name': u'Catalan',
                 'url': SELECTOR_VIEW_TEMPLATE % {
-                    'url': doc1.absolute_url(),
+                    'url': self.portal_url,
                     'tg': doc1_tg,
                     'lang': 'ca',
                     'query': '?set_language=ca'
@@ -125,7 +125,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 'code': u'es',
                 u'name': u'Spanish',
                 'url': SELECTOR_VIEW_TEMPLATE % {
-                    'url': doc1.absolute_url(),
+                    'url': self.portal_url,
                     'tg': doc1_tg,
                     'lang': 'es',
                     'query': '?set_language=es'
@@ -140,13 +140,13 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[0]['url'])
         self.assertEqual(
             self.browser.url,
-            doc1.absolute_url()+'?set_language=en'
+            doc1.absolute_url() + '?set_language=en'
         )
         self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
         self.browser.open(selector_languages[1]['url'])
         self.assertEqual(
             self.browser.url,
-            doc1_ca.absolute_url()+'?set_language=ca'
+            doc1_ca.absolute_url() + '?set_language=ca'
         )
         self.assertIn(
             u"Inici".encode("utf-8"),
@@ -155,7 +155,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[2]['url'])
         self.assertEqual(
             self.browser.url,
-            doc1_es.absolute_url()+'?set_language=es'
+            doc1_es.absolute_url() + '?set_language=es'
         )
         self.assertIn(
             u"Usted está aquí".encode("utf-8"),
@@ -223,9 +223,9 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         wftool = getToolByName(self.portal, "portal_workflow")
         wftool.doActionFor(document, 'publish')
         transaction.commit()
-
         view = selector_view(document, self.layer['request'])
         view.lang = 'es'
+        view.tg = ITG(document)
         url = view.getClosestDestination()
         self.assertEqual(url, self.portal.es.absolute_url())
 
@@ -336,19 +336,17 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 self.portal.absolute_url()+'?set_language=en'
             )
             self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
-            self.browser.open(selector_languages[1]['url'])
             self.assertEqual(
-                self.browser.url,
-                self.portal.absolute_url()+'?set_language=ca'
+                selector_languages[1]['url'],
+                self.portal.absolute_url()+'/@@multilingual-selector/notg/ca?set_language=ca'
             )
             self.assertIn(
                 u"Inici".encode("utf-8"),
                 self.browser.contents
             )
-            self.browser.open(selector_languages[2]['url'])
             self.assertEqual(
                 self.browser.url,
-                self.portal.absolute_url()+'?set_language=es'
+                self.portal.absolute_url()+'/@@multilingual-selector/notg/es?set_language=es'
             )
             self.assertIn(
                 u"Usted está aquí".encode("utf-8"),
@@ -367,7 +365,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 'code': u'en',
                 u'name': u'English',
                 'url': SELECTOR_VIEW_TEMPLATE % {
-                    'url': self.portal.en.absolute_url(),
+                    'url': self.portal.absolute_url(),
                     'tg': tg,
                     'lang': 'en',
                     'query': '?set_language=en'
@@ -380,7 +378,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 'code': u'ca',
                 u'name': u'Catalan',
                 'url': SELECTOR_VIEW_TEMPLATE % {
-                    'url': self.portal.en.absolute_url(),
+                    'url': self.portal.absolute_url(),
                     'tg': tg,
                     'lang': 'ca',
                     'query': '?set_language=ca'
@@ -394,7 +392,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 'code': u'es',
                 u'name': u'Spanish',
                 'url': SELECTOR_VIEW_TEMPLATE % {
-                    'url': self.portal.en.absolute_url(),
+                    'url': self.portal.absolute_url(),
                     'tg': tg,
                     'lang': 'es',
                     'query': '?set_language=es'
