@@ -207,7 +207,13 @@ class SetupMultilingualSite(object):
         Maintain the default page of the site on the language it was defined
         """
         previousDefaultPage = getattr(self.context, self.previousDefaultPageId)
-        language = ILanguage(previousDefaultPage).get_language()
+        languageWrapped = ILanguage(previousDefaultPage, None)
+        # If the previous default page cannot be adapted, do nothing.
+        # This might be the case if it is a Python Script or other non-portal
+        # content
+        if languageWrapped is None:
+            return False
+        language = languageWrapped.get_language()
         pageId = self.previousDefaultPageId
         # test language neutral
         if language == '':
