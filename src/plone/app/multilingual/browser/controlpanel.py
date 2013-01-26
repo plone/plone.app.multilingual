@@ -33,6 +33,7 @@ from plone.app.uuid.utils import uuidToObject
 import json
 
 from plone.app.multilingual import isLPinstalled
+from plone.app.multilingual.browser.migrator import portal_types_blacklist
 from plone.multilingual.interfaces import ITranslationManager, ILanguage
 
 from Products.CMFPlone import PloneMessageFactory as _Plone
@@ -450,6 +451,7 @@ class MigrationView(BrowserView):
     __call__ = ViewPageTemplateFile('templates/migration.pt')
 
     isLPinstalled = isLPinstalled
+    portal_types_blacklist = portal_types_blacklist
     try:
         catalog = getUtility(IRelationCatalog)
         hasRelationCatalog = True

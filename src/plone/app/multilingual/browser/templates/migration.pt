@@ -17,7 +17,9 @@
         $('.formControls input[name="form.button.relocate-content"]').click(function (event) {
           event.preventDefault();
           $('.results').html('<img src="spinner.gif">');
-          $.get('@@relocate-content', function(data) {
+          var blacklist = $('textarea#blacklist')[0].value;
+          var url = "@@relocate-content?blacklist:list=" + blacklist.split('\n').join('&blacklist:list=');
+          $.get(url, function(data) {
             $('.results').html(data)
           });
         });
@@ -142,7 +144,6 @@
                 </legend>
 
                 <p i18n:translate="legend_relocate_content">
-
                   This step will move the site's content to its corresponding
                   root language folder and previously will made a search for
                   misplaced content through the site's content tree and will
@@ -151,8 +152,19 @@
                   Make sure you have previously configured your site's
                   languages properly in the 'Site Languages' tab of the
                   'Languages' control panel.
-
                 </p>
+
+                <div>
+                    <p>Use this field to define portal types that will not be traversed for finding content to move.
+                        All content of those types will be moved with all contained sub-items. This is useful
+                        for content types that are themselves translatable, but contain sub-content that is not
+                        translatable or does not have a language set.<br />
+                        This list is pre-filled with some portal types, but you can add additional ones if needed,
+                        one per line.
+                    </p>
+                    <textarea name="blacklist" id="blacklist" rows="5" tal:content="python: '\n'.join(view.portal_types_blacklist)">
+                    </textarea>
+                </div>
 
                 <div class="formControls">
                     <input
@@ -231,7 +243,7 @@
             </form>
 
             <div class="results">
-              <!-- The migration results -->
+              <h3>Migration results</h3>
             </div>
         </div>
       </div>
