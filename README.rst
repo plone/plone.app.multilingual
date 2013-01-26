@@ -4,12 +4,12 @@ Introduction
 ============
 
 Talking about multi-language support in Plone is talk about
-Products.LinguaPlone. It has been the defacto standard for managing translations
-of Archetypes-based content types in Plone through the years. Somehow its
-functionality never made its way into the Plone core and today is in legacy
-status. Nowadays, Plone faces the rising of Dexterity content types and its
-incoming adoption into the Plone core in the near future (4.3) and complete the
-transition to Plone as default content types in Plone 5.
+Products.LinguaPlone. It has been the *defacto* standard for managing
+translations of Archetypes-based content types in Plone through the years.
+Somehow its functionality never made its way into the Plone core and today it is
+in legacy status. Nowadays, Plone faces the rising of Dexterity content types
+and its incoming adoption into the Plone core in the near future (4.3) and
+complete the transition to Plone as default content types in Plone 5.
 
 plone.app.multilingual was designed originally to provide Plone a whole
 multilingual story. Using ZCA technologies, enables translations to Dexterity
@@ -19,7 +19,7 @@ This module provides the user interface for managing content translations. It's
 the app package of the next generation Plone multilingual engine. It's designed
 to work with Dexterity content types and the *old fashioned* Archetypes based
 content types as well. It only works with Plone 4.1 and above due to the use of
-UUIDs to reference the translations.
+UUIDs for referencing the translations.
 
 After more than 7 years, a GSOC, redesigns, reimplementations due to deprecated
 libraries, two major Plone versions finally we are able to say that
@@ -75,7 +75,7 @@ Root Language folders
 After the setup, PAM will create root folders for each of your site's
 languages and put translated content into the appropriate folders. A language
 folder implements INavigationRoot, so from the user's point of view, each
-language is "jailed" inside its correspondent language folder. There are
+language is "jailed" inside its correspondent language folder. There are event
 subscribers in place to capture user interaction with content and update the
 language in contents accordingly, for example when user moves or copy content
 between language folders.
@@ -113,6 +113,7 @@ site's structure. There are two policies in place:
 
     * Ask user where to place the translated element in the destination
       language root folder
+
 
 Language selector policy
 ------------------------
@@ -162,21 +163,49 @@ side field.
 LinguaPlone migration
 ---------------------
 
-You can migrate your existing LP powered site to PAM using the *Migration* tab
-in the *languages* control panel. This non-destructive procedure will copy the
-translation information stored in content objects used by LP to the
-translation storage structures used in PAM.
+You can migrate your existing LP powered sites to PAM using the *Migration* tab
+in the *Languages* control panel. The migration has been divided into 4 steps
+for separation of concerns and for improving the success of each of the required
+procedures.
 
+Step 0 (optional) - Reindex the language index
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Backup
-------
+The migration of LinguaPlone content depends on an up-to-date Language index.
+Use this step to refresh this index. **Warning:** Depending on the number of
+items in your site, this can take a considerable amount of time. This step is
+not destructive and can be executed as many times as needed.
 
-Sometimes, it can be handy to have at hand a procedure that dumps translation
-information to an exportable format for later use. You can do so in the tab
-*Backup* in *languages* control panel.
+Step 1 - Relocate content to the proper root language folder
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For information about making your Dexterity content type translatable, see the
-plone.multilingualbehavior documentation.
+This step will move the site's content to its correspondent root language folder
+and previously will make a search for misplaced content through the site's
+content tree and will move them to its nearest translated parent. **Warning:**
+This step is destructive as it will alter your content tree structure. Make sure
+you have previously configured your site's languages properly in the 'Site
+Languages' tab of the 'Languages' control panel. It's advisable that you do not
+perform this step on production servers having not tried it in
+development/preproduction servers previously. Depending on the distribution of
+your site's content and the accuracy of the language information on each content
+object you may need to relocate manually some misplaced content after this step.
+Despite the fact that this step is 'destructive' it can be executed as times as
+needed if some problem is detected and afterwards you fix the problem. Please,
+refer to the procedure log when it finishes.
+
+Step 2 - Transfer multilingual catalog information
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This step will transfer the relations between translations stored by LinguaPlone
+to the PAM catalog. This step is not destructive and can be executed as many
+times as needed.
+
+Step 3 - Cleanup after migration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This step will search and fix some lost dependencies to the ITranslatable
+interface hidden in the relation catalog and it gets rid of them. It must be run
+only when LinguaPlone is already uninstalled, so this step is hidden until then.
 
 
 Marking objects as translatables
@@ -287,18 +316,10 @@ Translation reference storage
 -----------------------------
 
 In order to maintain the relations between the different language objects we
-designed a local utility that stores the relation tree on a BTree. The
-relations with all the content are done using default Plone implementation of
-UUIDs. We decided to push on that direction because:
-
-    * UUID are the actual content object identifier
-    * It's faster to access or modify one (or several) translation at once
-      without waking objects
-    * It's easier to work on all the translation (exports/imports)
-    * It's easier to maintain the integrity of all the translations
-    * It allows to access to the whole translation graph from one centralized
-      point of view enabling other uses of this graph, for example, the
-      translation map
+designed a common object called a *translation group*. This translation group
+has an UUID on its own and each object member of the group stores it in the
+object catalog register. You can use the ITranslationManager utility to access
+and manipulate the members of a translation group given one object of the group.
 
 
 Adapt all the steps on translation
