@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0b4'
+version = '1.0RC1'
 
 setup(name='plone.app.multilingual',
       version=version,
@@ -14,7 +14,7 @@ setup(name='plone.app.multilingual',
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
-      url='http://github.com/plone/plone.app.multilingual',
+      url='https://github.com/plone/plone.app.multilingual',
       license='GPL',
       author='Ramon Navarro, Victor Fernandez de Alba, awello et al',
       author_email='r.navarro@iskra.cat',
@@ -25,6 +25,7 @@ setup(name='plone.app.multilingual',
       zip_safe=False,
       install_requires=[
         'setuptools',
+        'five.grok',
         'plone.multilingual>=1.0rc1',
         'z3c.relationfield',
         'plone.app.z3cform',
