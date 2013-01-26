@@ -18,6 +18,12 @@ class AddTranslationsForm(form.SchemaForm):
     schema = form.IFormFieldProvider(IAddTranslation)
     ignoreContext = True
     label = _(u"label_add_translations", default=u"Add translations")
+    description = _(u"long_description_add_translations",
+                    default=u"This form allows you to add currently "
+                             "existing objects to be the translations "
+                             "of the current object. You have to manually "
+                             "select both the language and the object."
+                )
 
     @button.buttonAndHandler(_(u"add_translations",
                                default=u"Add translations"))
