@@ -3,7 +3,7 @@ translation-menu
 ::
     >>> portal = layer['portal']
     >>> from zope import component
-    >>> from zope.app.publisher.interfaces.browser import IBrowserMenu
+    >>> from zope.browsermenu.interfaces import IBrowserMenu
     >>> from plone.app.testing import (
     ...     SITE_OWNER_NAME,
     ...     SITE_OWNER_PASSWORD,
