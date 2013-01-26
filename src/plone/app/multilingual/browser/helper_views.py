@@ -110,6 +110,7 @@ class selector_view(universal_link):
         root = getToolByName(self.context, 'portal_url')
         ltool = getToolByName(self.context, 'portal_languages')
 
+        # We are useing TranslationManager to get the translations of a string tg
         manager = TranslationManager(self.tg)
         context = None
         languages = manager.get_translations()

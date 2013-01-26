@@ -25,7 +25,7 @@ setup(name='plone.app.multilingual',
       zip_safe=False,
       install_requires=[
         'setuptools',
-        'plone.multilingual',
+        'plone.multilingual>=1.0rc1',
         'z3c.relationfield',
         'plone.app.z3cform',
         'plone.app.registry',
