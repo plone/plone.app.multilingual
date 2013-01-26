@@ -4,6 +4,8 @@ vocabulary - test
 creating some sample_content::
 
     >>> portal = layer['portal']
+    >>> portal.portal_languages.supported_langs = ['en']
+
     >>> from zope.lifecycleevent import ObjectAddedEvent
     >>> from zope.event import notify
     >>> content_id = portal.invokeFactory(type_name="Document", id="sampledocument")
