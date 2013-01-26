@@ -111,6 +111,7 @@ class moveContentToProperRLF(BrowserView):
 
     template = ViewPageTemplateFile('templates/migrator-results.pt')
     stepinfo = u"Relocate content to the proper root language folder"
+    blacklist = list()
 
     def findContent(self, content, depth):
         # only handle portal content
