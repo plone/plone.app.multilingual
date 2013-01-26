@@ -1,0 +1,18 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:browser="http://namespaces.zope.org/browser">
+
+
+  <genericsetup:upgradeStep
+    source="1"
+    destination="2"
+    title="Convert from external storage to catalog and ids"
+    profile="plone.multilingual:default"
+    handler="plone.multilingual.to03.upgrade"
+    />
+
+
+
+</configure>
