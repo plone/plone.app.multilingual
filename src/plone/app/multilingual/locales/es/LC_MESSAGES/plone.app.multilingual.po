@@ -15,16 +15,16 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone.app.multilingual\n"
 
-#: ../browser/controlpanel.py:415
+#: ../browser/controlpanel.py:416
 msgid "All the configuration of P.A.M. If you want to set the default language to all the content without language and move all the content on the root folder to the default language folder, go to Extra Options section "
 msgstr ""
 
-#: ../browser/controlpanel.py:388
+#: ../browser/controlpanel.py:389
 msgid "Clean site setup"
 msgstr ""
 
 #: ../browser/templates/cleanup.pt:93
-#: ../browser/templates/migration.pt:220
+#: ../browser/templates/migration.pt:233
 msgid "Cleanup"
 msgstr ""
 
@@ -32,11 +32,11 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-#: ../browser/controlpanel.py:382
+#: ../browser/controlpanel.py:383
 msgid "Extra options"
 msgstr ""
 
-#: ../browser/templates/not_translated_yet.pt:23
+#: ../browser/templates/not_translated_yet.pt:28
 msgid "However, this is the list of the already translated languages for the requested content."
 msgstr ""
 
@@ -52,7 +52,7 @@ msgstr ""
 msgid "Move"
 msgstr ""
 
-#: ../browser/controlpanel.py:414
+#: ../browser/controlpanel.py:415
 msgid "Multilingual Settings"
 msgstr ""
 
@@ -60,47 +60,47 @@ msgstr ""
 msgid "Need a field"
 msgstr ""
 
-#: ../browser/controlpanel.py:379
+#: ../browser/controlpanel.py:380
 msgid "Negotiation scheme"
 msgstr ""
 
-#: ../browser/controlpanel.py:530
+#: ../browser/controlpanel.py:532
 msgid "Not translated"
 msgstr ""
 
-#: ../browser/controlpanel.py:385
+#: ../browser/controlpanel.py:386
 msgid "Policies"
 msgstr ""
 
-#: ../browser/templates/migration.pt:123
+#: ../browser/templates/migration.pt:125
 msgid "Reindex"
 msgstr ""
 
-#: ../browser/templates/migration.pt:158
+#: ../browser/templates/migration.pt:171
 msgid "Relocate"
 msgstr ""
 
-#: ../browser/controlpanel.py:185
+#: ../browser/controlpanel.py:186
 msgid "Search for closest translation in parent's content chain."
 msgstr ""
 
-#: ../browser/controlpanel.py:186
+#: ../browser/controlpanel.py:187
 msgid "Show user dialog with information about the available translations."
 msgstr ""
 
-#: ../browser/controlpanel.py:376
+#: ../browser/controlpanel.py:377
 msgid "Site languages"
 msgstr ""
 
-#: ../browser/templates/not_translated_yet.pt:18
+#: ../browser/templates/not_translated_yet.pt:23
 msgid "This content is not translated yet to the language requested."
 msgstr ""
 
-#: ../browser/templates/not_translated_yet.pt:39
-msgid "This item doesn't have any translation yet. You can return to the original language:"
+#: ../browser/templates/not_translated_yet.pt:46
+msgid "This item doesn't have any translation yet. You can return to the portal site:"
 msgstr ""
 
-#: ../browser/templates/migration.pt:188
+#: ../browser/templates/migration.pt:201
 msgid "Transfer"
 msgstr ""
 
@@ -124,17 +124,17 @@ msgid "description_add_translations"
 msgstr ""
 
 #. Default: "This step will fix some lost dependencies to the ITranslatable interface hidden in the relation catalog and it gets rid of them. It must be run only when LinguaPlone is already uninstalled."
-#: ../browser/templates/migration.pt:210
+#: ../browser/templates/migration.pt:223
 msgid "description_after_migration_cleanup"
 msgstr ""
 
 #. Default: "Authenticated users only. Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
-#: ../browser/controlpanel.py:140
+#: ../browser/controlpanel.py:141
 msgid "description_auth_ookie_manual_override"
 msgstr ""
 
 #. Default: "The languages in which the site should be translatable."
-#: ../browser/controlpanel.py:60
+#: ../browser/controlpanel.py:61
 msgid "description_available_languages"
 msgstr ""
 
@@ -149,12 +149,12 @@ msgid "description_babeledit_menu"
 msgstr ""
 
 #. Default: "Use browser language request negotiation."
-#: ../browser/controlpanel.py:179
+#: ../browser/controlpanel.py:180
 msgid "description_browser_language_request_negotiation"
 msgstr ""
 
 #. Default: "Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
-#: ../browser/controlpanel.py:130
+#: ../browser/controlpanel.py:131
 msgid "description_cookie_manual_override"
 msgstr ""
 
@@ -169,7 +169,7 @@ msgid "description_google_translation_key"
 msgstr ""
 
 #. Default: "Use language codes in URL path for manual override."
-#: ../browser/controlpanel.py:120
+#: ../browser/controlpanel.py:121
 msgid "description_language_codes_in_URL"
 msgstr ""
 
@@ -179,12 +179,12 @@ msgid "description_language_folder"
 msgstr ""
 
 #. Default: "Use the language of the content item."
-#: ../browser/controlpanel.py:111
+#: ../browser/controlpanel.py:112
 msgid "description_language_of_the_content"
 msgstr ""
 
 #. Default: "The migration process is divided into four steps, listed below. Each one of the steps has a well defined purpose explained. Some of them are destructive, so please read each one of it and do not try to run it on production servers without testing it previously."
-#: ../browser/templates/migration.pt:95
+#: ../browser/templates/migration.pt:97
 msgid "description_migrate"
 msgstr ""
 
@@ -194,7 +194,7 @@ msgid "description_migrate_after"
 msgstr ""
 
 #. Default: "Move the content that is on the root folder to the default language folder. This value is not stored so you need to check every time you want to run it"
-#: ../browser/controlpanel.py:94
+#: ../browser/controlpanel.py:95
 msgid "description_move_content_to_language_folder"
 msgstr ""
 
@@ -203,8 +203,13 @@ msgstr ""
 msgid "description_redirect_babel_view"
 msgstr ""
 
-#. Default: "This step will move the site's content to its corresponding root language folder and previously will made a search for misplaced content through the site's content tree and will move them to its nearest translated parent. This step is destructive as it will alter your content tree structure. Make sure you have previously configured your site's languages properly in the 'Site Languages' tab of the 'Languages' control panel."
-#: ../browser/templates/migration.pt:144
+#. Default: "Use this field to define portal types that will not be traversed for finding content to move. All content of those types will be moved with all contained sub-items. This is useful for content types that are themselves translatable, but contain sub-content that is not translatable or does not have a language set.<br /> This list is pre-filled with some portal types, but you can add additional ones if needed, one per line."
+#: ../browser/templates/migration.pt:158
+msgid "description_relocate_blacklist"
+msgstr ""
+
+#. Default: "This step will move the site's content to its corresponding root language folder and previously will make a search for misplaced content through the site's content tree and will move them to its nearest translated parent. This step is destructive as it will alter your content tree structure. Make sure you have previously configured your site's languages properly in the 'Site Languages' tab of the 'Languages' control panel."
+#: ../browser/templates/migration.pt:146
 msgid "description_relocate_content"
 msgstr ""
 
@@ -214,12 +219,12 @@ msgid "description_remove_translations"
 msgstr ""
 
 #. Default: "The default language used for the content and the UI of this site."
-#: ../browser/controlpanel.py:199
+#: ../browser/controlpanel.py:200
 msgid "description_selector_lookup_translations_policy"
 msgstr ""
 
 #. Default: "Set the default language on all content without language defined. This value is not stored so you need to check every time you want to run it"
-#: ../browser/controlpanel.py:82
+#: ../browser/controlpanel.py:83
 msgid "description_set_default_language"
 msgstr ""
 
@@ -229,7 +234,7 @@ msgid "description_set_language"
 msgstr ""
 
 #. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
-#: ../browser/controlpanel.py:153
+#: ../browser/controlpanel.py:154
 msgid "description_set_language_cookie_always"
 msgstr ""
 
@@ -239,17 +244,17 @@ msgid "description_shared_folder"
 msgstr ""
 
 #. Default: "The default language used for the content and the UI of this site."
-#: ../browser/controlpanel.py:50
+#: ../browser/controlpanel.py:51
 msgid "description_site_language"
 msgstr ""
 
 #. Default: "Use top-level domain (e.g.: www.plone.de)."
-#: ../browser/controlpanel.py:171
+#: ../browser/controlpanel.py:172
 msgid "description_top_level_domain"
 msgstr ""
 
 #. Default: "This step will transfer the relations between translations stored by LinguaPlone to the PAM catalog. This step is not destructive and can be executed as many times as needed."
-#: ../browser/templates/migration.pt:179
+#: ../browser/templates/migration.pt:192
 msgid "description_transfer_multilingual_catalog_info"
 msgstr ""
 
@@ -274,7 +279,7 @@ msgid "description_update_language"
 msgstr ""
 
 #. Default: "Use subdomain (e.g.: de.plone.org)."
-#: ../browser/controlpanel.py:163
+#: ../browser/controlpanel.py:164
 msgid "description_use_subdomain"
 msgstr ""
 
@@ -284,12 +289,12 @@ msgid "edit_translation"
 msgstr ""
 
 #. Default: "Authenticated users only."
-#: ../browser/controlpanel.py:138
+#: ../browser/controlpanel.py:139
 msgid "heading_auth_cookie_manual_override"
 msgstr ""
 
 #. Default: "Available languages"
-#: ../browser/controlpanel.py:58
+#: ../browser/controlpanel.py:59
 msgid "heading_available_languages"
 msgstr ""
 
@@ -299,12 +304,12 @@ msgid "heading_available_translations"
 msgstr ""
 
 #. Default: "Use browser language request negotiation."
-#: ../browser/controlpanel.py:177
+#: ../browser/controlpanel.py:178
 msgid "heading_browser_language_request_negotiation"
 msgstr ""
 
 #. Default: "Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
-#: ../browser/controlpanel.py:127
+#: ../browser/controlpanel.py:128
 msgid "heading_cookie_manual_override"
 msgstr ""
 
@@ -319,17 +324,17 @@ msgid "heading_google_translation_key"
 msgstr ""
 
 #. Default: "Use language codes in URL path for manual override."
-#: ../browser/controlpanel.py:117
+#: ../browser/controlpanel.py:118
 msgid "heading_language_codes_in_URL"
 msgstr ""
 
 #. Default: "Use the language of the content item."
-#: ../browser/controlpanel.py:109
+#: ../browser/controlpanel.py:110
 msgid "heading_language_of_the_content"
 msgstr ""
 
 #. Default: "Products.LinguaPlone Migration"
-#: ../browser/templates/migration.pt:85
+#: ../browser/templates/migration.pt:87
 msgid "heading_migration"
 msgstr ""
 
@@ -339,8 +344,13 @@ msgid "heading_migration_after"
 msgstr ""
 
 #. Default: "Move root content to default language folder"
-#: ../browser/controlpanel.py:92
+#: ../browser/controlpanel.py:93
 msgid "heading_move_content_to_language_folder"
+msgstr ""
+
+#. Default: "Not available in ${language}"
+#: ../browser/templates/not_translated_yet.pt:20
+msgid "heading_not_available_in_language"
 msgstr ""
 
 #. Default: "Redirect on creation to babel view."
@@ -349,27 +359,27 @@ msgid "heading_redirect_babel_view"
 msgstr ""
 
 #. Default: "The policy used to determine how the lookup for available translations will be made by the language selector."
-#: ../browser/controlpanel.py:196
+#: ../browser/controlpanel.py:197
 msgid "heading_selector_lookup_translations_policy"
 msgstr ""
 
 #. Default: "Set the default language"
-#: ../browser/controlpanel.py:80
+#: ../browser/controlpanel.py:81
 msgid "heading_set_default_language"
 msgstr ""
 
 #. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
-#: ../browser/controlpanel.py:149
+#: ../browser/controlpanel.py:150
 msgid "heading_set_language_cookie_always"
 msgstr ""
 
 #. Default: "Default site language"
-#: ../browser/controlpanel.py:48
+#: ../browser/controlpanel.py:49
 msgid "heading_site_language"
 msgstr ""
 
 #. Default: "Use top-level domain (e.g.: www.plone.de)."
-#: ../browser/controlpanel.py:169
+#: ../browser/controlpanel.py:170
 msgid "heading_top_level_domain"
 msgstr ""
 
@@ -379,12 +389,12 @@ msgid "heading_translation_map"
 msgstr ""
 
 #. Default: "Use subdomain (e.g.: de.plone.org)."
-#: ../browser/controlpanel.py:161
+#: ../browser/controlpanel.py:162
 msgid "heading_use_subdomain"
 msgstr ""
 
-#. Default: "The migration of LinguaPlone content depends on an up-to-date Language index. Use this step to refresh this index. Warning: Depending on the number of items in your site, this can take a considerable amount of time"
-#: ../browser/templates/migration.pt:113
+#. Default: "The migration of LinguaPlone content depends on an up-to-date Language index. Use this step to refresh this index. Warning: Depending on the number of items in your site, this can take a considerable amount of time."
+#: ../browser/templates/migration.pt:115
 msgid "help_reindex_language_index"
 msgstr ""
 
@@ -412,7 +422,7 @@ msgstr ""
 #. Default: "General"
 #: ../browser/templates/cleanup.pt:39
 #: ../browser/templates/controlpanel.pt:21
-#: ../browser/templates/migration.pt:58
+#: ../browser/templates/migration.pt:60
 msgid "label_general"
 msgstr ""
 
@@ -423,7 +433,7 @@ msgstr ""
 
 #. Default: "Migration"
 #: ../browser/templates/controlpanel.pt:31
-#: ../browser/templates/migration.pt:68
+#: ../browser/templates/migration.pt:70
 #: ../browser/templates/mmap.pt:74
 msgid "label_migration"
 msgstr ""
@@ -439,7 +449,7 @@ msgid "label_remove_translations"
 msgstr ""
 
 #. Default: "Save"
-#: ../browser/controlpanel.py:421
+#: ../browser/controlpanel.py:422
 msgid "label_save"
 msgstr ""
 
@@ -456,13 +466,13 @@ msgstr ""
 #. Default: "Translation Map"
 #: ../browser/templates/cleanup.pt:44
 #: ../browser/templates/controlpanel.pt:26
-#: ../browser/templates/migration.pt:63
+#: ../browser/templates/migration.pt:65
 msgid "label_translation_map"
 msgstr ""
 
 #. Default: "Up to Site Setup"
 #: ../browser/templates/cleanup.pt:73
-#: ../browser/templates/migration.pt:88
+#: ../browser/templates/migration.pt:90
 #: ../browser/templates/mmap.pt:99
 msgid "label_up_to_plone_setup"
 msgstr ""
@@ -478,22 +488,22 @@ msgid "language_folder"
 msgstr ""
 
 #. Default: "Step 3 - Cleanup after migration"
-#: ../browser/templates/migration.pt:206
+#: ../browser/templates/migration.pt:219
 msgid "legend_after_migration_cleanup"
 msgstr ""
 
 #. Default: "Optional step - Reindex the Language index"
-#: ../browser/templates/migration.pt:109
+#: ../browser/templates/migration.pt:111
 msgid "legend_reindex_language_index"
 msgstr ""
 
 #. Default: "Step 1 - Relocate content to the proper root language folder"
-#: ../browser/templates/migration.pt:140
+#: ../browser/templates/migration.pt:142
 msgid "legend_relocate_content"
 msgstr ""
 
 #. Default: "Step 2 - Transfer multilingual catalog information"
-#: ../browser/templates/migration.pt:175
+#: ../browser/templates/migration.pt:188
 msgid "legend_transfer_multilingual_catalog_info"
 msgstr ""
 
