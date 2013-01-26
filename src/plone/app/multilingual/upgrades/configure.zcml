@@ -10,7 +10,7 @@
     destination="2"
     title="Convert from external storage to catalog and ids"
     profile="plone.app.multilingual:default"
-    handler=".to2.upgrade"
+    handler=".to2.installPloneMultilingual"
     />
 
 
