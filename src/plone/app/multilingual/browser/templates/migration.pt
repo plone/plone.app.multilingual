@@ -145,7 +145,7 @@
 
                 <p i18n:translate="description_relocate_content">
                   This step will move the site's content to its corresponding
-                  root language folder and previously will made a search for
+                  root language folder and previously will make a search for
                   misplaced content through the site's content tree and will
                   move them to its nearest translated parent. This step is
                   destructive as it will alter your content tree structure.
