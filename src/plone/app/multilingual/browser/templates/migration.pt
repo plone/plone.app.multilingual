@@ -115,7 +115,7 @@
                  The migration of LinguaPlone content depends on an up-to-date Language
                  index. Use this step to refresh this index.
                  Warning: Depending on the number of items in your site, this can take
-                 a considerable amount of time
+                 a considerable amount of time.
 
                 </p>
 
@@ -143,8 +143,8 @@
 
                 <p i18n:translate="legend_relocate_content">
 
-                  This step will move the site's content to its corresponding
-                  root language folder and previously will made a search for
+                  This step will move the site's content to its correspondent
+                  root language folder and previously will make a search for
                   misplaced content through the site's content tree and will
                   move them to its nearest translated parent. This step is
                   destructive as it will alter your content tree structure.
