@@ -390,25 +390,35 @@ This is the planned feature list for PAM:
 
     * Babel view
     * Root language folders
-    * Translation locator policy
+    * Non invasive language selector
+    * Universal link
     * Language selector policy
     * Neutral root folder support
+    * Catalog based storage
     * Translation map
     * Google Translation Service integration
     * LinguaPlone migration
-    * Backup
+    * Get rid of the legacy LP catalog patches as they are no longer needed
 
-2.0
+
+2.0 (PLIP 13091)
+----------------
+
+    * The fist version compatible with PLIP 13091
+      (https://dev.plone.org/ticket/13091)
+    * Update, get rid of legacy code and transfer some of the PAM logic to the
+      Plone core (plone.app.i18n)
+    * Perform the same for other parts of Plone core to integrate some monkey
+      patches and update legacy code from Products.PloneLanguageTool
+
+
+3.0
 ---
 
     * XLIFF export/import
     * Iterate support: we know there are some needs about iterate integration
     * LinguaPlus/linguatools set of useful tools
     * Outdated translations alerts and translation workflows support
-
-3.0
----
-
     * plone.app.toolbar/plone.app.cmsui support
     * Add support for Deco layouts and content types
     * Pluggable translation policies
