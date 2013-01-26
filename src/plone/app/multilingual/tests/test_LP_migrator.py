@@ -1,4 +1,5 @@
 import unittest2 as unittest
+import transaction
 from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
 from AccessControl import Unauthorized
 from zope.component import getMultiAdapter
@@ -55,6 +56,7 @@ class migrationLPToPAM(unittest.TestCase):
         self.b_2_1_en = makeContent(self.b_1_1_en, 'Document', id='b_2_1_en')
         self.b_2_1_en.edit(language='en')
         self.b_2_1_ca = makeTranslation(self.b_2_1_en, 'ca')
+        transaction.commit()
         self.b_2_1_ca.edit(id='b_2_1_ca', language='ca')
 
         relocator_view = getMultiAdapter((self.portal, self.request),
