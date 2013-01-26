@@ -117,7 +117,7 @@
                  The migration of LinguaPlone content depends on an up-to-date Language
                  index. Use this step to refresh this index.
                  Warning: Depending on the number of items in your site, this can take
-                 a considerable amount of time
+                 a considerable amount of time.
 
                 </p>
 
@@ -188,7 +188,7 @@
                   Step 2 - Transfer multilingual catalog information
                 </legend>
 
-                <p i18n:translate="legend_transfer_multilingual_catalog_info">
+                <p i18n:translate="description_transfer_multilingual_catalog_info">
 
                   This step will transfer the relations between translations
                   stored by LinguaPlone to the PAM catalog. This step is not
@@ -219,7 +219,7 @@
                   Step 3 - Cleanup after migration
                 </legend>
 
-                <p i18n:translate="legend_after_migration_cleanup">
+                <p i18n:translate="description_after_migration_cleanup">
 
                   This step will fix some lost dependencies to the
                   ITranslatable interface hidden in the relation catalog and

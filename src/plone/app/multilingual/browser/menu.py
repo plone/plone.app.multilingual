@@ -1,9 +1,6 @@
 from zope.interface import implements
 from zope.component import getMultiAdapter
-from zope.component import getUtility
 from Products.CMFCore.utils import getToolByName
-from Products.CMFCore.interfaces import ISiteRoot
-from Products.CMFCore.permissions import ManagePortal
 from zope.browsermenu.menu import BrowserMenu
 from zope.browsermenu.menu import BrowserSubMenuItem
 from plone.memoize.instance import memoize
@@ -53,7 +50,9 @@ class TranslateMenu(BrowserMenu):
                 lang_id = lang.value
                 icon = showflags and lt.getFlagForLanguageCode(lang_id) or None
                 item = {
-                    "title": _(u"Create") + " " + lang_name,
+                    "title": _(u'create_translation',
+                                default=u"Create ${lang_name}",
+                                mapping={"lang_name": lang_name}),
                     "description": _(u"description_translate_into",
                                     default=u"Translate into ${lang_name}",
                                     mapping={"lang_name": lang_name}),
@@ -64,9 +63,9 @@ class TranslateMenu(BrowserMenu):
                     "width": "14",
                     "height": "11",
                     "extra": {"id": "translate_into_%s" % lang_id,
-                           "separator": None,
-                           "class": "contentmenuflags"},
-                    "submenu": None,
+                              "separator": None,
+                              "class": "contentmenuflags"},
+                              "submenu": None,
                     }
 
                 menu.append(item)
@@ -78,7 +77,9 @@ class TranslateMenu(BrowserMenu):
                 lang_id = lang.value
                 icon = showflags and lt.getFlagForLanguageCode(lang_id) or None
                 item = {
-                    "title": _(u"Edit") + " " + lang_name,
+                    "title": _(u'edit_translation',
+                                default=u"Edit ${lang_name}",
+                                mapping={"lang_name": lang_name}),
                     "description": _(u"description_babeledit_menu",
                                     default=u"Babel edit ${lang_name}",
                                     mapping={"lang_name": lang_name}),
@@ -88,9 +89,9 @@ class TranslateMenu(BrowserMenu):
                     "width": "14",
                     "height": "11",
                     "extra": {"id": "babel_edit_%s" % lang_id,
-                           "separator": None,
-                           "class": "contentmenuflags"},
-                    "submenu": None,
+                              "separator": None,
+                              "class": "contentmenuflags"},
+                              "submenu": None,
                     }
 
                 menu.append(item)
@@ -171,12 +172,11 @@ class TranslateMenu(BrowserMenu):
                 "submenu": None,
                 })
 
-
         menu.append({
             "title": _(u"title_set_language",
-                   default=u"Set content language"),
+                        default=u"Set content language"),
             "description": _(u"description_set_language",
-                   default=u"Set or change the current content language"),
+                             default=u"Set or change the current content language"),
             "action": url + "/update_language",
             "selected": False,
             "icon": None,

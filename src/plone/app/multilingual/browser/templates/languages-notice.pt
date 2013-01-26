@@ -1,14 +1,15 @@
 <dl class="portalMessage warning">
-  <dt i18n:translate="">
+  <dt i18n:translate="" i18n:domain="plone">
     Warning
   </dt>
-  <dd id="multilingual-languages-notice"
-      tal:define="portal_url context/portal_url">
+  <dd id="multilingual-languages-notice" i18n:domain="plone.app.multilingual"
+      tal:define="portal_url context/portal_url"
+      i18n:translate="not_configured_for_multiple_languages">
     Your site is not configured with more than one allowed language,
     but the add-on that provides support for content in multiple
     language is installed. You can add one or more additional
-    languages from the <a href="" i18n:translate=""
+    languages from the <a href="" i18n:translate="" i18n:name="control-panel-link"
     tal:attributes="href
-    string:${portal_url}/@@language-controlpanel">Language</a> control panel.
+    string:${portal_url}/@@language-controlpanel">Language control panel</a>.
   </dd>
 </dl>
