@@ -17,6 +17,7 @@ from plone.registry.interfaces import IRegistry
 
 from plone.multilingual.interfaces import ITranslationManager
 from plone.multilingual.interfaces import ITranslatable
+from plone.multilingual.manager import TranslationManager
 from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
 from .selector import addQuery
 from .selector import NOT_TRANSLATED_YET_TEMPLATE
@@ -48,7 +49,7 @@ class universal_link(BrowserView):
     def getDestination(self):
         # Look for the element
         ptool = getToolByName(self.context, 'portal_catalog')
-        query = {'TranslationGroup': self.tg}
+        query = {'TranslationGroup': self.tg, 'Language': 'all'}
         if self.lang:
             query = {'TranslationGroup': self.tg, 'Language': self.lang}
         else:
@@ -75,6 +76,7 @@ class selector_view(universal_link):
 
     def getDialogDestination(self):
         """Get the "not translated yet" dialog URL.
+        It's located on the root and shows the translated objects of that TG
         """
         dialog_view = NOT_TRANSLATED_YET_TEMPLATE
         postpath = False
@@ -83,29 +85,9 @@ class selector_view(universal_link):
         # And since we are mapping the root on itself,
         # we also do postpath insertion (@@search case)
 
-        #if ISiteRoot.providedBy(self.context):
-        #    dialog_view = ''
-        #    postpath = True
-
-        # We first look for the content on the request language
-        ltool = getToolByName(self.context, 'portal_languages')
-        self.lang = ltool.getRequestLanguages()
-        url = self.getDestination()
-        if url:
-            return self.wrapDestination(url + dialog_view, postpath=postpath)
-        # We look for the default language content
-        self.lang = ltool.getDefaultLanguage()
-        url = self.getDestination()
-        if url:
-            return self.wrapDestination(url + dialog_view, postpath=postpath)
-        # We look for the first translation we find
-        ptool = getToolByName(self.context, 'portal_catalog')
-        query = {'TranslationGroup': self.tg}
-        results = ptool.searchResults(query)
-        url = None
-        if len(results) > 0:
-            url = results[0].getUrl()
-            return self.wrapDestination(url + dialog_view, postpath=postpath)
+        root = getToolByName(self.context, 'portal_url')
+        url = root() + dialog_view + '/' + self.tg
+        return self.wrapDestination(url, postpath=postpath)
 
     def getParentChain(self, context):
         # XXX: switch it over to parent pointers if needed
@@ -124,24 +106,24 @@ class selector_view(universal_link):
         # As we don't have any content object we are going to look
         # for the best option
 
-        ltool = getToolByName(self.context, 'portal_languages')
-        ptool = getToolByName(self.context, 'portal_catalog')
         root = getToolByName(self.context, 'portal_url')
+        ltool = getToolByName(self.context, 'portal_languages')
 
-        query = {'TranslationGroup': self.tg, 'Language': 'all'}
-        results = ptool.searchResults(query)
+        manager = TranslationManager(self.tg)
         context = None
-        if len(results) == 0:
+        languages = manager.get_translations()
+        if len(languages) == 0:
             # If there is no results there are no translations
             # we move to portal root
             return self.wrapDestination(root(), postpath=False)
-        for result in results:
-            if result.Language in ltool.getRequestLanguages():
-                context = result.getObject()
-            elif result.Language == ltool.getDefaultLanguage():
-                context = result.getObject()
-        if context is None:
-            context = results[0].getObject()
+
+        # We are going to see if there is the prefered language translation
+        # Otherwise we get the first as context to look for translation
+        prefered = ltool.getPreferredLanguage()
+        if prefered in languages:
+            context = languages[prefered]
+        else:
+            context = languages[languages.keys()[0]]
 
         checkPermission = getSecurityManager().checkPermission
         chain = self.getParentChain(context)
@@ -212,8 +194,30 @@ class not_translated_yet(BrowserView):
     """
     __call__ = ViewPageTemplateFile('templates/not_translated_yet.pt')
 
+    implements(IPublishTraverse)
+
+    def __init__(self, context, request):
+        super(not_translated_yet, self).__init__(context, request)
+        self.tg = None
+
+    def publishTraverse(self, request, name):
+        if self.tg is None:  # ../@@not_translated_yet/translationgroup
+            self.tg = TranslationManager(name)
+        else:
+            raise NotFound(self, name, request)
+        return self
+
     def already_translated(self):
-        return ITranslationManager(self.context).get_translations().items()
+        if self.tg is not None:
+            # Need to check if the user has permission
+            return self.tg.get_restricted_translations().items()
+        else:
+            return []
 
     def has_any_translation(self):
-        return len(ITranslationManager(self.context).get_translations().items()) > 1
+
+        if self.tg is not None:
+            return len(self.tg.get_restricted_translations().items()) > 0
+        else:
+            return 0
+
