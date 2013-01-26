@@ -13,8 +13,13 @@
                         disable_column_two python:request.set('disable_plone.rightcolumn',1);">
 </metal:head>
 
-<metal:content-core fill-slot="content-core">
-    <metal:content-core define-macro="content-core">
+<metal:main fill-slot="main">
+    <metal:main define-macro="main">
+
+    <h1 class="documentFirstHeading" i18n:translate="heading_not_available_in_language">
+      Not available in <span i18n:name="language" tal:content="view/language_name" tal:omit-tag="">es</span>
+    </h1>
+
       <div class="documentDescription" id="parent-fieldname-description" i18n:translate="">
         This content is not translated yet to the language requested.
       </div>
@@ -26,9 +31,11 @@
               <tal:defines define="code python: trans_content[0];
                               trans_obj python: trans_content[1]">
               <li tal:condition="python:trans_obj.Title()">
+                <span tal:replace="python:view.language_name(code)" /> - <span tal:replace="code"/>:
                 <a tal:attributes="href python:trans_obj.absolute_url() + '?set_language=' + code"
                    tal:content="python:trans_obj.Title()">Translation Link</a></li>
               <li tal:condition="python:not trans_obj.Title()">
+                <span tal:content="python:trans_obj"></span>
                 <a tal:attributes="href python:trans_obj.absolute_url() + '?set_language=' + code">
                   (No Title)</a></li>
               </tal:defines>
@@ -43,8 +50,7 @@
             </ul>
         </tal:anytranslation>
       </section>
-    </metal:content-core>
-</metal:content-core>
-
+    </metal:main>
+  </metal:main>
 </body>
 </html>

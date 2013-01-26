@@ -1,3 +1,4 @@
+from plone.i18n.locales.interfaces import IContentLanguageAvailability
 from zope.interface import implements
 from zope.component import getUtility
 from zope.publisher.interfaces import IPublishTraverse, NotFound
@@ -221,3 +222,13 @@ class not_translated_yet(BrowserView):
         else:
             return 0
 
+    def language_name(self, lang=None):
+        """ Get the current language native name """
+        if lang is None:
+            lang_code = self.request.get('set_language')
+        else:
+            lang_code = lang
+        util = getUtility(IContentLanguageAvailability)
+        data = util.getLanguages(True)
+        lang_info = data.get(lang_code)
+        return lang_info.get('native', None) or lang_info.get('name')
