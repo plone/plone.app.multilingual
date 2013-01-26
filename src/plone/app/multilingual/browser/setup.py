@@ -103,7 +103,7 @@ class SetupMultilingualSite(object):
             obj = brain.getObject()
             if obj.language == '':
                 obj.language = defaultLanguage
-                obj.reindexObject()
+                obj.reindexObject(idxs=["Language"])
                 LOG.info("Set language %s on object %s" % (
                     defaultLanguage, '/'.join(obj.getPhysicalPath())))
 

@@ -102,7 +102,6 @@ def I18nAwareFolderContents():
 try:
     from Products.LinguaPlone import patches
 except ImportError:
-    pass
-    #I18nAwareCatalog()
+    I18nAwareCatalog()
 
-#I18nAwareFolderContents()
+I18nAwareFolderContents()
