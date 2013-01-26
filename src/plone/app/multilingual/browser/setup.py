@@ -106,6 +106,7 @@ class SetupMultilingualSite(object):
                 obj.reindexObject(idxs=["Language"])
                 LOG.info("Set language %s on object %s" % (
                     defaultLanguage, '/'.join(obj.getPhysicalPath())))
+        pc.manage_reindexIndex(ids=['Language', ])
 
     def move_default_language_content(self):
         """ Move the content with default language on the root folder

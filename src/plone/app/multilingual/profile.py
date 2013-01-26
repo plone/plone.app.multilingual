@@ -9,17 +9,16 @@ class HiddenProfiles(object):
 
     def getNonInstallableProfiles(self):
         return [
-            u'plone.multilingual',
             u'archetypes.multilingual',
             u'archetypes.testcase',
             ]
+
 
 class HiddenProducts(object):
     implements(INonQ)
 
     def getNonInstallableProducts(self):
         return [
-            u'plone.multilingual',
             u'archetypes.multilingual',
             u'archetypes.testcase',
             ]

@@ -58,5 +58,5 @@
            
   <utility factory="plone.app.multilingual.profile.HiddenProducts"
            name="plone.app.multilingual.hiddenproducts" />
-
+    
 </configure>
