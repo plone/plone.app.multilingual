@@ -4,6 +4,8 @@ Changelog
 1.0 - UNRELEASED
 ----------------------
 
+- Clean the migration template [erral]
+
 - Don't assume a transition called 'publish' will exist [erral]
 
 
