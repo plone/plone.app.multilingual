@@ -13,10 +13,10 @@
 <div id="results">
 
 <div class="resultInfo">
-    <h3 i18n:translate=""
+    <h2 i18n:translate=""
         tal:content="view/stepinfo">
         Reindex Language Index
-    </h3>
+    </h2>
 
     <p i18n:translate="migration_reindex_results">
       The "Language" index was re-indexed correctly. Before, it contained

@@ -15,7 +15,7 @@
 <div class="resultInfo" i18n:domain="plone.app.multilingual">
     <h2 i18n:translate=""
         tal:content="view/stepinfo">
-        Transfer multilingual catalog information
+        Relocate content to the proper root language folder
     </h2>
     <span i18n:translate="label_total_objects_translated">
         Total objects handled:
