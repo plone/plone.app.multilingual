@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
-"POT-Creation-Date: 2013-01-27 10:10+0000\n"
+"POT-Creation-Date: 2013-01-27 10:24+0000\n"
 "PO-Revision-Date: 2010-10-19 13:27+0000\n"
 "Last-Translator: CMS HU Berlin <plone@cms.hu-berlin.de>\n"
 "Language-Team: CMS HU Berlin <plone@cms.hu-berlin.de>\n"
@@ -344,6 +344,11 @@ msgstr ""
 #. Default: "Products.LinguaPlone After Migration"
 #: ../browser/templates/cleanup.pt:69
 msgid "heading_migration_after"
+msgstr ""
+
+#. Default: "Migration results"
+#: ../browser/templates/migration.pt:247
+msgid "heading_migration_results"
 msgstr ""
 
 #. Default: "Move root content to default language folder"

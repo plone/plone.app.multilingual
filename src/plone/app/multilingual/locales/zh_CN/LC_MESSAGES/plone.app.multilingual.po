@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-01-27 10:10+0000\n"
+"POT-Creation-Date: 2013-01-27 10:24+0000\n"
 "PO-Revision-Date: 2012-03-24 23:31+0800\n"
 "Last-Translator: Jian Aijun <jianaijun@gmail.com>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -347,6 +347,11 @@ msgstr ""
 #. Default: "Products.LinguaPlone After Migration"
 #: ../browser/templates/cleanup.pt:69
 msgid "heading_migration_after"
+msgstr ""
+
+#. Default: "Migration results"
+#: ../browser/templates/migration.pt:247
+msgid "heading_migration_results"
 msgstr ""
 
 #. Default: "Move root content to default language folder"

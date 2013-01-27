@@ -244,7 +244,7 @@
             </form>
 
             <div class="results">
-              <h3>Migration results</h3>
+              <h2 i18n:translate="heading_migration_results">Migration results</h2>
             </div>
         </div>
       </div>

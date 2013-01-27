@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
-"POT-Creation-Date: 2013-01-27 10:10+0000\n"
+"POT-Creation-Date: 2013-01-27 10:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Radek Jankiewicz <backup.rlacko@gmail.com>\n"
 "Language-Team: plone-cat <plone-cat@plone.org>\n"
@@ -346,6 +346,11 @@ msgstr "Migrácia z Products.LinguaPlone"
 #: ../browser/templates/cleanup.pt:69
 msgid "heading_migration_after"
 msgstr "Kroky po migrácii z Products.LinguaPlone"
+
+#. Default: "Migration results"
+#: ../browser/templates/migration.pt:247
+msgid "heading_migration_results"
+msgstr ""
 
 #. Default: "Move root content to default language folder"
 #: ../browser/controlpanel.py:93
