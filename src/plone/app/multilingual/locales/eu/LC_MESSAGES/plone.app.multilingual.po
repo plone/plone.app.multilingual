@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
-"POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"POT-Creation-Date: 2013-01-27 10:10+0000\n"
 "PO-Revision-Date: 2013-01-27 10:45+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: eu <eu@li.org>\n"
@@ -42,6 +42,10 @@ msgstr "Aukera gehigarriak"
 #: ../browser/templates/not_translated_yet.pt:28
 msgid "However, this is the list of the already translated languages for the requested content."
 msgstr "Hala ere, hemen dituzu hizkuntza batzuetan eginda dauden elementu honen itzulpenak."
+
+#: ../browser/controlpanel.py:390
+msgid "If you are installing PAM for the first time in a Plone site, either if it's on an existing or a brand new one you should run the following procedures in order to move the default site content to its right root language folder and be sure that all the content have the language attribute set up correctly. Previous to run them, please be sure that you have set up your site's languages in the 'Site languages' tab and have saved that setting. Finally, in case you have an existing Plone site with Products.LinguaPlone installed, please do not run this steps and refer directly to the 'Migration' tab."
+msgstr ""
 
 #: ../browser/translate.py:74
 msgid "Invalid field"
@@ -267,7 +271,7 @@ msgid "description_translate_into"
 msgstr "${lang_name} hizkuntzara itzuli"
 
 #. Default: "Translation map."
-#: ../browser/templates/mmap.pt:106
+#: ../browser/templates/mmap.pt:101
 msgid "description_translation_map"
 msgstr "Itzulpenen mapa"
 
@@ -387,7 +391,7 @@ msgid "heading_top_level_domain"
 msgstr "1. mailako domeinua erabili (esaterako www.plone.es edo www.plone.fr)"
 
 #. Default: "plone.app.multilingual translation map"
-#: ../browser/templates/mmap.pt:96
+#: ../browser/templates/mmap.pt:91
 msgid "heading_translation_map"
 msgstr "Edukiaren itzulpenen mapa"
 
@@ -412,13 +416,12 @@ msgid "label_alert_update"
 msgstr "Elementuaren hizkuntza aldatuz gero, hizkuntzaren arabera dagokion tokira mugituko da."
 
 #. Default: "All translations"
-#: ../browser/templates/mmap.pt:111
+#: ../browser/templates/mmap.pt:106
 msgid "label_all_translations"
 msgstr "Itzulpen guztiak"
 
 #. Default: "Cleanup actions"
 #: ../browser/templates/cleanup.pt:49
-#: ../browser/templates/controlpanel.pt:36
 msgid "label_cleanup"
 msgstr "Garbiketa-ekintzak"
 
@@ -429,11 +432,6 @@ msgstr "Garbiketa-ekintzak"
 msgid "label_general"
 msgstr "Orokorra"
 
-#. Default: "After Migration actions"
-#: ../browser/templates/mmap.pt:79
-msgid "label_import2"
-msgstr "Migrazioaren osteko ekintzak"
-
 #. Default: "Migration"
 #: ../browser/templates/controlpanel.pt:31
 #: ../browser/templates/migration.pt:70
@@ -442,7 +440,7 @@ msgid "label_migration"
 msgstr "Migrazioa"
 
 #. Default: "Missing translations"
-#: ../browser/templates/mmap.pt:110
+#: ../browser/templates/mmap.pt:105
 msgid "label_missing_translations"
 msgstr "Falta diren itzulpenak"
 
@@ -476,7 +474,7 @@ msgstr "Itzulpen-mapa"
 #. Default: "Up to Site Setup"
 #: ../browser/templates/cleanup.pt:73
 #: ../browser/templates/migration.pt:90
-#: ../browser/templates/mmap.pt:99
+#: ../browser/templates/mmap.pt:94
 msgid "label_up_to_plone_setup"
 msgstr "Atariaren konfigurazioa"
 
@@ -521,7 +519,7 @@ msgid "long_description_remove_translations"
 msgstr "Formulario honek elementu baten itzulpenak ezabatzeko aukera ematen dizu. Uneko elementuaren eta itzulpenaren arteko lotura edo itzulpena duen elementua ezabatzeko aukera ematen dizu. "
 
 #. Default: "Missing languages:"
-#: ../browser/templates/mmap.pt:147
+#: ../browser/templates/mmap.pt:142
 msgid "missing_languages"
 msgstr "Falta diren hizkuntzak:"
 
@@ -579,7 +577,7 @@ msgid "title_translate_menu"
 msgstr "Zure edukiaren itzulpenak kudeatu."
 
 #. Default: "Translations:"
-#: ../browser/templates/mmap.pt:155
+#: ../browser/templates/mmap.pt:150
 msgid "translation"
 msgstr "Itzulpenak:"
 

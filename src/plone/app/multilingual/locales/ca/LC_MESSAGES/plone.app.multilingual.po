@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.2b3\n"
-"POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"POT-Creation-Date: 2013-01-27 10:10+0000\n"
 "PO-Revision-Date: 2012-03-23 16:45 +0000\n"
 "Last-Translator: ramon.nb@gmail.com>\n"
 "Language-Team: plone-cat <plone-cat@plone.org>\n"
@@ -38,6 +38,10 @@ msgstr ""
 
 #: ../browser/templates/not_translated_yet.pt:28
 msgid "However, this is the list of the already translated languages for the requested content."
+msgstr ""
+
+#: ../browser/controlpanel.py:390
+msgid "If you are installing PAM for the first time in a Plone site, either if it's on an existing or a brand new one you should run the following procedures in order to move the default site content to its right root language folder and be sure that all the content have the language attribute set up correctly. Previous to run them, please be sure that you have set up your site's languages in the 'Site languages' tab and have saved that setting. Finally, in case you have an existing Plone site with Products.LinguaPlone installed, please do not run this steps and refer directly to the 'Migration' tab."
 msgstr ""
 
 #: ../browser/translate.py:74
@@ -264,7 +268,7 @@ msgid "description_translate_into"
 msgstr ""
 
 #. Default: "Translation map."
-#: ../browser/templates/mmap.pt:106
+#: ../browser/templates/mmap.pt:101
 msgid "description_translation_map"
 msgstr ""
 
@@ -384,7 +388,7 @@ msgid "heading_top_level_domain"
 msgstr ""
 
 #. Default: "plone.app.multilingual translation map"
-#: ../browser/templates/mmap.pt:96
+#: ../browser/templates/mmap.pt:91
 msgid "heading_translation_map"
 msgstr ""
 
@@ -409,13 +413,12 @@ msgid "label_alert_update"
 msgstr ""
 
 #. Default: "All translations"
-#: ../browser/templates/mmap.pt:111
+#: ../browser/templates/mmap.pt:106
 msgid "label_all_translations"
 msgstr ""
 
 #. Default: "Cleanup actions"
 #: ../browser/templates/cleanup.pt:49
-#: ../browser/templates/controlpanel.pt:36
 msgid "label_cleanup"
 msgstr ""
 
@@ -426,11 +429,6 @@ msgstr ""
 msgid "label_general"
 msgstr ""
 
-#. Default: "After Migration actions"
-#: ../browser/templates/mmap.pt:79
-msgid "label_import2"
-msgstr ""
-
 #. Default: "Migration"
 #: ../browser/templates/controlpanel.pt:31
 #: ../browser/templates/migration.pt:70
@@ -439,7 +437,7 @@ msgid "label_migration"
 msgstr ""
 
 #. Default: "Missing translations"
-#: ../browser/templates/mmap.pt:110
+#: ../browser/templates/mmap.pt:105
 msgid "label_missing_translations"
 msgstr ""
 
@@ -474,7 +472,7 @@ msgstr ""
 #. Default: "Up to Site Setup"
 #: ../browser/templates/cleanup.pt:73
 #: ../browser/templates/migration.pt:90
-#: ../browser/templates/mmap.pt:99
+#: ../browser/templates/mmap.pt:94
 msgid "label_up_to_plone_setup"
 msgstr ""
 
@@ -519,7 +517,7 @@ msgid "long_description_remove_translations"
 msgstr ""
 
 #. Default: "Missing languages:"
-#: ../browser/templates/mmap.pt:147
+#: ../browser/templates/mmap.pt:142
 msgid "missing_languages"
 msgstr ""
 
@@ -577,7 +575,7 @@ msgid "title_translate_menu"
 msgstr "Administra les traduccions del teu contingut"
 
 #. Default: "Translations:"
-#: ../browser/templates/mmap.pt:155
+#: ../browser/templates/mmap.pt:150
 msgid "translation"
 msgstr ""
 
