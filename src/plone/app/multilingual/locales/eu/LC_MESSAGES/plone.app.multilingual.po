@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
 "POT-Creation-Date: 2013-01-27 10:24+0000\n"
-"PO-Revision-Date: 2013-01-27 11:16+0100\n"
+"PO-Revision-Date: 2013-01-27 11:24+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: eu <eu@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -353,7 +353,7 @@ msgstr "Products.LinguaPlone Migrazioaren Ostekoak"
 #. Default: "Migration results"
 #: ../browser/templates/migration.pt:247
 msgid "heading_migration_results"
-msgstr ""
+msgstr "Migrazioaren emaitzak"
 
 #. Default: "Move root content to default language folder"
 #: ../browser/controlpanel.py:93
