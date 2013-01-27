@@ -13,7 +13,10 @@
 <div id="results">
 
 <div class="resultInfo" i18n:domain="plone.app.multilingual">
-    <h3 tal:content="view/stepinfo"></h3>
+    <h3 i18n:translate=""
+        tal:content="view/stepinfo">
+        Transfer multilingual catalog informatione
+    </h3>
     <span i18n:translate="label_total_objects_translated">
         Total objects handled:
     </span>

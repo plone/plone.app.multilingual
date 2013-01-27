@@ -32,9 +32,7 @@
           $('html, body').animate({
               scrollTop: $('.results').offset().top
           }, 2000);
-          $.get('@@transfer-lp-catalog', function(data) {
-            $('.results').html(data)
-          });
+          $('.results').load('@@transfer-lp-catalog #results');
           return false;
         });
 
