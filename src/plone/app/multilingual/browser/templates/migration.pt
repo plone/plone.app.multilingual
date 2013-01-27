@@ -14,8 +14,7 @@
 (function($) {
 
     $().ready(function() {
-        $('.formControls input[name="form.button.relocate-content"]').click(function (event) {
-          event.preventDefault();
+        $('#lp-migration-relocate-content').submit(function () {
           $('.results').html('<img src="spinner.gif">');
           var blacklist = $('textarea#blacklist')[0].value;
           var url = "@@relocate-content?blacklist:list=" + blacklist.split('\n').join('&blacklist:list=');
@@ -25,10 +24,10 @@
           $.get(url, function(data) {
             $('.results').html(data)
           });
+          return false;
         });
 
-        $('.formControls input[name="form.button.transfer-lp-catalog"]').click(function (event) {
-          event.preventDefault();
+        $('#lp-migration-transfer-catalog').submit(function () {
           $('.results').html('<img src="spinner.gif">');
           $('html, body').animate({
               scrollTop: $('.results').offset().top
@@ -36,10 +35,10 @@
           $.get('@@transfer-lp-catalog', function(data) {
             $('.results').html(data)
           });
+          return false;
         });
 
-        $('.formControls input[name="form.button.after-migration-cleanup"]').click(function (event) {
-          event.preventDefault();
+        $('#lp-migration-after-migration').submit(function () {
           $('.results').html('<img src="spinner.gif">');
           $('html, body').animate({
               scrollTop: $('.results').offset().top
@@ -47,17 +46,16 @@
           $.get('@@after-migration-cleanup', function(data) {
             $('.results').html(data)
           });
+          return false;
         });
 
-       $('.formControls input[name="form.button.reindex-language-index"]').click(function (event) {
-          event.preventDefault();
+       $('#lp-migration-reindex-content').submit(function () {
           $('.results').html('<img src="spinner.gif">');
           $('html, body').animate({
               scrollTop: $('.results').offset().top
           }, 2000);
-          $.get('@@reindex-language-index', function(data) {
-            $('.results').html(data)
-          });
+          $('.results').load('@@reindex-language-index #results');
+          return false;
         });
     });
 
@@ -116,7 +114,8 @@
 
             </p>
 
-            <form name="reindex"
+            <form
+                  id="lp-migration-reindex-content"
                   tal:attributes="action string:${portal_url}/reindex-language-index"
                   method="post">
               <fieldset>
@@ -147,7 +146,7 @@
               </fieldset>
             </form>
 
-            <form name="relocate"
+            <form id="lp-migration-relocate-content"
                   tal:attributes="action string:${portal_url}/relocate-content"
                   method="post">
               <fieldset>
@@ -193,7 +192,7 @@
               </fieldset>
             </form>
 
-            <form name="transfer"
+            <form id="lp-migration-transfer-catalog"
                   tal:attributes="action string:${portal_url}/transfer-lp-catalog"
                   method="post">
               <fieldset>
@@ -223,7 +222,7 @@
               </fieldset>
             </form>
 
-            <form name="aftermigration"
+            <form id="lp-migration-after-migration"
                   tal:condition="view/hasRelationCatalog"
                   tal:attributes="action string:${portal_url}/after-migration-cleanup"
                   method="post">

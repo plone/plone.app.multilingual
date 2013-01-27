@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    lang="en"
+    metal:use-macro="context/prefs_main_template/macros/master"
+    i18n:domain="plone.app.multilingual">
+
+<body>
+
+<metal:prefs fill-slot="prefs_configlet_content">
+
+<div id="results">
+
+<div class="resultInfo">
+    <h3 i18n:translate=""
+        tal:content="view/stepinfo">
+        Reindex Language Index
+    </h3>
+
+    <p i18n:translate="migration_reindex_results">
+      The "Language" index was re-indexed correctly. Before, it contained
+      <span i18n:name="previous_items_number" tal:content="view/items_before"
+          tal:omit-tag="" /> items, now it contains <span i18n:name="after_items_number"
+          tal:content="view/items_after" tal:omit-tag="" />
+
+    </p>
+</div>
+
+</div>
+</metal:prefs>
+</body>
+</html>
