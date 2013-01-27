@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
-"PO-Revision-Date: 2012-09-18 14:50+0100\n"
+"PO-Revision-Date: 2013-01-27 10:45+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: eu <eu@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,16 +20,16 @@ msgstr ""
 
 #: ../browser/controlpanel.py:416
 msgid "All the configuration of P.A.M. If you want to set the default language to all the content without language and move all the content on the root folder to the default language folder, go to Extra Options section "
-msgstr ""
+msgstr "plone.app.multilingual produktuaren konfigurazioa. Hizkuntzarik ez duten hizkuntzei defektuzko hizkuntza ezarri nahi badiezu, edo elementuak hizkuntzaren arabera dagokien tokira mugitu nahi baditzu, joan aukera gehigarrietara."
 
 #: ../browser/controlpanel.py:389
 msgid "Clean site setup"
-msgstr ""
+msgstr "Atariaren konfigurazioa garbitu"
 
 #: ../browser/templates/cleanup.pt:93
 #: ../browser/templates/migration.pt:233
 msgid "Cleanup"
-msgstr ""
+msgstr "Garbitu"
 
 #: ../browser/translate.py:109
 msgid "Create"
@@ -41,7 +41,7 @@ msgstr "Aukera gehigarriak"
 
 #: ../browser/templates/not_translated_yet.pt:28
 msgid "However, this is the list of the already translated languages for the requested content."
-msgstr ""
+msgstr "Hala ere, hemen dituzu hizkuntza batzuetan eginda dauden elementu honen itzulpenak."
 
 #: ../browser/translate.py:74
 msgid "Invalid field"
@@ -49,11 +49,11 @@ msgstr "Eremua ez da zuzena"
 
 #: ../browser/templates/languages-notice.pt:11
 msgid "Language control panel"
-msgstr ""
+msgstr "Hizkuntzen kontrol-panela"
 
 #: ../browser/templates/cleanup.pt:102
 msgid "Move"
-msgstr ""
+msgstr "Mugitu"
 
 #: ../browser/controlpanel.py:415
 msgid "Multilingual Settings"
@@ -65,47 +65,47 @@ msgstr "Eremua behar da"
 
 #: ../browser/controlpanel.py:380
 msgid "Negotiation scheme"
-msgstr ""
+msgstr "Hizkuntza negoziazioa"
 
 #: ../browser/controlpanel.py:532
 msgid "Not translated"
-msgstr ""
+msgstr "Itzuli gabe"
 
 #: ../browser/controlpanel.py:386
 msgid "Policies"
-msgstr ""
+msgstr "Politikak"
 
 #: ../browser/templates/migration.pt:125
 msgid "Reindex"
-msgstr ""
+msgstr "Berindexatu"
 
 #: ../browser/templates/migration.pt:171
 msgid "Relocate"
-msgstr ""
+msgstr "Birkokatu"
 
 #: ../browser/controlpanel.py:186
 msgid "Search for closest translation in parent's content chain."
-msgstr ""
+msgstr "Gurasoengandik hasita itzulpena duen elementurik gertukoena aurkitu."
 
 #: ../browser/controlpanel.py:187
 msgid "Show user dialog with information about the available translations."
-msgstr ""
+msgstr "Itzulpenik ez dagoela dioen mezua erakutsi."
 
 #: ../browser/controlpanel.py:377
 msgid "Site languages"
-msgstr ""
+msgstr "Atariaren hizkuntzak."
 
 #: ../browser/templates/not_translated_yet.pt:23
 msgid "This content is not translated yet to the language requested."
-msgstr ""
+msgstr "Elementu hau ez dago eskatutako hizkuntzan."
 
 #: ../browser/templates/not_translated_yet.pt:46
 msgid "This item doesn't have any translation yet. You can return to the portal site:"
-msgstr ""
+msgstr "Elementu honek ez du itzulpenenik. Atariaren sarrerara itzuli zaitezke"
 
 #: ../browser/templates/migration.pt:201
 msgid "Transfer"
-msgstr ""
+msgstr "Migratu"
 
 #. Default: "Add translations"
 #: ../browser/add_translation_form.py:28
@@ -119,17 +119,17 @@ msgstr "Edukia"
 #. Default: "Create ${lang_name}"
 #: ../browser/menu.py:53
 msgid "create_translation"
-msgstr ""
+msgstr "${lang_name} itzulpena sortu"
 
 #. Default: "Add existing content as translation"
 #: ../browser/menu.py:102
 msgid "description_add_translations"
-msgstr ""
+msgstr "Atarian dagoen elementu bat, honen itzulpen gisa gehitu"
 
 #. Default: "This step will fix some lost dependencies to the ITranslatable interface hidden in the relation catalog and it gets rid of them. It must be run only when LinguaPlone is already uninstalled."
 #: ../browser/templates/migration.pt:223
 msgid "description_after_migration_cleanup"
-msgstr ""
+msgstr "Pausu honek ITranslatabe interfazearen dependentzia batzuk kkonponduko ditu. LinguaPlone guztiz desinstalatuta dagoenen bakarrik exekutatu behar da."
 
 #. Default: "Authenticated users only. Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
 #: ../browser/controlpanel.py:141
@@ -144,7 +144,7 @@ msgstr "Atariko edukia zein hizkuntzatara itzuli ahal izango den."
 #. Default: "Edit with the babel_edit"
 #: ../browser/menu.py:37
 msgid "description_babel_edit"
-msgstr ""
+msgstr "babel_edit erabiliz editatu"
 
 #. Default: "Babel edit ${lang_name}"
 #: ../browser/menu.py:83
@@ -179,7 +179,7 @@ msgstr "URLan hizkuntza kodeak erabili eskuiz gainidazteko."
 #. Default: "Go to the user's browser preferred language related folder"
 #: ../browser/menu.py:132
 msgid "description_language_folder"
-msgstr ""
+msgstr "Erabiltzailearen nabigatzailearen hobespenek dioten hizkuntzara joan"
 
 #. Default: "Use the language of the content item."
 #: ../browser/controlpanel.py:112
@@ -189,12 +189,12 @@ msgstr "Elementuaren hizkuntza erabili."
 #. Default: "The migration process is divided into four steps, listed below. Each one of the steps has a well defined purpose explained. Some of them are destructive, so please read each one of it and do not try to run it on production servers without testing it previously."
 #: ../browser/templates/migration.pt:97
 msgid "description_migrate"
-msgstr ""
+msgstr "Migrazioa 4 pausutan egin behar da. Pausuetako bakoitzak helburu bakarra du eta bakoitzean azalduta dago. Batzuk aurretik egindako gauzak deuseztu egiten dituzte, beraz ezer egin aurretik irakurri eta egin probak zure garapeneko bertsioan produkzio-zerbitzarian egin aurretik."
 
 #. Default: "It can happen that there are relations left that contain LinguaPlone relations. By executing this step, the catalog gets reset and rebuilt. It CAN happen that things go bad. In that case relations get lost. It is therefor important that you have a backup!"
 #: ../browser/templates/cleanup.pt:80
 msgid "description_migrate_after"
-msgstr ""
+msgstr "LinguaPlonek funtzionatzeko behar dituen erlazioak oraindik ere konfigurazioan egon daitezke. Pausu hau eginez gero, katalogoa berrezarri egingo da. Zerbait gaizki joan daiteke eta, kasu horretan, erlazioak galdu egingo dira. Segurtasun kopia bat edukitzea ezinbestekoa da!"
 
 #. Default: "Move the content that is on the root folder to the default language folder. This value is not stored so you need to check every time you want to run it"
 #: ../browser/controlpanel.py:95
@@ -209,12 +209,12 @@ msgstr "Itzulpen berria sortu ostean babel bistara joan."
 #. Default: "Use this field to define portal types that will not be traversed for finding content to move. All content of those types will be moved with all contained sub-items. This is useful for content types that are themselves translatable, but contain sub-content that is not translatable or does not have a language set.<br /> This list is pre-filled with some portal types, but you can add additional ones if needed, one per line."
 #: ../browser/templates/migration.pt:158
 msgid "description_relocate_blacklist"
-msgstr ""
+msgstr "Erabili eremu hau, beren barruan elementurik ez bilatzea konfiguratzeko. Mota hauetako elementuak dauden bezala (beren ondorengo guztiekin) mugituko dira. Beren kabuz itzulgarriak diren baina itzuli ezin diren elementuak dituzten elementuentzat erabilgarria da. <br /> Zerrenda hau elementu-mota batzuekin aurrez betea dago, baina beste batzuk ere gehitu ditzakezu, beti ere bat idatziz lerro bakoitzean."
 
 #. Default: "This step will move the site's content to its corresponding root language folder and previously will make a search for misplaced content through the site's content tree and will move them to its nearest translated parent. This step is destructive as it will alter your content tree structure. Make sure you have previously configured your site's languages properly in the 'Site Languages' tab of the 'Languages' control panel."
 #: ../browser/templates/migration.pt:146
 msgid "description_relocate_content"
-msgstr ""
+msgstr "Pausu honek, elementuak beren hizkuntzaren arabera dagokien tokira mugituko ditu. Horretarako eduki zuhaitzean zehar gaizki kokatuta dauden elementuak topatuko ditu (adibidez, gaztelania hizkuntza gisa duten elementuak euskarazko zuhaitzean) eta dagokien tokira mugituko ditu. Pausu hau atzeraezina da eta zure eduki-zuhaitza aldatuko du. Ziurta zaitez aurrez zure atariaren hizkuntzak ondo konfiguratu dituzula 'Hizkuntzen kontrol-panelean'. Zerbitzariaren errore-erregistroan agertuko dira mugitu beharreko elementuen datuak."
 
 #. Default: "Delete translations or remove the relations"
 #: ../browser/menu.py:116
@@ -224,7 +224,7 @@ msgstr "Itzulpenak edo beren erlazioak ezabatu"
 #. Default: "The default language used for the content and the UI of this site."
 #: ../browser/controlpanel.py:200
 msgid "description_selector_lookup_translations_policy"
-msgstr ""
+msgstr "Defektuzko hizkuntza erabiltzen da edukiarentzat eta interfazearentzat."
 
 #. Default: "Set the default language on all content without language defined. This value is not stored so you need to check every time you want to run it"
 #: ../browser/controlpanel.py:83
@@ -234,7 +234,7 @@ msgstr "Hizkuntza definitu gabe duen edukiaren defektuzko hizkuntza aukeratu. Ba
 #. Default: "Set or change the current content language"
 #: ../browser/menu.py:178
 msgid "description_set_language"
-msgstr ""
+msgstr "Elementu honen hizkuntza ezarri edo aldatu"
 
 #. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
 #: ../browser/controlpanel.py:154
@@ -244,7 +244,7 @@ msgstr "Hizkuntzaren cookiea beti ezarri, adibidez baita 'set_language' parametr
 #. Default: "Show the language shared (neutral language) folder"
 #: ../browser/menu.py:163
 msgid "description_shared_folder"
-msgstr ""
+msgstr "Hizkuntzen artean partekatutako karpeta (neutrala) erakutsi"
 
 #. Default: "The default language used for the content and the UI of this site."
 #: ../browser/controlpanel.py:51
@@ -259,7 +259,7 @@ msgstr "Baila nagusiko domeinua erabili (esaterako www.plone.es edo www.plone.fr
 #. Default: "This step will transfer the relations between translations stored by LinguaPlone to the PAM catalog. This step is not destructive and can be executed as many times as needed."
 #: ../browser/templates/migration.pt:192
 msgid "description_transfer_multilingual_catalog_info"
-msgstr ""
+msgstr "Pausu honek LinguaPloneren elementuen arteko erlazioak sistema berrira migratuko ditu. Pausu honek ez du ezer deusezten eta nahi adina aldiz exekutatu daiteke."
 
 #. Default: "Translate into ${lang_name}"
 #: ../browser/menu.py:56
@@ -269,17 +269,17 @@ msgstr "${lang_name} hizkuntzara itzuli"
 #. Default: "Translation map."
 #: ../browser/templates/mmap.pt:106
 msgid "description_translation_map"
-msgstr ""
+msgstr "Itzulpenen mapa"
 
 #. Default: "Universal Language content link"
 #: ../browser/menu.py:148
 msgid "description_universal_link"
-msgstr ""
+msgstr "Elementuaren lotura unibertsala"
 
 #. Default: "Untranslated languages from the current content"
 #: ../browser/interfaces.py:42
 msgid "description_update_language"
-msgstr ""
+msgstr "Uneko elementuaren itzuli gabeko bertsioak"
 
 #. Default: "Use subdomain (e.g.: de.plone.org)."
 #: ../browser/controlpanel.py:164
@@ -289,7 +289,7 @@ msgstr "Azpidomeinua erabili (esaterako es.plone.org edo fr.plone.org)"
 #. Default: "Edit ${lang_name}"
 #: ../browser/menu.py:80
 msgid "edit_translation"
-msgstr ""
+msgstr "${lang_name} itzulpena editatu"
 
 #. Default: "Authenticated users only."
 #: ../browser/controlpanel.py:139
@@ -304,7 +304,7 @@ msgstr "Hizkuntzak"
 #. Default: "Available translations for this content"
 #: ../browser/templates/dexterity_edit.pt:15
 msgid "heading_available_translations"
-msgstr ""
+msgstr "Elementu honek dituen itzulpenak"
 
 #. Default: "Use browser language request negotiation."
 #: ../browser/controlpanel.py:178
@@ -339,12 +339,12 @@ msgstr "Elementuaren hizkuntza erabili"
 #. Default: "Products.LinguaPlone Migration"
 #: ../browser/templates/migration.pt:87
 msgid "heading_migration"
-msgstr ""
+msgstr "Products.LinguaPlone Migrazioa"
 
 #. Default: "Products.LinguaPlone After Migration"
 #: ../browser/templates/cleanup.pt:69
 msgid "heading_migration_after"
-msgstr ""
+msgstr "Products.LinguaPlone Migrazioaren Ostekoak"
 
 #. Default: "Move root content to default language folder"
 #: ../browser/controlpanel.py:93
@@ -354,7 +354,7 @@ msgstr "Atariaren erroko edukia defektuzko hizkuntzaren karpetara kopiatu"
 #. Default: "Not available in ${language}"
 #: ../browser/templates/not_translated_yet.pt:20
 msgid "heading_not_available_in_language"
-msgstr ""
+msgstr "Ez dago ${language }z"
 
 #. Default: "Redirect on creation to babel view."
 #: ../interfaces.py:28
@@ -364,7 +364,7 @@ msgstr "Sortzerakoan babel bistara berbideratu"
 #. Default: "The policy used to determine how the lookup for available translations will be made by the language selector."
 #: ../browser/controlpanel.py:197
 msgid "heading_selector_lookup_translations_policy"
-msgstr ""
+msgstr "Hizkuntza aldatzerakoan erabiliko den politika"
 
 #. Default: "Set the default language"
 #: ../browser/controlpanel.py:81
@@ -389,7 +389,7 @@ msgstr "1. mailako domeinua erabili (esaterako www.plone.es edo www.plone.fr)"
 #. Default: "plone.app.multilingual translation map"
 #: ../browser/templates/mmap.pt:96
 msgid "heading_translation_map"
-msgstr ""
+msgstr "Edukiaren itzulpenen mapa"
 
 #. Default: "Use subdomain (e.g.: de.plone.org)."
 #: ../browser/controlpanel.py:162
@@ -399,7 +399,7 @@ msgstr "Azpidomeinua erabili (esaterako www.plone.es)"
 #. Default: "The migration of LinguaPlone content depends on an up-to-date Language index. Use this step to refresh this index. Warning: Depending on the number of items in your site, this can take a considerable amount of time."
 #: ../browser/templates/migration.pt:115
 msgid "help_reindex_language_index"
-msgstr ""
+msgstr "LinguaPlonetik migrazioa egiteko hizkuntzari dagokion indizea guztiz eguneratuta egon behar da. Horretarako erabili orrialde hau. Oharra: zure atariak duen elementu-kopuruaren arabera, prozesu honek denbora asko har lezake."
 
 #. Default: "Add translations"
 #: ../browser/add_translation_form.py:20
@@ -409,42 +409,42 @@ msgstr "Itzulpenak gehitu"
 #. Default: "By updating the content language will trigger its move to the correct language folder in the site's hierarchy"
 #: ../browser/update_language_form.py:19
 msgid "label_alert_update"
-msgstr ""
+msgstr "Elementuaren hizkuntza aldatuz gero, hizkuntzaren arabera dagokion tokira mugituko da."
 
 #. Default: "All translations"
 #: ../browser/templates/mmap.pt:111
 msgid "label_all_translations"
-msgstr ""
+msgstr "Itzulpen guztiak"
 
 #. Default: "Cleanup actions"
 #: ../browser/templates/cleanup.pt:49
 #: ../browser/templates/controlpanel.pt:36
 msgid "label_cleanup"
-msgstr ""
+msgstr "Garbiketa-ekintzak"
 
 #. Default: "General"
 #: ../browser/templates/cleanup.pt:39
 #: ../browser/templates/controlpanel.pt:21
 #: ../browser/templates/migration.pt:60
 msgid "label_general"
-msgstr ""
+msgstr "Orokorra"
 
 #. Default: "After Migration actions"
 #: ../browser/templates/mmap.pt:79
 msgid "label_import2"
-msgstr ""
+msgstr "Migrazioaren osteko ekintzak"
 
 #. Default: "Migration"
 #: ../browser/templates/controlpanel.pt:31
 #: ../browser/templates/migration.pt:70
 #: ../browser/templates/mmap.pt:74
 msgid "label_migration"
-msgstr ""
+msgstr "Migrazioa"
 
 #. Default: "Missing translations"
 #: ../browser/templates/mmap.pt:110
 msgid "label_missing_translations"
-msgstr ""
+msgstr "Falta diren itzulpenak"
 
 #. Default: "Remove translations"
 #: ../browser/remove_translation_form.py:20
@@ -459,11 +459,10 @@ msgstr "Gorde"
 #. Default: "Total objects handled:"
 #: ../browser/templates/migrator-results.pt:5
 msgid "label_total_objects_translated"
-msgstr ""
+msgstr "Aztertu den elementu kopurua:"
 
 #. Default: "Translate"
 #: ../browser/menu.py:195
-#, fuzzy
 msgid "label_translate_menu"
 msgstr "Itzuli..."
 
@@ -472,64 +471,64 @@ msgstr "Itzuli..."
 #: ../browser/templates/controlpanel.pt:26
 #: ../browser/templates/migration.pt:65
 msgid "label_translation_map"
-msgstr ""
+msgstr "Itzulpen-mapa"
 
 #. Default: "Up to Site Setup"
 #: ../browser/templates/cleanup.pt:73
 #: ../browser/templates/migration.pt:90
 #: ../browser/templates/mmap.pt:99
 msgid "label_up_to_plone_setup"
-msgstr ""
+msgstr "Atariaren konfigurazioa"
 
 #. Default: "Update Language"
 #: ../browser/update_language_form.py:18
 msgid "label_update_language"
-msgstr ""
+msgstr "Hizkuntza eguneratu"
 
 #. Default: "Return to language folder"
 #: ../browser/menu.py:130
 msgid "language_folder"
-msgstr ""
+msgstr "Hizkuntzaren karpetara joan"
 
 #. Default: "Step 3 - Cleanup after migration"
 #: ../browser/templates/migration.pt:219
 msgid "legend_after_migration_cleanup"
-msgstr ""
+msgstr "3. pausua - Migrazioaren osteko garbiketa"
 
 #. Default: "Optional step - Reindex the Language index"
 #: ../browser/templates/migration.pt:111
 msgid "legend_reindex_language_index"
-msgstr ""
+msgstr "Hautazko pausua - Hizkuntza-indizea berindexatu"
 
 #. Default: "Step 1 - Relocate content to the proper root language folder"
 #: ../browser/templates/migration.pt:142
 msgid "legend_relocate_content"
-msgstr ""
+msgstr "1. pausua - Edukia dagokion hizkuntzaren karpetara mugitu"
 
 #. Default: "Step 2 - Transfer multilingual catalog information"
 #: ../browser/templates/migration.pt:188
 msgid "legend_transfer_multilingual_catalog_info"
-msgstr ""
+msgstr "2. pausua - Itzulpenen informazioa migratu"
 
 #. Default: "This form allows you to add currently existing objects to be the translations of the current object. You have to manually select both the language and the object."
 #: ../browser/add_translation_form.py:21
 msgid "long_description_add_translations"
-msgstr ""
+msgstr "Formulario honek jadanik atarian duzun elementu bat uneko elementuaren itzulpen gisa konfiguratzeko aukera ematen dizu. Zeuk aukeratu beharko dituzu bai elementua eta bai zein hizkuntzatan dagoen."
 
 #. Default: "This form allows you to remove the existing translations of the current object. You can just delete the link between the objects or you can delete the object itself."
 #: ../browser/remove_translation_form.py:22
 msgid "long_description_remove_translations"
-msgstr ""
+msgstr "Formulario honek elementu baten itzulpenak ezabatzeko aukera ematen dizu. Uneko elementuaren eta itzulpenaren arteko lotura edo itzulpena duen elementua ezabatzeko aukera ematen dizu. "
 
 #. Default: "Missing languages:"
 #: ../browser/templates/mmap.pt:147
 msgid "missing_languages"
-msgstr ""
+msgstr "Falta diren hizkuntzak:"
 
 #. Default: "Your site is not configured with more than one allowed language, but the add-on that provides support for content in multiple language is installed. You can add one or more additional languages from the ${control-panel-link}."
 #: ../browser/templates/languages-notice.pt:11
 msgid "not_configured_for_multiple_languages"
-msgstr ""
+msgstr "Zure ataria ez dago hizkuntza bat baino gehiago erabiltzeko konfiguratuta, baina eduki eleanitza izateko produktua instalatuta dago. Hizkuntza gehiago hemendik gehitu dezakezu: ${control-panel-link}."
 
 #: ../browser/remove_translation_form.py:39
 msgid "remove selected"
@@ -538,7 +537,7 @@ msgstr "Aukeratutako ezabaldu"
 #. Default: "Go to shared folder"
 #: ../browser/menu.py:161
 msgid "shared_folder"
-msgstr ""
+msgstr "Partekatutako karpetara joan"
 
 #. Default: "Add translations..."
 #: ../browser/menu.py:100
@@ -548,12 +547,12 @@ msgstr "Itzulpenak gehitu..."
 #. Default: "Available languages"
 #: ../browser/interfaces.py:41
 msgid "title_available_languages"
-msgstr ""
+msgstr "Hizkuntzak"
 
 #. Default: "Edit with babel view"
 #: ../browser/menu.py:35
 msgid "title_babel_edit"
-msgstr ""
+msgstr "Babel bistarekin editatu"
 
 #. Default: "Language"
 #: ../browser/interfaces.py:33
@@ -572,7 +571,7 @@ msgstr "Itzulpenak ezabatu..."
 #. Default: "Set content language"
 #: ../browser/menu.py:176
 msgid "title_set_language"
-msgstr ""
+msgstr "Edukiaren hizkuntza ezarri"
 
 #. Default: "Manage translations for your content."
 #: ../browser/menu.py:196
@@ -582,17 +581,17 @@ msgstr "Zure edukiaren itzulpenak kudeatu."
 #. Default: "Translations:"
 #: ../browser/templates/mmap.pt:155
 msgid "translation"
-msgstr ""
+msgstr "Itzulpenak:"
 
 #. Default: "Translation to ${language}"
 #: ../browser/templates/dexterity_edit.pt:33
 msgid "translation_to"
-msgstr ""
+msgstr "Itzulpena: ${language}"
 
 #. Default: "Universal Link"
 #: ../browser/menu.py:146
 msgid "universal_link"
-msgstr ""
+msgstr "Lotura Unibertsala"
 
 #: ../browser/remove_translation_form.py:29
 msgid "unlink selected"
@@ -601,5 +600,5 @@ msgstr "Aukeratutako lotura desegin"
 #. Default: "Update Language"
 #: ../browser/update_language_form.py:22
 msgid "update_language"
-msgstr ""
+msgstr "Hizkuntza eguneratu"
 
