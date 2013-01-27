@@ -19,6 +19,9 @@
           $('.results').html('<img src="spinner.gif">');
           var blacklist = $('textarea#blacklist')[0].value;
           var url = "@@relocate-content?blacklist:list=" + blacklist.split('\n').join('&blacklist:list=');
+          $('html, body').animate({
+              scrollTop: $('.results').offset().top
+          }, 2000);
           $.get(url, function(data) {
             $('.results').html(data)
           });
@@ -27,6 +30,9 @@
         $('.formControls input[name="form.button.transfer-lp-catalog"]').click(function (event) {
           event.preventDefault();
           $('.results').html('<img src="spinner.gif">');
+          $('html, body').animate({
+              scrollTop: $('.results').offset().top
+          }, 2000);
           $.get('@@transfer-lp-catalog', function(data) {
             $('.results').html(data)
           });
@@ -35,6 +41,9 @@
         $('.formControls input[name="form.button.after-migration-cleanup"]').click(function (event) {
           event.preventDefault();
           $('.results').html('<img src="spinner.gif">');
+          $('html, body').animate({
+              scrollTop: $('.results').offset().top
+          }, 2000);
           $.get('@@after-migration-cleanup', function(data) {
             $('.results').html(data)
           });
@@ -43,6 +52,9 @@
        $('.formControls input[name="form.button.reindex-language-index"]').click(function (event) {
           event.preventDefault();
           $('.results').html('<img src="spinner.gif">');
+          $('html, body').animate({
+              scrollTop: $('.results').offset().top
+          }, 2000);
           $.get('@@reindex-language-index', function(data) {
             $('.results').html(data)
           });
