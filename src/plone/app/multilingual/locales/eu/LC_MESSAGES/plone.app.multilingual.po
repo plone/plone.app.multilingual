@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
 "POT-Creation-Date: 2013-01-27 12:26+0000\n"
-"PO-Revision-Date: 2013-01-27 11:24+0100\n"
+"PO-Revision-Date: 2013-01-27 13:29+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: eu <eu@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../browser/migrator.py:67
 msgid "After migration relation cleanup"
-msgstr ""
+msgstr "Migrazioaren osteko garbiketa"
 
 #: ../browser/controlpanel.py:416
 msgid "All the configuration of P.A.M. If you want to set the default language to all the content without language and move all the content on the root folder to the default language folder, go to Extra Options section "
@@ -93,7 +93,7 @@ msgstr "Birkokatu"
 
 #: ../browser/migrator.py:111
 msgid "Relocate content to the proper root language folder"
-msgstr ""
+msgstr "Edukia dagokion hizkuntzaren karpetan kokatu"
 
 #: ../browser/controlpanel.py:186
 msgid "Search for closest translation in parent's content chain."
@@ -121,7 +121,7 @@ msgstr "Migratu"
 
 #: ../browser/migrator.py:32
 msgid "Transfer multilingual catalog information"
-msgstr ""
+msgstr "LinguaPloneren informazioa katalogora migratu"
 
 #. Default: "Add translations"
 #: ../browser/add_translation_form.py:28
@@ -215,7 +215,7 @@ msgstr "LinguaPlonek funtzionatzeko behar dituen erlazioak oraindik ere konfigur
 #. Default: "Here you will see the results of the migration process"
 #: ../browser/templates/migration.pt:265
 msgid "description_migration_results"
-msgstr ""
+msgstr "Hemen migrazioaren emaitzak ikusiko dituzu"
 
 #. Default: "Move the content that is on the root folder to the default language folder. This value is not stored so you need to check every time you want to run it"
 #: ../browser/controlpanel.py:95
@@ -445,7 +445,7 @@ msgstr "Itzulpen guztiak"
 #. Default: "Unfortunately a number of relations could not be translated and are lost! here is some debug information:"
 #: ../browser/templates/cleanup_results.pt:27
 msgid "label_bad_relations"
-msgstr ""
+msgstr "Erlazio batzuk ezin izan dira itzuli eta galdu egin dira! Hemen arazteko informazioa:"
 
 #. Default: "Cleanup actions"
 #: ../browser/templates/cleanup.pt:49
@@ -490,7 +490,7 @@ msgstr "Aztertu den elementu kopurua:"
 #. Default: "Number of relations touched:"
 #: ../browser/templates/cleanup_results.pt:21
 msgid "label_total_relations"
-msgstr ""
+msgstr "Ukitutako erlazio kopurua:"
 
 #. Default: "Translate"
 #: ../browser/menu.py:195
@@ -554,7 +554,7 @@ msgstr "Formulario honek elementu baten itzulpenak ezabatzeko aukera ematen dizu
 #. Default: "The \"Language\" index was re-indexed correctly. Before, it contained ${previous_items_number} items, now it contains ${after_items_number}"
 #: ../browser/templates/reindex-results.pt:24
 msgid "migration_reindex_results"
-msgstr ""
+msgstr "Hizkuntzaren indizea ondo berindexatu da. Lehen ${previous_items_number} elementu zituen eta orain ${after_items_number}."
 
 #. Default: "Missing languages:"
 #: ../browser/templates/mmap.pt:142
@@ -569,12 +569,12 @@ msgstr "Zure ataria ez dago hizkuntza bat baino gehiago erabiltzeko konfiguratut
 #. Default: "It's not possible to execute this step without uninstalling completely LinguaPlone: uninstall in the add-ons control panel, delete it from your buildout and re-run buildout. Then come here and try again."
 #: ../browser/templates/migration.pt:234
 msgid "relation_migration_with_lp_not_posible"
-msgstr ""
+msgstr "Ezin da pausu hau exekutatu LinguaPlone guztiz desinstalatu gabe: produktuen kontrol-paneletik desinstalatu lehenengo, ondoren buildout-etik kendu eta azkenik exekutatu buildout-a berriz ere. Guzti hori egindakoan, etorri berriz hona."
 
 #. Default: "Your site has no relation catalog, and therefore this migration step is not needed"
 #: ../browser/templates/migration.pt:242
 msgid "relation_migration_with_not_needed"
-msgstr ""
+msgstr "Zure atariak ez du erlazio-kataloorik eta beraz, ez pausu hau ez da beharrezkoa."
 
 #: ../browser/remove_translation_form.py:39
 msgid "remove selected"
