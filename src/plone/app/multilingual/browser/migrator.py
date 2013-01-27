@@ -1,8 +1,6 @@
-from Acquisition import aq_inner, aq_parent
+from Acquisition import aq_parent
 from zope.component.hooks import getSite
 from plone.multilingual.interfaces import ITranslationManager
-from plone.multilingual.interfaces import ITranslationLocator, ILanguage
-from plone.app.folder.utils import findObjects
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -66,6 +64,7 @@ class LP2PAMView(BrowserView):
 class LP2PAMAfterView(BrowserView):
 
     template = ViewPageTemplateFile('templates/cleanup_results.pt')
+    stepinfo = _(u"After migration relation cleanup")
 
     def reset_relation_catalog(self):
         """
@@ -108,8 +107,8 @@ class moveContentToProperRLF(BrowserView):
         parent.
     """
 
-    template = ViewPageTemplateFile('templates/migrator-results.pt')
-    stepinfo = u"Relocate content to the proper root language folder"
+    template = ViewPageTemplateFile('templates/relocate-results.pt')
+    stepinfo = _(u"Relocate content to the proper root language folder")
     blacklist = list()
 
     def findContent(self, content, depth):
@@ -140,7 +139,7 @@ class moveContentToProperRLF(BrowserView):
     def __call__(self):
         """ Note: Steps names don't correspond with the control panel ones """
         self.blacklist = [x.strip() for x in
-            self.request.get('blacklist', list()) if x.strip() != '']
+            self.request.form.get('blacklist[]') if x.strip() != '']
         self.results = self.step1andstep2()
         self.results += self.step3()
         return self.template()

@@ -34,7 +34,7 @@ import json
 
 from plone.app.multilingual import isLPinstalled
 from plone.app.multilingual.browser.migrator import portal_types_blacklist
-from plone.multilingual.interfaces import ITranslationManager, ILanguage
+from plone.multilingual.interfaces import ILanguage
 
 from Products.CMFPlone import PloneMessageFactory as _Plone
 from zope.i18nmessageid import MessageFactory

@@ -15,20 +15,18 @@
 
     $().ready(function() {
         $('#lp-migration-relocate-content').submit(function () {
-          $('.results').html('<img src="spinner.gif">');
           var blacklist = $('textarea#blacklist')[0].value;
-          var url = "@@relocate-content?blacklist:list=" + blacklist.split('\n').join('&blacklist:list=');
           $('html, body').animate({
               scrollTop: $('.results').offset().top
           }, 2000);
-          $.get(url, function(data) {
-            $('.results').html(data)
-          });
+          $('.results').load('@@relocate-content #results',
+                              {'blacklist': blacklist.split('\n')},
+                              {dataType: 'json'}
+          );
           return false;
         });
 
         $('#lp-migration-transfer-catalog').submit(function () {
-          $('.results').html('<img src="spinner.gif">');
           $('html, body').animate({
               scrollTop: $('.results').offset().top
           }, 2000);
@@ -37,18 +35,14 @@
         });
 
         $('#lp-migration-after-migration').submit(function () {
-          $('.results').html('<img src="spinner.gif">');
           $('html, body').animate({
               scrollTop: $('.results').offset().top
           }, 2000);
-          $.get('@@after-migration-cleanup', function(data) {
-            $('.results').html(data)
-          });
+          $('.results').load('@@after-migration-cleanup #results');
           return false;
         });
 
        $('#lp-migration-reindex-content').submit(function () {
-          $('.results').html('<img src="spinner.gif">');
           $('html, body').animate({
               scrollTop: $('.results').offset().top
           }, 2000);
@@ -221,8 +215,7 @@
             </form>
 
             <form id="lp-migration-after-migration"
-                  tal:condition="view/hasRelationCatalog"
-                  tal:attributes="action string:${portal_url}/after-migration-cleanup"
+                  tal:attributes="action python:not view.isLPinstalled and view.hasRelationCatalog and portal_url + '/after-migration-cleanup'"
                   method="post">
               <fieldset>
                 <legend i18n:translate="legend_after_migration_cleanup">
@@ -238,7 +231,22 @@
 
                 </p>
 
-                <div class="formControls">
+                <p tal:condition="view/isLPinstalled"
+                    i18n:translate="relation_migration_with_lp_not_posible">
+                    It's not possible to execute this step without
+                    uninstalling completely LinguaPlone: uninstall in the
+                    add-ons control panel, delete it from your buildout
+                    and re-run buildout. Then come here and try again.
+                </p>
+
+                <p tal:condition="python:not view.isLPinstalled and not view.hasRelationCatalog"
+                    i18n:translate="relation_migration_with_not_needed">
+                    Your site has no relation catalog, and therefore this
+                    migration step is not needed
+                </p>
+
+                <div class="formControls"
+                     tal:condition="python:not view.isLPinstalled and view.hasRelationCatalog">
                     <input
                         type="submit"
                         name="form.button.after-migration-cleanup"
@@ -254,6 +262,9 @@
 
             <div class="results">
               <h2 i18n:translate="heading_migration_results">Migration results</h2>
+              <p i18n:translate="description_migration_results">
+                Here you will see the results of the migration process
+              </p>
             </div>
         </div>
       </div>
