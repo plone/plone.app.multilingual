@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
 "POT-Creation-Date: 2013-01-27 10:10+0000\n"
-"PO-Revision-Date: 2013-01-27 10:45+0100\n"
+"PO-Revision-Date: 2013-01-27 11:16+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: eu <eu@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -45,7 +45,7 @@ msgstr "Hala ere, hemen dituzu hizkuntza batzuetan eginda dauden elementu honen 
 
 #: ../browser/controlpanel.py:390
 msgid "If you are installing PAM for the first time in a Plone site, either if it's on an existing or a brand new one you should run the following procedures in order to move the default site content to its right root language folder and be sure that all the content have the language attribute set up correctly. Previous to run them, please be sure that you have set up your site's languages in the 'Site languages' tab and have saved that setting. Finally, in case you have an existing Plone site with Products.LinguaPlone installed, please do not run this steps and refer directly to the 'Migration' tab."
-msgstr ""
+msgstr "plone.app.multilingual lehenengoz instalatzen ari bazara, edukia duen atari baten edo berri bat, honako pauso hauek, dagokien ordenean, exekutatu behar dituzu, edukia hizkuntzaren arabera dagokion tokira mugitu eta hizkuntzari dagokion atributua ondo dutela ziurtatzeko. Pausuak exekutatu aurretik, ziurtatu atariaren hizkuntzak ondo ezarri eta gorde dituzula. Azkenik, atari honetan Products.LinguaPlone instalatuta baduzu, ez exekutatu pausu hauek, joan 'Migrazioa' izeneko aukerara."
 
 #: ../browser/translate.py:74
 msgid "Invalid field"
