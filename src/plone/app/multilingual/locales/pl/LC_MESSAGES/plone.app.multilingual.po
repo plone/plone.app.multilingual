@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
-"POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"POT-Creation-Date: 2013-01-27 12:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Radek Jankiewicz <radoslaw.jankiewicz@gmail.com>\n"
 "Language-Team: plone-cat <plone-cat@plone.org>\n"
@@ -14,6 +14,10 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin2\n"
 "Domain: plone.app.multilingual\n"
 
+#: ../browser/migrator.py:67
+msgid "After migration relation cleanup"
+msgstr ""
+
 #: ../browser/controlpanel.py:416
 msgid "All the configuration of P.A.M. If you want to set the default language to all the content without language and move all the content on the root folder to the default language folder, go to Extra Options section "
 msgstr "Panel konfiguracyjny dla ustawień wersji językowych. Jeśli chcesz ustawić domyślny język dla wszystkich obiektów bez ustawionego języka i przenieść treść do folderu domyślnego języka - przejdź do sekcji Dodatkowych opcji "
@@ -23,7 +27,7 @@ msgid "Clean site setup"
 msgstr ""
 
 #: ../browser/templates/cleanup.pt:93
-#: ../browser/templates/migration.pt:233
+#: ../browser/templates/migration.pt:250
 msgid "Cleanup"
 msgstr ""
 
@@ -38,6 +42,10 @@ msgstr "Dodatkowe opcje"
 #: ../browser/templates/not_translated_yet.pt:28
 msgid "However, this is the list of the already translated languages for the requested content."
 msgstr "Lista języków na które został przetłumaczony wybrany obiekt"
+
+#: ../browser/controlpanel.py:390
+msgid "If you are installing PAM for the first time in a Plone site, either if it's on an existing or a brand new one you should run the following procedures in order to move the default site content to its right root language folder and be sure that all the content have the language attribute set up correctly. Previous to run them, please be sure that you have set up your site's languages in the 'Site languages' tab and have saved that setting. Finally, in case you have an existing Plone site with Products.LinguaPlone installed, please do not run this steps and refer directly to the 'Migration' tab."
+msgstr ""
 
 #: ../browser/translate.py:74
 msgid "Invalid field"
@@ -71,12 +79,16 @@ msgstr "Nie przetłumaczone"
 msgid "Policies"
 msgstr "Zasady"
 
-#: ../browser/templates/migration.pt:125
+#: ../browser/templates/migration.pt:128
 msgid "Reindex"
 msgstr ""
 
-#: ../browser/templates/migration.pt:171
+#: ../browser/templates/migration.pt:174
 msgid "Relocate"
+msgstr ""
+
+#: ../browser/migrator.py:111
+msgid "Relocate content to the proper root language folder"
 msgstr ""
 
 #: ../browser/controlpanel.py:186
@@ -99,8 +111,12 @@ msgstr "Ten obiekt nie został jeszcze przetłumaczony na wybrany język."
 msgid "This item doesn't have any translation yet. You can return to the portal site:"
 msgstr ""
 
-#: ../browser/templates/migration.pt:201
+#: ../browser/templates/migration.pt:204
 msgid "Transfer"
+msgstr ""
+
+#: ../browser/migrator.py:32
+msgid "Transfer multilingual catalog information"
 msgstr ""
 
 #. Default: "Add translations"
@@ -123,7 +139,7 @@ msgid "description_add_translations"
 msgstr "Dodaj istniejącą treść jako werjsę językową"
 
 #. Default: "This step will fix some lost dependencies to the ITranslatable interface hidden in the relation catalog and it gets rid of them. It must be run only when LinguaPlone is already uninstalled."
-#: ../browser/templates/migration.pt:223
+#: ../browser/templates/migration.pt:225
 msgid "description_after_migration_cleanup"
 msgstr ""
 
@@ -183,7 +199,7 @@ msgid "description_language_of_the_content"
 msgstr "Ustawia język zgodny z wersją językową danego obiektu."
 
 #. Default: "The migration process is divided into four steps, listed below. Each one of the steps has a well defined purpose explained. Some of them are destructive, so please read each one of it and do not try to run it on production servers without testing it previously."
-#: ../browser/templates/migration.pt:97
+#: ../browser/templates/migration.pt:99
 #, fuzzy
 msgid "description_migrate"
 msgstr "Opis procesu migracji"
@@ -192,6 +208,11 @@ msgstr "Opis procesu migracji"
 #: ../browser/templates/cleanup.pt:80
 msgid "description_migrate_after"
 msgstr "Uwaga! Wykonanie tego kroku spowoduje przebudowania katalogu. W przypadku niepowodzenia mogą zostać utracone relacje pomiędzy wersjami językowymi. Zanim wykonasz ten krok - upewnij się, że wykonałeś kopię zapasową bazy danych."
+
+#. Default: "Here you will see the results of the migration process"
+#: ../browser/templates/migration.pt:265
+msgid "description_migration_results"
+msgstr ""
 
 #. Default: "Move the content that is on the root folder to the default language folder. This value is not stored so you need to check every time you want to run it"
 #: ../browser/controlpanel.py:95
@@ -204,12 +225,12 @@ msgid "description_redirect_babel_view"
 msgstr "Po utworzeniu nowej wersji językowej przekieruj do widoku Babel"
 
 #. Default: "Use this field to define portal types that will not be traversed for finding content to move. All content of those types will be moved with all contained sub-items. This is useful for content types that are themselves translatable, but contain sub-content that is not translatable or does not have a language set.<br /> This list is pre-filled with some portal types, but you can add additional ones if needed, one per line."
-#: ../browser/templates/migration.pt:158
+#: ../browser/templates/migration.pt:161
 msgid "description_relocate_blacklist"
 msgstr ""
 
 #. Default: "This step will move the site's content to its corresponding root language folder and previously will make a search for misplaced content through the site's content tree and will move them to its nearest translated parent. This step is destructive as it will alter your content tree structure. Make sure you have previously configured your site's languages properly in the 'Site Languages' tab of the 'Languages' control panel."
-#: ../browser/templates/migration.pt:146
+#: ../browser/templates/migration.pt:149
 msgid "description_relocate_content"
 msgstr ""
 
@@ -254,7 +275,7 @@ msgid "description_top_level_domain"
 msgstr "Używaj domeny najwyższego poziomu (np. www.plone.pl)"
 
 #. Default: "This step will transfer the relations between translations stored by LinguaPlone to the PAM catalog. This step is not destructive and can be executed as many times as needed."
-#: ../browser/templates/migration.pt:192
+#: ../browser/templates/migration.pt:195
 msgid "description_transfer_multilingual_catalog_info"
 msgstr ""
 
@@ -264,7 +285,7 @@ msgid "description_translate_into"
 msgstr "Przetłumacz na ${lang_name}"
 
 #. Default: "Translation map."
-#: ../browser/templates/mmap.pt:106
+#: ../browser/templates/mmap.pt:101
 msgid "description_translation_map"
 msgstr "Mapa tłumaczeń."
 
@@ -334,7 +355,7 @@ msgid "heading_language_of_the_content"
 msgstr "Ustaw język zgodny z wersją językową danego obiektu."
 
 #. Default: "Products.LinguaPlone Migration"
-#: ../browser/templates/migration.pt:87
+#: ../browser/templates/migration.pt:89
 msgid "heading_migration"
 msgstr "Migracja z Products.LinguaPlone"
 
@@ -342,6 +363,11 @@ msgstr "Migracja z Products.LinguaPlone"
 #: ../browser/templates/cleanup.pt:69
 msgid "heading_migration_after"
 msgstr "Kroki pomigracyjne"
+
+#. Default: "Migration results"
+#: ../browser/templates/migration.pt:264
+msgid "heading_migration_results"
+msgstr ""
 
 #. Default: "Move root content to default language folder"
 #: ../browser/controlpanel.py:93
@@ -384,7 +410,7 @@ msgid "heading_top_level_domain"
 msgstr "Używaj domeny najwyższego poziomu (np. www.plone.pl)"
 
 #. Default: "plone.app.multilingual translation map"
-#: ../browser/templates/mmap.pt:96
+#: ../browser/templates/mmap.pt:91
 msgid "heading_translation_map"
 msgstr "Mapa wersji językowych"
 
@@ -394,7 +420,7 @@ msgid "heading_use_subdomain"
 msgstr "Używaj subdomeny (np. pl.plone.org)"
 
 #. Default: "The migration of LinguaPlone content depends on an up-to-date Language index. Use this step to refresh this index. Warning: Depending on the number of items in your site, this can take a considerable amount of time."
-#: ../browser/templates/migration.pt:115
+#: ../browser/templates/migration.pt:118
 msgid "help_reindex_language_index"
 msgstr ""
 
@@ -409,37 +435,36 @@ msgid "label_alert_update"
 msgstr "Podczas zmiany języka użytkownik zostanie przeniesiony do poprawnego folderu językowego w hierarchii witryny."
 
 #. Default: "All translations"
-#: ../browser/templates/mmap.pt:111
+#: ../browser/templates/mmap.pt:106
 msgid "label_all_translations"
 msgstr "Wszystkie tłumaczenia"
 
+#. Default: "Unfortunately a number of relations could not be translated and are lost! here is some debug information:"
+#: ../browser/templates/cleanup_results.pt:27
+msgid "label_bad_relations"
+msgstr ""
+
 #. Default: "Cleanup actions"
 #: ../browser/templates/cleanup.pt:49
-#: ../browser/templates/controlpanel.pt:36
 msgid "label_cleanup"
 msgstr ""
 
 #. Default: "General"
 #: ../browser/templates/cleanup.pt:39
 #: ../browser/templates/controlpanel.pt:21
-#: ../browser/templates/migration.pt:60
+#: ../browser/templates/migration.pt:62
 msgid "label_general"
 msgstr "Ogólne"
 
-#. Default: "After Migration actions"
-#: ../browser/templates/mmap.pt:79
-msgid "label_import2"
-msgstr "Akcje dokonane po migracji."
-
 #. Default: "Migration"
 #: ../browser/templates/controlpanel.pt:31
-#: ../browser/templates/migration.pt:70
+#: ../browser/templates/migration.pt:72
 #: ../browser/templates/mmap.pt:74
 msgid "label_migration"
 msgstr "Migracja"
 
 #. Default: "Missing translations"
-#: ../browser/templates/mmap.pt:110
+#: ../browser/templates/mmap.pt:105
 msgid "label_missing_translations"
 msgstr "Brakujące tłumaczenia"
 
@@ -454,8 +479,14 @@ msgid "label_save"
 msgstr "Zapisz"
 
 #. Default: "Total objects handled:"
-#: ../browser/templates/migrator-results.pt:5
+#: ../browser/templates/migrator-results.pt:20
+#: ../browser/templates/relocate-results.pt:20
 msgid "label_total_objects_translated"
+msgstr ""
+
+#. Default: "Number of relations touched:"
+#: ../browser/templates/cleanup_results.pt:21
+msgid "label_total_relations"
 msgstr ""
 
 #. Default: "Translate"
@@ -466,14 +497,14 @@ msgstr "Tłumacz"
 #. Default: "Translation Map"
 #: ../browser/templates/cleanup.pt:44
 #: ../browser/templates/controlpanel.pt:26
-#: ../browser/templates/migration.pt:65
+#: ../browser/templates/migration.pt:67
 msgid "label_translation_map"
 msgstr "Mapa wersji językowych"
 
 #. Default: "Up to Site Setup"
 #: ../browser/templates/cleanup.pt:73
-#: ../browser/templates/migration.pt:90
-#: ../browser/templates/mmap.pt:99
+#: ../browser/templates/migration.pt:92
+#: ../browser/templates/mmap.pt:94
 msgid "label_up_to_plone_setup"
 msgstr "Wróć do ustawień witryny"
 
@@ -488,22 +519,22 @@ msgid "language_folder"
 msgstr "Wróć do folderu języka"
 
 #. Default: "Step 3 - Cleanup after migration"
-#: ../browser/templates/migration.pt:219
+#: ../browser/templates/migration.pt:221
 msgid "legend_after_migration_cleanup"
 msgstr ""
 
 #. Default: "Optional step - Reindex the Language index"
-#: ../browser/templates/migration.pt:111
+#: ../browser/templates/migration.pt:114
 msgid "legend_reindex_language_index"
 msgstr ""
 
 #. Default: "Step 1 - Relocate content to the proper root language folder"
-#: ../browser/templates/migration.pt:142
+#: ../browser/templates/migration.pt:145
 msgid "legend_relocate_content"
 msgstr ""
 
 #. Default: "Step 2 - Transfer multilingual catalog information"
-#: ../browser/templates/migration.pt:188
+#: ../browser/templates/migration.pt:191
 msgid "legend_transfer_multilingual_catalog_info"
 msgstr ""
 
@@ -517,14 +548,29 @@ msgstr ""
 msgid "long_description_remove_translations"
 msgstr ""
 
+#. Default: "The \"Language\" index was re-indexed correctly. Before, it contained ${previous_items_number} items, now it contains ${after_items_number}"
+#: ../browser/templates/reindex-results.pt:24
+msgid "migration_reindex_results"
+msgstr ""
+
 #. Default: "Missing languages:"
-#: ../browser/templates/mmap.pt:147
+#: ../browser/templates/mmap.pt:142
 msgid "missing_languages"
 msgstr "Brakujące języki:"
 
 #. Default: "Your site is not configured with more than one allowed language, but the add-on that provides support for content in multiple language is installed. You can add one or more additional languages from the ${control-panel-link}."
 #: ../browser/templates/languages-notice.pt:11
 msgid "not_configured_for_multiple_languages"
+msgstr ""
+
+#. Default: "It's not possible to execute this step without uninstalling completely LinguaPlone: uninstall in the add-ons control panel, delete it from your buildout and re-run buildout. Then come here and try again."
+#: ../browser/templates/migration.pt:234
+msgid "relation_migration_with_lp_not_posible"
+msgstr ""
+
+#. Default: "Your site has no relation catalog, and therefore this migration step is not needed"
+#: ../browser/templates/migration.pt:242
+msgid "relation_migration_with_not_needed"
 msgstr ""
 
 #: ../browser/remove_translation_form.py:39
@@ -576,7 +622,7 @@ msgid "title_translate_menu"
 msgstr "Zarządzaj tłumaczeniami obiektu"
 
 #. Default: "Translations:"
-#: ../browser/templates/mmap.pt:155
+#: ../browser/templates/mmap.pt:150
 msgid "translation"
 msgstr "Wersje językowe:"
 

@@ -1,6 +1,17 @@
 Changelog
 =========
 
+1.0 - UNRELEASED
+----------------------
+
+- Clean the migration template [erral]
+
+- Don't assume a transition called 'publish' will exist [erral]
+
+- Show language name if no native language information is available.
+  [saily]
+
+
 1.0rc1 - 2013-01-26
 -------------------
 

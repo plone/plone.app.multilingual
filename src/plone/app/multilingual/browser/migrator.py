@@ -1,13 +1,10 @@
-from Acquisition import aq_inner, aq_parent
+from Acquisition import aq_parent
 from zope.component.hooks import getSite
 from plone.multilingual.interfaces import ITranslationManager
-from plone.multilingual.interfaces import ITranslationLocator, ILanguage
-from plone.app.folder.utils import findObjects
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFPlone.interfaces import IPloneSiteRoot
-from plone.app.layout.navigation.interfaces import INavigationRoot
 from zc.relation.interfaces import ICatalog
 from zope.component import getUtility
 from zope.component.interfaces import ComponentLookupError
@@ -15,7 +12,7 @@ import logging
 from Acquisition import aq_base
 from Products.CMFCore.exceptions import ResourceLockedError
 from plone.locking.interfaces import ILockable
-
+from plone.app.multilingual import _
 try:
     from Products.LinguaPlone.interfaces import ITranslatable
 except:
@@ -32,7 +29,7 @@ class LP2PAMView(BrowserView):
     """View for migrating multilingual catalog from LP to PAM"""
 
     template = ViewPageTemplateFile('templates/migrator-results.pt')
-    stepinfo = u"Transfer multilingual catalog information"
+    stepinfo = _(u"Transfer multilingual catalog information")
 
     def __call__(self):
         pc = getToolByName(self.context, 'portal_catalog')
@@ -67,6 +64,7 @@ class LP2PAMView(BrowserView):
 class LP2PAMAfterView(BrowserView):
 
     template = ViewPageTemplateFile('templates/cleanup_results.pt')
+    stepinfo = _(u"After migration relation cleanup")
 
     def reset_relation_catalog(self):
         """
@@ -109,8 +107,8 @@ class moveContentToProperRLF(BrowserView):
         parent.
     """
 
-    template = ViewPageTemplateFile('templates/migrator-results.pt')
-    stepinfo = u"Relocate content to the proper root language folder"
+    template = ViewPageTemplateFile('templates/relocate-results.pt')
+    stepinfo = _(u"Relocate content to the proper root language folder")
     blacklist = list()
 
     def findContent(self, content, depth):
@@ -140,8 +138,8 @@ class moveContentToProperRLF(BrowserView):
 
     def __call__(self):
         """ Note: Steps names don't correspond with the control panel ones """
-        self.blacklist = [x.strip() for x in 
-            self.request.get('blacklist', list()) if x.strip() != '']
+        self.blacklist = [x.strip() for x in
+            self.request.form.get('blacklist[]') if x.strip() != '']
         self.results = self.step1andstep2()
         self.results += self.step3()
         return self.template()
@@ -255,13 +253,14 @@ class moveContentToProperRLF(BrowserView):
 
 class LP2PAMReindexLanguageIndex(BrowserView):
 
+    template = ViewPageTemplateFile('templates/reindex-results.pt')
+    stepinfo = u"Reindex the LanguageIndex"
+
     def __call__(self):
         pc = getToolByName(self.context, 'portal_catalog')
         index = pc._catalog.getIndex('Language')
-        items_before = index.numObjects()
+        self.items_before = index.numObjects()
         pc.manage_reindexIndex(ids=['Language'])
-        items_after = index.numObjects()
-        output = '<div class="resultInfo"><h3>Reindex language index</h3>' \
-        'The "Language" index was re-indexed. Before, it contained %d '\
-        'items, now it contains %d items.</div>' % (items_before, items_after)
-        return output
+        self.items_after = index.numObjects()
+
+        return self.template()
