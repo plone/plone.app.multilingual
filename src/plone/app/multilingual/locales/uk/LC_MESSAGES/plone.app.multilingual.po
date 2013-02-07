@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
 "POT-Creation-Date: 2013-02-06 11:21+0000\n"
-"PO-Revision-Date: 2013-02-06 18:50+0300\n"
+"PO-Revision-Date: 2013-02-07 19:38+0300\n"
 "Last-Translator: Roman Kozlovskyi <krzroman@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: ../browser/migrator.py:67
 msgid "After migration relation cleanup"
-msgstr ""
+msgstr "Очищення зв'язків після міграції"
 
 #: ../browser/controlpanel.py:416
 msgid "All the configuration of P.A.M. If you want to set the default language to all the content without language and move all the content on the root folder to the default language folder, go to Extra Options section "
@@ -148,7 +148,7 @@ msgstr ""
 #. Default: "Authenticated users only. Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
 #: ../browser/controlpanel.py:141
 msgid "description_auth_ookie_manual_override"
-msgstr ""
+msgstr "Тільки для авторизованих користувачів. Використання куки для ручного перебивання. (Потрібно для відображення вювлету вибору мови.)"
 
 #. Default: "The languages in which the site should be translatable."
 #: ../browser/controlpanel.py:61
@@ -158,12 +158,12 @@ msgstr "Мови, на які сайт повинен бути переклад�
 #. Default: "Edit with the babel_edit"
 #: ../browser/menu.py:37
 msgid "description_babel_edit"
-msgstr ""
+msgstr "Редагувати з babel_edit"
 
 #. Default: "Babel edit ${lang_name}"
 #: ../browser/menu.py:83
 msgid "description_babeledit_menu"
-msgstr ""
+msgstr "Babel редагування ${lang_name}"
 
 #. Default: "Use browser language request negotiation."
 #: ../browser/controlpanel.py:180
@@ -173,12 +173,12 @@ msgstr ""
 #. Default: "Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
 #: ../browser/controlpanel.py:131
 msgid "description_cookie_manual_override"
-msgstr ""
+msgstr "Використання куки для ручного перебивання. (Потрібно для відображення вювлету вибору мови.)"
 
 #. Default: "Filter using language the content on folder_contents"
 #: ../interfaces.py:20
 msgid "description_filter_content"
-msgstr ""
+msgstr "ФІльтрувати використовуючи мову контенту на вмісті теки"
 
 #. Default: "Is a paying API in order to use google translation service"
 #: ../interfaces.py:43
@@ -193,12 +193,12 @@ msgstr ""
 #. Default: "Go to the user's browser preferred language related folder"
 #: ../browser/menu.py:132
 msgid "description_language_folder"
-msgstr ""
+msgstr "Перейти в теку мови вибрану браузером користувача"
 
 #. Default: "Use the language of the content item."
 #: ../browser/controlpanel.py:112
 msgid "description_language_of_the_content"
-msgstr ""
+msgstr "Використовувати мову контентного об'єкта"
 
 #. Default: "The migration process is divided into four steps, listed below. Each one of the steps has a well defined purpose explained. Some of them are destructive, so please read each one of it and do not try to run it on production servers without testing it previously."
 #: ../browser/templates/migration.pt:99
@@ -213,7 +213,7 @@ msgstr ""
 #. Default: "Here you will see the results of the migration process"
 #: ../browser/templates/migration.pt:265
 msgid "description_migration_results"
-msgstr ""
+msgstr "Тут ви побачите результати процесу міграції"
 
 #. Default: "Move the content that is on the root folder to the default language folder. This value is not stored so you need to check every time you want to run it"
 #: ../browser/controlpanel.py:95
@@ -223,7 +223,7 @@ msgstr ""
 #. Default: "After creating a new translation redirecto to babel view"
 #: ../interfaces.py:31
 msgid "description_redirect_babel_view"
-msgstr ""
+msgstr "Після створення нового перекладу перенаправити до babel вигляду"
 
 #. Default: "Use this field to define portal types that will not be traversed for finding content to move. All content of those types will be moved with all contained sub-items. This is useful for content types that are themselves translatable, but contain sub-content that is not translatable or does not have a language set.<br /> This list is pre-filled with some portal types, but you can add additional ones if needed, one per line."
 #: ../browser/templates/migration.pt:161
@@ -253,7 +253,7 @@ msgstr ""
 #. Default: "Set or change the current content language"
 #: ../browser/menu.py:178
 msgid "description_set_language"
-msgstr ""
+msgstr "Встановити або змінити мову даного контенту"
 
 #. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
 #: ../browser/controlpanel.py:154
@@ -303,7 +303,7 @@ msgstr ""
 #. Default: "Use subdomain (e.g.: de.plone.org)."
 #: ../browser/controlpanel.py:164
 msgid "description_use_subdomain"
-msgstr ""
+msgstr "Використовувати піддомени (наприклад: de.plone.org)"
 
 #. Default: "Edit ${lang_name}"
 #: ../browser/menu.py:80
@@ -338,7 +338,7 @@ msgstr ""
 #. Default: "Filter content by language."
 #: ../interfaces.py:17
 msgid "heading_filter_content"
-msgstr ""
+msgstr "Фільтрувати коттент за мовою"
 
 #. Default: "Google Translation API Key"
 #: ../interfaces.py:40
@@ -348,12 +348,12 @@ msgstr ""
 #. Default: "Use language codes in URL path for manual override."
 #: ../browser/controlpanel.py:118
 msgid "heading_language_codes_in_URL"
-msgstr ""
+msgstr "Використовувати коди мов в URL шляху для ручного перекривання."
 
 #. Default: "Use the language of the content item."
 #: ../browser/controlpanel.py:110
 msgid "heading_language_of_the_content"
-msgstr ""
+msgstr "Використовувати мову контентного об'єкта"
 
 #. Default: "Products.LinguaPlone Migration"
 #: ../browser/templates/migration.pt:89
@@ -373,7 +373,7 @@ msgstr "Результати міграції"
 #. Default: "Move root content to default language folder"
 #: ../browser/controlpanel.py:93
 msgid "heading_move_content_to_language_folder"
-msgstr ""
+msgstr "Перемістити контент у теку мови за замовчуванням"
 
 #. Default: "Not available in ${language}"
 #: ../browser/templates/not_translated_yet.pt:20
@@ -383,7 +383,7 @@ msgstr "Немає в наявності на ${language}"
 #. Default: "Redirect on creation to babel view."
 #: ../interfaces.py:28
 msgid "heading_redirect_babel_view"
-msgstr ""
+msgstr "Перенаправлення по створенню на babel вигляд."
 
 #. Default: "The policy used to determine how the lookup for available translations will be made by the language selector."
 #: ../browser/controlpanel.py:197
@@ -418,7 +418,7 @@ msgstr "plone.app.multilingual карта перекладів"
 #. Default: "Use subdomain (e.g.: de.plone.org)."
 #: ../browser/controlpanel.py:162
 msgid "heading_use_subdomain"
-msgstr ""
+msgstr "Використовувати піддомени (наприклад: de.plone.org)"
 
 #. Default: "The migration of LinguaPlone content depends on an up-to-date Language index. Use this step to refresh this index. Warning: Depending on the number of items in your site, this can take a considerable amount of time."
 #: ../browser/templates/migration.pt:118
@@ -596,7 +596,7 @@ msgstr "Доступні мови"
 #. Default: "Edit with babel view"
 #: ../browser/menu.py:35
 msgid "title_babel_edit"
-msgstr ""
+msgstr "Редагувати з babel виглядом"
 
 #. Default: "Language"
 #: ../browser/interfaces.py:33
