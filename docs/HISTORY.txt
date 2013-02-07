@@ -11,6 +11,9 @@ Changelog
 - Show language name if no native language information is available.
   [saily]
 
+- Added Ukrainian translation
+  [kroman0]
+
 
 1.0rc1 - 2013-01-26
 -------------------
