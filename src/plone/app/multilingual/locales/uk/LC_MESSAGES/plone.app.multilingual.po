@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
 "POT-Creation-Date: 2013-02-06 11:21+0000\n"
-"PO-Revision-Date: 2013-02-07 20:29+0300\n"
+"PO-Revision-Date: 2013-02-08 00:35+0300\n"
 "Last-Translator: Roman Kozlovskyi <krzroman@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr "Очищення зв'язків після міграції"
 
 #: ../browser/controlpanel.py:416
 msgid "All the configuration of P.A.M. If you want to set the default language to all the content without language and move all the content on the root folder to the default language folder, go to Extra Options section "
-msgstr ""
+msgstr "Вся конфігурація P.A.M. Якщо ви хочете встановити мову за замовчуванням для всього контенту без мови і перемістити весь вміст кореневої теки в у теку мови за замовчуванням, перейдіть в розділ Додаткові параметри"
 
 #: ../browser/controlpanel.py:389
 msgid "Clean site setup"
@@ -43,11 +43,11 @@ msgstr "Додаткові параметри"
 
 #: ../browser/templates/not_translated_yet.pt:28
 msgid "However, this is the list of the already translated languages for the requested content."
-msgstr ""
+msgstr "Однак, це список вже перекладених мов для запитуваного контенту."
 
 #: ../browser/controlpanel.py:390
 msgid "If you are installing PAM for the first time in a Plone site, either if it's on an existing or a brand new one you should run the following procedures in order to move the default site content to its right root language folder and be sure that all the content have the language attribute set up correctly. Previous to run them, please be sure that you have set up your site's languages in the 'Site languages' tab and have saved that setting. Finally, in case you have an existing Plone site with Products.LinguaPlone installed, please do not run this steps and refer directly to the 'Migration' tab."
-msgstr ""
+msgstr "Якщо ви встановлюєте PAM вперше на сайті Plone, або якщо він перебуває на існуючому або новому, то ви повинні виконати наступні процедури для того, щоб перемістити вміст сайту за замовчуванням у правильну теку корінь мови і переконайтеся, що весь контет має атрибут мови налаштований правильно. Попередньо, щоб запустити їх, будь ласка, переконайтеся, що ви встановили мову вашого сайту на вкладці 'Мови сайту' і зберегли цей параметр. Нарешті, у випадку, якщо у вас вже є Plone сайт з Products.LinguaPlone встановлено, будь ласка, не запускайте ці кроки і зверніться безпосередньо до вкладки 'Міграція'."
 
 #: ../browser/translate.py:74
 msgid "Invalid field"
@@ -143,7 +143,7 @@ msgstr "Додати існуючий контент в якості перек�
 #. Default: "This step will fix some lost dependencies to the ITranslatable interface hidden in the relation catalog and it gets rid of them. It must be run only when LinguaPlone is already uninstalled."
 #: ../browser/templates/migration.pt:225
 msgid "description_after_migration_cleanup"
-msgstr ""
+msgstr "Цей крок виправить деякі втрачені залежності ITranslatable інтерфейсу приховані у каталогу зв'язків і позбавляється від них. Він може бути запущений тільки тоді, коли LinguaPlone вже видалений."
 
 #. Default: "Authenticated users only. Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
 #: ../browser/controlpanel.py:141
@@ -168,7 +168,7 @@ msgstr "Babel редагування ${lang_name}"
 #. Default: "Use browser language request negotiation."
 #: ../browser/controlpanel.py:180
 msgid "description_browser_language_request_negotiation"
-msgstr ""
+msgstr "Використовуйте запит вибору мови браузера."
 
 #. Default: "Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
 #: ../browser/controlpanel.py:131
@@ -183,7 +183,7 @@ msgstr "ФІльтрувати використовуючи мову конте�
 #. Default: "Is a paying API in order to use google translation service"
 #: ../interfaces.py:43
 msgid "description_google_translation_key"
-msgstr ""
+msgstr "Чи є оплачено API для того, щоб використовувати Google перекладацькі послуги"
 
 #. Default: "Use language codes in URL path for manual override."
 #: ../browser/controlpanel.py:121
@@ -203,12 +203,12 @@ msgstr "Використовувати мову контентного об'єк
 #. Default: "The migration process is divided into four steps, listed below. Each one of the steps has a well defined purpose explained. Some of them are destructive, so please read each one of it and do not try to run it on production servers without testing it previously."
 #: ../browser/templates/migration.pt:99
 msgid "description_migrate"
-msgstr ""
+msgstr "Процес міграції складається з чотирьох кроків, перерахованих нижче. Кожен з кроків має строго певну мету. Деякі з них є руйнівними, тому, будь ласка, перечитайте кожен з них і не намагайтеся запустити його на виробничих серверах без попередньої перевірки."
 
 #. Default: "It can happen that there are relations left that contain LinguaPlone relations. By executing this step, the catalog gets reset and rebuilt. It CAN happen that things go bad. In that case relations get lost. It is therefor important that you have a backup!"
 #: ../browser/templates/cleanup.pt:80
 msgid "description_migrate_after"
-msgstr ""
+msgstr "Може статися, що існують зв'язки, які  залишились від LinguaPlone зв'язків. При виконанні цього кроку, каталог очищується і перебудовується. Може трапитися, що справи підуть погано. У цьому випадку зв'язки втратяться. Тому є важливо, щоб у вас була резервна копія!"
 
 #. Default: "Here you will see the results of the migration process"
 #: ../browser/templates/migration.pt:265
@@ -218,7 +218,7 @@ msgstr "Тут ви побачите результати процесу міг�
 #. Default: "Move the content that is on the root folder to the default language folder. This value is not stored so you need to check every time you want to run it"
 #: ../browser/controlpanel.py:95
 msgid "description_move_content_to_language_folder"
-msgstr ""
+msgstr "Переміщення контенту з кореневому каталогі в теку мови за замовчуванням. Це значення не зберігається так що ви повинні перевірити кожен раз, коли ви хочете, щоб запустити його"
 
 #. Default: "After creating a new translation redirecto to babel view"
 #: ../interfaces.py:31
@@ -228,12 +228,12 @@ msgstr "Після створення нового перекладу перен
 #. Default: "Use this field to define portal types that will not be traversed for finding content to move. All content of those types will be moved with all contained sub-items. This is useful for content types that are themselves translatable, but contain sub-content that is not translatable or does not have a language set.<br /> This list is pre-filled with some portal types, but you can add additional ones if needed, one per line."
 #: ../browser/templates/migration.pt:161
 msgid "description_relocate_blacklist"
-msgstr ""
+msgstr "Використовуйте це поле, щоб визначити типи котенту, які не будуть пройдені для пошуку контенту для переміщення. Весь контент цих типів буде переміщений з усіма вмістимим. Це корисно для типів вмісту, які самі по собі є перекладабельні, але містять суб-контент, який не переперекладається або не має встановленої мови.<br /> Цей список попередньо заповнений деякими типами контенту, але ви можете додати додаткові, якщо необхідно, по одному на рядок."
 
 #. Default: "This step will move the site's content to its corresponding root language folder and previously will make a search for misplaced content through the site's content tree and will move them to its nearest translated parent. This step is destructive as it will alter your content tree structure. Make sure you have previously configured your site's languages properly in the 'Site Languages' tab of the 'Languages' control panel."
 #: ../browser/templates/migration.pt:149
 msgid "description_relocate_content"
-msgstr ""
+msgstr "Цей крок перемість вмісту сайту у відповідні теки корені мов і попередньо зробить пошук недоречного контенту через вміст дерево сайту і перемістить їх до свого найближчого перекладеного батька. Цей крок є руйнівним, так як він буде змінювати вміст деревовидної структури. Переконайтеся, що ви правильно налаштували мову вашого сайту на вкладці 'Мови Cайту' панелі управління 'Мови'."
 
 #. Default: "Delete translations or remove the relations"
 #: ../browser/menu.py:116
@@ -243,12 +243,12 @@ msgstr "Видалити переклади або видалити зв'язк�
 #. Default: "The default language used for the content and the UI of this site."
 #: ../browser/controlpanel.py:200
 msgid "description_selector_lookup_translations_policy"
-msgstr ""
+msgstr "Мова за замовчуванням використовується для контенту і користувальницького інтерфейсу цього сайту."
 
 #. Default: "Set the default language on all content without language defined. This value is not stored so you need to check every time you want to run it"
 #: ../browser/controlpanel.py:83
 msgid "description_set_default_language"
-msgstr ""
+msgstr "Встановлення мови за умовчанням для всьго контенту без визначеної мови. Це значення не зберігається так що ви повинні перевірити кожен раз, коли ви хочете запустити його"
 
 #. Default: "Set or change the current content language"
 #: ../browser/menu.py:178
@@ -258,17 +258,17 @@ msgstr "Встановити або змінити мову даного кон�
 #. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
 #: ../browser/controlpanel.py:154
 msgid "description_set_language_cookie_always"
-msgstr ""
+msgstr "Завжди встановлювати куку мови, тобто також, коли відсутній параметр для 'set_language' запиту"
 
 #. Default: "Show the language shared (neutral language) folder"
 #: ../browser/menu.py:163
 msgid "description_shared_folder"
-msgstr ""
+msgstr "Показати мову загальної (нейтральної мови) теки"
 
 #. Default: "The default language used for the content and the UI of this site."
 #: ../browser/controlpanel.py:51
 msgid "description_site_language"
-msgstr ""
+msgstr "Мова за замовчуванням використовується для контенту і користувальницького інтерфейсу цього сайту."
 
 #. Default: "Use top-level domain (e.g.: www.plone.de)."
 #: ../browser/controlpanel.py:172
@@ -278,7 +278,7 @@ msgstr "Використовувати домени верхнього рівн�
 #. Default: "This step will transfer the relations between translations stored by LinguaPlone to the PAM catalog. This step is not destructive and can be executed as many times as needed."
 #: ../browser/templates/migration.pt:195
 msgid "description_transfer_multilingual_catalog_info"
-msgstr ""
+msgstr "Цей крок буде перетворювати зв'язки між переклади збережені LinguaPlone в каталозі PAM. Цей крок не є руйнівним і може виконатьсь стільки разів, скільки необхідно."
 
 #. Default: "Translate into ${lang_name}"
 #: ../browser/menu.py:56
@@ -293,12 +293,12 @@ msgstr "Карта перекладів."
 #. Default: "Universal Language content link"
 #: ../browser/menu.py:148
 msgid "description_universal_link"
-msgstr ""
+msgstr "Універсальне мовне посилання на контент"
 
 #. Default: "Untranslated languages from the current content"
 #: ../browser/interfaces.py:42
 msgid "description_update_language"
-msgstr ""
+msgstr "Неперекладені мови з поточного контенту"
 
 #. Default: "Use subdomain (e.g.: de.plone.org)."
 #: ../browser/controlpanel.py:164
@@ -328,7 +328,7 @@ msgstr "Наявні переклади"
 #. Default: "Use browser language request negotiation."
 #: ../browser/controlpanel.py:178
 msgid "heading_browser_language_request_negotiation"
-msgstr ""
+msgstr "Використовуйте запит вибору мови браузера."
 
 #. Default: "Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
 #: ../browser/controlpanel.py:128
@@ -388,7 +388,7 @@ msgstr "Перенаправлення по створенню на babel виг
 #. Default: "The policy used to determine how the lookup for available translations will be made by the language selector."
 #: ../browser/controlpanel.py:197
 msgid "heading_selector_lookup_translations_policy"
-msgstr ""
+msgstr "Політика, що використовується для визначення того, як шукатимуться доступні переклади при виборі мови."
 
 #. Default: "Set the default language"
 #: ../browser/controlpanel.py:81
@@ -398,7 +398,7 @@ msgstr "Встановити мову за замовчуванням"
 #. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
 #: ../browser/controlpanel.py:150
 msgid "heading_set_language_cookie_always"
-msgstr ""
+msgstr "Завжди встановлювати куку мови, тобто також, коли відсутній параметр для 'set_language' запиту"
 
 #. Default: "Default site language"
 #: ../browser/controlpanel.py:49
@@ -423,7 +423,7 @@ msgstr "Використовувати піддомени (наприклад: d
 #. Default: "The migration of LinguaPlone content depends on an up-to-date Language index. Use this step to refresh this index. Warning: Depending on the number of items in your site, this can take a considerable amount of time."
 #: ../browser/templates/migration.pt:118
 msgid "help_reindex_language_index"
-msgstr ""
+msgstr "Міграція контенту LinguaPlone залежить від того, чи оновлений індекс мови. Використовуйте цей крок, щоб оновити цей індекс. Попередження: в залежності від числа елементів в вашому сайті, це може зайняти значну кількість часу."
 
 #. Default: "Add translations"
 #: ../browser/add_translation_form.py:20
@@ -433,7 +433,7 @@ msgstr "Додати переклади"
 #. Default: "By updating the content language will trigger its move to the correct language folder in the site's hierarchy"
 #: ../browser/update_language_form.py:19
 msgid "label_alert_update"
-msgstr ""
+msgstr "По оновленню мови контенту викличеться його рух у правильну теку мови в ієрархії сайту"
 
 #. Default: "All translations"
 #: ../browser/templates/mmap.pt:106
@@ -443,7 +443,7 @@ msgstr "Усі переклади"
 #. Default: "Unfortunately a number of relations could not be translated and are lost! here is some debug information:"
 #: ../browser/templates/cleanup_results.pt:27
 msgid "label_bad_relations"
-msgstr ""
+msgstr "На жаль кілька зв'язків не можуть бути перекладені і будуть втрачені! Ось деякі відомості для відлагодження:"
 
 #. Default: "Cleanup actions"
 #: ../browser/templates/cleanup.pt:49
@@ -542,17 +542,17 @@ msgstr "Крок 2 - Передача багатомовного інформа�
 #. Default: "This form allows you to add currently existing objects to be the translations of the current object. You have to manually select both the language and the object."
 #: ../browser/add_translation_form.py:21
 msgid "long_description_add_translations"
-msgstr ""
+msgstr "Ця форма дозволяє додавати існуючі в даний час об'єкти як переклади поточного об'єкта. Ви повинні вручну вибрати і мову, і об'єкт."
 
 #. Default: "This form allows you to remove the existing translations of the current object. You can just delete the link between the objects or you can delete the object itself."
 #: ../browser/remove_translation_form.py:22
 msgid "long_description_remove_translations"
-msgstr ""
+msgstr "Ця форма дозволяє видаляти існуючі переклади поточного об'єкта. Ви можете просто видалити зв'язок між об'єктами або ви можете видалити сам об'єкт."
 
 #. Default: "The \"Language\" index was re-indexed correctly. Before, it contained ${previous_items_number} items, now it contains ${after_items_number}"
 #: ../browser/templates/reindex-results.pt:24
 msgid "migration_reindex_results"
-msgstr ""
+msgstr "Індекс \"Мова\" був правильно переіндексований. До цього, в ньому містилось ${previous_items_number} пунктів, тепер містить ${after_items_number}"
 
 #. Default: "Missing languages:"
 #: ../browser/templates/mmap.pt:142
@@ -562,12 +562,12 @@ msgstr "Відсутні мови:"
 #. Default: "Your site is not configured with more than one allowed language, but the add-on that provides support for content in multiple language is installed. You can add one or more additional languages from the ${control-panel-link}."
 #: ../browser/templates/languages-notice.pt:11
 msgid "not_configured_for_multiple_languages"
-msgstr ""
+msgstr "Ваш сайт не налаштований для більш ніж однієї дозволеної мови, але доповнення, яке забезпечує підтримку для утримання кількох мов встановлено. Ви можете додати одну або кілька додаткових мов з ${control-panel-link}."
 
 #. Default: "It's not possible to execute this step without uninstalling completely LinguaPlone: uninstall in the add-ons control panel, delete it from your buildout and re-run buildout. Then come here and try again."
 #: ../browser/templates/migration.pt:234
 msgid "relation_migration_with_lp_not_posible"
-msgstr ""
+msgstr "Не можливо виконати цей крок, не видаляючи повністю LinguaPlone: ​​видаліть на панель управління додатками, видаліть його з вашого buildout і перезапустіть buildout. Тоді поверніться сюди і спробуйте знову."
 
 #. Default: "Your site has no relation catalog, and therefore this migration step is not needed"
 #: ../browser/templates/migration.pt:242
