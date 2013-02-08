@@ -12,22 +12,20 @@
 
 <div id="results">
 
-<div class="resultInfo" i18n:domain="plone.app.multilingual">
+<div class="resultInfo">
     <h2 i18n:translate=""
         tal:content="view/stepinfo">
-        Transfer multilingual catalog information
+        Reindex Language Index
     </h2>
-    <span i18n:translate="label_total_objects_translated">
-        Total objects handled:
-    </span>
-    <span tal:content="python: len(view.results)">Number of objects</span>
-</div>
 
-<tal:block repeat="result view/results">
-    <div class="result"
-    tal:attributes="class python:result.startswith('ERROR') and 'result error' or 'result'"
-    tal:content="result"></div>
-</tal:block>
+    <p i18n:translate="migration_reindex_results">
+      The "Language" index was re-indexed correctly. Before, it contained
+      <span i18n:name="previous_items_number" tal:content="view/items_before"
+          tal:omit-tag="" /> items, now it contains <span i18n:name="after_items_number"
+          tal:content="view/items_after" tal:omit-tag="" />
+
+    </p>
+</div>
 
 </div>
 </metal:prefs>

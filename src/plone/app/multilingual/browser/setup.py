@@ -179,7 +179,8 @@ class SetupMultilingualSite(object):
             folder.setTitle("Language Shared")
             state = wftool.getInfoFor(folder, 'review_state', None)
             # This assumes a direct 'publish' transition from the initial state
-            if state != 'published':
+            available_transitions = [t['id'] for t in wftool.getTransitionsFor(folder)]
+            if state != 'published' and 'publish' in available_transitions:
                 wftool.doActionFor(folder, 'publish')
             folder.reindexObject()
             doneSomething = True

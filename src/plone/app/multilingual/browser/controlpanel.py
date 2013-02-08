@@ -34,7 +34,7 @@ import json
 
 from plone.app.multilingual import isLPinstalled
 from plone.app.multilingual.browser.migrator import portal_types_blacklist
-from plone.multilingual.interfaces import ITranslationManager, ILanguage
+from plone.multilingual.interfaces import ILanguage
 
 from Products.CMFPlone import PloneMessageFactory as _Plone
 from zope.i18nmessageid import MessageFactory
@@ -387,21 +387,21 @@ policies.label = _(u'Policies')
 
 clean_site_setup = FormFieldsets(IInitialCleanSiteSetupAdapter)
 clean_site_setup.label = _(u'Clean site setup')
-clean_site_setup.description = _(u"""If you are installing PAM for the first
-                                  time in a Plone site, either if it's on an
-                                  existing or a brand new one you should run the
-                                  following procedures in order to move the
-                                  default site content to its right root
-                                  language folder and be sure that all the
-                                  content have the language attribute set up
-                                  correctly. Previous to run them, please be
-                                  sure that you have set up your site's
-                                  languages in the 'Site languages' tab and have
-                                  saved that setting. Finally, in case you have
-                                  an existing Plone site with
-                                  Products.LinguaPlone installed, please do not
-                                  run this steps and refer directly to the
-                                  'Migration' tab.""")
+clean_site_setup.description = _(u"""If you are installing PAM for the first """
+                                  """time in a Plone site, either if it's on an """
+                                  """existing or a brand new one you should run the """
+                                  """following procedures in order to move the """
+                                  """default site content to its right root """
+                                  """language folder and be sure that all the """
+                                  """content have the language attribute set up """
+                                  """correctly. Previous to run them, please be """
+                                  """sure that you have set up your site's """
+                                  """languages in the 'Site languages' tab and have """
+                                  """saved that setting. Finally, in case you have """
+                                  """an existing Plone site with """
+                                  """Products.LinguaPlone installed, please do not """
+                                  """run this steps and refer directly to the """
+                                  """'Migration' tab.""")
 
 
 class LanguageControlPanel(BasePanel):
