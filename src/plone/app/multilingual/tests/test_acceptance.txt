@@ -5,13 +5,17 @@ Variables  plone/app/testing/interfaces.py
 Variables  plone/app/multilingual/tests/variables.py
 
 Suite Setup  Start browser
-Suite Teardown  Close All Browsers
+
 
 *** Test Cases ***
 
-PAM Basic Setup
+Scenario: Babel View for AT content
     Given a logged-in admin user
-    Page should contain  You are now logged in
+    And the dummy content is on place
+    When I translate it to spanish
+    And I switch the available translations language to catalan
+    Then I get the catalan translation information
+
 
 *** Keywords ***
 
@@ -27,3 +31,17 @@ a logged-in admin user
     Input text  __ac_name  ${SITE_OWNER_NAME}
     Input text  __ac_password  ${SITE_OWNER_PASSWORD}
     Click Button  Log in
+
+the dummy content is on place
+    Go to  ${PLONE_URL}/doc1
+
+I translate it to spanish
+    Click Element  xpath=//a[@title="Manage translations for your content."]
+    Click Element  id=translate_into_es
+    Page Should Contain  EN doc
+
+I switch the available translations language to catalan
+    Click Element  name=button-Catalan
+
+I get the catalan translation information
+    Page Should Contain  CA doc
