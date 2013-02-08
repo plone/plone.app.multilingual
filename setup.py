@@ -41,7 +41,11 @@ setup(name='plone.app.multilingual',
           'test': ['plone.app.testing',
                    'plone.multilingualbehavior',
                    'archetypes.multilingual',
-                   'Products.LinguaPlone'],
+                   'Products.LinguaPlone',
+                   'robotsuite',
+                   'robotframework-selenium2library',
+                   'decorator',  # BBB
+                   'selenium'],
       },
       entry_points="""
       # -*- Entry points: -*-

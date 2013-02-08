@@ -1,0 +1,29 @@
+*** Settings ***
+
+Library  Selenium2Library  timeout=10  implicit_wait=0.5
+Variables  plone/app/testing/interfaces.py
+Variables  plone/app/multilingual/tests/variables.py
+
+Suite Setup  Start browser
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+PAM Basic Setup
+    Given a logged-in admin user
+    Page should contain  You are now logged in
+
+*** Keywords ***
+
+Start browser
+    Open browser  http://localhost:55001/plone/
+
+Goto homepage
+    Go to  http://localhost:55001/plone/
+    Page should contain  Plone site
+
+a logged-in admin user
+    Go to  ${PLONE_URL}/login_form
+    Input text  __ac_name  ${SITE_OWNER_NAME}
+    Input text  __ac_password  ${SITE_OWNER_PASSWORD}
+    Click Button  Log in
