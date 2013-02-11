@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 import doctest
-from plone.app.testing import (
-    PLONE_FIXTURE,
-    PloneSandboxLayer,
-    applyProfile,
-    IntegrationTesting,
-    FunctionalTesting,
-    setRoles,
-    TEST_USER_ID,
-)
+
+from plone.testing.z2 import ZSERVER_FIXTURE
+from plone.app.testing import PLONE_FIXTURE
+from plone.app.testing import PloneSandboxLayer
+from plone.app.testing import applyProfile
+from plone.app.testing import IntegrationTesting
+from plone.app.testing import FunctionalTesting
+from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
+
 from zope.configuration import xmlconfig
+
 import plone.app.multilingual
 import plone.app.dexterity
 
@@ -40,5 +42,7 @@ PLONEAPPMULTILINGUAL_INTEGRATION_TESTING = IntegrationTesting(\
 PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING = FunctionalTesting(\
     bases=(PLONEAPPMULTILINGUAL_FIXTURE,),\
     name="plone.app.multilingual:Functional")
-
+PLONEAPPMULTILINGUAL_ACCEPTANCE_TESTING = FunctionalTesting(
+    bases=(PLONEAPPMULTILINGUAL_FIXTURE, ZSERVER_FIXTURE),
+    name="plone.app.multilingual:Acceptance")
 optionflags = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE)

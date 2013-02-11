@@ -1,0 +1,80 @@
+*** Settings ***
+
+Library  Selenium2Library  timeout=10  implicit_wait=1
+Variables  plone/app/testing/interfaces.py
+
+Suite Setup  Start browser
+Suite Teardown  Close All Browsers
+
+*** Variables ***
+
+${PORTAL_URL}  http://localhost:55001/plone
+${TEST_FOLDER}  http://localhost:55001/plone/test-folder
+
+${PORT} =  55001
+${ZOPE_URL} =  http://localhost:${PORT}
+${PLONE_URL} =  ${ZOPE_URL}/plone
+${BROWSER} =  Firefox
+
+*** Test Cases ***
+
+Scenario: Babel View for DX content
+    Given a site owner
+     When I translate the content 'dxdoc' to 'es'
+      And I switch the available translations language to 'Catalan'
+     Then I get the 'CA doc' as title of the available translation information for DX
+
+
+Scenario: Babel View for AT content
+    Given a site owner
+     When I translate the content 'atdoc' to 'es'
+      And I switch the available translations language to 'Catalan'
+     Then I get the 'CA doc' as title of the available translation information for AT
+
+
+*** Keywords ***
+
+Start browser
+    Open browser  http://localhost:55001/plone/
+
+
+# ----------------------------------------------------------------------------
+# Login/Logout
+# ----------------------------------------------------------------------------
+
+Log in
+    [Arguments]  ${userid}  ${password}
+    Go to  ${PORTAL_URL}/login_form
+    Page should contain element  __ac_name
+    Page should contain element  __ac_password
+    Page should contain button  Log in
+    Input text  __ac_name  ${userid}
+    Input text  __ac_password  ${password}
+    Click Button  Log in
+
+Log out
+    Go to  ${PORTAL_URL}/logout
+    Page should contain  logged out
+
+a test user
+    Log in  ${TEST_USER_NAME}  ${TEST_USER_PASSWORD}
+
+a site owner
+    Log in  ${SITE_OWNER_NAME}  ${SITE_OWNER_PASSWORD}
+
+
+# ----------------------------------------------------------------------------
+# Login/Logout
+# ----------------------------------------------------------------------------
+
+I translate the content '${content_id}' to '${lang}'
+    Go to  ${PLONE_URL}/${content_id}/@@create_translation?form.widgets.language=${lang}&form.buttons.create=1
+
+I switch the available translations language to '${lang}'
+    Click Element  name=button-${lang}
+
+I get the '${lang-title}' as title of the available translation information for AT
+    Wait Until Keyword Succeeds  5 sec  1 sec  Element Should Contain  xpath=//*[contains(@id, 'parent-fieldname-title')]  ${lang-title}
+
+I get the '${lang-title}' as title of the available translation information for DX
+    Wait Until Keyword Succeeds  5 sec  1 sec  Element Should Contain  id=form-widgets-IDublinCore-title  ${lang-title}
