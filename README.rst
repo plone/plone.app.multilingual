@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/plone/plone.app.multilingual.png
+    :target: http://travis-ci.org/plone/plone.app.multilingual
+
 .. contents::
 
 Introduction
