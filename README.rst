@@ -1,3 +1,6 @@
+.. image:: https://secure.travis-ci.org/saily/plone.app.multilingual
+    :target: http://travis-ci.org/saily/plone.app.multilingual
+    
 .. contents::
 
 Introduction
