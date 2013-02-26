@@ -1,5 +1,5 @@
-.. image:: https://travis-ci.org/collective/plone.app.multilingual.png
-    :target: http://travis-ci.org/collective/plone.app.multilingual
+.. image:: https://travis-ci.org/plone/plone.app.multilingual.png
+    :target: http://travis-ci.org/plone/plone.app.multilingual
 
 .. contents::
 
