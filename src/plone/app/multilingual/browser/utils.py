@@ -128,6 +128,11 @@ class BabelUtils(BrowserView):
         lang_info = data.get(lang_code)
         return lang_info.get('native', None) or lang_info.get('name')
 
+    def max_nr_of_buttons(self):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        return settings.buttons_babel_view_up_to_nr_translations
+
 
 def multilingualMoveObject(content, language):
     """
