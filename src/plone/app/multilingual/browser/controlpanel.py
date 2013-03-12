@@ -321,6 +321,12 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
     def set_redirect_babel_view(self, value):
         self.settings.redirect_babel_view = value
 
+    def get_buttons_babel_view_up_to_nr_translations(self):
+        return self.settings.buttons_babel_view_up_to_nr_translations
+
+    def set_buttons_babel_view_up_to_nr_translations(self, value):
+        self.settings.buttons_babel_view_up_to_nr_translations = value
+
     google_translation_key = property(get_google_translation_key,
                               set_google_translation_key)
 
@@ -329,6 +335,11 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
 
     redirect_babel_view = property(get_redirect_babel_view,
                                    set_redirect_babel_view)
+
+    buttons_babel_view_up_to_nr_translations = property(
+        get_buttons_babel_view_up_to_nr_translations,
+        set_buttons_babel_view_up_to_nr_translations,
+    )
 
 
 class InitialCleanSiteSetupAdapter(LanguageControlPanelAdapter):

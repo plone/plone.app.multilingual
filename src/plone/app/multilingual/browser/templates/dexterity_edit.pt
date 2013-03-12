@@ -14,9 +14,18 @@
     <div class='cell width-8 position-0'>
         <h1 i18n:translate="heading_available_translations">Available translations for this content</h1>
         <div id="trans-selector"
-             tal:define="languages pamutils/translated_languages;">
-          <div class="btn-group">
-            <tal:block repeat="lang languages">
+             tal:define="languages pamutils/translated_languages;
+             max_nr_of_buttons view/max_nr_of_buttons">
+          <div class="btn-group"
+            tal:define="use_dropdown python:max_nr_of_buttons and max_nr_of_buttons < len(languages)">
+            <select name="language_selector" tal:condition="use_dropdown">
+              <option tal:repeat="lang languages"
+                tal:attributes="value string:${lang/obj/absolute_url}/babel_view;
+                                      selected python:lang['isDefault'] and 'selected' or '';
+                                      id string:selection-${lang/code}"
+                tal:content="lang/info/native|lang/info/name">Language</option>
+            </select>
+            <tal:block repeat="lang languages" tal:condition="not:use_dropdown">
               <button class="btn"
                       tal:attributes="data-url string:${lang/obj/absolute_url}/babel_view;
                                       class python:lang['isDefault'] and 'btn active' or 'btn';

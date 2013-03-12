@@ -186,6 +186,16 @@
             $('#trans-selector button.active').removeClass('active');
             $(this).addClass('active');
         });
+        /* change the language trigger, this time for the drop-down, which is
+        used when too many translations are present to fit into buttons */
+        $('#trans-selector select').change(function () {
+            var selected_elem = $(this).children('option').eq(this.selectedIndex);
+            var url = selected_elem.val();
+            $('#frame-content').load(url, function () {
+                $("#frame-content fieldset legend").unwrap().remove();
+                update_view();
+            });
+        });
 
         /* select a field on both sides and change the color */
         var babel_selected = null,
@@ -207,6 +217,10 @@
 
         // Fetch default content
         var initialFetch = $('#trans-selector button.active').data('url');
+        // Can be null if not buttons, but the drop-down is present
+        if (initialFetch == null) {
+            initialFetch = $('#trans-selector select option:selected').val();
+        }
         $('#frame-content').load(initialFetch, function () {
             $("#frame-content fieldset legend").unwrap().remove();
             update_view();

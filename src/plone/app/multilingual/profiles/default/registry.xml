@@ -2,6 +2,8 @@
 <registry>
  <records interface="plone.app.multilingual.interfaces.IMultiLanguageExtraOptionsSchema">
     <value key="filter_content">True</value>
+    <value key="redirect_babel_view">True</value>
+    <value key="buttons_babel_view_up_to_nr_translations">7</value>
     <value key="google_translation_key"></value>
  </records>
  <records interface="plone.app.multilingual.browser.controlpanel.IMultiLanguagePolicies">
