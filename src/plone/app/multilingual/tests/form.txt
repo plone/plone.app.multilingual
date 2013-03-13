@@ -35,10 +35,11 @@ translating content (AT)::
 we should see now the translations edit-form::
 
 
-    >>> browser.getControl(name="title").value = "sample title de"
+    >>> title_de = "sample title de"
+    >>> browser.getControl(name="title").value = title_de
     >>> browser.getControl(name="form.button.save").click()
     >>> transaction.commit()
-    >>> content_id_de = "%s-de" % content_id
+    >>> content_id_de = browser.url.split('/')[-1]
     >>> content_de = portal[content_id_de]
 
 translating content (dexterity)::
@@ -77,7 +78,7 @@ now we should see the remove_translations form, but there are no more translatio
 
 nothing deleted::
 
-    >>> 'sampledocument-form-de' in portal.contentIds()
+    >>> content_id_de in portal.contentIds()
     True
 
 let's reregister the translation::
@@ -123,8 +124,10 @@ translating folderish content::
     >>> browser.open(portal_url + '/samplefolder/@@create_translation')
     >>> browser.getControl(name="form.widgets.language:list").value = ['de']
     >>> browser.getControl(name="form.buttons.create").click()
-    >>> browser.getControl(name="title").value = "sample folder title de"
+    >>> folder_title_de = "sample folder title de"
+    >>> browser.getControl(name="title").value = folder_title_de
     >>> browser.getControl(name="form.button.save").click()
+    >>> folder_id_de = browser.url.split('/')[-1]
 
 translating content in folders::
 
@@ -135,6 +138,6 @@ translating content in folders::
     >>> browser.open(folder.absolute_url() + '/' + content_id + '/@@create_translation')
     >>> browser.getControl(name="form.widgets.language:list").value = ['de']
     >>> browser.getControl(name="form.buttons.create").click()
-    >>> '%s-de' % folder_id in browser.url
+    >>> folder_id_de in browser.url
     True
 
