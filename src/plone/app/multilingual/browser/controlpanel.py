@@ -19,6 +19,7 @@ from plone.app.controlpanel.language import LanguageControlPanel as BasePanel
 from plone.app.controlpanel.language import LanguageControlPanelAdapter
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.registry import field as registry_field, Record
 from plone.protect import CheckAuthenticator
 
 from zope.component import getUtility
@@ -301,7 +302,7 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
         super(MultiLanguageExtraOptionsAdapter, self).__init__(context)
         self.registry = getUtility(IRegistry)
         self.settings = self.registry.forInterface(
-            IMultiLanguageExtraOptionsSchema)
+            IMultiLanguageExtraOptionsSchema, check=False)
 
     def get_filter_content(self):
         return self.settings.filter_content
@@ -321,6 +322,21 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
     def set_redirect_babel_view(self, value):
         self.settings.redirect_babel_view = value
 
+    def get_buttons_babel_view_up_to_nr_translations(self):
+        return self.settings.buttons_babel_view_up_to_nr_translations
+
+    def set_buttons_babel_view_up_to_nr_translations(self, value):
+        # Backwards-compatibility for installations of PAM before this
+        # field was added.
+        # If no entry is present in the registry, initialize it with a
+        # dummy value
+        name = "%s.buttons_babel_view_up_to_nr_translations" % \
+            IMultiLanguageExtraOptionsSchema.__identifier__
+        if name not in self.registry.records:
+            int_field = registry_field.Int()
+            self.registry.records[name] = Record(int_field)
+        self.settings.buttons_babel_view_up_to_nr_translations = value
+
     google_translation_key = property(get_google_translation_key,
                               set_google_translation_key)
 
@@ -329,6 +345,11 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
 
     redirect_babel_view = property(get_redirect_babel_view,
                                    set_redirect_babel_view)
+
+    buttons_babel_view_up_to_nr_translations = property(
+        get_buttons_babel_view_up_to_nr_translations,
+        set_buttons_babel_view_up_to_nr_translations,
+    )
 
 
 class InitialCleanSiteSetupAdapter(LanguageControlPanelAdapter):
