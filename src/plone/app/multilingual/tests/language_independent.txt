@@ -2,9 +2,9 @@ testing language-independent content
 ====================================
 ::
 
-    >>> from plone.app.testing import ( 
-    ...     TEST_USER_ID, 
-    ...     TEST_USER_NAME, 
+    >>> from plone.app.testing import (
+    ...     TEST_USER_ID,
+    ...     TEST_USER_NAME,
     ...     TEST_USER_PASSWORD,
     ...     login,
     ...     setRoles
@@ -27,9 +27,10 @@ testing language-independent content
     >>> login(portal, TEST_USER_NAME)
 
 create some content::
-        
+
     >>> content_id = portal.invokeFactory(type_name='Document', id="neutral_sample")
-    >>> portal[content_id].setTitle("Sample Content")
+    >>> sample_content = portal[content_id]
+    >>> sample_content.setTitle("Sample Content")
     >>> from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
     >>> from plone.multilingual.interfaces import ILanguage
     >>> ILanguage(portal[content_id]).get_language() == LANGUAGE_INDEPENDENT
@@ -48,6 +49,6 @@ the prior language-independent content should now have the portals default-langu
 
     >>> from Products.CMFCore.utils import getToolByName
     >>> lang_tool = getToolByName(portal, 'portal_languages')
-    >>> ILanguage(portal[content_id]).get_language() == lang_tool.getDefaultLanguage()
+    >>> ILanguage(sample_content).get_language() == lang_tool.getDefaultLanguage()
     True
 
