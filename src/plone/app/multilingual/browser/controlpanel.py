@@ -337,6 +337,18 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
             self.registry.records[name] = Record(int_field)
         self.settings.buttons_babel_view_up_to_nr_translations = value
 
+    def get_rename_translation_from_title(self):
+        return self.settings.rename_translation_from_title
+
+    def set_rename_translation_from_title(self, value):
+        name = "%s.rename_translation_from_title" % \
+            IMultiLanguageExtraOptionsSchema.__identifier__
+        if name not in self.registry.records:
+            bool_field = registry_field.Bool()
+            self.registry.records[name] = Record(bool_field)
+
+        self.settings.rename_translation_from_title = value
+
     google_translation_key = property(get_google_translation_key,
                               set_google_translation_key)
 
@@ -345,6 +357,9 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
 
     redirect_babel_view = property(get_redirect_babel_view,
                                    set_redirect_babel_view)
+
+    rename_translation_from_title = property(
+        get_rename_translation_from_title, set_rename_translation_from_title)
 
     buttons_babel_view_up_to_nr_translations = property(
         get_buttons_babel_view_up_to_nr_translations,
