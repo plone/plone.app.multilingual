@@ -133,12 +133,12 @@ since the translation is not new any more.
 
 But creating a new translation will cause proper renaming again::
 
-    >>> title_fr = "Ça va"
+    >>> title_fr = "Autres temps, autres mœurs"
     >>> browser.open(sample_content_it.absolute_url() + '/@@create_translation')
     >>> browser.getControl(name="form.widgets.language:list").value = ['fr']
     >>> browser.getControl(name="form.buttons.create").click()
     >>> browser.getControl(name="title").value = title_fr.decode('utf-8').encode('utf-8')
     >>> browser.getControl(name="form.button.save").click()
     >>> content_id_fr = browser.url.split('/')[-1]
-    >>> content_id_fr == 'ca-va'
+    >>> content_id_fr == 'autres-temps-autres-moeurs'
     True
