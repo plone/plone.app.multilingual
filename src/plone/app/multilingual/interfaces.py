@@ -22,7 +22,7 @@ class IMultiLanguageExtraOptionsSchema(Interface):
             default=u"Filter using language the content on folder_contents"),
         default=True,
         required=False,
-        )
+    )
 
     redirect_babel_view = schema.Bool(
         title=_(
@@ -34,7 +34,7 @@ class IMultiLanguageExtraOptionsSchema(Interface):
                        u"view")),
         default=True,
         required=False,
-        )
+    )
 
     buttons_babel_view_up_to_nr_translations = schema.Int(
         title=_(
@@ -54,6 +54,23 @@ class IMultiLanguageExtraOptionsSchema(Interface):
         required=False,
     )
 
+    rename_translation_from_title = schema.Bool(
+        title=_(
+            u"heading_rename_translation_from_title",
+            default=u"Rename translations based on their title?"
+        ),
+        description=_(
+            u"description_rename_translation_from_title",
+            default=u'When creating a translation, set its short name based '
+            'on the translated title. Example: An English folder named '
+            '"Publications" with short name "publications" is translated to '
+            'Italian with the new title "Pubblicazioni". If this option is '
+            'selected, the short name in Italian will become "pubblicazioni".'
+        ),
+        default=True,
+        required=False,
+    )
+
     google_translation_key = schema.TextLine(
         title=_(
             u"heading_google_translation_key",
@@ -63,4 +80,4 @@ class IMultiLanguageExtraOptionsSchema(Interface):
             default=(u"Is a paying API in order to use google translation "
                        u"service")),
         required=False,
-        )
+    )

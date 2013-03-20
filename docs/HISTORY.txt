@@ -20,6 +20,8 @@ Changelog
 - Use drop-down instead of buttons on babel view if there are more than X
   translations [pysailor]
 
+- Rename translations based on their title. Added control-panel option to toggle
+  this setting. Fixes #27 [pysailor]
 
 1.0rc1 - 2013-01-26
 -------------------

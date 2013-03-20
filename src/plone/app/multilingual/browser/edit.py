@@ -27,7 +27,8 @@ class MultilingualEditForm(DefaultEditForm):
 
     def gtenabled(self):
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema,
+                                            check=False)
         return settings.google_translation_key != ''
 
     def languages(self):
@@ -98,7 +99,8 @@ class MultilingualEditForm(DefaultEditForm):
     @property
     def max_nr_of_buttons(self):
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema,
+                                            check=False)
         return settings.buttons_babel_view_up_to_nr_translations
 
 if isDexterityInstalled:

@@ -61,7 +61,8 @@ class gtranslation_service_dexterity(BrowserView):
         else:
             manager = ITranslationManager(self.context)
             registry = getUtility(IRegistry)
-            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema,
+                                                check=False)
             lang_target = ILanguage(self.context).get_language()
             lang_source = self.request.form['lang_source']
             orig_object = manager.get_translation(lang_source)
@@ -85,7 +86,8 @@ class gtranslation_service_at(BrowserView):
         else:
             manager = ITranslationManager(self.context)
             registry = getUtility(IRegistry)
-            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema,
+                                                check=False)
             lang_target = ILanguage(self.context).get_language()
             lang_source = self.request.form['lang_source']
             orig_object = manager.get_translation(lang_source)
@@ -122,7 +124,8 @@ class TranslationForm(form.SchemaForm):
             translation_manager.add_translation(language)
             translated = translation_manager.get_translation(language)
             registry = getUtility(IRegistry)
-            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema,
+                                                check=False)
             if settings.redirect_babel_view:
                 return self.request.response.redirect(
                     translated.absolute_url() + '/babel_edit?set_language=%s' % language)

@@ -1,0 +1,144 @@
+testing renaming of translations
+================================
+::
+
+    >>> from plone.app.testing import (
+    ...     TEST_USER_ID,
+    ...     TEST_USER_NAME,
+    ...     TEST_USER_PASSWORD,
+    ...     login,
+    ...     setRoles
+    ... )
+
+    >>> from plone.testing.z2 import Browser
+
+Set up Plone with several languages::
+
+    >>> browser = Browser(layer['app'])
+    >>> browser.handleErrors = False
+    >>> portal = layer['portal']
+    >>> portal_url = portal.absolute_url()
+    >>> from Products.CMFCore.utils import getToolByName
+    >>> lang_tool = getToolByName(portal, 'portal_languages')
+    >>> languages = ['en', 'it', 'de', 'da', 'fr']
+    >>> lang_tool.supported_langs = languages
+    >>> lang_tool.start_neutral = 0
+    >>> import transaction
+    >>> transaction.commit()
+    >>> from plone.app.multilingual.browser.setup import SetupMultilingualSite
+    >>> workflowTool = getToolByName(portal, "portal_workflow")
+    >>> workflowTool.setDefaultChain('simple_publication_workflow')
+    >>> setupTool = SetupMultilingualSite()
+    >>> _ = setupTool.setupSite(portal)
+    >>> transaction.commit()
+    >>> browser.addHeader('Authorization', 'Basic %s:%s' %(TEST_USER_NAME, TEST_USER_PASSWORD))
+    >>> setRoles(portal, TEST_USER_ID, ['Manager'])
+    >>> login(portal, TEST_USER_NAME)
+
+create some content::
+
+    >>> content_id = portal.en.invokeFactory(type_name='Document', id="doc1")
+    >>> sample_content = portal.en[content_id]
+    >>> sample_content.setTitle("Sample Content")
+    >>> from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
+    >>> from plone.multilingual.interfaces import ILanguage
+    >>> ILanguage(sample_content).get_language() == lang_tool.getDefaultLanguage()
+    True
+    >>> transaction.commit()
+
+Now we a create a translation of it.
+
+    >>> browser.open(sample_content.absolute_url() + '/@@create_translation')
+    >>> browser.getControl(name="form.widgets.language:list").value = ['it']
+    >>> browser.getControl(name="form.buttons.create").click()
+    >>> browser.getControl(name="title").value = "I am Italian"
+    >>> browser.getControl(name="form.button.save").click()
+
+The id will be set based on the title (Plone default)::
+
+    >>> content_id_it = browser.url.split('/')[-1]
+    >>> content_id_it == 'i-am-italian'
+    True
+
+If we change the title, the id will stay as it was.
+
+    >>> sample_content_it = portal.it[content_id_it]
+    >>> browser.open(sample_content_it.absolute_url() + '/edit')
+    >>> title_it = "La vita è bella"
+    >>> browser.getControl(name="title").value = title_it.decode('utf-8').encode('utf-8')
+    >>> browser.getControl(name="form.button.save").click()
+    >>> sample_content_it.id == 'i-am-italian'
+    True
+
+    >>> sample_content_it.Title() == title_it
+    True
+
+
+Create another translation, using non-ASCII chars in the title.
+
+    >>> title_de = "Eine zünftige Maß Bier"
+    >>> browser.open(sample_content_it.absolute_url() + '/@@create_translation')
+    >>> browser.getControl(name="form.widgets.language:list").value = ['de']
+    >>> browser.getControl(name="form.buttons.create").click()
+    >>> browser.getControl(name="title").value = title_de.decode('utf-8').encode('utf-8')
+    >>> browser.getControl(name="form.button.save").click()
+
+The id has been normalized.
+
+    >>> content_id_de = browser.url.split('/')[-1]
+    >>> content_id_de == "eine-zuenftige-mass-bier"
+    True
+
+We now switch off renaming translations.
+
+    >>> from zope.component import getUtility
+    >>> from plone.registry.interfaces import IRegistry
+    >>> from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+    >>> registry = getUtility(IRegistry)
+    >>> settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+    >>> settings.rename_translation_from_title = False
+    >>> transaction.commit()
+
+If we add another translation, the id will not be built from the title.
+
+    >>> title_da = "Det forsømte Forår"
+    >>> browser.open(sample_content_it.absolute_url() + '/@@create_translation')
+    >>> browser.getControl(name="form.widgets.language:list").value = ['da']
+    >>> browser.getControl(name="form.buttons.create").click()
+    >>> browser.getControl(name="title").value = title_da.decode('utf-8').encode('utf-8')
+    >>> browser.getControl(name="form.button.save").click()
+    >>> content_id_da = browser.url.split('/')[-1]
+
+The id of the Danish item is the same as the id of the object we translated from.
+
+    >>> content_id_da == 'i-am-italian'
+    True
+
+We now activate the renaming again, and save the Danish item anew. The id does not change,
+since the translation is not new any more.
+
+    >>> settings.rename_translation_from_title = True
+    >>> transaction.commit()
+    >>> title_da = "Rødgrød med Fløde"
+    >>> sample_content_da = portal.da[content_id_da]
+    >>> browser.open(sample_content_da.absolute_url() + '/edit')
+    >>> browser.getControl(name="title").value = title_da.decode('utf-8').encode('utf-8')
+    >>> browser.getControl(name="form.button.save").click()
+    >>> new_content_id_da = browser.url.split('/')[-1]
+    >>> new_content_id_da == 'i-am-italian'
+    True
+
+    >>> sample_content_da.Title() == title_da
+    True
+
+But creating a new translation will cause proper renaming again::
+
+    >>> title_fr = "Autres temps, autres mœurs"
+    >>> browser.open(sample_content_it.absolute_url() + '/@@create_translation')
+    >>> browser.getControl(name="form.widgets.language:list").value = ['fr']
+    >>> browser.getControl(name="form.buttons.create").click()
+    >>> browser.getControl(name="title").value = title_fr.decode('utf-8').encode('utf-8')
+    >>> browser.getControl(name="form.button.save").click()
+    >>> content_id_fr = browser.url.split('/')[-1]
+    >>> content_id_fr == 'autres-temps-autres-moeurs'
+    True

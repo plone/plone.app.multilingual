@@ -14,6 +14,7 @@ functional_tests = [
     'menu.txt',
     'catalog.txt',
     'language_independent.txt',
+    'test_rename_translations.txt'
 ]
 
 
