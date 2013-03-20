@@ -18,9 +18,10 @@ except ImportError:
 
 try:
     pkg_resources.get_distribution('plone.dexterity')
-    isDexterityInstalled = True
 except pkg_resources.DistributionNotFound:
     isDexterityInstalled = False
+else:
+    isDexterityInstalled = True
 
 from plone.app.multilingual import catalog
 catalog  # pyflakes
