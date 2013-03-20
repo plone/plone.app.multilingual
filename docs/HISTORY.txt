@@ -17,6 +17,9 @@ Changelog
 - Add to travis-ci
   [saily]
 
+- Use drop-down instead of buttons on babel view if there are more than X
+  translations [pysailor]
+
 
 1.0rc1 - 2013-01-26
 -------------------
