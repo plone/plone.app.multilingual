@@ -56,9 +56,8 @@ only need the following line::
     eggs =
         plone.app.multilingual[archetypes]
 
-.. Note:: While archetypes is default in Plone, you can use without appendix
-          ``[archetypes]``. But in future this may change to dexterity, so we
-          recommend to add the appendix as shown above.
+While archetypes is default in Plone for now, you can strip ``[archetypes]``. 
+This may change in future so we recommend adding an appendix as shown above.
 
 
 Setup
