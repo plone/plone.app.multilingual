@@ -15,9 +15,10 @@ try:
 except ImportError:
     isLPinstalled = False
 
-
+# Instead of check for Dexterity, check if p.multilingualbehavior is installed.
+# If it's installed, then Dexterity is installed too.
 try:
-    pkg_resources.get_distribution('plone.dexterity')
+    pkg_resources.get_distribution('plone.multilingualbehavior')
 except pkg_resources.DistributionNotFound:
     isDexterityInstalled = False
 else:
