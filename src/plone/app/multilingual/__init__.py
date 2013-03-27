@@ -10,10 +10,11 @@ from languagetool import setLanguageBindingsCookieWins
 LanguageBinding.setLanguageBindings = setLanguageBindingsCookieWins
 
 try:
-    from Products.LinguaPlone import patches
-    isLPinstalled = True
-except ImportError:
+    pkg_resources.get_distribution('Products.LinguaPlone')
+except pkg_resources.DistributionNotFound:
     isLPinstalled = False
+else:
+    isLPinstalled = True
 
 # Instead of check for Dexterity, check if p.multilingualbehavior is installed.
 # If it's installed, then Dexterity is installed too.
