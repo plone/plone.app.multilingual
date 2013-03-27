@@ -45,17 +45,19 @@ Usage
 =====
 
 To use this package with both Dexterity and Archetypes based content types you
-should add the following two lines to your *eggs* buildout section::
+should add the following line to your *eggs* buildout section::
 
     eggs =
-        plone.app.multilingual
-        plone.multilingualbehavior
+        plone.app.multilingual[archetypes, dexterity]
 
 If you need to use this package only with Archetypes based content types you
 only need the following line::
 
     eggs =
-        plone.app.multilingual
+        plone.app.multilingual[archetypes]
+
+While archetypes is default in Plone for now, you can strip ``[archetypes]``. 
+This may change in future so we recommend adding an appendix as shown above.
 
 
 Setup
