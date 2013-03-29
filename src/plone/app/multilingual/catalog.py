@@ -43,6 +43,12 @@ def language_filter(query):
         root_path = '/'.join(site.getPhysicalPath())
 
         # Check if it is a language root folder to add the shared folder
+        
+        # fgr: when location query can be a list (for now maybe only in oldstyle collections 
+        # but I expect new style collections may get the option of multiple paths as well
+        # in that case no SHARED_NAME needs to be added, because the path criterions are 
+        # defined either with languagefolder or language neutral context already.
+        # may be this fix is somewhat dirty ... -fgr
         if old_path and old_path['query']: 
             if isinstance(old_path['query'],str) and \
                old_path['query'].split('/')[-1] in _languagelist:
