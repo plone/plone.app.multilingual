@@ -42,10 +42,11 @@ def language_filter(query):
         # We are going to check if is language root
         root_path = '/'.join(site.getPhysicalPath())
 
-        # Check is a language root folder to add the shared folder
-        if old_path and old_path['query'] and \
-            old_path['query'].split('/')[-1] in _languagelist:
-            old_path['query'] = [old_path_url, root_path + '/' + SHARED_NAME]
+        # Check if it is a language root folder to add the shared folder
+        if old_path and old_path['query']: 
+            if isinstance(old_path['query'],str) and \
+               old_path['query'].split('/')[-1] in _languagelist:
+                    old_path['query'] = [old_path_url, root_path + '/' + SHARED_NAME]
 
         # Check if its shared folder to add the root path
         #elif old_path['query'].split('/')[-1] == SHARED_NAME:
