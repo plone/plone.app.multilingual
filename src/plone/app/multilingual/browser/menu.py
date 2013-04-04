@@ -56,8 +56,7 @@ class TranslateMenu(BrowserMenu):
                     "description": _(u"description_translate_into",
                                     default=u"Translate into ${lang_name}",
                                     mapping={"lang_name": lang_name}),
-                    "action": url + "/@@create_translation?form.widgets.language"\
-                            "=%s&form.buttons.create=1" % lang_id,
+                    "action": url + "/@@create_translation?language=%s" % lang_id,
                     "selected": False,
                     "icon": icon,
                     "width": "14",

@@ -12,6 +12,7 @@ from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.registry.interfaces import IRegistry
 from z3c.form import button
 from zope.component import getUtility
+from urllib import quote_plus
 
 import json
 
@@ -97,36 +98,79 @@ class gtranslation_service_at(BrowserView):
             return google_translate(question, settings.google_translation_key, lang_target, lang_source)
 
 
-class TranslationForm(form.SchemaForm):
+class TranslationForm(BrowserView):
     """ Translation Form """
 
-    grok.name('create_translation')
-    grok.context(ITranslatable)
-    grok.require('plone.app.multilingual.ManageTranslations')
-    schema = ICreateTranslation
-    ignoreContext = True
-
-    @button.buttonAndHandler(_(u'Create'))
-    def handle_create(self, action):
-        data, errors = self.extractData()
-        if not errors:
-            language = data['language']
+    def __call__(self):
+        import pdb; pdb.set_trace()
+        language = self.request.get('language', None)
+        if language:
             translation_manager = ITranslationManager(aq_inner(self.context))
             if ILanguage(self.context).get_language() == LANGUAGE_INDEPENDENT:
+                # XXX : Why we need this ? the subscriber from pm should maintain it
                 language_tool = getToolByName(self.context, 'portal_languages')
                 default_language = language_tool.getDefaultLanguage()
                 ILanguage(self.context).set_language(default_language)
                 translation_manager.update()
                 self.context.reindexObject()
 
-            translation_manager.add_translation(language)
-            translated = translation_manager.get_translation(language)
+            # OLD code that creates the object before translating
+            # translation_manager.add_translation(language)
+            # translated = translation_manager.get_translation(language)
+            # registry = getUtility(IRegistry)
+            # settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+            # if settings.redirect_babel_view:
+            #     return self.request.response.redirect(
+            #         translated.absolute_url() + '/babel_edit?set_language=%s' % language)
+            # else:
+            #     return self.request.response.redirect(
+            #         translated.absolute_url() + '/edit?set_language=%s' %
+            #         language)
+
+            # We get the new parent
+            new_parent = translation_manager.add_translation_delegated(language)
+
             registry = getUtility(IRegistry)
             settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+
+            sdm = self.context.session_data_manager
+            session = sdm.getSessionData(create=True)
+            session.set("tg", translation_manager.tg)
+
+            # We set the language and redirect to babel_view or not
             if settings.redirect_babel_view:
-                return self.request.response.redirect(
-                    translated.absolute_url() + '/babel_edit?set_language=%s' % language)
+                pass
             else:
-                return self.request.response.redirect(
-                    translated.absolute_url() + '/edit?set_language=%s' %
-                    language)
+                # We look for the creation url for this content type
+
+                # Get the factory
+                baseUrl = new_parent.absolute_url()
+                types_tool = getToolByName(self.context, 'portal_types')
+
+                # Note: we don't check 'allowed' or 'available' here, because these are
+                # slow. We assume the 'allowedTypes' list has already performed the
+                # necessary calculations
+                actions = types_tool.listActionInfos(
+                    object=new_parent,
+                    check_permissions=False,
+                    check_condition=False,
+                    category='folder/add',
+                )
+
+                addActionsById = dict([(a['id'], a) for a in actions])
+
+                typeId = self.context.portal_type
+
+                addAction = addActionsById.get(typeId, None)
+
+                if addAction is not None:
+                    url = addAction['url']
+
+                if not url:
+                    url = '%s/createObject?type_name=%s' % (baseUrl, quote_plus(typeId))
+
+                # url = new_parent.absolute_url() + '/++addtranslation++'+self.context.portal_type+'++'+translation_manager.tg
+                return self.request.response.redirect(url)
+
+
+

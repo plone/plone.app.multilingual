@@ -175,6 +175,13 @@
     permission="cmf.ModifyPortalContent"
     />
 
+  <browser:page
+    for="plone.multilingual.interfaces.ITranslatable"
+    name="create_translation"
+    class=".translate.TranslationForm"
+    permission="plone.app.multilingual.ManageTranslations"
+    />
+
 
   <!-- Edit form -->
 
