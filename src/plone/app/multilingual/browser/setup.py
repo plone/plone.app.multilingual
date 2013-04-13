@@ -5,7 +5,10 @@ from plone.multilingual.interfaces import (
     ILanguage,
     LANGUAGE_INDEPENDENT
     )
+from plone.app.multilingual.interfaces import SHARED_NAME
+
 from Products.CMFPlone.utils import _createObjectByType
+
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Acquisition import aq_inner
@@ -101,8 +104,8 @@ class SetupMultilingualSite(object):
         objects = pc.searchResults(path=path, Language='all')
         for brain in objects:
             obj = brain.getObject()
-            if obj.language == '':
-                obj.language = defaultLanguage
+            if ILanguage(obj).get_language() == '' and obj.id != SHARED_NAME:
+                ILanguage(obj).set_language(defaultLanguage)
                 obj.reindexObject(idxs=["Language"])
                 LOG.info("Set language %s on object %s" % (
                     defaultLanguage, '/'.join(obj.getPhysicalPath())))
@@ -163,7 +166,7 @@ class SetupMultilingualSite(object):
         Create the shared neutral language folder
         """
         doneSomething = False
-        folderId = "shared"
+        folderId = SHARED_NAME
         folder = getattr(self.context, folderId, None)
         wftool = getToolByName(self.context, 'portal_workflow')
         if folder is None:
