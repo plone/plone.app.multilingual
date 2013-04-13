@@ -102,7 +102,6 @@ class TranslationForm(BrowserView):
     """ Translation Form """
 
     def __call__(self):
-        import pdb; pdb.set_trace()
         language = self.request.get('language', None)
         if language:
             translation_manager = ITranslationManager(aq_inner(self.context))
@@ -114,20 +113,6 @@ class TranslationForm(BrowserView):
                 translation_manager.update()
                 self.context.reindexObject()
 
-            # OLD code that creates the object before translating
-            # translation_manager.add_translation(language)
-            # translated = translation_manager.get_translation(language)
-            # registry = getUtility(IRegistry)
-            # settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
-            # if settings.redirect_babel_view:
-            #     return self.request.response.redirect(
-            #         translated.absolute_url() + '/babel_edit?set_language=%s' % language)
-            # else:
-            #     return self.request.response.redirect(
-            #         translated.absolute_url() + '/edit?set_language=%s' %
-            #         language)
-
-            # We get the new parent
             new_parent = translation_manager.add_translation_delegated(language)
 
             registry = getUtility(IRegistry)
@@ -137,14 +122,16 @@ class TranslationForm(BrowserView):
             session = sdm.getSessionData(create=True)
             session.set("tg", translation_manager.tg)
 
+            baseUrl = new_parent.absolute_url()
             # We set the language and redirect to babel_view or not
             if settings.redirect_babel_view:
-                pass
+                # Call the ++addtranslation++ adapter to show the babel add form
+                url = '%s/++addtranslation++%s' % (baseUrl, self.context.portal_type)
+                return self.request.response.redirect(url)
             else:
                 # We look for the creation url for this content type
 
                 # Get the factory
-                baseUrl = new_parent.absolute_url()
                 types_tool = getToolByName(self.context, 'portal_types')
 
                 # Note: we don't check 'allowed' or 'available' here, because these are
@@ -164,13 +151,13 @@ class TranslationForm(BrowserView):
                 addAction = addActionsById.get(typeId, None)
 
                 if addAction is not None:
-                    url = addAction['url']
+                    url = addAction['url'] 
 
                 if not url:
                     url = '%s/createObject?type_name=%s' % (baseUrl, quote_plus(typeId))
+                return self.request.response.redirect(url)
 
                 # url = new_parent.absolute_url() + '/++addtranslation++'+self.context.portal_type+'++'+translation_manager.tg
-                return self.request.response.redirect(url)
 
 
 

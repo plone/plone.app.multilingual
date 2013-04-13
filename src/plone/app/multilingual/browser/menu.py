@@ -16,6 +16,10 @@ from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT, ITG, ILanguage
 from plone.app.multilingual.interfaces import SHARED_NAME
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+
 
 class TranslateMenu(BrowserMenu):
     implements(ITranslateMenu)
@@ -29,6 +33,9 @@ class TranslateMenu(BrowserMenu):
         portal_url = portal_state.portal_url()
         showflags = lt.showFlags()
         context_id = ITG(context)
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        edit_view = 'babel_edit' if settings.redirect_babel_view else 'edit'
         # In case is neutral language show set language menu only
         if LANGUAGE_INDEPENDENT != ILanguage(context).get_language() and not INavigationRoot.providedBy(context):
             menu.append({

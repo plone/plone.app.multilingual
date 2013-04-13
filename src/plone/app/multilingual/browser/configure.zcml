@@ -57,6 +57,25 @@
       permission="cmf.ManagePortal"
       />
 
+  <browser:viewlet
+      name="plone.app.multilingual.add-form-is-translation"
+      for="*"
+      view="plone.dexterity.browser.add.DefaultAddView"
+      manager="plone.app.layout.viewlets.interfaces.IAboveContent"
+      class=".viewlets.addFormIsATranslationViewlet"
+      template="templates/add-form-is-translation.pt"
+      layer="..interfaces.IPloneAppMultilingualInstalled"
+      permission="zope.Public"
+      />
+
+  <browser:page
+    name="multilingual-remove-tg-session"
+    for="*"
+    class=".helper_views.remove_tg_session"
+    permission="zope.Public"
+    layer="..interfaces.IPloneAppMultilingualInstalled"
+    />
+
   <!-- Universal Link -->
 
   <browser:page
@@ -182,6 +201,41 @@
     permission="plone.app.multilingual.ManageTranslations"
     />
 
+  
+  <adapter
+      name="addtranslation"
+      factory=".add.AddViewTraverser"
+      />
+
+  <!-- Add Form Dexterity -->
+
+  <configure zcml:condition="installed plone.dexterity">
+    <!-- Standard add view and form - invoked from ++addtranslation++ traverser -->
+    <adapter
+        name="babel_view"
+        for="Products.CMFCore.interfaces.IFolderish
+             Products.CMFDefault.interfaces.ICMFDefaultSkin
+             plone.dexterity.interfaces.IDexterityFTI"
+        provides="zope.publisher.interfaces.browser.IBrowserPage"
+        factory=".add.DefaultMultilingualAddView"
+        />
+    <class class=".add.DefaultMultilingualAddView">
+        <require
+            permission="cmf.AddPortalContent"
+            interface="zope.publisher.interfaces.browser.IBrowserPage"
+            />
+    </class>
+  </configure>
+
+
+  <!-- Add Form Archetypes -->
+
+  <browser:page
+    for="plone.multilingual.interfaces.ITranslatable"
+    name="add_at_translation"
+    class=".add.MultilingualATAddForm"
+    permission="cmf.ModifyPortalContent"
+    />
 
   <!-- Edit form -->
 
