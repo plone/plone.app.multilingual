@@ -57,6 +57,8 @@
       permission="cmf.ManagePortal"
       />
 
+  <!-- It comes from a translation DX -->
+
   <browser:viewlet
       name="plone.app.multilingual.add-form-is-translation"
       for="*"
@@ -67,6 +69,19 @@
       layer="..interfaces.IPloneAppMultilingualInstalled"
       permission="zope.Public"
       />
+
+  <!-- It comes from a translation AT with Portal Factory -->
+
+  <browser:viewlet
+      name="plone.app.multilingual.add-form-is-at-translation"
+      for="*"
+      manager="plone.app.layout.viewlets.interfaces.IAboveContent"
+      class=".viewlets.addFormATIsATranslationViewlet"
+      template="templates/add-form-is-translation.pt"
+      layer="..interfaces.IPloneAppMultilingualInstalled"
+      permission="zope.Public"
+      />
+
 
   <browser:page
     name="multilingual-remove-tg-session"

@@ -116,7 +116,8 @@ class BabelUtils(BrowserView):
                 lang_info['isDefault'] = False
 
             # Remove the translation of the content currently being translated
-            if lang_info['code'] == context.Language():
+            # In case it's temporal we show as language is not already set on AT
+            if not context.portal_factory.isTemporary(self.context) and lang_info['code'] == ILanguage(context).get_language():
                 continue
 
             # Remove the translation in case the translator user does not have permissions over it

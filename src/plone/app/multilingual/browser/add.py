@@ -48,7 +48,6 @@ class AddViewTraverser(object):
         self.request = request
 
     def traverse(self, name, ignored):
-        import pdb; pdb.set_trace()
         ttool = getToolByName(self.context, 'portal_types')
         ti = ttool.getTypeInfo(name)
         if not IDexterityFTI.providedBy(ti):

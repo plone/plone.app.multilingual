@@ -104,20 +104,20 @@ class TranslationForm(BrowserView):
     def __call__(self):
         language = self.request.get('language', None)
         if language:
-            translation_manager = ITranslationManager(aq_inner(self.context))
-            if ILanguage(self.context).get_language() == LANGUAGE_INDEPENDENT:
+            context = aq_inner(self.context)
+            translation_manager = ITranslationManager(context)
+            if ILanguage(context).get_language() == LANGUAGE_INDEPENDENT:
                 # XXX : Why we need this ? the subscriber from pm should maintain it
-                language_tool = getToolByName(self.context, 'portal_languages')
+                language_tool = getToolByName(context, 'portal_languages')
                 default_language = language_tool.getDefaultLanguage()
-                ILanguage(self.context).set_language(default_language)
+                ILanguage(context).set_language(default_language)
                 translation_manager.update()
-                self.context.reindexObject()
+                context.reindexObject()
 
             new_parent = translation_manager.add_translation_delegated(language)
 
             registry = getUtility(IRegistry)
             settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
-
             sdm = self.context.session_data_manager
             session = sdm.getSessionData(create=True)
             session.set("tg", translation_manager.tg)
