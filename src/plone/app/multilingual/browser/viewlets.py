@@ -21,6 +21,7 @@ class oneLanguageConfiguredNoticeViewlet(ViewletBase):
         supported = lt.getSupportedLanguages()
         self.available = len(supported) <= 1
 
+
 class addFormIsATranslationViewlet(ViewletBase):
     """ Notice the user that this add form is a translation
     """
@@ -51,6 +52,7 @@ class addFormIsATranslationViewlet(ViewletBase):
             query = {'TranslationGroup': tg, 'Language': 'all'}
             results = ptool.searchResults(query)
             self.origin = results
+
 
 class addFormATIsATranslationViewlet(ViewletBase):
     """ Notice the user that this add form is a translation
