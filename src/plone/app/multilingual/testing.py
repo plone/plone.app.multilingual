@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import doctest
+from OFS.Folder import Folder
+from Testing import ZopeTestCase as ztc
 
 from plone.testing.z2 import ZSERVER_FIXTURE
 from plone.app.testing import PLONE_FIXTURE
@@ -10,22 +11,38 @@ from plone.app.testing import FunctionalTesting
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 
-from zope.configuration import xmlconfig
-
 import plone.app.multilingual
 import plone.app.dexterity
+
+from zope.configuration import xmlconfig
+
+import doctest
+import transaction
 
 
 class PloneAppMultilingualLayer(PloneSandboxLayer):
     defaultBases = (PLONE_FIXTURE,)
 
+    class Session(dict):
+        def set(self, key, value):
+            self[key] = value
+
     def setUpZope(self, app, configurationContext):
         # load ZCML
         xmlconfig.file('configure.zcml', plone.app.multilingual,
-                        context=configurationContext)
+                       context=configurationContext)
 
         xmlconfig.file('configure.zcml', plone.app.multilingual.tests,
-                        context=configurationContext)
+                       context=configurationContext)
+
+        # Support sessionstorage in tests
+        app.REQUEST['SESSION'] = self.Session()
+        if not hasattr(app, 'temp_folder'):
+            tf = Folder('temp_folder')
+            app._setObject('temp_folder', tf)
+            transaction.commit()
+
+        ztc.utils.setupCoreSessions(app)
 
     def setUpPloneSite(self, portal):
         # install into the Plone site
