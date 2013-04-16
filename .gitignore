@@ -26,3 +26,4 @@ docs/_build
 lib64
 lib
 include
+test_acceptance/*
