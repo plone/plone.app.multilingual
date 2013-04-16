@@ -38,14 +38,13 @@ setup(name='plone.app.multilingual',
       extras_require={
           'dexterity': ['plone.multilingualbehavior'],
           'archetypes': ['archetypes.multilingual'],
-          'test': ['plone.app.testing',
-                   'plone.multilingualbehavior',
-                   'archetypes.multilingual',
-                   'Products.LinguaPlone',
-                   'robotsuite',
-                   'robotframework-selenium2library',
-                   'decorator',  # BBB
-                   'selenium'],
+          'test': [
+              'plone.app.testing[robot]>=4.2.2',
+              'plone.multilingualbehavior',
+              'archetypes.multilingual',
+              'Products.LinguaPlone',
+              'decorator',  # BBB
+          ],
       },
       entry_points="""
       # -*- Entry points: -*-

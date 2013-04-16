@@ -1,29 +1,47 @@
 *.pyc
+*.egg
+*.egg-info
+*.mo
+
+# Directories
 eggs/*
 parts/*
 bin/*
 extras/*
-*.egg
 develop-eggs/*
-*.egg-info
-.installed.cfg
-.mr.developer.cfg
 var/*
-.DS_Store
 build/*
 dist/*
+docs/_build
+coverage
+
+# Sublime Text
 .codeintel/*
 MKcodeintel
-coverage
-*.mo
-docs/_build
+
+# buildout
+.installed.cfg
+.mr.developer.cfg
+
+# eclipse
 .project
 .pydevproject
 .settings
+
+# Mac
+.DS_Store
+
+# Local development
+local.cfg
+
 # Emacs
 .emacs.desktop*
+
 # Virtualenv
 lib64
 lib
 include
+
+# tests
 test_acceptance/*
+robot_*
