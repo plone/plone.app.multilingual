@@ -1,8 +1,20 @@
 Changelog
 =========
 
-1.0 - UNRELEASED
-----------------------
+1.0 - 2013-04-16
+----------------
+
+- Remove ITG usage to ITranslationManager usage
+  [ramon]
+
+- Shared folder working on old collections
+  [fgrcon]
+
+- Shared folder correct name and reference on setup
+  [ramon]
+
+- Instead of check for Dexterity, check if p.multilingualbehavior is installed. If it's installed, then Dexterity is installed too
+  [sneridagh]
 
 - Extend travis integration to test against Plone 4.1, 4.2, 4.3 and
   include following dependencies into tests:
