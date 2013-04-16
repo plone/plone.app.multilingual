@@ -16,6 +16,10 @@ from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT, ITranslationMana
 from plone.app.multilingual.interfaces import SHARED_NAME
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+
 
 class TranslateMenu(BrowserMenu):
     implements(ITranslateMenu)
@@ -29,6 +33,9 @@ class TranslateMenu(BrowserMenu):
         portal_url = portal_state.portal_url()
         showflags = lt.showFlags()
         context_id = ITranslationManager(context).tg
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        edit_view = 'babel_edit' if settings.redirect_babel_view else 'edit'
         # In case is neutral language show set language menu only
         if LANGUAGE_INDEPENDENT != ILanguage(context).get_language() and not INavigationRoot.providedBy(context):
             menu.append({
@@ -36,7 +43,7 @@ class TranslateMenu(BrowserMenu):
                        default=u"Edit with babel view"),
                 "description": _(u"description_babel_edit",
                                 default=u"Edit with the babel_edit"),
-                "action": url + "/babel_edit",
+                "action": url + "/" + edit_view,
                 "selected": False,
                 "icon": None,
                 "extra": {"id": "_edit_babel_edit",
@@ -56,8 +63,7 @@ class TranslateMenu(BrowserMenu):
                     "description": _(u"description_translate_into",
                                     default=u"Translate into ${lang_name}",
                                     mapping={"lang_name": lang_name}),
-                    "action": url + "/@@create_translation?form.widgets.language"\
-                            "=%s&form.buttons.create=1" % lang_id,
+                    "action": url + "/@@create_translation?language=%s" % lang_id,
                     "selected": False,
                     "icon": icon,
                     "width": "14",
@@ -83,7 +89,7 @@ class TranslateMenu(BrowserMenu):
                     "description": _(u"description_babeledit_menu",
                                     default=u"Babel edit ${lang_name}",
                                     mapping={"lang_name": lang_name}),
-                    "action": urls.getTerm(lang_id).title + "/babel_edit",
+                    "action": urls.getTerm(lang_id).title + "/" + edit_view,
                     "selected": False,
                     "icon": icon,
                     "width": "14",

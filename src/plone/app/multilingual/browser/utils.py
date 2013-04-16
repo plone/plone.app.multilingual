@@ -13,7 +13,9 @@ from Products.CMFCore.interfaces._content import IFolderish
 
 from plone.app.folder.utils import findObjects
 from plone.multilingual.interfaces import ITranslationManager
-from plone.multilingual.interfaces import ITranslationLocator, ILanguage
+from plone.multilingual.interfaces import ITranslationLocator
+from plone.multilingual.interfaces import ILanguage
+from plone.multilingual.manager import TranslationManager
 from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 
@@ -29,7 +31,13 @@ class BabelUtils(BrowserView):
         portal_state = getMultiAdapter((context, request),
                                        name="plone_portal_state")
         self.portal_url = portal_state.portal_url()
-        self.group = ITranslationManager(self.context)
+        # If there is any session tg lets use the session tg
+        sdm = self.context.session_data_manager
+        session = sdm.getSessionData(create=True)
+        if 'tg' in session.keys():
+            self.group = TranslationManager(session['tg'])
+        else:
+            self.group = ITranslationManager(self.context)
 
     def getGroup(self):
         return self.group
@@ -108,7 +116,8 @@ class BabelUtils(BrowserView):
                 lang_info['isDefault'] = False
 
             # Remove the translation of the content currently being translated
-            if lang_info['code'] == context.Language():
+            # In case it's temporal we show as language is not already set on AT
+            if not context.portal_factory.isTemporary(self.context) and lang_info['code'] == ILanguage(context).get_language():
                 continue
 
             # Remove the translation in case the translator user does not have permissions over it
