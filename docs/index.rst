@@ -1,93 +1,399 @@
-======================
-plone.app.multilingual
-======================
+.. line-block::
 
-.. toctree::
-   :maxdepth: 2
+    WARNING: If you are reading this on GitHub, DON'T! Read it on ReadTheDocs:
+    http://ploneapi.readthedocs.org/en/latest/index.html so you have working
+    references and proper formatting.
 
+.. image:: https://travis-ci.org/plone/plone.app.multilingual.png?branch=master
+    :target: http://travis-ci.org/plone/plone.app.multilingual
+
+**************************************************************
+plone.app.multilingual: Next generation multilingual support
+**************************************************************
 
 Introduction
 ============
 
 Talking about multi-language support in Plone is talk about
-Products.LinguaPlone. It's been the defacto standard for managing translations
-of Archetypes-based content in Plone through the years. Somehow its
-functionality never made its way into the Plone core. Nowadays, Plone faces the
-rising of Dexterity content types and its incoming adoption into the Plone core
-in the near future (4.3) and complete the transition to Plone default content
-types in Plone 5.
+Products.LinguaPlone. It has been the *defacto* standard for managing
+translations of Archetypes-based content types in Plone through the years.
+Somehow its functionality never made its way into the Plone core and today it is
+in legacy status. Nowadays, Plone faces the rising of Dexterity content types
+and its incoming adoption into the Plone core in the near future (4.3) and
+complete the transition to Plone as default content types in Plone 5.
 
 plone.app.multilingual was designed originally to provide Plone a whole
 multilingual story. Using ZCA technologies, enables translations to Dexterity
-and Archetypes content types as well.
+and Archetypes content types as well managed via an unified UI.
 
-After more than 4 years, a GSOC, redesigns, new versions, reimplementations due
-to deprecated libraries, two major Plone versions finally we are able to say
-that plone.app.multilingual is here.
+This module provides the user interface for managing content translations. It's
+the app package of the next generation Plone multilingual engine. It's designed
+to work with Dexterity content types and the *old fashioned* Archetypes based
+content types as well. It only works with Plone 4.1 and above due to the use of
+UUIDs for referencing the translations.
 
+After more than 7 years, a GSOC, redesigns, reimplementations due to deprecated
+libraries, two major Plone versions finally we are able to say that
+plone.app.multilingual is finally here.
+
+Components
+==========
+
+PAM is composed of four packages, two are mandatory:
+
+    * plone.app.multilingual (UI)
+    * plone.multilingual (core)
+
+and two optionals (at least one should be installed):
+
+    * plone.multilingualbehavior (enables Dexterity support via a behavior)
+    * archetypes.multilingual (enables Archetypes support)
+
+Usage
+=====
+
+To use this package with both Dexterity and Archetypes based content types you
+should add the following line to your *eggs* buildout section::
+
+    eggs =
+        plone.app.multilingual[archetypes, dexterity]
+
+If you need to use this package only with Archetypes based content types you
+only need the following line::
+
+    eggs =
+        plone.app.multilingual[archetypes]
+
+While archetypes is default in Plone for now, you can strip ``[archetypes]``.
+This may change in future so we recommend adding an appendix as shown above.
+
+
+Setup
+=====
+
+After re-running your buildout and installing the newly available add-ons, you
+should go to the *Languages* section of your site's control panel and select
+at least two or more languages for your site. You will now be able to create
+translations of Plone's default content types, or to link existing content as
+translations.
 
 Features
 ========
 
- 1. Archetype-based content types translation management
- 2. Dexterity-based content types translation management
- 3. Enhanced translation edit UI with already translated content
- 4. Language independent fields support
- 5. Google Translate service support
+These are the most important features PAM provides.
 
+Root Language folders
+---------------------
+
+After the setup, PAM will create root folders for each of your site's
+languages and put translated content into the appropriate folders. A language
+folder implements INavigationRoot, so from the user's point of view, each
+language is "jailed" inside its correspondent language folder. There are event
+subscribers in place to capture user interaction with content and update the
+language in contents accordingly, for example when user moves or copy content
+between language folders.
+
+
+Babel view
+----------
+
+An evolution of the LP *translate* view, unified for either Archetypes and
+Dexterity content types. It features an already translated content viewer for
+the current content being edited via an ajaxified dinamic selector that shows
+them on the fly on user request.
+
+
+Language independent fields
+---------------------------
+
+PAM has support for language independent fields, but with a twist respect the
+LP implementation. As PAM does design does not give more relevance to one
+translated object above the others siblings (has no canonical object), fields
+marked as language independent get copied over all the members of the
+translation group always. The PAM UI will warn you about this behavior by
+reminding you that the values in the field on the other group participants
+will be overwritten.
+
+
+Translation locator policy
+--------------------------
+
+When translating content, this policy decides how it would be placed in the
+site's structure. There are two policies in place:
+
+    * LP way, the translation gets placed in the nearest translated folder in
+      parent's hierarchy
+
+    * Ask user where to place the translated element in the destination
+      language root folder
+
+
+Language selector policy
+------------------------
+
+While browsing the site, the language selector viewlet allows users to switch
+site's content language and ease access between translations of the current
+content. There are two policies in place in case the translation of a specific
+language does not exist (yet):
+
+    * LP way, the selector shows the nearest translated container.
+    * Shows the user an informative view that shows the current available
+      translations for the current content.
+
+
+Neutral root folder support
+---------------------------
+
+The root language folders are used to place the tree of the correspondent
+language content. However, there are some use cases we need content that does
+not belongs to any language. For example, for assets or side resources like
+images, videos and documents. There is need to maintain a language neutral
+folder for place this kind of objects. After PAM setup, there is a special
+folder called *Language shared*. All items placed in this folder will have
+neutral as its default language and will be visible from the other root
+language folders as they were placed there.
+
+
+Translation map
+---------------
+
+In order to ease the translation tasks, we devised a tool that displays in a
+useful way all the current translated objects and its current translation
+information. The map also shows a list of missing translations in case you
+want to build a *mirrored* (completely) translated site.
+
+
+Google Translation Service integration
+--------------------------------------
+
+If you are subscriber of the Google Translation service (a paid service), you
+can setup your API key on *Languages* site setup. Then, you will notice a new
+icon in the babel view that takes the original field on the left side and
+using Google Translations service, translates its contents and fill the right
+side field.
+
+
+LinguaPlone migration
+---------------------
+
+You can migrate your existing LP powered sites to PAM using the *Migration* tab
+in the *Languages* control panel. The migration has been divided into 4 steps
+for separation of concerns and for improving the success of each of the required
+procedures.
+
+Step 0 (optional) - Reindex the language index
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The migration of LinguaPlone content depends on an up-to-date Language index.
+Use this step to refresh this index. **Warning:** Depending on the number of
+items in your site, this can take a considerable amount of time. This step is
+not destructive and can be executed as many times as needed.
+
+Step 1 - Relocate content to the proper root language folder
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This step will move the site's content to its correspondent root language folder
+and previously will make a search for misplaced content through the site's
+content tree and will move them to its nearest translated parent. **Warning:**
+This step is destructive as it will alter your content tree structure. Make sure
+you have previously configured your site's languages properly in the 'Site
+Languages' tab of the 'Languages' control panel. It's advisable that you do not
+perform this step on production servers having not tried it in
+development/preproduction servers previously. Depending on the distribution of
+your site's content and the accuracy of the language information on each content
+object you may need to relocate manually some misplaced content after this step.
+Despite the fact that this step is 'destructive' it can be executed as times as
+needed if some problem is detected and afterwards you fix the problem. Please,
+refer to the procedure log when it finishes.
+
+Step 2 - Transfer multilingual catalog information
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This step will transfer the relations between translations stored by LinguaPlone
+to the PAM catalog. This step is not destructive and can be executed as many
+times as needed.
+
+Step 3 - Cleanup after migration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This step will search and fix some lost dependencies to the ITranslatable
+interface hidden in the relation catalog and it gets rid of them. It must be run
+only when LinguaPlone is already uninstalled, so this step is hidden until then.
+
+
+Marking objects as translatables
+================================
+
+Archetypes
+----------
+
+By default, if PAM is installed, Archetypes-based content types are marked as
+translatables
+
+
+Dexterity
+---------
+
+Users should mark a dexterity content type as translatable by assigning a the
+multilingual behavior to the definition of the content type either via file
+system, supermodel or through the web.
+
+
+Marking fields as language independant
+======================================
+
+Archetypes
+----------
+
+The language independent fields on Archetype-based content are marked the same
+way as in LinguaPlone::
+
+    atapi.StringField(
+        'myField',
+        widget=atapi.StringWidget(
+        ....
+        ),
+        languageIndependent=True
+    ),
+
+.. note::
+
+    If you want to completely remove LinguaPlone of your installation, you
+    should make sure that your code are dependant in any way of LP.
+
+
+Dexterity
+---------
+
+There are four ways of achieve it.
+
+Grok directive
+~~~~~~~~~~~~~~
+
+In your content type class declaration::
+
+    from plone.multilingualbehavior import directives
+    directives.languageindependent('field')
+
+Supermodel
+~~~~~~~~~~
+
+In your content type XML file declaration::
+
+    <field name="myField" type="zope.schema.TextLine" lingua:independent="true">
+        <description />
+        <title>myField</title>
+    </field>
+
+Native
+~~~~~~
+
+In your code::
+
+    from plone.multilingualbehavior.interfaces import ILanguageIndependentField
+    alsoProvides(ISchema['myField'], ILanguageIndependentField)
+
+Through the web
+~~~~~~~~~~~~~~~
+
+Via the content type definition in the *Dexterity Content Types* control panel.
+
+ITranslationManager adapter
+===========================
+
+The most interesting adapter that p.a.m. provides is:
+``plone.multilingual.interfaces.ITranslationManager``.
+
+It adapts any ITranslatable object to provide convenience methods to manage
+the translations for that object.
+
+Add a translation
+-----------------
+
+Given an object `obj` and we want to translate it to Catalan language ('ca')::
+
+    from plone.multilingual.interfaces import ITranslationManager
+    ITranslationManager(obj).add_translation('ca')
+
+Register a translation for an already existing content
+------------------------------------------------------
+
+Given an object `obj` and we want to add `obj2` as a translation for Catalan language ('ca')::
+
+    ITranslationManager(obj).register_translation('ca', obj2)
+
+Get translations for an object
+------------------------------
+
+Given an object `obj`::
+
+    ITranslationManager(obj).get_translations()
+
+and if we want a concrete translation::
+
+    ITranslationManager(obj).get_translation('ca')
+
+Check if an object has translations
+-----------------------------------
+
+Given an object `obj`::
+
+    ITranslationManager(obj).get_translated_languages()
+
+or::
+
+    ITranslationManager(obj).has_translation('ca')
+
+For more information see: https://github.com/plone/plone.multilingual/blob/master/src/plone/multilingual/interfaces.py#L66
 
 Internal design of plone.multilingual
 ======================================
 
-All the internal features are implementated on the package plone.multilingual.
+All the internal features are implemented on the package plone.multilingual.
 
 The key points are:
 
- 1. Each translation is a different content object.
- 2. There is no canonical object
- 3. The translation reference infraestructure is external to the content object
- 4. Adapt all the steps on translation
- 5. Language get/set unification
- 6. Translatable marker interface
+    1. Each translation is a content object
+    2. There is no canonical object
+    3. The translation reference storage is external to the content
+       object
+    4. Adapt all the steps on translation
+    5. Language get/set via an unified adapter
+    6. Translatable marker interface(s)
 
-No canonical content object
----------------------------
+
+There is no canonical content object
+------------------------------------
 
 Having a canonical object on the content space produces a dependency which is
-not orthogonal with the normal behavior of Plone. All content objects should be
+not orthogonal with the normal behavior of Plone. Content objects should be
 autonomous and you should be able to remove it. This is the reason because we
 removed the canonical content object. There is a canonical object on the
 translation infrastructure but is not on the content space.
 
 
-Translation reference infrastructure
-------------------------------------
+Translation reference storage
+-----------------------------
 
-In order to maintain the relations between the different language objects we designed a local
-utility that stores the relation tree on a BTREE. The relations with all the content are done
-using default implementation of  UUIDs. We decided to push on that direction because:
-
- * UUID are the actual content object identifier
- * With external reference structure it's faster to remove or modify one translation
- * It's easier to work on all the translation (exports/imports)
- * It's easier to maintain the integrity of all the translations
-
-.. figure:: images/image04.png
-
-   Canonical storage design
+In order to maintain the relations between the different language objects we
+designed a common object called a *translation group*. This translation group
+has an UUID on its own and each object member of the group stores it in the
+object catalog register. You can use the ITranslationManager utility to access
+and manipulate the members of a translation group given one object of the group.
 
 
 Adapt all the steps on translation
 ----------------------------------
 
-All the different steps on a translation creation are adapted, it's possible to create different
-policies for different types, sites, ...
+The different aspects involved on a translation are adapted, so it's possible
+to create different policies for different types, sites, etc.
 
-The steps are :
   * ITranslationFactory - General factory used to create a new content
-    * ITranslationLocator - Where are we going to locate the new translated content
 
-        Default : If the parent folder is translated create the content on the translated parent folder, otherwise create on the parent folder.
+    * ITranslationLocator - Where we are going to locate the new translated content
+
+        Default : If the parent folder is translated create the content on the
+        translated parent folder, otherwise create on the parent folder.
 
     * ITranslationCloner - Method to clone the original object to the new one
 
@@ -101,288 +407,80 @@ The steps are :
 
     Default: Nothing
 
-Language get/set unification
-----------------------------
 
-In order to know the language of a content type there is a interface/adapter :
-plone.multilingual.interfaces.ILanguage
+Language get/set via an unified adapter
+---------------------------------------
 
-When you set a language on a content a subscriber change updates the canonical references.
+In order to access and modify the language of a content type regardless the
+type (Archetypes/Dexterity) there is a interface/adapter::
 
-Translatable marker interface
------------------------------
+    plone.multilingual.interfaces.ILanguage
 
-In order to know if a content can be translated there is a marker interface :
-plone.multilingual.interfaces.ITranslatable
-
-Dexterity related features plone.multilingualbehavior
-=====================================================
-
-All the internal features are implemented on the package : plone.multilingualbehavior
-
-The key points are :
-
- * Multilingual behavior
- * Language Independent Fields
- * Language get/set
- * Related fields
-
-Multilingual behavior
----------------------
-
-Marker interface : plone.multilingualbehavior.interfaces.IDexterityTranslatable
-
-Language Independent Fields
----------------------------
-
-*How to mark a field as language independent?*
-
-There are four ways of achieve it:
-
- * Grok directive
-
-.. code-block:: python
-
-    from plone.multilingualbehavior import directives
-    directives.languageindependent('field')
-
-* Supermodel
-
-.. code-block:: python
-
-    lingua:independent="true"
-
- * Native
-
-.. code-block:: python
-
-    alsoProvides(ISchema[‘field'], ILanguageIndependentField)
-
- * TTW
-
-    via the content type definition in the Dexterity configlet
-
-
-Implementation
---------------
-
-In order to maintain language independent fields on dexterity there is subscriber to ObjectModify
-that copies the files to translations. There is lock detection implemented with a stack  in order
-to stop deadlocks translations.
-
-**Language get/set**
-
-In order to get/set the language there is an implementation of the ILanguage interface that gets/sets
-the correct language
-
-**Related Fields**
-If it’s a related field and is marked as language independent it will look for the translation on the
-cloning/modifing process. With this feature it’s possible to create content vocabularies.
-
-
-Archetypes related features archetypes.multilingual
-===================================================
-
-All the internal features are implementated on the package : archetypes.multilingual
-
-The key points are :
- * Multilingual behavior
- * Language Independent Fields
- * Language get/set
-
-Defining translatable content
------------------------------
-
-Marker interface : plone.multilingualbehavior.interfaces.IDexterityTranslatable
-
-** Language Independent Fields **
-XXX
-
-** Language get/set **
-XXX
-
-
-
-UX plone.app.multilingual
-=========================
-
-All the internal features are implementated on the package : plone.app.multilingual
-
-The key points are :
- * Control panel
- * Translation menu
- * Language viewlet
- * Babel view/edit
- * Language Index
- * Catalog Patch
- * Permission
- * Language root folder
-
-
-API
-===
-
-**Get the translation manager**
-
-.. code-block:: python
-
-  from plone.multilingual.interfaces import ITranslationManager
-  manager = ITranslationManager(context)
-
-**Get the translations of an object**
-
-.. code-block:: python
-
-    translated_object = manager.get_translation(language_code-block)
-
-**Add an empty translation of an object**
-
-.. code-block:: python
-
-    manager.add_translation(language_code-block)
-
-**Register a translation of an object**
-
-.. code-block:: python
-
-    manager.register_translation(language_code-block, content)
-
-**Get all translations**
-
-.. code-block:: python
-
-    manager.get_translations()
-    # returns a dict with the language_code-blocks as keys
-
-**Get all translations language code-block**
-
-.. code-block:: python
-
-    manager.get_translated_languages()
-
-**Has a translation?**
-
-.. code-block:: python
-
-    manager.has_translation(language_code-block)
-
-**Get the language of the content?**
-
-.. code-block:: python
+You can use::
 
     from plone.multilingual.interfaces import ILanguage
     language = ILanguage(context).get_language()
 
-**Set the language of the content?**
+or in case you want to set the language of a content::
 
-.. code-block:: python
-
-    language = ILanguage(context).set_language(‘ca’)
-
-**Vocabularies**
-
- * plone.app.multilingual.browser.vocabulary.untranslated_languages(context)
-   * get the languages on which the context is not translated and the language is configured
-   * returns a SimpleVocabulary with the languages code-blocks and it’s name
- * plone.app.multilingual.browser.vocabulary.translated_languages(context)
-   * get the languages on which the context is translated
-   * returns a SimpleVocabulary with the languages code-blocks and it’s name
- * plone.app.multilingual.browser.vocabulary.translated_urls(context)
-   * get the urls of the translated objects
-   * returns a SimpleVocabulary with the languages code-blocks and the urls
- * plone.app.multilingual.browser.vocabulary.deletable_languages(context)
-   * get the languages from the objects that are translated and not available on the site
-   * returns a SimpleVocabulary with the languages code-blocks and it’s name
-
-HOW-TO..
-========
-
-Install
--------
-
-In order to install plone.app.multilingual without dexterity support you should add to buildout and run buildout:
-
-.. code-block:: python
-
-  eggs =
-        ...
-        plone.app.multilingual
-        ...
+    language = ILanguage(context).set_language('ca')
 
 
-In order to install plone.app.multilingual with dexterity support you should add to buildout and run buildout:
+Translatable marker interface
+-----------------------------
 
-.. code-block:: python
+In order to know if a content can be translated there is a marker interface:
 
- eggs =
-        ...
-        plone.app.multilingual
-        plone.multilingualbehavior
-        ...
+    plone.multilingual.interfaces.ITranslatable
 
 
-Setup
------
+License
+=======
 
-After installation you should be able to access Language settings on the control panel.
-
-.. figure:: images/image00.png
-
-   How to setup
-
-Here you can select which languages do you want to enable on you site and the order they will apear on the UI. On save the language folders will be created on the root folder with INavigationRoot marker interface, the default view on the site root will be moved to the default language folder and a redirect view will be configured on the site root in order to redirect users to the language folder. If you have content on you site you will need to set language on it and move it to the language folder. There is a option on control panel in order to do this task explained on howto section.
+GNU General Public License, version 2
 
 
-I have a site with content and I want to have a multilingual site
------------------------------------------------------------------
+Roadmap
+=======
 
- * Install plone.app.multilingual with/out dexterity support depending if the content is dexterity
- * Configure the needed languages on the control panel and Save
- * Set the default language on all the content that doesn’t have language defined using the control
-   panel option. You must check the option and save. On the error log will apear all the objects
-   that has been modified.
- * Move the root folder default language content to the default language using the control panel option.
-   You must check the option and save. On the error log will apear all the objects that has been modified.
+This is the planned feature list for PAM:
 
-.. image:: images/image01.png
-.. image:: images/image02.png
+1.0
+---
 
-I want to enable a dexterity type to be translatable
-----------------------------------------------------
-
-You can enable the behavior TTW or just add the plone.multilingualbehavior.interfaces.IDexterityTranslatable
-behavior on the FTI definition.
-
-
-I want to have dexterity language independent fields
-----------------------------------------------------
-
-It’s explained on the Dexterity section the three possible ways to define a language independent field
+    * Babel view
+    * Root language folders
+    * Non invasive language selector
+    * Universal link
+    * Language selector policy
+    * Neutral root folder support
+    * Catalog based storage
+    * Translation map
+    * Google Translation Service integration
+    * LinguaPlone migration
 
 
-I want to have archetypes language independent fields
------------------------------------------------------
+2.0 (PLIP 13091)
+----------------
 
-XXX
-
-
-I want to use Google Translate service on babel view
-----------------------------------------------------
-
-You should go to https://code-block.google.com/apis/console/ and copy your google api key to the language control panel.
-ALERT: this is a google paid service!
+    * The first version compatible with PLIP 13091
+      (https://dev.plone.org/ticket/13091)
+    * Update, get rid of legacy code and transfer some of the PAM logic to the
+      Plone core (plone.app.i18n)
+    * Perform the same for other parts of Plone core to integrate some monkey
+      patches and update legacy code from Products.PloneLanguageTool
 
 
-.. image:: images/image03.png
+3.0
+---
 
+    * XLIFF export/import
+    * Iterate support: we know there are some needs about iterate integration
+    * LinguaPlus/linguatools set of useful tools
+    * Outdated translations alerts and translation workflows support
+    * plone.app.toolbar/plone.app.cmsui support
+    * Add support for Deco layouts and content types
+    * Pluggable translation policies
+    * Pluggable language policies negotiations
 
-I want to have a vocabulary for a field that is translatable
-------------------------------------------------------------
-
-You can create on Dexterity types a relationfield to another interface. If this field is language independent
-it’ll maintain for each translation the correct vacabulary.
-
-I'm moving from LinguaPlone to PAM...
--------------------------------------
-
-We enabled the option to have both systems installed and a migration script (actully in process XXX )
+.. include:: CREDITS.txt

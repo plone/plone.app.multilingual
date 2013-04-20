@@ -20,4 +20,4 @@ Jan-Carel Brand:
 Anne Walter:
    For pushing for a initial working version
 
-Thomas Massmann, Martijn Pieters, Martin Aspelli, David Glick
+Thomas Massmann, Martijn Pieters, Martin Aspeli, David Glick

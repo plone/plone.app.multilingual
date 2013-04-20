@@ -13,7 +13,8 @@ Changelog
 - Shared folder correct name and reference on setup
   [ramon]
 
-- Instead of check for Dexterity, check if p.multilingualbehavior is installed. If it's installed, then Dexterity is installed too
+- Instead of check for Dexterity, check if p.multilingualbehavior is installed.
+  If it's installed, then Dexterity is installed too
   [sneridagh]
 
 - Fixed travis integration, extend from plone buildout-cache.
