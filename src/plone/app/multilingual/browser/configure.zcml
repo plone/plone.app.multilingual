@@ -149,6 +149,8 @@
     name="plone.app.multilingual.vocabularies.AllAvailableLanguageVocabulary"
     />
 
+  <include package="plone.app.contentmenu" />
+
   <!-- Default browser view -->
   <browser:view
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
@@ -216,7 +218,7 @@
     permission="plone.app.multilingual.ManageTranslations"
     />
 
-  
+
   <adapter
       name="addtranslation"
       factory=".add.AddViewTraverser"
