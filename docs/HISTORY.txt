@@ -1,6 +1,17 @@
 Changelog
 =========
 
+1.1 - Unreleased
+----------------
+
+- Extend travis integration to test against Plone 4.1, 4.2, 4.3 and
+  include following dependencies into tests:
+  - ``plone.multilingual``
+  - ``plone.multilingualbehavior``
+  - ``archetypes.multilingual``
+  [saily]
+
+
 1.0 - 2013-04-16
 ----------------
 
