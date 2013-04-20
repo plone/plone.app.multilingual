@@ -1,21 +1,16 @@
-import unittest
-
-from plone.testing import layered
-from plone.app.testing import applyProfile
-# from plone.app.testing import PLONE_ZSERVER
-
-from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_ACCEPTANCE_TESTING
-
-import robotsuite
-
-from zope.component.hooks import getSite
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.tests.utils import makeContent, makeTranslation
-from Products.CMFCore.utils import getToolByName
+from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_ACCEPTANCE_TESTING
+from plone.app.testing import applyProfile
 from plone.dexterity.utils import createContentInContainer
 from plone.multilingual.interfaces import ILanguage
+from plone.testing import layered
+from zope.component.hooks import getSite
+from Products.CMFCore.utils import getToolByName
 
+import robotsuite
 import transaction
+import unittest
 
 
 def setUp():
@@ -51,9 +46,7 @@ def setUp():
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTests([
-        # layered(robotsuite.RobotTestSuite("test_accessibility.txt"),
-        #         layer=PLONE_ZSERVER),
-        layered(robotsuite.RobotTestSuite("test_acceptance.txt", setUp=setUp),
+        layered(robotsuite.RobotTestSuite("test_robot.txt", setUp=setUp),
                 layer=PLONEAPPMULTILINGUAL_ACCEPTANCE_TESTING,
                 ),
     ])
