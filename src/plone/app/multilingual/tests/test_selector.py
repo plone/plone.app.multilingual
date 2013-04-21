@@ -149,7 +149,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             doc1_ca.absolute_url() + '?set_language=ca'
         )
         self.assertIn(
-            u"Inici".encode("utf-8"),
+            u'lang="ca"'.encode("utf-8"),
             self.browser.contents
         )
         self.browser.open(selector_languages[2]['url'])
@@ -158,7 +158,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             doc1_es.absolute_url() + '?set_language=es'
         )
         self.assertIn(
-            u"Usted está aquí".encode("utf-8"),
+            u'lang="es"'.encode("utf-8"),
             self.browser.contents
         )
 
@@ -260,7 +260,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.portal.ca.folder.absolute_url()+'?set_language=ca'
         )
         self.assertIn(
-            u"Inici".encode("utf-8"),
+            u'lang="ca"'.encode("utf-8"),
             self.browser.contents
         )
         self.browser.open(selector_languages[2]['url'])
@@ -269,7 +269,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.portal.es.absolute_url()+'?set_language=es'
         )
         self.assertIn(
-            u"Usted está aquí".encode("utf-8"),
+            u'lang="es"'.encode("utf-8"),
             self.browser.contents
         )
 
@@ -303,7 +303,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 NOT_TRANSLATED_YET_TEMPLATE + '/' + tgid + '?set_language=ca'
         )
         self.assertIn(
-            u"Inici".encode("utf-8"),
+            u'lang="ca"'.encode("utf-8"),
             self.browser.contents
         )
         self.browser.open(selector_languages[2]['url'])
@@ -313,7 +313,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 NOT_TRANSLATED_YET_TEMPLATE + '/' + tgid + '?set_language=es'
         )
         self.assertIn(
-            u"Usted está aquí".encode("utf-8"),
+            u'lang="es"'.encode("utf-8"),
             self.browser.contents
         )
 
@@ -343,7 +343,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             )
             self.browser.open(selector_languages[1]['url'])
             self.assertIn(
-                u"Inici".encode("utf-8"),
+                u'lang="ca"'.encode("utf-8"),
                 self.browser.contents
             )
             self.browser.open(selector_languages[2]['url'])
@@ -352,7 +352,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 self.portal.absolute_url()+'/@@multilingual-selector/notg/es?set_language=es'
             )
             self.assertIn(
-                u"Usted está aquí".encode("utf-8"),
+                u'lang="es"'.encode("utf-8"),
                 self.browser.contents
             )
 
@@ -419,7 +419,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.portal.ca.absolute_url()+'?set_language=ca'
         )
         self.assertIn(
-            u"Inici".encode("utf-8"),
+            u'lang="ca"'.encode("utf-8"),
             self.browser.contents
         )
         self.browser.open(selector_languages[2]['url'])
@@ -428,7 +428,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.portal.es.absolute_url()+'?set_language=es'
         )
         self.assertIn(
-            u"Usted está aquí".encode("utf-8"),
+            u'lang="es"'.encode("utf-8"),
             self.browser.contents
         )
 
@@ -477,7 +477,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.portal.ca.folder.absolute_url()+'/@@search?set_language=ca'
         )
         self.assertIn(
-            u"Inici".encode("utf-8"),
+            u'lang="ca"'.encode("utf-8"),
             self.browser.contents
         )
         # Here @@search isn't preserved because we've gone up a level
@@ -487,7 +487,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.portal.es.absolute_url()+'?set_language=es'
         )
         self.assertIn(
-            u"Usted está aquí".encode("utf-8"),
+            u'lang="es"'.encode("utf-8"),
             self.browser.contents
         )
 
@@ -516,7 +516,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.portal.ca.folder.absolute_url()+'/@@search?set_language=ca'
         )
         self.assertIn(
-            u"Inici".encode("utf-8"),
+            u'lang="ca"'.encode("utf-8"),
             self.browser.contents
         )
         # Here @@search isn't preserved because we've got the dialog
@@ -529,7 +529,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 NOT_TRANSLATED_YET_TEMPLATE + '/' + tgid + '?set_language=es'
         )
         self.assertIn(
-            u"Usted está aquí".encode("utf-8"),
+            u'lang="es"'.encode("utf-8"),
             self.browser.contents
         )
 
@@ -539,7 +539,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.request['PATH_INFO'] = '/plone/en/folder/@@search'
         self.request.form['uni'] = u'pres\xd8rved'
         self.request.form['int'] = '1'
-        
+
         selector = LanguageSelectorViewlet(
             self.portal.en.folder,
             self.request,
@@ -583,7 +583,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                     '/@@search?int=1&uni=pres%C3%98rved&set_language=ca'
             )
             self.assertIn(
-                u"Inici".encode("utf-8"),
+                u'lang="ca"'.encode("utf-8"),
                 self.browser.contents
             )
             # Here @@search isn't preserved because we've got the dialog
@@ -594,7 +594,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 untraslated_url[policy]
             )
             self.assertIn(
-                u"Usted está aquí".encode("utf-8"),
+                u'lang="es"'.encode("utf-8"),
                 self.browser.contents
             )
 
