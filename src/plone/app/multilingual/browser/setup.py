@@ -1,20 +1,15 @@
+from logging import getLogger
 from plone.app.layout.navigation.interfaces import INavigationRoot
-from zope.interface import alsoProvides
-from plone.multilingual.interfaces import (
-    ITranslationManager,
-    ILanguage,
-    LANGUAGE_INDEPENDENT
-    )
 from plone.app.multilingual.interfaces import SHARED_NAME
-
+from plone.app.multilingual import isDexterityInstalled
+from plone.multilingual.interfaces import ITranslationManager
+from plone.multilingual.interfaces import ILanguage
+from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
+from zope.interface import alsoProvides
+from Acquisition import aq_inner
 from Products.CMFPlone.utils import _createObjectByType
-
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
-from Acquisition import aq_inner
-
-from logging import getLogger
-
 
 LOG = getLogger('plone.app.multilingual')
 
@@ -49,6 +44,8 @@ class SetupMultilingualSite(object):
         self.context = context
         doneSomething = False
         self.folders = {}
+        if isDexterityInstalled:
+            self.check_translatable_foldertype()
         pl = getToolByName(self.context, "portal_languages")
         self.languages = languages = pl.getSupportedLanguages()
         if len(languages) == 1 and not forceOneLanguage:
@@ -256,3 +253,13 @@ class SetupMultilingualSite(object):
             doneSomething = True
             LOG.info('Root language switcher set up.')
         return doneSomething
+
+    def check_translatable_foldertype(self):
+        from plone.dexterity.interfaces import IDexterityFTI
+        from plone.multilingualbehavior.interfaces import IDexterityTranslatable
+        pt = getToolByName(self.context, 'portal_types')
+        fti = getattr(pt, self.folder_type)
+        if IDexterityFTI.providedBy(fti):
+            behaviors = list(fti.behaviors)
+            behaviors.append(IDexterityTranslatable.__identifier__)
+            fti.behaviors = behaviors

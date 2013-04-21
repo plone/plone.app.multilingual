@@ -11,6 +11,8 @@ Changelog
   - ``archetypes.multilingual``
   [saily]
 
+- plone.app.contenttypes compatibility on setup
+  [sneridagh]
 
 1.0 - 2013-04-16
 ----------------
