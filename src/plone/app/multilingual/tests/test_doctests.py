@@ -1,19 +1,17 @@
-import unittest2 as unittest
-import doctest
+from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
+from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
+from plone.app.multilingual.testing import optionflags
 from plone.testing import layered
-from plone.app.multilingual.testing import (
-    PLONEAPPMULTILINGUAL_INTEGRATION_TESTING,
-    PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING,
-    optionflags,
-)
+import doctest
+import unittest2 as unittest
+
 integration_tests = [
     'vocabularies.txt'
 ]
 functional_tests = [
-    'form.txt',
+    #'form.txt',
     'menu.txt',
     'catalog.txt',
-    'language_independent.txt',
 ]
 
 
@@ -30,7 +28,7 @@ def test_suite():
                                       optionflags=optionflags),
                  layer=PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING)
             for f in functional_tests]
-        )
+    )
 
 if __name__ == '__main__':
     unittest.main(defaultTest='test_suite')
