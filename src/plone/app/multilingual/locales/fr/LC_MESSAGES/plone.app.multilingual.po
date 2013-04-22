@@ -1,20 +1,19 @@
-# Giorgio Borelli <giorgio@giorgioborelli.it, 2012.
+# Sylvain Bouchard <sylvain.bouchard@savoirfairelinux.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.2b3\n"
 "POT-Creation-Date: 2013-01-27 12:26+0000\n"
 "PO-Revision-Date: 2012-05-15 16:37+0000\n"
-"Last-Translator: Giorgio Borelli <giorgio@giorgioborelli.it>\n"
-"Language-Team: Plone italian translation group <plone-italian-translation-discussion@lists.coactivate.org>\n"
+"Last-Translator: Sylvain Bouchard <sylvain.bouchard@savoirfairelinux.com>\n"
+"Language-Team: Savoir-faire Linux <sylvain.bouchard@savoirfairelinux.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"Language-Code: it\n"
-"Language-Name: Italian\n"
+"Language-Code: fr\n"
+"Language-Name: French\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone.app.multilingual\n"
-"X-Is-Fallback-For: it-ch it-it\n"
 
 #: ../browser/migrator.py:67
 msgid "After migration relation cleanup"
