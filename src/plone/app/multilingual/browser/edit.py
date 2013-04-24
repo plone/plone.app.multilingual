@@ -5,6 +5,7 @@ if isDexterityInstalled:
     from plone.multilingualbehavior.interfaces import ILanguageIndependentField
 else:
     DefaultEditForm = object
+    DefaultMultilingualEditView = object
 
 from plone.z3cform import layout
 from Products.CMFCore.utils import getToolByName
@@ -101,4 +102,5 @@ class MultilingualEditForm(DefaultEditForm):
         settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
         return settings.buttons_babel_view_up_to_nr_translations
 
-DefaultMultilingualEditView = layout.wrap_form(MultilingualEditForm)
+if isDexterityInstalled:
+    DefaultMultilingualEditView = layout.wrap_form(MultilingualEditForm)

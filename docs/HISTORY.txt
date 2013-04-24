@@ -4,6 +4,11 @@ Changelog
 1.1 - Unreleased
 ----------------
 
+- Added ++add++ and factory support using session var to store where it comes
+  from. It maintains the old programatic way so it's possible to create
+  translations using code.
+  [ramon]
+
 - Extend travis integration to test against Plone 4.1, 4.2, 4.3 and
   include following dependencies into tests:
   - ``plone.multilingual``
