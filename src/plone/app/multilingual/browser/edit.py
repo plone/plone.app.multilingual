@@ -101,5 +101,4 @@ class MultilingualEditForm(DefaultEditForm):
         settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
         return settings.buttons_babel_view_up_to_nr_translations
 
-if isDexterityInstalled:
-    DefaultMultilingualEditView = layout.wrap_form(MultilingualEditForm)
+DefaultMultilingualEditView = layout.wrap_form(MultilingualEditForm)
