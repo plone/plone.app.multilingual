@@ -123,7 +123,7 @@ class IMultiLanguageOptionsSchema(Interface):
             u"description_language_codes_in_URL",
             default=u"Use language codes in URL path for manual override."),
         required=False,
-        )
+    )
 
     use_cookie_negotiation = Bool(
         title=_(u"heading_cookie_manual_override",
@@ -134,7 +134,7 @@ class IMultiLanguageOptionsSchema(Interface):
             default=(u"Use cookie for manual override. (Required for the "
                      u"language selector viewlet to be rendered.)")),
         required=False,
-        )
+    )
 
     authenticated_users_only = Bool(
         title=_(u"heading_auth_cookie_manual_override",
