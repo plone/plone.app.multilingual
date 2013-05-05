@@ -111,9 +111,9 @@ class IMultiLanguageOptionsSchema(Interface):
         title=_(u"heading_language_of_the_content",
                 default=u"Use the language of the content item."),
         description=_(u"description_language_of_the_content",
-                default=u"Use the language of the content item."),
+                      default=u"Use the language of the content item."),
         required=False,
-        )
+    )
 
     use_path_negotiation = Bool(
         title=_(
