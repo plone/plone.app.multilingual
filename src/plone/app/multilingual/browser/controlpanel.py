@@ -88,7 +88,7 @@ class IInitialCleanSiteSetupAdapter(Interface):
                      u"to check every time you want to run it")),
         default=False,
         required=False,
-        )
+    )
 
     move_content_to_language_folder = Bool(
         title=_(u"heading_move_content_to_language_folder",
@@ -100,7 +100,7 @@ class IInitialCleanSiteSetupAdapter(Interface):
                      u"you need to check every time you want to run it")),
         default=False,
         required=False,
-        )
+    )
 
 
 class IMultiLanguageOptionsSchema(Interface):
