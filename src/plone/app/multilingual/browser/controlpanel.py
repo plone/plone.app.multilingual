@@ -145,7 +145,7 @@ class IMultiLanguageOptionsSchema(Interface):
                      u"override. (Required for the language selector viewlet "
                      u"to be rendered.)")),
         required=False,
-        )
+    )
 
     set_cookie_everywhere = Bool(
         title=_(
