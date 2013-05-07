@@ -98,66 +98,37 @@ class gtranslation_service_at(BrowserView):
             return google_translate(question, settings.google_translation_key, lang_target, lang_source)
 
 
-class TranslationForm(BrowserView):
+class TranslationForm(form.SchemaForm):
     """ Translation Form """
 
-    def __call__(self):
-        language = self.request.get('language', None)
-        if language:
-            context = aq_inner(self.context)
-            translation_manager = ITranslationManager(context)
-            if ILanguage(context).get_language() == LANGUAGE_INDEPENDENT:
-                # XXX : Why we need this ? the subscriber from pm should maintain it
-                language_tool = getToolByName(context, 'portal_languages')
+    grok.name('create_translation')
+    grok.context(ITranslatable)
+    grok.require('plone.app.multilingual.ManageTranslations')
+    schema = ICreateTranslation
+    ignoreContext = True
+
+    @button.buttonAndHandler(_(u'Create'))
+    def handle_create(self, action):
+        data, errors = self.extractData()
+        if not errors:
+            language = data['language']
+            translation_manager = ITranslationManager(aq_inner(self.context))
+            if ILanguage(self.context).get_language() == LANGUAGE_INDEPENDENT:
+                language_tool = getToolByName(self.context, 'portal_languages')
                 default_language = language_tool.getDefaultLanguage()
-                ILanguage(context).set_language(default_language)
+                ILanguage(self.context).set_language(default_language)
                 translation_manager.update()
-                context.reindexObject()
+                self.context.reindexObject()
 
-            new_parent = translation_manager.add_translation_delegated(language)
-
+            translation_manager.add_translation(language)
+            translated = translation_manager.get_translation(language)
             registry = getUtility(IRegistry)
             settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
-            sdm = self.context.session_data_manager
-            session = sdm.getSessionData(create=True)
-            session.set("tg", translation_manager.tg)
-
-            baseUrl = new_parent.absolute_url()
-            # We set the language and redirect to babel_view or not
             if settings.redirect_babel_view:
-                # Call the ++addtranslation++ adapter to show the babel add form
-                url = '%s/++addtranslation++%s' % (baseUrl, self.context.portal_type)
-                return self.request.response.redirect(url)
+                return self.request.response.redirect(
+                    translated.absolute_url() + '/babel_edit?set_language=%s' % language)
             else:
-                # We look for the creation url for this content type
-
-                # Get the factory
-                types_tool = getToolByName(self.context, 'portal_types')
-
-                # Note: we don't check 'allowed' or 'available' here, because these are
-                # slow. We assume the 'allowedTypes' list has already performed the
-                # necessary calculations
-                actions = types_tool.listActionInfos(
-                    object=new_parent,
-                    check_permissions=False,
-                    check_condition=False,
-                    category='folder/add',
-                )
-
-                addActionsById = dict([(a['id'], a) for a in actions])
-
-                typeId = self.context.portal_type
-
-                addAction = addActionsById.get(typeId, None)
-
-                if addAction is not None:
-                    url = addAction['url'] 
-
-                if not url:
-                    url = '%s/createObject?type_name=%s' % (baseUrl, quote_plus(typeId))
-                return self.request.response.redirect(url)
-
-                # url = new_parent.absolute_url() + '/++addtranslation++'+self.context.portal_type+'++'+translation_manager.tg
-
-
+                return self.request.response.redirect(
+                    translated.absolute_url() + '/edit?set_language=%s' %
+                    language)
 
