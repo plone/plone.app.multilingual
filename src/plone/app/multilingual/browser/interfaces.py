@@ -8,7 +8,7 @@ from plone.app.multilingual.browser.vocabularies import (
     deletable_languages,
     addTranslation
 )
-from plone.formwidget.contenttree import ObjPathSourceBinder
+from plone.formwidget.contenttree import ObjPathSourceBinder, ContentTreeFieldWidget
 from plone.directives import form
 from z3c.relationfield.schema import RelationChoice
 
@@ -58,6 +58,7 @@ class IAddTranslation(form.Schema):
         source=addTranslation,
         required=True,
     )
+    form.widget(content=ContentTreeFieldWidget)
 
 
 class IRemoveTranslation(form.Schema):
