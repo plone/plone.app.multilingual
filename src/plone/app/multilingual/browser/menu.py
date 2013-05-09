@@ -134,21 +134,21 @@ class TranslateMenu(BrowserMenu):
                                                         default=u"Add translations...")
                 menu.append(item)
 
-            item = {
-                "title": _(u"title_remove_translations",
-                           default=u"Remove translations..."),
-                "description": _(
-                    u"description_remove_translations",
-                    default=u"Delete translations or remove the relations"),
-                "action": url + "/remove_translations",
-                "selected": False,
-                "icon": None,
-                "extra": {"id": "_remove_translations",
-                       "separator": langs and "actionSeparator" or None,
-                       "class": ""},
-                "submenu": None,
-                }
-            menu.append(item)
+                item = {
+                    "title": _(u"title_remove_translations",
+                               default=u"Remove translations..."),
+                    "description": _(
+                        u"description_remove_translations",
+                        default=u"Delete translations or remove the relations"),
+                    "action": url + "/remove_translations",
+                    "selected": False,
+                    "icon": None,
+                    "extra": {"id": "_remove_translations",
+                           "separator": langs and "actionSeparator" or None,
+                           "class": ""},
+                    "submenu": None,
+                    }
+                menu.append(item)
 
         elif LANGUAGE_INDEPENDENT == ILanguage(context).get_language():
             menu.append({
