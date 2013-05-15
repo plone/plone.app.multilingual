@@ -53,13 +53,13 @@ class PloneAppMultilingualLayer(PloneSandboxLayer):
 
 PLONEAPPMULTILINGUAL_FIXTURE = PloneAppMultilingualLayer()
 
-PLONEAPPMULTILINGUAL_INTEGRATION_TESTING = IntegrationTesting(\
-    bases=(PLONEAPPMULTILINGUAL_FIXTURE,),\
+PLONEAPPMULTILINGUAL_INTEGRATION_TESTING = IntegrationTesting(
+    bases=(PLONEAPPMULTILINGUAL_FIXTURE,),
     name="plone.app.multilingual:Integration")
-PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING = FunctionalTesting(\
-    bases=(PLONEAPPMULTILINGUAL_FIXTURE,),\
+PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING = FunctionalTesting(
+    bases=(PLONEAPPMULTILINGUAL_FIXTURE,),
     name="plone.app.multilingual:Functional")
-PLONEAPPMULTILINGUAL_ACCEPTANCE_TESTING = FunctionalTesting(
+PLONEAPPMULTILINGUAL_ROBOT_TESTING = FunctionalTesting(
     bases=(PLONEAPPMULTILINGUAL_FIXTURE, ZSERVER_FIXTURE),
-    name="plone.app.multilingual:Acceptance")
+    name="plone.app.multilingual:Robot")
 optionflags = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE)
