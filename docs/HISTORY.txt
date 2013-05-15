@@ -4,6 +4,10 @@ Changelog
 1.1 - Unreleased
 ----------------
 
+- Bugfix: p.a.contentmenu fails if access to translation is not permitted. 
+  Solution: Introduce restricted access and use it in vocabulary for menu.
+  [jensens] 
+
 - Added ++add++ and factory support using session var to store where it comes
   from. It maintains the old programatic way so it's possible to create
   translations using code.

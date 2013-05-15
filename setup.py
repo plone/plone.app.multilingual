@@ -26,7 +26,7 @@ setup(name='plone.app.multilingual',
       install_requires=[
         'setuptools',
         'five.grok',
-        'plone.multilingual>=1.0rc1',
+        'plone.multilingual>=1.1dev',
         'z3c.relationfield',
         'plone.app.z3cform',
         'plone.app.registry',

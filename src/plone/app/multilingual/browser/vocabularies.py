@@ -74,8 +74,11 @@ def translated_urls(context):
         translated_languages.remove(content_language)
     languages = []
     for lang in translated_languages:
-        languages.append(SimpleVocabulary.createTerm(lang, lang, \
-            manager.get_translation(lang).absolute_url()))
+        translation = manager.get_restricted_translation(lang)
+        if translation is not None:
+            term = SimpleVocabulary.createTerm(lang, lang,
+                                               translation.absolute_url())
+            languages.append(term)
     return SimpleVocabulary(languages)
 
 
