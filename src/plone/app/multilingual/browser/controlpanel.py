@@ -88,7 +88,7 @@ class IInitialCleanSiteSetupAdapter(Interface):
                      u"to check every time you want to run it")),
         default=False,
         required=False,
-        )
+    )
 
     move_content_to_language_folder = Bool(
         title=_(u"heading_move_content_to_language_folder",
@@ -100,7 +100,7 @@ class IInitialCleanSiteSetupAdapter(Interface):
                      u"you need to check every time you want to run it")),
         default=False,
         required=False,
-        )
+    )
 
 
 class IMultiLanguageOptionsSchema(Interface):
@@ -111,9 +111,9 @@ class IMultiLanguageOptionsSchema(Interface):
         title=_(u"heading_language_of_the_content",
                 default=u"Use the language of the content item."),
         description=_(u"description_language_of_the_content",
-                default=u"Use the language of the content item."),
+                      default=u"Use the language of the content item."),
         required=False,
-        )
+    )
 
     use_path_negotiation = Bool(
         title=_(
@@ -123,7 +123,7 @@ class IMultiLanguageOptionsSchema(Interface):
             u"description_language_codes_in_URL",
             default=u"Use language codes in URL path for manual override."),
         required=False,
-        )
+    )
 
     use_cookie_negotiation = Bool(
         title=_(u"heading_cookie_manual_override",
@@ -134,7 +134,7 @@ class IMultiLanguageOptionsSchema(Interface):
             default=(u"Use cookie for manual override. (Required for the "
                      u"language selector viewlet to be rendered.)")),
         required=False,
-        )
+    )
 
     authenticated_users_only = Bool(
         title=_(u"heading_auth_cookie_manual_override",
@@ -145,7 +145,7 @@ class IMultiLanguageOptionsSchema(Interface):
                      u"override. (Required for the language selector viewlet "
                      u"to be rendered.)")),
         required=False,
-        )
+    )
 
     set_cookie_everywhere = Bool(
         title=_(
