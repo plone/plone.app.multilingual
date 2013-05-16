@@ -1,0 +1,148 @@
+*** Keywords ***
+Suite Setup
+  # ----------------------------------------------------------------------------
+  # Suite
+  # ----------------------------------------------------------------------------
+  Open browser  ${PLONE_URL}  browser=${BROWSER}  remote_url=${REMOTE_URL}  desired_capabilities=${DESIRED_CAPABILITIES}
+  # Log in as site owner
+
+Suite Teardown
+  Close All Browsers
+  # ----------------------------------------------------------------------------
+  # Login/Logout
+  # ----------------------------------------------------------------------------
+
+Log in
+  [Arguments]  ${userid}  ${password}
+  [Documentation]  Log in to the site as ${userid} using ${password}. There
+  ...  is no guarantee of where in the site you are once this is
+  ...  done. (You are responsible for knowing where you are and
+  ...  where you want to be)
+  Go to  ${PLONE_URL}/login_form
+  Page should contain element  __ac_name
+  Page should contain element  __ac_password
+  Page should contain button  Log in
+  Input text  __ac_name  ${userid}
+  Input text  __ac_password  ${password}
+  Click Button  Log in
+
+Log in as site owner
+  [Documentation]  Log in as the SITE_OWNER provided by plone.app.testing,
+  ...  with all the rights and privileges of that user.
+  Log in  ${SITE_OWNER_NAME}  ${SITE_OWNER_PASSWORD}
+
+Log in as test user
+  Log in  ${TEST_USER_NAME}  ${TEST_USER_PASSWORD}
+
+Log out
+  Go to  ${PLONE_URL}/logout
+  Page should contain  logged out
+  # ----------------------------------------------------------------------------
+  # Content
+  # ----------------------------------------------------------------------------
+
+a collection
+  [Arguments]  ${title}
+  Go to  ${TEST_FOLDER}/++add++Collection
+  Wait until page contains  Add Collection
+  Input text  name=form.widgets.IDublinCore.title  ${title}
+  Click Button  Save
+  Wait until page contains  Item created
+
+a document
+  [Arguments]  ${title}
+  Go to  ${TEST_FOLDER}/++add++Document
+  Wait until page contains  Add Page
+  Input text  name=form.widgets.IDublinCore.title  ${title}
+  Click Button  Save
+  Wait until page contains  Item created
+
+a event
+  [Arguments]  ${title}
+  Go to  ${TEST_FOLDER}/++add++Event
+  Wait until page contains  Add Event
+  Input text  name=form.widgets.IDublinCore.title  ${title}
+  Click Button  Save
+  Wait until page contains  Item created
+
+a file
+  [Arguments]  ${title}
+  Go to  ${TEST_FOLDER}/++add++File
+  Wait until page contains  Add File
+  Input text  name=form.widgets.title  ${title}
+  Choose File  name=form.widgets.file  ${PATH_TO_TEST_FILES}/file.pdf
+  Click Button  Save
+  Wait until page contains  Item created
+
+a folder
+  [Arguments]  ${title}
+  Go to  ${TEST_FOLDER}/++add++Folder
+  Wait until page contains  Add Folder
+  Input text  name=form.widgets.IDublinCore.title  ${title}
+  Click Button  Save
+  Wait until page contains  Item created
+
+a image
+  [Arguments]  ${title}
+  Go to  ${TEST_FOLDER}/++add++Image
+  Wait until page contains  Add Image
+  Input text  name=form.widgets.title  ${title}
+  Choose File  name=form.widgets.image  ${PATH_TO_TEST_FILES}/image.png
+  Click Button  Save
+  Wait until page contains  Item created  error=Image could not be created.
+
+a link
+  [Arguments]  ${title}
+  Go to  ${TEST_FOLDER}/++add++Link
+  Wait until page contains  Add Link
+  Input text  name=form.widgets.IDublinCore.title  ${title}
+  Click Button  Save
+  Wait until page contains  Item created
+
+a news item
+  [Arguments]  ${title}
+  Go to  ${TEST_FOLDER}/++add++News Item
+  Wait until page contains  Add News Item
+  Input text  name=form.widgets.IDublinCore.title  ${title}
+  Choose File  name=form.widgets.ILeadImage.image  ${PATH_TO_TEST_FILES}/image.png
+  Input text  name=form.widgets.ILeadImage.image_caption  ${title}'s caption
+  fill in metadata
+  Click Button  Save
+  Wait until page contains  Item created
+  # ----------------------------------------------------------------------------
+  # Collection
+  # ----------------------------------------------------------------------------
+
+the collection should contain
+  [Arguments]  ${title}
+  Go to  ${TEST_FOLDER}/my-collection
+  Page Should Contain  ${title}
+
+the collection should not contain
+  [Arguments]  ${title}
+  Go to  ${TEST_FOLDER}/my-collection
+  Page Should Not Contain  ${title}
+
+fill in metadata
+  Click Link  Categorization
+  Input text  name=form.widgets.IDublinCore.subjects  testcreated\nrobot
+  Click Link  Dates
+  ${currentyear}=  Get Time  year
+  fill date field  form.widgets.IDublinCore.effective  2009  January  1
+  fill date field  form.widgets.IDublinCore.expires  2022  December  12
+  Click Link  Ownership
+  Input text  name=form.widgets.IDublinCore.creators  another_creator
+  Input text  name=form.widgets.IDublinCore.contributors  contributor1\ncontributor2
+  Input text  name=form.widgets.IDublinCore.rights  Copyright\nstatement\nhere
+  Click Link  Settings
+  Select from List  name=form.widgets.IAllowDiscussion.allow_discussion:list  Yes
+  Select Checkbox  name=form.widgets.IExcludeFromNavigation.exclude_from_nav:list
+
+fill date field
+  [Arguments]  ${fieldid}  ${year}=2012  ${month}=January  ${day}=10
+  [Documentation]  Fill in the specified date field (such as effective/expiration date in the "dates" metadata tab) with the specified date.
+  ...  Month must be specified by name.
+  Click Link  xpath=//div[@data-fieldname="${fieldid}"]//a[contains(@class,"caltrigger")]
+  Select from list  id=calmonth  ${month}
+  Select from list  id=calyear  ${year}
+  Click Link  xpath=//div[@class='calweek']//a[contains(text(), "${day}")]

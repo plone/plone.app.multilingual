@@ -1,20 +1,15 @@
 *** Settings ***
 
-Library  Selenium2Library  timeout=10  implicit_wait=1
 Variables  plone/app/testing/interfaces.py
+Variables  plone/app/multilingual/tests/robot/variables.py
 
-Suite Setup  Start browser
-Suite Teardown  Close All Browsers
+Library  Selenium2Library  timeout=${SELENIUM_TIMEOUT}  implicit_wait=${SELENIUM_IMPLICIT_WAIT}
 
-*** Variables ***
+# Resource  library-settings.txt
+Resource  plone/app/multilingual/tests/robot/keywords.txt
 
-${PORTAL_URL}  http://localhost:55001/plone
-${TEST_FOLDER}  http://localhost:55001/plone/test-folder
-
-${PORT} =  55001
-${ZOPE_URL} =  http://localhost:${PORT}
-${PLONE_URL} =  ${ZOPE_URL}/plone
-${BROWSER} =  Firefox
+Suite Setup  Suite Setup
+Suite Teardown  Suite Teardown
 
 *** Test Cases ***
 
@@ -34,38 +29,11 @@ Scenario: Babel View for AT content
 
 *** Keywords ***
 
-Start browser
-    Open browser  http://localhost:55001/plone/
-
-
-# ----------------------------------------------------------------------------
-# Login/Logout
-# ----------------------------------------------------------------------------
-
-Log in
-    [Arguments]  ${userid}  ${password}
-    Go to  ${PORTAL_URL}/login_form
-    Page should contain element  __ac_name
-    Page should contain element  __ac_password
-    Page should contain button  Log in
-    Input text  __ac_name  ${userid}
-    Input text  __ac_password  ${password}
-    Click Button  Log in
-
-Log out
-    Go to  ${PORTAL_URL}/logout
-    Page should contain  logged out
-
 a test user
     Log in  ${TEST_USER_NAME}  ${TEST_USER_PASSWORD}
 
 a site owner
     Log in  ${SITE_OWNER_NAME}  ${SITE_OWNER_PASSWORD}
-
-
-# ----------------------------------------------------------------------------
-# Login/Logout
-# ----------------------------------------------------------------------------
 
 I translate the content '${content_id}' to '${lang}'
     Go to  ${PLONE_URL}/${content_id}/@@create_translation?language=${lang}

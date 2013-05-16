@@ -92,6 +92,9 @@ class TranslateMenu(BrowserMenu):
                 langs = translated_languages(context)
                 urls = translated_urls(context)
                 for lang in langs:
+                    if lang not in urls:
+                        # omit if translation is not permitted to access.
+                        continue
                     lang_name = lang.title
                     lang_id = lang.value
                     icon = showflags and lt.getFlagForLanguageCode(lang_id) or None

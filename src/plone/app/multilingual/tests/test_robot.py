@@ -1,6 +1,6 @@
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.tests.utils import makeContent, makeTranslation
-from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_ACCEPTANCE_TESTING
+from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_ROBOT_TESTING
 from plone.app.testing import applyProfile
 from plone.dexterity.utils import createContentInContainer
 from plone.multilingual.interfaces import ILanguage
@@ -8,6 +8,7 @@ from plone.testing import layered
 from zope.component.hooks import getSite
 from Products.CMFCore.utils import getToolByName
 
+import os
 import robotsuite
 import transaction
 import unittest
@@ -45,9 +46,16 @@ def setUp():
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTests([
-        layered(robotsuite.RobotTestSuite("test_robot.txt", setUp=setUp),
-                layer=PLONEAPPMULTILINGUAL_ACCEPTANCE_TESTING,
-                ),
-    ])
+    current_dir = os.path.abspath(os.path.dirname(__file__))
+    robot_dir = os.path.join(current_dir, 'robot')
+    robot_tests = [
+        os.path.join('robot', doc) for doc in
+        os.listdir(robot_dir) if doc.endswith('.robot') and
+        doc.startswith('test_')
+    ]
+    for test in robot_tests:
+        suite.addTests([
+            layered(robotsuite.RobotTestSuite(test, setUp=setUp),
+                    layer=PLONEAPPMULTILINGUAL_ROBOT_TESTING),
+        ])
     return suite
