@@ -1,3 +1,6 @@
+.. image:: http://jenkins.plone.org/view/PLIPS/job/job-plone.app.multilingual/badge/icon
+    :target: http://jenkins.plone.org/view/All/job/job-plone.app.multilingual/
+
 .. image:: https://travis-ci.org/plone/plone.app.multilingual.png?branch=master
     :target: http://travis-ci.org/plone/plone.app.multilingual
 
@@ -56,7 +59,7 @@ only need the following line::
     eggs =
         plone.app.multilingual[archetypes]
 
-While archetypes is default in Plone for now, you can strip ``[archetypes]``. 
+While archetypes is default in Plone for now, you can strip ``[archetypes]``.
 This may change in future so we recommend adding an appendix as shown above.
 
 
