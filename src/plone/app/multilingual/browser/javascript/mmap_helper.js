@@ -101,8 +101,8 @@ var load = function init(json){
         //set overridable=true for styling individual
         //nodes or edges
         Node: {
-            height: 20,
-            width: 40,
+            height: 25,
+            width: 60,
             //use a custom
             //node rendering function
             type: 'nodeline',
@@ -162,8 +162,8 @@ var load = function init(json){
             };
             //set label styles
             var style = label.style;
-            style.width = 40 + 'px';
-            style.height = 17 + 'px';
+            style.width = 100 + 'px';
+            style.height = 20 + 'px';
             style.cursor = 'pointer';
             style.color = '#000';
             //style.backgroundColor = '#1a1a1a';

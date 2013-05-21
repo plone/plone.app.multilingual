@@ -131,7 +131,12 @@ msgstr "Inhalt"
 #. Default: "Create ${lang_name}"
 #: ../browser/menu.py:53
 msgid "create_translation"
-msgstr ""
+msgstr "Erstelle Übersetzung"
+
+#. Default: "Create ${lang_name} folder"
+#: ../browser/menu.py:53
+msgid "create_translation_folder"
+msgstr "Erstelle Übersetzung für Ordner"
 
 #. Default: "Add existing content as translation"
 #: ../browser/menu.py:102
@@ -306,7 +311,12 @@ msgstr ""
 #. Default: "Edit ${lang_name}"
 #: ../browser/menu.py:80
 msgid "edit_translation"
-msgstr ""
+msgstr "Editiere Übersetzung"
+
+#. Default: "Edit ${lang_name} folder"
+#: ../browser/menu.py:80
+msgid "edit_translation_folder"
+msgstr "Editiere Übersetzung für Ordner"
 
 #. Default: "Authenticated users only."
 #: ../browser/controlpanel.py:139
@@ -581,12 +591,17 @@ msgstr "ausgewählte löschen"
 #. Default: "Go to shared folder"
 #: ../browser/menu.py:161
 msgid "shared_folder"
-msgstr ""
+msgstr "Gehe zu 'shared'-Ordner"
 
 #. Default: "Add translations..."
 #: ../browser/menu.py:100
 msgid "title_add_translations"
-msgstr "hinzufügen"
+msgstr "Übersetzung hinzufügen"
+
+#. Default: "Add translations for folder..."
+#: ../browser/menu.py:100
+msgid "title_add_translations_folder"
+msgstr "Übersetzung hinzufügen für Ordner"
 
 #. Default: "Available languages"
 #: ../browser/interfaces.py:41
@@ -596,7 +611,7 @@ msgstr ""
 #. Default: "Edit with babel view"
 #: ../browser/menu.py:35
 msgid "title_babel_edit"
-msgstr ""
+msgstr "Editieren mit Babel-Ansicht"
 
 #. Default: "Language"
 #: ../browser/interfaces.py:33
@@ -610,12 +625,12 @@ msgstr "Sprachen"
 #. Default: "Remove translations..."
 #: ../browser/menu.py:114
 msgid "title_remove_translations"
-msgstr "entfernen"
+msgstr "Entferne Übersetzung"
 
 #. Default: "Set content language"
 #: ../browser/menu.py:176
 msgid "title_set_language"
-msgstr ""
+msgstr "Sprache ändern"
 
 #. Default: "Manage translations for your content."
 #: ../browser/menu.py:196
