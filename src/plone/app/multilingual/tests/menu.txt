@@ -56,3 +56,28 @@ The menu should not appear if ITranslatable isn't provided by context ::
     >>> 'Translate' in browser.contents
     False
 
+
+Translation menu for folder with default page
+==============================================
+
+samplecontent::
+
+    >>> folder_id = portal.invokeFactory(type_name="Folder", id="folder")
+    >>> folder = portal[folder_id]
+	>>> notify(ObjectAddedEvent(folder))
+    >>> page_id = folder.invokeFactory(type_name="Document", id="page")
+    >>> page = folder[page_id]
+	>>> notify(ObjectAddedEvent(page))
+    >>> folder.setDefaultPage("page")
+    
+    >>> import transaction
+    >>> transaction.commit()
+    
+We should see menu item sets for both folder and default page::
+
+    >>> browser.open(folder.absolute_url())
+    >>> "folder/@@create_translation" in browser.contents
+    True
+    >>> "page/@@create_translation" in browser.contents
+    True
+
