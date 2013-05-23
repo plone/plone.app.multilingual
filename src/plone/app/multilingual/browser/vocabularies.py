@@ -52,7 +52,11 @@ def translated_languages(context):
     language_tool = getToolByName(context, 'portal_languages')
     language_infos = language_tool.getAvailableLanguages()
     manager = ITranslationManager(context)
-    translated_languages = manager.get_translated_languages()
+    # take care to filter out translated contents
+    # wich do no have supported language information
+    translated_languages = [a
+                            for a in manager.get_translated_languages()
+                            if a in language_infos]
     content_language = ILanguage(context).get_language()
     if content_language in translated_languages:
         translated_languages.remove(content_language)
