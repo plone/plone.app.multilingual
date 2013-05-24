@@ -4,7 +4,12 @@ Changelog
 1.1 - Unreleased
 ----------------
 
-- Bugfix: p.a.contentmenu fails if access to translation is not permitted.
+- Add translation: widget missing
+- Translating folder with default_page: menu items added
+- Add translation: display of default pages of folders
+  [ksuess]
+
+- Bugfix: p.a.contentmenu fails if access to translation is not permitted. 
   Solution: Introduce restricted access and use it in vocabulary for menu.
   [jensens]
 

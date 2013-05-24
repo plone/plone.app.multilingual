@@ -136,6 +136,11 @@ msgstr ""
 msgid "create_translation"
 msgstr ""
 
+#. Default: "Create ${lang_name} folder"
+#: ../browser/menu.py:53
+msgid "create_translation_folder"
+msgstr ""
+
 #. Default: "Add existing content as translation"
 #: ../browser/menu.py:102
 msgid "description_add_translations"
@@ -309,6 +314,11 @@ msgstr ""
 #. Default: "Edit ${lang_name}"
 #: ../browser/menu.py:80
 msgid "edit_translation"
+msgstr ""
+
+#. Default: "Edit ${lang_name} folder"
+#: ../browser/menu.py:80
+msgid "edit_translation_folder"
 msgstr ""
 
 #. Default: "Authenticated users only."
@@ -587,6 +597,11 @@ msgstr ""
 #. Default: "Add translations..."
 #: ../browser/menu.py:100
 msgid "title_add_translations"
+msgstr ""
+
+#. Default: "Add translations for folder..."
+#: ../browser/menu.py:100
+msgid "title_add_translations_folder"
 msgstr ""
 
 #. Default: "Available languages"
