@@ -146,7 +146,10 @@ class SetupMultilingualSite(object):
             folder.setTitle(name)
             state = wftool.getInfoFor(folder, 'review_state', None)
             # This assumes a direct 'publish' transition from the initial state
-            if state != 'published':
+            # We are going to check if its private and has publish action for the out of the box case
+            # otherwise don't do anything
+            available_transitions = [t['id'] for t in wftool.getTransitionsFor(folder)]
+            if state != 'published' and 'publish' in available_transitions:
                 wftool.doActionFor(folder, 'publish')
             folder.reindexObject()
             doneSomething = True
@@ -171,8 +174,7 @@ class SetupMultilingualSite(object):
             # content in the Plone root
             _createObjectByType(self.folder_type,
                                 self.context,
-                                folderId
-            )
+                                folderId)
             #self.context.invokeFactory(self.folder_type, folderId)
             folder = getattr(self.context, folderId)
             ILanguage(folder).set_language(LANGUAGE_INDEPENDENT)
