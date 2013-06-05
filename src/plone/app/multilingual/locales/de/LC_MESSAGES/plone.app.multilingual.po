@@ -2,32 +2,35 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
 "POT-Creation-Date: 2013-01-27 12:26+0000\n"
-"PO-Revision-Date: 2010-10-19 13:27+0000\n"
+"PO-Revision-Date: 2013-06-05 11:55+0100\n"
 "Last-Translator: CMS HU Berlin <plone@cms.hu-berlin.de>\n"
 "Language-Team: CMS HU Berlin <plone@cms.hu-berlin.de>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Language-Code: de\n"
 "Language-Name: Deutsch\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone.app.multilingual\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: ../browser/migrator.py:67
 msgid "After migration relation cleanup"
 msgstr ""
 
 #: ../browser/controlpanel.py:416
-msgid "All the configuration of P.A.M. If you want to set the default language to all the content without language and move all the content on the root folder to the default language folder, go to Extra Options section "
+msgid ""
+"All the configuration of P.A.M. If you want to set the default language to "
+"all the content without language and move all the content on the root folder "
+"to the default language folder, go to Extra Options section "
 msgstr ""
 
 #: ../browser/controlpanel.py:389
 msgid "Clean site setup"
 msgstr ""
 
-#: ../browser/templates/cleanup.pt:93
-#: ../browser/templates/migration.pt:250
+#: ../browser/templates/cleanup.pt:93 ../browser/templates/migration.pt:250
 msgid "Cleanup"
 msgstr ""
 
@@ -40,11 +43,21 @@ msgid "Extra options"
 msgstr ""
 
 #: ../browser/templates/not_translated_yet.pt:28
-msgid "However, this is the list of the already translated languages for the requested content."
+msgid ""
+"However, this is the list of the already translated languages for the "
+"requested content."
 msgstr ""
 
 #: ../browser/controlpanel.py:390
-msgid "If you are installing PAM for the first time in a Plone site, either if it's on an existing or a brand new one you should run the following procedures in order to move the default site content to its right root language folder and be sure that all the content have the language attribute set up correctly. Previous to run them, please be sure that you have set up your site's languages in the 'Site languages' tab and have saved that setting. Finally, in case you have an existing Plone site with Products.LinguaPlone installed, please do not run this steps and refer directly to the 'Migration' tab."
+msgid ""
+"If you are installing PAM for the first time in a Plone site, either if it's "
+"on an existing or a brand new one you should run the following procedures in "
+"order to move the default site content to its right root language folder and "
+"be sure that all the content have the language attribute set up correctly. "
+"Previous to run them, please be sure that you have set up your site's "
+"languages in the 'Site languages' tab and have saved that setting. Finally, "
+"in case you have an existing Plone site with Products.LinguaPlone installed, "
+"please do not run this steps and refer directly to the 'Migration' tab."
 msgstr ""
 
 #: ../browser/translate.py:74
@@ -108,7 +121,9 @@ msgid "This content is not translated yet to the language requested."
 msgstr ""
 
 #: ../browser/templates/not_translated_yet.pt:46
-msgid "This item doesn't have any translation yet. You can return to the portal site:"
+msgid ""
+"This item doesn't have any translation yet. You can return to the portal "
+"site:"
 msgstr ""
 
 #: ../browser/templates/migration.pt:204
@@ -122,7 +137,7 @@ msgstr ""
 #. Default: "Add translations"
 #: ../browser/add_translation_form.py:28
 msgid "add_translations"
-msgstr ""
+msgstr "Übersetzungen hinzufügen"
 
 #: ../browser/interfaces.py:57
 msgid "content"
@@ -131,7 +146,7 @@ msgstr "Inhalt"
 #. Default: "Create ${lang_name}"
 #: ../browser/menu.py:53
 msgid "create_translation"
-msgstr "Erstelle Übersetzung"
+msgstr "${lang_name}"
 
 #. Default: "Create ${lang_name} folder"
 #: ../browser/menu.py:53
@@ -141,7 +156,7 @@ msgstr "Erstelle Übersetzung für Ordner"
 #. Default: "Add existing content as translation"
 #: ../browser/menu.py:102
 msgid "description_add_translations"
-msgstr ""
+msgstr "Bereits existierende Übersetzung hinzufügen"
 
 #. Default: "This step will fix some lost dependencies to the ITranslatable interface hidden in the relation catalog and it gets rid of them. It must be run only when LinguaPlone is already uninstalled."
 #: ../browser/templates/migration.pt:225
@@ -166,7 +181,7 @@ msgstr ""
 #. Default: "Babel edit ${lang_name}"
 #: ../browser/menu.py:83
 msgid "description_babeledit_menu"
-msgstr ""
+msgstr "Editieren mit Babel-Ansicht"
 
 #. Default: "Use browser language request negotiation."
 #: ../browser/controlpanel.py:180
@@ -241,7 +256,7 @@ msgstr ""
 #. Default: "Delete translations or remove the relations"
 #: ../browser/menu.py:116
 msgid "description_remove_translations"
-msgstr ""
+msgstr "Übersetzungen löschen oder die Verweise entfernen"
 
 #. Default: "The default language used for the content and the UI of this site."
 #: ../browser/controlpanel.py:200
@@ -256,7 +271,7 @@ msgstr ""
 #. Default: "Set or change the current content language"
 #: ../browser/menu.py:178
 msgid "description_set_language"
-msgstr ""
+msgstr "Sprache setzen oder ändern."
 
 #. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
 #: ../browser/controlpanel.py:154
@@ -286,7 +301,7 @@ msgstr ""
 #. Default: "Translate into ${lang_name}"
 #: ../browser/menu.py:56
 msgid "description_translate_into"
-msgstr ""
+msgstr "Übersetzen in ${lang_name}"
 
 #. Default: "Translation map."
 #: ../browser/templates/mmap.pt:101
@@ -301,7 +316,7 @@ msgstr ""
 #. Default: "Untranslated languages from the current content"
 #: ../browser/interfaces.py:42
 msgid "description_update_language"
-msgstr ""
+msgstr "Sprachen, in die der Inhalt noch nicht übersetzt wurde."
 
 #. Default: "Use subdomain (e.g.: de.plone.org)."
 #: ../browser/controlpanel.py:164
@@ -311,7 +326,7 @@ msgstr ""
 #. Default: "Edit ${lang_name}"
 #: ../browser/menu.py:80
 msgid "edit_translation"
-msgstr "Editiere Übersetzung"
+msgstr "${lang_name} editieren"
 
 #. Default: "Edit ${lang_name} folder"
 #: ../browser/menu.py:80
@@ -441,7 +456,7 @@ msgstr "Übersetzungen hinzufügen"
 #. Default: "By updating the content language will trigger its move to the correct language folder in the site's hierarchy"
 #: ../browser/update_language_form.py:19
 msgid "label_alert_update"
-msgstr ""
+msgstr "Die Inhalte werden in den gewählten Sprachenordner verschoben"
 
 #. Default: "All translations"
 #: ../browser/templates/mmap.pt:106
@@ -459,16 +474,14 @@ msgid "label_cleanup"
 msgstr ""
 
 #. Default: "General"
-#: ../browser/templates/cleanup.pt:39
-#: ../browser/templates/controlpanel.pt:21
+#: ../browser/templates/cleanup.pt:39 ../browser/templates/controlpanel.pt:21
 #: ../browser/templates/migration.pt:62
 msgid "label_general"
 msgstr ""
 
 #. Default: "Migration"
 #: ../browser/templates/controlpanel.pt:31
-#: ../browser/templates/migration.pt:72
-#: ../browser/templates/mmap.pt:74
+#: ../browser/templates/migration.pt:72 ../browser/templates/mmap.pt:74
 msgid "label_migration"
 msgstr ""
 
@@ -486,7 +499,7 @@ msgstr "Übersetzungen entfernen"
 #. Default: "Save"
 #: ../browser/controlpanel.py:422
 msgid "label_save"
-msgstr ""
+msgstr "Speichern"
 
 #. Default: "Total objects handled:"
 #: ../browser/templates/migrator-results.pt:20
@@ -501,20 +514,17 @@ msgstr ""
 
 #. Default: "Translate"
 #: ../browser/menu.py:195
-#, fuzzy
 msgid "label_translate_menu"
-msgstr "Übersetzen in ..."
+msgstr "Übersetzen..."
 
 #. Default: "Translation Map"
-#: ../browser/templates/cleanup.pt:44
-#: ../browser/templates/controlpanel.pt:26
+#: ../browser/templates/cleanup.pt:44 ../browser/templates/controlpanel.pt:26
 #: ../browser/templates/migration.pt:67
 msgid "label_translation_map"
 msgstr ""
 
 #. Default: "Up to Site Setup"
-#: ../browser/templates/cleanup.pt:73
-#: ../browser/templates/migration.pt:92
+#: ../browser/templates/cleanup.pt:73 ../browser/templates/migration.pt:92
 #: ../browser/templates/mmap.pt:94
 msgid "label_up_to_plone_setup"
 msgstr ""
@@ -522,7 +532,7 @@ msgstr ""
 #. Default: "Update Language"
 #: ../browser/update_language_form.py:18
 msgid "label_update_language"
-msgstr ""
+msgstr "Sprache aktualisieren"
 
 #. Default: "Return to language folder"
 #: ../browser/menu.py:130
@@ -553,11 +563,15 @@ msgstr ""
 #: ../browser/add_translation_form.py:21
 msgid "long_description_add_translations"
 msgstr ""
+"Dieses Dialogfenster erlaubt es, bereits existierende Inhalte für "
+"Übersetzungen zu verwenden. Sie müssen Sprache und Inhalt auswählen."
 
 #. Default: "This form allows you to remove the existing translations of the current object. You can just delete the link between the objects or you can delete the object itself."
 #: ../browser/remove_translation_form.py:22
 msgid "long_description_remove_translations"
 msgstr ""
+"Sie können existierende Übersetzungen entfernen, indem Sie den Verweis auf "
+"das Objekt oder das Objekt selbst löschen."
 
 #. Default: "The \"Language\" index was re-indexed correctly. Before, it contained ${previous_items_number} items, now it contains ${after_items_number}"
 #: ../browser/templates/reindex-results.pt:24
@@ -586,7 +600,7 @@ msgstr ""
 
 #: ../browser/remove_translation_form.py:39
 msgid "remove selected"
-msgstr "ausgewählte löschen"
+msgstr "Objekt löschen"
 
 #. Default: "Go to shared folder"
 #: ../browser/menu.py:161
@@ -596,7 +610,7 @@ msgstr "Gehe zu 'shared'-Ordner"
 #. Default: "Add translations..."
 #: ../browser/menu.py:100
 msgid "title_add_translations"
-msgstr "Übersetzung hinzufügen"
+msgstr "Übersetzung hinzufügen..."
 
 #. Default: "Add translations for folder..."
 #: ../browser/menu.py:100
@@ -606,12 +620,12 @@ msgstr "Übersetzung hinzufügen für Ordner"
 #. Default: "Available languages"
 #: ../browser/interfaces.py:41
 msgid "title_available_languages"
-msgstr ""
+msgstr "Verfügbare Sprachen"
 
 #. Default: "Edit with babel view"
 #: ../browser/menu.py:35
 msgid "title_babel_edit"
-msgstr "Editieren mit Babel-Ansicht"
+msgstr "Editieren in Babel-View"
 
 #. Default: "Language"
 #: ../browser/interfaces.py:33
@@ -625,12 +639,12 @@ msgstr "Sprachen"
 #. Default: "Remove translations..."
 #: ../browser/menu.py:114
 msgid "title_remove_translations"
-msgstr "Entferne Übersetzung"
+msgstr "Übersetzungen entfernen..."
 
 #. Default: "Set content language"
 #: ../browser/menu.py:176
 msgid "title_set_language"
-msgstr "Sprache ändern"
+msgstr "Sprache setzen"
 
 #. Default: "Manage translations for your content."
 #: ../browser/menu.py:196
@@ -645,7 +659,7 @@ msgstr ""
 #. Default: "Translation to ${language}"
 #: ../browser/templates/dexterity_edit.pt:33
 msgid "translation_to"
-msgstr ""
+msgstr "Übersetzen in ${language}"
 
 #. Default: "Universal Link"
 #: ../browser/menu.py:146
@@ -654,10 +668,9 @@ msgstr ""
 
 #: ../browser/remove_translation_form.py:29
 msgid "unlink selected"
-msgstr "ausgewählte Verknüpfungen entfernen."
+msgstr "Verweis löschen"
 
 #. Default: "Update Language"
 #: ../browser/update_language_form.py:22
 msgid "update_language"
-msgstr ""
-
+msgstr "Sprachzuweisung aktualisieren"
