@@ -36,7 +36,7 @@ Changelog
   [kiorky]
   
 - added support for language neutral objects with country specific language codes 
-  by adding checking _combinedlanguagelist too
+  by checking _combinedlanguagelist too
   [agitator]
 
 
