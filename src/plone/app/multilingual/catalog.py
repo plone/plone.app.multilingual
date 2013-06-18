@@ -15,6 +15,7 @@ from Products.CMFPlone.interfaces import IPloneSiteRoot
 from App.special_dtml import DTMLFile
 
 from plone.i18n.locales.languages import _languagelist
+from plone.i18n.locales.languages import _combinedlanguagelist
 
 
 NO_FILTER = ['Language', 'UID', 'id', 'getId']
@@ -51,7 +52,8 @@ def language_filter(query):
         # may be this fix is somewhat dirty ... -fgr
         if old_path and old_path['query']: 
             if isinstance(old_path['query'],str) and \
-               old_path['query'].split('/')[-1] in _languagelist:
+               old_path['query'].split('/')[-1] in _languagelist or \
+               old_path['query'].split('/')[-1] in _combinedlanguagelist:
                     old_path['query'] = [old_path_url, root_path + '/' + SHARED_NAME]
 
         # Check if its shared folder to add the root path
