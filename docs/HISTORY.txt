@@ -35,7 +35,7 @@ Changelog
   wich do no have supported language information
   [kiorky]
   
-- added support for langueage neutral objects with country specific language codes 
+- added support for language neutral objects with country specific language codes 
   by adding checking _combinedlanguagelist too
   [agitator]
 
