@@ -34,6 +34,11 @@ Changelog
 - take care to filter out translated contents
   wich do no have supported language information
   [kiorky]
+  
+- added support for langueage neutral objects with country specific language codes 
+  by adding checking _combinedlanguagelist too
+  [agitator]
+
 
 1.0 - 2013-04-16
 ----------------
