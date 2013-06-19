@@ -50,10 +50,9 @@ def language_filter(query):
         # in that case no SHARED_NAME needs to be added, because the path criterions are 
         # defined either with languagefolder or language neutral context already.
         # may be this fix is somewhat dirty ... -fgr
-        if old_path and old_path['query']: 
-            if isinstance(old_path['query'],str) and \
-               old_path['query'].split('/')[-1] in _languagelist or \
-               old_path['query'].split('/')[-1] in _combinedlanguagelist:
+        if old_path and old_path['query'] and isinstance(old_path['query'],str): 
+            lang_path = old_path['query'].split('/')[-1]
+            if lang_path in _languagelist or lang_path in _combinedlanguagelist:
                     old_path['query'] = [old_path_url, root_path + '/' + SHARED_NAME]
 
         # Check if its shared folder to add the root path
