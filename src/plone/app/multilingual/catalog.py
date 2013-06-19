@@ -15,6 +15,7 @@ from Products.CMFPlone.interfaces import IPloneSiteRoot
 from App.special_dtml import DTMLFile
 
 from plone.i18n.locales.languages import _languagelist
+from plone.i18n.locales.languages import _combinedlanguagelist
 
 
 NO_FILTER = ['Language', 'UID', 'id', 'getId']
@@ -49,9 +50,9 @@ def language_filter(query):
         # in that case no SHARED_NAME needs to be added, because the path criterions are 
         # defined either with languagefolder or language neutral context already.
         # may be this fix is somewhat dirty ... -fgr
-        if old_path and old_path['query']: 
-            if isinstance(old_path['query'],str) and \
-               old_path['query'].split('/')[-1] in _languagelist:
+        if old_path and old_path['query'] and isinstance(old_path['query'],str): 
+            lang_path = old_path['query'].split('/')[-1]
+            if lang_path in _languagelist or lang_path in _combinedlanguagelist:
                     old_path['query'] = [old_path_url, root_path + '/' + SHARED_NAME]
 
         # Check if its shared folder to add the root path
