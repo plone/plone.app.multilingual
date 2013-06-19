@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.1dev'
+version = '1.1'
 
 setup(name='plone.app.multilingual',
       version=version,
@@ -26,7 +26,7 @@ setup(name='plone.app.multilingual',
       install_requires=[
         'setuptools',
         'five.grok',
-        'plone.multilingual>=1.1dev',
+        'plone.multilingual>=1.1',
         'z3c.relationfield',
         'plone.app.z3cform',
         'plone.app.registry',
