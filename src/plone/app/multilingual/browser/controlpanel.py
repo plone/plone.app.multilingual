@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from zope.interface import Interface
 from zope.interface import implementsOnly
 from zope.schema import Choice
@@ -60,8 +61,8 @@ class IMultiLanguageSelectionSchema(Interface):
         title=_(u"heading_available_languages",
                 default=u"Available languages"),
         description=_(u"description_available_languages",
-                default=u"The languages in which the site should be "
-                        u"translatable."),
+                      default=u"The languages in which the site should be "
+                              u"translatable."),
         required=True,
         missing_value=set(),
         value_type=Choice(
@@ -163,7 +164,7 @@ class IMultiLanguageOptionsSchema(Interface):
         title=_(u"heading_use_subdomain",
                 default=u"Use subdomain (e.g.: de.plone.org)."),
         description=_(u"description_use_subdomain",
-                default=u"Use subdomain (e.g.: de.plone.org)."),
+                      default=u"Use subdomain (e.g.: de.plone.org)."),
         required=False,
         )
 
@@ -171,7 +172,7 @@ class IMultiLanguageOptionsSchema(Interface):
         title=_(u"heading_top_level_domain",
                 default=u"Use top-level domain (e.g.: www.plone.de)."),
         description=_(u"description_top_level_domain",
-                default=u"Use top-level domain (e.g.: www.plone.de)."),
+                      default=u"Use top-level domain (e.g.: www.plone.de)."),
         required=False,
         )
 
@@ -179,14 +180,17 @@ class IMultiLanguageOptionsSchema(Interface):
         title=_(u"heading_browser_language_request_negotiation",
                 default=u"Use browser language request negotiation."),
         description=_(u"description_browser_language_request_negotiation",
-                default=u"Use browser language request negotiation."),
+                      default=u"Use browser language request negotiation."),
         required=False,
         )
 
 selector_policies = SimpleVocabulary(
-    [SimpleTerm(value=u'closest', title=_(u'Search for closest translation in parent\'s content chain.')),
-     SimpleTerm(value=u'dialog', title=_(u'Show user dialog with information about the available translations.'))
-    ]
+    [SimpleTerm(value=u'closest',
+                title=_(u'Search for closest translation in parent\'s content '
+                        u'chain.')),
+     SimpleTerm(value=u'dialog',
+                title=_(u'Show user dialog with information about the '
+                        u'available translations.'))]
 )
 
 
@@ -196,8 +200,9 @@ class IMultiLanguagePolicies(Interface):
 
     selector_lookup_translations_policy = Choice(
         title=_(u"heading_selector_lookup_translations_policy",
-                default=u"The policy used to determine how the lookup for available "
-                         "translations will be made by the language selector."),
+                default=u"The policy used to determine how the lookup for "
+                        u"available translations will be made by the language "
+                        u"selector."),
         description=_(u"description_selector_lookup_translations_policy",
                       default=u"The default language used for the content "
                               u"and the UI of this site."),
@@ -338,7 +343,7 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
         self.settings.buttons_babel_view_up_to_nr_translations = value
 
     google_translation_key = property(get_google_translation_key,
-                              set_google_translation_key)
+                                      set_google_translation_key)
 
     filter_content = property(get_filter_content,
                               set_filter_content)
@@ -391,8 +396,9 @@ class MultiLanguagePoliciesAdapter(LanguageControlPanelAdapter):
     def set_selector_lookup_translations_policy(self, value):
         self.settings.selector_lookup_translations_policy = value
 
-    selector_lookup_translations_policy = property(get_selector_lookup_translations_policy,
-                                                   set_selector_lookup_translations_policy)
+    selector_lookup_translations_policy = property(
+        get_selector_lookup_translations_policy,
+        set_selector_lookup_translations_policy)
 
 selection = FormFieldsets(IMultiLanguageSelectionSchema)
 selection.label = _(u'Site languages')
@@ -408,21 +414,16 @@ policies.label = _(u'Policies')
 
 clean_site_setup = FormFieldsets(IInitialCleanSiteSetupAdapter)
 clean_site_setup.label = _(u'Clean site setup')
-clean_site_setup.description = _(u"""If you are installing PAM for the first """
-                                  """time in a Plone site, either if it's on an """
-                                  """existing or a brand new one you should run the """
-                                  """following procedures in order to move the """
-                                  """default site content to its right root """
-                                  """language folder and be sure that all the """
-                                  """content have the language attribute set up """
-                                  """correctly. Previous to run them, please be """
-                                  """sure that you have set up your site's """
-                                  """languages in the 'Site languages' tab and have """
-                                  """saved that setting. Finally, in case you have """
-                                  """an existing Plone site with """
-                                  """Products.LinguaPlone installed, please do not """
-                                  """run this steps and refer directly to the """
-                                  """'Migration' tab.""")
+clean_site_setup.description = _(
+    u"If you are installing PAM for the first time in a Plone site, either if "
+    u"it's on an existing or a brand new one you should run the following "
+    u"procedures in order to move the default site content to its right root "
+    u"language folder and be sure that all the content have the language "
+    u"attribute set up correctly. Previous to run them, please be sure that "
+    u"you have set up your site's languages in the 'Site languages' tab and "
+    u"have saved that setting. Finally, in case you have an existing Plone "
+    u"site with Products.LinguaPlone installed, please do not run this steps "
+    u"and refer directly to the 'Migration' tab.")
 
 
 class LanguageControlPanel(BasePanel):
@@ -431,7 +432,8 @@ class LanguageControlPanel(BasePanel):
 
     template = ViewPageTemplateFile('templates/controlpanel.pt')
 
-    form_fields = FormFieldsets(selection, options, policies, extras, clean_site_setup)
+    form_fields = FormFieldsets(
+        selection, options, policies, extras, clean_site_setup)
 
     label = _("Multilingual Settings")
     description = _("All the configuration of P.A.M. If you want to set "
@@ -524,7 +526,9 @@ class multilingualMapViewJSON(BrowserView):
             root = root.getPortalObject()
             folder_path = '/'.join(root.getPhysicalPath())
 
-        self.request.response.setHeader("Content-type", "application/json; charset=utf-8")
+        self.request.response.setHeader(
+            "Content-type", "application/json; charset=utf-8")
+
         pcatalog = getToolByName(self.context, 'portal_catalog')
         query = {}
         query['path'] = {'query': folder_path, 'depth': 1}
@@ -532,27 +536,45 @@ class multilingualMapViewJSON(BrowserView):
         query['sort_order'] = "ascending"
         query['Language'] = lang
         search_results = pcatalog.searchResults(query)
-        resultat = {'id': 'root', 'name': folder_path, 'data': {}, 'children': []}
+        resultat = {
+            'id': 'root',
+            'name': folder_path,
+            'data': {},
+            'children': []
+        }
         supported_languages = tool.getSupportedLanguages()
         for sr in search_results:
             # We want to know the translated and missing elements
             translations = {}
             if 'TranslationGroup' in sr:
                 # We look for the brain for each translation
-                brains = pcatalog.unrestrictedSearchResults(TranslationGroup=sr['TranslationGroup'])
+                brains = pcatalog.unrestrictedSearchResults(
+                    TranslationGroup=sr['TranslationGroup'])
                 languages = {}
                 for brain in brains:
                     languages[brain.Language] = brain.UID
                 for lang in supported_languages:
                     if lang in languages.keys():
                         translated_obj = uuidToObject(languages[lang])
-                        translations[lang] = {'url': translated_obj.absolute_url(), 'title': translated_obj.getId()}
+                        translations[lang] = {
+                            'url': translated_obj.absolute_url(),
+                            'title': translated_obj.getId(),
+                        }
                     else:
-                        url_to_create = sr.getURL() + "/@@create_translation?form.widgets.language"\
+                        url_to_create = sr.getURL() + \
+                            "/@@create_translation?form.widgets.language"\
                             "=%s&form.buttons.create=1" % lang
-                        translations[lang] = {'url': url_to_create, 'title': _(u'Not translated')}
+                        translations[lang] = {
+                            'url': url_to_create,
+                            'title': _(u'Not translated'),
+                        }
             if get_all:
-                resultat['children'].append({'id': sr['UID'], 'name': sr['Title'], 'data': translations, 'children': []})
+                resultat['children'].append({
+                    'id': sr['UID'],
+                    'name': sr['Title'],
+                    'data': translations,
+                    'children': [],
+                })
             else:
                 pass
         return json.dumps(resultat)
@@ -563,13 +585,16 @@ class multilingualMapView(BrowserView):
     __call__ = ViewPageTemplateFile('templates/mmap.pt')
 
     def languages(self):
-        langs = getUtility(IVocabularyFactory, name=u"plone.app.multilingual.vocabularies.AllAvailableLanguageVocabulary")
+        langs = getUtility(IVocabularyFactory,
+                           name=u"plone.app.multilingual.vocabularies"
+                                u".AllAvailableLanguageVocabulary")
         tool = getToolByName(self.context, 'portal_languages', None)
         lang = tool.getDefaultLanguage()
         return {'default': lang, 'languages': langs(self.context)}
 
     def canonicals(self):
-        """ We get all the canonicals and see which translations are missing """
+        """ We get all the canonicals and see which translations are
+            missing """
         # Get the language
         tool = getToolByName(self.context, 'portal_languages', None)
         pcatalog = getToolByName(self.context, 'portal_catalog', None)
@@ -583,30 +608,44 @@ class multilingualMapView(BrowserView):
         for brain in brains:
             if not isinstance(brain.TranslationGroup, str):
                 # is alone, with a Missing.Value
-                missing_languages = [lang for lang in languages if lang != brain.Language]
-                translations = [{'url': brain.getURL(), 'path': brain.getPath(), 'lang': brain.Language}]
-                not_full_translations.append({'id': 'None',
-                                              'last_url': brain.getURL(),
-                                              'missing': missing_languages,
-                                              'translated': translations})
+                missing_languages = [
+                    lang for lang in languages if lang != brain.Language]
+                translations = [{
+                    'url': brain.getURL(),
+                    'path': brain.getPath(),
+                    'lang': brain.Language,
+                }]
+                not_full_translations.append({
+                    'id': 'None',
+                    'last_url': brain.getURL(),
+                    'missing': missing_languages,
+                    'translated': translations,
+                })
             elif isinstance(brain.TranslationGroup, str):
                 tg = brain.TranslationGroup
-                brains_tg = pcatalog.searchResults(Language='all', TranslationGroup=tg)
-                if len(brains_tg) < num_lang and tg not in already_added_canonicals:
+                brains_tg = pcatalog.searchResults(Language='all',
+                                                   TranslationGroup=tg)
+                if len(brains_tg) < num_lang \
+                   and tg not in already_added_canonicals:
                     translated_languages = [a.Language for a in brains_tg]
-                    missing_languages = [lang for lang in languages if lang not in translated_languages]
+                    missing_languages = [lang for lang in languages
+                                         if lang not in translated_languages]
                     translations = []
                     last_url = ''
                     for brain_tg in brains_tg:
                         last_url = brain_tg.getURL()
-                        translations.append({'url': brain_tg.getURL(),
-                                             'path': brain_tg.getPath(),
-                                             'lang': brain_tg.Language})
+                        translations.append({
+                            'url': brain_tg.getURL(),
+                            'path': brain_tg.getPath(),
+                            'lang': brain_tg.Language,
+                        })
 
-                    not_full_translations.append({'id': tg,
-                                              'last_url': last_url,
-                                              'missing': missing_languages,
-                                              'translated': translations})
+                    not_full_translations.append({
+                        'id': tg,
+                        'last_url': last_url,
+                        'missing': missing_languages,
+                        'translated': translations,
+                    })
                 already_added_canonicals.append(tg)
         return not_full_translations
 

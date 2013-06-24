@@ -31,7 +31,7 @@ class IMultiLanguageExtraOptionsSchema(Interface):
         description=_(
             u"description_redirect_babel_view",
             default=(u"After creating a new translation redirecto to babel "
-                       u"view")),
+                     u"view")),
         default=True,
         required=False,
         )
