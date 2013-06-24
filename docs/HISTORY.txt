@@ -1,7 +1,14 @@
 Changelog
 =========
 
-1.1 - Unreleased
+1.2 - Unreleased
+----------------
+
+- Add new option to allow users to bypass permission checks when updating
+  objects with language independent fields.  [saily]
+
+
+1.1 - 2013-06-19
 ----------------
 
 - Add translation: widget missing
@@ -9,7 +16,7 @@ Changelog
 - Add translation: display of default pages of folders
   [ksuess]
 
-- Bugfix: p.a.contentmenu fails if access to translation is not permitted. 
+- Bugfix: p.a.contentmenu fails if access to translation is not permitted.
   Solution: Introduce restricted access and use it in vocabulary for menu.
   [jensens]
 
@@ -34,8 +41,8 @@ Changelog
 - take care to filter out translated contents
   wich do no have supported language information
   [kiorky]
-  
-- added support for language neutral objects with country specific language codes 
+
+- added support for language neutral objects with country specific language codes
   by checking _combinedlanguagelist too
   [agitator]
 
