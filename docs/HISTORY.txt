@@ -4,12 +4,17 @@ Changelog
 1.1 - Unreleased
 ----------------
 
+- Added tests to check the behavior of PAM with p.app.stagingbehavior
+  when a content that contains working copy objects si cut and pasted or
+  its language is been changed.
+  [gborelli]
+
 - Add translation: widget missing
 - Translating folder with default_page: menu items added
 - Add translation: display of default pages of folders
   [ksuess]
 
-- Bugfix: p.a.contentmenu fails if access to translation is not permitted. 
+- Bugfix: p.a.contentmenu fails if access to translation is not permitted.
   Solution: Introduce restricted access and use it in vocabulary for menu.
   [jensens]
 
@@ -34,8 +39,8 @@ Changelog
 - take care to filter out translated contents
   wich do no have supported language information
   [kiorky]
-  
-- added support for language neutral objects with country specific language codes 
+
+- added support for language neutral objects with country specific language codes
   by checking _combinedlanguagelist too
   [agitator]
 
