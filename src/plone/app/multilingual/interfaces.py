@@ -31,7 +31,7 @@ class IMultiLanguageExtraOptionsSchema(Interface):
         description=_(
             u"description_redirect_babel_view",
             default=(u"After creating a new translation redirecto to babel "
-                       u"view")),
+                     u"view")),
         default=True,
         required=False,
         )
@@ -40,16 +40,15 @@ class IMultiLanguageExtraOptionsSchema(Interface):
         title=_(
             u"heading_buttons_babel_view_up_to_nr_translations",
             default=u"Use buttons in the bable view for up to how many "
-                    "translations?",
-        ),
+                    u"translations?"),
         description=_(
             u"description_buttons_babel_view_up_to_nr_translations",
-            default=u"When there are many translations for an item, the number"
-            " of displayed buttons for them might get too large to fit inside "
-            "the template. Choose here from which number onwards a drop-down "
-            "menu will be displayed instead of buttons. Zero means that "
-            "buttons will always be used."
-        ),
+            default=u"When there are many translations for an item, the "
+                    u"number of displayed buttons for them might get too "
+                    u"large to fit inside the template. Choose here from "
+                    u"which number onwards a drop-down menu will be displayed "
+                    u"instead of buttons. Zero means that buttons will always "
+                    u"be used."),
         default=7,
         required=False,
     )
@@ -60,7 +59,7 @@ class IMultiLanguageExtraOptionsSchema(Interface):
             default=u"Google Translation API Key"),
         description=_(
             u"description_google_translation_key",
-            default=(u"Is a paying API in order to use google translation "
-                       u"service")),
+            default=u"Is a paying API in order to use google translation "
+                    u"service"),
         required=False,
-        )
+    )
