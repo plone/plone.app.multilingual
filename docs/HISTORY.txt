@@ -11,6 +11,11 @@ Changelog
 1.1 - 2013-06-19
 ----------------
 
+- Added tests to check the behavior of PAM with p.app.stagingbehavior
+  when a content that contains working copy objects si cut and pasted or
+  its language is been changed.
+  [gborelli]
+
 - Add translation: widget missing
 - Translating folder with default_page: menu items added
 - Add translation: display of default pages of folders
