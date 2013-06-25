@@ -43,8 +43,6 @@ setup(name='plone.app.multilingual',
               'plone.multilingualbehavior',
               'archetypes.multilingual',
               'Products.LinguaPlone',
-              'plone.app.stagingbehavior',
-              # 'plone.app.versioningbehavior',
               'decorator',  # BBB
           ],
       },

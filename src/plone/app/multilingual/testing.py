@@ -13,7 +13,6 @@ from plone.app.testing import TEST_USER_ID
 
 import plone.app.multilingual
 import plone.app.dexterity
-import plone.app.stagingbehavior
 
 
 from zope.configuration import xmlconfig
@@ -35,9 +34,6 @@ class PloneAppMultilingualLayer(PloneSandboxLayer):
                        context=configurationContext)
 
         xmlconfig.file('configure.zcml', plone.app.multilingual.tests,
-                       context=configurationContext)
-
-        xmlconfig.file('configure.zcml', plone.app.stagingbehavior,
                        context=configurationContext)
 
         # Support sessionstorage in tests
