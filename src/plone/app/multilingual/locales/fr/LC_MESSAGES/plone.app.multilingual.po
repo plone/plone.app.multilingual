@@ -5,7 +5,7 @@ msgstr ""
 "POT-Creation-Date: 2013-01-27 12:26+0000\n"
 "PO-Revision-Date: 2012-05-15 16:37+0000\n"
 "Last-Translator: Sylvain Bouchard <sylvain.bouchard@savoirfairelinux.com>\n"
-"Language-Team: Savoir-faire Linux <sylvain.bouchard@savoirfairelinux.com>\n"
+"Language-Team: Plone-fr <plone-fr@lists.plone.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: ../browser/migrator.py:67
 msgid "After migration relation cleanup"
-msgstr ""
+msgstr "S'execute après la migration de nettoyage des relations"
 
 #: ../browser/controlpanel.py:416
 msgid "All the configuration of P.A.M. If you want to set the default language to all the content without language and move all the content on the root folder to the default language folder, go to Extra Options section "
@@ -42,7 +42,7 @@ msgstr "Options supplémentaires"
 
 #: ../browser/templates/not_translated_yet.pt:28
 msgid "However, this is the list of the already translated languages for the requested content."
-msgstr ""
+msgstr "Cependant, il s'agit de la liste des langues déjà traduite pour l'élément demandé."
 
 #: ../browser/controlpanel.py:390
 msgid "If you are installing PAM for the first time in a Plone site, either if it's on an existing or a brand new one you should run the following procedures in order to move the default site content to its right root language folder and be sure that all the content have the language attribute set up correctly. Previous to run them, please be sure that you have set up your site's languages in the 'Site languages' tab and have saved that setting. Finally, in case you have an existing Plone site with Products.LinguaPlone installed, please do not run this steps and refer directly to the 'Migration' tab."
@@ -66,7 +66,7 @@ msgstr "Options multilingues"
 
 #: ../browser/translate.py:60
 msgid "Need a field"
-msgstr ""
+msgstr "Besoin d'un champ"
 
 #: ../browser/controlpanel.py:380
 msgid "Negotiation scheme"
@@ -110,7 +110,7 @@ msgstr "Ce contenu n'est pas encore traduit dans la langue demandée"
 
 #: ../browser/templates/not_translated_yet.pt:46
 msgid "This item doesn't have any translation yet. You can return to the portal site:"
-msgstr ""
+msgstr "Cet élément n'a aucune traduction pour le moment. Vous pouvez revenir au site:"
 
 #: ../browser/templates/migration.pt:204
 msgid "Transfer"
@@ -142,7 +142,7 @@ msgstr "Ajouter du contenu existant comme traduction"
 #. Default: "This step will fix some lost dependencies to the ITranslatable interface hidden in the relation catalog and it gets rid of them. It must be run only when LinguaPlone is already uninstalled."
 #: ../browser/templates/migration.pt:225
 msgid "description_after_migration_cleanup"
-msgstr ""
+msgstr "Cet migration fixera les dépendances perdues à l'interface ITranslatable cachée dans le catalogue des relations et les supprimera. Elle doit être executée seulement une fois que LinguaPlone a été complètement désinstallé."
 
 #. Default: "Authenticated users only. Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
 #: ../browser/controlpanel.py:141
@@ -157,7 +157,7 @@ msgstr "Les langues disponibles pour les traductions sur ce site."
 #. Default: "Edit with the babel_edit"
 #: ../browser/menu.py:37
 msgid "description_babel_edit"
-msgstr ""
+msgstr "Modifier avec la vue babel"
 
 #. Default: "Babel edit ${lang_name}"
 #: ../browser/menu.py:83
