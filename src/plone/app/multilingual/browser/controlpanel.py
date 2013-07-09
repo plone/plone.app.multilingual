@@ -356,6 +356,17 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
         set_buttons_babel_view_up_to_nr_translations,
     )
 
+    def set_bypass_languageindependent_field_permission_check(self, value):
+        self.settings.bypass_languageindependent_field_permission_check = value
+
+    def get_bypass_languageindependent_field_permission_check(self):
+        return self.settings.bypass_languageindependent_field_permission_check
+
+    bypass_languageindependent_field_permission_check = property(
+        get_bypass_languageindependent_field_permission_check,
+        set_bypass_languageindependent_field_permission_check,
+    )
+
 
 class InitialCleanSiteSetupAdapter(LanguageControlPanelAdapter):
     implementsOnly(IInitialCleanSiteSetupAdapter)
