@@ -36,6 +36,24 @@ class IMultiLanguageExtraOptionsSchema(Interface):
         required=False,
         )
 
+    bypass_languageindependent_field_permission_check = schema.Bool(
+        title=_(
+            u"heading_bypass_languageindependent_field_permission_check",
+            default=u"Bypass language independent field permission check"),
+        description=_(
+            u"description_bypass_languageindependent_field_permission_check",
+            default=u"When updating an object with language independent the "
+                    u"field will be synced to all target languages. That can "
+                    u"produce Unauthorized error messages because if the "
+                    u"editor of the canonical object is not allowed to update "
+                    u"the target language objects. Enabling this bypasses "
+                    u"this permission check. This could also be dangerous, so "
+                    u"think about possible security issues before enabling "
+                    u"this."),
+        default=False,
+        required=False,
+    )
+
     buttons_babel_view_up_to_nr_translations = schema.Int(
         title=_(
             u"heading_buttons_babel_view_up_to_nr_translations",
