@@ -23,7 +23,7 @@ Add translation
     Click Element  css=#plone-contentmenu-multilingual .actionMenuHeader a
     Click Element  css=#_add_translations
     Click Element  css=#formfield-form-widgets-content-widgets-query .searchButton 
-    Click Element  css=#form-widgets-content-contenttree a[href$='en']
+    Click Element  css=#form-widgets-content-contenttree a[href$='/plone/en']
     Wait until page contains  It is a test document
     Click Element  css=#form-widgets-content-contenttree a[href$='it-is-a-test-document']
     Click Element  css=.contentTreeAdd
