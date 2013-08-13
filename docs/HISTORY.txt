@@ -4,6 +4,8 @@ Changelog
 1.2 - Unreleased
 ----------------
 
+- Revert translation: display of default pages of folders (it doesn't show
+  content which doesn't have 'is_default_page' attributes).  [bogdangi]
 - Add new option to allow users to bypass permission checks when updating
   objects with language independent fields.  [saily]
 
