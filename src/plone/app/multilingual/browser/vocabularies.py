@@ -23,7 +23,6 @@ def addTranslation(context):
     query = {"path": {'query': path, 'depth': 2},
               "Language": 'all'
              }
-    query['is_default_page'] = (True,False)
 
     return ObjPathSourceBinder(navigation_tree_query=query)(context)
 
