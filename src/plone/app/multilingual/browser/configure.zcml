@@ -82,6 +82,17 @@
       permission="zope.Public"
       />
 
+  <!-- Alternate language meta tags -->
+  <browser:viewlet
+      name="plone.app.multilingual.alternate-languages"
+      for="plone.multilingual.interfaces.ITranslatable"
+      manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
+      class=".viewlets.AlternateLanguagesViewlet"
+      template="templates/alternate-languages.pt"
+      layer="..interfaces.IPloneAppMultilingualInstalled"
+      permission="zope.Public"
+      />
+
 
   <browser:page
     name="multilingual-remove-tg-session"
