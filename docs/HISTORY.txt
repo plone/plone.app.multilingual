@@ -16,6 +16,10 @@ Changelog
   https://support.google.com/webmasters/answer/189077
   [saily]
 
+- Remove Twitter-Bootstrap css code from ``multilingual.css`` and set
+  stylesheet rendering to authenticated users only.
+  [saily]
+
 
 1.1 - 2013-06-19
 ----------------
