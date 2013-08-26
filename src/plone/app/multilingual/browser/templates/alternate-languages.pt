@@ -1,0 +1,4 @@
+<link rel="alternate"
+      tal:repeat="item view/alternates"
+      tal:attributes="hreflang item/lang;
+                      href string:${view/site_url}/${item/url}" />

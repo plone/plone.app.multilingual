@@ -5,9 +5,16 @@ Changelog
 ----------------
 
 - Revert translation: display of default pages of folders (it doesn't show
-  content which doesn't have 'is_default_page' attributes).  [bogdangi]
+  content which doesn't have 'is_default_page' attributes).
+  [bogdangi]
+
 - Add new option to allow users to bypass permission checks when updating
-  objects with language independent fields.  [saily]
+  objects with language independent fields.
+  [saily]
+
+- Add a new alternate languages viewlet, see:
+  https://support.google.com/webmasters/answer/189077
+  [saily]
 
 
 1.1 - 2013-06-19
