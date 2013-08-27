@@ -9,6 +9,9 @@ Changelog
 - Add new option to allow users to bypass permission checks when updating
   objects with language independent fields.  [saily]
 
+- Remove twitter bootstrap styles and make style rendered for authenticated
+  users only.  [saily]
+
 
 1.1 - 2013-06-19
 ----------------
