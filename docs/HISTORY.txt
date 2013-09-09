@@ -6,11 +6,15 @@ Changelog
 
 - Revert translation: display of default pages of folders (it doesn't show
   content which doesn't have 'is_default_page' attributes).  [bogdangi]
+
 - Add new option to allow users to bypass permission checks when updating
   objects with language independent fields.  [saily]
 
 - Remove twitter bootstrap styles and make style rendered for authenticated
   users only.  [saily]
+
+- Add an upgrade step to reimport css_registry
+  [saily]
 
 
 1.1 - 2013-06-19
