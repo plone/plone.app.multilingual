@@ -6,3 +6,7 @@ def reimport_css_registry(context):
     setup.runImportStepFromProfile(
         'profile-plone.app.multilingual:default', 'cssregistry',
         run_dependencies=False, purge_old=False)
+
+    # Refresh css
+    cssregistry = getToolByName(context, 'portal_css')
+    cssregistry.cookResources()
