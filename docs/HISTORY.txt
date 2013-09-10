@@ -16,6 +16,12 @@ Changelog
   https://support.google.com/webmasters/answer/189077
   [saily]
 
+- Remove twitter bootstrap styles and make style rendered for authenticated
+  users only.  [saily]
+
+- Add an upgrade step to reimport css_registry
+  [saily]
+
 
 1.1 - 2013-06-19
 ----------------
