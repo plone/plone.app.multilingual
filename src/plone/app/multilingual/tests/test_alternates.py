@@ -3,7 +3,7 @@ from Products.CMFCore.utils import getToolByName
 
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.testing import \
-    PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
+    PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
 from plone.app.multilingual.tests.utils import makeContent
 from plone.app.multilingual.tests.utils import makeTranslation
 from plone.app.multilingual.browser.viewlets import AlternateLanguagesViewlet
@@ -17,7 +17,7 @@ import unittest2 as unittest
 
 class TestAlternateLanguagesViewlet(unittest.TestCase):
 
-    layer = PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
+    layer = PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
