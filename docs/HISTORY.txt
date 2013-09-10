@@ -4,6 +4,9 @@ Changelog
 1.2 - Unreleased
 ----------------
 
+- Better testsetup for robot tests using it's own layer.
+  [saily]
+
 - Revert translation: display of default pages of folders (it doesn't show
   content which doesn't have 'is_default_page' attributes).
   [bogdangi]
