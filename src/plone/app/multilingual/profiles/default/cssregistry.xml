@@ -2,10 +2,10 @@
 <object name="portal_css">
 
     <stylesheet
-        id="++resource++plone.app.multilingual.stylesheet/multilingual.css"
-        rel="stylesheet" media="screen" authenticated="True" cacheable="True"
-        compression="safe" conditionalcomment="" cookable="True" enabled="on"
-        expression="" rendering="link" applyPrefix="True"
+        title="" id="++resource++plone.app.multilingual.stylesheet/multilingual.css"
+        authenticated="True" cacheable="True" compression="safe"
+        conditionalcomment="" cookable="True" enabled="on" expression=""
+        media="screen" rel="stylesheet" rendering="link" applyPrefix="True"
         />
 
 </object>
