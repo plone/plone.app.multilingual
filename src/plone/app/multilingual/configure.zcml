@@ -6,8 +6,7 @@
     xmlns:grok="http://namespaces.zope.org/grok"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:zcml="http://namespaces.zope.org/zcml"
-    i18n_domain="plone.app.multilingual"
-    >
+    i18n_domain="plone.app.multilingual">
 
     <include package="grokcore.component" file="meta.zcml" />
 
@@ -16,6 +15,7 @@
     <includeDependencies package="." />
 
     <include file="permissions.zcml" />
+    <include file="upgrades.zcml" />
 
     <include package="plone.app.controlpanel" />
     <include package="Products.CMFCore" file="permissions.zcml" />
@@ -43,20 +43,20 @@
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     />
 
-  <genericsetup:importStep
-      name="pam_reindex"
-      title="Setup indexes for plone.app.multilingual"
-      description=""
-      handler=".setuphandlers.setup_various">
-    <depends name="content"/>
-    <depends name="toolset"/>
-    <depends name="catalog"/>
-  </genericsetup:importStep>
+    <genericsetup:importStep
+        name="pam_reindex"
+        title="Setup indexes for plone.app.multilingual"
+        description=""
+        handler=".setuphandlers.setup_various">
+        <depends name="content"/>
+        <depends name="toolset"/>
+        <depends name="catalog"/>
+    </genericsetup:importStep>
 
-  <utility factory="plone.app.multilingual.profile.HiddenProfiles"
-           name="plone.app.multilingual.hiddenprofiles" />
-           
-  <utility factory="plone.app.multilingual.profile.HiddenProducts"
-           name="plone.app.multilingual.hiddenproducts" />
-    
+    <utility factory="plone.app.multilingual.profile.HiddenProfiles"
+             name="plone.app.multilingual.hiddenprofiles" />
+
+    <utility factory="plone.app.multilingual.profile.HiddenProducts"
+             name="plone.app.multilingual.hiddenproducts" />
+
 </configure>
