@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2 - Unreleased
+1.2 - 2013-09-24
 ----------------
 
 - Better testsetup for robot tests using it's own layer.
