@@ -1,0 +1,115 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:grok="http://namespaces.zope.org/grok"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="plone.app.multilingual">
+
+    <includeDependencies package="." />
+
+    <include file="permissions.zcml" />
+    <include file="upgrades.zcml" />
+
+    <include package="Products.CMFCore" file="permissions.zcml" />
+
+    <i18n:registerTranslations directory="locales" />
+
+    <include package=".browser" />
+    <include package=".dx" />
+
+    <genericsetup:registerProfile
+        name="default"
+        title="plone.app.multilingual"
+        description="Install to enable multilingual content support on the site"
+        directory="profiles/default"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    />
+
+  <!-- ITranslationGroup and indexer -->
+
+    <adapter factory=".itg.attributeTG" />
+    <adapter factory=".itg.MutableAttributeTG" />
+    <subscriber handler=".itg.addAttributeTG" />
+
+    <adapter factory=".indexer.itgIndexer" name="TranslationGroup" />
+    <adapter factory=".indexer.LanguageIndexer" name="Language" />
+
+  <!-- Generic plone.app.multilingual subscribers and adapters -->
+
+    <subscriber
+      for="plone.app.multilingual.interfaces.ITranslatable
+         zope.app.container.interfaces.IObjectAddedEvent"
+      handler="plone.app.multilingual.subscriber.createdEvent"/>
+    <subscriber
+      for="plone.app.multilingual.interfaces.ITranslatable
+         zope.lifecycleevent.interfaces.IObjectCopiedEvent"
+      handler="plone.app.multilingual.subscriber.createdEvent"/>
+    <subscriber
+      for="plone.app.multilingual.interfaces.ITranslatable
+         zope.lifecycleevent.interfaces.IObjectMovedEvent"
+      handler="plone.app.multilingual.subscriber.createdEvent"/>
+
+    <adapter
+      for="plone.app.multilingual.interfaces.ITranslatable"
+      provides="plone.app.multilingual.interfaces.ITranslationManager"
+      factory="plone.app.multilingual.manager.TranslationManager"
+    />
+    <adapter
+      for="plone.app.multilingual.interfaces.ITranslatable"
+      provides="plone.app.multilingual.interfaces.ITranslationLocator"
+      factory="plone.app.multilingual.factory.DefaultTranslationLocator"
+    />
+    <adapter
+      for="plone.app.multilingual.interfaces.ITranslatable"
+      provides="plone.app.multilingual.interfaces.ITranslationIdChooser"
+      factory="plone.app.multilingual.factory.DefaultTranslationIdChooser"
+    />
+    <adapter
+      for="plone.app.multilingual.interfaces.ITranslatable"
+      provides="plone.app.multilingual.interfaces.ITranslationCloner"
+      factory="plone.app.multilingual.factory.DefaultTranslationCloner"
+    />
+    <adapter
+      for="plone.app.multilingual.interfaces.ITranslatable"
+      provides="plone.app.multilingual.interfaces.ITranslationFactory"
+      factory="plone.app.multilingual.factory.DefaultTranslationFactory"
+    />
+
+  <!-- Dexterity Language Independent fields -->
+
+    <subscriber
+    for="plone.app.multilingual.dx.interfaces.IDexterityTranslatable
+         zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+    handler="plone.app.multilingual.dx.subscriber.handler"
+    />
+    <adapter
+      for="plone.app.multilingual.dx.interfaces.IDexterityTranslatable"
+      provides="plone.multilingual.interfaces.ITranslationCloner"
+      factory="plone.app.multilingual.dx.cloner.Cloner"
+    />
+    <adapter
+      for="plone.app.multilingual.dx.interfaces.IDexterityTranslatable"
+      provides="plone.multilingual.interfaces.ILanguageIndependentFieldsManager"
+      factory="plone.app.multilingual.dx.utils.LanguageIndependentFieldsManager"
+    />
+
+  <!-- Shared folder subscribers -->
+
+  <subscriber for="
+      plone.dexterity.interfaces.IDexterityContent
+      zope.lifecycleevent.interfaces.IObjectAddedEvent"
+    handler=".subscriber.reindex_neutral" />
+
+
+  <subscriber
+      for="plone.dexterity.interfaces.IDexterityContent
+           zope.component.interfaces.IObjectEvent"
+      handler=".subscriber.remove_ghosts"
+      />
+
+
+</configure>

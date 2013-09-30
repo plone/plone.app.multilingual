@@ -6,6 +6,11 @@
 
 .. contents::
 
+Alert
+=====
+
+Master branch is in heavy development and for Plone 5 (pam 2.0). There is a 1.x 
+branch for maintenance and compatibility with earlier Plone versions.
 
 Introduction
 ============
