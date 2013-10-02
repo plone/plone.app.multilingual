@@ -88,12 +88,12 @@
     />
     <adapter
       for="plone.app.multilingual.dx.interfaces.IDexterityTranslatable"
-      provides="plone.multilingual.interfaces.ITranslationCloner"
+      provides="plone.app.multilingual.interfaces.ITranslationCloner"
       factory="plone.app.multilingual.dx.cloner.Cloner"
     />
     <adapter
       for="plone.app.multilingual.dx.interfaces.IDexterityTranslatable"
-      provides="plone.multilingual.interfaces.ILanguageIndependentFieldsManager"
+      provides="plone.app.multilingual.interfaces.ILanguageIndependentFieldsManager"
       factory="plone.app.multilingual.dx.utils.LanguageIndependentFieldsManager"
     />
 
