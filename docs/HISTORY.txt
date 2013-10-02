@@ -1,6 +1,12 @@
 Changelog
 =========
 
+2.0 - (unreleased)
+------------------
+
+- Download latest v1 ``bootstrap.py``
+  [saily]
+
 
 1.2 - 2013-09-24
 ----------------
