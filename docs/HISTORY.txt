@@ -18,6 +18,9 @@ Changelog
   buildout.
   [saily]
 
+- Ensure ``plone.app.controlpanel.Language`` permission is present.
+  [saily]
+
 
 1.2 - 2013-09-24
 ----------------

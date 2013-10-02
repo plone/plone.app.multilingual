@@ -12,21 +12,23 @@
         class=".menu.TranslateMenu"
         />
 
-   <adapter for="plone.app.multilingual.interfaces.ITranslatable
-                 ..interfaces.IPloneAppMultilingualInstalled"
+    <adapter
+        for="plone.app.multilingual.interfaces.ITranslatable
+             ..interfaces.IPloneAppMultilingualInstalled"
         name="plone.contentmenu.multilingual"
         factory=".menu.TranslateSubMenuItem"
         provides="plone.app.contentmenu.interfaces.IContentMenuItem"
         />
 
-  <!-- Control panel -->
-  <browser:page
-    name="language-controlpanel"
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    class=".controlpanel.LanguageControlPanel"
-    permission="plone.app.controlpanel.Language"
-    layer="..interfaces.IPloneAppMultilingualInstalled"
-    />
+    <!-- Control panel -->
+    <include package="plone.app.controlpanel" />
+    <browser:page
+        name="language-controlpanel"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        class=".controlpanel.LanguageControlPanel"
+        permission="plone.app.controlpanel.Language"
+        layer="..interfaces.IPloneAppMultilingualInstalled"
+        />
 
   <!-- Migration Tab -->
   <browser:page
