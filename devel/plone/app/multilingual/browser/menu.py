@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_parent
-
-from zope.interface import implements
-from zope.component import getMultiAdapter
 from Products.CMFCore.utils import getToolByName
-from zope.browsermenu.menu import BrowserMenu
-from zope.browsermenu.menu import BrowserSubMenuItem
+
 from plone.memoize.instance import memoize
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.layout.navigation.defaultpage import isDefaultPage
@@ -17,14 +13,17 @@ from plone.app.multilingual.browser.vocabularies import (
     untranslated_languages, translated_languages, translated_urls)
 from plone.app.multilingual import _
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
-from plone.app.multilingual.interfaces import SHARED_NAME
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
-
-from plone.registry.interfaces import IRegistry
-from zope.component import getUtility
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.app.multilingual.browser.utils import is_shared
+from plone.registry.interfaces import IRegistry
+from zope.interface import implements
+from zope.browsermenu.menu import BrowserMenu
+from zope.browsermenu.menu import BrowserSubMenuItem
+from zope.component import getUtility
+from zope.component.hooks import getSite
 
 
 class TranslateMenu(BrowserMenu):
@@ -35,18 +34,19 @@ class TranslateMenu(BrowserMenu):
         menu = []
         url = context.absolute_url()
         lt = getToolByName(context, "portal_languages")
-        portal_state = getMultiAdapter(
-            (context, request), name=u'plone_portal_state')
 
-        portal_url = portal_state.portal_url()
+        site_url = getSite().absolute_url()
         showflags = lt.showFlags()
         context_id = ITranslationManager(context).tg
         registry = getUtility(IRegistry)
         settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
         edit_view = 'babel_edit' if settings.redirect_babel_view else 'edit'
         # In case is neutral language show set language menu only
-        if LANGUAGE_INDEPENDENT != ILanguage(context).get_language() \
-           and not INavigationRoot.providedBy(context):
+        is_neutral_content = (
+            ILanguage(context).get_language() == LANGUAGE_INDEPENDENT
+            or is_shared(context)
+        )
+        if not is_neutral_content and not INavigationRoot.providedBy(context):
             menu.append({
                 "title": _(
                     u"title_babel_edit",
@@ -108,11 +108,10 @@ class TranslateMenu(BrowserMenu):
                         mapping={"lang_name": lang_name}
                     )
                     menu.append(item)
-
                 langs = translated_languages(context)
                 urls = translated_urls(context)
                 for lang in langs:
-                    if lang not in urls:
+                    if lang.value not in urls.by_token:
                         # omit if translation is not permitted to access.
                         continue
                     lang_name = lang.title
@@ -191,7 +190,7 @@ class TranslateMenu(BrowserMenu):
                 }
                 menu.append(item)
 
-        elif LANGUAGE_INDEPENDENT == ILanguage(context).get_language():
+        elif is_neutral_content:
             menu.append({
                 "title": _(
                     u"language_folder",
@@ -202,7 +201,7 @@ class TranslateMenu(BrowserMenu):
                     default=u"Go to the user's browser preferred language "
                             u"related folder"
                 ),
-                "action": portal_url + '/' + lt.getPreferredLanguage(),
+                "action": site_url + '/' + lt.getPreferredLanguage(),
                 "selected": False,
                 "icon": None,
                 "extra": {
@@ -213,7 +212,7 @@ class TranslateMenu(BrowserMenu):
                 "submenu": None,
             })
 
-        if LANGUAGE_INDEPENDENT != ILanguage(context).get_language():
+        if not is_neutral_content:
             menu.append({
                 "title": _(
                     u"universal_link",
@@ -224,7 +223,7 @@ class TranslateMenu(BrowserMenu):
                     default=u"Universal Language content link"
                 ),
                 "action": "%s/@@multilingual-universal-link/%s" % (
-                    portal_url, context_id),
+                    site_url, context_id),
                 "selected": False,
                 "icon": None,
                 "extra": {
@@ -245,7 +244,7 @@ class TranslateMenu(BrowserMenu):
                     default=u"Show the language shared (neutral language) "
                             u"folder"
                 ),
-                "action": portal_url + '/' + SHARED_NAME,
+                "action": site_url + '/folder_contents',
                 "selected": False,
                 "icon": None,
                 "extra": {

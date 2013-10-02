@@ -65,8 +65,8 @@ class SetupMultilingualSite(object):
                 info.get('native', info.get('name')))
         doneSomething += self.linkTranslations()
         doneSomething += self.removePortalDefaultPage()
-        if self.previousDefaultPageId:
-            doneSomething += self.resetDefaultPage()
+        # if self.previousDefaultPageId:
+        #     doneSomething += self.resetDefaultPage()
         doneSomething += self.setupLanguageSwitcher()
         self.set_default_language_content()
         if not doneSomething:

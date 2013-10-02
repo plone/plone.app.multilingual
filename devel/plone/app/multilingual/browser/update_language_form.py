@@ -1,25 +1,28 @@
-from five import grok
-from z3c.form import button
-from plone.directives import form
-from plone.app.multilingual.browser.utils import multilingualMoveObject
-from plone.app.multilingual.interfaces import ITranslatable
+import zope.schema
+import zope.interface
+from zope.i18nmessageid import MessageFactory
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile as FiveViewPageTemplateFile
 
-from plone.app.multilingual import _
 from plone.app.multilingual.browser.interfaces import IUpdateLanguage
+from plone.app.multilingual import _
+from plone.app.multilingual.browser.utils import multilingualMoveObject
+
+import z3c.form
+
+import plone.app.z3cform
+import plone.z3cform.templates
 
 
-class UpdateLanguageForm(form.SchemaForm):
+class UpdateLanguageForm(z3c.form.form.Form):
+    """ A form to change language """
 
-    grok.name("update_language")
-    grok.context(ITranslatable)
-    grok.require("cmf.ModifyPortalContent")
-    schema = form.IFormFieldProvider(IUpdateLanguage)
+    fields = z3c.form.field.Fields(IUpdateLanguage)
+
     ignoreContext = True
-    label = _(u"label_update_language", default=u"Update Language")
-    status = _(u"label_alert_update",
-        default=u"""By updating the content language will trigger its move to the correct language folder in the site's hierarchy""")
 
-    @button.buttonAndHandler(_(u"update_language",
+    output = None
+
+    @z3c.form.button.buttonAndHandler(_(u"update_language",
                                default=u"Update Language"))
     def handle_update(self, action):
         data, errors = self.extractData()
@@ -31,3 +34,10 @@ class UpdateLanguageForm(form.SchemaForm):
             new_object = multilingualMoveObject(self.context, language)
 
         return self.request.response.redirect(new_object.absolute_url() + '?set_language=' + language)
+
+
+# IF you want to customize form frame you need to make a custom FormWrapper view around it
+# (default plone.z3cform.layout.FormWrapper is supplied automatically with form.py templates)
+# update_language_form = plone.z3cform.layout.wrap_form(UpdateLanguageForm, index=FiveViewPageTemplateFile("templates/reporter.pt"))
+update_language_form = plone.z3cform.layout.wrap_form(UpdateLanguageForm)
+

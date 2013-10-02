@@ -76,27 +76,6 @@ class gtranslation_service_dexterity(BrowserView):
             return google_translate(question, settings.google_translation_key, lang_target, lang_source)
 
 
-class gtranslation_service_at(BrowserView):
-
-    def __call__(self):
-        if (self.request.method != 'POST' and
-            not ('field' in self.request.form.keys() and
-                'lang_source' in self.request.form.keys())):
-            return _("Need a field")
-        else:
-            manager = ITranslationManager(self.context)
-            registry = getUtility(IRegistry)
-            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
-            lang_target = ILanguage(self.context).get_language()
-            lang_source = self.request.form['lang_source']
-            orig_object = manager.get_translation(lang_source)
-            try:
-                question = orig_object.getField(
-                    self.request.form['field']).get(orig_object)
-            except AttributeError:
-                return _("Invalid field")
-            return google_translate(question, settings.google_translation_key, lang_target, lang_source)
-
 
 class TranslationForm(BrowserView):
     """ Translation Form """
@@ -106,13 +85,13 @@ class TranslationForm(BrowserView):
         if language:
             context = aq_inner(self.context)
             translation_manager = ITranslationManager(context)
-            if ILanguage(context).get_language() == LANGUAGE_INDEPENDENT:
-                # XXX : Why we need this ? the subscriber from pm should maintain it
-                language_tool = getToolByName(context, 'portal_languages')
-                default_language = language_tool.getDefaultLanguage()
-                ILanguage(context).set_language(default_language)
-                translation_manager.update()
-                context.reindexObject()
+            # if ILanguage(context).get_language() == LANGUAGE_INDEPENDENT:
+            #     # XXX : Why we need this ? the subscriber from pm should maintain it
+            #     language_tool = getToolByName(context, 'portal_languages')
+            #     default_language = language_tool.getDefaultLanguage()
+            #     ILanguage(context).set_language(default_language)
+            #     translation_manager.update()
+            #     context.reindexObject()
 
             new_parent = translation_manager.add_translation_delegated(language)
 

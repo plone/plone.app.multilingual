@@ -12,6 +12,7 @@ from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 from plone.formwidget.contenttree import ObjPathSourceBinder
+from plone.app.multilingual.browser.utils import is_shared
 
 
 _ = MessageFactory('plone.app.multilingual')
@@ -36,7 +37,8 @@ def untranslated_languages(context):
     manager = ITranslationManager(context)
     translated_languages = manager.get_translated_languages()
     content_language = ILanguage(context).get_language()
-    filter_default = (content_language == LANGUAGE_INDEPENDENT)
+    if is_shared(context):
+        translated_languages = []
     languages = []
     for lang in available_portal_languages:
         if lang not in translated_languages:

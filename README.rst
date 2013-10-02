@@ -12,6 +12,14 @@ Alert
 Master branch is in heavy development and for Plone 5 (pam 2.0). There is a 1.x 
 branch for maintenance and compatibility with earlier Plone versions.
 
+plone.app.multilingual 2.x is on devel folder
+
+archetypes.multilingual 2.x is on extras folder
+
+In order to test in plone 4 with dx contenttypes use buildout.cfg
+
+In order to test in plone 5 use test-plone-5.x.cfg
+
 Introduction
 ============
 

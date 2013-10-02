@@ -633,7 +633,6 @@ class TestLanguageSelectorBasics(unittest.TestCase):
     #     context = context.__of__(container)
     #     alsoProvides(container, ISiteRoot)
     #     request = DummyRequest()
-    #     import ipdb;ipdb.set_trace()
     #     selector = LanguageSelectorViewlet(context, request, None, None)
     #     context.physicalpath = ['', 'fake', 'path']
     #     vbase = '/VirtualHostBase/http/127.0.0.1/'

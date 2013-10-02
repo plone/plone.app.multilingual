@@ -35,7 +35,7 @@ class LanguageRootFolder(Container):
     """ Language root folder type that holds the shared and is navigation root
     """
 
-    implements(ILanguageRootFolder, INavigationRoot)
+    implements(ILanguageRootFolder, INavigationRoot, IPloneSiteRoot)
 
     def has_key(self, id):
         """Indicates whether the folder has an item by ID.
@@ -51,7 +51,6 @@ class LanguageRootFolder(Container):
         if not allow_dup and id in CMFOrderedBTreeFolderBase.objectIds(self, None, False):
             raise BadRequestException('The id "%s" is invalid--'
                                       'it is already in use.' % id)
-
 
     def objectMap(self):
         # Returns a tuple of mappings containing subobject meta-data.
@@ -84,21 +83,6 @@ class LanguageRootFolder(Container):
                 #    raise
             else:
                 raise
-
-    # def _delOb(self, id):
-    #     """ Remove the named object from the folder or parent. """
-    #     obj = CMFOrderedBTreeFolderBase._getOb(self, id, _marker)
-    #     if obj is not _marker:
-    #         super(LanguageRootFolder, self)._delOb(id)
-    #     else:
-    #         aliased = getSite()
-    #         if aliased and id in aliased:
-    #             aliased._delOb(id)
-    #             # aliased.getOrdering().notifyRemoved(id)   # notify the ordering adapter
-    #         else:
-    #             raise
-    #     if id in self.getOrdering():
-    #         self.getOrdering().notifyRemoved(id)   # notify the ordering adapter
 
     def _getOb(self, id, default=_marker):
         obj = CMFOrderedBTreeFolderBase._getOb(self, id, default)
