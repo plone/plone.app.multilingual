@@ -15,13 +15,17 @@ from zope.component.hooks import getSite
 from zope.lifecycleevent import modified
 from zope.lifecycleevent.interfaces import IObjectRemovedEvent
 
-from OFS.interfaces import IObjectWillBeMovedEvent, IObjectWillBeAddedEvent, IObjectWillBeRemovedEvent
+from OFS.interfaces import IObjectWillBeAddedEvent
+from OFS.interfaces import IObjectWillBeMovedEvent
+from OFS.interfaces import IObjectWillBeRemovedEvent
 
-# On shared elements, the uuid is different so we need to take care of them on catalog in case we modify any shared element
 
+# On shared elements, the uuid is different so we need to take care of
+# them on catalog in case we modify any shared element
 def reindex_neutral(obj, event):
     # we need to look for the parent that is already indexed
-    if IPloneSiteRoot.providedBy(obj) or ILanguage(obj).get_language() != LANGUAGE_INDEPENDENT:
+    if IPloneSiteRoot.providedBy(obj) \
+       or ILanguage(obj).get_language() != LANGUAGE_INDEPENDENT:
         return
     parent = aq_parent(obj)
     site = getSite()
@@ -38,18 +42,26 @@ def reindex_neutral(obj, event):
         content_id = IUUID(parent).split('-')[0]
         pc = getToolByName(site, 'portal_catalog')
         for language_info in language_infos:
-            brains = pc.unrestrictedSearchResults(UID=content_id + '-' + language_info)
+            brains = pc.unrestrictedSearchResults(
+                UID=content_id + '-' + language_info)
             if len(brains):
-                obj.unrestrictedTraverse(brains[0].getPath() + '/' + obj.id).reindexObject()
+                obj.unrestrictedTraverse(
+                    brains[0].getPath() + '/' + obj.id).reindexObject()
     return
 
+
 def remove_ghosts(obj, event):
+    """We are going to remove a object: we need to check if its neutral
+       and remove their indexes also.
     """
-    We are going to remove a object: we need to check if its neutral and remove their indexes also.
-    """
-    if not IObjectWillBeAddedEvent.providedBy(event) and (IObjectWillBeMovedEvent.providedBy(event) or IObjectWillBeRemovedEvent.providedBy(event)):
+
+    if not IObjectWillBeAddedEvent.providedBy(event) \
+       and (IObjectWillBeMovedEvent.providedBy(event)
+            or IObjectWillBeRemovedEvent.providedBy(event)):
+
         if ILanguage(obj).get_language() != LANGUAGE_INDEPENDENT:
             return
+
         content_id = IUUID(obj).split('-')[0]
         site = getSite()
         pc = getToolByName(site, 'portal_catalog')
@@ -57,12 +69,14 @@ def remove_ghosts(obj, event):
         language_infos = language_tool.supported_langs
 
         for language_info in language_infos:
-            brains = pc.unrestrictedSearchResults(UID=content_id + '-' + language_info)
+            brains = pc.unrestrictedSearchResults(
+                UID=content_id + '-' + language_info)
             if len(brains):
-                obj.unrestrictedTraverse(brains[0].getPath() + '/' + obj.id).unindexObject()
+                obj.unrestrictedTraverse(
+                    brains[0].getPath() + '/' + obj.id).unindexObject()
+
 
 # Multilingual subscribers
-
 def reindex_object(obj):
     obj.reindexObject(idxs=("Language", "TranslationGroup",
                             "path", "allowedRolesAndUsers"), )
@@ -114,4 +128,3 @@ def createdEvent(obj, event):
             del session['tg']
     else:
         set_recursive_language(obj, LANGUAGE_INDEPENDENT)
-

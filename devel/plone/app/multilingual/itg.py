@@ -1,22 +1,14 @@
-
-from plone.uuid.interfaces import IUUIDGenerator
-from zope.component import queryUtility
-
-from zope import interface
-from zope import component
-# XXX
-from zope.component import adapter
-
-from zope.lifecycleevent.interfaces import IObjectCreatedEvent
-from zope.lifecycleevent.interfaces import IObjectCopiedEvent
-
-from plone.uuid.interfaces import IUUIDGenerator
-
+# -*- coding: utf-8 -*-
 from plone.app.multilingual.interfaces import ATTRIBUTE_NAME
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import NOTG
 from plone.app.multilingual.interfaces import IMutableTG
+from plone.uuid.interfaces import IUUIDGenerator
+from zope import interface
+from zope import component
+from zope.lifecycleevent.interfaces import IObjectCreatedEvent
+from zope.lifecycleevent.interfaces import IObjectCopiedEvent
 
 try:
     from Acquisition import aq_base
@@ -42,20 +34,20 @@ class MutableAttributeTG(object):
 
     def set(self, tg):
         if tg == NOTG:
-            generator = queryUtility(IUUIDGenerator)
+            generator = component.queryUtility(IUUIDGenerator)
             tg = generator()
         tg = str(tg)
         setattr(self.context, ATTRIBUTE_NAME, tg)
 
 
-@adapter(ITranslatable, IObjectCreatedEvent)
+@component.adapter(ITranslatable, IObjectCreatedEvent)
 def addAttributeTG(obj, event):
 
     if not IObjectCopiedEvent.providedBy(event):
         if getattr(aq_base(obj), ATTRIBUTE_NAME, None):
             return  # defensive: keep existing TG on non-copy create
 
-    generator = queryUtility(IUUIDGenerator)
+    generator = component.queryUtility(IUUIDGenerator)
     if generator is None:
         return
 

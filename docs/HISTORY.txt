@@ -13,6 +13,11 @@ Changelog
 - Add code analysis to ``plone-test-4.x.cfg`` and ``plone-test-5.x.cfg``
   [saily]
 
+- Huge PEP8 and Flake8 cleanup. Please run ``bin/code-analysis`` before
+  commiting. A git pre-commit hook should be added automatically through
+  buildout.
+  [saily]
+
 
 1.2 - 2013-09-24
 ----------------

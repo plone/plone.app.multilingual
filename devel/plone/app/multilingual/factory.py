@@ -44,7 +44,8 @@ class DefaultTranslationLocator(object):
         while not IPloneSiteRoot.providedBy(parent) and not found:
             parent_translation = ITranslationManager(parent)
             if parent_translation.has_translation(language):
-                translated_parent = parent_translation.get_translation(language)
+                translated_parent = \
+                    parent_translation.get_translation(language)
                 found = True
             parent = aq_parent(parent)
         return translated_parent
