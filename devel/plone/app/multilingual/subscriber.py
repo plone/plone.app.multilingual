@@ -55,19 +55,8 @@ def remove_ghosts(obj, event):
     """We are going to remove a object: we need to check if its neutral
        and remove their indexes also.
     """
-<<<<<<< HEAD
-
-    if not IObjectWillBeAddedEvent.providedBy(event) \
-       and (IObjectWillBeMovedEvent.providedBy(event)
-            or IObjectWillBeRemovedEvent.providedBy(event)):
-
-        if ILanguage(obj).get_language() != LANGUAGE_INDEPENDENT:
-=======
-    We are going to remove a object: we need to check if its neutral and remove their indexes also.
-    """
     if not IObjectWillBeAddedEvent.providedBy(event) and (IObjectWillBeMovedEvent.providedBy(event) or IObjectWillBeRemovedEvent.providedBy(event)):
         if not is_shared_original(obj):
->>>>>>> Working on 2.0 merge
             return
 
         content_id = IUUID(obj).split('-')[0]
@@ -76,25 +65,19 @@ def remove_ghosts(obj, event):
             pc = getToolByName(site, 'portal_catalog')
         except AttributeError:
             # In case we are removing the site there is no portal_catalog
-            return 
+            return
         language_tool = getToolByName(site, 'portal_languages')
         language_infos = language_tool.supported_langs
 
         for language_info in language_infos:
-<<<<<<< HEAD
             brains = pc.unrestrictedSearchResults(
                 UID=content_id + '-' + language_info)
-            if len(brains):
-                obj.unrestrictedTraverse(
-                    brains[0].getPath() + '/' + obj.id).unindexObject()
-=======
-            brains = pc.unrestrictedSearchResults(UID=content_id + '-' + language_info)
             for brain in brains:
                 obj.unrestrictedTraverse(brain.getPath()).unindexObject()
-            brains = pc.unrestrictedSearchResults(UID=content_id)
+            brains = pc.unrestrictedSearchResults(
+                UID=content_id)
             for brain in brains:
                 obj.unrestrictedTraverse(brain.getPath()).unindexObject()
->>>>>>> Working on 2.0 merge
 
 
 # Multilingual subscribers
