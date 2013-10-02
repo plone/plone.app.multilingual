@@ -10,6 +10,9 @@ Changelog
 - Fix an import issue in ``upgrades.py``
   [saily]
 
+- Add code analysis to ``plone-test-4.x.cfg`` and ``plone-test-5.x.cfg``
+  [saily]
+
 
 1.2 - 2013-09-24
 ----------------
