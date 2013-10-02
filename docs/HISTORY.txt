@@ -7,6 +7,9 @@ Changelog
 - Download latest v1 ``bootstrap.py``
   [saily]
 
+- Fix an import issue in ``upgrades.py``
+  [saily]
+
 
 1.2 - 2013-09-24
 ----------------
