@@ -35,7 +35,7 @@
     name="lp-migration"
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     class=".controlpanel.MigrationView"
-    permission="plone.app.controlpanel.Language"
+    permission="plone.app.multilingual.ManageTranslations"
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
 
@@ -43,7 +43,7 @@
     name="multilingual-map"
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     class=".controlpanel.multilingualMapView"
-    permission="plone.app.controlpanel.Language"
+    permission="plone.app.multilingual.ManageTranslations"
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
 
@@ -140,7 +140,7 @@
     name="multilingual-map-ajax"
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     class=".controlpanel.multilingualMapViewJSON"
-    permission="plone.app.controlpanel.Language"
+    permission="plone.app.multilingual.ManageTranslations"
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
 
@@ -216,12 +216,6 @@
       />
   </configure>
 
-  <browser:page
-    for="Products.Archetypes.atapi.BaseObject"
-    name="gtranslation_service"
-    class=".translate.gtranslation_service_at"
-    permission="cmf.ModifyPortalContent"
-    />
 
   <browser:page
     for="plone.app.multilingual.interfaces.ITranslatable"
@@ -257,15 +251,16 @@
   </configure>
 
 
-  <!-- Add Form Archetypes -->
+  <!-- Update language -->
 
-  <browser:page
-    for="plone.app.multilingual.interfaces.ITranslatable"
-    name="add_at_translation"
-    class=".add.MultilingualATAddForm"
-    permission="cmf.ModifyPortalContent"
-    />
+   <browser:page
+       for="plone.app.multilingual.interfaces.ITranslatable"
+       name="update_language"
+       class=".update_language_form.update_language_form"
+       permission="cmf.ModifyPortalContent"
+       />
 
+ 
   <!-- Edit form -->
 
   <configure zcml:condition="installed plone.dexterity">
@@ -277,12 +272,6 @@
       />
   </configure>
 
-  <browser:page
-    for="Products.Archetypes.atapi.BaseObject"
-    name="babel_edit"
-    class=".at_babel_view.ATBabelEdit"
-    permission="cmf.ModifyPortalContent"
-    />
 
   <!-- Templates for translation fields info visualization via AJAX -->
   <configure zcml:condition="installed plone.dexterity">
@@ -295,12 +284,6 @@
       />
   </configure>
 
-  <browser:page
-    for="Products.Archetypes.atapi.BaseObject"
-    name="babel_view"
-    class=".at_babel_view.ATBabelView"
-    permission="cmf.ModifyPortalContent"
-    />
 
   <browser:page
     for="*"
@@ -352,7 +335,7 @@
     name="lp-migration-after"
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     class=".controlpanel.MigrationViewAfter"
-    permission="plone.app.controlpanel.Language"
+    permission="plone.app.multilingual.ManageTranslations"
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
 

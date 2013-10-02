@@ -20,6 +20,11 @@
     <include package=".browser" />
     <include package=".dx" />
 
+    <adapter factory=".content.lrf.LRFOrdering" />
+
+    <adapter
+      factory=".shared_uuid.lrfUUID" />
+
     <genericsetup:registerProfile
         name="default"
         title="plone.app.multilingual"

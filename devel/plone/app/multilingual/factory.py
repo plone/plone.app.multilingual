@@ -6,6 +6,7 @@ from plone.app.multilingual.interfaces import (
     ITranslationCloner,
     ITranslationIdChooser,
     ITranslationManager,
+    ILanguageRootFolder
 )
 from zope import interface
 from Acquisition import aq_parent
@@ -41,7 +42,7 @@ class DefaultTranslationLocator(object):
         parent = aq_parent(self.context)
         translated_parent = parent
         found = False
-        while not IPloneSiteRoot.providedBy(parent) and not found:
+        while not (IPloneSiteRoot.providedBy(parent) and not ILanguageRootFolder.providedBy(parent)) and not found:
             parent_translation = ITranslationManager(parent)
             if parent_translation.has_translation(language):
                 translated_parent = \

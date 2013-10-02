@@ -64,7 +64,7 @@ PLONEAPPMULTILINGUAL_FIXTURE = PloneAppMultilingualLayer()
 
 class TwoLanguagesLayer(z2.Layer):
 
-    defaultBases = (PLONE_FIXTURE, )
+    defaultBases = (PLONE_APP_CONTENTTYPES_FIXTURE, )
 
     def setUp(self):
         with ploneSite() as portal:

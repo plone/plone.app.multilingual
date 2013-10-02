@@ -21,6 +21,8 @@ from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.app.multilingual.browser.utils import is_shared
+from zope.component.hooks import getSite
 
 
 class TranslateMenu(BrowserMenu):
@@ -33,13 +35,15 @@ class TranslateMenu(BrowserMenu):
         lt = getToolByName(context, "portal_languages")
         portal_state = getMultiAdapter((context, request), name=u'plone_portal_state')
         portal_url = portal_state.portal_url()
+        site_url = getSite().absolute_url()
         showflags = lt.showFlags()
         context_id = ITranslationManager(context).tg
         registry = getUtility(IRegistry)
         settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
         edit_view = 'babel_edit' if settings.redirect_babel_view else 'edit'
         # In case is neutral language show set language menu only
-        if LANGUAGE_INDEPENDENT != ILanguage(context).get_language() and not INavigationRoot.providedBy(context):
+        is_neutral_content = (ILanguage(context).get_language() == LANGUAGE_INDEPENDENT or is_shared(context))
+        if not is_neutral_content and not INavigationRoot.providedBy(context):
             menu.append({
                 "title": _(u"title_babel_edit",
                        default=u"Edit with babel view"),
@@ -88,11 +92,10 @@ class TranslateMenu(BrowserMenu):
                                         default=u"Create ${lang_name}",
                                         mapping={"lang_name": lang_name})
                     menu.append(item)
-
                 langs = translated_languages(context)
                 urls = translated_urls(context)
                 for lang in langs:
-                    if lang not in urls:
+                    if lang.value not in urls.by_token:
                         # omit if translation is not permitted to access.
                         continue
                     lang_name = lang.title
@@ -153,14 +156,14 @@ class TranslateMenu(BrowserMenu):
                     }
                 menu.append(item)
 
-        elif LANGUAGE_INDEPENDENT == ILanguage(context).get_language():
+        elif is_neutral_content:
             menu.append({
                 "title": _(u"language_folder",
                        default=u"Return to language folder"),
                 "description": _(
                     u"description_language_folder",
                     default=u"Go to the user's browser preferred language related folder"),
-                "action": portal_url + '/' + lt.getPreferredLanguage(),
+                "action": site_url + '/' + lt.getPreferredLanguage(),
                 "selected": False,
                 "icon": None,
                 "extra": {"id": "_shared_folder",
@@ -169,14 +172,14 @@ class TranslateMenu(BrowserMenu):
                 "submenu": None,
                 })
 
-        if LANGUAGE_INDEPENDENT != ILanguage(context).get_language():
+        if not is_neutral_content:
             menu.append({
                 "title": _(u"universal_link",
                        default=u"Universal Link"),
                 "description": _(
                     u"description_universal_link",
                     default=u"Universal Language content link"),
-                "action": portal_url + "/@@multilingual-universal-link/" + context_id,
+                "action": site_url + "/@@multilingual-universal-link/" + context_id,
                 "selected": False,
                 "icon": None,
                 "extra": {"id": "_universal_link",
@@ -191,7 +194,7 @@ class TranslateMenu(BrowserMenu):
                 "description": _(
                     u"description_shared_folder",
                     default=u"Show the language shared (neutral language) folder"),
-                "action": portal_url + '/' + SHARED_NAME,
+                "action": site_url + '/folder_contents',
                 "selected": False,
                 "icon": None,
                 "extra": {"id": "_shared_folder",

@@ -35,7 +35,7 @@ class ICreateTranslation(interface.Interface):
     )
 
 
-class IUpdateLanguage(form.Schema):
+class IUpdateLanguage(interface.Interface):
 
     language = schema.Choice(
         title=_(u"title_available_languages", default=u"Available languages"),
