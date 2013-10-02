@@ -1,11 +1,9 @@
 from Acquisition import aq_base, aq_chain
 
 from plone.app.multilingual.content.lrf import ILanguageRootFolder
-from plone.uuid.interfaces import IAttributeUUID
-from plone.uuid.interfaces import ATTRIBUTE_NAME
-from plone.uuid.interfaces import IUUID
-from zope.interface import implementer
+from plone.uuid.interfaces import IUUID, IAttributeUUID, ATTRIBUTE_NAME
 from zope.component import adapter
+from zope.interface import implementer
 
 
 @implementer(IUUID)

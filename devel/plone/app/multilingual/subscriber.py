@@ -76,7 +76,8 @@ def remove_ghosts(obj, event):
                 UID=content_id + '-' + language_info)
             for brain in brains:
                 obj.unrestrictedTraverse(brain.getPath()).unindexObject()
-            brains = pc.unrestrictedSearchResults(UID=content_id)
+            brains = pc.unrestrictedSearchResults(
+                UID=content_id)
             for brain in brains:
                 obj.unrestrictedTraverse(brain.getPath()).unindexObject()
 
