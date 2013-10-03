@@ -86,6 +86,8 @@
 
   <!-- Dexterity Language Independent fields -->
 
+
+
     <subscriber
     for="plone.app.multilingual.dx.interfaces.IDexterityTranslatable
          zope.lifecycleevent.interfaces.IObjectModifiedEvent"

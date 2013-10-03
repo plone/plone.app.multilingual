@@ -45,6 +45,7 @@ class LanguageIndependentFieldsManager(object):
         return False
 
     def copy_fields(self, translation):
+
         fti = getUtility(IDexterityFTI, name=self.context.portal_type)
         schemas = []
         schemas.append(fti.lookupSchema())

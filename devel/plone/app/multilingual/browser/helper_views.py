@@ -18,10 +18,12 @@ from plone.registry.interfaces import IRegistry
 
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import ITranslatable
+from plone.app.multilingual.interfaces import ILanguageRootFolder
 from plone.app.multilingual.manager import TranslationManager
 from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
 from .selector import addQuery
 from .selector import NOT_TRANSLATED_YET_TEMPLATE
+from zope.component.hooks import getSite
 
 
 class remove_tg_session(BrowserView):
@@ -33,6 +35,8 @@ class remove_tg_session(BrowserView):
         session = sdm.getSessionData(create=True)
         if 'tg' in session.keys():
             del session['tg']
+        if 'old_lang' in session.keys():
+            del session['old_lang']
 
         purl = getToolByName(self.context, 'portal_url')
         url = self.request.get('redirect', purl())
@@ -66,8 +70,33 @@ class universal_link(BrowserView):
 
     def getDestination(self):
         # Look for the element
+        url = None
+        # We check if it's shared content
+        query = {'TranslationGroup': self.tg}
         ptool = getToolByName(self.context, 'portal_catalog')
-        query = {'TranslationGroup': self.tg, 'Language': 'all'}
+        brains = ptool.searchResults(query)
+        is_shared = False
+        for brain in brains:
+            if '-' in brain.UID:
+                is_shared = True
+                brain_to_use = brain
+                break
+        if is_shared:
+            target_uid = brain_to_use.UID.split('-')[0]
+            if self.lang:
+                target_uid += '-' + self.lang
+            else:
+                # The negotiated language
+                ltool = getToolByName(self.context, 'portal_languages')
+                if len(ltool.getRequestLanguages()) > 0:
+                    language = ltool.getRequestLanguages()[0]
+                    target_uid += '-' + self.lang
+            results = ptool.searchResults(UID=target_uid)
+            if len(results) > 0:
+                url = results[0].getURL()
+            return url
+        # Normal content
+        query = {'TranslationGroup': self.tg}
         if self.lang:
             query = {'TranslationGroup': self.tg, 'Language': self.lang}
         else:
@@ -77,7 +106,6 @@ class universal_link(BrowserView):
                 language = ltool.getRequestLanguages()[0]
                 query = {'TranslationGroup': self.tg, 'Language': language}
         results = ptool.searchResults(query)
-        url = None
         if len(results) > 0:
             url = results[0].getURL()
         return url
@@ -124,8 +152,9 @@ class selector_view(universal_link):
         # As we don't have any content object we are going to look
         # for the best option
 
-        root = getToolByName(self.context, 'portal_url')
-        ltool = getToolByName(self.context, 'portal_languages')
+        site = getSite()
+        root = getToolByName(site, 'portal_url')
+        ltool = getToolByName(site, 'portal_languages')
 
         # We are useing TranslationManager to get the translations of a string tg
         manager = TranslationManager(self.tg)
@@ -147,7 +176,7 @@ class selector_view(universal_link):
         checkPermission = getSecurityManager().checkPermission
         chain = self.getParentChain(context)
         for item in chain:
-            if ISiteRoot.providedBy(item):
+            if ISiteRoot.providedBy(item) and not ILanguageRootFolder.providedBy(item):
                 # We do not care to get a permission error
                 # if the whole of the portal cannot be viewed.
                 # Having a permission issue on the root is fine;

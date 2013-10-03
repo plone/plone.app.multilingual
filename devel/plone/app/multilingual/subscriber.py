@@ -9,6 +9,8 @@ from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMutableTG
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import ITranslatable
+from plone.app.multilingual.interfaces import ILanguageRootFolder
+from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
 from plone.uuid.interfaces import IUUID
 
 from zope.component.hooks import getSite
@@ -26,9 +28,12 @@ from OFS.interfaces import IObjectWillBeRemovedEvent
 def reindex_neutral(obj, event):
     # we need to look for the parent that is already indexed
     if IPloneSiteRoot.providedBy(obj) \
-       or ILanguage(obj).get_language() != LANGUAGE_INDEPENDENT:
+       or (not is_shared(obj) and not is_shared_original(obj)):
         return
     parent = aq_parent(obj)
+    if ILanguageRootFolder.providedBy(parent):
+        # If it's parent is language root folder no need to reindex
+        return
     site = getSite()
     language_tool = getToolByName(site, 'portal_languages')
     language_infos = language_tool.supported_langs
@@ -128,9 +133,13 @@ def createdEvent(obj, event):
         portal = getSite()
 
         if 'tg' in session.keys() and \
+           'old_lang' in session.keys() and \
            not portal.portal_factory.isTemporary(obj):
             IMutableTG(obj).set(session['tg'])
             modified(obj)
             del session['tg']
+            old_obj = ITranslationManager(obj).get_translation(session['old_lang'])
+            ILanguageIndependentFieldsManager(old_obj).copy_fields(obj)
+            del session['old_lang']
     else:
         set_recursive_language(obj, LANGUAGE_INDEPENDENT)

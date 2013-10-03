@@ -25,6 +25,12 @@ class LanguageIndependentModifier(object):
 
     def __call__(self, content, event):
         """Called by the event system."""
+        sdm = content.session_data_manager
+        session = sdm.getSessionData()
+        if 'tg' in session.keys():
+            # In case it's a on the fly translation avoid 
+            return
+
         if IDexterityTranslatable.providedBy(content):
             self.canonical = ITranslationManager(content).query_canonical()
 

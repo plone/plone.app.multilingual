@@ -40,9 +40,10 @@ class LanguageRootFolder(Container):
     def has_key(self, id):
         """Indicates whether the folder has an item by ID.
         """
+
         if CMFOrderedBTreeFolderBase.has_key(self, id):
             return True
-        return id in getSite()
+        return id in getSite() and id not in _languagelist and id not in _combinedlanguagelist
 
     hasObject = has_key
 
@@ -54,6 +55,7 @@ class LanguageRootFolder(Container):
 
     def objectMap(self):
         # Returns a tuple of mappings containing subobject meta-data.
+
         return LazyMap(lambda (k, v):
                        {'id': k, 'meta_type': getattr(v, 'meta_type', None)},
                        self._tree.items(), self._count())
@@ -68,9 +70,9 @@ class LanguageRootFolder(Container):
             # Check if it's on shared folder
             # Search for the content on the shared folder
             portal = getSite()
-            if portal is not None and name in portal:
+            if portal is not None and name in portal and not name.startswith('_'):
                 # XXX Check that is content
-                if name != 'portal_catalog':
+                if name != 'portal_catalog' and (name not in _languagelist and name not in _combinedlanguagelist):
                     new_object = aq_base(getattr(portal, name)).__of__(self)
                     new_object._v_is_shared_content = True
                     return new_object
@@ -91,18 +93,20 @@ class LanguageRootFolder(Container):
         else:
             aliased = getSite()
             if aliased:
-                obj = aliased._getOb(id, default)
-                if obj is default:
-                    # if default is _marker:
-                    #     raise KeyError
-                    return default
-                new_object = aq_base(obj).__of__(self)
-                new_object._v_is_shared_content = True
-                return new_object
+                if (id not in _languagelist and id not in _combinedlanguagelist):
+                    obj = aliased._getOb(id, default)
+                    if obj is default:
+                        # if default is _marker:
+                        #     raise KeyError
+                        return default
+                    new_object = aq_base(obj).__of__(self)
+                    new_object._v_is_shared_content = True
+                    return new_object
 
     def objectIds(self, spec=None, ordered=True):
         aliased = getSite()
         # XXX : need to find better aproach
+
         try:
             if aliased is not None:
                 to_remove = []
@@ -110,10 +114,7 @@ class LanguageRootFolder(Container):
                 aliased_objectIds = list(aliased.objectIds(spec))
                 for id in aliased_objectIds:
                     if id in _languagelist or id in _combinedlanguagelist:
-                        to_remove.append(id)
-
-                for id in to_remove:
-                    aliased_objectIds.remove(id)
+                        aliased_objectIds.remove(id)
             else:
                 aliased_objectIds = []
 
@@ -124,6 +125,7 @@ class LanguageRootFolder(Container):
         return [item for item in own_elements] + aliased_objectIds
 
     def __getitem__(self, key):
+
         aliased = getSite()
         try:
             obj = aliased.__getitem__(key)

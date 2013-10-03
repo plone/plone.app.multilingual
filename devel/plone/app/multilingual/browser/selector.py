@@ -3,6 +3,7 @@ from zope.component import queryAdapter
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import NOTG
 from plone.app.i18n.locales.browser.selector import LanguageSelector
+from zope.component.hooks import getSite
 
 
 def addQuery(request, url, exclude=tuple(), **extras):
@@ -84,9 +85,10 @@ class LanguageSelectorViewlet(LanguageSelector):
             post_path = getPostPath(self.context, self.request)
             if post_path:
                 query_extras['post_path'] = post_path
+            site = getSite()
             data['url'] = addQuery(
                 self.request,
-                self.portal_url().rstrip("/") + \
+                site.absolute_url().rstrip("/") + \
                     "/@@multilingual-selector/%s/%s" % (
                         translation_group,
                         lang_info['code']
