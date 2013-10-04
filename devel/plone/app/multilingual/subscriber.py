@@ -16,6 +16,7 @@ from plone.uuid.interfaces import IUUID
 from zope.component.hooks import getSite
 from zope.lifecycleevent import modified
 from zope.lifecycleevent.interfaces import IObjectRemovedEvent
+from plone.app.multilingual.browser.utils import is_shared
 from plone.app.multilingual.browser.utils import is_shared_original
 
 from OFS.interfaces import IObjectWillBeAddedEvent
@@ -138,7 +139,8 @@ def createdEvent(obj, event):
             IMutableTG(obj).set(session['tg'])
             modified(obj)
             del session['tg']
-            old_obj = ITranslationManager(obj).get_translation(session['old_lang'])
+            old_obj = ITranslationManager(obj)\
+                .get_translation(session['old_lang'])
             ILanguageIndependentFieldsManager(old_obj).copy_fields(obj)
             del session['old_lang']
     else:
