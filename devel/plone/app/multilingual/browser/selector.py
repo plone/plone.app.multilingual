@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
 from ZTUtils import make_query
-from zope.component import queryAdapter
+
+from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import NOTG
-from plone.app.i18n.locales.browser.selector import LanguageSelector
+from zope.component import queryAdapter
 from zope.component.hooks import getSite
 
 
@@ -44,8 +46,8 @@ def getPostPath(context, request):
     # optimization we assume it is within the last three segments.
     path = context.getPhysicalPath()
     path_info = request.get('PATH_INFO', '')
-    match = [ p for p in path[-3:] if p ]
-    current_path = [ pi for pi in path_info.split('/') if pi ]
+    match = [p for p in path[-3:] if p]
+    current_path = [pi for pi in path_info.split('/') if pi]
     append_path = []
     stop = False
     while current_path and not stop:
@@ -86,14 +88,12 @@ class LanguageSelectorViewlet(LanguageSelector):
             if post_path:
                 query_extras['post_path'] = post_path
             site = getSite()
-            data['url'] = addQuery(
-                self.request,
-                site.absolute_url().rstrip("/") + \
-                    "/@@multilingual-selector/%s/%s" % (
-                        translation_group,
-                        lang_info['code']
-                    ),
-                **query_extras
-            )
+            data['url'] = addQuery(self.request,
+                                   site.absolute_url().rstrip("/") +
+                                   "/@@multilingual-selector/%s/%s" % (
+                                       translation_group,
+                                       lang_info['code']
+                                   ),
+                                   **query_extras)
             results.append(data)
         return results
