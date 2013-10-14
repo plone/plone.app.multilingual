@@ -12,6 +12,13 @@
         permission="plone.app.multilingual.ManageTranslations"
         />
 
+    <browser:page
+        name="remove_translations"
+        for="plone.app.multilingual.interfaces.ITranslatable"
+        class=".add.RemoveTranslationsForm"
+        permission="plone.app.multilingual.ManageTranslations"
+        />
+
    <!-- Menu for translations on content -->
     <browser:menu
         id="plone_contentmenu_multilingual"
