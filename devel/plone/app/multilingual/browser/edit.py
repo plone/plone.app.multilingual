@@ -1,20 +1,16 @@
+# -*- coding: utf-8 -*-
+from Acquisition import aq_inner
+from Products.CMFCore.utils import getToolByName
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from plone.dexterity.browser.edit import DefaultEditForm
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
-
-from plone.z3cform import layout
-from Products.CMFCore.utils import getToolByName
-from Acquisition import aq_inner
-
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
 from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
-from plone.app.i18n.locales.browser.selector import LanguageSelector
-
-
-from zope.component import getUtility
-from plone.registry.interfaces import IRegistry
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.app.i18n.locales.browser.selector import LanguageSelector
+from plone.registry.interfaces import IRegistry
+from plone.z3cform import layout
+from zope.component import getUtility
 
 
 class MultilingualEditForm(DefaultEditForm):
@@ -84,9 +80,9 @@ class MultilingualEditForm(DefaultEditForm):
             if '.' in field:
                 schemaname, fieldname = field.split('.')
                 for schema in self.additionalSchemata:
-                    if schemaname == schema.__identifier__ and fieldname in schema:
-                        if ILanguageIndependentField.providedBy(\
-                            schema[fieldname]):
+                    if schemaname == schema.__identifier__ \
+                       and fieldname in schema:
+                        if ILanguageIndependentField.providedBy(schema[fieldname]):  # noqa
                             self.widgets[field].addClass('languageindependent')
         self.babel_content = super(MultilingualEditForm, self).render()
         return self.babel()
