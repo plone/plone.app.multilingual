@@ -1,29 +1,27 @@
-from plone.i18n.locales.interfaces import IContentLanguageAvailability
-from zope.interface import implements
-from zope.component import getUtility
-from zope.publisher.interfaces import IPublishTraverse, NotFound
-
+# -*- coding: utf-8 -*-
 from Acquisition import aq_chain
-from Acquisition import aq_inner
 from AccessControl.SecurityManagement import getSecurityManager
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.interfaces import ISiteRoot
-
 from Products.CMFPlone.interfaces.factory import IFactoryTool
+
 from borg.localrole.interfaces import IFactoryTempFolder
 from plone.app.layout.navigation.interfaces import INavigationRoot
-from plone.registry.interfaces import IRegistry
-
+from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
+from plone.app.multilingual.browser.selector import addQuery
+from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ILanguageRootFolder
 from plone.app.multilingual.manager import TranslationManager
-from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
-from .selector import addQuery
-from .selector import NOT_TRANSLATED_YET_TEMPLATE
+from plone.i18n.locales.interfaces import IContentLanguageAvailability
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility
 from zope.component.hooks import getSite
+from zope.interface import implements
+from zope.publisher.interfaces import IPublishTraverse, NotFound
 
 
 class remove_tg_session(BrowserView):
@@ -42,7 +40,6 @@ class remove_tg_session(BrowserView):
         url = self.request.get('redirect', purl())
 
         self.request.RESPONSE.redirect(url)
-
 
 
 class universal_link(BrowserView):
@@ -156,7 +153,8 @@ class selector_view(universal_link):
         root = getToolByName(site, 'portal_url')
         ltool = getToolByName(site, 'portal_languages')
 
-        # We are useing TranslationManager to get the translations of a string tg
+        # We are useing TranslationManager to get the translations of a
+        # string tg
         manager = TranslationManager(self.tg)
         context = None
         languages = manager.get_translations()
@@ -176,7 +174,8 @@ class selector_view(universal_link):
         checkPermission = getSecurityManager().checkPermission
         chain = self.getParentChain(context)
         for item in chain:
-            if ISiteRoot.providedBy(item) and not ILanguageRootFolder.providedBy(item):
+            if ISiteRoot.providedBy(item) \
+               and not ILanguageRootFolder.providedBy(item):
                 # We do not care to get a permission error
                 # if the whole of the portal cannot be viewed.
                 # Having a permission issue on the root is fine;
@@ -191,7 +190,8 @@ class selector_view(universal_link):
             except TypeError:
                 if not ITranslatable.providedBy(item):
                     # In case there it's not translatable go to parent
-                    # This solves the problem when a parent is not ITranslatable
+                    # This solves the problem when a parent is not
+                    # ITranslatable
                     continue
                 else:
                     raise
