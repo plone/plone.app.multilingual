@@ -15,8 +15,27 @@
     <browser:page
         name="remove_translations"
         for="plone.app.multilingual.interfaces.ITranslatable"
-        class=".add.RemoveTranslationsForm"
+        class=".remove.RemoveTranslationsForm"
         permission="plone.app.multilingual.ManageTranslations"
+        />
+
+    <browser:page
+        for="plone.app.multilingual.interfaces.ITranslatable"
+        name="update_language"
+        class=".update.update_language_form"
+        permission="cmf.ModifyPortalContent"
+        />
+
+    <browser:page
+        for="plone.app.multilingual.interfaces.ITranslatable"
+        name="create_translation"
+        class=".translate.TranslationForm"
+        permission="plone.app.multilingual.ManageTranslations"
+        />
+
+    <adapter
+        name="addtranslation"
+        factory=".add.AddViewTraverser"
         />
 
    <!-- Menu for translations on content -->
@@ -231,19 +250,6 @@
   </configure>
 
 
-  <browser:page
-    for="plone.app.multilingual.interfaces.ITranslatable"
-    name="create_translation"
-    class=".translate.TranslationForm"
-    permission="plone.app.multilingual.ManageTranslations"
-    />
-
-
-  <adapter
-      name="addtranslation"
-      factory=".add.AddViewTraverser"
-      />
-
   <!-- Add Form Dexterity -->
 
   <configure zcml:condition="installed plone.dexterity">
@@ -263,17 +269,6 @@
             />
     </class>
   </configure>
-
-
-  <!-- Update language -->
-
-   <browser:page
-       for="plone.app.multilingual.interfaces.ITranslatable"
-       name="update_language"
-       class=".update_language_form.update_language_form"
-       permission="cmf.ModifyPortalContent"
-       />
-
 
   <!-- Edit form -->
 

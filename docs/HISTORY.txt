@@ -21,7 +21,16 @@ Changelog
 - Ensure ``plone.app.controlpanel.Language`` permission is present.
   [saily]
 
-- Merge add and add_translation_form into one file, drop grok usage.
+- Merge ``add.py`` and ``add_translation_form.py`` into one file
+  [saily]
+
+- Rename ``update_translation_form.py`` to ``update.py``
+  [saily]
+
+- Rename ``remove_translation_form.py`` to ``remove.py``
+  [saily]
+
+- Remove ``five.grok`` in browser directory.
   [saily]
 
 

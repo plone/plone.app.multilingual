@@ -1,24 +1,22 @@
+# -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
-from five import grok
+
 from plone.i18n.locales.interfaces import ILanguageAvailability
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from zope.component import getGlobalSiteManager
 from zope.component.hooks import getSite
-from zope.i18nmessageid import MessageFactory
-from zope.interface import implements
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 from plone.formwidget.contenttree import ObjPathSourceBinder
 from plone.app.multilingual.browser.utils import is_shared
 
+from zope.interface import implementer
+from zope.interface import provider
 
-_ = MessageFactory('plone.app.multilingual')
 
-
-@grok.provider(IContextSourceBinder)
+@provider(IContextSourceBinder)
 def addTranslation(context):
     path = '/'.join(getSite().getPhysicalPath())
     query = {"path": {'query': path, 'depth': 2},
@@ -28,15 +26,13 @@ def addTranslation(context):
     return ObjPathSourceBinder(navigation_tree_query=query)(context)
 
 
-@grok.provider(IContextSourceBinder)
+@provider(IContextSourceBinder)
 def untranslated_languages(context):
     language_tool = getToolByName(context, 'portal_languages')
     language_infos = language_tool.getAvailableLanguages()
-    default_language = language_tool.getDefaultLanguage()
     available_portal_languages = language_tool.supported_langs
     manager = ITranslationManager(context)
     translated_languages = manager.get_translated_languages()
-    content_language = ILanguage(context).get_language()
     if is_shared(context):
         translated_languages = []
     languages = []
@@ -44,12 +40,12 @@ def untranslated_languages(context):
         if lang not in translated_languages:
             native = language_infos[lang].get('native', None)
             name = language_infos[lang].get('name', lang)
-            languages.append(SimpleVocabulary.createTerm(lang, lang, \
-               native or name))
+            languages.append(
+                SimpleVocabulary.createTerm(lang, lang, native or name))
     return SimpleVocabulary(languages)
 
 
-@grok.provider(IContextSourceBinder)
+@provider(IContextSourceBinder)
 def translated_languages(context):
     language_tool = getToolByName(context, 'portal_languages')
     language_infos = language_tool.getAvailableLanguages()
@@ -66,12 +62,12 @@ def translated_languages(context):
     for lang in translated_languages:
         native = language_infos[lang].get('native', None)
         name = language_infos[lang].get('name', lang)
-        languages.append(SimpleVocabulary.createTerm(lang, lang, \
-            native or name))
+        languages.append(
+            SimpleVocabulary.createTerm(lang, lang, native or name))
     return SimpleVocabulary(languages)
 
 
-@grok.provider(IContextSourceBinder)
+@provider(IContextSourceBinder)
 def translated_urls(context):
     manager = ITranslationManager(context)
     translated_languages = manager.get_translated_languages()
@@ -82,13 +78,13 @@ def translated_urls(context):
     for lang in translated_languages:
         translation = manager.get_restricted_translation(lang)
         if translation is not None:
-            term = SimpleVocabulary.createTerm(lang, lang,
-                                               translation.absolute_url())
-            languages.append(term)
+            languages.append(
+                SimpleVocabulary.createTerm(
+                    lang, lang, translation.absolute_url()))
     return SimpleVocabulary(languages)
 
 
-@grok.provider(IContextSourceBinder)
+@provider(IContextSourceBinder)
 def deletable_languages(context):
     manager = ITranslationManager(context)
     translated_languages = manager.get_translated_languages()
@@ -100,8 +96,8 @@ def deletable_languages(context):
         if lang not in content_language:
             native = language_infos[lang].get('native', None)
             name = language_infos[lang].get('name', lang)
-            languages.append(SimpleVocabulary.createTerm(lang, lang, \
-                native or name))
+            languages.append(
+                SimpleVocabulary.createTerm(lang, lang, native or name))
     return SimpleVocabulary(languages)
 
 
@@ -109,10 +105,10 @@ def sort_key(language):
     return language[1]
 
 
+@implementer(IVocabularyFactory)
 class AllContentLanguageVocabulary(object):
-    """Vocabulary factory for all content languages in the portal.
+    """ Vocabulary factory for all content languages in the portal.
     """
-    implements(IVocabularyFactory)
 
     def __call__(self, context):
         context = getattr(context, 'context', context)
@@ -124,7 +120,10 @@ class AllContentLanguageVocabulary(object):
         else:
             languages = util.getLanguages()
 
-        items = [(l, languages[l].get('native', languages[l].get('name', l))) for l in languages]
+        items = [
+            (l, languages[l].get('native', languages[l].get('name', l)))
+            for l in languages
+        ]
         items.sort(key=sort_key)
         items = [SimpleTerm(i[0], i[0], i[1]) for i in items]
         return SimpleVocabulary(items)
@@ -132,10 +131,10 @@ class AllContentLanguageVocabulary(object):
 AllContentLanguageVocabularyFactory = AllContentLanguageVocabulary()
 
 
+@implementer(IVocabularyFactory)
 class AllAvailableLanguageVocabulary(object):
-    """Vocabulary factory for all enabled languages in the portal.
+    """ Vocabulary factory for all enabled languages in the portal.
     """
-    implements(IVocabularyFactory)
 
     def __call__(self, context):
         context = getattr(context, 'context', context)
@@ -148,8 +147,11 @@ class AllAvailableLanguageVocabulary(object):
             languages = util.getLanguages()
 
         supported_languages = ltool.supported_langs
-        items = [(l, languages[l].get('native', languages[l].get('name', l))) for l in languages
-                 if l in supported_languages]
+        items = [
+            (l, languages[l].get('native', languages[l].get('name', l)))
+            for l in languages
+            if l in supported_languages
+        ]
 
         items.sort(key=sort_key)
         items = [SimpleTerm(i[0], i[0], i[1]) for i in items]
