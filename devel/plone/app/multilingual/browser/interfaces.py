@@ -1,16 +1,15 @@
-from zope.browsermenu.interfaces import IBrowserMenu
-from zope.browsermenu.interfaces import IBrowserSubMenuItem
+# -*- coding: utf-8 -*-
+from plone.app.multilingual import _
+from plone.app.multilingual.browser.vocabularies import addTranslation
+from plone.app.multilingual.browser.vocabularies import deletable_languages
+from plone.app.multilingual.browser.vocabularies import untranslated_languages
+from plone.directives import form
+from plone.formwidget.contenttree import ContentTreeFieldWidget
+from z3c.relationfield.schema import RelationChoice
 from zope import interface
 from zope import schema
-from plone.app.multilingual import _
-from plone.app.multilingual.browser.vocabularies import (
-    untranslated_languages,
-    deletable_languages,
-    addTranslation
-)
-from plone.formwidget.contenttree import ObjPathSourceBinder, ContentTreeFieldWidget
-from plone.directives import form
-from z3c.relationfield.schema import RelationChoice
+from zope.browsermenu.interfaces import IBrowserMenu
+from zope.browsermenu.interfaces import IBrowserSubMenuItem
 
 
 class IMultilingualLayer(interface.Interface):
@@ -39,8 +38,8 @@ class IUpdateLanguage(interface.Interface):
 
     language = schema.Choice(
         title=_(u"title_available_languages", default=u"Available languages"),
-        description=_(u"description_update_language",
-            default=u"Untranslated languages from the current content"),
+        description=_(u"description_update_language", default=
+                      u"Untranslated languages from the current content"),
         source=untranslated_languages,
         required=True,
     )
