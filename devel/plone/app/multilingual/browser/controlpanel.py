@@ -1,45 +1,39 @@
 # -*- coding: utf-8 -*-
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone import PloneMessageFactory as _Plone
+from Products.Five import BrowserView
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from Products.statusmessages.interfaces import IStatusMessage
+
+from plone.app.controlpanel.language import LanguageControlPanel as BasePanel
+from plone.app.controlpanel.language import LanguageControlPanelAdapter
+from plone.app.form.validators import null_validator
+from plone.app.multilingual import isLPinstalled
+from plone.app.multilingual.browser.setup import SetupMultilingualSite
+from plone.app.multilingual.browser.migrator import portal_types_blacklist
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.app.multilingual.interfaces import ILanguage
+from plone.app.uuid.utils import uuidToObject
+from plone.fieldsets.fieldsets import FormFieldsets
+from plone.registry.interfaces import IRegistry
+from plone.registry import field as registry_field, Record
+from plone.protect import CheckAuthenticator
+from zc.relation.interfaces import ICatalog as IRelationCatalog
+from zope.component import getMultiAdapter
+from zope.component import getUtility
+from zope.component.interfaces import ComponentLookupError
+from zope.formlib import form
+from zope.i18nmessageid import MessageFactory
 from zope.interface import Interface
 from zope.interface import implementsOnly
 from zope.schema import Choice
 from zope.schema import Bool, List
-from zc.relation.interfaces import ICatalog as IRelationCatalog
-from Products.statusmessages.interfaces import IStatusMessage
-from zope.component import getMultiAdapter
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.Five import BrowserView
-
-from plone.app.form.validators import null_validator
-
-from plone.fieldsets.fieldsets import FormFieldsets
-
-from zope.formlib import form
-from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
-
-from plone.app.controlpanel.language import LanguageControlPanel as BasePanel
-from plone.app.controlpanel.language import LanguageControlPanelAdapter
-from plone.app.multilingual.browser.setup import SetupMultilingualSite
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
-from plone.registry import field as registry_field, Record
-from plone.protect import CheckAuthenticator
-
-from zope.component import getUtility
-from zope.component.interfaces import ComponentLookupError
-from plone.registry.interfaces import IRegistry
-from Products.CMFCore.utils import getToolByName
-
 from zope.schema.interfaces import IVocabularyFactory
-
-from plone.app.uuid.utils import uuidToObject
+from zope.schema.vocabulary import SimpleTerm
+from zope.schema.vocabulary import SimpleVocabulary
 
 import json
 
-from plone.app.multilingual import isLPinstalled
-from plone.app.multilingual.browser.migrator import portal_types_blacklist
-from plone.app.multilingual.interfaces import ILanguage
-
-from Products.CMFPlone import PloneMessageFactory as _Plone
-from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('plone.app.multilingual')
 
 
