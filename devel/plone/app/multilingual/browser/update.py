@@ -1,29 +1,23 @@
-import zope.schema
-import zope.interface
-from zope.i18nmessageid import MessageFactory
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile as FiveViewPageTemplateFile
-
-from plone.app.multilingual.browser.interfaces import IUpdateLanguage
+# -*- coding: utf-8 -*-
 from plone.app.multilingual import _
+from plone.app.multilingual.browser.interfaces import IUpdateLanguage
 from plone.app.multilingual.browser.utils import multilingualMoveObject
+from plone.z3cform.layout import wrap_form
+from z3c.form import button
+from z3c.form import field
+from z3c.form import form
 
-import z3c.form
 
-import plone.app.z3cform
-import plone.z3cform.templates
-
-
-class UpdateLanguageForm(z3c.form.form.Form):
+class UpdateLanguageForm(form.Form):
     """ A form to change language """
 
-    fields = z3c.form.field.Fields(IUpdateLanguage)
+    fields = field.Fields(IUpdateLanguage)
 
     ignoreContext = True
 
     output = None
 
-    @z3c.form.button.buttonAndHandler(_(u"update_language",
-                               default=u"Update Language"))
+    @button.buttonAndHandler(_(u"update_language", default=u"Update Language"))
     def handle_update(self, action):
         data, errors = self.extractData()
         new_object = self.context
@@ -33,11 +27,7 @@ class UpdateLanguageForm(z3c.form.form.Form):
             # We need to move the object to its place!!
             new_object = multilingualMoveObject(self.context, language)
 
-        return self.request.response.redirect(new_object.absolute_url() + '?set_language=' + language)
+        return self.request.response.redirect(
+            new_object.absolute_url() + '?set_language=' + language)
 
-
-# IF you want to customize form frame you need to make a custom FormWrapper view around it
-# (default plone.z3cform.layout.FormWrapper is supplied automatically with form.py templates)
-# update_language_form = plone.z3cform.layout.wrap_form(UpdateLanguageForm, index=FiveViewPageTemplateFile("templates/reporter.pt"))
-update_language_form = plone.z3cform.layout.wrap_form(UpdateLanguageForm)
-
+update_language_form = wrap_form(UpdateLanguageForm)
