@@ -4,7 +4,7 @@ if isDexterityInstalled:
     from plone.dexterity.browser.add import DefaultAddForm, DefaultAddView
     from plone.multilingualbehavior.interfaces import ILanguageIndependentField
 else:
-    DefaultEditForm = object
+    DefaultAddForm = DefaultAddView = object
 
 from plone.z3cform import layout
 from Products.CMFCore.utils import getToolByName
@@ -162,20 +162,20 @@ class MultilingualAddForm(DefaultAddForm):
 
 class DefaultMultilingualAddView(DefaultAddView):
     """This is the default add view as looked up by the ++add++ traversal
-    namespace adapter in CMF. It is an unnamed adapter on 
+    namespace adapter in CMF. It is an unnamed adapter on
     (context, request, fti).
-    
+
     Note that this is registered in ZCML as a simple <adapter />, but we
     also use the <class /> directive to set up security.
     """
-    
+
     form = MultilingualAddForm
-    
+
     def __init__(self, context, request, ti):
         super(DefaultAddView, self).__init__(context, request)
         self.ti = ti
 
         # Set portal_type name on newly created form instance
-        if self.form_instance is not None and not getattr(self.form_instance, 'portal_type', None): 
+        if self.form_instance is not None and not getattr(self.form_instance, 'portal_type', None):
             self.form_instance.portal_type = ti.getId()
 
