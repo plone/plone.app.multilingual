@@ -1,24 +1,18 @@
-import urllib
-
+# -*- coding: utf-8 -*-
 from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
-from five import grok
-from plone.directives import form
-from plone.app.multilingual.interfaces import ILanguage
-from plone.app.multilingual.interfaces import ITranslatable
-from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
-from plone.registry.interfaces import IRegistry
-from z3c.form import button
-from zope.component import getUtility
-from urllib import quote_plus
-
-import json
 
 from plone.app.multilingual import _
-from plone.app.multilingual.browser.interfaces import ICreateTranslation
+from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.app.multilingual.interfaces import ITranslationManager
+from plone.registry.interfaces import IRegistry
+from urllib import quote_plus
+from zope.component import getUtility
+
+import json
+import urllib
 
 
 def google_translate(question, key, lang_target, lang_source):
@@ -39,7 +33,8 @@ def google_translate(question, key, lang_target, lang_source):
         params = urllib.urlencode(data)
 
         retorn = urllib.urlopen(url + '?' + params)
-        translated += json.loads(retorn.read())['data']['translations'][0]['translatedText']
+        translated += json.loads(
+            retorn.read())['data']['translations'][0]['translatedText']
 
     data = {'key': key,
             'target': lang_target,
@@ -48,7 +43,8 @@ def google_translate(question, key, lang_target, lang_source):
     params = urllib.urlencode(data)
 
     retorn = urllib.urlopen(url + '?' + params)
-    translated += json.loads(retorn.read())['data']['translations'][0]['translatedText']
+    translated += json.loads(
+        retorn.read())['data']['translations'][0]['translatedText']
     return json.dumps({'data': translated})
 
 
@@ -57,7 +53,7 @@ class gtranslation_service_dexterity(BrowserView):
     def __call__(self):
         if (self.request.method != 'POST' and
             not ('field' in self.request.form.keys() and
-                'lang_source' in self.request.form.keys())):
+                 'lang_source' in self.request.form.keys())):
             return _("Need a field")
         else:
             manager = ITranslationManager(self.context)
@@ -73,8 +69,10 @@ class gtranslation_service_dexterity(BrowserView):
                     question = question.raw
             else:
                 return _("Invalid field")
-            return google_translate(question, settings.google_translation_key, lang_target, lang_source)
-
+            return google_translate(question,
+                                    settings.google_translation_key,
+                                    lang_target,
+                                    lang_source)
 
 
 class TranslationForm(BrowserView):
@@ -86,14 +84,15 @@ class TranslationForm(BrowserView):
             context = aq_inner(self.context)
             translation_manager = ITranslationManager(context)
             # if ILanguage(context).get_language() == LANGUAGE_INDEPENDENT:
-            #     # XXX : Why we need this ? the subscriber from pm should maintain it
+            #     # XXX : Why we need this ? the subscriber from pm should
+            #             maintain it
             #     language_tool = getToolByName(context, 'portal_languages')
             #     default_language = language_tool.getDefaultLanguage()
             #     ILanguage(context).set_language(default_language)
             #     translation_manager.update()
             #     context.reindexObject()
 
-            new_parent = translation_manager.add_translation_delegated(language)
+            new_parent = translation_manager.add_translation_delegated(language)  # noqa
 
             registry = getUtility(IRegistry)
             settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
@@ -105,8 +104,10 @@ class TranslationForm(BrowserView):
             baseUrl = new_parent.absolute_url()
             # We set the language and redirect to babel_view or not
             if settings.redirect_babel_view:
-                # Call the ++addtranslation++ adapter to show the babel add form
-                url = '%s/++addtranslation++%s' % (baseUrl, self.context.portal_type)
+                # Call the ++addtranslation++ adapter to show the babel
+                # add form
+                url = '%s/++addtranslation++%s' % (
+                    baseUrl, self.context.portal_type)
                 return self.request.response.redirect(url)
             else:
                 # We look for the creation url for this content type
@@ -114,9 +115,9 @@ class TranslationForm(BrowserView):
                 # Get the factory
                 types_tool = getToolByName(self.context, 'portal_types')
 
-                # Note: we don't check 'allowed' or 'available' here, because these are
-                # slow. We assume the 'allowedTypes' list has already performed the
-                # necessary calculations
+                # Note: we don't check 'allowed' or 'available' here,
+                # because these are slow. We assume the 'allowedTypes'
+                # list has already performed the necessary calculations
                 actions = types_tool.listActionInfos(
                     object=new_parent,
                     check_permissions=False,
@@ -131,13 +132,9 @@ class TranslationForm(BrowserView):
                 addAction = addActionsById.get(typeId, None)
 
                 if addAction is not None:
-                    url = addAction['url'] 
+                    url = addAction['url']
 
                 if not url:
-                    url = '%s/createObject?type_name=%s' % (baseUrl, quote_plus(typeId))
+                    url = '%s/createObject?type_name=%s' % (
+                        baseUrl, quote_plus(typeId))
                 return self.request.response.redirect(url)
-
-                # url = new_parent.absolute_url() + '/++addtranslation++'+self.context.portal_type+'++'+translation_manager.tg
-
-
-
