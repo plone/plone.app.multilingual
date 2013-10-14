@@ -21,6 +21,9 @@ Changelog
 - Ensure ``plone.app.controlpanel.Language`` permission is present.
   [saily]
 
+- Merge add and add_translation_form into one file, drop grok usage.
+  [saily]
+
 
 1.2 - 2013-09-24
 ----------------

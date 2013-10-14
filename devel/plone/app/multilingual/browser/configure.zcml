@@ -5,6 +5,13 @@
     xmlns:zcml="http://namespaces.zope.org/zcml"
     xmlns:z3c="http://namespaces.zope.org/z3c">
 
+    <browser:page
+        name="add_translations"
+        for="plone.app.multilingual.interfaces.ITranslatable"
+        class=".add.AddTranslationsForm"
+        permission="plone.app.multilingual.ManageTranslations"
+        />
+
    <!-- Menu for translations on content -->
     <browser:menu
         id="plone_contentmenu_multilingual"
@@ -260,7 +267,7 @@
        permission="cmf.ModifyPortalContent"
        />
 
- 
+
   <!-- Edit form -->
 
   <configure zcml:condition="installed plone.dexterity">

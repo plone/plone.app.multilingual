@@ -1,33 +1,26 @@
-from plone.dexterity.browser.add import DefaultAddForm, DefaultAddView
-from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
-
-from plone.z3cform import layout
+# -*- coding: utf-8 -*-
+from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
-from Acquisition import aq_inner
-
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
-from plone.app.i18n.locales.browser.selector import LanguageSelector
-
-
-from zope.component import getUtility
-from plone.registry.interfaces import IRegistry
+from plone.app.multilingual import _
+from plone.app.multilingual.browser.interfaces import IAddTranslation
+from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
+from plone.app.multilingual.interfaces import ILanguage
+from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
-
-
+from plone.dexterity.browser.add import DefaultAddForm, DefaultAddView
+from plone.dexterity.interfaces import IDexterityFTI
+from plone.directives import form
+from plone.registry.interfaces import IRegistry
+from z3c.form import button
+from zope.component import getUtility
 from zope.component import adapts
 from zope.component import queryMultiAdapter
 from zope.interface import implements
 from zope.interface import Interface
 from zope.traversing.interfaces import ITraversable
 from zope.traversing.interfaces import TraversalError
-from plone.dexterity.interfaces import IDexterityFTI
-
-from Products.CMFCore.interfaces import IFolderish
-from Products.CMFCore.utils import getToolByName
-
-from Products.Five import BrowserView
 
 
 class AddViewTraverser(object):
@@ -65,9 +58,6 @@ class AddViewTraverser(object):
         raise TraversalError(self.context, name)
 
 
-
-# Dexteity form
-
 class MultilingualAddForm(DefaultAddForm):
 
     babel = ViewPageTemplateFile("templates/dexterity_edit.pt")
@@ -97,9 +87,9 @@ class MultilingualAddForm(DefaultAddForm):
             if '.' in field:
                 schemaname, fieldname = field.split('.')
                 for schema in self.additionalSchemata:
-                    if schemaname == schema.__identifier__ and fieldname in schema:
-                        if ILanguageIndependentField.providedBy(\
-                            schema[fieldname]):
+                    if schemaname == schema.__identifier__ \
+                       and fieldname in schema:
+                        if ILanguageIndependentField.providedBy(schema[fieldname]):  # noqa
                             self.widgets[field].addClass('languageindependent')
         self.babel_content = super(MultilingualAddForm, self).render()
         return self.babel()
@@ -113,20 +103,46 @@ class MultilingualAddForm(DefaultAddForm):
 
 class DefaultMultilingualAddView(DefaultAddView):
     """This is the default add view as looked up by the ++add++ traversal
-    namespace adapter in CMF. It is an unnamed adapter on 
+    namespace adapter in CMF. It is an unnamed adapter on
     (context, request, fti).
-    
+
     Note that this is registered in ZCML as a simple <adapter />, but we
     also use the <class /> directive to set up security.
     """
-    
+
     form = MultilingualAddForm
-    
+
     def __init__(self, context, request, ti):
         super(DefaultAddView, self).__init__(context, request)
         self.ti = ti
 
         # Set portal_type name on newly created form instance
-        if self.form_instance is not None and not getattr(self.form_instance, 'portal_type', None): 
+        if self.form_instance is not None \
+           and not getattr(self.form_instance, 'portal_type', None):
             self.form_instance.portal_type = ti.getId()
 
+
+class AddTranslationsForm(form.SchemaForm):
+
+    schema = form.IFormFieldProvider(IAddTranslation)
+    ignoreContext = True
+    label = _(u"label_add_translations", default=u"Add translations")
+    description = _(u"long_description_add_translations", default=
+                    u"This form allows you to add currently existing "
+                    u"objects to be the translations of the current "
+                    u"object. You have to manually select both the "
+                    u"language and the object.")
+
+    @button.buttonAndHandler(_(u"add_translations",
+                               default=u"Add translations"))
+    def handle_add(self, action):
+        data, errors = self.extractData()
+        if not errors:
+            content = data['content']
+            language = data['language']
+            ITranslationManager(self.context)\
+                .register_translation(language, content)
+            ILanguage(content).set_language(language)
+
+        return self.request.response.redirect(
+            self.context.absolute_url() + '/add_translations')
