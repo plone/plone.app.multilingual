@@ -14,8 +14,8 @@
         title="Multilingual Support"
         description="Make this content type multilingual aware"
         provides=".interfaces.IDexterityTranslatable"
-      for="plone.dexterity.interfaces.IDexterityContent"
-    />
+        for="plone.dexterity.interfaces.IDexterityContent"
+        />
 
     <adapter
         for="plone.app.multilingual.dx.interfaces.IDexterityTranslatable"
@@ -36,15 +36,13 @@
     <!-- Integration for language-independent values in z3c.form -->
 
     <adapter
-      for="*
-           *
-           z3c.form.interfaces.IAddForm
-           plone.app.multilingual.dx.interfaces.ILanguageIndependentField
-           z3c.form.interfaces.IWidget"
-      factory=".form.AddingLanguageIndependentValue"
-      name="default"
-      />
-
-
+        for="*
+             *
+             z3c.form.interfaces.IAddForm
+             plone.app.multilingual.dx.interfaces.ILanguageIndependentField
+             z3c.form.interfaces.IWidget"
+        factory=".form.AddingLanguageIndependentValue"
+        name="default"
+        />
 
 </configure>
