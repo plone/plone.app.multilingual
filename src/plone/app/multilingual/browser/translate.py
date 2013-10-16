@@ -121,6 +121,7 @@ class TranslationForm(BrowserView):
             sdm = self.context.session_data_manager
             session = sdm.getSessionData(create=True)
             session.set("tg", translation_manager.tg)
+            session.set("old_lang", ILanguage(self.context).get_language())
 
             baseUrl = new_parent.absolute_url()
             # We set the language and redirect to babel_view or not
