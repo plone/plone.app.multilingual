@@ -33,7 +33,6 @@ Changelog
   users only.  [saily]
 
 - Add an upgrade step to reimport css_registry
->>>>>>> 6b549354da3186f94eec9f0b597a78db3ed8ac0d
   [saily]
 
 
