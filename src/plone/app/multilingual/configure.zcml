@@ -15,7 +15,7 @@
     <includeDependencies package="." />
 
     <include file="permissions.zcml" />
-    <include file="upgrades.zcml" />
+    <include package=".upgrades" />
 
     <include package="plone.app.controlpanel" />
     <include package="Products.CMFCore" file="permissions.zcml" />
