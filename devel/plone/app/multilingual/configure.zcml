@@ -34,6 +34,15 @@
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     />
 
+    <genericsetup:registerProfile
+        name="uninstall"
+        title="Uninstall plone.app.multilingual"
+        description="Uninstall to enable multilingual content support on the site"
+        directory="profiles/uninstall"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    />
+
   <!-- ITranslationGroup and indexer -->
 
     <adapter factory=".itg.attributeTG" />
