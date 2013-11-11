@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<import-steps>
+ <import-step id="plone.app.multilingual--uninstall-behaviors" version="20131111-01"
+              handler="plone.app.multilingual.setuphandlers.removeBehaviors"
+              title="plone.app.multilingual remove behaviors">
+    plone.app.multilingual remove-behaviors installation step.
+ </import-step>
+</import-steps>
