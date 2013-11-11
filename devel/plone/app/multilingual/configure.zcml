@@ -127,5 +127,9 @@
       handler=".subscriber.remove_ghosts"
       />
 
+  <utility
+      factory=".setuphandlers.HiddenProfiles"
+      name="plone.app.multilingual"
+      provides="Products.CMFPlone.interfaces.INonInstallable" />
 
 </configure>
