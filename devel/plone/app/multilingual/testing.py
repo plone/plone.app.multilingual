@@ -79,7 +79,8 @@ class TwoLanguagesLayer(z2.Layer):
                 portal['en'], 'Document', id='atdoc', title='EN doc')
             atdoc.setLanguage('en')
             atdoc_ca = makeTranslation(atdoc, 'ca')
-            atdoc_ca.edit(title="CA doc", language='ca')
+            atdoc_ca.setTitle(u"CA doc")
+            atdoc_ca.setLanguage('ca')
 
             dxdoc = createContentInContainer(
                 portal['en'], "dxdoc", id="dxdoc", title='EN doc')

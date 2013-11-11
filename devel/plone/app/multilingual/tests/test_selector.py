@@ -83,9 +83,11 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         doc1.setLanguage('en')
         doc1_tg = ITG(doc1)
         doc1_ca = makeTranslation(doc1, 'ca')
-        doc1_ca.edit(title="Foo", language='ca')
+        doc1_ca.setTitle(u"Foo")
+        doc1_ca.setLanguage('ca')
         doc1_es = makeTranslation(doc1, 'es')
-        doc1_es.edit(title="Foo", language='es')
+        doc1_es.setTitle(u"Foo")
+        doc1_es.setLanguage('es')
 
         self.selector = LanguageSelectorViewlet(doc1,
                             self.request, None, None)
@@ -193,7 +195,8 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         document.setLanguage('en')
         wftool.doActionFor(document, 'publish')
         folder_ca = makeTranslation(folder, 'ca')
-        folder_ca.edit(title="Foo", language='ca')
+        folder_ca.setTitle(u"Foo")
+        folder_ca.setLanguage('ca')
         wftool.doActionFor(folder_ca, 'publish')
         transaction.commit()
         return wftool
@@ -201,13 +204,16 @@ class TestLanguageSelectorBasics(unittest.TestCase):
     def setUpFullyTranslatedContent(self):
         wftool = self.setUpPartiallyTranslatedContent()
         document_ca = makeTranslation(self.portal.en.folder.document, 'ca')
-        document_ca.edit(title="Foo", language='ca')
+        document_ca.setTitle(u"Foo")
+        document_ca.setLanguage('ca')
         wftool.doActionFor(document_ca, 'publish')
         folder_es = makeTranslation(self.portal.en.folder, 'es')
-        folder_es.edit(title="Foo", language='es')
+        folder_es.setTitle(u"Foo")
+        folder_es.setLanguage('es')
         wftool.doActionFor(folder_es, 'publish')
         document_es = makeTranslation(self.portal.en.folder.document, 'es')
-        document_es.edit(title="Foo", language='es')
+        document_es.setTitle(u"Foo")
+        document_es.setLanguage('es')
         wftool.doActionFor(document_es, 'publish')
         transaction.commit()
         return wftool
