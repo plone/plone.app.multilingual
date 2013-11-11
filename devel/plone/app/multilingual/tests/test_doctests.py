@@ -6,7 +6,6 @@ import doctest
 import unittest2 as unittest
 
 integration_tests = [
-    'vocabularies.txt'
 ]
 functional_tests = [
     #'form.txt',
