@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest2 as unittest
+from zope.event import notify
 
 from zope.interface import implements
 from zope.component import getUtility
@@ -8,6 +9,7 @@ import transaction
 from Acquisition import Explicit
 from Products.CMFCore.utils import getToolByName
 from plone.registry.interfaces import IRegistry
+from zope.lifecycleevent import ObjectModifiedEvent
 from plone.testing.z2 import Browser
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 
@@ -79,6 +81,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.assertNotEquals(original_lang_info, multilingual_lang_info)
 
     def assertFullyTranslatedPages(self):
+
         doc1 = makeContent(self.portal, 'Document', id='doc1')
         doc1.setLanguage('en')
         doc1_tg = ITG(doc1)
@@ -88,6 +91,18 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         doc1_es = makeTranslation(doc1, 'es')
         doc1_es.setTitle(u"Foo")
         doc1_es.setLanguage('es')
+
+        wftool = getToolByName(self.portal, 'portal_workflow')
+        wftool.doActionFor(doc1, 'publish')
+        wftool.doActionFor(doc1_ca, 'publish')
+        wftool.doActionFor(doc1_es, 'publish')
+
+        notify(ObjectModifiedEvent(doc1))
+        notify(ObjectModifiedEvent(doc1_ca))
+        notify(ObjectModifiedEvent(doc1_es))
+
+        import transaction
+        transaction.commit()
 
         self.selector = LanguageSelectorViewlet(doc1,
                             self.request, None, None)
