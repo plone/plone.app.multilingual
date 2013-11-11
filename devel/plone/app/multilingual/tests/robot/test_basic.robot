@@ -20,11 +20,11 @@ Scenario: Babel View for DX content
      Then I get the 'CA doc' as title of the available translation information for DX
 
 
-Scenario: Babel View for AT content
-    Given a site owner
-     When I translate the content 'en/atdoc' to 'es'
-      And I switch the available translations language to 'Catalan'
-     Then I get the 'CA doc' as title of the available translation information for AT
+# Scenario: Babel View for AT content
+#     Given a site owner
+#      When I translate the content 'en/atdoc' to 'es'
+#       And I switch the available translations language to 'Catalan'
+#      Then I get the 'CA doc' as title of the available translation information for AT
 
 
 *** Keywords ***
