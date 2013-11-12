@@ -7,7 +7,7 @@ from plone.app.multilingual.interfaces import (
 from directives import languageindependent
 from zope.interface import Interface
 
-MULTILINGUAL_KEY = languageindependent.dotted_name()
+MULTILINGUAL_KEY = languageindependent.key
 
 
 class IDexterityTranslatable(ITranslatable):

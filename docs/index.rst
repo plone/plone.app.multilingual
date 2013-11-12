@@ -267,12 +267,12 @@ Dexterity
 
 There are four ways of achieve it.
 
-Grok directive
-~~~~~~~~~~~~~~
+Directive
+~~~~~~~~~
 
 In your content type class declaration::
 
-    from plone.multilingualbehavior import directives
+    from plone.app.multilingual.dx import directives
     directives.languageindependent('field')
 
 Supermodel

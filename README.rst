@@ -274,7 +274,15 @@ way as in LinguaPlone::
 Dexterity
 ---------
 
-There are three ways of achieve it.
+There are four ways of achieve it.
+
+Directive
+~~~~~~~~~
+
+In your content type class declaration::
+
+    from plone.app.multilingual.dx import directives
+    directives.languageindependent('field')
 
 Supermodel
 ~~~~~~~~~~
