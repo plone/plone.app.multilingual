@@ -14,7 +14,7 @@ Suite Teardown  Suite Teardown
 *** Test Cases ***
 
 Add translation
-    [Tags] Plone5
+    [Tags]  Plone5
 
     Given a site owner
      When I add new avaliable lang 'uk'
