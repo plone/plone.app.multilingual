@@ -5,10 +5,6 @@ Resource  plone/app/robotframework/keywords.robot
 
 Library  Remote  ${PLONE_URL}/RobotRemote
 
-Variables  plone/app/testing/interfaces.py
-Variables  plone/app/multilingual/tests/robot/variables.py
-
-
 Test Setup  Open test browser
 Test Teardown  Close all browsers
 
@@ -21,7 +17,7 @@ Scenario: As an editor I can translate a document
      When I translate the document into Catalan
      Then I can view the document in Catalan
 
-Scenario: As a vistor I can view the translation
+Scenario: As a visitor I can view the translation
     Given a site owner
       and a document in English with Catalan translation
      When I switch to Catalan
@@ -33,24 +29,26 @@ Scenario: As a vistor I can view the translation
 # Given
 
 a site owner
-  Log in  ${SITE_OWNER_NAME}  ${SITE_OWNER_PASSWORD}
+  Enable autologin as  Manager
 
 a visitor
-  Go To  ${PLONE_URL}
+  Disable autologin
 
 a document in English
-  Go to  ${PLONE_URL}/en/++add++Document
-  Input Text  form.widgets.IDublinCore.title  An English Document
-  Click Button  Save
+  Create content  type=Document
+  ...  container=/${PLONE_SITE_ID}/en/
+  ...  id=an-english-document
+  ...  title=An English Document
 
 a document in English with Catalan translation
-  Go to  ${PLONE_URL}/en/++add++Document
-  Input Text  form.widgets.IDublinCore.title  An English Document
-  Click Button  Save
-  Go to  ${PLONE_URL}/en/an-english-document/@@create_translation?language=ca
-  Input Text  form.widgets.IDublinCore.title  A Catalan Document
-  Click Button  Save
-  Wait until page contains  Item created
+  ${uid} =  Create content  type=Document
+  ...  container=/${PLONE_SITE_ID}/en/
+  ...  id=an-english-document
+  ...  title=An English Document
+  Create translation  ${uid}  ca
+  ...  title=A Catalan Document
+  Go to  ${PLONE_URL}/resolveuid/${uid}
+  Wait until page contains  An English Document
 
 # When
 
@@ -67,5 +65,7 @@ I switch to Catalan
 # Then
 
 I can view the document in Catalan
-  Page Should Contain Element  xpath=//*[contains(@class, 'documentFirstHeading')][./text()='A Catalan Document']
-  Page Should Contain Element  xpath=//ul[@id='portal-languageselector']/li[contains(@class, 'currentLanguage')]/a[@title='Català']
+  Page Should Contain Element
+  ...  xpath=//*[contains(@class, 'documentFirstHeading')][./text()='A Catalan Document']
+  Page Should Contain Element
+  ...  xpath=//ul[@id='portal-languageselector']/li[contains(@class, 'currentLanguage')]/a[@title='Català']

@@ -1,15 +1,13 @@
 *** Settings ***
 
-Variables  plone/app/testing/interfaces.py
-Variables  plone/app/multilingual/tests/robot/variables.py
+Resource  plone/app/robotframework/selenium.robot
+Resource  plone/app/robotframework/keywords.robot
 
-Library  Selenium2Library  timeout=${SELENIUM_TIMEOUT}  implicit_wait=${SELENIUM_IMPLICIT_WAIT}
+Library  Remote  ${PLONE_URL}/RobotRemote
 
-# Resource  library-settings.txt
-Resource  plone/app/multilingual/tests/robot/keywords.txt
+Test Setup  Open test browser
+Test Teardown  Close all browsers
 
-Suite Setup  Suite Setup
-Suite Teardown  Suite Teardown
 
 *** Test Cases ***
 
@@ -25,6 +23,7 @@ Scenario: Babel View for DX content
 #      When I translate the content 'en/atdoc' to 'es'
 #       And I switch the available translations language to 'Catalan'
 #      Then I get the 'CA doc' as title of the available translation information for AT
+
 
 
 *** Keywords ***
