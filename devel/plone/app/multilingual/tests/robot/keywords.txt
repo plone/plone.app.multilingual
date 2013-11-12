@@ -1,16 +1,10 @@
 *** Keywords ***
 Suite Setup
-  # ----------------------------------------------------------------------------
-  # Suite
-  # ----------------------------------------------------------------------------
   Open browser  ${PLONE_URL}  browser=${BROWSER}  remote_url=${REMOTE_URL}  desired_capabilities=${DESIRED_CAPABILITIES}
   # Log in as site owner
 
 Suite Teardown
   Close All Browsers
-  # ----------------------------------------------------------------------------
-  # Login/Logout
-  # ----------------------------------------------------------------------------
 
 Log in
   [Arguments]  ${userid}  ${password}
@@ -37,9 +31,6 @@ Log in as test user
 Log out
   Go to  ${PLONE_URL}/logout
   Page should contain  logged out
-  # ----------------------------------------------------------------------------
-  # Content
-  # ----------------------------------------------------------------------------
 
 a collection
   [Arguments]  ${title}
@@ -109,9 +100,6 @@ a news item
   fill in metadata
   Click Button  Save
   Wait until page contains  Item created
-  # ----------------------------------------------------------------------------
-  # Collection
-  # ----------------------------------------------------------------------------
 
 the collection should contain
   [Arguments]  ${title}
