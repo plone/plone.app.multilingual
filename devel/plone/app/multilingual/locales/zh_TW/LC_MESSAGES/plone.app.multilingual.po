@@ -604,7 +604,7 @@ msgstr ""
 
 #: ./browser/remove_translation_form.py:39
 msgid "remove selected"
-msgstr "移除选择"
+msgstr ""
 
 #. Default: "Go to shared folder"
 #: ./browser/menu.py:189
@@ -653,7 +653,7 @@ msgstr ""
 #. Default: "Manage translations for your content."
 #: ./browser/menu.py:224
 msgid "title_translate_menu"
-msgstr "为您的内容管理翻译。"
+msgstr ""
 
 #. Default: "Translations:"
 #: ./browser/templates/mmap.pt:150
