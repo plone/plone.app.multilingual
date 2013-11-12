@@ -43,7 +43,8 @@ class LanguageRootFolder(Container):
 
         if CMFOrderedBTreeFolderBase.has_key(self, id):
             return True
-        return id in getSite() and id not in _languagelist and id not in _combinedlanguagelist
+        return (id in getSite() and id not in _languagelist
+                and id not in _combinedlanguagelist and id != 'id-id')
 
     hasObject = has_key
 
@@ -72,7 +73,10 @@ class LanguageRootFolder(Container):
             portal = getSite()
             if portal is not None and name in portal and not name.startswith('_'):
                 # XXX Check that is content
-                if name != 'portal_catalog' and (name not in _languagelist and name not in _combinedlanguagelist):
+                if (name != 'portal_catalog'
+                        and (name not in _languagelist
+                             and name not in _combinedlanguagelist
+                             and name != 'id-id')):
                     new_object = aq_base(getattr(portal, name)).__of__(self)
                     new_object._v_is_shared_content = True
                     return new_object
@@ -93,7 +97,9 @@ class LanguageRootFolder(Container):
         else:
             aliased = getSite()
             if aliased:
-                if (id not in _languagelist and id not in _combinedlanguagelist):
+                if (id not in _languagelist
+                        and id not in _combinedlanguagelist
+                        and id != 'id-id'):
                     obj = aliased._getOb(id, default)
                     if obj is default:
                         # if default is _marker:
@@ -113,7 +119,8 @@ class LanguageRootFolder(Container):
                 # spec = ['Dexterity Container', 'Dexterity Item', 'ATFolder', 'ATDocument']
                 aliased_objectIds = list(aliased.objectIds(spec))
                 for id in aliased_objectIds:
-                    if id in _languagelist or id in _combinedlanguagelist:
+                    if (id in _languagelist or id in _combinedlanguagelist
+                            or id == 'id-id'):
                         aliased_objectIds.remove(id)
             else:
                 aliased_objectIds = []
