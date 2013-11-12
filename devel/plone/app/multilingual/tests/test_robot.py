@@ -5,9 +5,15 @@ import os
 import robotsuite
 import unittest
 
+UNIT_TEST_LEVEL = 1
+INTEGRATION_TEST_LEVEL = 2
+FUNCTIONAL_TEST_LEVEL = 3
+ROBOT_TEST_LEVEL = 5
+
 
 def test_suite():
     suite = unittest.TestSuite()
+    suite.level = ROBOT_TEST_LEVEL
     current_dir = os.path.abspath(os.path.dirname(__file__))
     robot_dir = os.path.join(current_dir, 'robot')
     robot_tests = [
