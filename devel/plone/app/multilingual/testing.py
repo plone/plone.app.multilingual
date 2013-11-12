@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from OFS.Folder import Folder
 from Testing import ZopeTestCase as ztc
+from plone.app.robotframework.testing import REMOTE_LIBRARY_BUNDLE_FIXTURE
 
 from plone.testing import z2
 from plone.app.contenttypes.testing import PLONE_APP_CONTENTTYPES_FIXTURE
@@ -100,6 +101,7 @@ PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING = FunctionalTesting(
 PLONEAPPMULTILINGUAL_ROBOT_TESTING = FunctionalTesting(
     bases=(PLONEAPPMULTILINGUAL_FIXTURE,
            TWO_LANGUAGES_FIXTURE,
+           REMOTE_LIBRARY_BUNDLE_FIXTURE,
            z2.ZSERVER_FIXTURE),
     name="plone.app.multilingual:Robot")
 optionflags = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE)
