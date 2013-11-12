@@ -60,7 +60,7 @@ class PAMFuncTestHelperViews(unittest.TestCase):
 
 class PAMIntTestHelperViews(unittest.TestCase):
 
-    layer = PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
+    layer = PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
