@@ -274,15 +274,7 @@ way as in LinguaPlone::
 Dexterity
 ---------
 
-There are four ways of achieve it.
-
-Grok directive
-~~~~~~~~~~~~~~
-
-In your content type class declaration::
-
-    from plone.multilingualbehavior import directives
-    directives.languageindependent('field')
+There are three ways of achieve it.
 
 Supermodel
 ~~~~~~~~~~

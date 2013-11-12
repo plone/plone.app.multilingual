@@ -1,10 +1,5 @@
 <configure
-    xmlns="http://namespaces.zope.org/zope"
-    xmlns:grok="http://namespaces.zope.org/grok">
-
-    <!-- Load ZCML from Grok and grok our grokkers -->
-    <include package="five.grok" file="meta.zcml" />
-    <grok:grok package=".meta" />
+    xmlns="http://namespaces.zope.org/zope">
 
     <!-- Behaviors -->
     <include package="plone.behavior" file="meta.zcml" />
