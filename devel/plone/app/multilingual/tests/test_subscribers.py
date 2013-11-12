@@ -4,7 +4,7 @@ from Products.CMFCore.utils import getToolByName
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import setRoles
 from plone.app.multilingual.interfaces import ILanguage
-from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
+from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_INTEGRATION_TESTING, PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
 
 import transaction
 import unittest2 as unittest
@@ -18,7 +18,7 @@ class TestSubscribers(unittest.TestCase):
     to change the language of the object from the container where
     it has been created, moved or copied
     """
-    layer = PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
+    layer = PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']

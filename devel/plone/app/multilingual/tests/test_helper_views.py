@@ -46,9 +46,11 @@ class PAMFuncTestHelperViews(unittest.TestCase):
         doc1 = makeContent(self.portal, 'Document', id='doc1')
         doc1.setLanguage('en')
         doc1_ca = makeTranslation(doc1, 'ca')
-        doc1_ca.edit(title="Foo", language='ca')
+        doc1_ca.setTitle(u"Foo")
+        doc1_ca.setLanguage('ca')
         doc1_es = makeTranslation(doc1, 'es')
-        doc1_es.edit(title="Foo", language='es')
+        doc1_es.setTitle(u"Foo")
+        doc1_es.setLanguage('es')
         transaction.commit()
 
         self.browser.open(doc1.absolute_url())
@@ -58,7 +60,7 @@ class PAMFuncTestHelperViews(unittest.TestCase):
 
 class PAMIntTestHelperViews(unittest.TestCase):
 
-    layer = PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
+    layer = PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
@@ -97,7 +99,8 @@ class PAMIntTestHelperViews(unittest.TestCase):
         new11 = self.portal.en['new11']
         new11.invokeFactory('Document', 'doc11', title=u"An archetypes based doc")
         doc1_ca = makeTranslation(self.portal.en.new11.doc11, 'ca')
-        doc1_ca.edit(title="Foo", language='ca')
+        doc1_ca.setTitle(u"Foo")
+        doc1_ca.setLanguage('ca')
         self.assertTrue(self.portal.ca.doc11)
         transaction.commit()
 
