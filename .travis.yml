@@ -27,4 +27,4 @@ install:
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-script: bin/test -s plone.app.multilingual
+script: bin/test -s plone.app.multilingual -t \!\#Plone5
