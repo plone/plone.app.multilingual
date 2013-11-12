@@ -16,7 +16,6 @@ from plone.app.layout.navigation.interfaces import INavigationRoot
 
 from plone.folder.ordered import CMFOrderedBTreeFolderBase
 from Acquisition import aq_base, aq_inner, aq_parent
-from Products.Archetypes.interfaces import IBaseObject
 from BTrees.OIBTree import union
 from Products.ZCatalog.Lazy import LazyMap
 from Products.CMFPlone.interfaces import IPloneSiteRoot
