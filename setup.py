@@ -42,6 +42,7 @@ setup(
         'archetypes': ['archetypes.multilingual'],
         'test': [
             'plone.app.testing[robot]>=4.2.2',
+            'plone.app.robotframework',
             'archetypes.multilingual',
             'decorator',  # BBB
         ],
