@@ -12,6 +12,8 @@ matrix:
       env: PLONE_VERSION=4.1
     - python: 2.6
       env: PLONE_VERSION=4.2
+    - python: 2.7
+      env: PLONE_VERSION=4.2
   exclude:
     - python: 2.7
       env: PLONE_VERSION=4.1
