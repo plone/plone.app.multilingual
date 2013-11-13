@@ -45,4 +45,14 @@
         name="default"
         />
 
+    <adapter
+        for="*
+             plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled
+             plone.app.multilingual.browser.add.MultilingualAddForm
+             plone.app.multilingual.dx.interfaces.ILanguageIndependentField
+             *"
+        factory=".validator.LanguageIndependentFieldValidator"
+        provides="z3c.form.interfaces.IValidator"
+        />
+
 </configure>
