@@ -1,35 +1,33 @@
-import martian
+from plone.supermodel.directives import MetadataListDirective
+from zope.interface import Interface
+from zope.interface.interfaces import IInterface
 
-from zope.interface.interface import TAGGED_DATA
 
-TEMP_KEY = '__form_directive_values__'
+LANGUAGE_INDEPENDENT_KEY = u'plone.app.multilingual.languageindependent'
 
-# Storages
-
-class LanguageIndependentStorage(object):
-    """Stores the primary() directive value in a schema tagged value.
-    """
-
-    def set(self, locals_, directive, value):
-        tags = locals_.setdefault(TAGGED_DATA, {})
-        tags.setdefault(directive.dotted_name(), []).extend(value)
-
-    def get(self, directive, component, default):
-        return component.queryTaggedValue(directive.dotted_name(), default)
-
-    def setattr(self, context, directive, value):
-        context.setTaggedValue(directive.dotted_name(), value)
 
 # Directives
 
-class languageindependent(martian.Directive):
+class languageindependent(MetadataListDirective):
     """Directive used to mark one or more fields as 'languageindependent'
     """
 
-    scope = martian.CLASS
-    store = LanguageIndependentStorage()
+    key = LANGUAGE_INDEPENDENT_KEY
+    value = 'true'
 
     def factory(self, *args):
-        return args
+        """The languageindependent directive accepts as arguments one or more
+        fieldnames (string) of fields which should be searchable.
+        """
+        if not args:
+            raise TypeError('The languageindependent directive expects at '
+                            'least one argument.')
+
+        form_interface = Interface
+        if IInterface.providedBy(args[0]):
+            form_interface = args[0]
+            args = args[1:]
+        return [(form_interface, field, self.value) for field in args]
+
 
 __all__ = ('languageindependent',)
