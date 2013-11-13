@@ -1,4 +1,7 @@
+from z3c.form.interfaces import DISPLAY_MODE
 from z3c.form.validator import StrictSimpleFieldValidator
+from zope.component import getMultiAdapter
+from zope.pagetemplate.interfaces import IPageTemplate
 
 
 class LanguageIndependentFieldValidator(StrictSimpleFieldValidator):
@@ -9,3 +12,18 @@ class LanguageIndependentFieldValidator(StrictSimpleFieldValidator):
     def validate(self, value, force=False):
         # always pass
         pass
+
+
+class LanguageIndependentFieldInputTemplate(object):
+
+    def __init__(self, context, request, view, field, widget):
+        self.context = context
+        self.request = request
+        self.view = view
+        self.field = field
+        self.widget = widget
+
+    def __call__(self, widget):
+        template = getMultiAdapter((self.context, self.request, self.view, \
+            self.field, self.widget,), IPageTemplate, name=DISPLAY_MODE)
+        return template(self.widget)
