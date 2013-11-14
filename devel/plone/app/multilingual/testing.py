@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
-import doctest
 from email.header import Header
 
-from OFS.Folder import Folder
 from Testing import ZopeTestCase as ztc
 from zope.event import notify
+from zope.interface import alsoProvides
 from zope.lifecycleevent import ObjectModifiedEvent
-from plone.rfc822 import constructMessageFromSchemata, initializeObjectFromSchemata
+from plone.rfc822 import constructMessageFromSchemata
+from plone.rfc822 import initializeObjectFromSchemata
 from plone.uuid.interfaces import IUUID
 from zope.configuration import xmlconfig
 from Products.CMFCore.utils import getToolByName
-import transaction
+from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.robotframework.remote import RemoteLibrary
@@ -19,7 +19,8 @@ from plone.app.robotframework import AutoLogin
 from plone.app.robotframework import Content
 from plone.testing import z2
 from plone.app.contenttypes.testing import PLONE_APP_CONTENTTYPES_FIXTURE
-from plone.app.testing import TEST_USER_ID, PLONE_FIXTURE
+from plone.app.testing import TEST_USER_ID
+from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import PloneSandboxLayer
@@ -27,20 +28,37 @@ from plone.app.testing import applyProfile
 from plone.app.testing import ploneSite
 from plone.app.testing import setRoles
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
-from plone.app.multilingual.tests.utils import makeContent, makeTranslation
-from plone.dexterity.utils import createContentInContainer, iterSchemata
+from plone.dexterity.utils import createContentInContainer
+from plone.dexterity.utils import iterSchemata
 from plone.app.multilingual.interfaces import ILanguage
 import plone.app.multilingual
 import plone.app.dexterity
 
 
+class Sessions(z2.Layer):
+
+    defaultBases = (PLONE_FIXTURE,)
+
+    def setUp(self):
+        with z2.zopeApp() as app:
+            ztc.utils.setupCoreSessions(app)
+
+    def testTearDown(self):
+        with z2.zopeApp() as app:
+            # Clean up sessions after each test
+            app.session_data_manager._p_jar.sync()
+            app.session_data_manager._getSessionDataContainer()._reset()
+
+            # Commit transaction
+            from transaction import commit
+            commit()
+
+SESSIONS_FIXTURE = Sessions()
+
+
 class PloneAppMultilingualLayer(PloneSandboxLayer):
 
-    defaultBases = (PLONE_APP_CONTENTTYPES_FIXTURE, )
-
-    class Session(dict):
-        def set(self, key, value):
-            self[key] = value
+    defaultBases = (SESSIONS_FIXTURE, PLONE_APP_CONTENTTYPES_FIXTURE)
 
     def setUpZope(self, app, configurationContext):
         # load ZCML
@@ -50,25 +68,16 @@ class PloneAppMultilingualLayer(PloneSandboxLayer):
         xmlconfig.file('overrides.zcml', plone.app.multilingual,
                        context=configurationContext)
 
-        xmlconfig.file('configure.zcml', plone.app.multilingual.tests,
-                       context=configurationContext)
-
-        # Support sessionstorage in tests
-        app.REQUEST['SESSION'] = self.Session()
-        if not hasattr(app, 'temp_folder'):
-            tf = Folder('temp_folder')
-            app._setObject('temp_folder', tf)
-            transaction.commit()
-
-        ztc.utils.setupCoreSessions(app)
+        # Enable languageindependent-field on IRelatedItems-behavior
+        from plone.app.relationfield.behavior import IRelatedItems
+        alsoProvides(IRelatedItems['relatedItems'], ILanguageIndependentField)
 
     def setUpPloneSite(self, portal):
         # install into the Plone site
         applyProfile(portal, 'plone.app.multilingual:default')
-        applyProfile(portal, 'plone.app.multilingual.tests:testing')
         setRoles(portal, TEST_USER_ID, ['Manager'])
 
-PLONEAPPMULTILINGUAL_FIXTURE = PloneAppMultilingualLayer()
+PLONE_APP_MULTILINGUAL_FIXTURE = PloneAppMultilingualLayer()
 
 
 class TwoLanguagesLayer(z2.Layer):
@@ -76,27 +85,31 @@ class TwoLanguagesLayer(z2.Layer):
     defaultBases = (PLONE_APP_CONTENTTYPES_FIXTURE, )
 
     def setUp(self):
+        def translate(obj, target_language='en'):
+            manager = ITranslationManager(obj)
+            manager.add_translation(target_language)
+            return manager.get_translation(target_language)
+
         with ploneSite() as portal:
+            # Define available languages
             language_tool = getToolByName(portal, 'portal_languages')
             language_tool.addSupportedLanguage('ca')
             language_tool.addSupportedLanguage('es')
 
+            # Setup language root folders
             setupTool = SetupMultilingualSite()
             setupTool.setupSite(portal)
 
-            atdoc = makeContent(
-                portal['en'], 'Document', id='atdoc', title='EN doc')
-            atdoc.setLanguage('en')
-            atdoc_ca = makeTranslation(atdoc, 'ca')
-            atdoc_ca.setTitle(u"CA doc")
-            atdoc_ca.setLanguage('ca')
+            # Create sample content
+            document = createContentInContainer(
+                portal['en'], 'Document',
+                id='test-document', title=u"EN test document")
+            ILanguage(document).set_language('en')
 
-            dxdoc = createContentInContainer(
-                portal['en'], "dxdoc", id="dxdoc", title='EN doc')
-            ILanguage(dxdoc).set_language('en')
-            dxdoc_ca = makeTranslation(dxdoc, 'ca')
-            dxdoc_ca.title = "CA doc"
-            ILanguage(dxdoc_ca).set_language('ca')
+            # Create sample translation
+            translation = translate(document, 'ca')
+            translation.title = u"CA test document"
+            ILanguage(translation).set_language('ca')
 
 TWO_LANGUAGES_FIXTURE = TwoLanguagesLayer()
 
@@ -148,16 +161,15 @@ REMOTE_LIBRARY_BUNDLE_FIXTURE = RemoteLibraryLayer(
     name="RemoteLibraryBundle:RobotRemote"
 )
 
-PLONEAPPMULTILINGUAL_INTEGRATION_TESTING = IntegrationTesting(
-    bases=(PLONEAPPMULTILINGUAL_FIXTURE,),
+PLONE_APP_MULTILINGUAL_INTEGRATION_TESTING = IntegrationTesting(
+    bases=(PLONE_APP_MULTILINGUAL_FIXTURE,),
     name="plone.app.multilingual:Integration")
-PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING = FunctionalTesting(
-    bases=(PLONEAPPMULTILINGUAL_FIXTURE,),
+PLONE_APP_MULTILINGUAL_FUNCTIONAL_TESTING = FunctionalTesting(
+    bases=(PLONE_APP_MULTILINGUAL_FIXTURE,),
     name="plone.app.multilingual:Functional")
-PLONEAPPMULTILINGUAL_ROBOT_TESTING = FunctionalTesting(
-    bases=(PLONEAPPMULTILINGUAL_FIXTURE,
+PLONE_APP_MULTILINGUAL_ROBOT_TESTING = FunctionalTesting(
+    bases=(PLONE_APP_MULTILINGUAL_FIXTURE,
            TWO_LANGUAGES_FIXTURE,
            REMOTE_LIBRARY_BUNDLE_FIXTURE,
            z2.ZSERVER_FIXTURE),
     name="plone.app.multilingual:Robot")
-optionflags = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE)
