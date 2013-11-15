@@ -119,11 +119,16 @@
       zope.lifecycleevent.interfaces.IObjectAddedEvent"
     handler=".subscriber.reindex_neutral" />
 
-
   <subscriber
       for="plone.dexterity.interfaces.IDexterityContent
            zope.component.interfaces.IObjectEvent"
       handler=".subscriber.remove_ghosts"
+      />
+
+  <adapter
+      provides="zope.container.interfaces.INameChooser"
+      for="plone.app.multilingual.interfaces.ILanguageRootFolder"
+      factory=".content.lrf.LRFNameChooser"
       />
 
   <utility
