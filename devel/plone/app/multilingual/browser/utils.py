@@ -202,7 +202,10 @@ def get_original_object(content):
 
 def multilingualMoveObject(content, language):
     """
-    if is_shared_ghost(content):
+    Move content object and its contained objects to a new language folder
+    Also set the language on all the content moved
+    """
+    if is_shared(content):
         # In case is shared we are going to create it on the language root
         # folder
 

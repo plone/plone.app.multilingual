@@ -8,7 +8,7 @@ from zope.event import notify
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.browser.utils import multilingualMoveObject
-from plone.app.multilingual.browser.utils import is_shared_ghost
+from plone.app.multilingual.browser.utils import is_shared
 from plone.dexterity.utils import createContentInContainer
 
 
@@ -73,7 +73,7 @@ class TestLanguageRootFolder(unittest.TestCase):
         uuid = IUUID(self.portal['test-document'])
 
         # CHeck thats ghost is ghost
-        self.assertTrue(is_shared_ghost(self.portal.ca['test-document']))
+        self.assertTrue(is_shared(self.portal.ca['test-document']))
 
         # Check is in the catalog 
         brains = self.portal.portal_catalog.searchResults(UID=uuid)
@@ -97,7 +97,7 @@ class TestLanguageRootFolder(unittest.TestCase):
         moved_uuid = IUUID(self.portal.ca['copy_of_test-document'])
 
         self.assertEqual(uuid, moved_uuid)
-        self.assertFalse(is_shared_ghost(moved))
+        self.assertFalse(is_shared(moved))
 
         # Check portal_catalog is updated after move
         brains = self.portal.portal_catalog.searchResults(UID=uuid)
@@ -123,4 +123,4 @@ class TestLanguageRootFolder(unittest.TestCase):
 
         # Check that ghost is no longer ghost
         self.assertFalse(
-            is_shared_ghost(self.portal.es['copy_of_test-document']))
+            is_shared(self.portal.es['copy_of_test-document']))

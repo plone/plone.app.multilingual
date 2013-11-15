@@ -17,7 +17,7 @@ from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
-from plone.app.multilingual.browser.utils import is_shared_ghost
+from plone.app.multilingual.browser.utils import is_shared
 from plone.registry.interfaces import IRegistry
 from zope.interface import implements
 from zope.browsermenu.menu import BrowserMenu
@@ -44,7 +44,7 @@ class TranslateMenu(BrowserMenu):
         # In case is neutral language show set language menu only
         is_neutral_content = (
             ILanguage(context).get_language() == LANGUAGE_INDEPENDENT
-            or is_shared_ghost(context)
+            or is_shared(context)
         )
         if not is_neutral_content and not INavigationRoot.providedBy(context):
             menu.append({

@@ -16,7 +16,7 @@ from plone.uuid.interfaces import IUUID
 from zope.component.hooks import getSite
 from zope.lifecycleevent import modified
 from zope.lifecycleevent.interfaces import IObjectRemovedEvent
-from plone.app.multilingual.browser.utils import is_shared_ghost
+from plone.app.multilingual.browser.utils import is_shared
 from plone.app.multilingual.browser.utils import is_shared_original
 
 from OFS.interfaces import IObjectWillBeAddedEvent
@@ -29,7 +29,7 @@ from OFS.interfaces import IObjectWillBeRemovedEvent
 def reindex_neutral(obj, event):
     # we need to look for the parent that is already indexed
     if IPloneSiteRoot.providedBy(obj) \
-       or (not is_shared_ghost(obj) and not is_shared_original(obj)):
+       or (not is_shared(obj) and not is_shared_original(obj)):
         return
     parent = aq_parent(obj)
     if ILanguageRootFolder.providedBy(parent):
