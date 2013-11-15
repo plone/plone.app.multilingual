@@ -75,7 +75,7 @@ class DefaultTranslationIdChooser(object):
         splitted = content_id.split('-')
         # ugly heuristic (searching for something like 'de', 'en' etc.)
         if len(splitted) > 1 and len(splitted[-1]) == 2:
-            content_id = ''.join(splitted[:-1])
+            content_id = '-'.join(splitted[:-1])
         while content_id in parent.objectIds():
             content_id = "%s-%s" % (content_id, language)
         return content_id
