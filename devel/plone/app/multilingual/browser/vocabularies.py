@@ -10,7 +10,7 @@ from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 from plone.formwidget.contenttree import ObjPathSourceBinder
-from plone.app.multilingual.browser.utils import is_shared
+from plone.app.multilingual.browser.utils import is_shared_ghost
 
 from zope.interface import implementer
 from zope.interface import provider
@@ -30,7 +30,7 @@ def untranslated_languages(context):
     available_portal_languages = language_tool.supported_langs
     manager = ITranslationManager(context)
     translated_languages = manager.get_translated_languages()
-    if is_shared(context):
+    if is_shared_ghost(context):
         translated_languages = []
     languages = []
     for lang in available_portal_languages:
