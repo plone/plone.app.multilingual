@@ -45,4 +45,25 @@
         name="default"
         />
 
+    <adapter
+        for="*
+             plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled
+             plone.app.multilingual.browser.add.MultilingualAddForm
+             plone.app.multilingual.dx.interfaces.ILanguageIndependentField
+             *"
+        provides="z3c.form.interfaces.IValidator"
+        factory=".validator.LanguageIndependentFieldValidator"
+        />
+
+    <adapter
+        for="*
+             plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled
+             plone.app.multilingual.browser.add.MultilingualAddForm
+             plone.app.multilingual.dx.interfaces.ILanguageIndependentField
+             *"
+        provides="zope.pagetemplate.interfaces.IPageTemplate"
+        name="input"
+        factory=".validator.LanguageIndependentFieldInputTemplate"
+        />
+
 </configure>
