@@ -28,9 +28,7 @@ from plone.app.testing import applyProfile
 from plone.app.testing import ploneSite
 from plone.app.testing import setRoles
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
-from plone.dexterity.utils import createContentInContainer
 from plone.dexterity.utils import iterSchemata
-from plone.app.multilingual.interfaces import ILanguage
 import plone.app.multilingual
 import plone.app.dexterity
 
@@ -61,7 +59,7 @@ class PloneAppMultilingualLayer(PloneSandboxLayer):
     defaultBases = (SESSIONS_FIXTURE, PLONE_APP_CONTENTTYPES_FIXTURE)
 
     def setUpZope(self, app, configurationContext):
-        # load ZCML
+        # Configure ZCML
         xmlconfig.file('configure.zcml', plone.app.multilingual,
                        context=configurationContext)
 
@@ -73,23 +71,36 @@ class PloneAppMultilingualLayer(PloneSandboxLayer):
         alsoProvides(IRelatedItems['relatedItems'], ILanguageIndependentField)
 
     def setUpPloneSite(self, portal):
-        # install into the Plone site
+        # Activate product
         applyProfile(portal, 'plone.app.multilingual:default')
+
+        # Empower test user
         setRoles(portal, TEST_USER_ID, ['Manager'])
+
+        # Enable all errors
+        error_log = getToolByName(portal, 'error_log')
+        error_log._ignored_exceptions = ()
+
+        # Set default workflow
+        wftool = getToolByName(portal, 'portal_workflow')
+        wftool.setDefaultChain('simple_publication_workflow')
+
+        # Cleanup p.a.contenttypes stuff
+        if 'robot-test-folder' in portal.objectIds():
+            portal.manage_delObjects('robot-test-folder')
 
 PLONE_APP_MULTILINGUAL_FIXTURE = PloneAppMultilingualLayer()
 
+PLONE_APP_MULTILINGUAL_INTEGRATION_TESTING = IntegrationTesting(
+    bases=(PLONE_APP_MULTILINGUAL_FIXTURE,),
+    name="plone.app.multilingual:Integration")
 
-class TwoLanguagesLayer(z2.Layer):
 
-    defaultBases = (PLONE_APP_CONTENTTYPES_FIXTURE, )
+class MultipleLanguagesLayer(z2.Layer):
+
+    defaultBases = (PLONE_APP_MULTILINGUAL_FIXTURE,)
 
     def setUp(self):
-        def translate(obj, target_language='en'):
-            manager = ITranslationManager(obj)
-            manager.add_translation(target_language)
-            return manager.get_translation(target_language)
-
         with ploneSite() as portal:
             # Define available languages
             language_tool = getToolByName(portal, 'portal_languages')
@@ -100,18 +111,11 @@ class TwoLanguagesLayer(z2.Layer):
             setupTool = SetupMultilingualSite()
             setupTool.setupSite(portal)
 
-            # Create sample content
-            document = createContentInContainer(
-                portal['en'], 'Document',
-                id='test-document', title=u"EN test document")
-            ILanguage(document).set_language('en')
+MULTIPLE_LANGUAGES_LAYER = MultipleLanguagesLayer()
 
-            # Create sample translation
-            translation = translate(document, 'ca')
-            translation.title = u"CA test document"
-            ILanguage(translation).set_language('ca')
-
-TWO_LANGUAGES_FIXTURE = TwoLanguagesLayer()
+PLONE_APP_MULTILINGUAL_FUNCTIONAL_TESTING = FunctionalTesting(
+    bases=(MULTIPLE_LANGUAGES_LAYER,),
+    name="plone.app.multilingual:Functional")
 
 
 class MultiLingual(RemoteLibrary):
@@ -161,15 +165,13 @@ REMOTE_LIBRARY_BUNDLE_FIXTURE = RemoteLibraryLayer(
     name="RemoteLibraryBundle:RobotRemote"
 )
 
-PLONE_APP_MULTILINGUAL_INTEGRATION_TESTING = IntegrationTesting(
-    bases=(PLONE_APP_MULTILINGUAL_FIXTURE,),
-    name="plone.app.multilingual:Integration")
-PLONE_APP_MULTILINGUAL_FUNCTIONAL_TESTING = FunctionalTesting(
-    bases=(PLONE_APP_MULTILINGUAL_FIXTURE,),
-    name="plone.app.multilingual:Functional")
 PLONE_APP_MULTILINGUAL_ROBOT_TESTING = FunctionalTesting(
-    bases=(PLONE_APP_MULTILINGUAL_FIXTURE,
-           TWO_LANGUAGES_FIXTURE,
+    bases=(MULTIPLE_LANGUAGES_LAYER,
            REMOTE_LIBRARY_BUNDLE_FIXTURE,
            z2.ZSERVER_FIXTURE),
     name="plone.app.multilingual:Robot")
+
+
+PAM_INTEGRATION_TESTING = PLONE_APP_MULTILINGUAL_INTEGRATION_TESTING
+PAM_FUNCTIONAL_TESTING = PLONE_APP_MULTILINGUAL_FUNCTIONAL_TESTING
+PAM_ROBOT_TESTING = PLONE_APP_MULTILINGUAL_ROBOT_TESTING

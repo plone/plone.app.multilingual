@@ -1,191 +1,244 @@
+# -*- coding: utf-8 -*-
+from OFS.event import ObjectWillBeRemovedEvent
 import unittest2 as unittest
-import transaction
-from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
-from AccessControl import Unauthorized
-from zope.component import getMultiAdapter
-from zope.interface import alsoProvides
-
 from Products.CMFCore.utils import getToolByName
+from zope.event import notify
+from plone.app.multilingual import api
 
-from plone.app.testing import TEST_USER_ID, TEST_USER_NAME
-from plone.app.testing import SITE_OWNER_NAME
-from plone.app.testing import login, logout
-from plone.app.testing import setRoles
-
-from plone.app.testing import applyProfile
-
-from plone.app.multilingual.tests.utils import makeContent, makeTranslation
+from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
+from plone.app.multilingual.interfaces import ILanguage
+from plone.app.multilingual.interfaces import ITranslationIdChooser
+from plone.app.multilingual.interfaces import ITranslationLocator
 from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.multilingual.browser.setup import SetupMultilingualSite
-from plone.app.multilingual.interfaces import (
-    IPloneAppMultilingualInstalled,
-    ILanguage,
-    ITranslationManager
-    )
+from plone.app.testing import logout
+from plone.dexterity.utils import createContentInContainer
 
 
-class test_basic_api(unittest.TestCase):
-
-    layer = PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
+class TestAPI(unittest.TestCase):
+    layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        alsoProvides(self.request, IPloneAppMultilingualInstalled)
-        language_tool = getToolByName(self.portal, 'portal_languages')
-        language_tool.addSupportedLanguage('ca')
-        language_tool.addSupportedLanguage('es')
-        self.a_ca = makeContent(self.portal, 'dxdoc', id='a_ca')
-        ILanguage(self.a_ca).set_language('ca')
 
-    def testSupportedLanguages(self):
+    def test_translate(self):
+        # Create
+        a_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
+
+        self.assertEqual(ITranslationManager(a_ca).get_translations(),
+                         {'ca': a_ca})
+
+        # Translate
+        a_en = api.translate(a_ca, 'en')
+
+        self.assertEqual(ITranslationManager(a_ca).get_translations(),
+                         {'ca': a_ca, 'en': a_en})
+
+
+class TestBasicAPI(unittest.TestCase):
+    layer = PAM_FUNCTIONAL_TESTING
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+        self.request = self.layer['request']
+
+        # Create
+        self.a_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
+
+    def test_supported_languages(self):
         language_tool = getToolByName(self.portal, 'portal_languages')
-        self.failUnless(language_tool.getSupportedLanguages(), ['es', 'ca'])
+        self.assertEqual(language_tool.getSupportedLanguages(),
+                         ['en', 'ca', 'es'])
 
     def test_get_translations(self):
-        self.failUnless(ITranslationManager(self.a_ca).get_translations(), {'ca': self.a_ca})
+        translations = ITranslationManager(self.a_ca).get_translations()
+        self.assertEqual(translations, {'ca': self.a_ca})
 
     def test_get_translation(self):
-        self.failUnless(ITranslationManager(self.a_ca).get_translation('ca'), self.a_ca)
+        a_ca = ITranslationManager(self.a_ca).get_translation('ca')
+        self.assertEqual(a_ca, self.a_ca)
 
     def test_get_translated_languages(self):
-        self.failUnless(ITranslationManager(self.a_ca).get_translated_languages(), ['ca'])
+        translated_languages = \
+            ITranslationManager(self.a_ca).get_translated_languages()
+        self.assertEqual(translated_languages, ['ca'])
 
     def test_has_translation(self):
-        self.assertTrue(ITranslationManager(self.a_ca).has_translation('ca'))
-        self.assertFalse(ITranslationManager(self.a_ca).has_translation('es'))
-
-    def test_get_restricted_translations(self):
-        # XXX : Test another user
-        self.failUnless(ITranslationManager(self.a_ca).get_restricted_translations(), {'ca': self.a_ca})
+        translation_manager = ITranslationManager(self.a_ca)
+        self.assertTrue(translation_manager.has_translation('ca'))
+        self.assertFalse(translation_manager.has_translation('es'))
 
     def test_get_restricted_translation(self):
-        # XXX : Test another user
-        self.failUnless(ITranslationManager(self.a_ca).get_restricted_translation('ca'), self.a_ca)
+        restricted_translations = \
+            ITranslationManager(self.a_ca).get_restricted_translations()
+        self.assertEqual(restricted_translations, {'ca': self.a_ca})
+
+    def test_get_restricted_translation_for_anonymous(self):
+        logout()
+        restricted_translations = \
+            ITranslationManager(self.a_ca).get_restricted_translations()
+        self.assertEqual(restricted_translations, {})
 
     def test_add_translation(self):
+        # Check that document does not exists
+        self.assertNotIn('test-document', self.portal['es'].objectIds())
+
         # Create es translation
         ITranslationManager(self.a_ca).add_translation('es')
 
         # Check if it exists
-        self.assertTrue('a_ca-es' in self.portal)
-        self.a_ca_es = self.portal['a_ca-es']
+        self.assertIn('test-document', self.portal['es'].objectIds())
 
         # Check language
-        self.failUnless(ILanguage(self.a_ca_es).get_language(), 'es')
+        language = ILanguage(self.portal['es']['test-document']).get_language()
+        self.assertEqual(language, 'es')
 
     def test_add_translation_delegated(self):
         # Create es translation
-        self.failUnless(ITranslationManager(self.a_ca).add_translation_delegated('es'), self.portal)
+        portal_es = ITranslationManager(
+            self.a_ca).add_translation_delegated('es')
+        self.assertEqual(portal_es, self.portal['es'])
 
     def test_register_translation(self):
-        self.a_es = makeContent(self.portal, 'dxdoc', id='a_es')
-        ILanguage(self.a_es).set_language('es')
-        ITranslationManager(self.a_ca).register_translation('es', self.a_es)
-        self.failUnless(ITranslationManager(self.a_ca).get_translations(), {'ca': self.a_ca, 'es': self.a_es})
+        a_es = createContentInContainer(
+            self.portal['es'], 'Document', title=u"Test document")
+
+        ITranslationManager(self.a_ca).register_translation('es', a_es)
+
+        translations = ITranslationManager(self.a_ca).get_translations()
+        self.assertEqual(translations, {'ca': self.a_ca, 'es': a_es})
 
 
-class test_lrf_api(unittest.TestCase):
-
-    layer = PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
+class TestLanguageRootFolderAPI(unittest.TestCase):
+    layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        alsoProvides(self.request, IPloneAppMultilingualInstalled)
-        language_tool = getToolByName(self.portal, 'portal_languages')
-        language_tool.addSupportedLanguage('ca')
-        language_tool.addSupportedLanguage('es')
-
-        workflowTool = getToolByName(self.portal, "portal_workflow")
-        workflowTool.setDefaultChain('simple_publication_workflow')
-
-        setupTool = SetupMultilingualSite()
-        setupTool.folder_type = 'dxfolder'
-        setupTool.setupSite(self.portal)
-
-        self.a_ca = makeContent(self.portal.ca, 'dxdoc', id='a_ca')
 
     def test_initial_language_set(self):
-        self.failUnless(ILanguage(self.a_ca).get_language(), 'ca')
+        # Create
+        a_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
+
+        # Check that the content has language
+        self.assertEqual(ILanguage(a_ca).get_language(), 'ca')
 
     def test_add_translation(self):
-        ITranslationManager(self.a_ca).add_translation('es')
+        # Create
+        a_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
 
-        self.a_es = ITranslationManager(self.a_ca).get_translation('es')
-        self.failUnless(ITranslationManager(self.a_ca).get_translations(), {'ca': self.a_ca, 'es': self.a_es})
-        # Check is in the correct folder
-        self.assertTrue(self.a_es.id in self.portal.es)
+        # Translate
+        ITranslationManager(a_ca).add_translation('es')
+        a_es = ITranslationManager(a_ca).get_translation('es')
 
-        # Try again
-        self.assertRaises(KeyError, ITranslationManager(self.a_ca).add_translation, 'es')
-        # Error language
-        self.assertRaises(KeyError, ITranslationManager(self.a_ca).add_translation, None)
+        # Check that translation is registered
+        self.failUnless(ITranslationManager(a_ca).get_translations(),
+                        {'ca': a_ca, 'es': a_es})
+
+        # Check that it is in the correct folder
+        self.assertTrue(a_es.id in self.portal['es'])
+
+        # Check that it cannot be translated again
+        translation_manager = ITranslationManager(a_ca)
+        self.assertRaises(KeyError, translation_manager.add_translation, 'es')
+
+        # Check that language must be valid
+        self.assertRaises(KeyError, translation_manager.add_translation, None)
 
     def test_add_translation_delegated(self):
-        new_path = ITranslationManager(self.a_ca).add_translation_delegated('es')
-        self.failUnless(new_path, self.portal.es)
+        a_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
+
+        translation_manager = ITranslationManager(a_ca)
+        portal_es = translation_manager.add_translation_delegated('es')
+
+        self.assertEqual(portal_es, self.portal['es'])
 
     def test_create_destroy_link_translations(self):
-        ITranslationManager(self.a_ca).add_translation('es')
-        self.a_es = ITranslationManager(self.a_ca).get_translation('es')
+        a_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
 
-        self.b_es = makeContent(self.portal.es, 'dxdoc', id='b_es')
+        ITranslationManager(a_ca).add_translation('es')
+        a_es = ITranslationManager(a_ca).get_translation('es')
 
-        ITranslationManager(self.b_es).add_translation('ca')
-        self.b_ca = ITranslationManager(self.b_es).get_translation('ca')
+        # Create duplicate content
+        another_es = createContentInContainer(
+            self.portal['es'], 'Document', title=u"Test another")
 
-        from OFS.event import ObjectWillBeRemovedEvent
-        from zope.event import notify
+        ITranslationManager(another_es).add_translation('ca')
+        another_ca = ITranslationManager(another_es).get_translation('ca')
 
-        notify(ObjectWillBeRemovedEvent(self.a_es))
-        self.portal.es.manage_delObjects(self.a_es.id)
+        # Delete original content
+        notify(ObjectWillBeRemovedEvent(a_es))
+        self.portal.es.manage_delObjects(a_es.id)
 
-        notify(ObjectWillBeRemovedEvent(self.b_ca))
-        self.portal.ca.manage_delObjects(self.b_ca.id)
+        notify(ObjectWillBeRemovedEvent(another_ca))
+        self.portal.ca.manage_delObjects(another_ca.id)
 
-        id_b_es = ITranslationManager(self.b_es).query_canonical()
-        id_a_ca = ITranslationManager(self.a_ca).query_canonical()
-        self.assertFalse(id_b_es == id_a_ca)
-        self.assertTrue(isinstance(id_b_es, str))
+        # Check canonical values are still different
+        id_a_ca = ITranslationManager(a_ca).query_canonical()
+        id_another_es = ITranslationManager(another_es).query_canonical()
+
+        self.assertNotEquals(id_another_es, id_a_ca)
+        self.assertTrue(isinstance(id_another_es, str))
         self.assertTrue(isinstance(id_a_ca, str))
 
-        ITranslationManager(self.a_ca).register_translation('es', self.b_es)
+        # Make documents translations of each other
+        ITranslationManager(a_ca).register_translation('es', another_es)
 
-        id_b_es = ITranslationManager(self.b_es).query_canonical()
-        id_a_ca = ITranslationManager(self.a_ca).query_canonical()
-        self.assertTrue(id_b_es == id_a_ca)
+        # Check that canonical values are now the same
+        id_a_ca = ITranslationManager(a_ca).query_canonical()
+        id_another_es = ITranslationManager(another_es).query_canonical()
 
-    def test_create_relink_translation(self):
-        """ We check the update function here """
+        self.assertEqual(id_another_es, id_a_ca)
 
-        # ITranslationManager(self.a_ca).add_translation('es')
-        # self.a_es = ITranslationManager(self.a_ca).get_translation('es')
+    def test_create_relink_translations(self):
+        """We check the update function here"""
+        a_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
 
-        self.b_es = makeContent(self.portal.es, 'dxfolder', id='b_es')
-        ITranslationManager(self.b_es).add_translation('ca')
-        self.b_ca = ITranslationManager(self.b_es).get_translation('ca')
+        b_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
 
-        ITranslationManager(self.a_ca).register_translation('es', self.b_es)
+        b_es = createContentInContainer(
+            self.portal['es'], 'Document', title=u"Test document")
+        ITranslationManager(b_es).add_translation('ca')
+        ITranslationManager(a_ca).register_translation('es', b_es)
 
-        self.assertFalse(ITranslationManager(self.b_ca).has_translation('es'))
-        self.failUnless(ITranslationManager(self.b_es).get_translation('ca'), self.a_ca)
+        self.assertFalse(ITranslationManager(b_ca).has_translation('es'))
+        self.assertEqual(ITranslationManager(b_es).get_translation('ca'), a_ca)
 
     def test_id_chooser(self):
-        from plone.app.multilingual.interfaces import ITranslationIdChooser
-        chooser = ITranslationIdChooser(self.a_ca)
-        self.failUnless(chooser(self.portal, 'es'), 'a_ca-es')
+        a_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
+
+        chooser = ITranslationIdChooser(a_ca)
+        self.assertEqual(chooser(self.portal, 'es'), 'test-document')
+
+        b = createContentInContainer(
+            self.portal, 'Document', title=u"Another test")
+
+        b_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Another test")
+
+        chooser = ITranslationIdChooser(b_ca)
+        self.assertEqual(chooser(self.portal, 'es'), 'another-test-es')
 
     def test_locator(self):
-        self.bf_ca = makeContent(self.portal.ca, 'dxfolder', id='bf_ca')
-        self.bf2_ca = makeContent(self.portal.ca.bf_ca, 'dxfolder', id='bf2_ca')
+        folder_ca = createContentInContainer(
+            self.portal['ca'], 'Folder', title=u"Test folder")
+        subfolder_ca = createContentInContainer(
+            self.portal['ca']['test-folder'], 'Folder', title=u"Test folder")
 
-        from plone.app.multilingual.interfaces import ITranslationLocator
-        locator = ITranslationLocator(self.bf2_ca)
-        self.failUnless(locator('es'), self.portal.es)
+        locator = ITranslationLocator(subfolder_ca)
+        self.failUnless(locator('es'), self.portal['es'])
 
-        ITranslationManager(self.bf_ca).add_translation('es')
-        self.bf_es = ITranslationManager(self.bf_ca).get_translation('es')
+        ITranslationManager(folder_ca).add_translation('es')
+        folder_es = ITranslationManager(folder_ca).get_translation('es')
 
-        child_locator = ITranslationLocator(self.bf2_ca)
-        self.failUnless(child_locator('es'), self.bf_es)
+        child_locator = ITranslationLocator(subfolder_ca)
+        self.failUnless(child_locator('es'), folder_es)

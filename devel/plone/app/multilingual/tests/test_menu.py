@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
-from Products.CMFCore.utils import getToolByName
+import transaction
 import unittest2 as unittest
-from zope.event import notify
-from zope.lifecycleevent import ObjectAddedEvent
-from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
-from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
+from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
+from plone.app.testing import SITE_OWNER_NAME
+from plone.app.testing import SITE_OWNER_PASSWORD
+from plone.dexterity.utils import createContentInContainer
 from plone.testing._z2_testbrowser import Browser
 
 
 class TestMenu(unittest.TestCase):
-
-    layer = PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
+    layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
@@ -22,50 +21,42 @@ class TestMenu(unittest.TestCase):
             'Authorization', 'Basic %s:%s' % (
                 SITE_OWNER_NAME, SITE_OWNER_PASSWORD))
 
-        # Configure languages
-        self.portal_url = self.portal.absolute_url()
-        self.lang_tool = getToolByName(self.portal, 'portal_languages')
-        self.lang_tool.supported_langs = ['en', 'it', 'de']
-
-        # Create language root folder for 'en'
-        self.portal.invokeFactory(type_name="Folder", id="en")
-        self.container = self.portal['en']
-        self.container.setLanguage('en')
-
         # Create sample document in 'en' and index it into catalog
-        content_id = self.container.invokeFactory(
-            type_name="Document", id="sampledocument-form")
-        self.content = self.container[content_id]
-        self.content.setLanguage('en')
-        notify(ObjectAddedEvent(self.content))
+        self.a_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
 
-        import transaction
         transaction.commit()
 
-    def testMenuIsVisible(self):
-        self.browser.open(self.content.absolute_url())
+    def test_menu_is_visible(self):
+        self.browser.open(self.a_ca.absolute_url())
         self.assertIn('Translate', self.browser.contents)
 
-    def testMenuContainsTranslatableEntries(self):
-        self.browser.open(self.content.absolute_url())
-        self.assertIn('translate_into_it', self.browser.contents)
-        self.assertIn('translate_into_de', self.browser.contents)
+    def test_menu_contains_translatable_entries(self):
+        self.browser.open(self.a_ca.absolute_url())
+        self.assertIn('translate_into_es', self.browser.contents)
+        self.assertIn('translate_into_en', self.browser.contents)
 
-    def testMenuDoesNotContainTranslatedEntries(self):
-        self.browser.open(self.content.absolute_url())
-        self.assertNotIn('translate_into_en', self.browser.contents)
+    def test_menu_does_not_contain_translated_entries(self):
+        self.browser.open(self.a_ca.absolute_url())
+        self.assertNotIn('translate_into_ca', self.browser.contents)
 
-    def testMenuDoesNotAppearWithoutITranslatable(self):
+    def test_menu_does_not_appear_without_ITranslatable(self):
         self.browser.open(self.portal.absolute_url() + '/folder_listing')
         self.assertNotIn('Translate', self.browser.contents)
 
-    def testMenuIsVisibleOnFolderDefaultPage(self):
-        self.container.setDefaultPage('sampledocument-form')
+    def test_menu_is_visible_on_folder_default_page(self):
+        createContentInContainer(
+            self.portal['ca'], 'Folder', title=u"Test folder")
+        createContentInContainer(
+            self.portal['ca']['test-folder'], 'Document',
+            title=u"Test document")
+        self.portal['ca']['test-folder'].setDefaultPage('test-document')
 
-        import transaction
         transaction.commit()
 
-        self.browser.open(self.container.absolute_url())
-        self.assertIn("en/@@create_translation", self.browser.contents)
-        self.assertIn("sampledocument-form/@@create_translation",
-                      self.browser.contents)
+        self.browser.open(
+            self.portal['ca']['test-folder'].absolute_url())
+        self.assertIn(
+            "test-folder/@@create_translation", self.browser.contents)
+        self.assertIn(
+            "test-document/@@create_translation", self.browser.contents)

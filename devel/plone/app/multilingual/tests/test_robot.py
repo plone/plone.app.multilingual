@@ -3,7 +3,7 @@ import unittest
 
 import robotsuite
 
-from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_ROBOT_TESTING
+from plone.app.multilingual.testing import PAM_ROBOT_TESTING
 from plone.testing import layered
 
 
@@ -17,7 +17,6 @@ def test_suite():
     suite = unittest.TestSuite()
     suite.level = ROBOT_TEST_LEVEL
     suite.addTests([
-        layered(robotsuite.RobotTestSuite('robot'),
-                layer=PLONEAPPMULTILINGUAL_ROBOT_TESTING),
+        layered(robotsuite.RobotTestSuite('robot'), layer=PAM_ROBOT_TESTING),
     ])
     return suite
