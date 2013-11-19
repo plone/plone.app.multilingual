@@ -221,29 +221,23 @@ class TestLanguageIndependentRelationField(unittest.TestCase):
         )
         self.assertEqual(dm.get(), [])
 
-    # TODO: The test below fails! This should probably
-    # be fixed in copy fields by:
-    #
-    # 1) looking up from relation catalog, does any translated
-    #    document have relations to the original document
-    #
-    # 2) updating those relations to point to the new
-    #    translation
-    #
-    #def test_copied_relation_list_gets_translated(self):
-    #    a_ca = api.translate(self.a_en, 'ca')
-    #    b_ca = api.translate(self.b_en, 'ca')
-    #
-    #    adapted = IRelatedItems(a_ca)
-    #
-    #    bound = IRelatedItems['relatedItems'].bind(adapted)
-    #    self.assertEqual(len(bound.get(adapted)), 1)
-    #
-    #    value = bound.get(adapted)
-    #    self.assertEqual(type(value[0]), RelationValue)
-    #
-    #    dm = getMultiAdapter(
-    #        (adapted, IRelatedItems['relatedItems']),
-    #        IDataManager
-    #    )
-    #    self.assertEqual(dm.get(), [b_ca])
+    def test_copied_relation_list_gets_translated(self):
+        a_ca = api.translate(self.a_en, 'ca')
+        b_ca = api.translate(self.b_en, 'ca')
+
+        # But only after self.a_en is modified (this is a feature, not a bug):
+        notify(ObjectModifiedEvent(self.a_en))
+
+        adapted = IRelatedItems(a_ca)
+
+        bound = IRelatedItems['relatedItems'].bind(adapted)
+        self.assertEqual(len(bound.get(adapted)), 1)
+
+        value = bound.get(adapted)
+        self.assertEqual(type(value[0]), RelationValue)
+
+        dm = getMultiAdapter(
+            (adapted, IRelatedItems['relatedItems']),
+            IDataManager
+        )
+        self.assertEqual(dm.get(), [b_ca])
