@@ -1,27 +1,17 @@
 # -*- coding: utf-8 -*-
-from Products.CMFCore.utils import getToolByName
+import transaction
 import unittest2 as unittest
-from zope.event import notify
-from zope.lifecycleevent import ObjectAddedEvent
-from plone.app.multilingual.browser.setup import SetupMultilingualSite
-from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
+from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
+from plone.dexterity.utils import createContentInContainer
 from plone.testing._z2_testbrowser import Browser
 
 
 class TestForm(unittest.TestCase):
-
-    layer = PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
+    layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
-
-        # Setup multilingual site
-        language_tool = getToolByName(self.portal, 'portal_languages')
-        language_tool.addSupportedLanguage('it')
-        language_tool.addSupportedLanguage('de')
-        setupTool = SetupMultilingualSite()
-        setupTool.setupSite(self.portal)
 
         # Setup test browser
         self.browser = Browser(self.layer['app'])
@@ -30,98 +20,96 @@ class TestForm(unittest.TestCase):
             'Authorization', 'Basic %s:%s' % (
                 SITE_OWNER_NAME, SITE_OWNER_PASSWORD))
 
-        # Create sample document in 'en' and index it into catalog
-        self.container = self.portal['en']
-        self.content_id = self.container.invokeFactory(
-            type_name="Document", id="sampledocument-form")
-        self.content = self.container[self.content_id]
-        self.content.setLanguage('en')
-        notify(ObjectAddedEvent(self.content))
+    def test_all_translation_links_are_shown(self):
+        a_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
 
-        import transaction
         transaction.commit()
 
-    def testAllTranslationLinksAreShown(self):
-        self.browser.open(self.content.absolute_url())
+        self.browser.open(a_ca.absolute_url())
         self.assertIn('plone-contentmenu-multilingual', self.browser.contents)
-        self.assertIn('translate_into_it', self.browser.contents)
-        self.assertIn('translate_into_de', self.browser.contents)
+        self.assertIn('translate_into_es', self.browser.contents)
+        self.assertIn('translate_into_en', self.browser.contents)
 
-    def testTranslationFormCreatesTranslation(self):
+    def test_translation_form_creates_translation(self):
+        a_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
+
+        transaction.commit()
+
         # Translate content
         self.browser.open(
-            self.content.absolute_url()
-            + '/@@create_translation?language=de')
+            a_ca.absolute_url() + '/@@create_translation?language=en')
 
         # Fill in translation details
         self.browser.getControl(
-            name="form.widgets.IDublinCore.title").value = "sample title de"
+            name="form.widgets.IDublinCore.title").value = u"Test document"
         self.browser.getControl(name="form.buttons.save").click()
 
-        import transaction
+        self.portal._p_jar.sync()
+
+        self.assertIn("test-document", self.portal['en'].objectIds())
+
+        self.browser.open(a_ca.absolute_url())
+        self.assertIn('plone-contentmenu-multilingual', self.browser.contents)
+        self.assertIn('translate_into_es', self.browser.contents)
+        self.assertNotIn('translate_into_en', self.browser.contents)
+
+    def test_translation_can_be_unregistered(self):
+        a_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
+
         transaction.commit()
 
-        self.assertIn("sample-title-de", self.portal['de'].objectIds())
-
-        self.browser.open(self.content.absolute_url())
-        self.assertIn('plone-contentmenu-multilingual', self.browser.contents)
-        self.assertIn('translate_into_it', self.browser.contents)
-        self.assertNotIn('translate_into_de', self.browser.contents)
-
-    def testTranslationCanBeUnregistered(self):
         # Create translation
         self.browser.open(
-            self.content.absolute_url()
-            + '/@@create_translation?language=de')
+            a_ca.absolute_url()
+            + '/@@create_translation?language=en')
 
         # Fill in translation details
         self.browser.getControl(
-            name="form.widgets.IDublinCore.title").value = "sample title de"
+            name="form.widgets.IDublinCore.title").value = u"Test document"
         self.browser.getControl(name="form.buttons.save").click()
 
-        import transaction
-        transaction.commit()
-
         # Unregister translation
-        self.browser.open(self.content.absolute_url()
+        self.browser.open(a_ca.absolute_url()
                           + '/remove_translations?set_language=en')
+
+        self.portal._p_jar.sync()
+
         self.assertEqual(
             self.browser.getControl(name="form.widgets.languages:list").value,
-            ['de'])
+            ['en'])
         self.browser.getControl("unlink selected").click()
         self.assertEqual(
             self.browser.getControl(name="form.widgets.languages:list").value,
             [])
 
         # Translation is unregistered
-        self.browser.open(self.content.absolute_url())
+        self.browser.open(a_ca.absolute_url())
         self.assertIn('plone-contentmenu-multilingual', self.browser.contents)
-        self.assertIn('translate_into_it', self.browser.contents)
-        self.assertIn('translate_into_de', self.browser.contents)
+        self.assertIn('translate_into_es', self.browser.contents)
+        self.assertIn('translate_into_en', self.browser.contents)
 
         transaction.commit()
 
         # Content is still available
-        self.assertIn('sample-title-de', self.portal['de'].contentIds())
+        self.assertIn('test-document', self.portal['en'].contentIds())
 
+    def test_registering_translation(self):
+        a_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
 
-    def testRegisteringTranslation(self):
-        # Create another page
-        container = self.portal['de']
-        content_id = container.invokeFactory(
-            type_name="Document", id="sampleform-de")
-        content = container[content_id]
-        content.setLanguage('de')
-        notify(ObjectAddedEvent(content))
+        b_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
 
-        import transaction
         transaction.commit()
 
         # Register translation
         self.browser.open(
-            self.content.absolute_url() + '/add_translations')
+            a_ca.absolute_url() + '/add_translations')
         self.assertEqual(self.browser.getControl(
-            name="form.widgets.language:list").options, ['it', 'de'])
+            name="form.widgets.language:list").options, ['en', 'es'])
 
         # Fill in form
         form = self.browser.getForm(index=1)
@@ -129,35 +117,40 @@ class TestForm(unittest.TestCase):
             type='radio',
             name='form.widgets.content:list',
             attrs=dict(checked='checked',
-                       value='%s' %'/'.join(content.getPhysicalPath()),
+                       value='%s' % '/'.join(b_ca.getPhysicalPath()),
                        id='form-widgets-content-0'))
         self.browser.getControl(
-            name="form.widgets.language:list").value = ['de']
+            name="form.widgets.language:list").value = ['en']
         self.browser.getControl(
             name='form.buttons.add_translations').click()
 
         # Language is removed from nontranslated languages
         self.assertEqual(self.browser.getControl(
-            name="form.widgets.language:list").options, ['it'])
+            name="form.widgets.language:list").options, ['es'])
 
         # And translation can be unregistered
-        self.browser.open(self.content.absolute_url() + '/remove_translations')
+        self.browser.open(a_ca.absolute_url() + '/remove_translations')
         self.assertEqual(self.browser.getControl(
-            name="form.widgets.languages:list").value, ['de'])
+            name="form.widgets.languages:list").value, ['en'])
 
-    def testTranslationCanBeRemovedByDeleting(self):
+    def test_translation_can_be_removed_by_deleting(self):
+        a_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
+
+        transaction.commit()
+
         # Translate content
         self.browser.open(
-            self.content.absolute_url()
-            + '/@@create_translation?language=de')
+            a_ca.absolute_url()
+            + '/@@create_translation?language=en')
 
         # Fill in translation details
         self.browser.getControl(
-            name="form.widgets.IDublinCore.title").value = "sample title de"
+            name="form.widgets.IDublinCore.title").value = u"Test document"
         self.browser.getControl(name="form.buttons.save").click()
 
         # Remove translation
-        self.browser.open(self.content.absolute_url() + '/remove_translations')
+        self.browser.open(a_ca.absolute_url() + '/remove_translations')
         self.browser.getControl("remove selected").click()
 
         self.assertEqual(self.browser.getControl(
@@ -165,48 +158,44 @@ class TestForm(unittest.TestCase):
 
         self.portal._p_jar.sync()
 
-        self.assertNotIn('sample-title-de', self.portal['de'].objectIds())
+        self.assertNotIn('test-document', self.portal['en'].objectIds())
 
-    def testFolderishContentCanBeTransalte(self):
-        self.container.invokeFactory(type_name="Folder", id="samplefolder")
-        notify(ObjectAddedEvent(self.container.samplefolder))
+    def test_folderish_content_can_be_translated(self):
+        createContentInContainer(
+            self.portal['ca'], 'Folder', title=u"Test folder")
 
-        import transaction
         transaction.commit()
 
         self.browser.open(
             self.portal.absolute_url()
-            + '/en/samplefolder/@@create_translation?language=de')
+            + '/ca/test-folder/@@create_translation?language=en')
 
-        self.browser.getControl(name="form.widgets.IDublinCore.title").value =\
-            "sample folder title de"
+        self.browser.getControl(
+            name="form.widgets.IDublinCore.title").value = u"Test folder"
         self.browser.getControl(name="form.buttons.save").click()
 
         self.portal._p_jar.sync()
 
-        self.assertIn('sample-folder-title-de', self.portal['de'].objectIds())
+        self.assertIn('test-folder', self.portal['en'].objectIds())
 
-    def testContentInFoldersCanBeTranslated(self):
-        self.container.invokeFactory(type_name="Folder", id="samplefolder")
-        notify(ObjectAddedEvent(self.container.samplefolder))
+    def test_content_in_folders_can_be_translated(self):
+        af_ca = createContentInContainer(
+            self.portal['ca'], 'Folder', title=u"Test folder")
 
-        folder = self.container['samplefolder']
-        content_id = folder.invokeFactory(
-            type_name="Document", id="sampledocument_in_folder")
-        notify(ObjectAddedEvent(folder[content_id]))
+        b_ca = createContentInContainer(
+            self.portal['ca']['test-folder'],
+            'Document', title=u"Test document")
 
-        import transaction
         transaction.commit()
 
         self.browser.open(
-            folder.absolute_url() + '/' + content_id
-            + '/@@create_translation?language=de')
+            af_ca.absolute_url() + '/' + b_ca.id
+            + '/@@create_translation?language=en')
 
-        self.browser.getControl(name="form.widgets.IDublinCore.title").value =\
-            "sample folder content title de"
+        self.browser.getControl(
+            name="form.widgets.IDublinCore.title").value = u"Test folder"
         self.browser.getControl(name="form.buttons.save").click()
 
         self.portal._p_jar.sync()
 
-        self.assertIn('sample-folder-content-title-de',
-                      self.portal['de'].objectIds())
+        self.assertIn('test-folder', self.portal['en'].objectIds())

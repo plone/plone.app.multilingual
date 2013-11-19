@@ -571,7 +571,7 @@ class multilingualMapView(BrowserView):
         # Needs to be optimized
         not_full_translations = []
         already_added_canonicals = []
-        brains = pcatalog.searchResults(Language='all')
+        brains = pcatalog.searchResults()
         for brain in brains:
             if not isinstance(brain.TranslationGroup, str):
                 # is alone, with a Missing.Value
@@ -590,8 +590,7 @@ class multilingualMapView(BrowserView):
                 })
             elif isinstance(brain.TranslationGroup, str):
                 tg = brain.TranslationGroup
-                brains_tg = pcatalog.searchResults(Language='all',
-                                                   TranslationGroup=tg)
+                brains_tg = pcatalog.searchResults(TranslationGroup=tg)
                 if len(brains_tg) < num_lang \
                    and tg not in already_added_canonicals:
                     translated_languages = [a.Language for a in brains_tg]

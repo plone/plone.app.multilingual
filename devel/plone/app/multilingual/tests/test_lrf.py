@@ -1,142 +1,126 @@
+# -*- coding: utf-8 -*-
+from OFS.event import ObjectWillBeRemovedEvent
+from plone.uuid.interfaces import IUUID
+
 import unittest2 as unittest
-import transaction
-from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
-from AccessControl import Unauthorized
-from zope.component import getMultiAdapter
-from zope.interface import alsoProvides
+from zope.event import notify
 
-from Products.CMFCore.utils import getToolByName
-
-from plone.app.testing import TEST_USER_ID, TEST_USER_NAME, TEST_USER_PASSWORD
-from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
-
-from plone.app.testing import login, logout
-from plone.app.testing import setRoles
-
-from plone.app.testing import applyProfile
-from plone.testing.z2 import Browser
-
-from plone.app.multilingual.tests.utils import makeContent, makeTranslation
+from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.multilingual.browser.setup import SetupMultilingualSite
-from plone.app.multilingual.interfaces import (
-    IPloneAppMultilingualInstalled,
-    ILanguage,
-    ITranslationManager
-    )
 from plone.app.multilingual.browser.utils import multilingualMoveObject
 from plone.app.multilingual.browser.utils import is_shared
+from plone.dexterity.utils import createContentInContainer
 
 
-class test_real_lrf(unittest.TestCase):
+class TestLanguageRootFolder(unittest.TestCase):
 
-    layer = PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
+    layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        alsoProvides(self.request, IPloneAppMultilingualInstalled)
-        language_tool = getToolByName(self.portal, 'portal_languages')
-        language_tool.addSupportedLanguage('ca')
-        language_tool.addSupportedLanguage('es')
-
-        workflowTool = getToolByName(self.portal, "portal_workflow")
-        workflowTool.setDefaultChain('simple_publication_workflow')
-
-        setupTool = SetupMultilingualSite()
-        setupTool.setupSite(self.portal)
-
-        # self.a_ca = makeContent(self.portal.ca, 'dxdoc', id='a_ca')
 
     def test_shared_content(self):
-        self.root_a_ca = makeContent(self.portal, 'dxdoc', id='a_ca')
+        # Create shared document
+        createContentInContainer(
+            self.portal, 'Document', title=u"Test document")
 
-        # Check shared is there
-        self.assertTrue(self.root_a_ca == self.portal.ca.a_ca)
-        self.assertTrue(self.root_a_ca == self.portal.es.a_ca)
+        # Check shared document is there
+        self.assertEqual(self.portal['test-document'],
+                         self.portal.ca['test-document'])
+        self.assertEqual(self.portal['test-document'],
+                         self.portal.es['test-document'])
 
-        # Check remove root from lrf and catalog update
+        # Delete shared document
+        notify(ObjectWillBeRemovedEvent(self.portal['test-document']))
+        self.portal.manage_delObjects(self.portal['test-document'].id)
 
-        from OFS.event import ObjectWillBeRemovedEvent
-        from zope.event import notify
+        # Check that it is not available in LRFs
+        self.assertNotIn('test-document', self.portal['ca'].objectIds())
+        self.assertNotIn('test-document', self.portal['es'].objectIds())
 
-        notify(ObjectWillBeRemovedEvent(self.portal.a_ca))
-        self.portal.manage_delObjects(self.root_a_ca.id)
+    def test_shared_content_indexing(self):
+        # Create shared document
+        createContentInContainer(
+            self.portal, 'Document', title=u"Test document")
 
-        self.assertTrue('a_ca' not in self.portal.ca)
+        # Check that shared document is indexed in root and in all LRFs
+        elements = self.portal.portal_catalog.searchResults(id='test-document')
+        self.assertEqual(len(elements), 4)
 
-    def test_shared_catalog_content(self):
-        self.root_a_ca = makeContent(self.portal, 'dxdoc', id='a_ca')
+        # Remove shared document
+        notify(ObjectWillBeRemovedEvent(self.portal['test-document']))
+        self.portal.manage_delObjects(self.portal['test-document'].id)
 
-        elements = self.portal.portal_catalog.searchResults(id='a_ca')
+        # Check that shared document is unindexed
+        elements = self.portal.portal_catalog.searchResults(id='test-document')
+        self.assertEqual(len(elements), 0)
 
-        # Check catalog on lrf is indexed
-        self.assertTrue(len(elements) == 4)
+    def test_shared_content_uuid(self):
+        # Create shared document
+        createContentInContainer(
+            self.portal, 'Document', title=u"Test document")
 
-        # Check remove root from lrf and catalog update
+        root_uuid = IUUID(self.portal['test-document'])
+        shared_uuid = IUUID(self.portal.ca['test-document'])
 
-        from OFS.event import ObjectWillBeRemovedEvent
-        from zope.event import notify
+        self.assertEqual('{0:s}-ca'.format(root_uuid), shared_uuid)
 
-        notify(ObjectWillBeRemovedEvent(self.portal.a_ca))
-        self.portal.manage_delObjects(self.root_a_ca.id)
+    def test_moving_shared_content_to_lrf(self):
+        # Create shared document
+        createContentInContainer(
+            self.portal, 'Document', title=u"Test document")
+        uuid = IUUID(self.portal['test-document'])
 
-        elements = self.portal.portal_catalog.searchResults(id='a_ca')
-
-        # Check catalog on lrf is indexed
-        self.assertTrue(len(elements) == 0)
-
-    def test_uuid_shared(self):
-        self.root_a_ca = makeContent(self.portal, 'dxdoc', id='a_ca')
-        
-        from plone.uuid.interfaces import IUUID
-
-        rootuuid = IUUID(self.root_a_ca)
-        shareduuid = IUUID(self.portal.ca.a_ca)
-        self.assertTrue(rootuuid + '-ca' == shareduuid)
-
-    def test_shared_to_lrf(self):
-        self.root_a_ca = makeContent(self.portal, 'dxdoc', id='a_ca')
-
-        from plone.uuid.interfaces import IUUID
-        old_uuid = IUUID(self.root_a_ca)
-        # The ghost is ghost
-        self.assertTrue(is_shared(self.portal.ca.a_ca))
+        # CHeck thats ghost is ghost
+        self.assertTrue(is_shared(self.portal.ca['test-document']))
 
         # Check is in the catalog 
-        brains = self.portal.portal_catalog.searchResults(UID=old_uuid)
-        self.assertTrue(len(brains) == 1)
-        self.assertTrue(brains[0].getPath() == '/plone/a_ca')
+        brains = self.portal.portal_catalog.searchResults(UID=uuid)
+        self.assertEqual(len(brains), 1)
+        self.assertEqual(brains[0].getPath(), '/plone/test-document')
 
-        brains = self.portal.portal_catalog.searchResults(UID=old_uuid + '-ca')
-        self.assertTrue(len(brains) == 1)
-        self.assertTrue(brains[0].getPath() == '/plone/ca/a_ca')
+        brains = self.portal.portal_catalog.searchResults(
+            UID='{0:s}-ca'.format(uuid))
+        self.assertEqual(len(brains), 1)
+        self.assertEqual(brains[0].getPath(), '/plone/ca/test-document')
 
-        brains = self.portal.portal_catalog.searchResults(UID=old_uuid + '-es')
-        self.assertTrue(len(brains) == 1)
-        self.assertTrue(brains[0].getPath() == '/plone/es/a_ca')
+        brains = self.portal.portal_catalog.searchResults(
+            UID='{0:s}-es'.format(uuid))
+        self.assertEqual(len(brains), 1)
+        self.assertEqual(brains[0].getPath(), '/plone/es/test-document')
 
-        new_object = multilingualMoveObject(self.portal.ca.a_ca, 'ca')
-        # check that the old and the new uuid are the same
-        new_uuid = IUUID(self.portal.ca.copy_of_a_ca)
-        self.assertTrue(old_uuid, new_uuid)
-        self.assertFalse(is_shared(new_object))
+        # MOVE!
+        moved = multilingualMoveObject(self.portal.ca['test-document'], 'ca')
 
-        # check portal_catalog is updated
+        # Check that the old and the new uuid are the same
+        moved_uuid = IUUID(self.portal.ca['copy_of_test-document'])
 
-        brains = self.portal.portal_catalog.searchResults(UID=old_uuid)
-        self.assertTrue(len(brains) == 1)
-        self.assertTrue(brains[0].getPath() == '/plone/ca/copy_of_a_ca')
+        self.assertEqual(uuid, moved_uuid)
+        self.assertFalse(is_shared(moved))
 
-        brains = self.portal.portal_catalog.searchResults(UID=old_uuid + '-ca')
-        self.assertTrue(len(brains) == 0)
+        # Check portal_catalog is updated after move
+        brains = self.portal.portal_catalog.searchResults(UID=uuid)
+        self.assertEqual(len(brains), 1)
+        self.assertEqual(brains[0].getPath(),
+                         '/plone/ca/copy_of_test-document')
 
-        brains = self.portal.portal_catalog.searchResults(UID=old_uuid + '-es')
-        self.assertTrue(len(brains) == 0)
+        brains = self.portal.portal_catalog.searchResults(
+            UID='{0:s}-ca'.format(uuid))
+        self.assertEqual(len(brains), 0)
+
+        brains = self.portal.portal_catalog.searchResults(
+            UID='{0:s}-es'.format(uuid))
+        self.assertEqual(len(brains), 0)
 
         # Check which translations it have
-        self.failUnless(ITranslationManager(new_object).get_translations(), {'ca': new_object})
-        ITranslationManager(new_object).add_translation('es')
-        self.failUnless(ITranslationManager(new_object).get_translations(), {'ca': new_object, 'es': self.portal.es.copy_of_a_ca})
+        self.assertEqual(
+            ITranslationManager(moved).get_translations(), {'ca': moved})
+        ITranslationManager(moved).add_translation('es')
+        self.assertEqual(
+            ITranslationManager(moved).get_translations(),
+            {'ca': moved, 'es': self.portal.es['copy_of_test-document']})
 
-        self.assertFalse(is_shared(self.portal.es.copy_of_a_ca))
+        # Check that ghost is no longer ghost
+        self.assertFalse(
+            is_shared(self.portal.es['copy_of_test-document']))

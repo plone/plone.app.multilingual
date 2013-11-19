@@ -1,27 +1,23 @@
+# -*- coding: utf-8 -*-
 from plone.i18n.locales.interfaces import IContentLanguageAvailability
-from Acquisition import aq_parent, aq_inner
+from Acquisition import aq_parent
+from Acquisition import aq_inner
+from Acquisition import aq_base
+from Acquisition import aq_chain
 from AccessControl.SecurityManagement import getSecurityManager
-
-from zope.event import notify
 from zope.component import getUtility
 from zope.component import getMultiAdapter
-from zope.lifecycleevent import ObjectModifiedEvent
-
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
-from Products.CMFCore.interfaces._content import IFolderish
+from plone.app.i18n.locales.browser.selector import LanguageSelector
+from zope.component.hooks import getSite
+from plone.registry.interfaces import IRegistry
 
-from plone.app.folder.utils import findObjects
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import ITranslationLocator
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.manager import TranslationManager
 from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
-from plone.app.i18n.locales.browser.selector import LanguageSelector
-from Acquisition import aq_base, aq_chain
-from zope.component.hooks import getSite
-
-from plone.registry.interfaces import IRegistry
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ILanguageRootFolder
 from Products.CMFPlone.interfaces import IPloneSiteRoot
@@ -30,8 +26,7 @@ from Products.CMFPlone.interfaces import IPloneSiteRoot
 class BabelUtils(BrowserView):
 
     def __init__(self, context, request):
-        self.context = context
-        self.request = request
+        super(BabelUtils, self).__init__(context, request)
         portal_state = getMultiAdapter((context, request),
                                        name="plone_portal_state")
         self.portal_url = portal_state.portal_url()
@@ -105,7 +100,10 @@ class BabelUtils(BrowserView):
         tool = getToolByName(context, 'portal_languages', None)
         checkPermission = getSecurityManager().checkPermission
         translations = self.group.get_translations()
-        translated_info = [dict(code=key, info=tool.getAvailableLanguageInformation()[key], obj=translations[key]) for key in translations]
+        translated_info =\
+            [dict(code=key,
+                  info=tool.getAvailableLanguageInformation()[key],
+                  obj=translations[key]) for key in translations]
 
         default_language = tool.getDefaultLanguage()
 
@@ -118,13 +116,19 @@ class BabelUtils(BrowserView):
             else:
                 lang_info['isDefault'] = False
 
-            # Remove the translation of the content currently being translated
-            # In case it's temporal we show as language is not already set on AT
-            if not context.portal_factory.isTemporary(self.context) and lang_info['code'] == ILanguage(context).get_language():
+            # Remove the translation of the content currently being
+            # translated In case it's temporal we show as language is not
+            # already set on AT
+            portal_factory = getToolByName(self.context, 'portal_factory')
+            context_language = ILanguage(context).get_language()
+            if (not portal_factory.isTemporary(self.context)
+                    and lang_info['code'] == context_language):
                 continue
 
-            # Remove the translation in case the translator user does not have permissions over it
-            has_view_permission = bool(checkPermission('View', lang_info['obj']))
+            # Remove the translation in case the translator user does not
+            # have permissions over it
+            has_view_permission =\
+                bool(checkPermission('View', lang_info['obj']))
             if not has_view_permission:
                 continue
 
@@ -152,10 +156,13 @@ def is_shared(content):
     """
     child = content
     for element in aq_chain(content):
-        if hasattr(child, '_v_is_shared_content') and child._v_is_shared_content and ILanguageRootFolder.providedBy(element):
+        if (hasattr(child, '_v_is_shared_content')
+                and child._v_is_shared_content
+                and ILanguageRootFolder.providedBy(element)):
             return True
         child = element
     return False
+
 
 def is_shared_original(content):
     """
@@ -163,7 +170,8 @@ def is_shared_original(content):
     """
     child = content
     for element in aq_chain(content):
-        if IPloneSiteRoot.providedBy(element) and ILanguageRootFolder.providedBy(child):
+        if (IPloneSiteRoot.providedBy(element)
+                and ILanguageRootFolder.providedBy(child)):
             return False
     return True
 
@@ -176,7 +184,9 @@ def get_original_object(content):
     child = content
 
     for element in aq_chain(content):
-        if hasattr(child, '_v_is_shared_content') and child._v_is_shared_content and ILanguageRootFolder.providedBy(element):
+        if (hasattr(child, '_v_is_shared_content')
+                and child._v_is_shared_content
+                and ILanguageRootFolder.providedBy(element)):
             break
         child = element
         path.insert(0, element.id)
@@ -189,26 +199,33 @@ def get_original_object(content):
         # It's the root element
         return content
 
+
 def multilingualMoveObject(content, language):
     """
-        Move content object and its contained objects to a new language folder
-        Also set the language on all the content moved
+    Move content object and its contained objects to a new language folder
+    Also set the language on all the content moved
     """
     if is_shared(content):
-        # In case is shared we are going to create it on the language root folder
+        # In case is shared we are going to create it on the language root
+        # folder
+
         orig_content = get_original_object(content)
         target_folder = getattr(getSite(), language)
-        # It's going to be a non shared content so we remove it from portal_catalog
+        # It's going to be a non shared content so we remove it from
+        # portal_catalog
 
     else:
         orig_content = content
         target_folder = ITranslationLocator(orig_content)(language)
+
     parent = aq_parent(orig_content)
     cb_copy_data = parent.manage_cutObjects(orig_content.getId())
     list_ids = target_folder.manage_pasteObjects(cb_copy_data)
     new_id = list_ids[0]['new_id']
     new_object = target_folder[new_id]
+
     if hasattr(new_object, '_v_is_shared_content'):
         new_object._v_is_shared_content = False
     new_object.reindexObject()
+
     return new_object

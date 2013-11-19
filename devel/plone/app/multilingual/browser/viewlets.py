@@ -119,8 +119,7 @@ class AlternateLanguagesViewlet(ViewletBase):
         """
         tm = ITranslationManager(self.context)
         catalog = getToolByName(self.context, 'portal_catalog')
-        results = catalog(TranslationGroup=tm.query_canonical(),
-                          Language='all')
+        results = catalog(TranslationGroup=tm.query_canonical())
 
         portal_path_len = len(
             '/'.join(self.portal_state.portal().getPhysicalPath()))

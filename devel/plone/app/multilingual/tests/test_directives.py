@@ -1,14 +1,16 @@
-from plone.app.multilingual.dx.directives import languageindependent
+# -*- coding: utf-8 -*-
+import unittest
+
 from plone.directives import form
-from plone.supermodel.utils import mergedTaggedValueList
 from zope import schema
 from zope.interface import Interface
-import unittest
 import zope.component.testing
+
+from plone.app.multilingual.dx.directives import languageindependent
+from plone.supermodel.utils import mergedTaggedValueList
 
 
 class TestDirectives(unittest.TestCase):
-
     def tearDown(self):
         """Tear down the testing setup.
         """
@@ -24,9 +26,9 @@ class TestDirectives(unittest.TestCase):
             languageindependent('foo')
             foo = schema.TextLine(title=u'Foo')
 
-        self.assertEquals([(Interface, 'foo', 'true')],
-                          mergedTaggedValueList(IDummy,
-                                                languageindependent.key))
+        self.assertEqual([(Interface, 'foo', 'true')],
+                         mergedTaggedValueList(IDummy,
+                                               languageindependent.key))
 
     def test_inherited_schema_still_has_tagged_value(self):
         """An inherited schema should still have the tagged value information
@@ -43,7 +45,7 @@ class TestDirectives(unittest.TestCase):
             """Schema class which inherits a field from IFoo.
             """
 
-        self.assertEquals([(Interface, 'baz', 'true')],
-                          mergedTaggedValueList(IFoo, languageindependent.key))
-        self.assertEquals([(Interface, 'baz', 'true')],
-                          mergedTaggedValueList(IBar, languageindependent.key))
+        self.assertEqual([(Interface, 'baz', 'true')],
+                         mergedTaggedValueList(IFoo, languageindependent.key))
+        self.assertEqual([(Interface, 'baz', 'true')],
+                         mergedTaggedValueList(IBar, languageindependent.key))

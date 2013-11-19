@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+from zope.container.interfaces import INameChooser
+from plone.app.content.namechooser import NormalizingNameChooser
 
 from plone.dexterity.interfaces import IDexterityContent
 from plone.dexterity.content import Container
@@ -11,7 +13,7 @@ from OFS.ObjectManager import BadRequestException
 from plone.folder.interfaces import IExplicitOrdering
 from zope.component.hooks import getSite
 
-from plone.app.multilingual.interfaces import ILanguageRootFolder, ISharedElement
+from plone.app.multilingual.interfaces import ILanguageRootFolder, ISharedElement, ITranslationIdChooser
 from plone.app.layout.navigation.interfaces import INavigationRoot
 
 from plone.folder.ordered import CMFOrderedBTreeFolderBase
@@ -173,3 +175,23 @@ class LRFOrdering(DefaultOrdering):
             else:
                 return 0
                 # raise ValueError('No object with id "%s" exists.' % id)
+
+
+class LRFNameChooser(NormalizingNameChooser):
+    """Special name chooser to fix issue where createContentInContainer is
+    used to create a new content into LRF with an id, which exists already
+    in the parent folder.
+    """
+
+    implements(INameChooser)
+    adapts(ILanguageRootFolder)
+
+    def chooseName(self, name, object):
+        chosen = super(LRFNameChooser, self).chooseName(name, object)
+        if chosen in self.context.objectIds():
+            old_id = getattr(object, 'id', None)
+            object.id = chosen
+            chooser = ITranslationIdChooser(object)
+            chosen = chooser(self.context, self.context.getId())
+            object.id = old_id
+        return chosen

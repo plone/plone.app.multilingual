@@ -1,38 +1,33 @@
 # -*- coding: utf-8 -*-
 import unittest2 as unittest
-from zope.event import notify
-from zope.lifecycleevent import ObjectAddedEvent
+from plone.app.multilingual import api
 from plone.app.multilingual.browser.vocabularies import untranslated_languages
-from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
+from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
+from plone.dexterity.utils import createContentInContainer
 
 
 class TestVocabularies(unittest.TestCase):
-
-    layer = PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
+    layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
 
-        # Create language root folder for 'en'
-        self.portal.portal_languages.supported_langs = ['en']
-        self.portal.invokeFactory(type_name="Folder", id="en")
-        self.portal['en'].setLanguage('en')
+    def test_content_is_translated_into_all_languages(self):
+        a_ac = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
 
-        # Create sample document in 'en' and index it into catalog
-        content_id = self.portal['en'].invokeFactory(
-            type_name="Document", id="sampledocument")
-        self.content = self.portal['en'][content_id]
-        notify(ObjectAddedEvent(self.content))
+        api.translate(a_ac, 'en')
+        api.translate(a_ac, 'es')
 
-    def testContentLanguageIsInTheOnlySupportedLanguage(self):
-        self.assertEquals(len(untranslated_languages(self.content)), 0)
+        self.assertEqual(len(untranslated_languages(a_ac)), 0)
 
-    def testSupportingSomeMoreLanguages(self):
-        self.portal.portal_languages.supported_langs = ['en', 'de', 'it', 'es']
+    def test_content_is_not_translated_to_any_language(self):
+        a_ac = createContentInContainer(
+            self.portal, 'Document', title=u"Test document")
 
-        languages = untranslated_languages(self.content).by_token.keys()
+        languages = untranslated_languages(a_ac).by_token.keys()
 
-        self.assertEquals(len(languages), 3)
-        self.assertIn('de', languages)
+        self.assertEqual(len(languages), 3)
+        self.assertIn('ca', languages)
         self.assertIn('es', languages)
-        self.assertIn('it', languages)
+        self.assertIn('en', languages)

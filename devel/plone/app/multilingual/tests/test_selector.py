@@ -1,33 +1,26 @@
 # -*- coding: utf-8 -*-
 import unittest2 as unittest
 from zope.event import notify
-
-from zope.interface import implements
 from zope.component import getUtility
-
 import transaction
 from Acquisition import Explicit
 from Products.CMFCore.utils import getToolByName
 from plone.registry.interfaces import IRegistry
 from zope.lifecycleevent import ObjectModifiedEvent
-from plone.testing.z2 import Browser
 from plone.app.i18n.locales.browser.selector import LanguageSelector
+from plone.dexterity.utils import createContentInContainer
 
-from plone.app.multilingual.interfaces import ITranslatable
+from plone.testing.z2 import Browser
 from plone.app.multilingual.interfaces import ITG
+from plone.app.multilingual import api
 from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
-from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
 from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
 from plone.app.multilingual.browser.selector import getPostPath
 from plone.app.multilingual.browser.selector import addQuery
 from plone.app.multilingual.browser.helper_views import selector_view
-from plone.app.multilingual.testing import (
-    PLONEAPPMULTILINGUAL_INTEGRATION_TESTING,
-    PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
-)
-from plone.app.multilingual.tests.utils import makeContent
-from plone.app.multilingual.tests.utils import makeTranslation
+from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
+from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
 
 
 class EvilObject(object):
@@ -39,284 +32,293 @@ class EvilObject(object):
         raise UnicodeError
 
 
-SELECTOR_VIEW_TEMPLATE = ('%(url)s/@@multilingual-selector'
-                          '/%(tg)s/%(lang)s%(query)s')
+SELECTOR_VIEW_TEMPLATE =\
+    '%(url)s/@@multilingual-selector/%(tg)s/%(lang)s%(query)s'
 
 
 class TestLanguageSelectorBasics(unittest.TestCase):
 
-    layer = PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
+    layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
+        # Set test variables
         self.portal = self.layer['portal']
-        self.portal.error_log._ignored_exceptions = ()
+        self.portal_url = self.portal.absolute_url()
         self.request = self.layer['request']
+
+        # Setup testbrowser
         self.browser = Browser(self.layer['app'])
         self.browser.handleErrors = False
-        self.portal_url = self.portal.absolute_url()
-        self.language_tool = getToolByName(self.portal, 'portal_languages')
-        self.language_tool.addSupportedLanguage('ca')
-        self.language_tool.addSupportedLanguage('es')
 
-        self.selector = LanguageSelectorViewlet(self.portal,
-                            self.request, None, None)
+    def test_selector_viewlet_is_available(self):
+        selector_viewlet = \
+            LanguageSelectorViewlet(self.portal, self.request, None, None)
+        selector_viewlet.update()
+        self.assertTrue(selector_viewlet.available())
 
-    def test_available(self):
-        self.selector.update()
-        self.assertEquals(self.selector.available(), True)
+    def test_selector_viewlet_is_available_but_tool_is_not(self):
+        selector_viewlet = \
+            LanguageSelectorViewlet(self.portal, self.request, None, None)
+        selector_viewlet.update()
+        selector_viewlet.tool = None
+        self.assertFalse(selector_viewlet.available())
 
-    def test_available_no_tool(self):
-        self.selector.update()
-        self.selector.tool = None
-        self.assertEquals(self.selector.available(), False)
+    def test_selector_data_not_modified_by_viewlet(self):
+        selector_viewlet = \
+            LanguageSelectorViewlet(self.portal, self.request, None, None)
+        selector_viewlet.update()
+        selector_viewlet_languages = selector_viewlet.languages()
 
-    def test_original_selector_data_not_modified_by_viewlet(self):
-        self.selector.update()
-        multilingual_lang_info = self.selector.languages()
-        original_selector = LanguageSelector(self.portal,
-                            self.request, None, None)
-        original_selector.update()
-        original_lang_info = original_selector.languages()
+        selector_adapter = \
+            LanguageSelector(self.portal, self.request, None, None)
+        selector_adapter.update()
+        selector_adapter_languages = selector_adapter.languages()
 
-        self.assertNotEquals(original_lang_info, multilingual_lang_info)
+        self.assertNotEquals(selector_adapter_languages,
+                             selector_viewlet_languages)
 
     def assertFullyTranslatedPages(self):
+        a = createContentInContainer(
+            self.portal['en'], 'Document', title=u"Test document")
 
-        doc1 = makeContent(self.portal, 'Document', id='doc1')
-        doc1.setLanguage('en')
-        doc1_tg = ITG(doc1)
-        doc1_ca = makeTranslation(doc1, 'ca')
-        doc1_ca.setTitle(u"Foo")
-        doc1_ca.setLanguage('ca')
-        doc1_es = makeTranslation(doc1, 'es')
-        doc1_es.setTitle(u"Foo")
-        doc1_es.setLanguage('es')
+        a_ca = api.translate(a, 'ca')
+        a_ca.setTitle(u"Test Document (CA)")
+
+        a_es = api.translate(a, 'es')
+        a_es.setTitle(u"Test Document (ES)")
 
         wftool = getToolByName(self.portal, 'portal_workflow')
-        wftool.doActionFor(doc1, 'publish')
-        wftool.doActionFor(doc1_ca, 'publish')
-        wftool.doActionFor(doc1_es, 'publish')
+        wftool.doActionFor(a, 'publish')
+        wftool.doActionFor(a_ca, 'publish')
+        wftool.doActionFor(a_es, 'publish')
 
-        notify(ObjectModifiedEvent(doc1))
-        notify(ObjectModifiedEvent(doc1_ca))
-        notify(ObjectModifiedEvent(doc1_es))
+        notify(ObjectModifiedEvent(a))
+        notify(ObjectModifiedEvent(a_ca))
+        notify(ObjectModifiedEvent(a_es))
 
-        import transaction
+        selector_viewlet =\
+            LanguageSelectorViewlet(a, self.request, None, None)
+        selector_viewlet.update()
+        selector_viewlet_languages = selector_viewlet.languages()
+
+        self.assertEqual(selector_viewlet_languages, [{
+            'code': u'en',
+            u'flag': u'/++resource++country-flags/gb.gif',
+            u'name': u'English',
+            u'native': u'English',
+            'url': SELECTOR_VIEW_TEMPLATE % {
+                'url': self.portal_url,
+                'tg': ITG(a),
+                'lang': 'en',
+                'query': '?set_language=en'
+            },
+            'selected': True,
+            'translated': True,
+        }, {
+            'code': u'ca',
+            u'flag': u'/++resource++language-flags/ca.gif',
+            u'name': u'Catalan',
+            u'native': u'Catal\xe0',
+            'url': SELECTOR_VIEW_TEMPLATE % {
+                'url': self.portal_url,
+                'tg': ITG(a),
+                'lang': 'ca',
+                'query': '?set_language=ca'
+            },
+            'selected': False,
+            'translated': True,
+        }, {
+            'code': u'es',
+            u'flag': u'/++resource++country-flags/es.gif',
+            u'name': u'Spanish',
+            u'native': u'Espa\xf1ol',
+            'url': SELECTOR_VIEW_TEMPLATE % {
+                'url': self.portal_url,
+                'tg': ITG(a),
+                'lang': 'es',
+                'query': '?set_language=es'
+            },
+            'selected': False,
+            'translated': True,
+        }])
+
         transaction.commit()
 
-        self.selector = LanguageSelectorViewlet(doc1,
-                            self.request, None, None)
-
-        self.selector.update()
-        selector_languages = self.selector.languages()
-        self.assertEqual(selector_languages, [
-            {
-                'code': u'en',
-                u'name': u'English',
-                'url': SELECTOR_VIEW_TEMPLATE % {
-                    'url': self.portal_url,
-                    'tg': doc1_tg,
-                    'lang': 'en',
-                    'query': '?set_language=en'
-                },
-                'selected': True,
-                u'flag': u'/++resource++country-flags/gb.gif',
-                'translated': True,
-                u'native': u'English'
-            },
-            {
-                'code': u'ca',
-                u'name': u'Catalan',
-                'url': SELECTOR_VIEW_TEMPLATE % {
-                    'url': self.portal_url,
-                    'tg': doc1_tg,
-                    'lang': 'ca',
-                    'query': '?set_language=ca'
-                },
-                'selected': False,
-                u'flag': u'/++resource++language-flags/ca.gif',
-                'translated': True,
-                u'native': u'Catal\xe0'
-            },
-            {
-                'code': u'es',
-                u'name': u'Spanish',
-                'url': SELECTOR_VIEW_TEMPLATE % {
-                    'url': self.portal_url,
-                    'tg': doc1_tg,
-                    'lang': 'es',
-                    'query': '?set_language=es'
-                },
-                'selected': False,
-                u'flag': u'/++resource++country-flags/es.gif',
-                'translated': True,
-                u'native': u'Espa\xf1ol'
-            }
-        ])
-
-        self.browser.open(selector_languages[0]['url'])
-        self.assertEqual(
-            self.browser.url,
-            doc1.absolute_url() + '?set_language=en'
-        )
+        self.browser.open(selector_viewlet_languages[0]['url'])
+        self.assertEqual(self.browser.url,
+                         a.absolute_url() + '?set_language=en')
         self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
-        self.browser.open(selector_languages[1]['url'])
-        self.assertEqual(
-            self.browser.url,
-            doc1_ca.absolute_url() + '?set_language=ca'
-        )
-        self.assertIn(
-            u'lang="ca"'.encode("utf-8"),
-            self.browser.contents
-        )
-        self.browser.open(selector_languages[2]['url'])
-        self.assertEqual(
-            self.browser.url,
-            doc1_es.absolute_url() + '?set_language=es'
-        )
-        self.assertIn(
-            u'lang="es"'.encode("utf-8"),
-            self.browser.contents
-        )
 
-    def test_languages_full_translated_by_closest(self):
+        self.browser.open(selector_viewlet_languages[1]['url'])
+        self.assertEqual(self.browser.url,
+                         a_ca.absolute_url() + '?set_language=ca')
+
+        self.assertIn(u'lang="ca"'.encode("utf-8"), self.browser.contents)
+
+        self.browser.open(selector_viewlet_languages[2]['url'])
+        self.assertEqual(self.browser.url,
+                         a_es.absolute_url() + '?set_language=es')
+        self.assertIn(u'lang="es"'.encode("utf-8"), self.browser.contents)
+
+    def test_languages_fully_translated_by_closest(self):
         self.registry = getUtility(IRegistry)
         self.settings = self.registry.forInterface(IMultiLanguagePolicies)
         self.settings.selector_lookup_translations_policy = 'closest'
 
         self.assertFullyTranslatedPages()
 
-    def test_languages_full_translated_by_dialog(self):
+    def test_languages_fully_translated_by_dialog(self):
         self.registry = getUtility(IRegistry)
         self.settings = self.registry.forInterface(IMultiLanguagePolicies)
         self.settings.selector_lookup_translations_policy = 'dialog'
 
         self.assertFullyTranslatedPages()
 
-    def setUpPAMFolders(self):
-        workflowTool = getToolByName(self.portal, "portal_workflow")
-        workflowTool.setDefaultChain('simple_publication_workflow')
-        setupTool = SetupMultilingualSite()
-        setupTool.setupSite(self.portal)
-        transaction.commit()
-        return workflowTool
-
     def setUpPartiallyTranslatedContent(self):
-        wftool = self.setUpPAMFolders()
-        folder = makeContent(self.portal.en, 'Folder', id='folder')
-        folder.setLanguage('en')
-        wftool.doActionFor(folder, 'publish')
-        document = makeContent(folder, 'Document', id='document')
-        document.setLanguage('en')
-        wftool.doActionFor(document, 'publish')
-        folder_ca = makeTranslation(folder, 'ca')
-        folder_ca.setTitle(u"Foo")
-        folder_ca.setLanguage('ca')
-        wftool.doActionFor(folder_ca, 'publish')
+        wftool = getToolByName(self.portal, 'portal_workflow')
+
+        f_en = createContentInContainer(
+            self.portal['en'], 'Folder', title=u"Test folder")
+        wftool.doActionFor(f_en, 'publish')
+
+        a_en = createContentInContainer(
+            self.portal['en']['test-folder'], 'Document',
+            title=u"Test document")
+        wftool.doActionFor(a_en, 'publish')
+
+        f_ca = api.translate(f_en, 'ca')
+        f_ca.setTitle(u"Test folder CA")
+        wftool.doActionFor(f_ca, 'publish')
+
         transaction.commit()
-        return wftool
 
     def setUpFullyTranslatedContent(self):
-        wftool = self.setUpPartiallyTranslatedContent()
-        document_ca = makeTranslation(self.portal.en.folder.document, 'ca')
-        document_ca.setTitle(u"Foo")
-        document_ca.setLanguage('ca')
-        wftool.doActionFor(document_ca, 'publish')
-        folder_es = makeTranslation(self.portal.en.folder, 'es')
-        folder_es.setTitle(u"Foo")
-        folder_es.setLanguage('es')
-        wftool.doActionFor(folder_es, 'publish')
-        document_es = makeTranslation(self.portal.en.folder.document, 'es')
-        document_es.setTitle(u"Foo")
-        document_es.setLanguage('es')
-        wftool.doActionFor(document_es, 'publish')
+        wftool = getToolByName(self.portal, 'portal_workflow')
+
+        self.setUpPartiallyTranslatedContent()
+
+        a_ca = api.translate(
+            self.portal['en']['test-folder']['test-document'], 'ca')
+        a_ca.setTitle(u"Test document CA")
+        wftool.doActionFor(a_ca, 'publish')
+
+        f_es = api.translate(
+            self.portal['en']['test-folder'], 'es')
+        f_es.setTitle(u"Test folder ES")
+        wftool.doActionFor(f_es, 'publish')
+
+        a_es = api.translate(
+            self.portal['en']['test-folder']['test-document'], 'es')
+        a_es.setTitle(u"Test document ES")
+        wftool.doActionFor(a_es, 'publish')
+
         transaction.commit()
-        return wftool
 
     def test_languages_untranslated_by_closest(self):
+        # Define selector policy
         self.registry = getUtility(IRegistry)
         self.settings = self.registry.forInterface(IMultiLanguagePolicies)
         self.settings.selector_lookup_translations_policy = 'closest'
-        self.setUpPAMFolders()
 
-        document = makeContent(self.portal.ca, 'Document', id='untranslated')
-        document.setLanguage('ca')
         wftool = getToolByName(self.portal, "portal_workflow")
-        wftool.doActionFor(document, 'publish')
-        transaction.commit()
-        view = selector_view(document, self.layer['request'])
-        view.lang = 'es'
-        view.tg = ITG(document)
-        url = view.getClosestDestination()
-        self.assertEqual(url, self.portal.es.absolute_url())
 
-        view.lang = 'it'
+        a_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
+        a_ca.setLanguage('ca')
+        wftool.doActionFor(a_ca, 'publish')
+
+        view = selector_view(a_ca, self.request)
+        view.tg = ITG(a_ca)
+
+        # Check that the 'original' language gets the created document
+        view.lang = 'ca'
         url = view.getClosestDestination()
-        self.assertEqual(url, self.portal.absolute_url())
+        self.assertEqual(url, a_ca.absolute_url())
+
+        # Check that untranslated languages get the nearest translated parent
+        view.lang = 'es'
+        url = view.getClosestDestination()
+        self.assertEqual(url, self.portal['es'].absolute_url())
+
+        view.lang = 'en'
+        url = view.getClosestDestination()
+        self.assertEqual(url, self.portal['en'].absolute_url())
+
+        # Check that translating content updates the closest destination
+        a_es = api.translate(a_ca, 'es')
+        view.lang = 'es'
+        url = view.getClosestDestination()
+        self.assertEqual(url, a_es.absolute_url())
 
     def test_languages_partially_translated_by_closest(self):
         self.registry = getUtility(IRegistry)
         self.settings = self.registry.forInterface(IMultiLanguagePolicies)
         self.settings.selector_lookup_translations_policy = 'closest'
+
+        # Setup content
         self.setUpPartiallyTranslatedContent()
 
-        selector = LanguageSelectorViewlet(
-            self.portal.en.folder.document,
-            self.request,
-            None,
-            None
-        )
+        a_en = self.portal['en']['test-folder']['test-document']
+        f_ca = self.portal['ca']['test-folder']
 
+        selector = LanguageSelectorViewlet(a_en, self.request, None, None)
         selector.update()
         selector_languages = selector.languages()
+
+        # Check that EN translation is found
         self.browser.open(selector_languages[0]['url'])
         self.assertEqual(
             self.browser.url,
-            self.portal.en.folder.document.absolute_url()+'?set_language=en'
+            a_en.absolute_url() + '?set_language=en'
         )
+        self.assertIn(u'lang="en"'.encode("utf-8"), self.browser.contents)
+        # But extra check, because English is the default?
         self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+
+        # Check that CA translation is only partial and a parent folder
+        # is found
         self.browser.open(selector_languages[1]['url'])
         self.assertEqual(
             self.browser.url,
-            self.portal.ca.folder.absolute_url()+'?set_language=ca'
+            f_ca.absolute_url() + '?set_language=ca'
         )
-        self.assertIn(
-            u'lang="ca"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn(u'lang="ca"'.encode("utf-8"), self.browser.contents)
+
+        # Check that ES translation is missing and only the LRF is found
         self.browser.open(selector_languages[2]['url'])
         self.assertEqual(
             self.browser.url,
-            self.portal.es.absolute_url()+'?set_language=es'
+            self.portal['es'].absolute_url() + '?set_language=es'
         )
-        self.assertIn(
-            u'lang="es"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn(u'lang="es"'.encode("utf-8"), self.browser.contents)
 
     def test_languages_partially_translated_by_dialog(self):
         self.registry = getUtility(IRegistry)
         self.settings = self.registry.forInterface(IMultiLanguagePolicies)
         self.settings.selector_lookup_translations_policy = 'dialog'
 
+        # Setup content
         self.setUpPartiallyTranslatedContent()
 
-        selector = LanguageSelectorViewlet(
-            self.portal.en.folder.document,
-            self.request,
-            None,
-            None
-        )
+        a_en = self.portal['en']['test-folder']['test-document']
 
+        selector = LanguageSelectorViewlet(a_en, self.request, None, None)
         selector.update()
         selector_languages = selector.languages()
+
+        # Check that EN translation is found
         self.browser.open(selector_languages[0]['url'])
         self.assertEqual(
             self.browser.url,
-            self.portal.en.folder.document.absolute_url()+'?set_language=en'
+            a_en.absolute_url()+'?set_language=en'
         )
+        # But extra check, because English is the default?
+        self.assertIn(u'lang="en"'.encode("utf-8"), self.browser.contents)
         self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+
         tgid = selector_languages[1]['url'].split('/')[-2]
+
+        # Check that CA is not yet translated
         self.browser.open(selector_languages[1]['url'])
         self.assertEqual(
             self.browser.url,
@@ -327,6 +329,8 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             u'lang="ca"'.encode("utf-8"),
             self.browser.contents
         )
+
+        # Check that ES is not yet translated
         self.browser.open(selector_languages[2]['url'])
         self.assertEqual(
             self.browser.url,
@@ -338,102 +342,127 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.browser.contents
         )
 
-    def test_site_root(self):
-        for policy in ['closest', 'dialog']:
-            self.registry = getUtility(IRegistry)
-            self.settings = self.registry.forInterface(IMultiLanguagePolicies)
-            self.settings.selector_lookup_translations_policy = policy
-            transaction.commit()
-            self.selector = LanguageSelectorViewlet(
-                self.portal,
-                self.request,
-                None,
-                None
-            )
-            self.selector.update()
-            selector_languages = self.selector.languages()
-            self.browser.open(selector_languages[0]['url'])
-            #self.assertEqual(
-            #    self.browser.url,
-            #    self.portal.absolute_url()+'?set_language=en'
-            #)
-            self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
-            self.assertEqual(
-                selector_languages[1]['url'],
-                self.portal.absolute_url()+'/@@multilingual-selector/notg/ca?set_language=ca'
-            )
-            self.browser.open(selector_languages[1]['url'])
-            self.assertIn(
-                u'lang="ca"'.encode("utf-8"),
-                self.browser.contents
-            )
-            self.browser.open(selector_languages[2]['url'])
-            self.assertEqual(
-                selector_languages[2]['url'],
-                self.portal.absolute_url()+'/@@multilingual-selector/notg/es?set_language=es'
-            )
-            self.assertIn(
-                u'lang="es"'.encode("utf-8"),
-                self.browser.contents
-            )
+    def assertSiteRoot(self):
+        self.selector_viewlet = LanguageSelectorViewlet(
+            self.portal, self.request, None, None)
+        self.selector_viewlet.update()
+        selector_languages = self.selector_viewlet.languages()
+
+        transaction.commit()
+
+        # Check EN root
+        self.assertEqual(
+            selector_languages[0]['url'],
+            (self.portal.absolute_url()
+             + '/@@multilingual-selector/notg/en?set_language=en')
+        )
+        self.browser.open(selector_languages[0]['url'])
+        self.assertIn(
+            u'lang="en"'.encode("utf-8"),
+            self.browser.contents
+        )
+        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+
+        # Check CA root
+        self.assertEqual(
+            selector_languages[1]['url'],
+            (self.portal.absolute_url()
+             + '/@@multilingual-selector/notg/ca?set_language=ca')
+        )
+        self.browser.open(selector_languages[1]['url'])
+        self.assertIn(
+            u'lang="ca"'.encode("utf-8"),
+            self.browser.contents
+        )
+
+        # Check ES root
+        self.browser.open(selector_languages[2]['url'])
+        self.assertEqual(
+            selector_languages[2]['url'],
+            (self.portal.absolute_url()
+             + '/@@multilingual-selector/notg/es?set_language=es')
+        )
+        self.assertIn(
+            u'lang="es"'.encode("utf-8"),
+            self.browser.contents
+        )
+
+    def test_siteroot_by_closest(self):
+        self.registry = getUtility(IRegistry)
+        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings.selector_lookup_translations_policy = 'closest'
+
+        self.assertSiteRoot()
+
+    def test_siteroot_by_dialog(self):
+        self.registry = getUtility(IRegistry)
+        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings.selector_lookup_translations_policy = 'dialog'
+
+        self.assertSiteRoot()
 
     def assertRootFolders(self):
-        self.selector = LanguageSelectorViewlet(self.portal.en,
-                                                self.request, None, None)
-        tg = ITG(self.portal.en)
+        self.selector_viewlet = LanguageSelectorViewlet(
+            self.portal['en'], self.request, None, None)
+        self.selector_viewlet.update()
 
-        self.selector.update()
-        selector_languages = self.selector.languages()
-        self.assertEqual(selector_languages, [
-            {
-                'code': u'en',
-                u'name': u'English',
-                'url': SELECTOR_VIEW_TEMPLATE % {
-                    'url': self.portal.absolute_url(),
-                    'tg': tg,
-                    'lang': 'en',
-                    'query': '?set_language=en'
-                },
-                'selected': True,
-                u'flag': u'/++resource++country-flags/gb.gif',
-                'translated': True,
-                u'native': u'English'},
-            {
-                'code': u'ca',
-                u'name': u'Catalan',
-                'url': SELECTOR_VIEW_TEMPLATE % {
-                    'url': self.portal.absolute_url(),
-                    'tg': tg,
-                    'lang': 'ca',
-                    'query': '?set_language=ca'
-                },
-                'selected': False,
-                u'flag': u'/++resource++language-flags/ca.gif',
-                'translated': True,
-                u'native': u'Catal\xe0'
+        selector_languages = self.selector_viewlet.languages()
+        tg = ITG(self.portal['en'])
+
+        self.assertEqual(selector_languages, [{
+            'code': u'en',
+            u'flag': u'/++resource++country-flags/gb.gif',
+            u'name': u'English',
+            u'native': u'English',
+            'url': SELECTOR_VIEW_TEMPLATE % {
+                'url': self.portal.absolute_url(),
+                'tg': tg,
+                'lang': 'en',
+                'query': '?set_language=en'
             },
-            {
-                'code': u'es',
-                u'name': u'Spanish',
-                'url': SELECTOR_VIEW_TEMPLATE % {
-                    'url': self.portal.absolute_url(),
-                    'tg': tg,
-                    'lang': 'es',
-                    'query': '?set_language=es'
-                },
-                'selected': False,
-                u'flag': u'/++resource++country-flags/es.gif',
-                'translated': True,
-                u'native': u'Espa\xf1ol'
-            }
-        ])
+            'selected': True,
+            'translated': True,
+        }, {
+            'code': u'ca',
+            u'flag': u'/++resource++language-flags/ca.gif',
+            u'name': u'Catalan',
+            u'native': u'Catal\xe0',
+            'url': SELECTOR_VIEW_TEMPLATE % {
+                'url': self.portal.absolute_url(),
+                'tg': tg,
+                'lang': 'ca',
+                'query': '?set_language=ca'
+            },
+            'selected': False,
+            'translated': True,
+        }, {
+            'code': u'es',
+            u'flag': u'/++resource++country-flags/es.gif',
+            u'name': u'Spanish',
+            u'native': u'Espa\xf1ol',
+            'url': SELECTOR_VIEW_TEMPLATE % {
+                'url': self.portal.absolute_url(),
+                'tg': tg,
+                'lang': 'es',
+                'query': '?set_language=es'
+            },
+            'selected': False,
+            'translated': True,
+        }])
 
+        # Check EN
         self.browser.open(selector_languages[0]['url'])
         self.assertEqual(
             self.browser.url,
-            self.portal.en.absolute_url()+'?set_language=en'
+            self.portal['en'].absolute_url()+'?set_language=en'
+        )
+        self.assertIn(
+            u'lang="en"'.encode("utf-8"),
+            self.browser.contents
         )
         self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+
+        # Check CA
         self.browser.open(selector_languages[1]['url'])
         self.assertEqual(
             self.browser.url,
@@ -443,6 +472,8 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             u'lang="ca"'.encode("utf-8"),
             self.browser.contents
         )
+
+        # Check ES
         self.browser.open(selector_languages[2]['url'])
         self.assertEqual(
             self.browser.url,
@@ -458,8 +489,6 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.settings = self.registry.forInterface(IMultiLanguagePolicies)
         self.settings.selector_lookup_translations_policy = 'dialog'
 
-        self.setUpPAMFolders()
-
         self.assertRootFolders()
 
     def test_languages_root_folders_by_closest(self):
@@ -467,42 +496,53 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.settings = self.registry.forInterface(IMultiLanguagePolicies)
         self.settings.selector_lookup_translations_policy = 'closest'
 
-        self.setUpPAMFolders()
-
         self.assertRootFolders()
 
     def test_languages_preserve_view(self):
-        self.setUpPartiallyTranslatedContent()
         self.registry = getUtility(IRegistry)
-        self.request['PATH_INFO'] = '/plone/en/folder/@@search'
         self.settings = self.registry.forInterface(IMultiLanguagePolicies)
         self.settings.selector_lookup_translations_policy = 'closest'
-        transaction.commit()
-        selector = LanguageSelectorViewlet(
-            self.portal.en.folder,
-            self.request,
-            None,
-            None
-        )
+
+        self.setUpPartiallyTranslatedContent()
+
+        f_en = self.portal['en']['test-folder']
+        f_en = self.portal['en']['test-folder']
+        f_ca = self.portal['ca']['test-folder']
+
+        self.request['PATH_INFO'] = '/plone/en/test-folder/@@search'
+
+        selector = LanguageSelectorViewlet(f_en, self.request, None, None)
         selector.update()
         selector_languages = selector.languages()
+
+        transaction.commit()
+
+        # Check EN
         self.browser.open(selector_languages[0]['url'])
         self.assertEqual(
             self.browser.url,
-            self.portal.en.folder.absolute_url()+'/@@search?set_language=en'
+            f_en.absolute_url()+'/@@search?set_language=en'
+        )
+        self.assertIn(
+            u'lang="en"'.encode("utf-8"),
+            self.browser.contents
         )
         self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+
+        # Check CA
         self.browser.open(selector_languages[1]['url'])
         self.assertEqual(
             self.browser.url,
-            self.portal.ca.folder.absolute_url()+'/@@search?set_language=ca'
+            f_ca.absolute_url()+'/@@search?set_language=ca'
         )
         self.assertIn(
             u'lang="ca"'.encode("utf-8"),
             self.browser.contents
         )
-        # Here @@search isn't preserved because we've gone up a level
+
+        # Check ES
         self.browser.open(selector_languages[2]['url'])
+        # Here @@search isn't preserved because we've gone up a level
         self.assertEqual(
             self.browser.url,
             self.portal.es.absolute_url()+'?set_language=es'
@@ -516,34 +556,40 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.registry = getUtility(IRegistry)
         self.settings = self.registry.forInterface(IMultiLanguagePolicies)
         self.settings.selector_lookup_translations_policy = 'dialog'
-        transaction.commit()
-        selector = LanguageSelectorViewlet(
-            self.portal.en.folder,
-            self.request,
-            None,
-            None
-        )
+
+        selector = LanguageSelectorViewlet(f_en, self.request, None, None)
         selector.update()
         selector_languages = selector.languages()
+
+        transaction.commit()
+
+        # Check EN
         self.browser.open(selector_languages[0]['url'])
         self.assertEqual(
             self.browser.url,
-            self.portal.en.folder.absolute_url()+'/@@search?set_language=en'
+            f_en.absolute_url()+'/@@search?set_language=en'
+        )
+        self.assertIn(
+            u'lang="en"'.encode("utf-8"),
+            self.browser.contents
         )
         self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+
+        # Check CA
         self.browser.open(selector_languages[1]['url'])
         self.assertEqual(
             self.browser.url,
-            self.portal.ca.folder.absolute_url()+'/@@search?set_language=ca'
+            f_ca.absolute_url()+'/@@search?set_language=ca'
         )
         self.assertIn(
             u'lang="ca"'.encode("utf-8"),
             self.browser.contents
         )
-        # Here @@search isn't preserved because we've got the dialog
-        self.browser.open(selector_languages[2]['url'])
-        tgid = selector_languages[2]['url'].split('/')[-3]
 
+        # Check ES
+        self.browser.open(selector_languages[2]['url'])
+        # Here @@search isn't preserved because we've got the dialog
+        tgid = selector_languages[2]['url'].split('/')[-3]
         self.assertEqual(
             self.browser.url,
             self.portal.absolute_url() + \
@@ -554,70 +600,81 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.browser.contents
         )
 
-    def test_languages_preserve_query(self):
+    def assertLanguagesPreserveQuery(self, policy):
+
         self.setUpPartiallyTranslatedContent()
-        self.registry = getUtility(IRegistry)
-        self.request['PATH_INFO'] = '/plone/en/folder/@@search'
+        self.request['PATH_INFO'] = '/plone/en/test-folder/@@search'
         self.request.form['uni'] = u'pres\xd8rved'
         self.request.form['int'] = '1'
 
-        selector = LanguageSelectorViewlet(
-            self.portal.en.folder,
-            self.request,
-            None,
-            None
-        )
+        f_en = self.portal['en']['test-folder']
+        f_ca = self.portal['ca']['test-folder']
+
+        selector = LanguageSelectorViewlet(f_en, self.request, None, None)
         selector.update()
         selector_languages = selector.languages()
+
         tgid = selector_languages[2]['url'].split('/')[-3]
-
-        untraslated_url = {
-            'closest': self.portal.es.absolute_url() + \
-                '?int=1&uni=pres%C3%98rved&set_language=es',
-            'dialog': self.portal.absolute_url() + \
-                NOT_TRANSLATED_YET_TEMPLATE + '/' + tgid + \
-                '?int=1&uni=pres%C3%98rved&set_language=es'
+        untranslated_url = {
+            'closest': (self.portal['es'].absolute_url()
+                        + '?int=1&uni=pres%C3%98rved&set_language=es'),
+            'dialog': (self.portal.absolute_url()
+                       + NOT_TRANSLATED_YET_TEMPLATE + '/' + tgid
+                       + '?int=1&uni=pres%C3%98rved&set_language=es')
         }
-        for policy in ['closest', 'dialog']:
-            self.settings = self.registry.forInterface(IMultiLanguagePolicies)
-            self.settings.selector_lookup_translations_policy = policy
-            transaction.commit()
-            selector = LanguageSelectorViewlet(
-                self.portal.en.folder,
-                self.request,
-                None,
-                None
-            )
-            selector.update()
-            selector_languages = selector.languages()
-            self.browser.open(selector_languages[0]['url'])
-            self.assertEqual(
-                self.browser.url,
-                self.portal.en.folder.absolute_url() + \
-                    '/@@search?int=1&uni=pres%C3%98rved&set_language=en'
-            )
-            self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
-            self.browser.open(selector_languages[1]['url'])
-            self.assertEqual(
-                self.browser.url,
-                self.portal.ca.folder.absolute_url() + \
-                    '/@@search?int=1&uni=pres%C3%98rved&set_language=ca'
-            )
-            self.assertIn(
-                u'lang="ca"'.encode("utf-8"),
-                self.browser.contents
-            )
-            # Here @@search isn't preserved because we've got the dialog
-            self.browser.open(selector_languages[2]['url'])
 
-            self.assertEqual(
-                self.browser.url,
-                untraslated_url[policy]
-            )
-            self.assertIn(
-                u'lang="es"'.encode("utf-8"),
-                self.browser.contents
-            )
+        transaction.commit()
+
+        # Check EN
+        self.browser.open(selector_languages[0]['url'])
+        self.assertEqual(
+            self.browser.url,
+            (f_en.absolute_url()
+             + '/@@search?int=1&uni=pres%C3%98rved&set_language=en')
+        )
+        self.assertIn(
+            u'lang="en"'.encode("utf-8"),
+            self.browser.contents
+        )
+        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+
+        # Check CA
+        self.browser.open(selector_languages[1]['url'])
+        self.assertEqual(
+            self.browser.url,
+            (f_ca.absolute_url()
+             + '/@@search?int=1&uni=pres%C3%98rved&set_language=ca')
+        )
+        self.assertIn(
+            u'lang="ca"'.encode("utf-8"),
+            self.browser.contents
+        )
+
+        # Check ES
+        self.browser.open(selector_languages[2]['url'])
+        # Here @@search isn't preserved because we've got the dialog
+        self.assertEqual(
+            self.browser.url,
+            untranslated_url[policy]
+        )
+        self.assertIn(
+            u'lang="es"'.encode("utf-8"),
+            self.browser.contents
+        )
+
+    def test_languages_preserve_by_closest(self):
+        self.registry = getUtility(IRegistry)
+        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings.selector_lookup_translations_policy = 'closest'
+
+        self.assertLanguagesPreserveQuery('closest')
+
+    def test_languages_preserve_by_dialog(self):
+        self.registry = getUtility(IRegistry)
+        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings.selector_lookup_translations_policy = 'dialog'
+
+        self.assertLanguagesPreserveQuery('dialog')
 
     # XXX: this seems to me like a demented use case.
     # If you put the VH _after_ the jail,
@@ -642,7 +699,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
     #     registry = getUtility(IRegistry)
     #     settings = registry.forInterface(IMultiLanguagePolicies)
     #     settings.selector_lookup_translations_policy = 'dialog'
-
+    #
     #     from Products.CMFCore.interfaces import ISiteRoot
     #     from zope.interface import alsoProvides
     #     provideAdapter(DummyState, adapts=(Dummy, DummyRequest),
@@ -683,45 +740,47 @@ class TestLanguageSelectorBasics(unittest.TestCase):
 
 class TestLanguageSelectorPostPath(unittest.TestCase):
 
-    layer = PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
+    layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
-        self.folder = makeContent(self.portal, 'Folder', id='folder')
-        self.document = makeContent(self.folder, 'Document', id='document')
+        self.folder = createContentInContainer(
+            self.portal['ca'], 'Folder', title=u"Folder")
+        self.document = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Document")
         self.request = self.layer['request']
 
     def test_findpath(self):
-        self.request['PATH_INFO'] = '/plone/folder/document/whatever'
+        self.request['PATH_INFO'] = '/plone/ca/folder/document/whatever'
         self.assertEqual(
             getPostPath(self.document, self.request),
             '/whatever'
         )
 
     def test_findpath_match(self):
-        self.request['PATH_INFO'] = '/plone/folder/document'
+        self.request['PATH_INFO'] = '/plone/ca/folder/document'
         self.assertEqual(
             getPostPath(self.document, self.request),
             ''
         )
 
     def test_findpath_match_slash(self):
-        self.request['PATH_INFO'] = '/plone/folder/document/'
+        self.request['PATH_INFO'] = '/plone/ca/folder/document/'
         self.assertEqual(
             getPostPath(self.document, self.request),
             ''
         )
 
     def test_findpath_template(self):
-        self.request['PATH_INFO'] = ('/plone/folder/document/'
-                                     'whatever/foo/atct_edit')
+        self.request['PATH_INFO'] = ('/plone/ca/folder/document/'
+                                     'whatever/foo/edit')
         self.assertEqual(
             getPostPath(self.document, self.request),
-            '/whatever/foo/atct_edit'
+            '/whatever/foo/edit'
         )
 
     def test_findpath_view(self):
-        self.request['PATH_INFO'] = '/plone/folder/document/@@search'
+        self.request['PATH_INFO'] = '/plone/ca/folder/document/@@search'
         self.assertEqual(
             getPostPath(self.document, self.request),
             '/@@search'
@@ -729,7 +788,7 @@ class TestLanguageSelectorPostPath(unittest.TestCase):
 
     def test_findpath_vhr(self):
         self.request['PATH_INFO'] = ('/VirtualHostBase/http/127.0.0.1'
-                                     '/plone/folder/document/'
+                                     '/plone/ca/folder/document/'
                                      'VirtualHostRoot/whatever')
         self.assertEqual(
             getPostPath(self.document, self.request),
@@ -738,7 +797,7 @@ class TestLanguageSelectorPostPath(unittest.TestCase):
 
     def test_findpath_vh_marker(self):
         self.request['PATH_INFO'] = ('/VirtualHostBase/http/127.0.0.1'
-                                     '/plone/folder/document/'
+                                     '/plone/ca/folder/document/'
                                      'VirtualHostRoot/_vh_foo/whatever')
         self.assertEqual(
             getPostPath(self.document, self.request),
@@ -747,7 +806,7 @@ class TestLanguageSelectorPostPath(unittest.TestCase):
 
     def test_findpath_vhr_and_traverser(self):
         self.request['PATH_INFO'] = ('/VirtualHostBase/http/127.0.0.1'
-                                     '/plone/folder/document/++theme++foo/'
+                                     '/plone/ca/folder/document/++theme++foo/'
                                      'VirtualHostRoot/whatever')
         self.assertEqual(
             getPostPath(self.document, self.request),
@@ -757,7 +816,7 @@ class TestLanguageSelectorPostPath(unittest.TestCase):
 
 class TestLanguageSelectorAddQuery(unittest.TestCase):
 
-    layer = PLONEAPPMULTILINGUAL_INTEGRATION_TESTING
+    layer = PAM_INTEGRATION_TESTING
 
     def setUp(self):
         self.request = self.layer['request']
