@@ -130,7 +130,12 @@ class BabelUtils(BrowserView):
 
     def current_language_name(self):
         """ Get the current language native name """
-        adapted = ILanguage(self.context)
+        if getToolByName(self.context, 'portal_factory').isTemporary(self.context):
+            # We're in Archetypes mode and inside a portal_factory, get the
+            # current language from the parent instead
+            adapted = ILanguage(self.context.__parent__)
+        else:
+            adapted = ILanguage(self.context)
         lang_code = adapted.get_language()
         util = getUtility(IContentLanguageAvailability)
         data = util.getLanguages(True)
