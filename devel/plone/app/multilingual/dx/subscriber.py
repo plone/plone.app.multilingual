@@ -18,6 +18,8 @@ from zope.event import notify
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.lifecycleevent import Attributes
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
+from zope.component.hooks import getSite
+from Acquisition import aq_parent
 
 
 class LanguageIndependentModifier(object):
@@ -25,7 +27,13 @@ class LanguageIndependentModifier(object):
 
     def __call__(self, content, event):
         """Called by the event system."""
-        sdm = content.session_data_manager
+        if aq_parent(content) is None:
+            # The event is thrown on a non acquired object
+            # so we can't get the session_data_manager
+            sdm = getSite().session_data_manager
+        else:
+            sdm = content.session_data_manager
+
         session = sdm.getSessionData()
         if 'tg' in session.keys():
             # In case it's a on the fly translation avoid 
