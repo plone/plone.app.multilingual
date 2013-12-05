@@ -57,19 +57,6 @@
       permission="cmf.ManagePortal"
       />
 
-  <!-- It comes from a translation DX -->
-
-  <browser:viewlet
-      name="plone.app.multilingual.add-form-is-translation"
-      for="*"
-      view="plone.dexterity.browser.add.DefaultAddView"
-      manager="plone.app.layout.viewlets.interfaces.IAboveContent"
-      class=".viewlets.addFormIsATranslationViewlet"
-      template="templates/add-form-is-translation.pt"
-      layer="..interfaces.IPloneAppMultilingualInstalled"
-      permission="zope.Public"
-      />
-
   <!-- It comes from a translation AT with Portal Factory -->
 
   <browser:viewlet
@@ -205,16 +192,6 @@
       />
 
   <!-- GTranslate Service -->
-
-  <configure zcml:condition="installed plone.dexterity">
-    <browser:page
-      for="plone.dexterity.interfaces.IDexterityContent"
-      name="gtranslation_service"
-      class=".translate.gtranslation_service_dexterity"
-      permission="cmf.ModifyPortalContent"
-      />
-  </configure>
-
   <browser:page
     for="Products.Archetypes.atapi.BaseObject"
     name="gtranslation_service"
@@ -235,9 +212,8 @@
       factory=".add.AddViewTraverser"
       />
 
-  <!-- Add Form Dexterity -->
-
-  <configure zcml:condition="installed plone.dexterity">
+  <!-- Dexterity -->
+  <configure zcml:condition="installed plone.multilingualbehavior">
     <!-- Standard add view and form - invoked from ++addtranslation++ traverser -->
     <adapter
         name="babel_view"
@@ -253,6 +229,44 @@
             interface="zope.publisher.interfaces.browser.IBrowserPage"
             />
     </class>
+
+    <!-- Edit form -->
+    <browser:page
+      for="plone.dexterity.interfaces.IDexterityContent"
+      name="babel_edit"
+      class=".edit.DefaultMultilingualEditView"
+      permission="cmf.ModifyPortalContent"
+      />
+
+    <!-- Templates for translation fields info visualization via AJAX -->
+    <browser:page
+      for="plone.dexterity.interfaces.IDexterityContent"
+      name="babel_view"
+      class=".view.DexterityBabelView"
+      template="templates/dx_babel_view.pt"
+      permission="cmf.ModifyPortalContent"
+      />
+
+    <!-- It comes from a translation DX -->
+    <browser:viewlet
+        name="plone.app.multilingual.add-form-is-translation"
+        for="*"
+        view="plone.dexterity.browser.add.DefaultAddView"
+        manager="plone.app.layout.viewlets.interfaces.IAboveContent"
+        class=".viewlets.addFormIsATranslationViewlet"
+        template="templates/add-form-is-translation.pt"
+        layer="..interfaces.IPloneAppMultilingualInstalled"
+        permission="zope.Public"
+        />
+
+    <!-- GTranslate Service -->
+    <browser:page
+      for="plone.dexterity.interfaces.IDexterityContent"
+      name="gtranslation_service"
+      class=".translate.gtranslation_service_dexterity"
+      permission="cmf.ModifyPortalContent"
+      />
+
   </configure>
 
 
@@ -266,16 +280,6 @@
     />
 
   <!-- Edit form -->
-
-  <configure zcml:condition="installed plone.dexterity">
-    <browser:page
-      for="plone.dexterity.interfaces.IDexterityContent"
-      name="babel_edit"
-      class=".edit.DefaultMultilingualEditView"
-      permission="cmf.ModifyPortalContent"
-      />
-  </configure>
-
   <browser:page
     for="Products.Archetypes.atapi.BaseObject"
     name="babel_edit"
@@ -284,16 +288,6 @@
     />
 
   <!-- Templates for translation fields info visualization via AJAX -->
-  <configure zcml:condition="installed plone.dexterity">
-    <browser:page
-      for="plone.dexterity.interfaces.IDexterityContent"
-      name="babel_view"
-      class=".view.DexterityBabelView"
-      template="templates/dx_babel_view.pt"
-      permission="cmf.ModifyPortalContent"
-      />
-  </configure>
-
   <browser:page
     for="Products.Archetypes.atapi.BaseObject"
     name="babel_view"

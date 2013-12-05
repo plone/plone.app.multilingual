@@ -1,38 +1,18 @@
-from plone.app.multilingual import isDexterityInstalled
-
-if isDexterityInstalled:
-    from plone.dexterity.browser.add import DefaultAddForm, DefaultAddView
-    from plone.multilingualbehavior.interfaces import ILanguageIndependentField
-else:
-    DefaultEditForm = object
-
-from plone.z3cform import layout
-from Products.CMFCore.utils import getToolByName
-from Acquisition import aq_inner
-
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
-from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
-from plone.app.i18n.locales.browser.selector import LanguageSelector
-
-
-from zope.component import getUtility
-from plone.registry.interfaces import IRegistry
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
-
-
-from zope.component import adapts
-from zope.component import queryMultiAdapter
-from zope.interface import implements
-from zope.interface import Interface
-from zope.traversing.interfaces import ITraversable
-from zope.traversing.interfaces import TraversalError
-from plone.dexterity.interfaces import IDexterityFTI
-
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
-
 from Products.Five import BrowserView
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from plone.app.multilingual import isDexterityInstalled
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.dexterity.interfaces import IDexterityFTI
+from plone.registry.interfaces import IRegistry
+from zope.component import adapts
+from zope.component import getUtility
+from zope.component import queryMultiAdapter
+from zope.interface import Interface
+from zope.interface import implements
+from zope.traversing.interfaces import ITraversable
+from zope.traversing.interfaces import TraversalError
 
 
 class AddViewTraverser(object):
@@ -68,6 +48,7 @@ class AddViewTraverser(object):
                 return add_view.__of__(self.context)
 
         raise TraversalError(self.context, name)
+
 
 # Archetypes form
 
@@ -113,69 +94,69 @@ class MultilingualATAddForm(BrowserView):
         return self.request.response.redirect(o.absolute_url())
 
 
+if isDexterityInstalled:
+    # Dexteity forms
+    from plone.dexterity.browser.add import DefaultAddForm, DefaultAddView
+    from plone.multilingualbehavior.interfaces import ILanguageIndependentField
 
 
-# Dexteity form
+    class MultilingualAddForm(DefaultAddForm):
+        babel = ViewPageTemplateFile("templates/dexterity_edit.pt")
 
-class MultilingualAddForm(DefaultAddForm):
+        def gtenabled(self):
+            registry = getUtility(IRegistry)
+            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+            return settings.google_translation_key != ''
 
-    babel = ViewPageTemplateFile("templates/dexterity_edit.pt")
+        def portal_url(self):
+            portal_tool = getToolByName(self.context, 'portal_url', None)
+            if portal_tool is not None:
+                return portal_tool.getPortalObject().absolute_url()
+            return None
 
-    def gtenabled(self):
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
-        return settings.google_translation_key != ''
+        def render(self):
+            self.request['disable_border'] = True
 
-    def portal_url(self):
-        portal_tool = getToolByName(self.context, 'portal_url', None)
-        if portal_tool is not None:
-            return portal_tool.getPortalObject().absolute_url()
-        return None
+            for field in self.fields.keys():
+                if field in self.schema:
+                    if ILanguageIndependentField.providedBy(self.schema[field]):
+                        self.widgets[field].addClass('languageindependent')
+                # With plone.autoform, fieldnames from additional schematas
+                # reference their schema by prefixing their fieldname
+                # with schema.__identifier__ and then a dot as a separator
+                # See autoform.txt in the autoform package
+                if '.' in field:
+                    schemaname, fieldname = field.split('.')
+                    for schema in self.additionalSchemata:
+                        if schemaname == schema.__identifier__ and fieldname in schema:
+                            if ILanguageIndependentField.providedBy(\
+                                schema[fieldname]):
+                                self.widgets[field].addClass('languageindependent')
+            self.babel_content = super(MultilingualAddForm, self).render()
+            return self.babel()
 
-    def render(self):
-        self.request['disable_border'] = True
-
-        for field in self.fields.keys():
-            if field in self.schema:
-                if ILanguageIndependentField.providedBy(self.schema[field]):
-                    self.widgets[field].addClass('languageindependent')
-            # With plone.autoform, fieldnames from additional schematas
-            # reference their schema by prefixing their fieldname
-            # with schema.__identifier__ and then a dot as a separator
-            # See autoform.txt in the autoform package
-            if '.' in field:
-                schemaname, fieldname = field.split('.')
-                for schema in self.additionalSchemata:
-                    if schemaname == schema.__identifier__ and fieldname in schema:
-                        if ILanguageIndependentField.providedBy(\
-                            schema[fieldname]):
-                            self.widgets[field].addClass('languageindependent')
-        self.babel_content = super(MultilingualAddForm, self).render()
-        return self.babel()
-
-    @property
-    def max_nr_of_buttons(self):
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
-        return settings.buttons_babel_view_up_to_nr_translations
+        @property
+        def max_nr_of_buttons(self):
+            registry = getUtility(IRegistry)
+            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+            return settings.buttons_babel_view_up_to_nr_translations
 
 
-class DefaultMultilingualAddView(DefaultAddView):
-    """This is the default add view as looked up by the ++add++ traversal
-    namespace adapter in CMF. It is an unnamed adapter on 
-    (context, request, fti).
-    
-    Note that this is registered in ZCML as a simple <adapter />, but we
-    also use the <class /> directive to set up security.
-    """
-    
-    form = MultilingualAddForm
-    
-    def __init__(self, context, request, ti):
-        super(DefaultAddView, self).__init__(context, request)
-        self.ti = ti
+    class DefaultMultilingualAddView(DefaultAddView):
+        """This is the default add view as looked up by the ++add++ traversal
+        namespace adapter in CMF. It is an unnamed adapter on
+        (context, request, fti).
 
-        # Set portal_type name on newly created form instance
-        if self.form_instance is not None and not getattr(self.form_instance, 'portal_type', None): 
-            self.form_instance.portal_type = ti.getId()
+        Note that this is registered in ZCML as a simple <adapter />, but we
+        also use the <class /> directive to set up security.
+        """
 
+        form = MultilingualAddForm
+
+        def __init__(self, context, request, ti):
+            super(DefaultAddView, self).__init__(context, request)
+            self.ti = ti
+
+            # Set portal_type name on newly created form instance
+            if self.form_instance is not None and not getattr(self.form_instance, 'portal_type', None):
+                self.form_instance.portal_type = ti.getId()
