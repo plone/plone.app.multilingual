@@ -38,6 +38,21 @@ def language_filter(query):
     query['Language'] = [languageTool.getPreferredLanguage(),
                          LANGUAGE_INDEPENDENT]
     old_path = query.get('path', None)
+
+    # In case the search is called from the search form,
+    # append the shared folder.
+    if isinstance(old_path, str) and IPloneSiteRoot.providedBy(site):
+        # We are going to check if is language root
+        root_path = '/'.join(site.getPhysicalPath())
+
+        old_path_url = old_path
+        if old_path:
+            lang_path = old_path_url.split('/')[-1]
+            if lang_path in _languagelist or \
+                    lang_path in _combinedlanguagelist:
+                query['path']['query'] = [old_path_url,
+                                          root_path + '/' + SHARED_NAME]
+
     # In case is a depth path search
     if isinstance(old_path, dict) and 'query' in old_path and \
                                       IPloneSiteRoot.providedBy(site):
@@ -61,12 +76,6 @@ def language_filter(query):
                     lang_path in _combinedlanguagelist:
                 old_path['query'] = [old_path_url,
                                      root_path + '/' + SHARED_NAME]
-
-        # Check if its shared folder to add the root path
-        #elif old_path['query'].split('/')[-1] == SHARED_NAME:
-        #    old_path['query'] = [
-        #        old_path_url,
-        #        root_path + '/' + languageTool.getPreferredLanguage()]
 
 
 def AlreadyApplied(patch):
