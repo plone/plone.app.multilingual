@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.2.2dev-fourdigits1'
+version = '1.2.2dev'
 
 setup(name='plone.app.multilingual',
       version=version,
