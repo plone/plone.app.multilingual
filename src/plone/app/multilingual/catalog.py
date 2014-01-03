@@ -50,8 +50,9 @@ def language_filter(query):
             lang_path = old_path_url.split('/')[-1]
             if lang_path in _languagelist or \
                     lang_path in _combinedlanguagelist:
-                query['path']['query'] = [old_path_url,
-                                          root_path + '/' + SHARED_NAME]
+                query['path'] = {
+                    'query': [old_path_url, root_path + '/' + SHARED_NAME],
+                }
 
     # In case is a depth path search
     if isinstance(old_path, dict) and 'query' in old_path and \
