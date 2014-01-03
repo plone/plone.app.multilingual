@@ -1,21 +1,22 @@
-from Products.CMFPlone.CatalogTool import CatalogTool
-from Products.CMFCore.utils import getToolByName
-from plone.multilingual.interfaces import ILanguage, ITranslatable
-from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
-from plone.indexer import indexer
-
-from plone.app.content.browser.foldercontents import (FolderContentsView,
-                                                     FolderContentsTable)
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema, SHARED_NAME
 from Acquisition import aq_inner
-from zope.component import getUtility
-from zope.component.hooks import getSite
-from plone.registry.interfaces import IRegistry
-from Products.CMFPlone.interfaces import IPloneSiteRoot
 from App.special_dtml import DTMLFile
-
+from Products.CMFPlone.CatalogTool import CatalogTool
+from Products.CMFPlone.interfaces import IPloneSiteRoot
+from Products.CMFCore.utils import getToolByName
+from plone.app.content.browser.foldercontents import (
+    FolderContentsView,
+    FolderContentsTable,
+)
+from plone.app.multilingual.interfaces import (
+    IMultiLanguageExtraOptionsSchema,
+    SHARED_NAME,
+)
 from plone.i18n.locales.languages import _languagelist
 from plone.i18n.locales.languages import _combinedlanguagelist
+from plone.multilingual.interfaces import LANGUAGE_INDEPENDENT
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility
+from zope.component.hooks import getSite
 
 
 NO_FILTER = ['Language', 'UID', 'id', 'getId']
@@ -38,26 +39,34 @@ def language_filter(query):
                          LANGUAGE_INDEPENDENT]
     old_path = query.get('path', None)
     # In case is a depth path search
-    if isinstance(old_path, dict) and 'query' in old_path and IPloneSiteRoot.providedBy(site):
+    if isinstance(old_path, dict) and 'query' in old_path and \
+                                      IPloneSiteRoot.providedBy(site):
         old_path_url = old_path['query']
         # We are going to check if is language root
         root_path = '/'.join(site.getPhysicalPath())
 
         # Check if it is a language root folder to add the shared folder
-        
-        # fgr: when location query can be a list (for now maybe only in oldstyle collections 
-        # but I expect new style collections may get the option of multiple paths as well
-        # in that case no SHARED_NAME needs to be added, because the path criterions are 
-        # defined either with languagefolder or language neutral context already.
-        # may be this fix is somewhat dirty ... -fgr
-        if old_path and old_path['query'] and isinstance(old_path['query'],str): 
+
+        # fgr: when location query can be a list (for now maybe only in
+        # oldstyle collections but I expect new style collections may get the
+        # option of multiple paths as well in that case no SHARED_NAME needs
+        # to be added, because the path criterions are defined either with
+        # languagefolder or language neutral context already. may be this fix
+        # is somewhat dirty ... -fgr
+
+        if old_path and old_path['query'] and \
+                isinstance(old_path['query'], str):
             lang_path = old_path['query'].split('/')[-1]
-            if lang_path in _languagelist or lang_path in _combinedlanguagelist:
-                    old_path['query'] = [old_path_url, root_path + '/' + SHARED_NAME]
+            if lang_path in _languagelist or \
+                    lang_path in _combinedlanguagelist:
+                old_path['query'] = [old_path_url,
+                                     root_path + '/' + SHARED_NAME]
 
         # Check if its shared folder to add the root path
         #elif old_path['query'].split('/')[-1] == SHARED_NAME:
-        #    old_path['query'] = [old_path_url, root_path + '/' + languageTool.getPreferredLanguage()]
+        #    old_path['query'] = [
+        #        old_path_url,
+        #        root_path + '/' + languageTool.getPreferredLanguage()]
 
 
 def AlreadyApplied(patch):
