@@ -118,10 +118,10 @@
             url_translate = $('input#url_translate').val(),
             langSource = $('#frame-content #view_language')[0].innerHTML;
 
-        $('#form-target fieldset > div > .field').unwrap()
+        $('#form-target fieldset > div > .field').unwrap();
 
         original_fields = $('#frame-content .field');
-        destination_fields = $('#form-target fieldset .field');
+        destination_fields = $('#form-target fieldset > .field');
 
         // Calculate the padding between fields as intended by css
         if (original_fields.length > 1) {
@@ -203,7 +203,7 @@
         $('#babel-edit *[id^=fieldset] .field').click(function () {
             var index = $('#form-target .field').index($(this));
             if (babel_selected) {
-                $(babel_selected).addClass('selected')
+                $(babel_selected).addClass('selected');
                 $(babel_selected).toggleClass("selected");
                 $(orig_babel_select).toggleClass("selected");
                 $(orig_babel_select).children('.translator-widget').hide();
@@ -218,7 +218,7 @@
         // Fetch default content
         var initialFetch = $('#trans-selector button.active').data('url');
         // Can be null if not buttons, but the drop-down is present
-        if (initialFetch == null) {
+        if (initialFetch === null) {
             initialFetch = $('#trans-selector select option:selected').val();
         }
         $('#frame-content').load(initialFetch, function () {
