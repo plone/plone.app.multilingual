@@ -32,7 +32,7 @@ class LanguageIndependentModifier(object):
             # so we can't get the session_data_manager
             sdm = getSite().session_data_manager
         else:
-            sdm = content.session_data_manager
+            sdm = getToolByName(content, 'session_data_manager')
 
         session = sdm.getSessionData()
         if 'tg' in session.keys():
