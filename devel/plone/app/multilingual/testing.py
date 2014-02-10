@@ -128,11 +128,12 @@ class MultiLingual(RemoteLibrary):
 
             Create translation  /plone/en/foo  ca  title=Translated
         """
-        # XXX: **kwargs do not yet with Robot Framework remote libraries
         # Parse arguments:
         uid_or_path = args[0]
         target_language = args[1]
-        kwargs = dict([arg.split('=', 1) for arg in args[2:]])
+
+        # BBB: Support keywords arguments with robotframework < 2.8.3
+        kwargs.update(dict([arg.split('=', 1) for arg in args[2:]]))
 
         # Look up translatable content
         pc = getToolByName(self, "portal_catalog")
