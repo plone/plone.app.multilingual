@@ -132,10 +132,11 @@ def createdEvent(obj, event):
         sdm = obj.session_data_manager
         session = sdm.getSessionData()
         portal = getSite()
+        portal_factory = getToolByName(portal, 'portal_factory')
 
         if 'tg' in session.keys() and \
            'old_lang' in session.keys() and \
-           not portal.portal_factory.isTemporary(obj):
+           not portal_factory.isTemporary(obj):
             IMutableTG(obj).set(session['tg'])
             modified(obj)
             del session['tg']
