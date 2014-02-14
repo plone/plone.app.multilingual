@@ -3,7 +3,7 @@ from email.header import Header
 
 from Testing import ZopeTestCase as ztc
 from zope.event import notify
-from zope.interface import alsoProvides
+from zope.interface import alsoProvides, noLongerProvides
 from zope.lifecycleevent import ObjectModifiedEvent
 from plone.rfc822 import constructMessageFromSchemata
 from plone.rfc822 import initializeObjectFromSchemata
@@ -28,7 +28,7 @@ from plone.app.testing import applyProfile
 from plone.app.testing import ploneSite
 from plone.app.testing import setRoles
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
-from plone.dexterity.utils import iterSchemata
+from plone.dexterity.utils import iterSchemata, iterSchemataForType
 import plone.app.multilingual
 import plone.app.dexterity
 
@@ -119,6 +119,19 @@ PLONE_APP_MULTILINGUAL_FUNCTIONAL_TESTING = FunctionalTesting(
 
 
 class MultiLingual(RemoteLibrary):
+
+    def set_field_language_independent(self, portal_type, field, value='1'):
+        """Set the given field in the given portal type language independent
+        or unset from being one
+        """
+        for schema in iterSchemataForType(portal_type):
+            if field in schema:
+                if ILanguageIndependentField.providedBy(schema[field]):
+                    if value.lower() not in ('true', 'on', 'yes', 'y', '1'):
+                        noLongerProvides(field, ILanguageIndependentField)
+                else:
+                    if value.lower() in ('true', 'on', 'yes', 'y', '1'):
+                        alsoProvides(field, ILanguageIndependentField)
 
     def create_translation(self, *args, **kwargs):
         """Create translation for an object with uid in the given
