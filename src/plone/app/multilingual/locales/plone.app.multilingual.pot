@@ -22,7 +22,7 @@ msgid "After migration relation cleanup"
 msgstr ""
 
 #: ./browser/controlpanel.py:439
-msgid "All the configuration of P.A.M. If you want to set the default language to all the content without language and move all the content on the root folder to the default language folder, go to Extra Options section "
+msgid "All the configuration of P.A.M. If you want to set the default language to all the content without language and move all the content on the root folder to the default language folder, go to Clean site setup section "
 msgstr ""
 
 #: ./browser/controlpanel.py:416

@@ -450,7 +450,7 @@ class LanguageControlPanel(BasePanel):
     description = _("All the configuration of P.A.M. If you want to set "
                     "the default language to all the content without language "
                     "and move all the content on the root folder to the "
-                    "default language folder, go to Extra Options section ")
+                    "default language folder, go to Clean site setup section ")
     form_name = _("Multilingual Settings")
 
     @form.action(_(u'label_save', default=u'Save'), name=u'save')
