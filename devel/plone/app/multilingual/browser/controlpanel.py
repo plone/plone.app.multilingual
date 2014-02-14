@@ -403,10 +403,9 @@ class LanguageControlPanel(BasePanel):
         selection, options, policies, extras)
 
     label = _("Multilingual Settings")
-    description = _("All the configuration of P.A.M. If you want to set "
-                    "the default language to all the content without language "
-                    "and move all the content on the root folder to the "
-                    "default language folder, go to Extra Options section ")
+    description = _("pam_controlpanel_description",
+                    default=u"All the configuration of "
+                            u"a multilingual Plone site")
     form_name = _("Multilingual Settings")
 
     @form.action(_(u'label_save', default=u'Save'), name=u'save')

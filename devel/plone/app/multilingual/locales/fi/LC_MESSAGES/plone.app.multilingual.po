@@ -19,8 +19,8 @@ msgid "After migration relation cleanup"
 msgstr "Sisältöviittausten korjaus migraation jälkeen"
 
 #: ./browser/controlpanel.py:439
-msgid "All the configuration of P.A.M. If you want to set the default language to all the content without language and move all the content on the root folder to the default language folder, go to Extra Options section "
-msgstr "Kaikki monikielisen sisällönhallinnan asetukset. (Jos haluat asettaa oletuskielen kaikille sivuille, jolla ei ole vielä kieltä, ja siirtää sivut saman sisällön juurihakemistosta oletuskielen hakemistoon, valitse Lisätoiminnot.)"
+msgid "pam_controlpanel_description"
+msgstr "Kaikki monikielisen sisällönhallinnan asetukset. (Jos haluat asettaa oletuskielen kaikille sivuille, jolla ei ole vielä kieltä, ja siirtää sivut saman sisällön juurihakemistosta oletuskielen hakemistoon, valitse migraatio.)"
 
 #: ./browser/controlpanel.py:416
 msgid "Clean site setup"
