@@ -21,9 +21,6 @@ matrix:
     env: PLONE_VERSION=4.2
   - python: 2.6
     env: PLONE_VERSION=4.3
-before_script:
-- gem install --version 0.8.9 faraday
-- gem install travis-artifacts
 install:
 - sed -ie "s#test-plone-4.x.cfg#test-plone-$PLONE_VERSION.x.cfg#" travis.cfg
 - mkdir -p buildout-cache/downloads
@@ -34,6 +31,8 @@ before_script:
 - sh -e /etc/init.d/xvfb start
 script: bin/test
 after_script:
+- gem install --version 0.8.9 faraday
+- gem install travis-artifacts
 - travis-artifacts upload --path parts/test
 notifications:
   irc:
