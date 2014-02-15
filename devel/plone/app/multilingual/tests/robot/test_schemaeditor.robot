@@ -86,4 +86,3 @@ the language independent field setting is selected
 
 the language independent field setting is not selected
   Checkbox should not be selected  form-widgets-IFieldLanguageIndependent-languageindependent-0
-
