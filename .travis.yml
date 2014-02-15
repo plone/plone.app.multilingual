@@ -8,6 +8,7 @@ env:
   - PLONE_VERSION=4.2
   - PLONE_VERSION=4.3
   global:
+  - ARTIFACTS_S3_BUCKET=plone.app.multilingual
   - secure: KuSwVhrRovthk4UkJsejjAbKDK24UQWNTDqz8ixF0kwbLVNEbv0gTDh9MylaD2hpgX8YzO2D9LhgJyf3hOsEywAer/lgY/E1P53lB9fR0ODGqATrMKfmxsApWDuomUbPn6s7lPSwMy49Xl8SdNR6DGnleefedjnw0C5Asizg0mI=
   - secure: rTq4q8TAAA1nAHP0iw6/cHJbd05PJG5xzLD0WXgEZOC8jvHWEpnskPWS1S5rM0YeqliYA9QMvlnlB/6c8b+AytZU87hFm+qddNmT6DlsxNXwM+Tqi1rAEafPOhiowfxjzgsiJocWKds4ohdQOU0iVgONdKbm+0v+zF47NfPj4DU=
 matrix:
