@@ -118,7 +118,8 @@ msgstr "Siirrä monikielisen sisällön katalogitiedot"
 #. Default: "This object is going to be a translation to ${DYNAMIC_CONTENT} from: <ul> <li><a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\"> <span>${DYNAMIC_CONTENT}</span> <span>${DYNAMIC_CONTENT}</span></a></li> </ul> <span>x</span>"
 #: ./browser/templates/add-form-is-translation.pt:15
 msgid "add-form-is-translation"
-msgstr "Tämä sivu on käännös sivusta ${DYNAMIC_CONTENT} sivuksi <ul> <li><a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\"> <span>${DYNAMIC_CONTENT}</span> <span>${DYNAMIC_CONTENT}</span></a></li> </ul> <span>x</span>"
+msgstr ""
+#msgstr "Tämä sivu on käännös sivusta ${DYNAMIC_CONTENT} sivuksi <ul> <li><a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\"> <span>${DYNAMIC_CONTENT}</span> <span>${DYNAMIC_CONTENT}</span></a></li> </ul> <span>x</span>"
 
 #. Default: "Add translations"
 #: ./browser/add_translation_form.py:28
