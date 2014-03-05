@@ -6,7 +6,6 @@ from plone.autoform import directives
 from plone.supermodel import model
 from plone.z3cform.fieldsets import extensible
 from plone.z3cform.fieldsets.interfaces import IFormExtender
-from z3c.form.field import Fields
 from z3c.form.interfaces import HIDDEN_MODE
 from z3c.form.interfaces import NO_VALUE
 from z3c.form.widget import ComputedWidgetAttribute
@@ -181,7 +180,6 @@ class FauxDataManager(object):
 class MultilingualAddFormExtender(extensible.FormExtender):
     implements(IFormExtender)
     adapts(Interface, IPloneAppMultilingualInstalled, MultilingualAddForm)
-    fields = Fields(IMultilingualAddFormMarker)
 
     def __init__(self, context, request, form):
         self.context = context
