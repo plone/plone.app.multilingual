@@ -13,23 +13,24 @@ Test Teardown  Close all browsers
 
 Scenario: As a site owner I can see language independent field setting
     Given a site owner
-      and a dexterity content type field settings form
+      and a dexterity content type with a TTW field
      When I open the field settings
      Then I can see the language independent field setting
 
 Scenario: As a site owner I can set field language independent
     Given a site owner
-      and a dexterity content type field settings form
-     When I select language independent field setting
+      and a dexterity content type with a TTW field
+     When I open the field settings
+      and I select the language independent field setting
       and I save the form
       and I open the form again
      Then the language independent field setting is selected
 
 Scenario: As a site owner I can unset field from being language independent
     Given a site owner
-      and a dexterity content type with a language independent field
-      and a dexterity content type field settings form
-     When I unselect language independent field setting
+      and a dexterity content type with a language independent TTW field
+     When I open the field settings
+      and I unselect the language independent field setting
       and I save the form
       and I open the form again
      Then the language independent field setting is not selected
@@ -42,26 +43,30 @@ Scenario: As a site owner I can unset field from being language independent
 a site owner
   Enable autologin as  Manager
 
-a dexterity content type open in schema editor
-  Go to  ${PLONE_URL}/dexterity-types/Document/@@fields
-  Element should be visible  css=a.fieldSettings
+a dexterity content type with a TTW field
+  Create content type  Custom
+  Go to  ${PLONE_URL}/dexterity-types/Custom/@@fields
+  Wait until page contains element  css=body.template-fields
 
 a dexterity content type field settings form
-  Go to  ${PLONE_URL}/dexterity-types/Document/@@fields
+  Go to  ${PLONE_URL}/dexterity-types/Custom/@@fields
   Element should be visible  css=a.fieldSettings
   Click link  css=a.fieldSettings
-  Wait until page contains  Edit Field 'text'
+  Wait until page contains  Edit Field 'custom'
 
-a dexterity content type with a language independent field
-  Set field language independent  Document  text  on
+a dexterity content type with a language independent TTW field
+  Create content type  Custom
+  Set field language independent  Custom  custom  on
+  Go to  ${PLONE_URL}/dexterity-types/Custom/@@fields
+  Wait until page contains element  css=body.template-fields
 
 # When
 
 I Open the field settings
   Click link  css=a.fieldSettings
-  Wait until page contains  Edit Field 'text'
+  Wait until page contains  Edit Field 'custom'
 
-I select language independent field setting
+I select the language independent field setting
   Select checkbox  form-widgets-IFieldLanguageIndependent-languageindependent-0
   Checkbox should be selected  form-widgets-IFieldLanguageIndependent-languageindependent-0
 
@@ -70,9 +75,9 @@ I save the form
 
 I open the form again
   Click link  css=a.fieldSettings
-  Wait until page contains  Edit Field 'text'
+  Wait until page contains  Edit Field 'custom'
 
-I unselect language independent field setting
+I unselect the language independent field setting
   Unselect checkbox  form-widgets-IFieldLanguageIndependent-languageindependent-0
   Checkbox should not be selected  form-widgets-IFieldLanguageIndependent-languageindependent-0
 
