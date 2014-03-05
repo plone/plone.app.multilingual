@@ -3,6 +3,7 @@ from Acquisition import aq_parent
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IPloneSiteRoot
+from zope.globalrequest import getRequest
 
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.app.multilingual.interfaces import ILanguage
@@ -118,8 +119,6 @@ def createdEvent(obj, event):
     if IObjectRemovedEvent.providedBy(event):
         return
 
-    portal = getSite()
-
     # On ObjectCopiedEvent and ObjectMovedEvent aq_parent(event.object) is
     # always equal to event.newParent.
     parent = aq_parent(event.object)
@@ -134,9 +133,14 @@ def createdEvent(obj, event):
         portal = getSite()
         portal_factory = getToolByName(portal, 'portal_factory')
 
-        if 'tg' in session.keys() and \
-           'old_lang' in session.keys() and \
-           not portal_factory.isTemporary(obj):
+        request = getRequest()
+        if (not 'form.widgets.pam_old_lang' in request.form
+                or not 'form.widgets.pam_old_lang' in request.form):
+            # This request did not come from multilingual add form
+            pass
+        elif ('tg' in session.keys()
+                and 'old_lang' in session.keys()
+                and not portal_factory.isTemporary(obj)):
             IMutableTG(obj).set(session['tg'])
             modified(obj)
             del session['tg']
