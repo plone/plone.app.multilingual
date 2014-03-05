@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
-from plone.app.multilingual import _
-from plone.app.multilingual.browser.vocabularies import addTranslation
-from plone.app.multilingual.browser.vocabularies import deletable_languages
-from plone.app.multilingual.browser.vocabularies import untranslated_languages
-from plone.directives import form
+from plone.autoform import directives
+from plone.autoform.interfaces import IFormFieldProvider
+from plone.supermodel import model
 from plone.formwidget.contenttree import ContentTreeFieldWidget
 from z3c.relationfield.schema import RelationChoice
 from zope import interface
 from zope import schema
 from zope.browsermenu.interfaces import IBrowserMenu
 from zope.browsermenu.interfaces import IBrowserSubMenuItem
+
+from plone.app.multilingual import _
+from plone.app.multilingual.browser.vocabularies import addTranslation
+from plone.app.multilingual.browser.vocabularies import deletable_languages
+from plone.app.multilingual.browser.vocabularies import untranslated_languages
 
 
 class IMultilingualLayer(interface.Interface):
@@ -45,7 +48,7 @@ class IUpdateLanguage(interface.Interface):
     )
 
 
-class IAddTranslation(form.Schema):
+class IAddTranslation(model.Schema):
 
     language = schema.Choice(
         title=_(u"title_language", default=u"Language"),
@@ -57,10 +60,10 @@ class IAddTranslation(form.Schema):
         source=addTranslation,
         required=True,
     )
-    form.widget(content=ContentTreeFieldWidget)
+    directives.widget(content=ContentTreeFieldWidget)
 
 
-class IRemoveTranslation(form.Schema):
+class IRemoveTranslation(model.Schema):
 
     languages = schema.List(
         title=_(u"title_languages"),
@@ -70,8 +73,8 @@ class IRemoveTranslation(form.Schema):
         ),
         required=True,
     )
-    form.widget(languages='z3c.form.browser.select.SelectFieldWidget')
+    directives.widget(languages='z3c.form.browser.select.SelectFieldWidget')
 
-interface.alsoProvides(IUpdateLanguage, form.IFormFieldProvider)
-interface.alsoProvides(IAddTranslation, form.IFormFieldProvider)
-interface.alsoProvides(IRemoveTranslation, form.IFormFieldProvider)
+interface.alsoProvides(IUpdateLanguage, IFormFieldProvider)
+interface.alsoProvides(IAddTranslation, IFormFieldProvider)
+interface.alsoProvides(IRemoveTranslation, IFormFieldProvider)

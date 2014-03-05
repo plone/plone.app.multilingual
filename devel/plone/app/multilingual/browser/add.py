@@ -3,9 +3,12 @@ from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.autoform import directives
+from plone.autoform.form import AutoExtensibleForm
+from plone.autoform.interfaces import IFormFieldProvider
 from plone.supermodel import model
 from plone.z3cform.fieldsets import extensible
 from plone.z3cform.fieldsets.interfaces import IFormExtender
+from z3c.form.form import Form
 from z3c.form.interfaces import HIDDEN_MODE
 from z3c.form.interfaces import NO_VALUE
 from z3c.form.widget import ComputedWidgetAttribute
@@ -13,7 +16,6 @@ from zope import schema
 from plone.dexterity.browser.add import DefaultAddForm
 from plone.dexterity.browser.add import DefaultAddView
 from plone.dexterity.interfaces import IDexterityFTI
-from plone.directives import form
 from plone.registry.interfaces import IRegistry
 from z3c.form import button
 from zope.component import getUtility
@@ -224,9 +226,9 @@ class DefaultMultilingualAddView(DefaultAddView):
             self.form_instance.portal_type = ti.getId()
 
 
-class AddTranslationsForm(form.SchemaForm):
+class AddTranslationsForm(AutoExtensibleForm, Form):
 
-    schema = form.IFormFieldProvider(IAddTranslation)
+    schema = IFormFieldProvider(IAddTranslation)
     ignoreContext = True
     label = _(u"label_add_translations", default=u"Add translations")
     description = _(u"long_description_add_translations", default=

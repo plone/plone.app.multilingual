@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
+from plone.supermodel import model
 
-from plone.directives import form
 from zope import schema
 from zope.interface import Interface
 import zope.component.testing
@@ -20,7 +20,7 @@ class TestDirectives(unittest.TestCase):
         """Test, if the schema directive values are stored as tagged values.
         """
 
-        class IDummy(form.Schema):
+        class IDummy(model.Schema):
             """Dummy schema class.
             """
             languageindependent('foo')
@@ -35,7 +35,7 @@ class TestDirectives(unittest.TestCase):
         inherited from its superclass.
         """
 
-        class IFoo(form.Schema):
+        class IFoo(model.Schema):
             """Class with a searchable field
             """
             languageindependent('baz')

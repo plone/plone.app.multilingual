@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_parent
+from plone.autoform.form import AutoExtensibleForm
+from plone.autoform.interfaces import IFormFieldProvider
+from z3c.form.form import Form
+from z3c.form import button
 
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.interfaces import IRemoveTranslation
-from plone.directives import form
-from z3c.form import button
 
 
-class RemoveTranslationsForm(form.SchemaForm):
+class RemoveTranslationsForm(AutoExtensibleForm, Form):
 
-    schema = form.IFormFieldProvider(IRemoveTranslation)
+    schema = IFormFieldProvider(IRemoveTranslation)
     ignoreContext = True
     label = _(u"label_remove_translations",
               default=u"Remove translations")
