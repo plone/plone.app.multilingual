@@ -25,9 +25,19 @@
       factory=".shared_uuid.lrfUUID" />
 
     <genericsetup:registerProfile
-        name="default"
-        title="plone.app.multilingual"
+        name="base"
+        title="plone.app.multilingual: base"
         description="Install to enable multilingual content support on the site"
+        directory="profiles/base"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    />
+
+    <genericsetup:registerProfile
+        zcml:condition="installed plone.app.contenttypes"
+        name="default"
+        title="plone.app.multilingual: default"
+        description="Enable multilingual behavior on plone.app.contenttypes"
         directory="profiles/default"
         provides="Products.GenericSetup.interfaces.EXTENSION"
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
