@@ -1,44 +1,43 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: plone.app.multilingual\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2013-07-05 11:58+0000\n"
-"PO-Revision-Date: 2013-06-05 11:55+0100\n"
-"Last-Translator: CMS HU Berlin <plone@cms.hu-berlin.de>\n"
-"Language-Team: CMS HU Berlin <plone@cms.hu-berlin.de>\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: Asko Soukka <asko.soukka@iki.fi>\n"
+"Language-Team: Finnish <https://github.com/collective>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"Language-Code: de\n"
-"Language-Name: Deutsch\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language-Code: fi\n"
+"Language-Name: Finnish\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: plone.app.multilingual\n"
-"X-Generator: Poedit 1.5.4\n"
+"Domain: DOMAIN\n"
 
 #: ./browser/migrator.py:67
 msgid "After migration relation cleanup"
-msgstr ""
+msgstr "Sisältöviittausten korjaus migraation jälkeen"
 
 #: ./browser/controlpanel.py:439
 msgid "pam_controlpanel_description"
-msgstr ""
+msgstr "Kaikki monikielisen sisällönhallinnan asetukset. (Jos haluat asettaa oletuskielen kaikille sivuille, jolla ei ole vielä kieltä, ja siirtää sivut saman sisällön juurihakemistosta oletuskielen hakemistoon, valitse migraatio.)"
 
 #: ./browser/controlpanel.py:416
 msgid "Clean site setup"
-msgstr ""
+msgstr "Siivoa sivuston asetukset"
 
 #: ./browser/templates/cleanup.pt:93
 #: ./browser/templates/migration.pt:250
 msgid "Cleanup"
-msgstr ""
+msgstr "Siivous"
 
 #: ./browser/controlpanel.py:410
 msgid "Extra options"
-msgstr ""
+msgstr "Lisäominaisuudet"
 
 #: ./browser/templates/not_translated_yet.pt:28
 msgid "However, this is the list of the already translated languages for the requested content."
-msgstr ""
+msgstr "Sivusta löytyy käännös näille kielille:"
 
 #: ./browser/controlpanel.py:417
 msgid "If you are installing PAM for the first time in a Plone site, either if it's on an existing or a brand new one you should run the following procedures in order to move the default site content to its right root language folder and be sure that all the content have the language attribute set up correctly. Previous to run them, please be sure that you have set up your site's languages in the 'Site languages' tab and have saved that setting. Finally, in case you have an existing Plone site with Products.LinguaPlone installed, please do not run this steps and refer directly to the 'Migration' tab."
@@ -46,109 +45,110 @@ msgstr ""
 
 #: ./browser/translate.py:75
 msgid "Invalid field"
-msgstr ""
+msgstr "Virheellinen kenttä"
 
 #: ./browser/templates/languages-notice.pt:11
 msgid "Language control panel"
-msgstr ""
+msgstr "Monikielisen sisällönhallinnan asetukset"
 
 #: ./browser/templates/cleanup.pt:102
 msgid "Move"
-msgstr ""
+msgstr "Siirrä"
 
 #: ./browser/controlpanel.py:438
 msgid "Multilingual Settings"
-msgstr ""
+msgstr "Monikielisen sisällönhallinnan asetukset"
 
 #: ./browser/translate.py:61
 msgid "Need a field"
-msgstr ""
+msgstr "Kenttä puuttuu"
 
 #: ./browser/controlpanel.py:407
 msgid "Negotiation scheme"
-msgstr ""
+msgstr "Näytettävän kielen valinta"
 
 #: ./browser/controlpanel.py:569
 msgid "Not translated"
-msgstr ""
+msgstr "Ei käännetty"
 
 #: ./browser/controlpanel.py:413
 msgid "Policies"
-msgstr ""
+msgstr "Käytännöt"
 
 #: ./browser/templates/migration.pt:128
 msgid "Reindex"
-msgstr ""
+msgstr "Indeksoi uudelleen"
 
 #: ./browser/templates/migration.pt:174
 msgid "Relocate"
-msgstr ""
+msgstr "Siirrä"
 
 #: ./browser/migrator.py:111
 msgid "Relocate content to the proper root language folder"
-msgstr ""
+msgstr "Siirrä sivu sen oikeaan kielikansioon"
 
 #: ./browser/controlpanel.py:189
 msgid "Search for closest translation in parent's content chain."
-msgstr ""
+msgstr "Etsi lähin käännetty sivu kansiohierarkian perusteella"
 
 #: ./browser/controlpanel.py:192
 msgid "Show user dialog with information about the available translations."
-msgstr ""
+msgstr "Anna käyttäjän valita joku saatavilla olevista käännöksistä"
 
 #: ./browser/controlpanel.py:404
 msgid "Site languages"
-msgstr ""
+msgstr "Sivuston kielet"
 
 #: ./browser/templates/not_translated_yet.pt:23
 msgid "This content is not translated yet to the language requested."
-msgstr ""
+msgstr "Tätä sivua ei ole vielä käännetty pyydetylle kielelle."
 
 #: ./browser/templates/not_translated_yet.pt:46
 msgid "This item doesn't have any translation yet. You can return to the portal site:"
-msgstr ""
+msgstr "Tästä sivusta ei ole vielä yhtään käännöstä. Siirry takaisin etusivulle:"
 
 #: ./browser/templates/migration.pt:204
 msgid "Transfer"
-msgstr ""
+msgstr "Siirrä"
 
 #: ./browser/migrator.py:32
 msgid "Transfer multilingual catalog information"
-msgstr ""
+msgstr "Siirrä monikielisen sisällön katalogitiedot"
 
 #. Default: "This object is going to be a translation to ${DYNAMIC_CONTENT} from: <ul> <li><a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\"> <span>${DYNAMIC_CONTENT}</span> <span>${DYNAMIC_CONTENT}</span></a></li> </ul> <span>x</span>"
 #: ./browser/templates/add-form-is-translation.pt:15
 msgid "add-form-is-translation"
 msgstr ""
+#msgstr "Tämä sivu on käännös sivusta ${DYNAMIC_CONTENT} sivuksi <ul> <li><a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\"> <span>${DYNAMIC_CONTENT}</span> <span>${DYNAMIC_CONTENT}</span></a></li> </ul> <span>x</span>"
 
 #. Default: "Add translations"
 #: ./browser/add_translation_form.py:28
 msgid "add_translations"
-msgstr "Übersetzungen hinzufügen"
+msgstr "Lisää käännös"
 
 #: ./browser/interfaces.py:57
 msgid "content"
-msgstr "Inhalt"
+msgstr "Sisältö"
 
 #. Default: "If you want to create this object without being a translation press <a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\">here</a>"
 #: ./browser/templates/add-form-is-translation.pt:15
 msgid "create-object-without-translation"
-msgstr ""
+msgstr "<a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\">Haluan luoda tämän sivun, mutta en halua siitä tulevan linkitettyä käännöstä.</a>"
 
 #. Default: "Create ${lang_name}"
 #: ./browser/menu.py:87
 msgid "create_translation"
-msgstr "${lang_name}"
+msgstr "Käännä ${lang_name}"
 
 #. Default: "Create ${lang_name} folder"
 #: ./browser/menu.py:84
 msgid "create_translation_folder"
-msgstr "Erstelle Übersetzung für Ordner"
+msgstr "Luo kansio ${lang_name}"
 
 #. Default: "Add existing content as translation"
 #: ./browser/menu.py:124
 msgid "description_add_translations"
-msgstr "Bereits existierende Übersetzung hinzufügen"
+msgstr "Aseta olemassaoleva käännös"
 
 #. Default: "This step will fix some lost dependencies to the ITranslatable interface hidden in the relation catalog and it gets rid of them. It must be run only when LinguaPlone is already uninstalled."
 #: ./browser/templates/migration.pt:225
@@ -158,27 +158,27 @@ msgstr ""
 #. Default: "Authenticated users only. Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
 #: ./browser/controlpanel.py:143
 msgid "description_auth_ookie_manual_override"
-msgstr ""
+msgstr "Valitse kieli keksin perusteella kirjautuneille käyttäjille (kielenvalintalinkkien täytyy olla näkyvissä)"
 
 #. Default: "The languages in which the site should be translatable."
 #: ./browser/controlpanel.py:63
 msgid "description_available_languages"
-msgstr ""
+msgstr "Kielet, joille tämän sivuston sisältöä tulisi kääntää"
 
 #. Default: "Edit with the babel_edit"
 #: ./browser/menu.py:46
 msgid "description_babel_edit"
-msgstr ""
+msgstr "Muokkaa rinnakkaisnäkymässä"
 
 #. Default: "Babel edit ${lang_name}"
 #: ./browser/menu.py:102
 msgid "description_babeledit_menu"
-msgstr "Editieren mit Babel-Ansicht"
+msgstr "Muokkaa rinnakkain kieltä ${lang_name}"
 
 #. Default: "Use browser language request negotiation."
 #: ./browser/controlpanel.py:182
 msgid "description_browser_language_request_negotiation"
-msgstr ""
+msgstr "Valitse kieli selaimen asetusten perusteella"
 
 #. Default: "When there are many translations for an item, the number of displayed buttons for them might get too large to fit inside the template. Choose here from which number onwards a drop-down menu will be displayed instead of buttons. Zero means that buttons will always be used."
 #: ./interfaces.py:44
@@ -188,32 +188,32 @@ msgstr ""
 #. Default: "Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
 #: ./browser/controlpanel.py:133
 msgid "description_cookie_manual_override"
-msgstr ""
+msgstr "Valitse kieli keksin perusteella (kielenvalintalinkkien täytyy olla näkyvissä)"
 
 #. Default: "Filter using language the content on folder_contents"
 #: ./interfaces.py:20
 msgid "description_filter_content"
-msgstr ""
+msgstr "Suodata kansioiden sisältö valitun kielen mukaan"
 
 #. Default: "Is a paying API in order to use google translation service"
 #: ./interfaces.py:60
 msgid "description_google_translation_key"
-msgstr ""
+msgstr "Maksullinen API-avain Googlen käännöspalvelun käyttöön"
 
 #. Default: "Use language codes in URL path for manual override."
 #: ./browser/controlpanel.py:123
 msgid "description_language_codes_in_URL"
-msgstr ""
+msgstr "Valitse kieli osoitteessa olevien kielikoodien perusteella"
 
 #. Default: "Go to the user's browser preferred language related folder"
 #: ./browser/menu.py:160
 msgid "description_language_folder"
-msgstr ""
+msgstr "Siirry käyttäjän selaimen suosittaman kielen kielikansioon"
 
 #. Default: "Use the language of the content item."
 #: ./browser/controlpanel.py:114
 msgid "description_language_of_the_content"
-msgstr ""
+msgstr "Valitse kieli näytettävän sivun kielen mukaan"
 
 #. Default: "The migration process is divided into four steps, listed below. Each one of the steps has a well defined purpose explained. Some of them are destructive, so please read each one of it and do not try to run it on production servers without testing it previously."
 #: ./browser/templates/migration.pt:99
@@ -253,7 +253,7 @@ msgstr ""
 #. Default: "Delete translations or remove the relations"
 #: ./browser/menu.py:143
 msgid "description_remove_translations"
-msgstr "Übersetzungen löschen oder die Verweise entfernen"
+msgstr ""
 
 #. Default: "The default language used for the content and the UI of this site."
 #: ./browser/controlpanel.py:206
@@ -268,7 +268,7 @@ msgstr ""
 #. Default: "Set or change the current content language"
 #: ./browser/menu.py:206
 msgid "description_set_language"
-msgstr "Sprache setzen oder ändern."
+msgstr ""
 
 #. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
 #: ./browser/controlpanel.py:156
@@ -298,77 +298,77 @@ msgstr ""
 #. Default: "Translate into ${lang_name}"
 #: ./browser/menu.py:71
 msgid "description_translate_into"
-msgstr "Übersetzen in ${lang_name}"
+msgstr "Käännä kielelle ${lang_name}"
 
 #. Default: "Translation map."
 #: ./browser/templates/mmap.pt:101
 msgid "description_translation_map"
-msgstr ""
+msgstr "Käännöskartta"
 
 #. Default: "Universal Language content link"
 #: ./browser/menu.py:176
 msgid "description_universal_link"
-msgstr ""
+msgstr "Kielineutraali linkki"
 
 #. Default: "Untranslated languages from the current content"
 #: ./browser/interfaces.py:42
 msgid "description_update_language"
-msgstr "Sprachen, in die der Inhalt noch nicht übersetzt wurde."
+msgstr "Kielet, joille tätä sivua ei ole käännetty"
 
 #. Default: "Use subdomain (e.g.: de.plone.org)."
 #: ./browser/controlpanel.py:166
 msgid "description_use_subdomain"
-msgstr ""
+msgstr "Valitse kieli aladomainin mukaan (e.g. fi.plone.org)"
 
 #. Default: "Edit ${lang_name}"
 #: ./browser/menu.py:118
 msgid "edit_translation"
-msgstr "${lang_name} editieren"
+msgstr "Muokkaa kieltä ${lang_name}"
 
 #. Default: "Edit ${lang_name} folder"
 #: ./browser/menu.py:115
 msgid "edit_translation_folder"
-msgstr "Editiere Übersetzung für Ordner"
+msgstr "Muokkaa kansiota kielelle ${lang_name}"
 
 #. Default: "Authenticated users only."
 #: ./browser/controlpanel.py:141
 msgid "heading_auth_cookie_manual_override"
-msgstr ""
+msgstr "Vain kirjautuneet käyttäjät."
 
 #. Default: "Available languages"
 #: ./browser/controlpanel.py:61
 msgid "heading_available_languages"
-msgstr ""
+msgstr "Valittavissa olevat kielet"
 
 #. Default: "Available translations for this content"
 #: ./browser/templates/dexterity_edit.pt:15
 msgid "heading_available_translations"
-msgstr ""
+msgstr "Tämän sivun käännökset"
 
 #. Default: "Use browser language request negotiation."
 #: ./browser/controlpanel.py:180
 msgid "heading_browser_language_request_negotiation"
-msgstr ""
+msgstr "Valitse kieli selaimen asetusten perusteella."
 
 #. Default: "Use buttons in the bable view for up to how many translations?"
 #: ./interfaces.py:40
 msgid "heading_buttons_babel_view_up_to_nr_translations"
-msgstr ""
+msgstr "Kuinka monelle kielelle näyettään painikkeet rinnakkaiskäännösnäkymässä?"
 
 #. Default: "Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
 #: ./browser/controlpanel.py:130
 msgid "heading_cookie_manual_override"
-msgstr ""
+msgstr "Valitse kieli keksin perusteella (edellyttää kielenvalintalinkkien näkymistä)"
 
 #. Default: "Filter content by language."
 #: ./interfaces.py:17
 msgid "heading_filter_content"
-msgstr ""
+msgstr "Suodata sivut kielen mukaan"
 
 #. Default: "Google Translation API Key"
 #: ./interfaces.py:57
 msgid "heading_google_translation_key"
-msgstr ""
+msgstr "Google-käännöspalvelun API-avain"
 
 #. Default: "Use language codes in URL path for manual override."
 #: ./browser/controlpanel.py:120
@@ -453,12 +453,12 @@ msgstr ""
 #. Default: "Add translations"
 #: ./browser/add_translation_form.py:20
 msgid "label_add_translations"
-msgstr "Übersetzungen hinzufügen"
+msgstr ""
 
 #. Default: "By updating the content language will trigger its move to the correct language folder in the site's hierarchy"
 #: ./browser/update_language_form.py:19
 msgid "label_alert_update"
-msgstr "Die Inhalte werden in den gewählten Sprachenordner verschoben"
+msgstr ""
 
 #. Default: "All translations"
 #: ./browser/templates/mmap.pt:106
@@ -496,14 +496,13 @@ msgstr ""
 
 #. Default: "Remove translations"
 #: ./browser/remove_translation_form.py:20
-#, fuzzy
 msgid "label_remove_translations"
-msgstr "Übersetzungen entfernen"
+msgstr ""
 
 #. Default: "Save"
 #: ./browser/controlpanel.py:445
 msgid "label_save"
-msgstr "Speichern"
+msgstr ""
 
 #. Default: "Total objects handled:"
 #: ./browser/templates/migrator-results.pt:20
@@ -519,7 +518,7 @@ msgstr ""
 #. Default: "Translate"
 #: ./browser/menu.py:223
 msgid "label_translate_menu"
-msgstr "Übersetzen..."
+msgstr ""
 
 #. Default: "Translation Map"
 #: ./browser/templates/cleanup.pt:44
@@ -538,7 +537,7 @@ msgstr ""
 #. Default: "Update Language"
 #: ./browser/update_language_form.py:18
 msgid "label_update_language"
-msgstr "Sprache aktualisieren"
+msgstr ""
 
 #. Default: "Return to language folder"
 #: ./browser/menu.py:158
@@ -568,12 +567,12 @@ msgstr ""
 #. Default: "This form allows you to add currently existing objects to be the translations of the current object. You have to manually select both the language and the object."
 #: ./browser/add_translation_form.py:21
 msgid "long_description_add_translations"
-msgstr "Dieses Dialogfenster erlaubt es, bereits existierende Inhalte für Übersetzungen zu verwenden. Sie müssen Sprache und Inhalt auswählen."
+msgstr ""
 
 #. Default: "This form allows you to remove the existing translations of the current object. You can just delete the link between the objects or you can delete the object itself."
 #: ./browser/remove_translation_form.py:22
 msgid "long_description_remove_translations"
-msgstr "Sie können existierende Übersetzungen entfernen, indem Sie den Verweis auf das Objekt oder das Objekt selbst löschen."
+msgstr ""
 
 #. Default: "The \"Language\" index was re-indexed correctly. Before, it contained ${previous_items_number} items, now it contains ${after_items_number}"
 #: ./browser/templates/reindex-results.pt:24
@@ -602,78 +601,78 @@ msgstr ""
 
 #: ./browser/remove_translation_form.py:39
 msgid "remove selected"
-msgstr "Objekt löschen"
+msgstr ""
 
 #. Default: "Go to shared folder"
 #: ./browser/menu.py:189
 msgid "shared_folder"
-msgstr "Gehe zu 'shared'-Ordner"
+msgstr ""
 
 #. Default: "Add translations..."
 #: ./browser/menu.py:136
 msgid "title_add_translations"
-msgstr "Übersetzung hinzufügen..."
+msgstr ""
 
 #. Default: "Add translations for folder..."
 #: ./browser/menu.py:134
 msgid "title_add_translations_folder"
-msgstr "Übersetzung hinzufügen für Ordner"
+msgstr ""
 
 #. Default: "Available languages"
 #: ./browser/interfaces.py:41
 msgid "title_available_languages"
-msgstr "Verfügbare Sprachen"
+msgstr ""
 
 #. Default: "Edit with babel view"
 #: ./browser/menu.py:44
 msgid "title_babel_edit"
-msgstr "Editieren in Babel-View"
+msgstr ""
 
 #. Default: "Language"
 #: ./browser/interfaces.py:33
 msgid "title_language"
-msgstr "Sprache"
+msgstr ""
 
 #: ./browser/interfaces.py:67
 msgid "title_languages"
-msgstr "Sprachen"
+msgstr ""
 
 #. Default: "Remove translations..."
 #: ./browser/menu.py:141
 msgid "title_remove_translations"
-msgstr "Übersetzungen entfernen..."
+msgstr ""
 
 #. Default: "Set content language"
 #: ./browser/menu.py:204
 msgid "title_set_language"
-msgstr "Sprache setzen"
+msgstr "Aseta sisällön kieli"
 
 #. Default: "Manage translations for your content."
 #: ./browser/menu.py:224
 msgid "title_translate_menu"
-msgstr "Übersetzungen verwalten"
+msgstr "Hallitse sisällön käännöksiä."
 
 #. Default: "Translations:"
 #: ./browser/templates/mmap.pt:150
 msgid "translation"
-msgstr ""
+msgstr "Käännökset"
 
 #. Default: "Translation to ${language}"
 #: ./browser/templates/dexterity_edit.pt:43
 msgid "translation_to"
-msgstr "Übersetzen in ${language}"
+msgstr "Käännös kielelle ${language}"
 
 #. Default: "Universal Link"
 #: ./browser/menu.py:174
 msgid "universal_link"
-msgstr ""
+msgstr "Kielineutraali linkki"
 
 #: ./browser/remove_translation_form.py:29
 msgid "unlink selected"
-msgstr "Verweis löschen"
+msgstr ""
 
 #. Default: "Update Language"
 #: ./browser/update_language_form.py:22
 msgid "update_language"
-msgstr "Sprachzuweisung aktualisieren"
+msgstr "Vaihda kieltä"
 

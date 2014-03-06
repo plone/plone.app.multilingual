@@ -21,7 +21,7 @@ msgid "After migration relation cleanup"
 msgstr "Очищення зв'язків після міграції"
 
 #: ./browser/controlpanel.py:439
-msgid "All the configuration of P.A.M. If you want to set the default language to all the content without language and move all the content on the root folder to the default language folder, go to Extra Options section "
+msgid "pam_controlpanel_description"
 msgstr "Вся конфігурація P.A.M. Якщо ви хочете встановити мову за замовчуванням для всього контенту без мови і перемістити весь вміст кореневої теки в у теку мови за замовчуванням, перейдіть в розділ Додаткові параметри"
 
 #: ./browser/controlpanel.py:416

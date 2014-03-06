@@ -20,7 +20,7 @@ msgid "After migration relation cleanup"
 msgstr "S'execute après la migration de nettoyage des relations"
 
 #: ./browser/controlpanel.py:439
-msgid "All the configuration of P.A.M. If you want to set the default language to all the content without language and move all the content on the root folder to the default language folder, go to Extra Options section "
+msgid "pam_controlpanel_description"
 msgstr "Toute la configuration de plone.app.multilingual (PAM). Si vous voulez définir la langue par défaut ou déplacer le contenu racine dans le dossier de langue par défaut, allez dans la section Entretien du site."
 
 #: ./browser/controlpanel.py:416

@@ -28,12 +28,33 @@
         factory=".language.Language" />
 
     <!-- Configure plone.supermodel handler if available -->
-    <utility zcml:condition="installed plone.supermodel"
+    <utility
+        zcml:condition="installed plone.supermodel"
         factory=".supermodel.LanguageIndependentFieldMetadataHandler"
         name="plone.rfc822.lingua"
         />
 
-    <!-- Integration for language-independent values in z3c.form -->
+    <adapter
+        zcml:condition="installed plone.supermodel"
+        factory=".directives.LanguageIndependentFieldsPlugin"
+        name="plone.rfc822.lingua"
+        />
+
+    <!-- Configure plone.schemaeditor adapter -->
+    <adapter
+        provides="plone.schemaeditor.interfaces.IFieldEditorExtender"
+        for="zope.schema.interfaces.IField"
+        name="plone.schemaeditor.languageindependent"
+        factory=".schemaeditor.get_li_schema"
+        zcml:condition="installed plone.schemaeditor"
+        />
+
+    <adapter
+        provides=".schemaeditor.IFieldLanguageIndependent"
+        for="zope.schema.interfaces.IField"
+        factory=".schemaeditor.FieldLanguageIndependentAdapter"
+        zcml:condition="installed plone.schemaeditor"
+        />
 
     <adapter
         for="*

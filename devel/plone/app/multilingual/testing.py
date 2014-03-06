@@ -2,23 +2,26 @@
 from email.header import Header
 
 from Testing import ZopeTestCase as ztc
+from plone.dexterity.fti import DexterityFTI
 from zope.event import notify
-from zope.interface import alsoProvides
+from zope.interface import alsoProvides, noLongerProvides
 from zope.lifecycleevent import ObjectModifiedEvent
 from plone.rfc822 import constructMessageFromSchemata
 from plone.rfc822 import initializeObjectFromSchemata
 from plone.uuid.interfaces import IUUID
 from zope.configuration import xmlconfig
 from Products.CMFCore.utils import getToolByName
-from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
+from plone.app.contenttypes.testing import PLONE_APP_CONTENTTYPES_FIXTURE
+from plone.dexterity.utils import iterSchemata, iterSchemataForType
+import plone.app.dexterity
 
+from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.robotframework.remote import RemoteLibrary
 from plone.app.robotframework import RemoteLibraryLayer
 from plone.app.robotframework import AutoLogin
 from plone.app.robotframework import Content
 from plone.testing import z2
-from plone.app.contenttypes.testing import PLONE_APP_CONTENTTYPES_FIXTURE
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import FunctionalTesting
@@ -28,9 +31,7 @@ from plone.app.testing import applyProfile
 from plone.app.testing import ploneSite
 from plone.app.testing import setRoles
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
-from plone.dexterity.utils import iterSchemata
 import plone.app.multilingual
-import plone.app.dexterity
 
 
 class Sessions(z2.Layer):
@@ -120,6 +121,44 @@ PLONE_APP_MULTILINGUAL_FUNCTIONAL_TESTING = FunctionalTesting(
 
 class MultiLingual(RemoteLibrary):
 
+    def create_content_type(self, portal_type):
+        """Create dummy content type with a single custom field"""
+        fti = DexterityFTI(str(portal_type), title=portal_type)
+        fti.behaviors = (
+            'plone.app.dexterity.behaviors.metadata.IBasic',
+            'plone.app.multilingual.dx.interfaces.IDexterityTranslatable'
+        )
+        fti.model_source = u"""\
+<model xmlns="http://namespaces.plone.org/supermodel/schema">
+<schema>
+<field name="custom" type="zope.schema.TextLine">
+  <description />
+  <required>False</required>
+  <title>Custom field</title>
+</field>
+</schema>
+</model>"""
+        fti.global_allow = True
+        self.portal_types._setObject(str(portal_type), fti)
+
+        # TODO: This should be split into two separate keywords:
+        # - Create content type
+        # - Add content type field
+
+    def set_field_language_independent(self, portal_type, field, value='1'):
+        """Set the given field in the given portal type language independent
+        or unset from being one
+        """
+        for schema in iterSchemataForType(portal_type):
+            if field in schema:
+                ob = schema[field]
+                if ILanguageIndependentField.providedBy(ob):
+                    if value.lower() not in ('true', 'on', 'yes', 'y', '1'):
+                        noLongerProvides(schema[ob], ILanguageIndependentField)
+                else:
+                    if value.lower() in ('true', 'on', 'yes', 'y', '1'):
+                        alsoProvides(ob, ILanguageIndependentField)
+
     def create_translation(self, *args, **kwargs):
         """Create translation for an object with uid in the given
         target_language and return its UID
@@ -128,11 +167,12 @@ class MultiLingual(RemoteLibrary):
 
             Create translation  /plone/en/foo  ca  title=Translated
         """
-        # XXX: **kwargs do not yet with Robot Framework remote libraries
         # Parse arguments:
         uid_or_path = args[0]
         target_language = args[1]
-        kwargs = dict([arg.split('=', 1) for arg in args[2:]])
+
+        # BBB: Support keywords arguments with robotframework < 2.8.3
+        kwargs.update(dict([arg.split('=', 1) for arg in args[2:]]))
 
         # Look up translatable content
         pc = getToolByName(self, "portal_catalog")

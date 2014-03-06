@@ -224,6 +224,7 @@
         </div>
 
     </metal:form>
+    </div>
   </div>
 </metal:main>
 </body>

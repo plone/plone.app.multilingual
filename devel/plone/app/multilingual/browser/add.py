@@ -2,25 +2,37 @@
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
-from plone.app.multilingual import _
-from plone.app.multilingual.browser.interfaces import IAddTranslation
-from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
-from plone.app.multilingual.interfaces import ILanguage
-from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
-from plone.dexterity.browser.add import DefaultAddForm, DefaultAddView
+from plone.autoform import directives
+from plone.autoform.form import AutoExtensibleForm
+from plone.autoform.interfaces import IFormFieldProvider
+from plone.supermodel import model
+from plone.z3cform.fieldsets import extensible
+from plone.z3cform.fieldsets.interfaces import IFormExtender
+from z3c.form.form import Form
+from z3c.form.interfaces import HIDDEN_MODE
+from z3c.form.interfaces import NO_VALUE
+from z3c.form.widget import ComputedWidgetAttribute
+from zope import schema
+from plone.dexterity.browser.add import DefaultAddForm
+from plone.dexterity.browser.add import DefaultAddView
 from plone.dexterity.interfaces import IDexterityFTI
-from plone.directives import form
 from plone.registry.interfaces import IRegistry
 from z3c.form import button
 from zope.component import getUtility
 from zope.component import adapts
 from zope.component import queryMultiAdapter
-from zope.interface import implements
+from zope.interface import implements, alsoProvides
 from zope.interface import Interface
 from zope.traversing.interfaces import ITraversable
 from zope.traversing.interfaces import TraversalError
+
+from plone.app.multilingual import _
+from plone.app.multilingual.browser.interfaces import IAddTranslation
+from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
+from plone.app.multilingual.interfaces import ILanguage
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 
 
 class AddViewTraverser(object):
@@ -101,6 +113,98 @@ class MultilingualAddForm(DefaultAddForm):
         return settings.buttons_babel_view_up_to_nr_translations
 
 
+class IMultilingualAddFormMarkerFieldMarker(Interface):
+    """Marker interfaces for add form marker fields"""
+
+
+class IMultilingualAddFormMarker(model.Schema):
+    """Marker metadata fields for multilingual add form"""
+    directives.mode(pam_tg=HIDDEN_MODE)
+    pam_tg = schema.ASCIILine(title=u"Translated content")
+    pam_old_lang = schema.ASCIILine(title=u"Old language")
+
+alsoProvides(IMultilingualAddFormMarker['pam_tg'],
+             IMultilingualAddFormMarkerFieldMarker)
+
+alsoProvides(IMultilingualAddFormMarker['pam_old_lang'],
+             IMultilingualAddFormMarkerFieldMarker)
+
+
+def get_multilingual_add_form_tg_value(adapter):
+    session_manager = getToolByName(adapter.context, 'session_data_manager')
+    session_data = session_manager.getSessionData()
+    return session_data.get('tg', '')
+
+
+MultilingualAddFormTgValue = ComputedWidgetAttribute(
+    get_multilingual_add_form_tg_value,
+    context=None, request=None, view=None, widget=None,
+    field=IMultilingualAddFormMarker['pam_tg']
+)
+
+
+def get_multilingual_add_form_old_lang_value(adapter):
+    session_manager = getToolByName(adapter.context, 'session_data_manager')
+    session_data = session_manager.getSessionData()
+    return session_data.get('old_lang', '')
+
+
+MultilingualAddFormOldLangValue = ComputedWidgetAttribute(
+    get_multilingual_add_form_old_lang_value,
+    context=None, request=None, view=None, widget=None,
+    field=IMultilingualAddFormMarker['pam_old_lang']
+)
+
+
+class FauxDataManager(object):
+    """Data manager for marker fields, which are not meant to be saved"""
+
+    def __init__(self, context, field):
+        self.context = context
+        self.field = field
+
+    def get(self):
+        raise AttributeError
+
+    def query(self, default=NO_VALUE):
+        return default
+
+    def set(self, value):
+        pass
+
+    def canAccess(self):
+        return False
+
+    def canWrite(self):
+        return False
+
+
+class MultilingualAddFormExtender(extensible.FormExtender):
+    implements(IFormExtender)
+    adapts(Interface, IPloneAppMultilingualInstalled, MultilingualAddForm)
+
+    def __init__(self, context, request, form):
+        self.context = context
+        self.request = request
+        self.form = form
+
+    def update(self):
+        groups = getattr(self.form, 'groups', None)
+        if isinstance(groups, list) and len(groups):
+            group = groups[-1].__name__
+        else:
+            group = None
+
+        self.add(IMultilingualAddFormMarker, prefix='', group=group)
+
+        if group is None:
+            for name in IMultilingualAddFormMarker:
+                self.form.fields[name].mode = HIDDEN_MODE
+        else:
+            for name in IMultilingualAddFormMarker:
+                self.form.groups[-1].fields[name].mode = HIDDEN_MODE
+
+
 class DefaultMultilingualAddView(DefaultAddView):
     """This is the default add view as looked up by the ++add++ traversal
     namespace adapter in CMF. It is an unnamed adapter on
@@ -122,9 +226,9 @@ class DefaultMultilingualAddView(DefaultAddView):
             self.form_instance.portal_type = ti.getId()
 
 
-class AddTranslationsForm(form.SchemaForm):
+class AddTranslationsForm(AutoExtensibleForm, Form):
 
-    schema = form.IFormFieldProvider(IAddTranslation)
+    schema = IFormFieldProvider(IAddTranslation)
     ignoreContext = True
     label = _(u"label_add_translations", default=u"Add translations")
     description = _(u"long_description_add_translations", default=
