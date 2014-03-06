@@ -1,27 +1,27 @@
+from Acquisition import aq_base
 from Acquisition import aq_parent
-from zope.component.hooks import getSite
-from plone.app.multilingual.interfaces import ITranslationManager
+from Products.CMFCore.exceptions import ResourceLockedError
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.CMFPlone.interfaces import IPloneSiteRoot
+from plone.app.multilingual import _
+from plone.app.multilingual.interfaces import ITranslationManager
+from plone.locking.interfaces import ILockable
 from zc.relation.interfaces import ICatalog
 from zope.component import getUtility
+from zope.component.hooks import getSite
 from zope.component.interfaces import ComponentLookupError
+
 import logging
-from Acquisition import aq_base
-from Products.CMFCore.exceptions import ResourceLockedError
-from plone.locking.interfaces import ILockable
-from plone.app.multilingual import _
+
 try:
     from Products.LinguaPlone.interfaces import ITranslatable
 except:
     from plone.app.multilingual.interfaces import ITranslatable
 
 LP_TRANSLATABLE = 'Products.LinguaPlone.interfaces.ITranslatable'
-
 portal_types_blacklist = ['Collage', 'FormFolder', 'Ploneboard']
-
 logger = logging.getLogger(__name__)
 
 
@@ -47,8 +47,9 @@ class LP2PAMView(BrowserView):
                     if translations:
                         for language in translations.keys():
                             try:
-                                manager.register_translation(language,
-                                    translations[language][0])
+                                manager.register_translation(
+                                    language, translations[language][0]
+                                )
                             except KeyError:
                                 logger.warning(
                                     '%s already translated to %s: %s' %
@@ -62,16 +63,13 @@ class LP2PAMView(BrowserView):
 
 
 class LP2PAMAfterView(BrowserView):
-
     template = ViewPageTemplateFile('templates/cleanup_results.pt')
     stepinfo = _(u"After migration relation cleanup")
 
     def reset_relation_catalog(self):
-        """
-        Sometimes there are dependencies to the ITranslatable
-        interface hidden in the relation catalog. This reset gets
-        rid of them. (Assuming that Products.LinguaPlone is already
-        uninstalled)
+        """Sometimes there are dependencies to the ITranslatable interface
+        hidden in the relation catalog. This reset gets rid of them. (Assuming
+        that Products.LinguaPlone is already uninstalled).
         """
         try:
             catalog = getUtility(ICatalog)
@@ -88,8 +86,10 @@ class LP2PAMAfterView(BrowserView):
             except KeyError:
                 # If you read this because you wonder why you have many
                 # missing relations, please inform do3cc
-                logger.warning("A relation could not be recreated. You have "
-                    "lost relations")
+                logger.warning(
+                    "A relation could not be recreated. "
+                    "You have lost relations"
+                )
                 bad.append(str(relation.__dict__))
         return total, bad
 
@@ -101,61 +101,72 @@ class LP2PAMAfterView(BrowserView):
 
 
 class moveContentToProperRLF(BrowserView):
-    """ This browser view moves the site's content to its corresponding root
-        language folder and previously made a search for misplaced content
-        through the site's content tree and moves them to its nearest translated
-        parent.
+    """This browser view moves the site's content to its corresponding root
+    language folder and previously made a search for misplaced content through
+    the site's content tree and moves them to its nearest translated parent.
     """
-
     template = ViewPageTemplateFile('templates/relocate-results.pt')
     stepinfo = _(u"Relocate content to the proper root language folder")
     blacklist = list()
 
     def findContent(self, content, depth):
-        # only handle portal content
+        content = aq_base(content)
+        logger.info("found content id: %s" % getattr(content, 'id', content))
+
         if not getattr(content, 'portal_type', None):
-            logger.warning('SKIP non-portal content %s (%s)' %
-                (content.absolute_url(), content.meta_type))
+            # Only handle portal content
+            logger.warning(
+                'SKIP non-portal content %s' % content
+            )
             return
-        if hasattr(aq_base(content), 'objectIds') \
-            and content.portal_type not in self.blacklist:
+        if hasattr(content, 'objectIds')\
+                and content.portal_type not in self.blacklist:
             for id in content.objectIds():
-                self.findContent(getattr(content, id), depth + 1)
+                try:
+                    self.findContent(getattr(content, id), depth + 1)
+                except:
+                    import ipdb; ipdb.set_trace()
+                    pass
         while len(self.content_tree) < depth + 1:
             self.content_tree.append([])
         if ITranslatable.providedBy(content):
             # The content parent has the same language?
-            if not IPloneSiteRoot.providedBy(aq_parent(content)) \
-               and aq_parent(content).Language() != content.Language():
+            parent = aq_parent(content)
+            if parent\
+                    and not IPloneSiteRoot.providedBy(parent)\
+                    and parent.Language() != content.Language():
                 self.content_tree[depth].append(content)
 
     def searchNearestTranslatedParent(self, content):
         parent = aq_parent(content)
-        while parent.Language() != content.Language() \
-              and not IPloneSiteRoot.providedBy(parent):
+        while parent.Language() != content.Language()\
+                and not IPloneSiteRoot.providedBy(parent):
             parent = aq_parent(parent)
         return parent
 
     def __call__(self):
-        """ Note: Steps names don't correspond with the control panel ones """
-        self.blacklist = [x.strip() for x in
-            self.request.form.get('blacklist[]') if x.strip() != '']
+        """Note: Steps names don't correspond with the control panel ones.
+        """
+        self.blacklist = [
+            x.strip() for x in
+            self.request.form.get('blacklist[]') if x.strip() != ''
+        ]
         self.results = self.step1andstep2()
         self.results += self.step3()
         return self.template()
 
     def step1andstep2(self):
-        """ Explore the site's content searching for misplaced content and move
-            it to its nearest translated parent.
+        """Explore the site's content searching for misplaced content and move
+        it to its nearest translated parent.
         """
         portal = getSite()
 
         output = []
-        # Step 1 - Audit the content tree and make a list with the candidates to
-        # be moved to the right RLF. Once we get a candidate, decide if it
+        # Step 1 - Audit the content tree and make a list with the candidates
+        # to be moved to the right RLF. Once we get a candidate, decide if it
         # should be moved to its nearest parent with the same language. Trying
-        # to avoid the catalog in order to avoid problems with big sites and bad
-        # or corrupted catalogs.
+        # to avoid the catalog in order to avoid problems with big sites and
+        # bad or corrupted catalogs.
         self.content_tree = []
         self.findContent(portal, 0)
         logger.warning("Step 1: Eligible content: %s" % self.content_tree)
@@ -187,11 +198,12 @@ class moveContentToProperRLF(BrowserView):
                                    '/'.join(target_folder.getPhysicalPath()))
                         log = logger.warning
                     except Exception, err:
-                        info_str = "ERROR. Step 2: not possible to move " \
-                        "object %s to folder %s. Error: %s" % (
-                                   '/'.join(content.getPhysicalPath()),
-                                   '/'.join(target_folder.getPhysicalPath()),
-                                   err)
+                        info_str = "ERROR. Step 2: not possible to move "\
+                            "object %s to folder %s. Error: %s" % (
+                                '/'.join(content.getPhysicalPath()),
+                                '/'.join(target_folder.getPhysicalPath()),
+                                err
+                            )
                         log = logger.error
                     log(info_str)
                     output.append(info_str)
@@ -200,7 +212,7 @@ class moveContentToProperRLF(BrowserView):
         return output
 
     def step3(self):
-        """ Move the existing site content to its correspondent RLF.
+        """Move the existing site content to its correspondent RLF.
         """
         portal = getSite()
         pc = getToolByName(portal, "portal_catalog")
@@ -236,13 +248,15 @@ class moveContentToProperRLF(BrowserView):
                         cutted = self.context.manage_cutObjects(brain.id)
                     try:
                         folder.manage_pasteObjects(cutted)
-                        info_str = "Moved object %s to root language folder %s" % (
-                                    old_path, lang)
+                        info_str =\
+                            "Moved object %s to root language folder %s" % (
+                                old_path, lang
+                            )
                         log = logger.warning
                     except Exception, err:
                         info_str = "ERROR. Step 3: not possible to move "\
-                        "object %s to root language folder %s. Error: %s" % (
-                            old_path, lang, err)
+                            "object %s to root language folder %s. Error: %s"\
+                            % (old_path, lang, err)
                         log = logger.error
                     log(info_str)
                     output.append(info_str)
