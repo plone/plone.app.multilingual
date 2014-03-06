@@ -34,7 +34,6 @@ setup(
         'plone.dexterity>=2.1',
         'plone.app.z3cform',
         'plone.app.registry',
-        'plone.directives.form',
         'plone.formwidget.contenttree',
         'Products.PloneLanguageTool',
     ],
