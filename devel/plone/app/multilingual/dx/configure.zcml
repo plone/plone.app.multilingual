@@ -28,8 +28,15 @@
         factory=".language.Language" />
 
     <!-- Configure plone.supermodel handler if available -->
-    <utility zcml:condition="installed plone.supermodel"
+    <utility
+        zcml:condition="installed plone.supermodel"
         factory=".supermodel.LanguageIndependentFieldMetadataHandler"
+        name="plone.rfc822.lingua"
+        />
+
+    <adapter
+        zcml:condition="installed plone.supermodel"
+        factory=".directives.LanguageIndependentFieldsPlugin"
         name="plone.rfc822.lingua"
         />
 

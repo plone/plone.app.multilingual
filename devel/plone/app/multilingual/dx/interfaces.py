@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
-# vim: set ts=4 sw=4:
-from plone.app.multilingual.interfaces import (
-    ITranslatable,
-)
-
-from directives import languageindependent
 from zope.interface import Interface
 
-MULTILINGUAL_KEY = languageindependent.key
+from plone.app.multilingual.interfaces import ITranslatable
+
+MULTILINGUAL_KEY = u'plone.app.multilingual.languageindependent'
 
 
 class IDexterityTranslatable(ITranslatable):

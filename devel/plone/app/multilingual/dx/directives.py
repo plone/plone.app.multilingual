@@ -1,9 +1,15 @@
+# -*- coding: utf-8 -*-
 from plone.supermodel.directives import MetadataListDirective
+from plone.supermodel.directives import CheckerPlugin
 from zope.interface import Interface
+from zope.interface import alsoProvides
 from zope.interface.interfaces import IInterface
 
+from plone.app.multilingual.dx.interfaces import MULTILINGUAL_KEY
+from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 
-LANGUAGE_INDEPENDENT_KEY = u'plone.app.multilingual.languageindependent'
+
+LANGUAGE_INDEPENDENT_KEY = MULTILINGUAL_KEY
 
 
 # Directives
@@ -30,4 +36,20 @@ class languageindependent(MetadataListDirective):
         return [(form_interface, field, self.value) for field in args]
 
 
-__all__ = ('languageindependent',)
+class LanguageIndependentFieldsPlugin(CheckerPlugin):
+
+    key = LANGUAGE_INDEPENDENT_KEY
+
+    def __call__(self):
+        schema = self.schema
+        for fieldName in self.check():
+            alsoProvides(schema[fieldName], ILanguageIndependentField)
+
+    def fieldNames(self):
+        if self.value is None:
+            return
+        for taggedValue in self.value:
+            yield taggedValue[1]
+
+
+__all__ = ('languageindependent', 'LanguageIndependentFieldsPlugin')
