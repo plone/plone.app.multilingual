@@ -133,7 +133,7 @@ def createdEvent(obj, event):
         portal = getSite()
         portal_factory = getToolByName(portal, 'portal_factory')
 
-        request = getRequest()
+        request = getattr(event.object, 'REQUEST', getRequest())
         if (not 'form.widgets.pam_old_lang' in request.form
                 or not 'form.widgets.pam_old_lang' in request.form):
             # This request did not come from multilingual add form
