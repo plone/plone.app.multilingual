@@ -1,23 +1,20 @@
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import _createObjectByType
+from Products.Five import BrowserView
 from logging import getLogger
+from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.layout.navigation.interfaces import INavigationRoot
-from plone.app.multilingual.interfaces import SHARED_NAME
-from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITranslatable
+from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.app.multilingual.subscriber import set_recursive_language
-from zope.interface import alsoProvides
-from Acquisition import aq_inner
-from Products.CMFPlone.utils import _createObjectByType
-from Products.CMFCore.utils import getToolByName
-from Products.Five import BrowserView
-from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
-from zope.event import notify
-from zope.lifecycleevent import modified
-from zope.component.hooks import getSite
-from plone.i18n.locales.languages import _languagelist
 from plone.i18n.locales.languages import _combinedlanguagelist
-
+from plone.i18n.locales.languages import _languagelist
+from zope.component.hooks import getSite
+from zope.event import notify
+from zope.interface import alsoProvides
+from zope.lifecycleevent import modified
 
 LOG = getLogger('plone.app.multilingual')
 
@@ -61,8 +58,10 @@ class SetupMultilingualSite(object):
         available = pl.getAvailableLanguages()
         for language in languages:
             info = available[language]
-            doneSomething += self.setUpLanguage(language,
-                info.get('native', info.get('name')))
+            doneSomething += self.setUpLanguage(
+                language,
+                info.get('native', info.get('name'))
+            )
         doneSomething += self.linkTranslations()
         doneSomething += self.removePortalDefaultPage()
         # if self.previousDefaultPageId:
@@ -85,10 +84,13 @@ class SetupMultilingualSite(object):
         except TypeError, e:
             raise TypeError(str(e) + " Are your folders ITranslatable?")
         for language in self.languages:
-            if ((language != self.defaultLanguage) and (not
-                canonical.has_translation(language))):
-                canonical.register_translation(language,
-                                               self.folders[language])
+            if language == self.defaultLanguage:
+                continue
+            if not canonical.has_translation(language):
+                canonical.register_translation(
+                    language,
+                    self.folders[language]
+                )
                 doneSomething = True
         if doneSomething:
             LOG.info("Translations linked.")
@@ -125,9 +127,10 @@ class SetupMultilingualSite(object):
             folder.setTitle(name)
             state = wftool.getInfoFor(folder, 'review_state', None)
             # This assumes a direct 'publish' transition from the initial state
-            # We are going to check if its private and has publish action for the out of the box case
-            # otherwise don't do anything
-            available_transitions = [t['id'] for t in wftool.getTransitionsFor(folder)]
+            # We are going to check if its private and has publish action for
+            # the out of the box case otherwise don't do anything
+            available_transitions = [t['id'] for t in
+                                     wftool.getTransitionsFor(folder)]
             if state != 'published' and 'publish' in available_transitions:
                 wftool.doActionFor(folder, 'publish')
 
@@ -191,8 +194,9 @@ class SetupMultilingualSite(object):
         target.reindexObject()
         defaultPage = getattr(target, pageId)
         defaultPage.reindexObject()
-        LOG.info("Moved default page '%s' to folder '%s'." %
-            (pageId, target.getId()))
+        LOG.info("Moved default page '{0}' to folder '{1}'.".format(
+            pageId, target.getId()
+        ))
         return True
 
     def setupLanguageSwitcher(self):

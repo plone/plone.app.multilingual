@@ -1,26 +1,24 @@
 # -*- coding: utf-8 -*-
-from plone.i18n.locales.interfaces import IContentLanguageAvailability
-from Acquisition import aq_parent
-from Acquisition import aq_inner
-from Acquisition import aq_base
-from Acquisition import aq_chain
 from AccessControl.SecurityManagement import getSecurityManager
-from zope.component import getUtility
-from zope.component import getMultiAdapter
-from Products.Five import BrowserView
+from Acquisition import aq_chain
+from Acquisition import aq_inner
+from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
-from plone.app.i18n.locales.browser.selector import LanguageSelector
-from zope.component.hooks import getSite
-from plone.registry.interfaces import IRegistry
-
-from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.multilingual.interfaces import ITranslationLocator
-from plone.app.multilingual.interfaces import ILanguage
-from plone.app.multilingual.manager import TranslationManager
-from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
-from plone.app.multilingual.interfaces import ILanguageRootFolder
 from Products.CMFPlone.interfaces import IPloneSiteRoot
+from Products.Five import BrowserView
+from plone.app.i18n.locales.browser.selector import LanguageSelector
+from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
+from plone.app.multilingual.interfaces import ILanguage
+from plone.app.multilingual.interfaces import ILanguageRootFolder
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.app.multilingual.interfaces import ITranslationLocator
+from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.manager import TranslationManager
+from plone.i18n.locales.interfaces import IContentLanguageAvailability
+from plone.registry.interfaces import IRegistry
+from zope.component import getMultiAdapter
+from zope.component import getUtility
+from zope.component.hooks import getSite
 
 
 class BabelUtils(BrowserView):
@@ -151,7 +149,7 @@ class BabelUtils(BrowserView):
 
 
 def is_shared(content):
-    """ 
+    """
     Check if it's a ghost object
     """
     child = content
