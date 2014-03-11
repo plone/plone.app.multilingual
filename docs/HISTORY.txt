@@ -4,6 +4,9 @@ Changelog
 2.0 - (unreleased)
 ------------------
 
+- ``createdEvent`` subscriber works now in request-free environments too.
+  [jensens]
+
 - Download latest v1 ``bootstrap.py``
   [saily]
 

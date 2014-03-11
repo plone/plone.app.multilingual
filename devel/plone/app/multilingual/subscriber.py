@@ -134,10 +134,12 @@ def createdEvent(obj, event):
         portal_factory = getToolByName(portal, 'portal_factory')
 
         request = getattr(event.object, 'REQUEST', getRequest())
-        if request and not 'form.widgets.pam_old_lang' in request.form:
-            # This request did not come from multilingual add form
-            pass
-        elif ('tg' in session.keys()
+        has_pam_old_lang_in_form = (
+            request and
+            not 'form.widgets.pam_old_lang' in request.form
+        )
+        if (not has_pam_old_lang_in_form
+                and 'tg' in session.keys()
                 and 'old_lang' in session.keys()
                 and not portal_factory.isTemporary(obj)):
             IMutableTG(obj).set(session['tg'])
