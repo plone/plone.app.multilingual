@@ -4,17 +4,17 @@
 *.mo
 
 # Directories
-eggs/*
-parts/*
-bin/*
-extras/*
-develop-eggs/*
-var/*
-build/*
-dist/*
-docs/_build
-coverage
-src/*
+/eggs/*
+/parts/*
+/bin/*
+/extras/*
+/develop-eggs/*
+/var/*
+/build/*
+/dist/*
+/docs/_build
+/coverage
+/src/*
 
 # Sublime Text
 .codeintel/*
@@ -39,10 +39,11 @@ local.cfg
 .emacs.desktop*
 
 # Virtualenv
-lib64
-lib
-include
+/lib64/
+/lib/
+/include/
+/local/
 
 # tests
-test_acceptance/*
+/test_acceptance/*
 robot_*
