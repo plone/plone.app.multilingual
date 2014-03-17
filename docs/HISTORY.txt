@@ -1,11 +1,18 @@
 Changelog
 =========
 
+1.2.2 (unreleased)
+------------------
+
+- Nothing changed yet.
+
+
 1.2.1 2013-10-16
 ----------------
 
 - Solving on-the-fly language independent field
   [ramon]
+
 
 1.2 - 2013-09-24
 ----------------
