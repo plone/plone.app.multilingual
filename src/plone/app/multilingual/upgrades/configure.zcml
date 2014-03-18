@@ -1,0 +1,33 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="plone.app.multilingual">
+
+    <genericsetup:upgradeStep
+        source="1"
+        destination="2"
+        title="Update css_registry to render styles for authenticated users only."
+        description=""
+        profile="plone.app.multilingual:default"
+        handler=".upgrades.reimport_css_registry"
+        />
+
+    <genericsetup:upgradeStep
+        source="2"
+        destination="3"
+        title="Create new registry entry for bypass_languageindependent_field_permission_check"
+        description=""
+        profile="plone.app.multilingual:default"
+        handler=".upgrades.upgrade_2_to_3_add_missing_registry_entry"
+        />
+    <!-- 2 -> 3 upgrade profile -->
+    <genericsetup:registerProfile
+        name="3"
+        title="plone.app.multilingual.upgrades.3: Update registry"
+        description=""
+        directory="profiles/3"
+        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+
+</configure>
