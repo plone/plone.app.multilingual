@@ -4,6 +4,9 @@ Changelog
 1.2.2 (unreleased)
 ------------------
 
+- Fix translation views so that the correct from and to languages are shown.
+  [fredvd]
+
 - Make search look in "Lanuguage Shared" too.
   https://github.com/plone/plone.app.multilingual/issues/106
   [khink]
@@ -14,6 +17,7 @@ Changelog
 
 - Solving on-the-fly language independent field
   [ramon]
+
 
 1.2 - 2013-09-24
 ----------------

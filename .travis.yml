@@ -1,28 +1,44 @@
 language: python
 python:
-  - 2.6
-  - 2.7
+- 2.6
+- 2.7
 env:
+  matrix:
   - PLONE_VERSION=4.1
   - PLONE_VERSION=4.2
   - PLONE_VERSION=4.3
+  global:
+  - ARTIFACTS_S3_BUCKET=plone.app.multilingual
+  - secure: KuSwVhrRovthk4UkJsejjAbKDK24UQWNTDqz8ixF0kwbLVNEbv0gTDh9MylaD2hpgX8YzO2D9LhgJyf3hOsEywAer/lgY/E1P53lB9fR0ODGqATrMKfmxsApWDuomUbPn6s7lPSwMy49Xl8SdNR6DGnleefedjnw0C5Asizg0mI=
+  - secure: rTq4q8TAAA1nAHP0iw6/cHJbd05PJG5xzLD0WXgEZOC8jvHWEpnskPWS1S5rM0YeqliYA9QMvlnlB/6c8b+AytZU87hFm+qddNmT6DlsxNXwM+Tqi1rAEafPOhiowfxjzgsiJocWKds4ohdQOU0iVgONdKbm+0v+zF47NfPj4DU=
 matrix:
   allow_failures:
-    - python: 2.6
-      env: PLONE_VERSION=4.1
+  - python: 2.6
+    env: PLONE_VERSION=4.1
   exclude:
-    - python: 2.7
-      env: PLONE_VERSION=4.1
-    - python: 2.6
-      env: PLONE_VERSION=4.2
-    - python: 2.6
-      env: PLONE_VERSION=4.3
+  - python: 2.7
+    env: PLONE_VERSION=4.1
+  - python: 2.6
+    env: PLONE_VERSION=4.2
+  - python: 2.6
+    env: PLONE_VERSION=4.3
 install:
-  - sed -ie "s#test-plone-4.x.cfg#test-plone-$PLONE_VERSION.x.cfg#" travis.cfg
-  - mkdir -p buildout-cache/downloads
-  - python bootstrap.py -c travis.cfg
-  - bin/buildout -Nc travis.cfg
+- sed -ie "s#test-plone-4.x.cfg#test-plone-$PLONE_VERSION.x.cfg#" travis.cfg
+- mkdir -p buildout-cache/downloads
+- python bootstrap.py -c travis.cfg
+- bin/buildout -Nc travis.cfg
 before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
 script: bin/test
+after_script:
+- gem install --version 0.8.9 faraday
+- gem install travis-artifacts
+- travis-artifacts upload --path parts/test
+notifications:
+  irc:
+    channels:
+    - irc.freenode.org#plone-testing
+    template:
+    - "%{repository}#%{build_number} (%{branch} | %{commit} | %{author}): %{message}"
+    - "Robot: http://plone.app.multilingual.s3-website-us-east-1.amazonaws.com/artifacts/%{build_number}/%{build_number}.1/robot_report.html"

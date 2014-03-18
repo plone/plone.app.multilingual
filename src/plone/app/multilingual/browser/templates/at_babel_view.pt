@@ -14,7 +14,7 @@
               fieldsets python:[key for key in schematas.keys() if (schematas[key].editableFields(here, visible_only=True))];
               errors python:request.get('errors', {})">
 
-          <div id="view_language" tal:content="context/language">
+          <div id="view_language" tal:content="context/Language">
           </div>
 
           <tal:fieldsets define="sole_fieldset python:len(fieldsets)==1"

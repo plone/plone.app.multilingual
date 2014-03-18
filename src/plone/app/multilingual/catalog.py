@@ -78,6 +78,12 @@ def language_filter(query):
                 old_path['query'] = [old_path_url,
                                      root_path + '/' + SHARED_NAME]
 
+        # Check if its shared folder to add the root path
+        #elif old_path['query'].split('/')[-1] == SHARED_NAME:
+        #    old_path['query'] = [
+        #        old_path_url,
+        #        root_path + '/' + languageTool.getPreferredLanguage()]
+
 
 def AlreadyApplied(patch):
     if patch in _enabled:
