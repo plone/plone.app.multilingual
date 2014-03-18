@@ -8,18 +8,18 @@ class HiddenProfiles(object):
     implements(INonInstallable)
 
     def getNonInstallableProfiles(self):
-        """
-        Prevents uninstall profile from showing up in the profile list
-        when creating a Plone site.
+        """Prevents uninstall profile from showing up in the profile list when
+        creating a Plone site.
         """
         return [
-            # u'plone.app.multilingual:default',  # XXX: TODO: this one too?
+            u'plone.app.multilingual:base',
             u'plone.app.multilingual:uninstall',
         ]
 
 
 def removeBehaviors(context):
-    """Remove p.a.multilingual behaviors from p.a.contenttypes types."""
+    """Remove p.a.multilingual behaviors from p.a.contenttypes types.
+    """
 
     if context.readDataFile('plone.app.multilingual_uninstall.txt') is None:
         return
