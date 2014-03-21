@@ -1,36 +1,35 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
-
-from plone.memoize.instance import memoize
-from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.layout.navigation.defaultpage import isDefaultPage
-from plone.app.multilingual.browser.interfaces import (
-    ITranslateMenu,
-    ITranslateSubMenuItem,
-)
-from plone.app.multilingual.browser.vocabularies import (
-    untranslated_languages, translated_languages, translated_urls)
+from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.multilingual import _
-from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
-from plone.app.multilingual.interfaces import ILanguage
-from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.app.multilingual.browser.interfaces import ITranslateMenu
+from plone.app.multilingual.browser.interfaces import ITranslateSubMenuItem
 from plone.app.multilingual.browser.utils import is_shared
+from plone.app.multilingual.browser.vocabularies import translated_languages
+from plone.app.multilingual.browser.vocabularies import translated_urls
+from plone.app.multilingual.browser.vocabularies import untranslated_languages
+from plone.app.multilingual.interfaces import ILanguage
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
+from plone.memoize.instance import memoize
 from plone.registry.interfaces import IRegistry
-from zope.interface import implements
 from zope.browsermenu.menu import BrowserMenu
 from zope.browsermenu.menu import BrowserSubMenuItem
 from zope.component import getUtility
 from zope.component.hooks import getSite
+from zope.interface import implements
 
 
 class TranslateMenu(BrowserMenu):
     implements(ITranslateMenu)
 
     def getMenuItems(self, context, request):
-        """Return menu item entries in a TAL-friendly form."""
+        """Return menu item entries in a TAL-friendly form.
+        """
         menu = []
         url = context.absolute_url()
         lt = getToolByName(context, "portal_languages")
@@ -75,12 +74,12 @@ class TranslateMenu(BrowserMenu):
             for idx, context in enumerate(contexts):
                 url = context.absolute_url()
 
-                langs = untranslated_languages(context)
-                for lang in langs:
+                ulangs = untranslated_languages(context)
+                for lang in ulangs:
                     lang_name = lang.title
                     lang_id = lang.value
-                    icon = showflags and lt.getFlagForLanguageCode(lang_id) \
-                           or None
+                    icon = showflags and lt.getFlagForLanguageCode(lang_id)\
+                        or None
                     item = {
                         "description": _(
                             u"description_translate_into",
@@ -116,8 +115,8 @@ class TranslateMenu(BrowserMenu):
                         continue
                     lang_name = lang.title
                     lang_id = lang.value
-                    icon = showflags and lt.getFlagForLanguageCode(lang_id) \
-                           or None
+                    icon = showflags and lt.getFlagForLanguageCode(lang_id)\
+                        or None
                     item = {
                         "description": _(
                             u"description_babeledit_menu",

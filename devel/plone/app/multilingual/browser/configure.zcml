@@ -72,7 +72,6 @@
         title="Translate menu - contains translation-related actions"
         class=".menu.TranslateMenu"
         />
-
     <adapter
         for="plone.app.multilingual.interfaces.ITranslatable
              ..interfaces.IPloneAppMultilingualInstalled"
