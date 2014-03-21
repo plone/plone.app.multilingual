@@ -11,7 +11,7 @@ setup(
     long_description="\n\n".join([
         open("README.rst").read(),
         open(os.path.join("docs", "CREDITS.txt")).read(),
-        open(os.path.join("docs", "HISTORY.txt")).read(),
+        open("CHANGES.rst").read(),
     ]),
     classifiers=[
         "Framework :: Plone",

@@ -4,6 +4,10 @@ Changelog
 2.0 - (unreleased)
 ------------------
 
+- In the findContent method of the migrator script, do a more explicit test if
+  a content is a real, Dexterity or Archetypes based content object.
+  [thet]
+
 - ``createdEvent`` subscriber works now in request-free environments too.
   [jensens]
 
