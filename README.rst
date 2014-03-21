@@ -108,7 +108,7 @@ Babel view
 
 An evolution of the LP *translate* view, unified for either Archetypes and
 Dexterity content types. It features an already translated content viewer for
-the current content being edited via an ajaxified dinamic selector that shows
+the current content being edited via an ajaxified dynamic selector that shows
 them on the fly on user request.
 
 
