@@ -1,4 +1,15 @@
+# -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import _createObjectByType
+from plone.app.multilingual import logger
+from plone.app.multilingual.interfaces import ILanguage
+from time import time
+
+import transaction
+
+
+SHARED_NAME = 'shared'  # old shared folder name
+OLD_PREFIX = 'old_'  # temporary prefix while migrating
 
 
 def reimport_css_registry(context):
@@ -10,19 +21,6 @@ def reimport_css_registry(context):
     # Refresh css
     cssregistry = getToolByName(context, 'portal_css')
     cssregistry.cookResources()
-
-# -*- coding: utf-8 -*-
-from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import _createObjectByType
-
-from plone.app.multilingual import logger
-from plone.app.multilingual.interfaces import ILanguage
-from time import time
-
-import transaction
-
-SHARED_NAME = 'shared'  # old shared folder name
-OLD_PREFIX = 'old_'  # temporary prefix while migrating
 
 
 def migration_pam_1_to_2(context):
