@@ -132,7 +132,7 @@ class moveContentToProperRLF(BrowserView):
                 content.absolute_url(), content.meta_type))
             return
         if hasattr(aq_base(content), 'objectIds')\
-                and content.portal_type not in self.blacklist:
+                and aq_base(content).portal_type not in self.blacklist:
             for id in content.objectIds():
                 try:
                     self.findContent(getattr(content, id), depth + 1)
