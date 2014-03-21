@@ -134,10 +134,7 @@ class moveContentToProperRLF(BrowserView):
         if hasattr(aq_base(content), 'objectIds')\
                 and aq_base(content).portal_type not in self.blacklist:
             for id in content.objectIds():
-                try:
-                    self.findContent(getattr(content, id), depth + 1)
-                except RuntimeError:
-                    import ipdb; ipdb.set_trace()
+                self.findContent(getattr(content, id), depth + 1)
         while len(self.content_tree) < depth + 1:
             self.content_tree.append([])
         if ITranslatable.providedBy(content):
