@@ -1,27 +1,40 @@
+from Acquisition import aq_base
 from Acquisition import aq_parent
-from zope.component.hooks import getSite
-from plone.app.multilingual.interfaces import ITranslationManager
+from Products.CMFCore.exceptions import ResourceLockedError
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.CMFPlone.interfaces import IPloneSiteRoot
+from plone.app.multilingual import _
+from plone.app.multilingual.interfaces import ITranslationManager
+from plone.locking.interfaces import ILockable
 from zc.relation.interfaces import ICatalog
 from zope.component import getUtility
+from zope.component.hooks import getSite
 from zope.component.interfaces import ComponentLookupError
+from zope.interface import Interface
+
 import logging
-from Acquisition import aq_base
-from Products.CMFCore.exceptions import ResourceLockedError
-from plone.locking.interfaces import ILockable
-from plone.app.multilingual import _
+
 try:
     from Products.LinguaPlone.interfaces import ITranslatable
 except:
     from plone.app.multilingual.interfaces import ITranslatable
 
+try:
+    from plone.dexterity.interfaces import IDexterityContent
+except ImportError:
+    class IDexterityContent(Interface):
+        pass
+try:
+    from Products.Archetypes.interfaces import IBaseObject
+except ImportError:
+    class IBaseObject(Interface):
+        pass
+
+
 LP_TRANSLATABLE = 'Products.LinguaPlone.interfaces.ITranslatable'
-
 portal_types_blacklist = ['Collage', 'FormFolder', 'Ploneboard']
-
 logger = logging.getLogger(__name__)
 
 
@@ -50,7 +63,7 @@ class LP2PAMView(BrowserView):
                                 manager.register_translation(language,
                                     translations[language][0])
                             except KeyError:
-                                logger.warning(
+                                logger.info(
                                     '%s already translated to %s: %s' %
                                     (obj.id, language,
                                         str(manager.get_translations())))
@@ -113,14 +126,18 @@ class moveContentToProperRLF(BrowserView):
 
     def findContent(self, content, depth):
         # only handle portal content
-        if not getattr(content, 'portal_type', None):
-            logger.warning('SKIP non-portal content %s (%s)' %
-                (content.absolute_url(), content.meta_type))
+        if not IDexterityContent.providedBy(content)\
+                and not IBaseObject.providedBy(content):
+            logger.warning('SKIP non-portal content %s (%s)' % (
+                content.absolute_url(), content.meta_type))
             return
-        if hasattr(aq_base(content), 'objectIds') \
-            and content.portal_type not in self.blacklist:
+        if hasattr(aq_base(content), 'objectIds')\
+                and content.portal_type not in self.blacklist:
             for id in content.objectIds():
-                self.findContent(getattr(content, id), depth + 1)
+                try:
+                    self.findContent(getattr(content, id), depth + 1)
+                except RuntimeError:
+                    import ipdb; ipdb.set_trace()
         while len(self.content_tree) < depth + 1:
             self.content_tree.append([])
         if ITranslatable.providedBy(content):
@@ -158,7 +175,7 @@ class moveContentToProperRLF(BrowserView):
         # or corrupted catalogs.
         self.content_tree = []
         self.findContent(portal, 0)
-        logger.warning("Step 1: Eligible content: %s" % self.content_tree)
+        logger.info("Step 1: Eligible content: %s" % self.content_tree)
 
         # We now have a list of lists that maps each eligible content with its
         # depth in the content tree
@@ -185,7 +202,7 @@ class moveContentToProperRLF(BrowserView):
                         info_str = "Step 2: Moved object %s to folder %s" % (
                                    '/'.join(content.getPhysicalPath()),
                                    '/'.join(target_folder.getPhysicalPath()))
-                        log = logger.warning
+                        log = logger.info
                     except Exception, err:
                         info_str = "ERROR. Step 2: not possible to move " \
                         "object %s to folder %s. Error: %s" % (
@@ -238,7 +255,7 @@ class moveContentToProperRLF(BrowserView):
                         folder.manage_pasteObjects(cutted)
                         info_str = "Moved object %s to root language folder %s" % (
                                     old_path, lang)
-                        log = logger.warning
+                        log = logger.info
                     except Exception, err:
                         info_str = "ERROR. Step 3: not possible to move "\
                         "object %s to root language folder %s. Error: %s" % (
