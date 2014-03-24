@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<object name="portal_catalog" meta_type="Plone Catalog Tool">
+  <index remove="True" name="Language" meta_type="FieldIndex"/>
+  <column remove="True" value="Language"/>
+  <index remove="True" name="TranslationGroup" meta_type="FieldIndex"/>
+  <column remove="True" value="TranslationGroup"/>
+</object>

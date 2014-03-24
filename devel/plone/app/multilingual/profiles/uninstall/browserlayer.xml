@@ -1,0 +1,3 @@
+<layers>
+  <layer remove="True" name="plone.app.multilingual" interface="plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled"/>
+</layers>
