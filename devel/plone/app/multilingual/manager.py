@@ -1,24 +1,20 @@
+from Products.CMFCore.utils import getToolByName
+from plone.app.multilingual.events import ObjectTranslatedEvent
+from plone.app.multilingual.events import ObjectWillBeTranslatedEvent
+from plone.app.multilingual.interfaces import ILanguage
+from plone.app.multilingual.interfaces import IMutableTG
+from plone.app.multilingual.interfaces import ITG
+from plone.app.multilingual.interfaces import ITranslationFactory
+from plone.app.multilingual.interfaces import ITranslationLocator
+from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.interfaces import NOTG
+from plone.app.multilingual.itg import addAttributeTG
+from plone.app.uuid.utils import uuidToObject
+from plone.uuid.handlers import addAttributeUUID
+from plone.uuid.interfaces import IUUID
 from zope import interface
 from zope.event import notify
-from plone.uuid.interfaces import IUUID
-from plone.app.multilingual.interfaces import (
-    ILanguage,
-    ITranslationManager,
-    ITranslationFactory,
-    ITranslationLocator,
-    ITG,
-    IMutableTG,
-    NOTG
-)
-from plone.app.multilingual.itg import addAttributeTG
-from plone.app.multilingual.events import (
-    ObjectWillBeTranslatedEvent,
-    ObjectTranslatedEvent,
-)
-from plone.uuid.handlers import addAttributeUUID
-from plone.app.uuid.utils import uuidToObject
 from zope.site.hooks import getSite
-from Products.CMFCore.utils import getToolByName
 
 
 class TranslationManager(object):

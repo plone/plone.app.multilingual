@@ -1,33 +1,21 @@
-# -*- encoding: utf-8 -*-
-from zope.container.interfaces import INameChooser
-from plone.app.content.namechooser import NormalizingNameChooser
-
-from plone.dexterity.interfaces import IDexterityContent
-from plone.dexterity.content import Container
-from zope.interface import alsoProvides
-from zope.interface import implements
-from zope.component import adapts
-from Products.CMFCore.utils import getToolByName
+from Acquisition import aq_base
 from OFS.ObjectManager import BadRequestException
-
-from plone.folder.interfaces import IExplicitOrdering
-from zope.component.hooks import getSite
-
-from plone.app.multilingual.interfaces import ILanguageRootFolder, ISharedElement, ITranslationIdChooser
-from plone.app.layout.navigation.interfaces import INavigationRoot
-
-from plone.folder.ordered import CMFOrderedBTreeFolderBase
-from Acquisition import aq_base, aq_inner, aq_parent
-from BTrees.OIBTree import union
-from Products.ZCatalog.Lazy import LazyMap
 from Products.CMFPlone.interfaces import IPloneSiteRoot
+from Products.ZCatalog.Lazy import LazyMap
+from plone.app.content.namechooser import NormalizingNameChooser
+from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.app.multilingual.interfaces import ILanguageRootFolder
+from plone.app.multilingual.interfaces import ITranslationIdChooser
+from plone.dexterity.content import Container
 from plone.folder.default import DefaultOrdering
-
-from zope.component import getUtility
-from zope.schema.interfaces import IVocabularyFactory
-
-from plone.i18n.locales.languages import _languagelist
+from plone.folder.interfaces import IExplicitOrdering
+from plone.folder.ordered import CMFOrderedBTreeFolderBase
 from plone.i18n.locales.languages import _combinedlanguagelist
+from plone.i18n.locales.languages import _languagelist
+from zope.component import adapts
+from zope.component.hooks import getSite
+from zope.container.interfaces import INameChooser
+from zope.interface import implements
 
 _marker = object()
 
@@ -51,7 +39,8 @@ class LanguageRootFolder(Container):
 
     def _checkId(self, id, allow_dup=0):
         """ check only locally """
-        if not allow_dup and id in CMFOrderedBTreeFolderBase.objectIds(self, None, False):
+        if not allow_dup and id in CMFOrderedBTreeFolderBase.objectIds(
+                self, None, False):
             raise BadRequestException('The id "%s" is invalid--'
                                       'it is already in use.' % id)
 
@@ -72,7 +61,8 @@ class LanguageRootFolder(Container):
             # Check if it's on shared folder
             # Search for the content on the shared folder
             portal = getSite()
-            if portal is not None and name in portal and not name.startswith('_'):
+            if portal is not None and name in portal\
+                    and not name.startswith('_'):
                 # XXX Check that is content
                 if (name != 'portal_catalog' and name != 'portal_url'
                         and (name not in _languagelist
@@ -83,7 +73,8 @@ class LanguageRootFolder(Container):
                     return new_object
                 else:
                     raise
-                #if IBaseObject.providedBy(new_object) or IDexterityContent.providedBy(new_object):
+                #if IBaseObject.providedBy(new_object)\
+                #        or IDexterityContent.providedBy(new_object):
                 #    new_object._v_is_shared_content = True
                 #    return new_object
                 #else:
@@ -116,8 +107,10 @@ class LanguageRootFolder(Container):
 
         try:
             if aliased is not None:
-                to_remove = []
-                # spec = ['Dexterity Container', 'Dexterity Item', 'ATFolder', 'ATDocument']
+                # spec = ['Dexterity Container',
+                #         'Dexterity Item',
+                #         'ATFolder',
+                #         'ATDocument']
                 aliased_objectIds = list(aliased.objectIds(spec))
                 for id in aliased_objectIds:
                     if (id in _languagelist or id in _combinedlanguagelist
@@ -145,16 +138,21 @@ class LanguageRootFolder(Container):
 
 
 class LRFOrdering(DefaultOrdering):
-    """ This implementation checks if there is any object that is not on the list
-    in case its a shared object so you can move. """
+    """This implementation checks if there is any object that is not on the
+    list in case its a shared object so you can move.
+    """
 
     implements(IExplicitOrdering)
     adapts(ILanguageRootFolder)
 
     def idsInOrder(self):
         """ see interfaces.py """
-        to_renew = [x for x in self.context.objectIds() if x not in self._pos().keys()]
-        to_remove = [x for x in self._pos().keys() if x not in self.context.objectIds()]
+        to_renew = [
+            x for x in self.context.objectIds()
+            if x not in self._pos().keys()]
+        to_remove = [
+            x for x in self._pos().keys()
+            if x not in self.context.objectIds()]
         for id in to_renew:
             self.notifyAdded(id)
         for id in to_remove:

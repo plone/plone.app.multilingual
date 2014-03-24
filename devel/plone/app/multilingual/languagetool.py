@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# vim: set ts=4 sw=4:
 
 
 def setLanguageBindingsCookieWins(self, usePath=1, useContent=1, useCookie=1,

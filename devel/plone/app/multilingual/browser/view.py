@@ -1,5 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
 from plone.dexterity.browser.view import DefaultView
 from z3c.form.interfaces import IEditForm
 from zope.interface import implements

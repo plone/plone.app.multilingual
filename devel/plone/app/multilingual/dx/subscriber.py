@@ -1,25 +1,23 @@
-# -*- coding: utf-8 -*-
 from AccessControl import getSecurityManager
 from AccessControl.SecurityManagement import newSecurityManager
 from AccessControl.SecurityManagement import setSecurityManager
 from AccessControl.User import UnrestrictedUser
+from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
-
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
-from plone.dexterity.interfaces import IDexterityFTI
+from plone.app.multilingual.dx.interfaces import IDexterityTranslatable
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.multilingual.dx.interfaces import IDexterityTranslatable
+from plone.dexterity.interfaces import IDexterityFTI
 from plone.registry.interfaces import IRegistry
-from zope.component import queryAdapter
 from zope.component import getUtility
-from zope.event import notify
-from zope.lifecycleevent import ObjectModifiedEvent
-from zope.lifecycleevent import Attributes
-from zope.lifecycleevent.interfaces import IObjectModifiedEvent
+from zope.component import queryAdapter
 from zope.component.hooks import getSite
-from Acquisition import aq_parent
+from zope.event import notify
+from zope.lifecycleevent import Attributes
+from zope.lifecycleevent import ObjectModifiedEvent
+from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 
 
 class LanguageIndependentModifier(object):

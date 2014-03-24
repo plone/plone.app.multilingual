@@ -1,7 +1,3 @@
-<configure
-    xmlns="http://namespaces.zope.org/zope">
-
-    <!-- Behaviors -->
-    <include package="plone.behavior" file="meta.zcml" />
-
+<configure xmlns="http://namespaces.zope.org/zope">
+  <include package="plone.behavior" file="meta.zcml" />
 </configure>

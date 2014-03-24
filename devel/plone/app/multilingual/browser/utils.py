@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from AccessControl.SecurityManagement import getSecurityManager
 from Acquisition import aq_chain
 from Acquisition import aq_inner

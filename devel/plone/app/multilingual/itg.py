@@ -1,14 +1,13 @@
-# -*- coding: utf-8 -*-
 from plone.app.multilingual.interfaces import ATTRIBUTE_NAME
-from plone.app.multilingual.interfaces import ITranslatable
-from plone.app.multilingual.interfaces import ITG
-from plone.app.multilingual.interfaces import NOTG
 from plone.app.multilingual.interfaces import IMutableTG
+from plone.app.multilingual.interfaces import ITG
+from plone.app.multilingual.interfaces import ITranslatable
+from plone.app.multilingual.interfaces import NOTG
 from plone.uuid.interfaces import IUUIDGenerator
-from zope import interface
 from zope import component
-from zope.lifecycleevent.interfaces import IObjectCreatedEvent
+from zope import interface
 from zope.lifecycleevent.interfaces import IObjectCopiedEvent
+from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 
 try:
     from Acquisition import aq_base

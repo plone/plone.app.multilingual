@@ -1,16 +1,13 @@
-# -*- coding: utf-8 -*-
-from plone.app.multilingual.interfaces import (
-    ITranslationFactory,
-    ILanguageIndependentFieldsManager,
-    ITranslationLocator,
-    ITranslationCloner,
-    ITranslationIdChooser,
-    ITranslationManager,
-    ILanguageRootFolder
-)
-from zope import interface
 from Acquisition import aq_parent
 from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
+from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
+from plone.app.multilingual.interfaces import ILanguageRootFolder
+from plone.app.multilingual.interfaces import ITranslationCloner
+from plone.app.multilingual.interfaces import ITranslationFactory
+from plone.app.multilingual.interfaces import ITranslationIdChooser
+from plone.app.multilingual.interfaces import ITranslationLocator
+from plone.app.multilingual.interfaces import ITranslationManager
+from zope import interface
 
 
 class DefaultLanguageIndependentFieldsManager(object):
@@ -42,10 +39,12 @@ class DefaultTranslationLocator(object):
         parent = aq_parent(self.context)
         translated_parent = parent
         found = False
-        while not (IPloneSiteRoot.providedBy(parent) and not ILanguageRootFolder.providedBy(parent)) and not found:
+        while not (IPloneSiteRoot.providedBy(parent)
+                   and not ILanguageRootFolder.providedBy(parent))\
+                and not found:
             parent_translation = ITranslationManager(parent)
             if parent_translation.has_translation(language):
-                translated_parent = \
+                translated_parent =\
                     parent_translation.get_translation(language)
                 found = True
             parent = aq_parent(parent)

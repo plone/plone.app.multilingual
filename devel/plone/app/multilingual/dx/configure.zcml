@@ -6,85 +6,54 @@
     xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="plone.app.multilingual">
 
-    <includeDependencies package="." />
+  <includeDependencies package="." />
 
-    <include file="meta.zcml" />
+  <include file="meta.zcml" />
+  <include package=".schemaeditor" zcml:condition="installed plone.schemaeditor"/>
+  <include package=".supermodel" zcml:condition="installed plone.supermodel"/>
 
-    <plone:behavior
-        title="Multilingual Support"
-        description="Make this content type multilingual aware"
-        provides=".interfaces.IDexterityTranslatable"
-        for="plone.dexterity.interfaces.IDexterityContent"
-        />
+  <plone:behavior
+      title="Multilingual Support"
+      description="Make this content type multilingual aware"
+      provides=".interfaces.IDexterityTranslatable"
+      for="plone.dexterity.interfaces.IDexterityContent"/>
 
-    <adapter
-        for="plone.app.multilingual.dx.interfaces.IDexterityTranslatable"
-        provides="plone.app.multilingual.interfaces.ILanguageIndependentFieldsManager"
-        factory=".utils.LanguageIndependentFieldsManager" />
+  <adapter
+      for="plone.app.multilingual.dx.interfaces.IDexterityTranslatable"
+      provides="plone.app.multilingual.interfaces.ILanguageIndependentFieldsManager"
+      factory=".utils.LanguageIndependentFieldsManager"/>
 
-    <adapter
-        for="plone.dexterity.interfaces.IDexterityContent"
-        provides="plone.app.multilingual.interfaces.ILanguage"
-        factory=".language.Language" />
+  <adapter
+      for="plone.dexterity.interfaces.IDexterityContent"
+      provides="plone.app.multilingual.interfaces.ILanguage"
+      factory=".language.Language"/>
 
-    <!-- Configure plone.supermodel handler if available -->
-    <utility
-        zcml:condition="installed plone.supermodel"
-        factory=".supermodel.LanguageIndependentFieldMetadataHandler"
-        name="plone.rfc822.lingua"
-        />
+  <adapter
+      for="*
+           *
+           z3c.form.interfaces.IAddForm
+           plone.app.multilingual.dx.interfaces.ILanguageIndependentField
+           z3c.form.interfaces.IWidget"
+      factory=".form.AddingLanguageIndependentValue"
+      name="default"/>
 
-    <adapter
-        zcml:condition="installed plone.supermodel"
-        factory=".directives.LanguageIndependentFieldsPlugin"
-        name="plone.rfc822.lingua"
-        />
+  <adapter
+      for="*
+           plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled
+           plone.app.multilingual.browser.add.MultilingualAddForm
+           plone.app.multilingual.dx.interfaces.ILanguageIndependentField
+           *"
+      provides="z3c.form.interfaces.IValidator"
+      factory=".validator.LanguageIndependentFieldValidator"/>
 
-    <!-- Configure plone.schemaeditor adapter -->
-    <adapter
-        provides="plone.schemaeditor.interfaces.IFieldEditorExtender"
-        for="zope.schema.interfaces.IField"
-        name="plone.schemaeditor.languageindependent"
-        factory=".schemaeditor.get_li_schema"
-        zcml:condition="installed plone.schemaeditor"
-        />
-
-    <adapter
-        provides=".schemaeditor.IFieldLanguageIndependent"
-        for="zope.schema.interfaces.IField"
-        factory=".schemaeditor.FieldLanguageIndependentAdapter"
-        zcml:condition="installed plone.schemaeditor"
-        />
-
-    <adapter
-        for="*
-             *
-             z3c.form.interfaces.IAddForm
-             plone.app.multilingual.dx.interfaces.ILanguageIndependentField
-             z3c.form.interfaces.IWidget"
-        factory=".form.AddingLanguageIndependentValue"
-        name="default"
-        />
-
-    <adapter
-        for="*
-             plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled
-             plone.app.multilingual.browser.add.MultilingualAddForm
-             plone.app.multilingual.dx.interfaces.ILanguageIndependentField
-             *"
-        provides="z3c.form.interfaces.IValidator"
-        factory=".validator.LanguageIndependentFieldValidator"
-        />
-
-    <adapter
-        for="*
-             plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled
-             plone.app.multilingual.browser.add.MultilingualAddForm
-             plone.app.multilingual.dx.interfaces.ILanguageIndependentField
-             *"
-        provides="zope.pagetemplate.interfaces.IPageTemplate"
-        name="input"
-        factory=".validator.LanguageIndependentFieldInputTemplate"
-        />
+  <adapter
+      for="*
+           plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled
+           plone.app.multilingual.browser.add.MultilingualAddForm
+           plone.app.multilingual.dx.interfaces.ILanguageIndependentField
+           *"
+      provides="zope.pagetemplate.interfaces.IPageTemplate"
+      name="input"
+      factory=".validator.LanguageIndependentFieldInputTemplate"/>
 
 </configure>

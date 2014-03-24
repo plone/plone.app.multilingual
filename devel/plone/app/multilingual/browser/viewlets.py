@@ -1,12 +1,10 @@
-# -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
-
 from cStringIO import StringIO
-from plone.memoize import ram
 from plone.app.layout.viewlets.common import ViewletBase
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
+from plone.memoize import ram
 
 
 def _cache_until_catalog_change(fun, self):

@@ -1,8 +1,6 @@
-<configure
-    xmlns="http://namespaces.zope.org/zope"
-    i18n_domain="plone.app.multilingual"
-    >
+<configure xmlns="http://namespaces.zope.org/zope"
+    i18n_domain="plone.app.multilingual">
 
-    <adapter factory=".shared_uuid.attributeUUID" />    
+  <adapter factory=".shared_uuid.attributeUUID"/>
 
 </configure>

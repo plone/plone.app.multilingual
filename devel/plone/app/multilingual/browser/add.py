@@ -1,45 +1,41 @@
-# -*- coding: utf-8 -*-
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from plone.app.multilingual import _
+from plone.app.multilingual.browser.interfaces import IAddTranslation
+from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
+from plone.app.multilingual.interfaces import ILanguage
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.interfaces import ITranslationManager
 from plone.autoform import directives
 from plone.autoform.form import AutoExtensibleForm
 from plone.autoform.interfaces import IFormFieldProvider
+from plone.dexterity.browser.add import DefaultAddForm
+from plone.dexterity.browser.add import DefaultAddView
+from plone.dexterity.interfaces import IDexterityFTI
+from plone.registry.interfaces import IRegistry
 from plone.supermodel import model
 from plone.z3cform.fieldsets import extensible
 from plone.z3cform.fieldsets.interfaces import IFormExtender
+from z3c.form import button
 from z3c.form.form import Form
 from z3c.form.interfaces import HIDDEN_MODE
 from z3c.form.interfaces import NO_VALUE
 from z3c.form.widget import ComputedWidgetAttribute
 from zope import schema
-from plone.dexterity.browser.add import DefaultAddForm
-from plone.dexterity.browser.add import DefaultAddView
-from plone.dexterity.interfaces import IDexterityFTI
-from plone.registry.interfaces import IRegistry
-from z3c.form import button
-from zope.component import getUtility
 from zope.component import adapts
+from zope.component import getUtility
 from zope.component import queryMultiAdapter
-from zope.interface import implements, alsoProvides
 from zope.interface import Interface
+from zope.interface import implements, alsoProvides
 from zope.traversing.interfaces import ITraversable
 from zope.traversing.interfaces import TraversalError
 
-from plone.app.multilingual import _
-from plone.app.multilingual.browser.interfaces import IAddTranslation
-from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
-from plone.app.multilingual.interfaces import ILanguage
-from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
-from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
-
 
 class AddViewTraverser(object):
-
     """Add view traverser.
     """
-
     adapts(IFolderish, Interface)
     implements(ITraversable)
 
