@@ -56,7 +56,7 @@ class LanguageRootFolder(Container):
 
     def __getattr__(self, name):
         try:
-            return Container.__getattr__(self, name)
+            return super(LanguageRootFolder, self).__getattr__(self, name)
         except AttributeError:
             # Check if it's on shared folder
             # Search for the content on the shared folder
