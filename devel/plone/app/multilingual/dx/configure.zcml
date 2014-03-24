@@ -29,7 +29,7 @@
       name="plone.rfc822.lingua"/>
 
   <adapter
-      factory="..directives.LanguageIndependentFieldsPlugin"
+      factory=".directives.LanguageIndependentFieldsPlugin"
       name="plone.rfc822.lingua"/>
 
 
