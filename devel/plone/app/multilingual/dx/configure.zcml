@@ -3,14 +3,35 @@
     xmlns:five="http://namespaces.zope.org/five"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:plone="http://namespaces.plone.org/plone"
-    xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="plone.app.multilingual">
 
   <includeDependencies package="." />
 
   <include file="meta.zcml" />
-  <include package=".schemaeditor" zcml:condition="installed plone.schemaeditor"/>
-  <include package=".supermodel" zcml:condition="installed plone.supermodel"/>
+
+
+  <!-- Configure plone.schemaeditor adapter -->
+  <adapter
+      provides="plone.schemaeditor.interfaces.IFieldEditorExtender"
+      for="zope.schema.interfaces.IField"
+      name="plone.schemaeditor.languageindependent"
+      factory=".schemaeditor.get_li_schema"/>
+
+  <adapter
+      provides=".schemaeditor.IFieldLanguageIndependent"
+      for="zope.schema.interfaces.IField"
+      factory=".schemaeditor.FieldLanguageIndependentAdapter"/>
+
+
+  <!-- Configure plone.supermodel handler -->
+  <utility
+      factory=".supermodel.LanguageIndependentFieldMetadataHandler"
+      name="plone.rfc822.lingua"/>
+
+  <adapter
+      factory="..directives.LanguageIndependentFieldsPlugin"
+      name="plone.rfc822.lingua"/>
+
 
   <plone:behavior
       title="Multilingual Support"
