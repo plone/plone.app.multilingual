@@ -1,0 +1,15 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="plone.app.multilingual">
+
+  <!-- Configure plone.supermodel handler if available -->
+  <utility
+      factory=".supermodel.LanguageIndependentFieldMetadataHandler"
+      name="plone.rfc822.lingua"/>
+
+  <adapter
+      factory=".directives.LanguageIndependentFieldsPlugin"
+      name="plone.rfc822.lingua"/>
+
+</configure>
