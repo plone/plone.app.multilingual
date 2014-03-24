@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<object>
+  <hidden manager="plone.portalheader" skinname="Plone Default">
+    <viewlet name="plone.app.multilingual.languageselector"/>
+  </hidden>
+
+  <order manager="plone.portalheader" skinname="Plone Default">
+    <viewlet name="plone.app.i18n.locales.languageselector"/>
+  </order>
+</object>
