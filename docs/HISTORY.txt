@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0 - (unreleased)
+2.0a1 (2014-03-25)
 ------------------
 
 - Download latest v1 ``bootstrap.py``
