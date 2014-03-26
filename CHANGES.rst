@@ -11,6 +11,9 @@ Changelog
   translations may change.
   [saily]
 
+- Add uninstall profile.
+  [thet]
+
 
 2.0a1 (2014-03-25)
 ------------------
