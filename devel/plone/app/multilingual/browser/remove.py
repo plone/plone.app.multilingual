@@ -20,7 +20,7 @@ class RemoveTranslationsForm(AutoExtensibleForm, Form):
                     u"just delete the link between the objects "
                     u"or you can delete the object itself.")
 
-    @button.buttonAndHandler(_(u"unlink selected"))
+    @button.buttonAndHandler(_(u"unlink selected"), name='unlink')
     def handle_unlink(self, action):
         data, errors = self.extractData()
         manager = ITranslationManager(self.context)
@@ -31,7 +31,7 @@ class RemoveTranslationsForm(AutoExtensibleForm, Form):
         return self.request.response.redirect(
             self.context.absolute_url() + '/remove_translations')
 
-    @button.buttonAndHandler(_(u"remove selected"))
+    @button.buttonAndHandler(_(u"remove selected"), name='remove')
     def handle_remove(self, action):
         data, errors = self.extractData()
         manager = ITranslationManager(self.context)
