@@ -1,36 +1,33 @@
-# -*- coding: utf-8 -*-
-from email.header import Header
-
-from Testing import ZopeTestCase as ztc
-from plone.dexterity.fti import DexterityFTI
-from zope.event import notify
-from zope.interface import alsoProvides, noLongerProvides
-from zope.lifecycleevent import ObjectModifiedEvent
-from plone.rfc822 import constructMessageFromSchemata
-from plone.rfc822 import initializeObjectFromSchemata
-from plone.uuid.interfaces import IUUID
-from zope.configuration import xmlconfig
 from Products.CMFCore.utils import getToolByName
+from Testing import ZopeTestCase as ztc
+from email.header import Header
 from plone.app.contenttypes.testing import PLONE_APP_CONTENTTYPES_FIXTURE
-from plone.dexterity.utils import iterSchemata, iterSchemataForType
-import plone.app.dexterity
-
+from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.robotframework.remote import RemoteLibrary
-from plone.app.robotframework import RemoteLibraryLayer
 from plone.app.robotframework import AutoLogin
 from plone.app.robotframework import Content
-from plone.testing import z2
-from plone.app.testing import TEST_USER_ID
-from plone.app.testing import PLONE_FIXTURE
+from plone.app.robotframework import RemoteLibraryLayer
+from plone.app.robotframework.remote import RemoteLibrary
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
+from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
+from plone.app.testing import TEST_USER_ID
 from plone.app.testing import applyProfile
 from plone.app.testing import ploneSite
 from plone.app.testing import setRoles
-from plone.app.multilingual.browser.setup import SetupMultilingualSite
+from plone.dexterity.fti import DexterityFTI
+from plone.dexterity.utils import iterSchemata, iterSchemataForType
+from plone.rfc822 import constructMessageFromSchemata
+from plone.rfc822 import initializeObjectFromSchemata
+from plone.testing import z2
+from plone.uuid.interfaces import IUUID
+from zope.configuration import xmlconfig
+from zope.event import notify
+from zope.interface import alsoProvides, noLongerProvides
+from zope.lifecycleevent import ObjectModifiedEvent
+import plone.app.dexterity
 import plone.app.multilingual
 
 

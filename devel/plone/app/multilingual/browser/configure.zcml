@@ -5,107 +5,130 @@
     xmlns:zcml="http://namespaces.zope.org/zcml"
     xmlns:z3c="http://namespaces.zope.org/z3c">
 
-    <browser:page
-        name="add_translations"
-        for="plone.app.multilingual.interfaces.ITranslatable"
-        class=".add.AddTranslationsForm"
-        permission="plone.app.multilingual.ManageTranslations"
-        />
+  <include package="plone.app.contentmenu"/>
 
-    <browser:page
-        name="remove_translations"
-        for="plone.app.multilingual.interfaces.ITranslatable"
-        class=".remove.RemoveTranslationsForm"
-        permission="plone.app.multilingual.ManageTranslations"
-        />
 
-    <browser:page
-        for="plone.app.multilingual.interfaces.ITranslatable"
-        name="update_language"
-        class=".update.update_language_form"
-        permission="cmf.ModifyPortalContent"
-        />
+  <!-- Resource Directories -->
+  <browser:resourceDirectory
+      name="plone.app.multilingual.javascript"
+      directory="javascript"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
+  <browser:resourceDirectory
+      name="plone.app.multilingual.stylesheet"
+      directory="stylesheet"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
+  <browser:resourceDirectory
+      name="plone.app.multilingual.images"
+      directory="images"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
-    <browser:page
-        for="plone.app.multilingual.interfaces.ITranslatable"
-        name="create_translation"
-        class=".translate.TranslationForm"
-        permission="plone.app.multilingual.ManageTranslations"
-        />
 
-    <adapter
-        name="addtranslation"
-        factory=".add.AddViewTraverser"
-        />
 
-    <adapter
-        name="plone.app.multilingual.addtranslation.marker"
-        provides="plone.z3cform.fieldsets.interfaces.IFormExtender"
-        for="*
-             plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled
-             plone.app.multilingual.browser.add.MultilingualAddForm"
-        factory=".add.MultilingualAddFormExtender"
-        />
 
-    <adapter
-        provides="z3c.form.interfaces.IDataManager"
-        for="*
-             .add.IMultilingualAddFormMarkerFieldMarker"
-        factory=".add.FauxDataManager"
-        />
+  <!-- Vocabulary all languages -->
+  <utility
+      component=".vocabularies.AllContentLanguageVocabularyFactory"
+      name="plone.app.multilingual.vocabularies.AllContentLanguageVocabulary"/>
 
-    <adapter
-        name="default"
-        provides="z3c.form.interfaces.IValue"
-        factory=".add.MultilingualAddFormTgValue"
-        />
+  <utility
+      component=".vocabularies.AllAvailableLanguageVocabularyFactory"
+      name="plone.app.multilingual.vocabularies.AllAvailableLanguageVocabulary"/>
 
-    <adapter
-        name="default"
-        provides="z3c.form.interfaces.IValue"
-        factory=".add.MultilingualAddFormOldLangValue"
-        />
+  <adapter
+      name="addtranslation"
+      factory=".add.AddViewTraverser"/>
 
-   <!-- Menu for translations on content -->
-    <browser:menu
-        id="plone_contentmenu_multilingual"
-        title="Translate menu - contains translation-related actions"
-        class=".menu.TranslateMenu"
-        />
-    <adapter
-        for="plone.app.multilingual.interfaces.ITranslatable
-             ..interfaces.IPloneAppMultilingualInstalled"
-        name="plone.contentmenu.multilingual"
-        factory=".menu.TranslateSubMenuItem"
-        provides="plone.app.contentmenu.interfaces.IContentMenuItem"
-        />
+  <adapter
+      name="plone.app.multilingual.addtranslation.marker"
+      provides="plone.z3cform.fieldsets.interfaces.IFormExtender"
+      for="*
+      plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled
+      plone.app.multilingual.browser.add.MultilingualAddForm"
+      factory=".add.MultilingualAddFormExtender"/>
 
-    <!-- Control panel -->
-    <include package="plone.app.controlpanel" />
-    <browser:page
-        name="language-controlpanel"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-        class=".controlpanel.LanguageControlPanel"
-        permission="plone.app.controlpanel.Language"
-        layer="..interfaces.IPloneAppMultilingualInstalled"
-        />
+  <adapter
+      provides="z3c.form.interfaces.IDataManager"
+      for="*
+      .add.IMultilingualAddFormMarkerFieldMarker"
+      factory=".add.FauxDataManager"/>
+
+  <adapter
+      name="default"
+      provides="z3c.form.interfaces.IValue"
+      factory=".add.MultilingualAddFormTgValue"/>
+
+  <adapter
+      name="default"
+      provides="z3c.form.interfaces.IValue"
+      factory=".add.MultilingualAddFormOldLangValue"/>
+
+
+  <browser:page
+      name="add_translations"
+      for="plone.app.multilingual.interfaces.ITranslatable"
+      class=".add.AddTranslationsForm"
+      permission="plone.app.multilingual.ManageTranslations"/>
+
+  <browser:page
+      name="remove_translations"
+      for="plone.app.multilingual.interfaces.ITranslatable"
+      class=".remove.RemoveTranslationsForm"
+      permission="plone.app.multilingual.ManageTranslations"/>
+
+  <browser:page
+      for="plone.app.multilingual.interfaces.ITranslatable"
+      name="update_language"
+      class=".update.update_language_form"
+      permission="cmf.ModifyPortalContent"/>
+
+  <browser:page
+      for="plone.app.multilingual.interfaces.ITranslatable"
+      name="create_translation"
+      class=".translate.TranslationForm"
+      permission="plone.app.multilingual.ManageTranslations"/>
+
+
+
+  <!-- Menu for translations on content -->
+  <browser:menu
+      id="plone_contentmenu_multilingual"
+      title="Translate menu - contains translation-related actions"
+      class=".menu.TranslateMenu"/>
+  <adapter
+      for="plone.app.multilingual.interfaces.ITranslatable
+           ..interfaces.IPloneAppMultilingualInstalled"
+      name="plone.contentmenu.multilingual"
+      factory=".menu.TranslateSubMenuItem"
+      provides="plone.app.contentmenu.interfaces.IContentMenuItem"/>
+
+  <!-- Control panel -->
+  <include package="plone.app.controlpanel"/>
+  <browser:page
+      name="language-controlpanel"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".controlpanel.LanguageControlPanel"
+      permission="plone.app.controlpanel.Language"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
+  <adapter factory=".controlpanel.MultiLanguageControlPanelAdapter"/>
+  <adapter factory=".controlpanel.MultiLanguageOptionsControlPanelAdapter"/>
+  <adapter factory=".controlpanel.MultiLanguageExtraOptionsAdapter"/>
+  <adapter factory=".controlpanel.MultiLanguagePoliciesAdapter"/>
+
 
   <!-- Migration Tab -->
   <browser:page
-    name="lp-migration"
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    class=".controlpanel.MigrationView"
-    permission="plone.app.multilingual.ManageTranslations"
-    layer="..interfaces.IPloneAppMultilingualInstalled"
-    />
+      name="lp-migration"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".controlpanel.MigrationView"
+      permission="plone.app.multilingual.ManageTranslations"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
   <browser:page
-    name="multilingual-map"
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    class=".controlpanel.multilingualMapView"
-    permission="plone.app.multilingual.ManageTranslations"
-    layer="..interfaces.IPloneAppMultilingualInstalled"
-    />
+      name="multilingual-map"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".controlpanel.multilingualMapView"
+      permission="plone.app.multilingual.ManageTranslations"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
   <!-- Notices Viewlets -->
   <browser:viewlet
@@ -116,11 +139,9 @@
       class=".viewlets.oneLanguageConfiguredNoticeViewlet"
       template="templates/languages-notice.pt"
       layer="..interfaces.IPloneAppMultilingualInstalled"
-      permission="cmf.ManagePortal"
-      />
+      permission="cmf.ManagePortal"/>
 
   <!-- It comes from a translation DX -->
-
   <browser:viewlet
       name="plone.app.multilingual.add-form-is-translation"
       for="*"
@@ -129,11 +150,9 @@
       class=".viewlets.addFormIsATranslationViewlet"
       template="templates/add-form-is-translation.pt"
       layer="..interfaces.IPloneAppMultilingualInstalled"
-      permission="zope.Public"
-      />
+      permission="zope.Public"/>
 
   <!-- It comes from a translation AT with Portal Factory -->
-
   <browser:viewlet
       name="plone.app.multilingual.add-form-is-at-translation"
       for="*"
@@ -141,8 +160,7 @@
       class=".viewlets.addFormATIsATranslationViewlet"
       template="templates/add-form-is-translation.pt"
       layer="..interfaces.IPloneAppMultilingualInstalled"
-      permission="zope.Public"
-      />
+      permission="zope.Public"/>
 
   <!-- Alternate language meta tags -->
   <browser:viewlet
@@ -152,227 +170,158 @@
       class=".viewlets.AlternateLanguagesViewlet"
       template="templates/alternate-languages.pt"
       layer="..interfaces.IPloneAppMultilingualInstalled"
-      permission="zope.Public"
-      />
-
+      permission="zope.Public"/>
 
   <browser:page
-    name="multilingual-remove-tg-session"
-    for="*"
-    class=".helper_views.remove_tg_session"
-    permission="zope.Public"
-    layer="..interfaces.IPloneAppMultilingualInstalled"
-    />
+      name="multilingual-remove-tg-session"
+      for="*"
+      class=".helper_views.remove_tg_session"
+      permission="zope.Public"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
   <!-- Universal Link -->
-
   <browser:page
-    name="multilingual-universal-link"
-    for="*"
-    class=".helper_views.universal_link"
-    permission="zope.Public"
-    layer="..interfaces.IPloneAppMultilingualInstalled"
-    />
+      name="multilingual-universal-link"
+      for="*"
+      class=".helper_views.universal_link"
+      permission="zope.Public"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
   <!-- Selector -->
-
   <browser:page
-    name="multilingual-selector"
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    class=".helper_views.selector_view"
-    permission="zope.Public"
-    layer="..interfaces.IPloneAppMultilingualInstalled"
-    />
+      name="multilingual-selector"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".helper_views.selector_view"
+      permission="zope.Public"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
   <!-- Not Translated Yet -->
-
   <browser:page
-    name="not_translated_yet"
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    class=".helper_views.not_translated_yet"
-    permission="zope.Public"
-    layer="..interfaces.IPloneAppMultilingualInstalled"
-    />
+      name="not_translated_yet"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".helper_views.not_translated_yet"
+      permission="zope.Public"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
   <!-- Multilingual Map ajax helper -->
-
   <browser:page
-    name="multilingual-map-ajax"
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    class=".controlpanel.multilingualMapViewJSON"
-    permission="plone.app.multilingual.ManageTranslations"
-    layer="..interfaces.IPloneAppMultilingualInstalled"
-    />
+      name="multilingual-map-ajax"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".controlpanel.multilingualMapViewJSON"
+      permission="plone.app.multilingual.ManageTranslations"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
-
-  <adapter factory=".controlpanel.MultiLanguageControlPanelAdapter" />
-  <adapter factory=".controlpanel.MultiLanguageOptionsControlPanelAdapter" />
-  <adapter factory=".controlpanel.MultiLanguageExtraOptionsAdapter" />
-  <adapter factory=".controlpanel.MultiLanguagePoliciesAdapter" />
-
-  <!-- Vocabulary all languages -->
-  <utility
-    component=".vocabularies.AllContentLanguageVocabularyFactory"
-    name="plone.app.multilingual.vocabularies.AllContentLanguageVocabulary"
-    />
-
-  <utility
-    component=".vocabularies.AllAvailableLanguageVocabularyFactory"
-    name="plone.app.multilingual.vocabularies.AllAvailableLanguageVocabulary"
-    />
-
-  <include package="plone.app.contentmenu" />
 
   <!-- Default browser view -->
   <browser:view
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    class=".switcher.LanguageSwitcher"
-    name="language-switcher"
-    permission="zope.Public"
-    menu="plone_displayviews"
-    title="Root language switcher"
-    layer="..interfaces.IPloneAppMultilingualInstalled"
-    />
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".switcher.LanguageSwitcher"
+      name="language-switcher"
+      permission="zope.Public"
+      menu="plone_displayviews"
+      title="Root language switcher"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
   <!-- Viewlet for switching language -->
   <browser:viewlet
-    name="plone.app.multilingual.languageselector"
-    template="templates/languageselector.pt"
-    manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
-    class=".selector.LanguageSelectorViewlet"
-    permission="zope2.View"
-    for="plone.app.multilingual.interfaces.ITranslatable"
-    layer="..interfaces.IPloneAppMultilingualInstalled"
-    />
+      name="plone.app.multilingual.languageselector"
+      template="templates/languageselector.pt"
+      manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
+      class=".selector.LanguageSelectorViewlet"
+      permission="zope2.View"
+      for="plone.app.multilingual.interfaces.ITranslatable"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
-  <!-- Resource Directories -->
 
-  <browser:resourceDirectory
-      name="plone.app.multilingual.javascript"
-      directory="javascript"
-      layer="..interfaces.IPloneAppMultilingualInstalled"
-      />
-
-  <browser:resourceDirectory
-      name="plone.app.multilingual.stylesheet"
-      directory="stylesheet"
-      layer="..interfaces.IPloneAppMultilingualInstalled"
-      />
-
-  <browser:resourceDirectory
-      name="plone.app.multilingual.images"
-      directory="images"
-      layer="..interfaces.IPloneAppMultilingualInstalled"
-      />
-
-  <!-- GTranslate Service -->
-
+  <!-- DEXTERITY -->
   <configure zcml:condition="installed plone.dexterity">
+
+    <!-- GTranslate Service -->
     <browser:page
-      for="plone.dexterity.interfaces.IDexterityContent"
-      name="gtranslation_service"
-      class=".translate.gtranslation_service_dexterity"
-      permission="cmf.ModifyPortalContent"
-      />
-  </configure>
+        for="plone.dexterity.interfaces.IDexterityContent"
+        name="gtranslation_service"
+        class=".translate.gtranslation_service_dexterity"
+        permission="cmf.ModifyPortalContent"/>
 
-
-  <!-- Add Form Dexterity -->
-
-  <configure zcml:condition="installed plone.dexterity">
     <!-- Standard add view and form - invoked from ++addtranslation++ traverser -->
     <adapter
         name="babel_view"
         for="Products.CMFCore.interfaces.IFolderish
-             Products.CMFDefault.interfaces.ICMFDefaultSkin
-             plone.dexterity.interfaces.IDexterityFTI"
+        Products.CMFDefault.interfaces.ICMFDefaultSkin
+        plone.dexterity.interfaces.IDexterityFTI"
         provides="zope.publisher.interfaces.browser.IBrowserPage"
-        factory=".add.DefaultMultilingualAddView"
-        />
+        factory=".add.DefaultMultilingualAddView"/>
     <class class=".add.DefaultMultilingualAddView">
-        <require
-            permission="cmf.AddPortalContent"
-            interface="zope.publisher.interfaces.browser.IBrowserPage"
-            />
+      <require
+          permission="cmf.AddPortalContent"
+          interface="zope.publisher.interfaces.browser.IBrowserPage"/>
     </class>
-  </configure>
 
-  <!-- Edit form -->
-
-  <configure zcml:condition="installed plone.dexterity">
+    <!-- Edit form -->
     <browser:page
-      for="plone.dexterity.interfaces.IDexterityContent"
-      name="babel_edit"
-      class=".edit.DefaultMultilingualEditView"
-      permission="cmf.ModifyPortalContent"
-      />
-  </configure>
+        for="plone.dexterity.interfaces.IDexterityContent"
+        name="babel_edit"
+        class=".edit.DefaultMultilingualEditView"
+        permission="cmf.ModifyPortalContent"/>
 
 
-  <!-- Templates for translation fields info visualization via AJAX -->
-  <configure zcml:condition="installed plone.dexterity">
+    <!-- Templates for translation fields info visualization via AJAX -->
     <browser:page
-      for="plone.dexterity.interfaces.IDexterityContent"
-      name="babel_view"
-      class=".view.DexterityBabelView"
-      template="templates/dx_babel_view.pt"
-      permission="cmf.ModifyPortalContent"
-      />
-  </configure>
+        for="plone.dexterity.interfaces.IDexterityContent"
+        name="babel_view"
+        class=".view.DexterityBabelView"
+        template="templates/dx_babel_view.pt"
+        permission="cmf.ModifyPortalContent"/>
 
+  </configure>
 
   <browser:page
-    for="*"
-    name="babel_utils"
-    class=".utils.BabelUtils"
-    permission="zope2.View"
-    />
+      for="*"
+      name="babel_utils"
+      class=".utils.BabelUtils"
+      permission="zope2.View"/>
+
 
   <!-- Migration Views -->
 
   <!-- Optional initial step - reindex Language index -->
   <browser:page
-    name="reindex-language-index"
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    class=".migrator.LP2PAMReindexLanguageIndex"
-    permission="cmf.ManagePortal"
-    layer="..interfaces.IPloneAppMultilingualInstalled"
-    />
+      name="reindex-language-index"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".migrator.LP2PAMReindexLanguageIndex"
+      permission="cmf.ManagePortal"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
   <!-- Step 1 - Relocates the content if needed -->
   <browser:page
-    name="relocate-content"
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    class=".migrator.moveContentToProperRLF"
-    permission="cmf.ManagePortal"
-    layer="..interfaces.IPloneAppMultilingualInstalled"
-    />
+      name="relocate-content"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".migrator.moveContentToProperRLF"
+      permission="cmf.ManagePortal"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
   <!-- Step 2 - Migrate multilingual catalog info -->
   <browser:page
-    name="transfer-lp-catalog"
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    class=".migrator.LP2PAMView"
-    permission="cmf.ManagePortal"
-    layer="..interfaces.IPloneAppMultilingualInstalled"
-    />
+      name="transfer-lp-catalog"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".migrator.LP2PAMView"
+      permission="cmf.ManagePortal"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
   <!-- Step 3  - Cleanup tasks after migration -->
   <browser:page
-    name="after-migration-cleanup"
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    class=".migrator.LP2PAMAfterView"
-    permission="cmf.ManagePortal"
-    layer="..interfaces.IPloneAppMultilingualInstalled"
-    />
+      name="after-migration-cleanup"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".migrator.LP2PAMAfterView"
+      permission="cmf.ManagePortal"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
   <!-- To delete -->
   <browser:page
-    name="lp-migration-after"
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    class=".controlpanel.MigrationViewAfter"
-    permission="plone.app.multilingual.ManageTranslations"
-    layer="..interfaces.IPloneAppMultilingualInstalled"
-    />
+      name="lp-migration-after"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".controlpanel.MigrationViewAfter"
+      permission="plone.app.multilingual.ManageTranslations"
+      layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
 </configure>

@@ -1,7 +1,7 @@
-from zope.interface import Interface
-from zope.interface import Attribute
-from zope import schema
 from plone.app.multilingual import _
+from zope import schema
+from zope.interface import Attribute
+from zope.interface import Interface
 
 # CONSTANTS
 SHARED_NAME = 'shared'

@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
 from zope.interface import Interface
-
 from plone.app.multilingual.interfaces import ITranslatable
 
 MULTILINGUAL_KEY = u'plone.app.multilingual.languageindependent'

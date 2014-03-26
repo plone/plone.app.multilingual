@@ -1,18 +1,14 @@
-# -*- coding: utf-8 -*-
-from plone.supermodel.directives import MetadataListDirective
+from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
+from plone.app.multilingual.dx.interfaces import MULTILINGUAL_KEY
 from plone.supermodel.directives import CheckerPlugin
+from plone.supermodel.directives import MetadataListDirective
 from zope.interface import Interface
 from zope.interface import alsoProvides
 from zope.interface.interfaces import IInterface
 
-from plone.app.multilingual.dx.interfaces import MULTILINGUAL_KEY
-from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
-
 
 LANGUAGE_INDEPENDENT_KEY = MULTILINGUAL_KEY
 
-
-# Directives
 
 class languageindependent(MetadataListDirective):
     """Directive used to mark one or more fields as 'languageindependent'

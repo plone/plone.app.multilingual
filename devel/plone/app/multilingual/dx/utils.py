@@ -1,23 +1,15 @@
-# -*- coding: utf-8 -*-
-from zope import interface
-from zope.component import getUtility
-
-from plone.dexterity import utils
-from plone.dexterity.interfaces import IDexterityFTI
-
-from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
-
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
-from z3c.relationfield.interfaces import IRelationValue, IRelationList
-
 from plone.app.multilingual.interfaces import ILanguage
-from zope.component import queryAdapter
+from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
 from plone.app.multilingual.interfaces import ITranslationManager
-
-from zope.app.intid.interfaces import IIntIds
-from zope import component
-from z3c.relationfield import RelationValue
 from plone.dexterity.utils import iterSchemata
+from z3c.relationfield import RelationValue
+from z3c.relationfield.interfaces import IRelationValue, IRelationList
+from zope import component
+from zope import interface
+from zope.app.intid.interfaces import IIntIds
+from zope.component import queryAdapter
+
 
 _marker = object()
 

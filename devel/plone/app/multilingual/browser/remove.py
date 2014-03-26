@@ -1,13 +1,11 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_parent
-from plone.autoform.form import AutoExtensibleForm
-from plone.autoform.interfaces import IFormFieldProvider
-from z3c.form.form import Form
-from z3c.form import button
-
-from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.interfaces import IRemoveTranslation
+from plone.app.multilingual.interfaces import ITranslationManager
+from plone.autoform.form import AutoExtensibleForm
+from plone.autoform.interfaces import IFormFieldProvider
+from z3c.form import button
+from z3c.form.form import Form
 
 
 class RemoveTranslationsForm(AutoExtensibleForm, Form):
@@ -22,7 +20,7 @@ class RemoveTranslationsForm(AutoExtensibleForm, Form):
                     u"just delete the link between the objects "
                     u"or you can delete the object itself.")
 
-    @button.buttonAndHandler(_(u"unlink selected"))
+    @button.buttonAndHandler(_(u"unlink selected"), name='unlink')
     def handle_unlink(self, action):
         data, errors = self.extractData()
         manager = ITranslationManager(self.context)
@@ -33,7 +31,7 @@ class RemoveTranslationsForm(AutoExtensibleForm, Form):
         return self.request.response.redirect(
             self.context.absolute_url() + '/remove_translations')
 
-    @button.buttonAndHandler(_(u"remove selected"))
+    @button.buttonAndHandler(_(u"remove selected"), name='remove')
     def handle_remove(self, action):
         data, errors = self.extractData()
         manager = ITranslationManager(self.context)

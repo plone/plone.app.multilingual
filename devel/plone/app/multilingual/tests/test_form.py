@@ -80,7 +80,7 @@ class TestForm(unittest.TestCase):
         self.assertEqual(
             self.browser.getControl(name="form.widgets.languages:list").value,
             ['en'])
-        self.browser.getControl("unlink selected").click()
+        self.browser.getControl(name='form.buttons.unlink').click()
         self.assertEqual(
             self.browser.getControl(name="form.widgets.languages:list").value,
             [])
@@ -151,7 +151,7 @@ class TestForm(unittest.TestCase):
 
         # Remove translation
         self.browser.open(a_ca.absolute_url() + '/remove_translations')
-        self.browser.getControl("remove selected").click()
+        self.browser.getControl(name='form.buttons.remove').click()
 
         self.assertEqual(self.browser.getControl(
             name="form.widgets.languages:list").value, [])

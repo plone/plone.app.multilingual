@@ -1,15 +1,10 @@
-# -*- coding: utf-8 -*-
-
-from zope.interface import implements
-
-from z3c.form.interfaces import NO_VALUE
-from z3c.form.interfaces import IValue
-
-from Products.CMFCore.utils import getToolByName
 from Acquisition import aq_base
-
+from Products.CMFCore.utils import getToolByName
 from interfaces import ILanguageIndependentField
 from plone.app.multilingual.manager import TranslationManager
+from z3c.form.interfaces import IValue
+from z3c.form.interfaces import NO_VALUE
+from zope.interface import implements
 
 
 def isLanguageIndependent(field):
@@ -68,4 +63,3 @@ class AddingLanguageIndependentValue(ValueBase):
             return NO_VALUE
 
         return self.field.default
-

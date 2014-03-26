@@ -1,27 +1,26 @@
-# -*- coding: utf-8 -*-
-from Acquisition import aq_chain
 from AccessControl.SecurityManagement import getSecurityManager
+from Acquisition import aq_chain
+from Products.CMFCore.interfaces import ISiteRoot
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces.factory import IFactoryTool
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.CMFCore.utils import getToolByName
-from Products.CMFCore.interfaces import ISiteRoot
-from Products.CMFPlone.interfaces.factory import IFactoryTool
-
 from borg.localrole.interfaces import IFactoryTempFolder
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
-from plone.app.multilingual.browser.selector import addQuery
 from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
-from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.multilingual.interfaces import ITranslatable
+from plone.app.multilingual.browser.selector import addQuery
 from plone.app.multilingual.interfaces import ILanguageRootFolder
+from plone.app.multilingual.interfaces import ITranslatable
+from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.manager import TranslationManager
 from plone.i18n.locales.interfaces import IContentLanguageAvailability
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 from zope.component.hooks import getSite
 from zope.interface import implements
-from zope.publisher.interfaces import IPublishTraverse, NotFound
+from zope.publisher.interfaces import IPublishTraverse
+from zope.publisher.interfaces import NotFound
 
 
 class remove_tg_session(BrowserView):

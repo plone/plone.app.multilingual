@@ -1,8 +1,7 @@
-from zope import interface
-
-from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
-from plone.app.multilingual.interfaces import ILanguage
 from plone.app.dexterity.behaviors.metadata import ICategorization
+from plone.app.multilingual.interfaces import ILanguage
+from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
+from zope import interface
 
 
 # Patch for hiding 'language' field from the edit form

@@ -1,6 +1,6 @@
-from plone.dexterity.interfaces import IDexterityFTI
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import INonInstallable
+from plone.dexterity.interfaces import IDexterityFTI
 from zope.interface import implements
 
 

@@ -7,140 +7,126 @@
     xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="plone.app.multilingual">
 
-    <includeDependencies package="." />
+  <includeDependencies package="."/>
+  <i18n:registerTranslations directory="locales"/>
 
-    <include file="permissions.zcml" />
-    <include file="upgrades.zcml" />
+  <include package="Products.CMFCore" file="permissions.zcml"/>
 
-    <include package="Products.CMFCore" file="permissions.zcml" />
+  <include file="permissions.zcml"/>
+  <include file="upgrades.zcml"/>
+  <include package=".browser"/>
+  <include package=".dx"/>
 
-    <i18n:registerTranslations directory="locales" />
+  <adapter factory=".content.lrf.LRFOrdering"/>
+  <adapter factory=".shared_uuid.lrfUUID"/>
 
-    <include package=".browser" />
-    <include package=".dx" />
-
-    <adapter factory=".content.lrf.LRFOrdering" />
-
-    <adapter
-      factory=".shared_uuid.lrfUUID" />
-
-    <genericsetup:registerProfile
-        name="default"
-        title="plone.app.multilingual"
-        description="Install to enable multilingual content support on the site"
-        directory="profiles/default"
-        provides="Products.GenericSetup.interfaces.EXTENSION"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    />
-
-    <genericsetup:registerProfile
-        name="uninstall"
-        title="Uninstall plone.app.multilingual"
-        description="Uninstall to enable multilingual content support on the site"
-        directory="profiles/uninstall"
-        provides="Products.GenericSetup.interfaces.EXTENSION"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    />
 
   <!-- ITranslationGroup and indexer -->
 
-    <adapter factory=".itg.attributeTG" />
-    <adapter factory=".itg.MutableAttributeTG" />
-    <subscriber handler=".itg.addAttributeTG" />
+  <adapter factory=".itg.attributeTG"/>
+  <adapter factory=".itg.MutableAttributeTG"/>
+  <subscriber handler=".itg.addAttributeTG"/>
 
-    <adapter factory=".indexer.itgIndexer" name="TranslationGroup" />
-    <adapter factory=".indexer.LanguageIndexer" name="Language" />
+  <adapter factory=".indexer.itgIndexer" name="TranslationGroup"/>
+  <adapter factory=".indexer.LanguageIndexer" name="Language"/>
+
 
   <!-- Generic plone.app.multilingual subscribers and adapters -->
 
-    <subscriber
+  <subscriber
       for="plone.app.multilingual.interfaces.ITranslatable
-         zope.app.container.interfaces.IObjectAddedEvent"
+           zope.app.container.interfaces.IObjectAddedEvent"
       handler="plone.app.multilingual.subscriber.createdEvent"/>
-    <subscriber
+  <subscriber
       for="plone.app.multilingual.interfaces.ITranslatable
-         zope.lifecycleevent.interfaces.IObjectCopiedEvent"
+           zope.lifecycleevent.interfaces.IObjectCopiedEvent"
       handler="plone.app.multilingual.subscriber.createdEvent"/>
-    <subscriber
+  <subscriber
       for="plone.app.multilingual.interfaces.ITranslatable
-         zope.lifecycleevent.interfaces.IObjectMovedEvent"
+           zope.lifecycleevent.interfaces.IObjectMovedEvent"
       handler="plone.app.multilingual.subscriber.createdEvent"/>
 
-    <adapter
+  <adapter
       for="plone.app.multilingual.interfaces.ITranslatable"
       provides="plone.app.multilingual.interfaces.ITranslationManager"
-      factory="plone.app.multilingual.manager.TranslationManager"
-    />
-    <adapter
+      factory="plone.app.multilingual.manager.TranslationManager"/>
+  <adapter
       for="plone.app.multilingual.interfaces.ITranslatable"
       provides="plone.app.multilingual.interfaces.ITranslationLocator"
-      factory="plone.app.multilingual.factory.DefaultTranslationLocator"
-    />
-    <adapter
+      factory="plone.app.multilingual.factory.DefaultTranslationLocator"/>
+  <adapter
       for="plone.app.multilingual.interfaces.ITranslatable"
       provides="plone.app.multilingual.interfaces.ITranslationIdChooser"
-      factory="plone.app.multilingual.factory.DefaultTranslationIdChooser"
-    />
-    <adapter
+      factory="plone.app.multilingual.factory.DefaultTranslationIdChooser"/>
+  <adapter
       for="plone.app.multilingual.interfaces.ITranslatable"
       provides="plone.app.multilingual.interfaces.ITranslationCloner"
-      factory="plone.app.multilingual.factory.DefaultTranslationCloner"
-    />
-    <adapter
+      factory="plone.app.multilingual.factory.DefaultTranslationCloner"/>
+  <adapter
       for="plone.app.multilingual.interfaces.ITranslatable"
       provides="plone.app.multilingual.interfaces.ITranslationFactory"
-      factory="plone.app.multilingual.factory.DefaultTranslationFactory"
-    />
+      factory="plone.app.multilingual.factory.DefaultTranslationFactory"/>
+
 
   <!-- Dexterity Language Independent fields -->
 
-
-
-    <subscriber
-    for="plone.app.multilingual.dx.interfaces.IDexterityTranslatable
-         zope.lifecycleevent.interfaces.IObjectModifiedEvent"
-    handler="plone.app.multilingual.dx.subscriber.handler"
-    />
-    <adapter
+  <subscriber
+      for="plone.app.multilingual.dx.interfaces.IDexterityTranslatable
+           zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+      handler="plone.app.multilingual.dx.subscriber.handler"/>
+  <adapter
       for="plone.app.multilingual.dx.interfaces.IDexterityTranslatable"
       provides="plone.app.multilingual.interfaces.ITranslationCloner"
-      factory="plone.app.multilingual.dx.cloner.Cloner"
-    />
-    <adapter
+      factory="plone.app.multilingual.dx.cloner.Cloner"/>
+  <adapter
       for="plone.app.multilingual.dx.interfaces.IDexterityTranslatable"
       provides="plone.app.multilingual.interfaces.ILanguageIndependentFieldsManager"
-      factory="plone.app.multilingual.dx.utils.LanguageIndependentFieldsManager"
-    />
+      factory="plone.app.multilingual.dx.utils.LanguageIndependentFieldsManager"/>
+
 
   <!-- Shared folder subscribers -->
 
-  <subscriber for="
-      plone.dexterity.interfaces.IDexterityContent
-      zope.lifecycleevent.interfaces.IObjectAddedEvent"
-    handler=".subscriber.reindex_neutral" />
+  <subscriber
+      for="plone.dexterity.interfaces.IDexterityContent
+           zope.lifecycleevent.interfaces.IObjectAddedEvent"
+      handler=".subscriber.reindex_neutral"/>
 
   <subscriber
       for="plone.dexterity.interfaces.IDexterityContent
            zope.component.interfaces.IObjectEvent"
-      handler=".subscriber.remove_ghosts"
-      />
+      handler=".subscriber.remove_ghosts"/>
 
   <adapter
       provides="zope.container.interfaces.INameChooser"
       for="plone.app.multilingual.interfaces.ILanguageRootFolder"
-      factory=".content.lrf.LRFNameChooser"
-      />
+      factory=".content.lrf.LRFNameChooser"/>
 
   <utility
       factory=".setuphandlers.HiddenProfiles"
       name="plone.app.multilingual"
-      provides="Products.CMFPlone.interfaces.INonInstallable" />
+      provides="Products.CMFPlone.interfaces.INonInstallable"/>
+
+
+  <genericsetup:registerProfile
+      name="default"
+      title="plone.app.multilingual"
+      description="Install to enable multilingual content support on the site"
+      directory="profiles/default"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+  <genericsetup:registerProfile
+      name="uninstall"
+      title="Uninstall plone.app.multilingual"
+      description="Uninstall to enable multilingual content support on the site"
+      directory="profiles/uninstall"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
   <genericsetup:importStep
       name="plone.app.multilingual"
       title="plone.app.multilingual uninstall"
       description=""
-      handler="plone.app.multilingual.setuphandlers.removeBehaviors"
-      />
+      handler="plone.app.multilingual.setuphandlers.removeBehaviors"/>
 
 </configure>

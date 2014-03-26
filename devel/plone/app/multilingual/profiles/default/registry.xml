@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <registry>
- <records interface="plone.app.multilingual.interfaces.IMultiLanguageExtraOptionsSchema">
+  <records interface="plone.app.multilingual.interfaces.IMultiLanguageExtraOptionsSchema">
     <value key="filter_content">True</value>
     <value key="redirect_babel_view">True</value>
     <value key="bypass_languageindependent_field_permission_check">False</value>
     <value key="buttons_babel_view_up_to_nr_translations">7</value>
     <value key="google_translation_key"></value>
- </records>
- <records interface="plone.app.multilingual.browser.controlpanel.IMultiLanguagePolicies">
+  </records>
+  <records interface="plone.app.multilingual.browser.controlpanel.IMultiLanguagePolicies">
     <value key="selector_lookup_translations_policy">closest</value>
- </records>
+  </records>
 </registry>

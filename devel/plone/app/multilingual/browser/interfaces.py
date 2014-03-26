@@ -1,18 +1,16 @@
-# -*- coding: utf-8 -*-
+from plone.app.multilingual import _
+from plone.app.multilingual.browser.vocabularies import addTranslation
+from plone.app.multilingual.browser.vocabularies import deletable_languages
+from plone.app.multilingual.browser.vocabularies import untranslated_languages
 from plone.autoform import directives
 from plone.autoform.interfaces import IFormFieldProvider
-from plone.supermodel import model
 from plone.formwidget.contenttree import ContentTreeFieldWidget
+from plone.supermodel import model
 from z3c.relationfield.schema import RelationChoice
 from zope import interface
 from zope import schema
 from zope.browsermenu.interfaces import IBrowserMenu
 from zope.browsermenu.interfaces import IBrowserSubMenuItem
-
-from plone.app.multilingual import _
-from plone.app.multilingual.browser.vocabularies import addTranslation
-from plone.app.multilingual.browser.vocabularies import deletable_languages
-from plone.app.multilingual.browser.vocabularies import untranslated_languages
 
 
 class IMultilingualLayer(interface.Interface):
