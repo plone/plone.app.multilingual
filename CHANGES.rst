@@ -4,7 +4,12 @@ Changelog
 2.0a2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix alternate language viewlet
+  [saily]
+
+- Fix tests. Don't rely on translateable strings in functional tests,
+  translations may change.
+  [saily]
 
 
 2.0a1 (2014-03-25)
