@@ -23,7 +23,7 @@ setup(
     author='Ramon Navarro, Victor Fernandez de Alba, awello et al',
     author_email='r.navarro@iskra.cat',
     packages=find_packages('src'),
-    package_dir={'': 'devel'},
+    package_dir={'': 'src'},
     namespace_packages=['plone', 'plone.app'],
     include_package_data=True,
     zip_safe=False,
