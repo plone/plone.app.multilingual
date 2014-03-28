@@ -6,6 +6,10 @@ Changelog
 
 - Move ``devel`` to ``src`` folder, update ``MANIFEST.in``,
   ``setup.py``, ``buildout.cfg`` and ``.gitignore`` to fit that new structure.
+  Updated docs.
+  [saily]
+
+- Prepare tests to Plone 5
   [saily]
 
 

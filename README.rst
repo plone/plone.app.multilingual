@@ -9,16 +9,17 @@
 Alert
 =====
 
-Master branch is in heavy development and for Plone 5 (pam 2.0). There is a 1.x 
+Master branch is in heavy development and for Plone 5 (pam 2.0). There is a 1.x
 branch for maintenance and compatibility with earlier Plone versions.
 
-plone.app.multilingual 2.x is on devel folder
+``plone.app.multilingual`` 2.x is on ``src`` folder
 
-archetypes.multilingual 2.x is on extras folder
+``archetypes.multilingual`` 2.x is on ``extras`` folder
 
-In order to test in plone 4 with dx contenttypes use buildout.cfg
+In order to test in plone 4 with dx contenttypes use ``buildout.cfg``
 
-In order to test in plone 5 use test-plone-5.x.cfg
+In order to test in plone 5 use ``test-plone-5.0.x.cfg``
+
 
 Introduction
 ============
@@ -45,18 +46,18 @@ After more than 7 years, a GSOC, redesigns, reimplementations due to deprecated
 libraries, two major Plone versions finally we are able to say that
 plone.app.multilingual is finally here.
 
+
 Components
 ==========
 
-PAM is composed of four packages, two are mandatory:
+In Version 1.x PAM was composed of four packages, two are mandatory were
+``plone.app.multilingual`` (UI) and ``plone.multilingual`` (core). The optional
+and packages to get dexterity or archetype content types translateable were
+``plone.multilingualbehavior`` and ``archetype.multilingual``.
 
-    * plone.app.multilingual (UI)
-    * plone.multilingual (core)
-
-and two optionals (at least one should be installed):
-
-    * plone.multilingualbehavior (enables Dexterity support via a behavior)
-    * archetypes.multilingual (enables Archetypes support)
+To target Plone 5 we merged dexterity multilingualbehaviour into the core
+package ``plone.app.multilingual`` and left ``archetypes.multilingual`` as an
+optional extension package.
 
 Usage
 =====
@@ -65,16 +66,13 @@ To use this package with both Dexterity and Archetypes based content types you
 should add the following line to your *eggs* buildout section::
 
     eggs =
-        plone.app.multilingual[archetypes, dexterity]
-
-If you need to use this package only with Archetypes based content types you
-only need the following line::
-
-    eggs =
         plone.app.multilingual[archetypes]
 
-While archetypes is default in Plone for now, you can strip ``[archetypes]``.
-This may change in future so we recommend adding an appendix as shown above.
+If you need to use this package with Dexterity based content types only you
+only need the following line, since Dexterity is default in Plone 5::
+
+    eggs =
+        plone.app.multilingual
 
 
 Setup
@@ -299,7 +297,7 @@ Native
 
 In your code::
 
-    from plone.multilingualbehavior.interfaces import ILanguageIndependentField
+    from plone.app.multilingual.interfaces import ILanguageIndependentField
     alsoProvides(ISchema['myField'], ILanguageIndependentField)
 
 Through the web
@@ -308,10 +306,11 @@ Through the web
 Via the content type definition in the *Dexterity Content Types* control panel.
 
 
-Internal design of plone.multilingual
-======================================
+Internal design of plone.app.multilingual
+=========================================
 
-All the internal features are implemented on the package plone.multilingual.
+All the internal features are implemented on the package
+``plone.app.multilingual``.
 
 The key points are:
 
@@ -376,11 +375,11 @@ Language get/set via an unified adapter
 In order to access and modify the language of a content type regardless the
 type (Archetypes/Dexterity) there is a interface/adapter::
 
-    plone.multilingual.interfaces.ILanguage
+    plone.app.multilingual.interfaces.ILanguage
 
 You can use::
 
-    from plone.multilingual.interfaces import ILanguage
+    from plone.app.multilingual.interfaces import ILanguage
     language = ILanguage(context).get_language()
 
 or in case you want to set the language of a content::
@@ -391,9 +390,9 @@ or in case you want to set the language of a content::
 Translatable marker interface
 -----------------------------
 
-In order to know if a content can be translated there is a marker interface:
+In order to know if a content can be translated there is a marker interface::
 
-    plone.multilingual.interfaces.ITranslatable
+    plone.app.multilingual.interfaces.ITranslatable
 
 
 License
