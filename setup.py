@@ -22,7 +22,7 @@ setup(
     license='GPL',
     author='Ramon Navarro, Victor Fernandez de Alba, awello et al',
     author_email='r.navarro@iskra.cat',
-    packages=find_packages('devel'),
+    packages=find_packages('src'),
     package_dir={'': 'devel'},
     namespace_packages=['plone', 'plone.app'],
     include_package_data=True,

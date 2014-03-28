@@ -4,7 +4,9 @@ Changelog
 2.0a3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Move ``devel`` to ``src`` folder, update ``MANIFEST.in``,
+  ``setup.py``, ``buildout.cfg`` and ``.gitignore`` to fit that new structure.
+  [saily]
 
 
 2.0a2 (2014-03-27)

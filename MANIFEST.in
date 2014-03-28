@@ -2,7 +2,6 @@ include *.txt
 include *.rst
 
 recursive-include src *
-recursive-include devel *
 recursive-include docs *
 
 global-exclude *.pyc
