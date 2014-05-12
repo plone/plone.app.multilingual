@@ -4,6 +4,10 @@ Changelog
 2.0a3 (unreleased)
 ------------------
 
+- Use *Modify portal content* permission for *Edit* action on Language Root
+  Folders.
+  [saily]
+
 - Move ``devel`` to ``src`` folder, update ``MANIFEST.in``,
   ``setup.py``, ``buildout.cfg`` and ``.gitignore`` to fit that new structure.
   [saily]
