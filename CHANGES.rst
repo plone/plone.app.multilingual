@@ -4,6 +4,10 @@ Changelog
 2.0a3 (unreleased)
 ------------------
 
+- Show 'Translate into' menu in plone-contentmenu only when having permission
+  to translate.
+  [saily]
+
 - Use *Modify portal content* permission for *Edit* action on Language Root
   Folders.
   [saily]

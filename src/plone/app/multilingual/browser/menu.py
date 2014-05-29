@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from AccessControl import getSecurityManager
 from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
 from plone.app.layout.navigation.defaultpage import isDefaultPage
@@ -14,7 +16,8 @@ from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
-from plone.memoize.instance import memoize
+from plone.app.multilingual.permissions import ManageTranslations
+from plone.memoize import view
 from plone.registry.interfaces import IRegistry
 from zope.browsermenu.menu import BrowserMenu
 from zope.browsermenu.menu import BrowserSubMenuItem
@@ -289,17 +292,25 @@ class TranslateSubMenuItem(BrowserSubMenuItem):
     def action(self):
         return self.context.absolute_url() + "/add_translations"
 
-    @memoize
+    @view.memoize
     def available(self):
+        # Is PAM installed?
         if not IPloneAppMultilingualInstalled.providedBy(self.request):
             return False
 
+        # Do we have portal_languages?
         lt = getToolByName(self.context, 'portal_languages', None)
         if lt is None:
             return False
 
+        # Do we have multiple languages?
         supported = lt.listSupportedLanguages()
         if len(supported) < 2:
+            return False
+
+        # And now check permissions
+        sm = getSecurityManager()
+        if not sm.checkPermission(ManageTranslations, self.context):
             return False
 
         return True
