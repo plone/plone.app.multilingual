@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0a3 (unreleased)
+2.0a3 (2014-05-30)
 ------------------
 
 - Show 'Translate into' menu in plone-contentmenu only when having permission
