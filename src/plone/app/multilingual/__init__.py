@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Products.PloneLanguageTool.LanguageTool import LanguageBinding
 from languagetool import setLanguageBindingsCookieWins
 from zope.i18nmessageid import MessageFactory

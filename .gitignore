@@ -42,6 +42,7 @@ local.cfg
 /lib/
 /include/
 /local/
+.Python
 
 # tests
 /test_acceptance/*

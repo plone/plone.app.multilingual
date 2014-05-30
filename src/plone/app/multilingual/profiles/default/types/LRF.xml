@@ -44,6 +44,6 @@
   <action title="Edit" action_id="edit" category="object" condition_expr=""
       icon_expr="" link_target="" url_expr="string:${object_url}/edit"
       visible="True" i18n:attributes="title">
-    <permission value="Manage Portal"/>
+    <permission value="Modify portal content"/>
   </action>
 </object>
