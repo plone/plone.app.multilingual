@@ -4,7 +4,6 @@ python:
 - 2.7
 env:
   matrix:
-  - PLONE_VERSION=4.1
   - PLONE_VERSION=4.2
   - PLONE_VERSION=4.3
   - PLONE_VERSION=5.0
@@ -15,16 +14,12 @@ env:
 matrix:
   allow_failures:
   - python: 2.6
-    env: PLONE_VERSION=4.1
-  - python: 2.6
     env: PLONE_VERSION=4.2
   - python: 2.7
     env: PLONE_VERSION=4.2
   - python: 2.7
     env: PLONE_VERSION=5.0
   exclude:
-  - python: 2.7
-    env: PLONE_VERSION=4.1
   - python: 2.6
     env: PLONE_VERSION=4.3
   - python: 2.6
