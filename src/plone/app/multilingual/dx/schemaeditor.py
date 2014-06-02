@@ -51,8 +51,9 @@ class FieldLanguageIndependentAdapter(object):
 # additional conditions pass:
 @adapter(ISchemaContext, IField)
 def get_li_schema(schema_context, field):
-    if 'plone.app.multilingual.dx.interfaces.IDexterityTranslatable' \
-            in schema_context.fti.behaviors:
+    behavior = 'plone.app.multilingual.dx.interfaces.IDexterityTranslatable'
+    fti = getattr(schema_context, 'fti', None)
+    if fti and behavior in getattr(fti, 'behaviors', []):
         return IFieldLanguageIndependent
 
 
