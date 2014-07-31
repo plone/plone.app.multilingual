@@ -315,7 +315,7 @@ class MigrateFolderToLRFView(BrowserView):
 
         # Do the transform
         self.context.__class__ = LanguageRootFolder
-        self.context._p_changed = True
+        self.context._p_changed = aq_parent(self.context).p_changed = True
         self.context.portal_type = 'LRF'
 
         # Update content language
