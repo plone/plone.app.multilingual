@@ -4,8 +4,12 @@ Changelog
 2.0a4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add a manual folder to LRF migration view
+  [datakurre]
 
+- Fix schema editor plugin to not break schema editors outside FTI (e.g.
+  collective.easyform)
+  [datakurre]
 
 2.0a3 (2014-05-30)
 ------------------
