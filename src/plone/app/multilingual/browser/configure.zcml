@@ -316,6 +316,15 @@
       permission="cmf.ManagePortal"
       layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
+  <!-- For manual folder to LRF migration -->
+  <browser:page
+      name="migrate-to-language-root-folder"
+      for="plone.dexterity.interfaces.IDexterityContainer"
+      class=".migrator.MigrateFolderToLRFView"
+      permission="cmf.ManagePortal"
+      layer="..interfaces.IPloneAppMultilingualInstalled"
+      />
+
   <!-- To delete -->
   <browser:page
       name="lp-migration-after"

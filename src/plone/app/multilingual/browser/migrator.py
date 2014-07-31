@@ -1,12 +1,13 @@
+import logging
+
 from Acquisition import aq_base
+from Acquisition import aq_inner
 from Acquisition import aq_parent
 from Products.CMFCore.exceptions import ResourceLockedError
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from plone.app.multilingual import _
-from plone.app.multilingual.interfaces import ITranslationManager
 from plone.locking.interfaces import ILockable
 from zc.relation.interfaces import ICatalog
 from zope.component import getUtility
@@ -14,11 +15,15 @@ from zope.component.hooks import getSite
 from zope.component.interfaces import ComponentLookupError
 from zope.interface import Interface
 
-import logging
+from plone.app.multilingual import _
+from plone.app.multilingual.content.lrf import LanguageRootFolder
+from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.interfaces import ILanguage
+
 
 try:
     from Products.LinguaPlone.interfaces import ITranslatable
-except:
+except ImportError:
     from plone.app.multilingual.interfaces import ITranslatable
 
 try:
@@ -278,3 +283,55 @@ class LP2PAMReindexLanguageIndex(BrowserView):
         self.items_after = index.numObjects()
 
         return self.template()
+
+
+class MigrateFolderToLRFView(BrowserView):
+
+    def __call__(self):
+        plone_utils = getToolByName(self.context, "plone_utils")
+
+        if self.context.__class__ == LanguageRootFolder:
+            self.request.response.redirect(self.context.absolute_url())
+            return
+
+        if not IPloneSiteRoot.providedBy(aq_parent(aq_inner(self.context))):
+            plone_utils.addPortalMessage(
+                _(u"folder_to_lrf_not_next_to_root",
+                  default=u"Only folders just below the root "
+                          u"can be transformed")
+            )
+            self.request.response.redirect(self.context.absolute_url())
+            return
+
+        portal_languages = getToolByName(self.context, "portal_languages")
+        available_languages = portal_languages.getAvailableLanguages()
+        if not self.context.id in available_languages.keys():
+            plone_utils.addPortalMessage(
+                _(u"folder_to_lrf_id_not_language",
+                  default=u"Folder's id is not a valid language code")
+            )
+            self.request.response.redirect(self.context.absolute_url())
+            return
+
+        # Do the transform
+        self.context.__class__ = LanguageRootFolder
+        self.context._p_changed = True
+        self.context.portal_type = 'LRF'
+
+        # Update content language
+        portal_catalog = getToolByName(self.context, "portal_catalog")
+        search_results = portal_catalog.unrestrictedSearchResults(
+            path='/'.join(self.context.getPhysicalPath()))
+        for brain in search_results:
+            ob = brain._unrestrictedGetObject()
+            language_aware = ILanguage(ob, None)
+            if language_aware is not None:
+                language_aware.set_language(self.context.id)
+                ob.reindexObject(idxs=['Language', 'TranslationGroup'])
+
+        plone_utils.addPortalMessage(
+            _(u"folder_to_lrf_success",
+              default=u"Folder has been successfully transformed to "
+                      u"a language root folder")
+        )
+        self.request.response.redirect(self.context.absolute_url())
