@@ -5,8 +5,17 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces.factory import IFactoryTool
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from Products.PloneLanguageTool.interfaces import INegotiateLanguage
 from borg.localrole.interfaces import IFactoryTempFolder
 from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.i18n.locales.interfaces import IContentLanguageAvailability
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility, getMultiAdapter
+from zope.component.hooks import getSite
+from zope.interface import implements
+from zope.publisher.interfaces import IPublishTraverse
+from zope.publisher.interfaces import NotFound
+
 from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
 from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
 from plone.app.multilingual.browser.selector import addQuery
@@ -14,13 +23,6 @@ from plone.app.multilingual.interfaces import ILanguageRootFolder
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.manager import TranslationManager
-from plone.i18n.locales.interfaces import IContentLanguageAvailability
-from plone.registry.interfaces import IRegistry
-from zope.component import getUtility
-from zope.component.hooks import getSite
-from zope.interface import implements
-from zope.publisher.interfaces import IPublishTraverse
-from zope.publisher.interfaces import NotFound
 
 
 class remove_tg_session(BrowserView):
@@ -83,10 +85,9 @@ class universal_link(BrowserView):
                 target_uid += '-' + self.lang
             else:
                 # The negotiated language
-                ltool = getToolByName(self.context, 'portal_languages')
-                if len(ltool.getRequestLanguages()) > 0:
-                    language = ltool.getRequestLanguages()[0]
-                    target_uid += '-' + self.lang
+                language = getMultiAdapter((self.context, self.request),
+                                           INegotiateLanguage).language
+                target_uid += '-' + language
             results = ptool.searchResults(UID=target_uid)
             if len(results) > 0:
                 url = results[0].getURL()
@@ -97,10 +98,9 @@ class universal_link(BrowserView):
             query = {'TranslationGroup': self.tg, 'Language': self.lang}
         else:
             # The negotiated language
-            ltool = getToolByName(self.context, 'portal_languages')
-            if len(ltool.getRequestLanguages()) > 0:
-                language = ltool.getRequestLanguages()[0]
-                query = {'TranslationGroup': self.tg, 'Language': language}
+            language = getMultiAdapter((self.context, self.request),
+                                       INegotiateLanguage).language
+            query = {'TranslationGroup': self.tg, 'Language': language}
         results = ptool.searchResults(query)
         if len(results) > 0:
             url = results[0].getURL()
