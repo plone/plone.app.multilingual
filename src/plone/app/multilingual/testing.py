@@ -105,6 +105,9 @@ class MultipleLanguagesLayer(z2.Layer):
             language_tool.addSupportedLanguage('ca')
             language_tool.addSupportedLanguage('es')
 
+            # Enable request negotiator
+            language_tool.use_request_negotiation = True
+
             # Setup language root folders
             setupTool = SetupMultilingualSite()
             setupTool.setupSite(portal)
