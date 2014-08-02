@@ -4,6 +4,9 @@ Changelog
 2.0a4 (unreleased)
 ------------------
 
+- Fix Plone 5 compatibility issues
+  [martior]
+
 - Add a manual folder to LRF migration view
   [datakurre]
 
