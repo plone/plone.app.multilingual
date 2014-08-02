@@ -129,7 +129,7 @@ def createdEvent(obj, event):
         sdm = obj.session_data_manager
         session = sdm.getSessionData()
         portal = getSite()
-        portal_factory = getToolByName(portal, 'portal_factory')
+        portal_factory = getToolByName(portal, 'portal_factory', None)
 
         request = getattr(event.object, 'REQUEST', getRequest())
         has_pam_old_lang_in_form = (
@@ -139,7 +139,7 @@ def createdEvent(obj, event):
         if (not has_pam_old_lang_in_form
                 and 'tg' in session.keys()
                 and 'old_lang' in session.keys()
-                and not portal_factory.isTemporary(obj)):
+                and (portal_factory is None or not portal_factory.isTemporary(obj))):
             IMutableTG(obj).set(session['tg'])
             modified(obj)
             del session['tg']

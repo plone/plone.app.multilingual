@@ -86,7 +86,8 @@ class addFormATIsATranslationViewlet(ViewletBase):
 
     def update(self):
         """ It's only for AT on factory so we check """
-        if self.context.portal_factory.isTemporary(self.context):
+        factory = getToolByName(self.context, 'portal_factory',None)
+        if factory is not None and factory.isTemporary(self.context):
             sdm = self.context.session_data_manager
             session = sdm.getSessionData(create=True)
             if ITranslatable.providedBy(self.context):

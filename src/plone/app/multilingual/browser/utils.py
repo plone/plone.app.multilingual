@@ -116,9 +116,9 @@ class BabelUtils(BrowserView):
             # Remove the translation of the content currently being
             # translated In case it's temporal we show as language is not
             # already set on AT
-            portal_factory = getToolByName(self.context, 'portal_factory')
+            portal_factory = getToolByName(self.context, 'portal_factory', None)
             context_language = ILanguage(context).get_language()
-            if (not portal_factory.isTemporary(self.context)
+            if ( ( portal_factory is None or not portal_factory.isTemporary(self.context) )
                     and lang_info['code'] == context_language):
                 continue
 
