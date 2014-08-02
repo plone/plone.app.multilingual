@@ -123,12 +123,12 @@ if isDexterityInstalled:
                         self.widgets[field].addClass('languageindependent')
                 # With plone.autoform, fieldnames from additional schematas
                 # reference their schema by prefixing their fieldname
-                # with schema.__identifier__ and then a dot as a separator
+                # with a schema prefix and then a dot as a separator
                 # See autoform.txt in the autoform package
                 if '.' in field:
                     schemaname, fieldname = field.split('.')
                     for schema in self.additionalSchemata:
-                        if schemaname == schema.__identifier__ and fieldname in schema:
+                        if self.fields[field].interface == schema and fieldname in schema:
                             if ILanguageIndependentField.providedBy(\
                                 schema[fieldname]):
                                 self.widgets[field].addClass('languageindependent')

@@ -11,6 +11,9 @@ Changelog
 - Fix translation views so that the correct from and to languages are shown.
   [fredvd]
 
+- Fix prefix matching for language independent fields from plone.autoform
+  [huubbouma]
+
 
 1.2.1 2013-10-16
 ----------------
