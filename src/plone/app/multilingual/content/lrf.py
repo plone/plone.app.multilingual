@@ -111,7 +111,7 @@ class LanguageRootFolder(Container):
                 #         'Dexterity Item',
                 #         'ATFolder',
                 #         'ATDocument']
-                aliased_objectIds = list(aliased.objectIds(spec))
+                aliased_objectIds = list(set(aliased.objectIds(spec)))
                 for id in aliased_objectIds:
                     if (id in _languagelist or id in _combinedlanguagelist
                             or id == 'id-id'):

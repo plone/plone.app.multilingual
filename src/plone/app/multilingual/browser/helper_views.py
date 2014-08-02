@@ -2,7 +2,7 @@ from AccessControl.SecurityManagement import getSecurityManager
 from Acquisition import aq_chain
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces.factory import IFactoryTool
+from Products.ATContentTypes.interfaces.factory import IFactoryTool
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.PloneLanguageTool.interfaces import INegotiateLanguage
