@@ -1,8 +1,22 @@
 Changelog
 =========
 
-2.0a3 (unreleased)
+2.0a4 (unreleased)
 ------------------
+
+- Add a manual folder to LRF migration view
+  [datakurre]
+
+- Fix schema editor plugin to not break schema editors outside FTI (e.g.
+  collective.easyform)
+  [datakurre]
+
+2.0a3 (2014-05-30)
+------------------
+
+- Show 'Translate into' menu in plone-contentmenu only when having permission
+  to translate.
+  [saily]
 
 - Use *Modify portal content* permission for *Edit* action on Language Root
   Folders.
@@ -10,6 +24,10 @@ Changelog
 
 - Move ``devel`` to ``src`` folder, update ``MANIFEST.in``,
   ``setup.py``, ``buildout.cfg`` and ``.gitignore`` to fit that new structure.
+  Updated docs.
+  [saily]
+
+- Prepare tests to Plone 5
   [saily]
 
 

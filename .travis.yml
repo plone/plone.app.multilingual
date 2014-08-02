@@ -4,9 +4,9 @@ python:
 - 2.7
 env:
   matrix:
-  - PLONE_VERSION=4.1
   - PLONE_VERSION=4.2
   - PLONE_VERSION=4.3
+  - PLONE_VERSION=5.0
   global:
   - ARTIFACTS_S3_BUCKET=plone.app.multilingual
   - secure: nIhZCx2JXPSBllk9wQEscZ6qwRtQ2Z8gWZOTipVDjKCnls0J/qthd6svAVW3S+smHwWuQKMogym5xYWbH1kGbE/EZgYZJV4N8vDodpcbpW6HS2O85Zlb2PYcLMcxGy22RRahvJ39TaPMsq7uQMQA7rzZsLFlBxx3FSKd6pDUEE0=
@@ -14,16 +14,16 @@ env:
 matrix:
   allow_failures:
   - python: 2.6
-    env: PLONE_VERSION=4.1
-  - python: 2.6
     env: PLONE_VERSION=4.2
   - python: 2.7
     env: PLONE_VERSION=4.2
+  - python: 2.7
+    env: PLONE_VERSION=5.0
   exclude:
-  - python: 2.7
-    env: PLONE_VERSION=4.1
   - python: 2.6
     env: PLONE_VERSION=4.3
+  - python: 2.6
+    env: PLONE_VERSION=5.0
 install:
 - sed -ie "s#test-plone-4.x.cfg#test-plone-$PLONE_VERSION.x.cfg#" travis.cfg
 - mkdir -p buildout-cache/downloads

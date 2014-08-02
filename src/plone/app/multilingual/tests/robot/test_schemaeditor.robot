@@ -72,7 +72,7 @@ I select the language independent field setting
 
 I save the form
   Click button  form-buttons-save
-  Sleep  0.5
+  Element should not be visible  .pb-ajax
 
 I open the form again
   Click link  css=a.fieldSettings

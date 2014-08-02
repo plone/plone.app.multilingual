@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '2.0a3.dev0'
+version = '2.0a4.dev0'
 
 setup(
     name='plone.app.multilingual',
@@ -31,7 +31,8 @@ setup(
         'setuptools',
         'z3c.relationfield',
         'plone.behavior',
-        'plone.dexterity>=2.1',
+        'plone.dexterity',
+#       'plone.dexterity>=2.1',
         'plone.app.z3cform',
         'plone.app.registry',
         'plone.formwidget.contenttree',

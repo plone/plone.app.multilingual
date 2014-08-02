@@ -64,7 +64,7 @@ class LanguageRootFolder(Container):
             if portal is not None and name in portal\
                     and not name.startswith('_'):
                 # XXX Check that is content
-                if (name != 'portal_catalog' and name != 'portal_url'
+                if (name != 'portal_catalog' and name != 'portal_url' and name != 'acl_users'
                         and (name not in _languagelist
                              and name not in _combinedlanguagelist
                              and name != 'id-id')):

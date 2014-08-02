@@ -2,6 +2,7 @@ from Acquisition import aq_parent
 from OFS.interfaces import IObjectWillBeAddedEvent
 from OFS.interfaces import IObjectWillBeMovedEvent
 from OFS.interfaces import IObjectWillBeRemovedEvent
+from Products.CMFCore.interfaces import IActionSucceededEvent
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IPloneSiteRoot
@@ -83,7 +84,8 @@ def remove_ghosts(obj, event):
                 UID=content_id)
             for brain in brains:
                 obj.unrestrictedTraverse(brain.getPath()).unindexObject()
-
+    if IActionSucceededEvent.providedBy(event):
+        reindex_neutral(obj, event)
 
 # Multilingual subscribers
 def reindex_object(obj):

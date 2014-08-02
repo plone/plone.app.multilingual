@@ -6,19 +6,6 @@
 
 .. contents::
 
-Alert
-=====
-
-Master branch is in heavy development and for Plone 5 (pam 2.0). There is a 1.x 
-branch for maintenance and compatibility with earlier Plone versions.
-
-plone.app.multilingual 2.x is on devel folder
-
-archetypes.multilingual 2.x is on extras folder
-
-In order to test in plone 4 with dx contenttypes use buildout.cfg
-
-In order to test in plone 5 use test-plone-5.x.cfg
 
 Introduction
 ============
@@ -45,17 +32,24 @@ After more than 7 years, a GSOC, redesigns, reimplementations due to deprecated
 libraries, two major Plone versions finally we are able to say that
 plone.app.multilingual is finally here.
 
+
+Versions
+========
+
+* 1.x - Plone 4.x with Archetypes and Dexterity
+
+* 2.x - Plone 4.x with plone.app.contenttypes (Dexterity) and real shared content
+
+
 Components
 ==========
 
-PAM is composed of four packages, two are mandatory:
+PAM is composed of two packages, one is mandatory:
 
-    * plone.app.multilingual (UI)
-    * plone.multilingual (core)
+    * plone.app.multilingual (core, UI, enables Dexterity support via a behavior)
 
-and two optionals (at least one should be installed):
+and one optional (at least one should be installed):
 
-    * plone.multilingualbehavior (enables Dexterity support via a behavior)
     * archetypes.multilingual (enables Archetypes support)
 
 Usage
@@ -65,17 +59,13 @@ To use this package with both Dexterity and Archetypes based content types you
 should add the following line to your *eggs* buildout section::
 
     eggs =
-        plone.app.multilingual[archetypes, dexterity]
-
-If you need to use this package only with Archetypes based content types you
-only need the following line::
-
-    eggs =
         plone.app.multilingual[archetypes]
 
-While archetypes is default in Plone for now, you can strip ``[archetypes]``.
-This may change in future so we recommend adding an appendix as shown above.
+To use this package with plone.app.contenttypes you should add the following
+line to your *eggs* vuildout section::
 
+    eggs =
+        plone.app.multilingual
 
 Setup
 =====
