@@ -226,6 +226,6 @@
             update_view();
         });
 
-        $(".formTabs").click(sync_elements_vertically);
+        $(".formTabs, .pat-autotoc a").click(sync_elements_vertically);
     });
 }(jQuery));
