@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.interfaces import IUpdateLanguage
 from plone.app.multilingual.browser.utils import multilingualMoveObject

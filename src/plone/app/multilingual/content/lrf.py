@@ -29,7 +29,7 @@ class LanguageRootFolder(Container):
         """Indicates whether the folder has an item by ID.
         """
         return (
-            CMFOrderedBTreeFolderBase.has_key(self, item_id)
+            CMFOrderedBTreeFolderBase.has_key(self, item_id)  # noqa
             or (
                 item_id in getSite()
                 and item_id not in BLACK_LIST_IDS
@@ -53,7 +53,7 @@ class LanguageRootFolder(Container):
                        self._tree.items(), self._count())
 
     def __contains__(self, name):
-        return self.has_key(name)
+        return self.has_key(name)  # noqa
 
     def __getattr__(self, name):
         try:

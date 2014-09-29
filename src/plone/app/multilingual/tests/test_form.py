@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-import transaction
-import unittest2 as unittest
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
-from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
+from plone.app.testing import SITE_OWNER_NAME
+from plone.app.testing import SITE_OWNER_PASSWORD
 from plone.dexterity.utils import createContentInContainer
 from plone.testing._z2_testbrowser import Browser
+import transaction
+import unittest2 as unittest
 
 
 class TestForm(unittest.TestCase):

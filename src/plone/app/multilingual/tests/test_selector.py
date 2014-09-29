@@ -1,26 +1,24 @@
 # -*- coding: utf-8 -*-
-import unittest2 as unittest
-from zope.event import notify
-from zope.component import getUtility
-import transaction
-from Acquisition import Explicit
 from Products.CMFCore.utils import getToolByName
-from plone.registry.interfaces import IRegistry
-from zope.lifecycleevent import ObjectModifiedEvent
 from plone.app.i18n.locales.browser.selector import LanguageSelector
-from plone.dexterity.utils import createContentInContainer
-
-from plone.testing.z2 import Browser
-from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual import api
 from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
+from plone.app.multilingual.browser.helper_views import selector_view
 from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
 from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
-from plone.app.multilingual.browser.selector import getPostPath
 from plone.app.multilingual.browser.selector import addQuery
-from plone.app.multilingual.browser.helper_views import selector_view
+from plone.app.multilingual.browser.selector import getPostPath
+from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
+from plone.dexterity.utils import createContentInContainer
+from plone.registry.interfaces import IRegistry
+from plone.testing.z2 import Browser
+from zope.component import getUtility
+from zope.event import notify
+from zope.lifecycleevent import ObjectModifiedEvent
+import transaction
+import unittest2 as unittest
 
 
 class EvilObject(object):
@@ -322,8 +320,9 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[1]['url'])
         self.assertEqual(
             self.browser.url,
-            self.portal.absolute_url() + \
-                NOT_TRANSLATED_YET_TEMPLATE + '/' + tgid + '?set_language=ca'
+            self.portal.absolute_url() +
+            NOT_TRANSLATED_YET_TEMPLATE +
+            '/' + tgid + '?set_language=ca'
         )
         self.assertIn(
             u'lang="ca"'.encode("utf-8"),
@@ -334,8 +333,9 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[2]['url'])
         self.assertEqual(
             self.browser.url,
-            self.portal.absolute_url() + \
-                NOT_TRANSLATED_YET_TEMPLATE + '/' + tgid + '?set_language=es'
+            self.portal.absolute_url() +
+            NOT_TRANSLATED_YET_TEMPLATE +
+            '/' + tgid + '?set_language=es'
         )
         self.assertIn(
             u'lang="es"'.encode("utf-8"),
@@ -592,8 +592,9 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         tgid = selector_languages[2]['url'].split('/')[-3]
         self.assertEqual(
             self.browser.url,
-            self.portal.absolute_url() + \
-                NOT_TRANSLATED_YET_TEMPLATE + '/' + tgid + '?set_language=es'
+            self.portal.absolute_url() +
+            NOT_TRANSLATED_YET_TEMPLATE +
+            '/' + tgid + '?set_language=es'
         )
         self.assertIn(
             u'lang="es"'.encode("utf-8"),

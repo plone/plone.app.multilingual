@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -24,20 +25,21 @@ from z3c.form.interfaces import HIDDEN_MODE
 from z3c.form.interfaces import NO_VALUE
 from z3c.form.widget import ComputedWidgetAttribute
 from zope import schema
-from zope.component import adapts
+from zope.component import adapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
 from zope.interface import Interface
-from zope.interface import implements, alsoProvides
+from zope.interface import alsoProvides
+from zope.interface import implementer
 from zope.traversing.interfaces import ITraversable
 from zope.traversing.interfaces import TraversalError
 
 
+@adapter(IFolderish, Interface)
+@implementer(ITraversable)
 class AddViewTraverser(object):
     """Add view traverser.
     """
-    adapts(IFolderish, Interface)
-    implements(ITraversable)
 
     def __init__(self, context, request):
         self.context = context
@@ -180,9 +182,9 @@ class FauxDataManager(object):
         return False
 
 
+@implementer(IFormExtender)
+@adapter(Interface, IPloneAppMultilingualInstalled, MultilingualAddForm)
 class MultilingualAddFormExtender(extensible.FormExtender):
-    implements(IFormExtender)
-    adapts(Interface, IPloneAppMultilingualInstalled, MultilingualAddForm)
 
     def __init__(self, context, request, form):
         self.context = context

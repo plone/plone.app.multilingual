@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.vocabularies import addTranslation
 from plone.app.multilingual.browser.vocabularies import deletable_languages

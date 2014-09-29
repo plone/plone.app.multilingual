@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.supermodel.interfaces import IFieldMetadataHandler
 from plone.supermodel.utils import ns

@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-import unittest2 as unittest
 from Products.CMFCore.utils import getToolByName
-
-from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
+from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.browser.vocabularies import\
     AllContentLanguageVocabulary
-from plone.app.multilingual.browser.setup import SetupMultilingualSite
+from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
+import unittest2 as unittest
 
 
 class TestSetupMultilingualSite(unittest.TestCase):

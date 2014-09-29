@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Acquisition import aq_parent
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.interfaces import IRemoveTranslation

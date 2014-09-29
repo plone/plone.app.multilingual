@@ -13,8 +13,8 @@ from plone.app.multilingual.itg import addAttributeTG
 from plone.app.uuid.utils import uuidToObject
 from plone.uuid.handlers import addAttributeUUID
 from plone.uuid.interfaces import IUUID
-from zope.interface import implementer
 from zope.event import notify
+from zope.interface import implementer
 from zope.site.hooks import getSite
 
 

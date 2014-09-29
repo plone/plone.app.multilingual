@@ -24,6 +24,14 @@ from zope.lifecycleevent import modified
 from zope.lifecycleevent.interfaces import IObjectRemovedEvent
 
 
+def _reindex_site_root(obj, root, language_infos):
+    for language_info in language_infos:
+        lrf_to_reindex = getattr(root, language_info, None)
+        to_reindex = getattr(lrf_to_reindex, obj.id, None)
+        if to_reindex is not None:
+            to_reindex.reindexObject()
+
+
 # On shared elements, the uuid is different so we need to take care of
 # them on catalog in case we modify any shared element
 def reindex_neutral(obj, event):
@@ -40,24 +48,20 @@ def reindex_neutral(obj, event):
     language_infos = language_tool.supported_langs
     if IPloneSiteRoot.providedBy(parent):
         # It's plone site root we need to look at LRF
-        for language_info in language_infos:
-            lrf_to_reindex = getattr(parent, language_info, None)
-            to_reindex = getattr(lrf_to_reindex, obj.id, None)
-            if to_reindex is not None:
-                to_reindex.reindexObject()
-    else:
-        content_id = IUUID(parent).split('-')[0]
-        pc = getToolByName(site, 'portal_catalog')
-        for language_info in language_infos:
-            brains = pc.unrestrictedSearchResults(
-                UID=content_id + '-' + language_info)
-            if len(brains):
-                brain = brains[0]
-                if brain.getId in BLACK_LIST_IDS:
-                    continue
-                obj.unrestrictedTraverse(
-                    brain.getPath() + '/' + obj.id).reindexObject()
-    return
+        _reindex_site_root(obj, parent, language_infos)
+        return
+
+    content_id = IUUID(parent).split('-')[0]
+    pc = getToolByName(site, 'portal_catalog')
+    for language_info in language_infos:
+        brains = pc.unrestrictedSearchResults(
+            UID=content_id + '-' + language_info)
+        if len(brains):
+            brain = brains[0]
+            if brain.getId in BLACK_LIST_IDS:
+                continue
+            obj.unrestrictedTraverse(
+                brain.getPath() + '/' + obj.id).reindexObject()
 
 
 def remove_ghosts(obj, event):

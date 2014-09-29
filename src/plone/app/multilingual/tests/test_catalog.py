@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-import unittest
 from Products.CMFCore.utils import getToolByName
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.dexterity.utils import createContentInContainer
+import unittest
 
 
 class TestCatalogPatch(unittest.TestCase):

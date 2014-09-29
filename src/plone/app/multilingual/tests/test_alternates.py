@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-import unittest2 as unittest
-
 from plone.app.multilingual import api
-
 from plone.app.multilingual.browser.viewlets import AlternateLanguagesViewlet
+from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.dexterity.utils import createContentInContainer
-from plone.app.multilingual.interfaces import ITranslationManager
+import unittest2 as unittest
 
 
 class TestAlternateLanguagesViewlet(unittest.TestCase):

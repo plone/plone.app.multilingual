@@ -19,14 +19,16 @@ from plone.app.testing import applyProfile
 from plone.app.testing import ploneSite
 from plone.app.testing import setRoles
 from plone.dexterity.fti import DexterityFTI
-from plone.dexterity.utils import iterSchemata, iterSchemataForType
+from plone.dexterity.utils import iterSchemata
+from plone.dexterity.utils import iterSchemataForType
 from plone.rfc822 import constructMessageFromSchemata
 from plone.rfc822 import initializeObjectFromSchemata
 from plone.testing import z2
 from plone.uuid.interfaces import IUUID
 from zope.configuration import xmlconfig
 from zope.event import notify
-from zope.interface import alsoProvides, noLongerProvides
+from zope.interface import alsoProvides
+from zope.interface import noLongerProvides
 from zope.lifecycleevent import ObjectModifiedEvent
 import plone.app.dexterity
 import plone.app.multilingual
