@@ -305,7 +305,7 @@ class MigrateFolderToLRFView(BrowserView):
 
         portal_languages = getToolByName(self.context, "portal_languages")
         available_languages = portal_languages.getAvailableLanguages()
-        if not self.context.id in available_languages.keys():
+        if self.context.id not in available_languages.keys():
             plone_utils.addPortalMessage(
                 _(u"folder_to_lrf_id_not_language",
                   default=u"Folder's id is not a valid language code")
