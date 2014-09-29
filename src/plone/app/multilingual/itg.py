@@ -5,9 +5,9 @@ from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import NOTG
 from plone.uuid.interfaces import IUUIDGenerator
-from zope.component import implementer
+from zope.component import adapter
 from zope.component import queryUtility
-from zope.interface import adapter
+from zope.interface import implementer
 from zope.lifecycleevent.interfaces import IObjectCopiedEvent
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 
