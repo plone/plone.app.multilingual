@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 
 def setLanguageBindingsCookieWins(self, usePath=1, useContent=1, useCookie=1,

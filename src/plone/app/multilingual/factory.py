@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Acquisition import aq_parent
 from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
@@ -7,13 +8,13 @@ from plone.app.multilingual.interfaces import ITranslationFactory
 from plone.app.multilingual.interfaces import ITranslationIdChooser
 from plone.app.multilingual.interfaces import ITranslationLocator
 from plone.app.multilingual.interfaces import ITranslationManager
-from zope import interface
+from zope.interface import implementer
 
 
+@implementer(ILanguageIndependentFieldsManager)
 class DefaultLanguageIndependentFieldsManager(object):
     """ Default language independent fields manager.
     """
-    interface.implements(ILanguageIndependentFieldsManager)
 
     def __init__(self, context):
         self.context = context
@@ -25,9 +26,8 @@ class DefaultLanguageIndependentFieldsManager(object):
         return
 
 
+@implementer(ITranslationLocator)
 class DefaultTranslationLocator(object):
-
-    interface.implements(ITranslationLocator)
 
     def __init__(self, context):
         self.context = context
@@ -51,20 +51,18 @@ class DefaultTranslationLocator(object):
         return translated_parent
 
 
+@implementer(ITranslationCloner)
 class DefaultTranslationCloner(object):
-
-    interface.implements(ITranslationCloner)
 
     def __init__(self, context):
         self.context = context
 
-    def __call__(self, object):
+    def __call__(self, obj):
         return
 
 
+@implementer(ITranslationIdChooser)
 class DefaultTranslationIdChooser(object):
-
-    interface.implements(ITranslationIdChooser)
 
     def __init__(self, context):
         self.context = context
@@ -80,9 +78,8 @@ class DefaultTranslationIdChooser(object):
         return content_id
 
 
+@implementer(ITranslationFactory)
 class DefaultTranslationFactory(object):
-
-    interface.implements(ITranslationFactory)
 
     def __init__(self, context):
         self.context = context

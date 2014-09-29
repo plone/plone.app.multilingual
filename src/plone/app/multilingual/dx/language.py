@@ -1,19 +1,19 @@
+# -*- coding: utf-8 -*-
 from plone.app.dexterity.behaviors.metadata import ICategorization
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
-from zope import interface
+from zope.interface import implementer
 
 
 # Patch for hiding 'language' field from the edit form
 ICategorization['language'].readonly = True
 
 
+@implementer(ILanguage)
 class Language(object):
 
     def __init__(self, context):
         self.context = context
-
-    interface.implements(ILanguage)
 
     def get_language(self):
         language = self.context.language

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
 from Testing import ZopeTestCase as ztc
 from email.header import Header

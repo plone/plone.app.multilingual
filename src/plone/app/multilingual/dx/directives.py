@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.app.multilingual.dx.interfaces import MULTILINGUAL_KEY
 from plone.supermodel.directives import CheckerPlugin

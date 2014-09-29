@@ -1,17 +1,17 @@
-from plone.supermodel.interfaces import IFieldMetadataHandler
-from zope.interface import implements, alsoProvides
-from plone.supermodel.utils import ns
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
+from plone.supermodel.interfaces import IFieldMetadataHandler
+from plone.supermodel.utils import ns
+from zope.interface import alsoProvides
+from zope.interface import implementer
 
 
+@implementer(IFieldMetadataHandler)
 class LanguageIndependentFieldMetadataHandler(object):
     """Define the ``lingua`` namespace.
 
     This lets you write lingua:independent="true" on a field to mark it as
     a language independent field.
     """
-
-    implements(IFieldMetadataHandler)
 
     namespace = "http://namespaces.plone.org/supermodel/lingua"
     prefix = "lingua"

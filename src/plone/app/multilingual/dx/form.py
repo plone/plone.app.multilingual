@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 from Acquisition import aq_base
 from Products.CMFCore.utils import getToolByName
 from interfaces import ILanguageIndependentField
 from plone.app.multilingual.manager import TranslationManager
 from z3c.form.interfaces import IValue
 from z3c.form.interfaces import NO_VALUE
-from zope.interface import implements
+from zope.interface import implementer
 
 
 def isLanguageIndependent(field):
@@ -17,8 +18,8 @@ def isLanguageIndependent(field):
         return False
 
 
+@implementer(IValue)
 class ValueBase(object):
-    implements(IValue)
 
     def __init__(self, context, request, form, field, widget):
         self.context = context

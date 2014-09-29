@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
 from cStringIO import StringIO
 from plone.app.layout.viewlets.common import ViewletBase
@@ -86,7 +87,7 @@ class addFormATIsATranslationViewlet(ViewletBase):
 
     def update(self):
         """ It's only for AT on factory so we check """
-        factory = getToolByName(self.context, 'portal_factory',None)
+        factory = getToolByName(self.context, 'portal_factory', None)
         if factory is not None and factory.isTemporary(self.context):
             sdm = self.context.session_data_manager
             session = sdm.getSessionData(create=True)

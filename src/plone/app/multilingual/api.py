@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from plone.app.multilingual.interfaces import ITranslationManager
 
 

@@ -1,14 +1,14 @@
+# -*- coding: utf-8 -*-
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.schemaeditor.interfaces import IFieldEditorExtender
 from plone.schemaeditor.interfaces import ISchemaContext
 from zope import schema
 from zope.component import adapter
-from zope.component import adapts
 from zope.component import provideAdapter
 from zope.i18nmessageid import MessageFactory
 from zope.interface import Interface
 from zope.interface import alsoProvides
-from zope.interface import implements
+from zope.interface import implementer
 from zope.interface import noLongerProvides
 from zope.schema import interfaces
 from zope.schema.interfaces import IField
@@ -25,9 +25,9 @@ class IFieldLanguageIndependent(Interface):
         required=False)
 
 
+@implementer(IFieldLanguageIndependent)
+@adapter(interfaces.IField)
 class FieldLanguageIndependentAdapter(object):
-    implements(IFieldLanguageIndependent)
-    adapts(interfaces.IField)
 
     def __init__(self, field):
         self.field = field

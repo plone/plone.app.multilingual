@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Acquisition import aq_base
 from Acquisition import aq_chain
 from plone.app.multilingual.content.lrf import ILanguageRootFolder

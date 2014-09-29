@@ -92,13 +92,18 @@ class MultilingualAddForm(DefaultAddForm):
             # reference their schema by prefixing their fieldname
             # with schema.__identifier__ and then a dot as a separator
             # See autoform.txt in the autoform package
-            if '.' in field:
-                schemaname, fieldname = field.split('.')
-                for schema in self.additionalSchemata:
-                    if schemaname == schema.__identifier__ \
-                       and fieldname in schema:
-                        if ILanguageIndependentField.providedBy(schema[fieldname]):  # noqa
-                            self.widgets[field].addClass('languageindependent')
+            if '.' not in field:
+                continue
+            schemaname, fieldname = field.split('.')
+            for add_schema in self.additionalSchemata:
+                if (
+                    schemaname == add_schema.__identifier__
+                    and fieldname in add_schema
+                    and ILanguageIndependentField.providedBy(
+                        add_schema[fieldname])
+                ):
+                    self.widgets[field].addClass('languageindependent')
+
         self.babel_content = super(MultilingualAddForm, self).render()
         return self.babel()
 

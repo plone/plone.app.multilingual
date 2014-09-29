@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Acquisition import aq_parent
 from OFS.interfaces import IObjectWillBeAddedEvent
 from OFS.interfaces import IObjectWillBeMovedEvent
@@ -87,6 +88,7 @@ def remove_ghosts(obj, event):
     if IActionSucceededEvent.providedBy(event):
         reindex_neutral(obj, event)
 
+
 # Multilingual subscribers
 def reindex_object(obj):
     obj.reindexObject(idxs=("Language", "TranslationGroup",
@@ -134,12 +136,13 @@ def createdEvent(obj, event):
         request = getattr(event.object, 'REQUEST', getRequest())
         has_pam_old_lang_in_form = (
             request and
-            not 'form.widgets.pam_old_lang' in request.form
+            'form.widgets.pam_old_lang' not in request.form
         )
         if (not has_pam_old_lang_in_form
                 and 'tg' in session.keys()
                 and 'old_lang' in session.keys()
-                and (portal_factory is None or not portal_factory.isTemporary(obj))):
+                and (portal_factory is None
+                     or not portal_factory.isTemporary(obj))):
             IMutableTG(obj).set(session['tg'])
             modified(obj)
             del session['tg']

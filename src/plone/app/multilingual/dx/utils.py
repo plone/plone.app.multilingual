@@ -1,21 +1,22 @@
+# -*- coding: utf-8 -*-
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.dexterity.utils import iterSchemata
 from z3c.relationfield import RelationValue
-from z3c.relationfield.interfaces import IRelationValue, IRelationList
-from zope import component
-from zope import interface
+from z3c.relationfield.interfaces import IRelationList
+from z3c.relationfield.interfaces import IRelationValue
 from zope.app.intid.interfaces import IIntIds
+from zope.component import getUtility
 from zope.component import queryAdapter
-
+from zope.interface import implementer
 
 _marker = object()
 
 
+@implementer(ILanguageIndependentFieldsManager)
 class LanguageIndependentFieldsManager(object):
-    interface.implements(ILanguageIndependentFieldsManager)
 
     def __init__(self, context):
         self.context = context
@@ -29,7 +30,7 @@ class LanguageIndependentFieldsManager(object):
 
     def copy_relation(self, relation_value, target_language):
         obj = relation_value.to_object
-        intids = component.getUtility(IIntIds)
+        intids = getUtility(IIntIds)
         translation = ITranslationManager(obj).get_translation(target_language)
         if translation:
             return RelationValue(intids.getId(translation))
