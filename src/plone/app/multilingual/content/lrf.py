@@ -119,9 +119,10 @@ class LanguageRootFolder(Container):
         aliased = getSite()
         try:
             obj = aliased.__getitem__(key)
-            new_object = aq_base(obj).__of__(self)
-            new_object._v_is_shared_content = True
-            return new_object
+            if obj.getId() not in BLACK_LIST_IDS:
+                new_object = aq_base(obj).__of__(self)
+                new_object._v_is_shared_content = True
+                return new_object
         except KeyError:
             return CMFOrderedBTreeFolderBase.__getitem__(self, key)
 
