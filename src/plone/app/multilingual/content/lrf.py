@@ -137,10 +137,12 @@ class LRFOrdering(DefaultOrdering):
         """ see interfaces.py """
         to_renew = [
             x for x in self.context.objectIds()
-            if x not in self._pos().keys()]
+            if x not in self._pos().keys()
+        ]
         to_remove = [
             x for x in self._pos().keys()
-            if x not in self.context.objectIds()]
+            if x not in self.context.objectIds()
+        ]
         for item_id in to_renew:
             self.notifyAdded(item_id)
         for item_id in to_remove:
