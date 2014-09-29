@@ -56,7 +56,7 @@ def reindex_neutral(obj, event):
                 if brain.getId in BLACK_LIST_IDS:
                     continue
                 obj.unrestrictedTraverse(
-                    brains.getPath() + '/' + obj.id).reindexObject()
+                    brain.getPath() + '/' + obj.id).reindexObject()
     return
 
 
