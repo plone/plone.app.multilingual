@@ -82,38 +82,36 @@ class LanguageRootFolder(Container):
             new_object._v_is_shared_content = True
             return new_object
 
-    def _getOb(self, id, default=_marker):
-        obj = CMFOrderedBTreeFolderBase._getOb(self, id, default)
+    def _getOb(self, item_id, default=_marker):
+        obj = CMFOrderedBTreeFolderBase._getOb(self, item_id, default)
         if obj is not default:
             return obj
-        else:
-            aliased = getSite()
-            if aliased:
-                if (id not in _languagelist
-                        and id not in _combinedlanguagelist
-                        and id != 'id-id'):
-                    obj = aliased._getOb(id, default)
-                    if obj is default:
-                        # if default is _marker:
-                        #     raise KeyError
-                        return default
-                    new_object = aq_base(obj).__of__(self)
-                    new_object._v_is_shared_content = True
-                    return new_object
+
+        aliased = getSite()
+        if aliased and item_id not in BLACK_LIST_IDS:
+            obj = aliased._getOb(item_id, default)
+            if obj is default:
+                return default
+            new_object = aq_base(obj).__of__(self)
+            new_object._v_is_shared_content = True
+            return new_object
+        if default is not _marker:
+            return default
 
     def objectIds(self, spec=None, ordered=True):
         # XXX : need to find better aproach
         aliased = getSite()
+        aliased_objectIds = set()
         if aliased is not None:
             try:
                 # spec = ['Dexterity Container',
                 #         'Dexterity Item',
                 #         'ATFolder',
                 #         'ATDocument']
-                aliased_objectIds = set(aliased.objectIds(spec))
+                aliased_objectIds.update(aliased.objectIds(spec))
                 aliased_objectIds -= BLACK_LIST_IDS
             except AttributeError:
-                aliased_objectIds = set()
+                pass
         own_elements = CMFOrderedBTreeFolderBase.objectIds(self, spec, False)
         return [item for item in own_elements] + list(aliased_objectIds)
 
@@ -143,23 +141,23 @@ class LRFOrdering(DefaultOrdering):
         to_remove = [
             x for x in self._pos().keys()
             if x not in self.context.objectIds()]
-        for id in to_renew:
-            self.notifyAdded(id)
-        for id in to_remove:
-            self.notifyRemoved(id)
+        for item_id in to_renew:
+            self.notifyAdded(item_id)
+        for item_id in to_remove:
+            self.notifyRemoved(item_id)
         return list(self._order())
 
-    def getObjectPosition(self, id):
+    def getObjectPosition(self, item_id):
         """ see interfaces.py """
         pos = self._pos()
-        if id in pos:
-            return pos[id]
+        if item_id in pos:
+            return pos[item_id]
         else:
             aliased = getSite()
             if id in aliased.objectIds():
-                self.notifyAdded(id)
+                self.notifyAdded(item_id)
                 pos = self._pos()
-                return pos[id]
+                return pos[item_id]
             else:
                 return 0
                 # raise ValueError('No object with id "%s" exists.' % id)
