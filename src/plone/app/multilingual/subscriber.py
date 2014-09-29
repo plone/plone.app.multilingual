@@ -7,6 +7,7 @@ from Products.CMFCore.interfaces import IActionSucceededEvent
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IPloneSiteRoot
+from plone.app.multilingual import BLACK_LIST_IDS
 from plone.app.multilingual.browser.utils import is_shared
 from plone.app.multilingual.browser.utils import is_shared_original
 from plone.app.multilingual.interfaces import ILanguage
@@ -51,8 +52,11 @@ def reindex_neutral(obj, event):
             brains = pc.unrestrictedSearchResults(
                 UID=content_id + '-' + language_info)
             if len(brains):
+                brain = brains[0]
+                if brain.getId in BLACK_LIST_IDS:
+                    continue
                 obj.unrestrictedTraverse(
-                    brains[0].getPath() + '/' + obj.id).reindexObject()
+                    brains.getPath() + '/' + obj.id).reindexObject()
     return
 
 

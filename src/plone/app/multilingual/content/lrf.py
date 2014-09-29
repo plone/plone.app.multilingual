@@ -5,30 +5,19 @@ from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.ZCatalog.Lazy import LazyMap
 from plone.app.content.namechooser import NormalizingNameChooser
 from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.app.multilingual import BLACK_LIST_IDS
 from plone.app.multilingual.interfaces import ILanguageRootFolder
 from plone.app.multilingual.interfaces import ITranslationIdChooser
 from plone.dexterity.content import Container
 from plone.folder.default import DefaultOrdering
 from plone.folder.interfaces import IExplicitOrdering
 from plone.folder.ordered import CMFOrderedBTreeFolderBase
-from plone.i18n.locales.languages import _combinedlanguagelist
-from plone.i18n.locales.languages import _languagelist
 from zope.component import adapter
 from zope.component.hooks import getSite
 from zope.container.interfaces import INameChooser
 from zope.interface import implementer
 
 _marker = object()
-
-
-BLACK_LIST_IDS = {
-    'id-id',
-    'portal_catalog',
-    'portal_url',
-    'acl_users'
-}
-BLACK_LIST_IDS.update(_combinedlanguagelist)
-BLACK_LIST_IDS.update(_languagelist)
 
 
 @implementer(ILanguageRootFolder, INavigationRoot, IPloneSiteRoot)
