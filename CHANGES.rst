@@ -4,6 +4,15 @@ Changelog
 2.0a4 (unreleased)
 ------------------
 
+- Feature: Introduce a set variable BLACK_LIST_IDS which is used as a central
+  place for blacklisted object ids not to take into account as neutral
+  content or in LRF. It unifies the formerly cluttered different combinations
+  of tests with same goal.
+  [jensens]
+
+- Cleanup: Pep8, utf8-headers, readability, ..., code-analysis now runs.
+  [jensens]
+
 - Fix issue where universal link ignored the language cookie
   [datakurre]
 
