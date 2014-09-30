@@ -135,8 +135,10 @@ class TestLanguageRootFolderAPI(unittest.TestCase):
         a_es = ITranslationManager(a_ca).get_translation('es')
 
         # Check that translation is registered
-        self.assertEqual(ITranslationManager(a_ca).get_translations(),
-                        {'ca': a_ca, 'es': a_es})
+        self.assertEqual(
+            ITranslationManager(a_ca).get_translations(),
+            {'ca': a_ca, 'es': a_es}
+        )
 
         # Check that it is in the correct folder
         self.assertTrue(a_es.id in self.portal['es'])
