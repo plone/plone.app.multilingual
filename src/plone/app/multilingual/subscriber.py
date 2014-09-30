@@ -37,7 +37,7 @@ def reindex_neutral(obj, event):
     On shared elements, the uuid is different so we need to take care of
     them on catalog in case we modify any shared element
     """
-    # we need to look for the parent that is already indexed
+    # is the given object Neutral?
     if IPloneSiteRoot.providedBy(obj) \
        or obj.getId() in BLACK_LIST_IDS \
        or (not is_shared(obj) and not is_shared_original(obj)):
@@ -45,7 +45,7 @@ def reindex_neutral(obj, event):
 
     parent = aq_parent(obj)
     if ILanguageRootFolder.providedBy(parent):
-        # If it's parent is language root folder thre is no need to reindex
+        # If it's parent is language root folder there is no need to reindex
         return
 
     site = getSite()
@@ -64,6 +64,7 @@ def reindex_neutral(obj, event):
             UID=content_id + '-' + language_info
         )
         if len(brains):
+            # we have results, so parent was indexed before.
             brain = brains[0]
             obj.unrestrictedTraverse(
                 brain.getPath() + '/' + obj.id).reindexObject()
