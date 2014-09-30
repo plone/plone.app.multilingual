@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from plone.app.multilingual import _
 from zope import schema
 from zope.interface import Attribute
@@ -146,8 +147,8 @@ class ILanguageIndependentFieldsManager(Interface):
 class IMutableTG(Interface):
     """Adapt an object to this interface to manage the TG of an object
 
-    Be sure of what you are doing. TG is supposed to be stable and
-    widely used
+    Be sure of what you are doing. Translation Group (TG) is supposed to
+    be stable and widely used
     """
     def get():
         """Return the TG of the context"""
@@ -158,7 +159,7 @@ class IMutableTG(Interface):
 
 
 class ITG(Interface):
-    """Abstract representation of a TG.
+    """Abstract representation of a Translation Group (TG).
 
     Adapt an object to this interface to obtain its UUID. Adaptation will
     fail if the object does not have a TG (yet).

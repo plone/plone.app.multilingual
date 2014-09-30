@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from z3c.form.interfaces import DISPLAY_MODE
 from z3c.form.validator import StrictSimpleFieldValidator
 from zope.component import getMultiAdapter

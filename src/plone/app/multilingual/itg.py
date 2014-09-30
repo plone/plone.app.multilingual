@@ -1,29 +1,31 @@
+# -*- coding: utf-8 -*-
 from plone.app.multilingual.interfaces import ATTRIBUTE_NAME
 from plone.app.multilingual.interfaces import IMutableTG
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import NOTG
 from plone.uuid.interfaces import IUUIDGenerator
-from zope import component
-from zope import interface
+from zope.component import adapter
+from zope.component import queryUtility
+from zope.interface import implementer
 from zope.lifecycleevent.interfaces import IObjectCopiedEvent
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 
 try:
     from Acquisition import aq_base
-except ImportError:
+except ImportError:  # wtf? do we really need that?
     aq_base = lambda v: v  # soft-dependency on Zope2, fallback
 
 
-@interface.implementer(ITG)
-@component.adapter(ITranslatable)
+@implementer(ITG)
+@adapter(ITranslatable)
 def attributeTG(context):
     return getattr(context, ATTRIBUTE_NAME, None)
 
 
+@implementer(IMutableTG)
+@adapter(ITranslatable)
 class MutableAttributeTG(object):
-    interface.implements(IMutableTG)
-    component.adapts(ITranslatable)
 
     def __init__(self, context):
         self.context = context
@@ -33,20 +35,20 @@ class MutableAttributeTG(object):
 
     def set(self, tg):
         if tg == NOTG:
-            generator = component.queryUtility(IUUIDGenerator)
+            generator = queryUtility(IUUIDGenerator)
             tg = generator()
         tg = str(tg)
         setattr(self.context, ATTRIBUTE_NAME, tg)
 
 
-@component.adapter(ITranslatable, IObjectCreatedEvent)
+@adapter(ITranslatable, IObjectCreatedEvent)
 def addAttributeTG(obj, event):
 
     if not IObjectCopiedEvent.providedBy(event):
         if getattr(aq_base(obj), ATTRIBUTE_NAME, None):
             return  # defensive: keep existing TG on non-copy create
 
-    generator = component.queryUtility(IUUIDGenerator)
+    generator = queryUtility(IUUIDGenerator)
     if generator is None:
         return
 

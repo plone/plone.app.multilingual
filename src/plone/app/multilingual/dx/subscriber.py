@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from AccessControl import getSecurityManager
 from AccessControl.SecurityManagement import newSecurityManager
 from AccessControl.SecurityManagement import setSecurityManager
@@ -34,7 +35,7 @@ class LanguageIndependentModifier(object):
 
         session = sdm.getSessionData()
         if 'tg' in session.keys():
-            # In case it's a on the fly translation avoid 
+            # In case it's a on the fly translation avoid
             return
 
         if IDexterityTranslatable.providedBy(content):

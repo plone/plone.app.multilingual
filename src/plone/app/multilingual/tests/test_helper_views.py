@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
-import unittest2 as unittest
-import transaction
-from plone.dexterity.utils import createContentInContainer
-
-from plone.testing.z2 import Browser
+from plone.app.multilingual import api
+from plone.app.multilingual.browser.utils import multilingualMoveObject
+from plone.app.multilingual.interfaces import ILanguage
+from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import TEST_USER_PASSWORD
-from plone.app.multilingual import api
-from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
-from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.multilingual.interfaces import ILanguage
-from plone.app.multilingual.browser.utils import multilingualMoveObject
+from plone.dexterity.utils import createContentInContainer
+from plone.testing.z2 import Browser
+import transaction
+import unittest2 as unittest
 
 
 class PAMFuncTestHelperViews(unittest.TestCase):

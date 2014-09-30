@@ -1,5 +1,5 @@
+# -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
-from cStringIO import StringIO
 from plone.app.layout.viewlets.common import ViewletBase
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITranslatable
@@ -8,14 +8,14 @@ from plone.memoize import ram
 
 
 def _cache_until_catalog_change(fun, self):
-    key = StringIO()
     catalog = getToolByName(self.context, 'portal_catalog')
-
-    print >> key, fun.__name__
-    print >> key, catalog.getCounter()
-    print >> key, '/'.join(self.context.getPhysicalPath())
-
-    return key.getvalue()
+    key = '{0}{1}{2}'
+    key = key.format(
+        fun.__name__,
+        catalog.getCounter(),
+        '/'.join(self.context.getPhysicalPath())
+    )
+    return key
 
 
 class oneLanguageConfiguredNoticeViewlet(ViewletBase):
@@ -86,7 +86,7 @@ class addFormATIsATranslationViewlet(ViewletBase):
 
     def update(self):
         """ It's only for AT on factory so we check """
-        factory = getToolByName(self.context, 'portal_factory',None)
+        factory = getToolByName(self.context, 'portal_factory', None)
         if factory is not None and factory.isTemporary(self.context):
             sdm = self.context.session_data_manager
             session = sdm.getSessionData(create=True)

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.vocabularies import addTranslation
 from plone.app.multilingual.browser.vocabularies import deletable_languages
@@ -39,8 +40,10 @@ class IUpdateLanguage(interface.Interface):
 
     language = schema.Choice(
         title=_(u"title_available_languages", default=u"Available languages"),
-        description=_(u"description_update_language", default=
-                      u"Untranslated languages from the current content"),
+        description=_(
+            u"description_update_language",
+            default=u"Untranslated languages from the current content"
+        ),
         source=untranslated_languages,
         required=True,
     )

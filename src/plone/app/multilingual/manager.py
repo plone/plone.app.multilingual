@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
 from plone.app.multilingual.events import ObjectTranslatedEvent
 from plone.app.multilingual.events import ObjectWillBeTranslatedEvent
@@ -12,14 +13,13 @@ from plone.app.multilingual.itg import addAttributeTG
 from plone.app.uuid.utils import uuidToObject
 from plone.uuid.handlers import addAttributeUUID
 from plone.uuid.interfaces import IUUID
-from zope import interface
 from zope.event import notify
+from zope.interface import implementer
 from zope.site.hooks import getSite
 
 
+@implementer(ITranslationManager)
 class TranslationManager(object):
-
-    interface.implements(ITranslationManager)
 
     def __init__(self, context):
         self.context = context
@@ -188,7 +188,7 @@ class TranslationManager(object):
         brains = self.pcatalog.unrestrictedSearchResults(
             TranslationGroup=self.tg)
         for brain in brains:
-            if not brain.Language in languages:
+            if brain.Language not in languages:
                 languages.append(brain.Language)
         return languages
 

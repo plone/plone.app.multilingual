@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Acquisition import aq_parent
 from OFS.interfaces import IObjectWillBeAddedEvent
 from OFS.interfaces import IObjectWillBeMovedEvent
@@ -6,6 +7,7 @@ from Products.CMFCore.interfaces import IActionSucceededEvent
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IPloneSiteRoot
+from plone.app.multilingual import BLACK_LIST_IDS
 from plone.app.multilingual.browser.utils import is_shared
 from plone.app.multilingual.browser.utils import is_shared_original
 from plone.app.multilingual.interfaces import ILanguage
@@ -22,37 +24,50 @@ from zope.lifecycleevent import modified
 from zope.lifecycleevent.interfaces import IObjectRemovedEvent
 
 
-# On shared elements, the uuid is different so we need to take care of
-# them on catalog in case we modify any shared element
+def _reindex_site_root(obj, root, language_infos):
+    for language_info in language_infos:
+        lrf_to_reindex = getattr(root, language_info, None)
+        to_reindex = getattr(lrf_to_reindex, obj.id, None)
+        if to_reindex is not None:
+            to_reindex.reindexObject()
+
+
 def reindex_neutral(obj, event):
-    # we need to look for the parent that is already indexed
+    """Neutral
+    On shared elements, the uuid is different so we need to take care of
+    them on catalog in case we modify any shared element
+    """
+    # is the given object Neutral?
     if IPloneSiteRoot.providedBy(obj) \
+       or obj.getId() in BLACK_LIST_IDS \
        or (not is_shared(obj) and not is_shared_original(obj)):
         return
+
     parent = aq_parent(obj)
     if ILanguageRootFolder.providedBy(parent):
-        # If it's parent is language root folder no need to reindex
+        # If it's parent is language root folder there is no need to reindex
         return
+
     site = getSite()
     language_tool = getToolByName(site, 'portal_languages')
     language_infos = language_tool.supported_langs
     if IPloneSiteRoot.providedBy(parent):
         # It's plone site root we need to look at LRF
-        for language_info in language_infos:
-            lrf_to_reindex = getattr(parent, language_info, None)
-            to_reindex = getattr(lrf_to_reindex, obj.id, None)
-            if to_reindex is not None:
-                to_reindex.reindexObject()
-    else:
-        content_id = IUUID(parent).split('-')[0]
-        pc = getToolByName(site, 'portal_catalog')
-        for language_info in language_infos:
-            brains = pc.unrestrictedSearchResults(
-                UID=content_id + '-' + language_info)
-            if len(brains):
-                obj.unrestrictedTraverse(
-                    brains[0].getPath() + '/' + obj.id).reindexObject()
-    return
+        _reindex_site_root(obj, parent, language_infos)
+        return
+
+    # ok, we're very neutral
+    content_id = IUUID(parent).split('-')[0]
+    pc = getToolByName(site, 'portal_catalog')
+    for language_info in language_infos:
+        brains = pc.unrestrictedSearchResults(
+            UID=content_id + '-' + language_info
+        )
+        if len(brains):
+            # we have results, so parent was indexed before.
+            brain = brains[0]
+            obj.unrestrictedTraverse(
+                brain.getPath() + '/' + obj.id).reindexObject()
 
 
 def remove_ghosts(obj, event):
@@ -87,10 +102,12 @@ def remove_ghosts(obj, event):
     if IActionSucceededEvent.providedBy(event):
         reindex_neutral(obj, event)
 
+
 # Multilingual subscribers
 def reindex_object(obj):
-    obj.reindexObject(idxs=("Language", "TranslationGroup",
-                            "path", "allowedRolesAndUsers"), )
+    obj.reindexObject(
+        idxs=("Language", "TranslationGroup", "path", "allowedRolesAndUsers")
+    )
 
 
 def set_recursive_language(obj, language):
@@ -134,12 +151,13 @@ def createdEvent(obj, event):
         request = getattr(event.object, 'REQUEST', getRequest())
         has_pam_old_lang_in_form = (
             request and
-            not 'form.widgets.pam_old_lang' in request.form
+            'form.widgets.pam_old_lang' not in request.form
         )
         if (not has_pam_old_lang_in_form
                 and 'tg' in session.keys()
                 and 'old_lang' in session.keys()
-                and (portal_factory is None or not portal_factory.isTemporary(obj))):
+                and (portal_factory is None
+                     or not portal_factory.isTemporary(obj))):
             IMutableTG(obj).set(session['tg'])
             modified(obj)
             del session['tg']

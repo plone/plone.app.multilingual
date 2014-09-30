@@ -1,11 +1,12 @@
+# -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import INonInstallable
 from plone.dexterity.interfaces import IDexterityFTI
-from zope.interface import implements
+from zope.interface import implementer
 
 
+@implementer(INonInstallable)
 class HiddenProfiles(object):
-    implements(INonInstallable)
 
     def getNonInstallableProfiles(self):
         """

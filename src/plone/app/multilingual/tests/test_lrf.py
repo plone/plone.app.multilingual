@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 from OFS.event import ObjectWillBeRemovedEvent
-from plone.uuid.interfaces import IUUID
-
-import unittest2 as unittest
-from zope.event import notify
-
-from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
-from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.multilingual.browser.utils import multilingualMoveObject
 from plone.app.multilingual.browser.utils import is_shared
+from plone.app.multilingual.browser.utils import multilingualMoveObject
+from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.dexterity.utils import createContentInContainer
+from plone.uuid.interfaces import IUUID
+from zope.event import notify
+import unittest2 as unittest
 
 
 class TestLanguageRootFolder(unittest.TestCase):
@@ -75,7 +73,7 @@ class TestLanguageRootFolder(unittest.TestCase):
         # CHeck thats ghost is ghost
         self.assertTrue(is_shared(self.portal.ca['test-document']))
 
-        # Check is in the catalog 
+        # Check is in the catalog
         brains = self.portal.portal_catalog.searchResults(UID=uuid)
         self.assertEqual(len(brains), 1)
         self.assertEqual(brains[0].getPath(), '/plone/test-document')

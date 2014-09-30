@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Acquisition import aq_parent
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.interfaces import IRemoveTranslation
@@ -14,11 +15,13 @@ class RemoveTranslationsForm(AutoExtensibleForm, Form):
     ignoreContext = True
     label = _(u"label_remove_translations",
               default=u"Remove translations")
-    description = _(u"long_description_remove_translations", default=
-                    u"This form allows you to remove the existing "
-                    u"translations of the current object. You can "
-                    u"just delete the link between the objects "
-                    u"or you can delete the object itself.")
+    description = _(
+        u"long_description_remove_translations",
+        default=u"This form allows you to remove the existing "
+                u"translations of the current object. You can "
+                u"just delete the link between the objects "
+                u"or you can delete the object itself."
+    )
 
     @button.buttonAndHandler(_(u"unlink selected"), name='unlink')
     def handle_unlink(self, action):

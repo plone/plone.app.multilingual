@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 from OFS.event import ObjectWillBeRemovedEvent
-import unittest2 as unittest
 from Products.CMFCore.utils import getToolByName
-from zope.event import notify
 from plone.app.multilingual import api
-
-from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITranslationIdChooser
 from plone.app.multilingual.interfaces import ITranslationLocator
 from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.testing import logout
 from plone.dexterity.utils import createContentInContainer
+from zope.event import notify
+import unittest2 as unittest
 
 
 class TestAPI(unittest.TestCase):
@@ -136,8 +135,10 @@ class TestLanguageRootFolderAPI(unittest.TestCase):
         a_es = ITranslationManager(a_ca).get_translation('es')
 
         # Check that translation is registered
-        self.failUnless(ITranslationManager(a_ca).get_translations(),
-                        {'ca': a_ca, 'es': a_es})
+        self.assertEqual(
+            ITranslationManager(a_ca).get_translations(),
+            {'ca': a_ca, 'es': a_es}
+        )
 
         # Check that it is in the correct folder
         self.assertTrue(a_es.id in self.portal['es'])
@@ -219,7 +220,7 @@ class TestLanguageRootFolderAPI(unittest.TestCase):
         chooser = ITranslationIdChooser(a_ca)
         self.assertEqual(chooser(self.portal, 'es'), 'test-document')
 
-        b = createContentInContainer(
+        createContentInContainer(
             self.portal, 'Document', title=u"Another test")
 
         b_ca = createContentInContainer(
@@ -235,10 +236,10 @@ class TestLanguageRootFolderAPI(unittest.TestCase):
             self.portal['ca']['test-folder'], 'Folder', title=u"Test folder")
 
         locator = ITranslationLocator(subfolder_ca)
-        self.failUnless(locator('es'), self.portal['es'])
+        self.assertEqual(locator('es'), self.portal['es'])
 
         ITranslationManager(folder_ca).add_translation('es')
         folder_es = ITranslationManager(folder_ca).get_translation('es')
 
         child_locator = ITranslationLocator(subfolder_ca)
-        self.failUnless(child_locator('es'), folder_es)
+        self.assertEqual(child_locator('es'), folder_es)

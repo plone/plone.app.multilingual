@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
@@ -8,7 +9,6 @@ from plone.app.multilingual.interfaces import ITranslationManager
 from plone.registry.interfaces import IRegistry
 from urllib import quote_plus
 from zope.component import getUtility
-
 import json
 import urllib
 

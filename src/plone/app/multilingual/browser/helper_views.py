@@ -1,24 +1,13 @@
+# -*- coding: utf-8 -*-
 from AccessControl.SecurityManagement import getSecurityManager
 from Acquisition import aq_chain
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
-try:
-    from Products.ATContentTypes.interfaces.factory import IFactoryTool
-except ImportError:
-    from Products.CMFPlone.interfaces.factory import IFactoryTool
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.PloneLanguageTool.interfaces import INegotiateLanguage
 from borg.localrole.interfaces import IFactoryTempFolder
 from plone.app.layout.navigation.interfaces import INavigationRoot
-from plone.i18n.locales.interfaces import IContentLanguageAvailability
-from plone.registry.interfaces import IRegistry
-from zope.component import getUtility, getMultiAdapter
-from zope.component.hooks import getSite
-from zope.interface import implements
-from zope.publisher.interfaces import IPublishTraverse
-from zope.publisher.interfaces import NotFound
-
 from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
 from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
 from plone.app.multilingual.browser.selector import addQuery
@@ -26,6 +15,19 @@ from plone.app.multilingual.interfaces import ILanguageRootFolder
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.manager import TranslationManager
+from plone.i18n.locales.interfaces import IContentLanguageAvailability
+from plone.registry.interfaces import IRegistry
+from zope.component import getMultiAdapter
+from zope.component import getUtility
+from zope.component.hooks import getSite
+from zope.interface import implementer
+from zope.publisher.interfaces import IPublishTraverse
+from zope.publisher.interfaces import NotFound
+
+try:
+    from Products.ATContentTypes.interfaces.factory import IFactoryTool
+except ImportError:
+    from Products.CMFPlone.interfaces.factory import IFactoryTool
 
 
 class remove_tg_session(BrowserView):
@@ -46,12 +48,11 @@ class remove_tg_session(BrowserView):
         self.request.RESPONSE.redirect(url)
 
 
+@implementer(IPublishTraverse)
 class universal_link(BrowserView):
     """ Redirects the user to the negotiated translated page
         based on the user preferences in the user's browser.
     """
-
-    implements(IPublishTraverse)
 
     def __init__(self, context, request):
         super(universal_link, self).__init__(context, request)
@@ -238,13 +239,12 @@ class selector_view(universal_link):
         self.request.RESPONSE.redirect(url)
 
 
+@implementer(IPublishTraverse)
 class not_translated_yet(BrowserView):
     """ View to inform user that the view requested is not translated yet,
         and shows the already translated related content.
     """
     __call__ = ViewPageTemplateFile('templates/not_translated_yet.pt')
-
-    implements(IPublishTraverse)
 
     def __init__(self, context, request):
         super(not_translated_yet, self).__init__(context, request)
