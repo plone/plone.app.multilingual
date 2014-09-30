@@ -32,17 +32,22 @@ def _reindex_site_root(obj, root, language_infos):
             to_reindex.reindexObject()
 
 
-# On shared elements, the uuid is different so we need to take care of
-# them on catalog in case we modify any shared element
 def reindex_neutral(obj, event):
+    """Neutral
+    On shared elements, the uuid is different so we need to take care of
+    them on catalog in case we modify any shared element
+    """
     # we need to look for the parent that is already indexed
     if IPloneSiteRoot.providedBy(obj) \
+       or obj.getId() in BLACK_LIST_IDS \
        or (not is_shared(obj) and not is_shared_original(obj)):
         return
+
     parent = aq_parent(obj)
     if ILanguageRootFolder.providedBy(parent):
-        # If it's parent is language root folder no need to reindex
+        # If it's parent is language root folder thre is no need to reindex
         return
+
     site = getSite()
     language_tool = getToolByName(site, 'portal_languages')
     language_infos = language_tool.supported_langs
@@ -51,15 +56,15 @@ def reindex_neutral(obj, event):
         _reindex_site_root(obj, parent, language_infos)
         return
 
+    # ok, we're very neutral
     content_id = IUUID(parent).split('-')[0]
     pc = getToolByName(site, 'portal_catalog')
     for language_info in language_infos:
         brains = pc.unrestrictedSearchResults(
-            UID=content_id + '-' + language_info)
+            UID=content_id + '-' + language_info
+        )
         if len(brains):
             brain = brains[0]
-            if brain.getId in BLACK_LIST_IDS:
-                continue
             obj.unrestrictedTraverse(
                 brain.getPath() + '/' + obj.id).reindexObject()
 
@@ -99,8 +104,9 @@ def remove_ghosts(obj, event):
 
 # Multilingual subscribers
 def reindex_object(obj):
-    obj.reindexObject(idxs=("Language", "TranslationGroup",
-                            "path", "allowedRolesAndUsers"), )
+    obj.reindexObject(
+        idxs=("Language", "TranslationGroup", "path", "allowedRolesAndUsers")
+    )
 
 
 def set_recursive_language(obj, language):
