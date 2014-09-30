@@ -23,7 +23,8 @@ BLACK_LIST_IDS = {
     'id-id',
     'portal_catalog',
     'portal_url',
-    'acl_users'
+    'acl_users',
+    'members',
 }
 BLACK_LIST_IDS.update(_combinedlanguagelist)
 BLACK_LIST_IDS.update(_languagelist)
