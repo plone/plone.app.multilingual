@@ -38,7 +38,7 @@ Versions
 
 * 1.x - Plone 4.x with Archetypes and Dexterity
 
-* 2.x - Plone 4.x with plone.app.contenttypes (Dexterity) and real shared content
+* 2.x - Plone >= 4.x with plone.app.contenttypes (Dexterity) and real shared content
 
 
 Components
@@ -381,10 +381,16 @@ or in case you want to set the language of a content::
 Translatable marker interface
 -----------------------------
 
-In order to know if a content can be translated there is a marker interface:
+In order to know if a content can be translated there is a marker interface::
 
     plone.multilingual.interfaces.ITranslatable
 
+Source Code
+===========
+
+Contributors please read the document `Process for Plone core's development <http://docs.plone.org/develop/plone-coredev/index.html>`_
+
+Sources are at the `Plone code repository hosted at Github <https://github.com/plone/plone.app.multilingual>`_.
 
 License
 =======
