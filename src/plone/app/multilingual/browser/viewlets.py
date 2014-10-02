@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import IPloneSiteRoot
 from plone.app.layout.viewlets.common import ViewletBase
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.memoize import ram
+from zope.component import getUtility
 
 
 def _cache_until_catalog_change(fun, self):
@@ -120,9 +122,9 @@ class AlternateLanguagesViewlet(ViewletBase):
         catalog = getToolByName(self.context, 'portal_catalog')
         results = catalog(TranslationGroup=tm.query_canonical())
 
-        portal_path_len = len(
-            '/'.join(self.portal_state.portal().getPhysicalPath()))
-
+        plone_site = getUtility(IPloneSiteRoot)
+        portal_path = '/'.join(plone_site.getPhysicalPath())
+        portal_path_len = len(portal_path)
         alternates = []
         for item in results:
             path_len = portal_path_len + len('{0:s}/'.format(item.Language))
