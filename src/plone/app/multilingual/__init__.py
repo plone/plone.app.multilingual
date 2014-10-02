@@ -18,12 +18,13 @@ logger = logging.getLogger('plone.app.multilingual')
 _ = MessageFactory('plone.app.multilingual')
 LanguageBinding.setLanguageBindings = setLanguageBindingsCookieWins
 
-
+# blacklisted means:
+# * blocks traversal on LRF level
+# * no multilingual indexing (for every language, as with language neutral)
+#   if ids direct under portal, also contained objects are not indexed
+#   multilingual.
 BLACK_LIST_IDS = {
     'id-id',
-    'portal_catalog',
-    'portal_url',
-    'acl_users',
     'members',
 }
 BLACK_LIST_IDS.update(_combinedlanguagelist)

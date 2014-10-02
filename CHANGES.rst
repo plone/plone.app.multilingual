@@ -4,6 +4,10 @@ Changelog
 2.0a4 (unreleased)
 ------------------
 
+- Do not block acquisition on LRF for acl_users, portal_url (both broke login 
+  form) and portal_catalog any more. 
+  [jensens]
+
 - Feature: Introduce a set variable BLACK_LIST_IDS which is used as a central
   place for blacklisted object ids not to take into account as neutral
   content or in LRF. It unifies the formerly cluttered different combinations
