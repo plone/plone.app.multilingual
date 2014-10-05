@@ -1,27 +1,17 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_parent
-from OFS.interfaces import IObjectWillBeAddedEvent
-from OFS.interfaces import IObjectWillBeMovedEvent
-from OFS.interfaces import IObjectWillBeRemovedEvent
-from Products.CMFCore.interfaces import IActionSucceededEvent
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IPloneSiteRoot
-from plone.app.multilingual import BLACK_LIST_IDS
 from plone.app.multilingual.browser.utils import is_language_independent
-from plone.app.multilingual.browser.utils import is_shared
-from plone.app.multilingual.browser.utils import is_shared_original
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
 from plone.app.multilingual.interfaces import ILanguageIndependentFolder
-from plone.app.multilingual.interfaces import ILanguageRootFolder
 from plone.app.multilingual.interfaces import IMutableTG
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.uuid.interfaces import IUUID
 from zope.component.hooks import getSite
-from zope.deprecation import deprecated
 from zope.globalrequest import getRequest
 from zope.lifecycleevent import modified
 from zope.lifecycleevent.interfaces import IObjectRemovedEvent
@@ -101,81 +91,6 @@ def unindex_language_independent(ob, event):
             ob.unrestrictedTraverse(brain.getPath()).unindexObject()
         for brain in pc.unrestrictedSearchResults(UID=uuid):
             ob.unrestrictedTraverse(brain.getPath()).unindexObject()
-
-
-def reindex_neutral(obj, event):
-    """Neutral
-    On shared elements, the uuid is different so we need to take care of
-    them on catalog in case we modify any shared element
-    """
-    # is the given object Neutral?
-    if IPloneSiteRoot.providedBy(obj) \
-       or obj.getId() in BLACK_LIST_IDS \
-       or (not is_shared(obj) and not is_shared_original(obj)):
-        return
-
-    parent = aq_parent(obj)
-    if ILanguageRootFolder.providedBy(parent):
-        # If it's parent is language root folder there is no need to reindex
-        return
-
-    site = getSite()
-    language_tool = getToolByName(site, 'portal_languages')
-    language_infos = language_tool.supported_langs
-    if IPloneSiteRoot.providedBy(parent):
-        # It's plone site root we need to look at LRF
-        _reindex_site_root(obj, parent, language_infos)
-        return
-
-    # ok, we're very neutral
-    content_id = IUUID(parent).split('-')[0]
-    pc = getToolByName(site, 'portal_catalog')
-    for language_info in language_infos:
-        brains = pc.unrestrictedSearchResults(
-            UID=content_id + '-' + language_info
-        )
-        if len(brains):
-            # we have results, so parent was indexed before.
-            brain = brains[0]
-            obj.unrestrictedTraverse(
-                brain.getPath() + '/' + obj.id).reindexObject()
-deprecated('reindex_neutral',
-           'reindex_neutral is removed by the next release')
-
-
-def remove_ghosts(obj, event):
-    """We are going to remove a object: we need to check if its neutral
-       and remove their indexes also.
-    """
-    if not IObjectWillBeAddedEvent.providedBy(event) \
-       and (IObjectWillBeMovedEvent.providedBy(event)
-            or IObjectWillBeRemovedEvent.providedBy(event)):
-        if not is_shared_original(obj):
-            return
-
-        content_id = IUUID(obj).split('-')[0]
-        site = getSite()
-        try:
-            pc = getToolByName(site, 'portal_catalog')
-        except AttributeError:
-            # In case we are removing the site there is no portal_catalog
-            return
-        language_tool = getToolByName(site, 'portal_languages')
-        language_infos = language_tool.supported_langs
-
-        for language_info in language_infos:
-            brains = pc.unrestrictedSearchResults(
-                UID=content_id + '-' + language_info)
-            for brain in brains:
-                obj.unrestrictedTraverse(brain.getPath()).unindexObject()
-            brains = pc.unrestrictedSearchResults(
-                UID=content_id)
-            for brain in brains:
-                obj.unrestrictedTraverse(brain.getPath()).unindexObject()
-    if IActionSucceededEvent.providedBy(event):
-        reindex_neutral(obj, event)
-deprecated('remove_ghosts',
-           'remove_ghosts is removed by the next release')
 
 
 # Multilingual subscribers
