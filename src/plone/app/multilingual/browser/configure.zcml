@@ -1,12 +1,9 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:plone="http://namespaces.plone.org/plone"
-    xmlns:zcml="http://namespaces.zope.org/zcml"
-    xmlns:z3c="http://namespaces.zope.org/z3c">
+    xmlns:zcml="http://namespaces.zope.org/zcml">
 
   <include package="plone.app.contentmenu"/>
-
 
   <!-- Resource Directories -->
   <browser:resourceDirectory
@@ -21,9 +18,6 @@
       name="plone.app.multilingual.images"
       directory="images"
       layer="..interfaces.IPloneAppMultilingualInstalled"/>
-
-
-
 
   <!-- Vocabulary all languages -->
   <utility
@@ -57,11 +51,12 @@
       provides="z3c.form.interfaces.IValue"
       factory=".add.MultilingualAddFormTgValue"/>
 
+
+
   <adapter
       name="default"
       provides="z3c.form.interfaces.IValue"
       factory=".add.MultilingualAddFormOldLangValue"/>
-
 
   <browser:page
       name="add_translations"
@@ -86,8 +81,6 @@
       name="create_translation"
       class=".translate.TranslationForm"
       permission="plone.app.multilingual.ManageTranslations"/>
-
-
 
   <!-- Menu for translations on content -->
   <browser:menu
@@ -211,7 +204,6 @@
       permission="plone.app.multilingual.ManageTranslations"
       layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
-
   <!-- Default browser view -->
   <browser:view
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
@@ -231,7 +223,6 @@
       permission="zope2.View"
       for="plone.app.multilingual.interfaces.ITranslatable"
       layer="..interfaces.IPloneAppMultilingualInstalled"/>
-
 
   <!-- DEXTERITY -->
   <configure zcml:condition="installed plone.dexterity">
@@ -280,7 +271,6 @@
       name="babel_utils"
       class=".utils.BabelUtils"
       permission="zope2.View"/>
-
 
   <!-- Migration Views -->
 

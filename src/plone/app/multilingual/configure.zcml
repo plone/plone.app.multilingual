@@ -17,9 +17,9 @@
   <include package=".browser"/>
   <include package=".dx"/>
 
-  <adapter factory=".content.lrf.LRFOrdering"/>
+  <!--<adapter factory=".content.lrf.LRFOrdering"/>-->
   <adapter factory=".shared_uuid.lrfUUID"/>
-
+  <adapter factory=".shared_uuid.lifUUID"/>
 
   <!-- ITranslationGroup and indexer -->
 
@@ -30,6 +30,10 @@
   <adapter factory=".indexer.itgIndexer" name="TranslationGroup"/>
   <adapter factory=".indexer.LanguageIndexer" name="Language"/>
 
+  <subscriber
+      for="plone.app.multilingual.interfaces.ILanguageIndependentFolder
+           zope.lifecycleevent.interfaces.IObjectCreatedEvent"
+      handler="plone.app.multilingual.content.lif.connect_with_others"/>
 
   <!-- Generic plone.app.multilingual subscribers and adapters -->
 
@@ -84,8 +88,33 @@
       factory="plone.app.multilingual.dx.utils.LanguageIndependentFieldsManager"/>
 
 
-  <!-- Shared folder subscribers -->
+  <!-- Language independent folder content indexers -->
+  <subscriber
+      for="plone.dexterity.interfaces.IDexterityContent
+           zope.lifecycleevent.interfaces.IObjectAddedEvent"
+      handler=".subscriber.reindex_language_independent"/>
 
+  <subscriber
+      for="plone.dexterity.interfaces.IDexterityContent
+           zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+      handler=".subscriber.reindex_language_independent"/>
+
+   <subscriber
+      for="plone.dexterity.interfaces.IDexterityContent
+           Products.CMFCore.interfaces.IActionSucceededEvent"
+      handler=".subscriber.reindex_language_independent"/>
+
+  <subscriber
+      for="plone.dexterity.interfaces.IDexterityContent
+           OFS.interfaces.IObjectWillBeMovedEvent"
+      handler=".subscriber.unindex_language_independent"/>
+
+  <subscriber
+      for="plone.dexterity.interfaces.IDexterityContent
+           OFS.interfaces.IObjectWillBeRemovedEvent"
+      handler=".subscriber.unindex_language_independent"/>
+
+  <!-- Deprecated
   <subscriber
       for="plone.dexterity.interfaces.IDexterityContent
            zope.lifecycleevent.interfaces.IObjectAddedEvent"
@@ -95,6 +124,7 @@
       for="plone.dexterity.interfaces.IDexterityContent
            zope.component.interfaces.IObjectEvent"
       handler=".subscriber.remove_ghosts"/>
+   -->
 
   <adapter
       provides="zope.container.interfaces.INameChooser"

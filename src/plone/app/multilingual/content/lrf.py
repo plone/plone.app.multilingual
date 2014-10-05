@@ -15,9 +15,30 @@ from plone.folder.ordered import CMFOrderedBTreeFolderBase
 from zope.component import adapter
 from zope.component.hooks import getSite
 from zope.container.interfaces import INameChooser
+from zope.deprecation import deprecated
 from zope.interface import implementer
 
+
 _marker = object()
+
+
+@implementer(INameChooser)
+@adapter(ILanguageRootFolder)
+class LRFNameChooser(NormalizingNameChooser):
+    """Special name chooser to fix issue where createContentInContainer is
+    used to create a new content into LRF with an id, which exists already
+    in the parent folder.
+
+    """
+    def chooseName(self, name, object):
+        chosen = super(LRFNameChooser, self).chooseName(name, object)
+        if chosen in self.context.objectIds():
+            old_id = getattr(object, 'id', None)
+            object.id = chosen
+            chooser = ITranslationIdChooser(object)
+            chosen = chooser(self.context, self.context.getId())
+            object.id = old_id
+        return chosen
 
 
 @implementer(ILanguageRootFolder, INavigationRoot, IPloneSiteRoot)
@@ -114,6 +135,8 @@ class LanguageRootFolder(Container):
                 return new_object
         except KeyError:
             return CMFOrderedBTreeFolderBase.__getitem__(self, key)
+deprecated('LanguageRootFolder',
+           'LanguageRootFolders should be migrate to DexterityContainers')
 
 
 @implementer(IExplicitOrdering)
@@ -153,22 +176,5 @@ class LRFOrdering(DefaultOrdering):
             else:
                 return 0
                 # raise ValueError('No object with id "%s" exists.' % id)
-
-
-@implementer(INameChooser)
-@adapter(ILanguageRootFolder)
-class LRFNameChooser(NormalizingNameChooser):
-    """Special name chooser to fix issue where createContentInContainer is
-    used to create a new content into LRF with an id, which exists already
-    in the parent folder.
-    """
-
-    def chooseName(self, name, object):
-        chosen = super(LRFNameChooser, self).chooseName(name, object)
-        if chosen in self.context.objectIds():
-            old_id = getattr(object, 'id', None)
-            object.id = chosen
-            chooser = ITranslationIdChooser(object)
-            chosen = chooser(self.context, self.context.getId())
-            object.id = old_id
-        return chosen
+deprecated('LRFOrdering',
+           'LRFOrdering is removed by the next release')

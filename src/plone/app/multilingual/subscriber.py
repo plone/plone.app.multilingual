@@ -8,10 +8,12 @@ from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from plone.app.multilingual import BLACK_LIST_IDS
+from plone.app.multilingual.browser.utils import is_language_independent
 from plone.app.multilingual.browser.utils import is_shared
 from plone.app.multilingual.browser.utils import is_shared_original
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
+from plone.app.multilingual.interfaces import ILanguageIndependentFolder
 from plone.app.multilingual.interfaces import ILanguageRootFolder
 from plone.app.multilingual.interfaces import IMutableTG
 from plone.app.multilingual.interfaces import ITranslatable
@@ -19,17 +21,86 @@ from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.uuid.interfaces import IUUID
 from zope.component.hooks import getSite
+from zope.deprecation import deprecated
 from zope.globalrequest import getRequest
 from zope.lifecycleevent import modified
 from zope.lifecycleevent.interfaces import IObjectRemovedEvent
 
 
-def _reindex_site_root(obj, root, language_infos):
-    for language_info in language_infos:
+def _reindex_site_root(obj, root, language_codes):
+    for language_info in language_codes:
         lrf_to_reindex = getattr(root, language_info, None)
         to_reindex = getattr(lrf_to_reindex, obj.id, None)
         if to_reindex is not None:
             to_reindex.reindexObject()
+
+
+def reindex_language_independent(ob, event):
+    """Re-index language independent object for other languages
+
+    Language independent objects are indexed once for each language with
+    different, language code post-fixed, UUID for each. When ever a language
+    independent object is modified in some language, it must be re-indexed
+    for all the other languages as well.
+
+    """
+    if not is_language_independent(ob):
+        return
+
+    pc = getToolByName(ob, 'portal_catalog')
+    parent = aq_parent(ob)
+
+    # Re-index objects just below the language independent folder
+    if ILanguageIndependentFolder.providedBy(parent):
+        brains = pc.unrestrictedSearchResults(portal_type='LIF')
+        for brain in brains:
+            lif = brain._unrestrictedGetObject()
+            if lif != parent:
+                lif[ob.id].indexObject()
+    # Re-index objects deeper inside language independent folder
+    else:
+        language_tool = getToolByName(ob, 'portal_languages')
+        language_codes = language_tool.supported_langs
+        parent_uuid = IUUID(parent).split('-')[0] + '-'
+        for code in language_codes:
+            results = pc.unrestrictedSearchResults(UID=parent_uuid + code)
+            # When we have results, parent has been indexed and we can reindex:
+            for brain in results:
+                tmp = ob.unrestrictedTraverse(brain.getPath() + '/' + ob.id)
+                tmp.reindexObject()
+
+
+def unindex_language_independent(ob, event):
+    """Un-index language independent object for other languages
+
+    Language independent objects are indexed once for each language with
+    different, language code post-fixed, UUID for each. When ever a language
+    independent object is removed in some language, we must un-indexed
+    all the other languages as well.
+
+    XXX: Removing any language independent folder will unindex contents of
+    all language independent folders. When that happens, catalog clear
+    and rebuild would restore contenst for the other folders.
+
+    """
+    if not is_language_independent(ob):
+        return
+
+    try:
+        pc = getToolByName(ob, 'portal_catalog')
+    except AttributeError:
+        # When we are removing the site, there is no portal_catalog:
+        return
+
+    language_tool = getToolByName(ob, 'portal_languages')
+    language_codes = language_tool.supported_langs
+
+    uuid = IUUID(ob).split('-')[0]
+    for code in language_codes:
+        for brain in pc.unrestrictedSearchResults(UID=uuid + '-' + code):
+            ob.unrestrictedTraverse(brain.getPath()).unindexObject()
+        for brain in pc.unrestrictedSearchResults(UID=uuid):
+            ob.unrestrictedTraverse(brain.getPath()).unindexObject()
 
 
 def reindex_neutral(obj, event):
@@ -68,6 +139,8 @@ def reindex_neutral(obj, event):
             brain = brains[0]
             obj.unrestrictedTraverse(
                 brain.getPath() + '/' + obj.id).reindexObject()
+deprecated('reindex_neutral',
+           'reindex_neutral is removed by the next release')
 
 
 def remove_ghosts(obj, event):
@@ -101,6 +174,8 @@ def remove_ghosts(obj, event):
                 obj.unrestrictedTraverse(brain.getPath()).unindexObject()
     if IActionSucceededEvent.providedBy(event):
         reindex_neutral(obj, event)
+deprecated('remove_ghosts',
+           'remove_ghosts is removed by the next release')
 
 
 # Multilingual subscribers
@@ -110,17 +185,22 @@ def reindex_object(obj):
     )
 
 
-def set_recursive_language(obj, language):
-    """ Set the language at this object and recursive
+def set_recursive_language(ob, language):
+    """Set the language for this object and its children in a recursive
+    manner
+
     """
-    if ILanguage(obj).get_language() != language:
-        ILanguage(obj).set_language(language)
-        ITranslationManager(obj).update()
-        reindex_object(obj)
-    if IFolderish.providedBy(obj):
-        for item in obj.items():
-            if ITranslatable.providedBy(item):
-                set_recursive_language(item, language)
+    if is_language_independent(ob):
+        ILanguage(ob).set_language(None)
+
+    elif ILanguage(ob).get_language() != language:
+        ILanguage(ob).set_language(language)
+        ITranslationManager(ob).update()
+        reindex_object(ob)
+
+    for child in (IFolderish.providedBy(ob) and ob.items() or ()):
+        if ITranslatable.providedBy(child):
+            set_recursive_language(child, language)
 
 
 # Subscriber to set language on the child folder

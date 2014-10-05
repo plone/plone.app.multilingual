@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<object name="LRF" meta_type="Dexterity FTI" i18n:domain="plone" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
-  <property name="title" i18n:translate="">Language Root Folder</property>
+<object name="LIF" meta_type="Dexterity FTI" i18n:domain="plone" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+  <property name="title" i18n:translate="">Language Independent Folder</property>
   <property name="description" i18n:translate=""></property>
   <property name="icon_expr"></property>
-  <property name="factory">LRF</property>
-  <property name="add_view_expr">string:${folder_url}/++add++LRF</property>
+  <property name="factory">LIF</property>
+  <property name="add_view_expr">string:${folder_url}/++add++LIF</property>
   <property name="link_target"></property>
   <property name="immediate_view">view</property>
   <property name="global_allow">False</property>
@@ -28,11 +28,10 @@
     <element value="Products.CMFPlone.interfaces.constrains.ISelectableConstrainTypes"/>
     <element value="plone.app.multilingual.dx.interfaces.IDexterityTranslatable" />
     <element value="plone.app.dexterity.behaviors.exclfromnav.IExcludeFromNavigation"/>
-    <element value="plone.app.layout.navigation.interfaces.INavigationRoot"/>
   </property>
-  <property name="schema">plone.app.multilingual.interfaces.ILanguageRootFolder</property>
+  <property name="schema">plone.app.multilingual.interfaces.ILanguageIndependentFolder</property>
   <property name="model_source"></property>
-  <property name="model_file">plone.app.multilingual.content:lrf.xml</property>
+  <property name="model_file">plone.app.multilingual.content:lif.xml</property>
   <alias from="(Default)" to="(dynamic view)"/>
   <alias from="edit" to="@@edit"/>
   <alias from="sharing" to="@@sharing"/>

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from Acquisition import aq_base
 from plone.app.multilingual.interfaces import ATTRIBUTE_NAME
 from plone.app.multilingual.interfaces import IMutableTG
 from plone.app.multilingual.interfaces import ITG
@@ -10,11 +11,6 @@ from zope.component import queryUtility
 from zope.interface import implementer
 from zope.lifecycleevent.interfaces import IObjectCopiedEvent
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent
-
-try:
-    from Acquisition import aq_base
-except ImportError:  # wtf? do we really need that?
-    aq_base = lambda v: v  # soft-dependency on Zope2, fallback
 
 
 @implementer(ITG)

@@ -37,6 +37,7 @@ setup(
         'plone.app.registry',
         'plone.formwidget.contenttree',
         'Products.PloneLanguageTool',
+        'zope.deprecation'
     ],
     extras_require={
         'archetypes': ['archetypes.multilingual'],
