@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-import pkg_resources
 from Products.CMFPlone.interfaces import INonInstallable
 from zope.interface import implementer
+import pkg_resources
 
 try:
     pkg_resources.get_distribution('plone.app.contenttypes')
