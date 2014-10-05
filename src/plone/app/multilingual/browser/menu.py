@@ -7,7 +7,7 @@ from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.interfaces import ITranslateMenu
 from plone.app.multilingual.browser.interfaces import ITranslateSubMenuItem
-from plone.app.multilingual.browser.utils import is_shared
+from plone.app.multilingual.browser.utils import is_language_independent
 from plone.app.multilingual.browser.vocabularies import translated_languages
 from plone.app.multilingual.browser.vocabularies import translated_urls
 from plone.app.multilingual.browser.vocabularies import untranslated_languages
@@ -45,7 +45,7 @@ class TranslateMenu(BrowserMenu):
         # In case is neutral language show set language menu only
         is_neutral_content = (
             ILanguage(context).get_language() == LANGUAGE_INDEPENDENT
-            or is_shared(context)
+            or is_language_independent(context)
         )
         if not is_neutral_content and not INavigationRoot.providedBy(context):
             menu.append({
