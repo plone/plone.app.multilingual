@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
-from plone.app.multilingual.browser.utils import is_shared
+from plone.app.multilingual.browser.utils import is_language_independent
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.formwidget.contenttree import ObjPathSourceBinder
@@ -29,7 +29,7 @@ def untranslated_languages(context):
     available_portal_languages = language_tool.supported_langs
     manager = ITranslationManager(context)
     translated_languages = manager.get_translated_languages()
-    if is_shared(context):
+    if is_language_independent(context):
         translated_languages = []
     languages = []
     for lang in available_portal_languages:
