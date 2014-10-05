@@ -4,13 +4,11 @@ from Acquisition import aq_chain
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.Five import BrowserView
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFolder
-from plone.app.multilingual.interfaces import ILanguageRootFolder
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITranslationLocator
 from plone.app.multilingual.interfaces import ITranslationManager
@@ -20,7 +18,6 @@ from plone.registry.interfaces import IRegistry
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component.hooks import getSite
-from zope.deprecation import deprecated
 
 
 def is_language_independent(ob):
@@ -184,59 +181,3 @@ def multilingualMoveObject(content, language):
     new_object.reindexObject()
 
     return new_object
-
-
-def is_shared(content):
-    """
-    Check if it's a ghost object
-    """
-    child = content
-    for element in aq_chain(content):
-        if (hasattr(child, '_v_is_shared_content')
-                and child._v_is_shared_content
-                and ILanguageRootFolder.providedBy(element)):
-            return True
-        child = element
-    return False
-deprecated('is_shared',
-           'is_shared is removed by the next release')
-
-
-def is_shared_original(content):
-    """
-    Check if it's a shared real object
-    """
-    child = content
-    for element in aq_chain(content):
-        if (IPloneSiteRoot.providedBy(element)
-                and ILanguageRootFolder.providedBy(child)):
-            return False
-    return True
-deprecated('is_shared_original',
-           'is_shared_original is removed by the next release')
-
-
-def get_original_object(content):
-    """
-    Get the original object of a shared content
-    """
-    path = []
-    child = content
-
-    for element in aq_chain(content):
-        if (hasattr(child, '_v_is_shared_content')
-                and child._v_is_shared_content
-                and ILanguageRootFolder.providedBy(element)):
-            break
-        child = element
-        path.insert(0, element.id)
-
-    if ILanguageRootFolder.providedBy(element):
-        # it's a ghost element
-        site = getSite()
-        return site.restrictedTraverse('/'.join(path))
-    else:
-        # It's the root element
-        return content
-deprecated('is_original_content',
-           'is_original_content is removed by the next release')

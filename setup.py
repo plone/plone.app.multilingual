@@ -32,12 +32,10 @@ setup(
         'z3c.relationfield',
         'plone.behavior',
         'plone.dexterity',
-#       'plone.dexterity>=2.1',
         'plone.app.z3cform',
         'plone.app.registry',
         'plone.formwidget.contenttree',
         'Products.PloneLanguageTool',
-        'zope.deprecation'
     ],
     extras_require={
         'archetypes': ['archetypes.multilingual'],
