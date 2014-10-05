@@ -10,13 +10,6 @@ except pkg_resources.DistributionNotFound:
 else:
     HAS_PLONE_APP_CONTENTTYPES = True
 
-try:
-    pkg_resources.get_distribution('plone.app.contenttypes')
-except pkg_resources.DistributionNotFound:
-    HAS_PLONE_APP_CONTENTTYPES = False
-else:
-    HAS_PLONE_APP_CONTENTTYPES = True
-
 
 @implementer(INonInstallable)
 class HiddenProfiles(object):
