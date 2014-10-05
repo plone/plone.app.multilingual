@@ -1,13 +1,13 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
-    xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:five="http://namespaces.zope.org/five"
     xmlns:i18n="http://namespaces.zope.org/i18n"
-    xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="plone.app.multilingual">
 
   <includeDependencies package="."/>
+  <five:registerPackage package="."/> <!-- Required for uninstall profile -->
+
   <i18n:registerTranslations directory="locales"/>
 
   <include package="Products.CMFCore" file="permissions.zcml"/>
@@ -106,11 +106,10 @@
       name="plone.app.multilingual"
       provides="Products.CMFPlone.interfaces.INonInstallable"/>
 
-
   <genericsetup:registerProfile
       name="default"
       title="plone.app.multilingual"
-      description="Install to enable multilingual content support on the site"
+      description="Install to enable multilingual content support"
       directory="profiles/default"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
@@ -118,15 +117,22 @@
   <genericsetup:registerProfile
       name="uninstall"
       title="Uninstall plone.app.multilingual"
-      description="Uninstall to enable multilingual content support on the site"
+      description="Uninstall to remove multilingual content support"
       directory="profiles/uninstall"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
   <genericsetup:importStep
-      name="plone.app.multilingual"
+      name="plone.app.multilingual_default"
+      title="plone.app.multilingual default"
+      description=""
+      handler=".setuphandlers.step_default_various"
+      />
+
+  <genericsetup:importStep
+      name="plone.app.multilingual_uninstall"
       title="plone.app.multilingual uninstall"
       description=""
-      handler="plone.app.multilingual.setuphandlers.removeBehaviors"/>
+      handler=".setuphandlers.step_uninstall_various"/>
 
 </configure>
