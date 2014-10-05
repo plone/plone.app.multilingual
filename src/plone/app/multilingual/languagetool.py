@@ -5,7 +5,6 @@ def setLanguageBindingsCookieWins(self, usePath=1, useContent=1, useCookie=1,
                                   useRequest=1, useDefault=1,
                                   useCcTLD=0, useSubdomain=0, authOnly=0):
     """Setup the current language stuff."""
-    langs = []
     if usePath:
         # This one is set if there is an allowed language in the current path
         langsPath = [self.tool.getPathLanguage()]

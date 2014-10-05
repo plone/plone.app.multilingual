@@ -2,6 +2,7 @@
 from Acquisition import aq_base
 from Acquisition import aq_chain
 from plone.app.multilingual.content.lrf import ILanguageRootFolder
+from plone.app.multilingual.interfaces import ILanguageIndependentFolder
 from plone.uuid.interfaces import ATTRIBUTE_NAME
 from plone.uuid.interfaces import IAttributeUUID
 from plone.uuid.interfaces import IUUID
@@ -16,14 +17,19 @@ def lrfUUID(context):
 
 
 @implementer(IUUID)
+@adapter(ILanguageIndependentFolder)
+def lifUUID(context):
+    return getattr(aq_base(context), ATTRIBUTE_NAME, None)
+
+
+@implementer(IUUID)
 @adapter(IAttributeUUID)
 def attributeUUID(context):
-    child = context
+    is_language_independent = False
     for element in aq_chain(context):
-        if hasattr(child, '_v_is_shared_content') \
-           and child._v_is_shared_content \
-           and ILanguageRootFolder.providedBy(element):
-            uid = getattr(aq_base(context), ATTRIBUTE_NAME, None)
+        if ILanguageIndependentFolder.providedBy(element):
+            is_language_independent = True
+        if ILanguageRootFolder.providedBy(element) and is_language_independent:
+            uid = getattr(aq_base(context), ATTRIBUTE_NAME, None) or ''
             return uid + '-' + element.id if uid is not None else None
-        child = element
     return getattr(context, ATTRIBUTE_NAME, None)

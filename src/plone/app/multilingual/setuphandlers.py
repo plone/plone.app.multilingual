@@ -40,7 +40,7 @@ def enable_translatable_behavior(portal):
     for fti in dx_ftis:
 
         # Enable translatable behavior for all types
-        behaviors = [i for i in fti.behaviors]
+        behaviors = list(fti.behaviors)
         behaviors.extend([
             'plone.app.multilingual.dx.interfaces.IDexterityTranslatable',
         ])

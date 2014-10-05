@@ -14,13 +14,13 @@ ATTRIBUTE_NAME = '_plone.tg'
 NOTG = 'notg'
 
 
-class ISharedElement(Interface):
-    """ Marker interface for a shared element
+class ILanguageRootFolder(Interface):
+    """ Language Root Folder content type interface
     """
 
 
-class ILanguageRootFolder(Interface):
-    """ Language Root Folder content type interface
+class ILanguageIndependentFolder(Interface):
+    """ Language independent shared folder between languages
     """
 
 

@@ -6,7 +6,7 @@ from plone.dexterity.utils import createContentInContainer
 import unittest
 
 
-class TestCatalogPatch(unittest.TestCase):
+class TestIndependentLanguageFolder(unittest.TestCase):
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
@@ -14,8 +14,8 @@ class TestCatalogPatch(unittest.TestCase):
         self.request = self.layer['request']
 
         createContentInContainer(
-            self.portal, 'Document', title=u"Test document")
-        # ^ This will be shadowed to all language root folders
+            self.portal['en']['media'], 'Document', title=u"Test document")
+        # ^ This will be shadowed to all language independent folders
 
         createContentInContainer(
             self.portal['ca'], 'Document', title=u"Test document")
@@ -45,7 +45,7 @@ class TestCatalogPatch(unittest.TestCase):
             [x.Language for x in catalog.searchResults(self.request, **kw)]
 
         self.assertIn(LANGUAGE_INDEPENDENT, lang_independent)
-        self.assertEqual(len(lang_independent), 4)
+        self.assertEqual(len(lang_independent), 3)
 
     def test_query_for_one_language(self):
         catalog = getToolByName(self.portal, 'portal_catalog')
@@ -53,4 +53,4 @@ class TestCatalogPatch(unittest.TestCase):
         kw = {'Language': 'ca'}
         self.assertEqual([x.Language for x
                           in catalog.searchResults(self.request, **kw)],
-                         ['ca', 'ca'])
+                         ['ca', 'ca', 'ca'])

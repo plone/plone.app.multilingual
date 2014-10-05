@@ -9,6 +9,7 @@ from Products.Five import BrowserView
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
 from plone.app.multilingual.interfaces import ILanguage
+from plone.app.multilingual.interfaces import ILanguageIndependentFolder
 from plone.app.multilingual.interfaces import ILanguageRootFolder
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITranslationLocator
@@ -19,6 +20,15 @@ from plone.registry.interfaces import IRegistry
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component.hooks import getSite
+from zope.deprecation import deprecated
+
+
+def is_language_independent(ob):
+    if not ILanguageIndependentFolder.providedBy(ob):
+        for element in aq_chain(ob):
+            if ILanguageIndependentFolder.providedBy(element):
+                return True
+    return False
 
 
 class BabelUtils(BrowserView):
@@ -153,6 +163,29 @@ class BabelUtils(BrowserView):
         return settings.buttons_babel_view_up_to_nr_translations
 
 
+def multilingualMoveObject(content, language):
+    """Move content object and its contained objects to a new language folder
+    Also set the language on all the content moved
+
+    """
+    if is_language_independent(content):
+        # Language independent content will be created into language roo
+        target_folder = getattr(getSite(), language)
+    else:
+        target_folder = ITranslationLocator(content)(language)
+
+    parent = aq_parent(content)
+
+    copy_data = parent.manage_cutObjects(content.getId())
+    list_ids = target_folder.manage_pasteObjects(copy_data)
+    new_id = list_ids[0]['new_id']
+    new_object = target_folder[new_id]
+
+    new_object.reindexObject()
+
+    return new_object
+
+
 def is_shared(content):
     """
     Check if it's a ghost object
@@ -165,6 +198,8 @@ def is_shared(content):
             return True
         child = element
     return False
+deprecated('is_shared',
+           'is_shared is removed by the next release')
 
 
 def is_shared_original(content):
@@ -177,6 +212,8 @@ def is_shared_original(content):
                 and ILanguageRootFolder.providedBy(child)):
             return False
     return True
+deprecated('is_shared_original',
+           'is_shared_original is removed by the next release')
 
 
 def get_original_object(content):
@@ -201,34 +238,5 @@ def get_original_object(content):
     else:
         # It's the root element
         return content
-
-
-def multilingualMoveObject(content, language):
-    """
-    Move content object and its contained objects to a new language folder
-    Also set the language on all the content moved
-    """
-    if is_shared(content):
-        # In case is shared we are going to create it on the language root
-        # folder
-
-        orig_content = get_original_object(content)
-        target_folder = getattr(getSite(), language)
-        # It's going to be a non shared content so we remove it from
-        # portal_catalog
-
-    else:
-        orig_content = content
-        target_folder = ITranslationLocator(orig_content)(language)
-
-    parent = aq_parent(orig_content)
-    cb_copy_data = parent.manage_cutObjects(orig_content.getId())
-    list_ids = target_folder.manage_pasteObjects(cb_copy_data)
-    new_id = list_ids[0]['new_id']
-    new_object = target_folder[new_id]
-
-    if hasattr(new_object, '_v_is_shared_content'):
-        new_object._v_is_shared_content = False
-    new_object.reindexObject()
-
-    return new_object
+deprecated('is_original_content',
+           'is_original_content is removed by the next release')
