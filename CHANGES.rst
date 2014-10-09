@@ -4,6 +4,13 @@ Changelog
 2.0a4 (unreleased)
 ------------------
 
+- Add uninstall hook to run uninstall profile on deactivation
+  [datakurre]
+
+- Fix behavior registration on activation for all Dexterity types
+  without dependency to plone.app.contenttypes.
+  [datakurre]
+
 - Do not block acquisition on LRF for acl_users, portal_url (both broke login 
   form) and portal_catalog any more. 
   [jensens]
