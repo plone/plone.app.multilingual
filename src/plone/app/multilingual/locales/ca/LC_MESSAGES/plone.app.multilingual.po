@@ -453,7 +453,7 @@ msgstr ""
 #. Default: "Add translations"
 #: ./browser/add_translation_form.py:20
 msgid "label_add_translations"
-msgstr ""
+msgstr "Afegir traduccions"
 
 #. Default: "By updating the content language will trigger its move to the correct language folder in the site's hierarchy"
 #: ./browser/update_language_form.py:19
@@ -517,9 +517,8 @@ msgstr ""
 
 #. Default: "Translate"
 #: ./browser/menu.py:223
-#, fuzzy
 msgid "label_translate_menu"
-msgstr "Tradueix a..."
+msgstr "Tradueix"
 
 #. Default: "Translation Map"
 #: ./browser/templates/cleanup.pt:44
@@ -607,7 +606,7 @@ msgstr "Esborrar la seleccionada"
 #. Default: "Go to shared folder"
 #: ./browser/menu.py:189
 msgid "shared_folder"
-msgstr ""
+msgstr "Anar a Carpeta compartida"
 
 #. Default: "Add translations..."
 #: ./browser/menu.py:136
@@ -627,7 +626,7 @@ msgstr ""
 #. Default: "Edit with babel view"
 #: ./browser/menu.py:44
 msgid "title_babel_edit"
-msgstr ""
+msgstr "Editar amb vista babel"
 
 #. Default: "Language"
 #: ./browser/interfaces.py:33
@@ -646,7 +645,7 @@ msgstr "Esborrar traduccions"
 #. Default: "Set content language"
 #: ./browser/menu.py:204
 msgid "title_set_language"
-msgstr ""
+msgstr "Establir Idioma del contingut"
 
 #. Default: "Manage translations for your content."
 #: ./browser/menu.py:224
@@ -666,7 +665,7 @@ msgstr ""
 #. Default: "Universal Link"
 #: ./browser/menu.py:174
 msgid "universal_link"
-msgstr ""
+msgstr "Link universal"
 
 #: ./browser/remove_translation_form.py:29
 msgid "unlink selected"
