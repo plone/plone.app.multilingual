@@ -25,7 +25,7 @@ _enabled = []
 
 def language_filter(query):
 
-    if query.get('Language') == 'all':
+    if query.get('Language') in ('all', ['all']):
         del query['Language']
         return
     for key in NO_FILTER:    # any "nofilter" indexing prevent mangling
@@ -92,7 +92,7 @@ def I18nAwareCatalog():
         return
 
     def searchResults(self, REQUEST=None, **kw):
-        if REQUEST is not None and kw.get('Language', '') != 'all':
+        if REQUEST is not None and kw.get('Language', '') not in ('all', ['all']):
             language_filter(REQUEST)
         else:
             language_filter(kw)

@@ -24,7 +24,10 @@ def addTranslation(context):
               "Language": 'all'
              }
 
-    return ObjPathSourceBinder(navigation_tree_query=query)(context)
+    # XXX With Language='all' it works for autocomplete but not for
+    # contenttree.  Without a Language keyword argument it works for
+    # contenttree but not for autocomplete...
+    return ObjPathSourceBinder(navigation_tree_query=query, Language='all')(context)
 
 
 @grok.provider(IContextSourceBinder)
