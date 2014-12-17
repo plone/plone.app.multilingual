@@ -152,16 +152,6 @@
       layer="..interfaces.IPloneAppMultilingualInstalled"
       permission="zope.Public"/>
 
-  <!-- It comes from a translation AT with Portal Factory -->
-  <browser:viewlet
-      name="plone.app.multilingual.add-form-is-at-translation"
-      for="*"
-      manager="plone.app.layout.viewlets.interfaces.IAboveContent"
-      class=".viewlets.addFormATIsATranslationViewlet"
-      template="templates/add-form-is-translation.pt"
-      layer="..interfaces.IPloneAppMultilingualInstalled"
-      permission="zope.Public"/>
-
   <!-- Alternate language meta tags -->
   <browser:viewlet
       name="plone.app.multilingual.alternate-languages"
