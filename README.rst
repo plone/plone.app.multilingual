@@ -62,7 +62,7 @@ should add the following line to your *eggs* buildout section::
         plone.app.multilingual[archetypes]
 
 To use this package with plone.app.contenttypes you should add the following
-line to your *eggs* vuildout section::
+line to your *eggs* buildout section::
 
     eggs =
         plone.app.multilingual
