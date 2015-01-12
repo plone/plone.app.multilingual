@@ -83,29 +83,38 @@ class MultilingualAddForm(DefaultAddForm):
             return portal_tool.getPortalObject().absolute_url()
         return None
 
+    def _process_language_independent(self, fields, widgets):
+        for field_key in fields.keys():
+            print "processing field key: ", field_key
+            if field_key in self.schema:
+                schema_field = self.schema[field_key]
+                print "-> Main Schema field"
+            else:
+                # With plone.autoform, fieldnames from additional schematas
+                # reference their schema by prefixing their fieldname
+                # with schema.__identifier__ and then a dot as a separator
+                # See autoform.txt in the autoform package
+                print "-> Add Schema field"
+                if '.' not in field_key:
+                    print "-> No Dot!!!"
+                    continue
+                schema_name, field_name = field_key.split('.')
+                for aschema in self.additionalSchemata:
+                    if schema_name == aschema.__name__ \
+                       and field_name in aschema:
+                        print "--> FOUND in ", repr(aschema)
+                        schema_field = aschema[field_name]
+                        break
+
+            if ILanguageIndependentField.providedBy(schema_field):
+                print "-> Mark as language independent"
+                widgets[field_key].addClass('languageindependent')
+
     def render(self):
         self.request['disable_border'] = True
-
-        for field in self.fields.keys():
-            if field in self.schema:
-                if ILanguageIndependentField.providedBy(self.schema[field]):
-                    self.widgets[field].addClass('languageindependent')
-            # With plone.autoform, fieldnames from additional schematas
-            # reference their schema by prefixing their fieldname
-            # with schema.__identifier__ and then a dot as a separator
-            # See autoform.txt in the autoform package
-            if '.' not in field:
-                continue
-            schemaname, fieldname = field.split('.')
-            for add_schema in self.additionalSchemata:
-                if (
-                    schemaname == add_schema.__identifier__
-                    and fieldname in add_schema
-                    and ILanguageIndependentField.providedBy(
-                        add_schema[fieldname])
-                ):
-                    self.widgets[field].addClass('languageindependent')
-
+        self._process_language_independent(self.fields, self.widgets)
+        for group in self.groups:
+            self._process_language_independent(group.fields, group.widgets)
         self.babel_content = super(MultilingualAddForm, self).render()
         return self.babel()
 
@@ -114,6 +123,9 @@ class MultilingualAddForm(DefaultAddForm):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
         return settings.buttons_babel_view_up_to_nr_translations
+
+    def updateFields(self):
+        super(MultilingualAddForm, self).updateFields()
 
 
 class IMultilingualAddFormMarkerFieldMarker(Interface):
@@ -218,15 +230,6 @@ class DefaultMultilingualAddView(DefaultAddView):
     """
 
     form = MultilingualAddForm
-
-    def __init__(self, context, request, ti):
-        super(DefaultAddView, self).__init__(context, request)
-        self.ti = ti
-
-        # Set portal_type name on newly created form instance
-        if self.form_instance is not None \
-           and not getattr(self.form_instance, 'portal_type', None):
-            self.form_instance.portal_type = ti.getId()
 
 
 class AddTranslationsForm(AutoExtensibleForm, Form):
