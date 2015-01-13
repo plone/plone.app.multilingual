@@ -5,6 +5,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.interfaces import IAddTranslation
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
+from plone.app.multilingual.dx.interfaces import IMultilingualAddForm
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
@@ -68,6 +69,7 @@ class AddViewTraverser(object):
         raise TraversalError(self.context, name)
 
 
+@implementer(IMultilingualAddForm)
 class MultilingualAddForm(DefaultAddForm):
 
     babel = ViewPageTemplateFile("templates/dexterity_edit.pt")
@@ -85,29 +87,23 @@ class MultilingualAddForm(DefaultAddForm):
 
     def _process_language_independent(self, fields, widgets):
         for field_key in fields.keys():
-            print "processing field key: ", field_key
             if field_key in self.schema:
                 schema_field = self.schema[field_key]
-                print "-> Main Schema field"
             else:
                 # With plone.autoform, fieldnames from additional schematas
                 # reference their schema by prefixing their fieldname
                 # with schema.__identifier__ and then a dot as a separator
                 # See autoform.txt in the autoform package
-                print "-> Add Schema field"
                 if '.' not in field_key:
-                    print "-> No Dot!!!"
                     continue
                 schema_name, field_name = field_key.split('.')
                 for aschema in self.additionalSchemata:
                     if schema_name == aschema.__name__ \
                        and field_name in aschema:
-                        print "--> FOUND in ", repr(aschema)
                         schema_field = aschema[field_name]
                         break
 
             if ILanguageIndependentField.providedBy(schema_field):
-                print "-> Mark as language independent"
                 widgets[field_key].addClass('languageindependent')
 
     def render(self):
@@ -115,6 +111,7 @@ class MultilingualAddForm(DefaultAddForm):
         self._process_language_independent(self.fields, self.widgets)
         for group in self.groups:
             self._process_language_independent(group.fields, group.widgets)
+            alsoProvides(group, IMultilingualAddForm)
         self.babel_content = super(MultilingualAddForm, self).render()
         return self.babel()
 
