@@ -19,17 +19,17 @@
     margin-right: 20px;
 }
 
-#babel-edit #fieldset-default .field, #babel-edit #frame-content .field  {
+#babel-edit .field, #babel-edit #frame-content .field  {
     background-color: #f1f1f1;
     padding: 20px;
 }
 
-#babel-edit #fieldset-default .selected, #babel-edit #frame-content .selected{
+#babel-edit .selected, #babel-edit #frame-content .selected{
     background-color: #99B0C4;
     color: #0A0909;
 }
 
-#babel-edit #fieldset-default .selected .formHelp {
+#babel-edit .selected .formHelp {
     color: white;
 }
 
