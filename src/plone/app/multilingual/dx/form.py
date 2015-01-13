@@ -53,6 +53,9 @@ class AddingLanguageIndependentValue(ValueBase):
                 orig_lang = result.keys()[0]
                 obj = result[orig_lang]
                 name = self.field.__name__
+                # XXX
+                # this does not work with behaviors, if other than direct
+                # attribute storage was used.
                 try:
                     value = getattr(aq_base(obj), name)
                 except AttributeError:
