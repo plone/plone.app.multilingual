@@ -52,7 +52,7 @@
   <adapter
       for="*
            *
-           z3c.form.interfaces.IAddForm
+           plone.app.multilingual.dx.interfaces.IMultilingualAddForm
            plone.app.multilingual.dx.interfaces.ILanguageIndependentField
            z3c.form.interfaces.IWidget"
       factory=".form.AddingLanguageIndependentValue"

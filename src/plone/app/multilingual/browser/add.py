@@ -85,6 +85,17 @@ class MultilingualAddForm(DefaultAddForm):
             return portal_tool.getPortalObject().absolute_url()
         return None
 
+    def render(self):
+        self.request['disable_border'] = True
+        self.babel_content = super(MultilingualAddForm, self).render()
+        return self.babel()
+
+    @property
+    def max_nr_of_buttons(self):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        return settings.buttons_babel_view_up_to_nr_translations
+
     def _process_language_independent(self, fields, widgets):
         for field_key in fields.keys():
             if field_key in self.schema:
@@ -106,23 +117,12 @@ class MultilingualAddForm(DefaultAddForm):
             if ILanguageIndependentField.providedBy(schema_field):
                 widgets[field_key].addClass('languageindependent')
 
-    def render(self):
-        self.request['disable_border'] = True
+    def update(self):
+        super(MultilingualAddForm, self).update()
         self._process_language_independent(self.fields, self.widgets)
         for group in self.groups:
             self._process_language_independent(group.fields, group.widgets)
             alsoProvides(group, IMultilingualAddForm)
-        self.babel_content = super(MultilingualAddForm, self).render()
-        return self.babel()
-
-    @property
-    def max_nr_of_buttons(self):
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
-        return settings.buttons_babel_view_up_to_nr_translations
-
-    def updateFields(self):
-        super(MultilingualAddForm, self).updateFields()
 
 
 class IMultilingualAddFormMarkerFieldMarker(Interface):
