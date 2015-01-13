@@ -119,10 +119,12 @@ class MultilingualAddForm(DefaultAddForm):
 
     def update(self):
         super(MultilingualAddForm, self).update()
+
+        # process widgets to be shown as language independent
         self._process_language_independent(self.fields, self.widgets)
         for group in self.groups:
-            self._process_language_independent(group.fields, group.widgets)
             alsoProvides(group, IMultilingualAddForm)
+            self._process_language_independent(group.fields, group.widgets)
 
 
 class IMultilingualAddFormMarkerFieldMarker(Interface):
@@ -135,11 +137,15 @@ class IMultilingualAddFormMarker(model.Schema):
     pam_tg = schema.ASCIILine(title=u"Translated content")
     pam_old_lang = schema.ASCIILine(title=u"Old language")
 
-alsoProvides(IMultilingualAddFormMarker['pam_tg'],
-             IMultilingualAddFormMarkerFieldMarker)
+alsoProvides(
+    IMultilingualAddFormMarker['pam_tg'],
+    IMultilingualAddFormMarkerFieldMarker
+)
 
-alsoProvides(IMultilingualAddFormMarker['pam_old_lang'],
-             IMultilingualAddFormMarkerFieldMarker)
+alsoProvides(
+    IMultilingualAddFormMarker['pam_old_lang'],
+    IMultilingualAddFormMarkerFieldMarker
+)
 
 
 def get_multilingual_add_form_tg_value(adapter):
@@ -203,6 +209,9 @@ class MultilingualAddFormExtender(extensible.FormExtender):
     def update(self):
         groups = getattr(self.form, 'groups', None)
         if isinstance(groups, list) and len(groups):
+            for group in groups:
+                alsoProvides(group, IMultilingualAddForm)
+
             group = groups[-1].__name__
         else:
             group = None
