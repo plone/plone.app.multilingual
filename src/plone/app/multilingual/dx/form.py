@@ -42,7 +42,6 @@ class AddingLanguageIndependentValue(ValueBase):
             return session['tg']
 
     def get(self):
-        print "get AddingLanguageIndependentValue", self.field
         uuid = self.getTranslationUuid()
 
         if isLanguageIndependent(self.field) and uuid:
@@ -54,22 +53,17 @@ class AddingLanguageIndependentValue(ValueBase):
                 orig_lang = result.keys()[0]
                 obj = result[orig_lang]
                 name = self.field.__name__
-                print "-> field name ", name
                 # XXX
                 # this does not work with behaviors, if other than direct
                 # attribute storage was used.
                 try:
                     value = getattr(aq_base(obj), name)
                 except AttributeError:
-                    print "-> AttributeError: ", name
                     pass
                 else:
-                    print "-> attribute value ", value
                     return value
 
         if self.field.default is None:
-            print "-> no value"
             return NO_VALUE
 
-        print "-> default"
         return self.field.default
