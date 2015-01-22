@@ -4,6 +4,10 @@ Changelog
 2.0a4 (unreleased)
 ------------------
 
+- Fixed language independent fields in ++addtranslation++
+  requires plone.z3cform >= 0.8.1
+  [jensens, agitator]
+
 - Add uninstall hook to run uninstall profile on deactivation
   [datakurre]
 
@@ -11,8 +15,8 @@ Changelog
   without dependency to plone.app.contenttypes.
   [datakurre]
 
-- Do not block acquisition on LRF for acl_users, portal_url (both broke login 
-  form) and portal_catalog any more. 
+- Do not block acquisition on LRF for acl_users, portal_url (both broke login
+  form) and portal_catalog any more.
   [jensens]
 
 - Feature: Introduce a set variable BLACK_LIST_IDS which is used as a central
