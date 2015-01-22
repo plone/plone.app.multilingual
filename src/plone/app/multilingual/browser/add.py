@@ -69,10 +69,18 @@ class AddViewTraverser(object):
         raise TraversalError(self.context, name)
 
 
+@provider(IMultilingualAddForm)
+class MultilingualAddFormGroup(Group)
+    """Multilingual marked group
+    """
+
+
 @implementer(IMultilingualAddForm)
 class MultilingualAddForm(DefaultAddForm):
 
     babel = ViewPageTemplateFile("templates/dexterity_edit.pt")
+
+    group_class = MultilingualAddFormGroup
 
     def gtenabled(self):
         registry = getUtility(IRegistry)
