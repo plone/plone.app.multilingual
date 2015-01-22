@@ -5,10 +5,7 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="plone.app.multilingual">
 
-  <includeDependencies package="." />
-
   <include file="meta.zcml" />
-
 
   <!-- Configure plone.schemaeditor adapter -->
   <adapter
