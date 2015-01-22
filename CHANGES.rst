@@ -8,14 +8,14 @@ Changelog
   [saily]
 
 - Fixed language independent fields in ++addtranslation++
-  requires plone.z3cform >= 0.8.1
+  requires ``plone.z3cform >= 0.8.1``
   [jensens, agitator]
 
 - Add uninstall hook to run uninstall profile on deactivation
   [datakurre]
 
 - Fix behavior registration on activation for all Dexterity types
-  without dependency to plone.app.contenttypes.
+  without dependency to ``plone.app.contenttypes``.
   [datakurre]
 
 - Do not block acquisition on LRF for acl_users, portal_url (both broke login
@@ -41,7 +41,7 @@ Changelog
   [datakurre]
 
 - Fix schema editor plugin to not break schema editors outside FTI (e.g.
-  collective.easyform)
+  ``collective.easyform``)
   [datakurre]
 
 2.0a3 (2014-05-30)
