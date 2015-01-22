@@ -19,6 +19,7 @@ from plone.dexterity.interfaces import IDexterityFTI
 from plone.registry.interfaces import IRegistry
 from plone.supermodel import model
 from plone.z3cform.fieldsets import extensible
+from plone.z3cform.fieldsets.group import Group
 from plone.z3cform.fieldsets.interfaces import IFormExtender
 from z3c.form import button
 from z3c.form.form import Form
@@ -32,6 +33,7 @@ from zope.component import queryMultiAdapter
 from zope.interface import Interface
 from zope.interface import alsoProvides
 from zope.interface import implementer
+from zope.interface import provider
 from zope.traversing.interfaces import ITraversable
 from zope.traversing.interfaces import TraversalError
 
@@ -70,7 +72,7 @@ class AddViewTraverser(object):
 
 
 @provider(IMultilingualAddForm)
-class MultilingualAddFormGroup(Group)
+class MultilingualAddFormGroup(Group):
     """Multilingual marked group
     """
 
@@ -127,28 +129,10 @@ class MultilingualAddForm(DefaultAddForm):
 
     def update(self):
         super(MultilingualAddForm, self).update()
-
         # process widgets to be shown as language independent
         self._process_language_independent(self.fields, self.widgets)
         for group in self.groups:
-            alsoProvides(group, IMultilingualAddForm)
             self._process_language_independent(group.fields, group.widgets)
-
-# XXX
-### BEGIN PATCH WORKAROUND TO MARK GROUPS AS IMultilingualAddForm
-
-from z3c.form.group import Group
-
-_orginial_Group_update = Group.update
-
-
-def pam_group_update(self):
-    if IMultilingualAddForm.providedBy(self.parentForm):
-        alsoProvides(self, IMultilingualAddForm)
-    _orginial_Group_update(self)
-
-Group.update = pam_group_update
-### END PATCH
 
 
 class IMultilingualAddFormMarkerFieldMarker(Interface):
