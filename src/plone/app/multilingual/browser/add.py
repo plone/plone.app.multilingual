@@ -33,7 +33,6 @@ from zope.component import queryMultiAdapter
 from zope.interface import Interface
 from zope.interface import alsoProvides
 from zope.interface import implementer
-from zope.interface import provider
 from zope.traversing.interfaces import ITraversable
 from zope.traversing.interfaces import TraversalError
 
@@ -71,7 +70,7 @@ class AddViewTraverser(object):
         raise TraversalError(self.context, name)
 
 
-@provider(IMultilingualAddForm)
+@implementer(IMultilingualAddForm)
 class MultilingualAddFormGroup(Group):
     """Multilingual marked group
     """
