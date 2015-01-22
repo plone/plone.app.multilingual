@@ -61,7 +61,7 @@ class PloneAppMultilingualLayer(PloneSandboxLayer):
 
     def setUpZope(self, app, configurationContext):
         # Configure ZCML
-        xmlconfig.file('configure.zcml', plone.app.multilingual,
+        xmlconfig.file('testing.zcml', plone.app.multilingual,
                        context=configurationContext)
 
         xmlconfig.file('overrides.zcml', plone.app.multilingual,
