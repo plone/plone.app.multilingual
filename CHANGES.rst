@@ -4,6 +4,9 @@ Changelog
 2.0a4 (unreleased)
 ------------------
 
+- Add new ``bootstrap.py`` to support new parameter ``--setuptools-version``.
+  [saily]
+
 - Fixed language independent fields in ++addtranslation++
   requires plone.z3cform >= 0.8.1
   [jensens, agitator]
