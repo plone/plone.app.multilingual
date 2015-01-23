@@ -27,7 +27,7 @@ matrix:
 install:
 - sed -ie "s#test-plone-4.x.cfg#test-plone-$PLONE_VERSION.x.cfg#" travis.cfg
 - mkdir -p buildout-cache/downloads
-- python bootstrap-buildout.py --setuptools-version=8.3 -c travis.cfg
+- python bootstrap.py --setuptools-version=8.3 --version=2.4.1 -c travis.cfg
 - bin/buildout -N -t 3 -c travis.cfg
 before_script:
 - export DISPLAY=:99.0
