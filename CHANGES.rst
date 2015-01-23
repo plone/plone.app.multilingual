@@ -4,6 +4,12 @@ Changelog
 2.0a4 (unreleased)
 ------------------
 
+- Remove BLACKLIST_IDS, with LIF this is superfluos.
+  [jensens]
+
+- Remove LanguageTool patch, meanwhile superfluos.
+  [jensens]
+
 - Add new ``bootstrap.py`` to support new parameter ``--setuptools-version``.
   [saily]
 
