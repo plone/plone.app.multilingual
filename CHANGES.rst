@@ -4,6 +4,9 @@ Changelog
 2.0a4 (unreleased)
 ------------------
 
+- Refactor locations of code in dx to bundle stuff at a sane place.
+  [jensens]
+
 - Remove BLACKLIST_IDS, with LIF this is superfluos.
   [jensens]
 
