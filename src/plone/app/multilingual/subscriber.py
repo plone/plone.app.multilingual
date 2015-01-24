@@ -118,13 +118,14 @@ def set_recursive_language(ob, language):
             set_recursive_language(child, language)
 
 
-# Subscriber to set language on the child folder
 def createdEvent(obj, event):
-    """ It can be a
-        IObjectRemovedEvent - don't do anything
-        IObjectMovedEvent
-        IObjectAddedEvent
-        IObjectCopiedEvent
+    """ Subscriber to set language on the child folder
+
+    It can be a
+    - IObjectRemovedEvent - don't do anything
+    - IObjectMovedEvent
+    - IObjectAddedEvent
+    - IObjectCopiedEvent
     """
     if IObjectRemovedEvent.providedBy(event):
         return
@@ -156,8 +157,8 @@ def createdEvent(obj, event):
             IMutableTG(obj).set(session['tg'])
             modified(obj)
             del session['tg']
-            old_obj = ITranslationManager(obj)\
-                .get_translation(session['old_lang'])
+            tm = ITranslationManager(obj)
+            old_obj = tm.get_translation(session['old_lang'])
             ILanguageIndependentFieldsManager(old_obj).copy_fields(obj)
             del session['old_lang']
     else:

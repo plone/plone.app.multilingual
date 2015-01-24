@@ -98,6 +98,9 @@ class LanguageIndependentModifier(object):
         fti = getUtility(IDexterityFTI, name=translation.portal_type)
         schema = fti.lookupSchema()
         descriptions = Attributes(schema)
+        # where is this information needed?
+        # XXX behaviors need to be considered here
+        # use plone.dexterity.utils.iterSchemata or similiar
 
         # Pass the canonical object as a event description
         notify(ObjectModifiedEvent(translation, descriptions, self.canonical))

@@ -73,8 +73,9 @@ class LanguageIndependentFieldsManager(object):
         doomed = False
 
         target_language = queryAdapter(translation, ILanguage).get_language()
-        relation_copier =\
-            lambda r, l=target_language, f=self.copy_relation: f(r, l)
+
+        def relation_copier(rel, lang=target_language, fun=self.copy_relation):
+            return fun(rel, lang)
 
         for schema in iterSchemata(self.context):
             for field_name in schema:
