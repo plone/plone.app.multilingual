@@ -10,12 +10,13 @@ from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.interfaces import ITG
 from plone.autoform import directives
 from plone.autoform.form import AutoExtensibleForm
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.dexterity.browser.add import DefaultAddForm
 from plone.dexterity.browser.add import DefaultAddView
-from plone.dexterity.interfaces import IDexterityFTI
+from plone.dexterity.interfaces import IDexterityContent
 from plone.registry.interfaces import IRegistry
 from plone.supermodel import model
 from plone.z3cform.fieldsets import extensible
@@ -35,6 +36,9 @@ from zope.interface import alsoProvides
 from zope.interface import implementer
 from zope.traversing.interfaces import ITraversable
 from zope.traversing.interfaces import TraversalError
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 @adapter(IFolderish, Interface)
@@ -46,28 +50,53 @@ class AddViewTraverser(object):
     def __init__(self, context, request):
         self.context = context
         self.request = request
+        self.request.translation_info = dict()
+        self.info = self.request.translation_info
 
     def traverse(self, name, ignored):
-        ttool = getToolByName(self.context, 'portal_types')
-        ti = ttool.getTypeInfo(name)
-        if not IDexterityFTI.providedBy(ti):
-            # we are not on DX content
+        self.info['target_language'] = ILanguage(self.context)
+        catalog = getToolByName(self.context, 'portal_catalog')
+        brains = catalog(UID=name)
+        if len(brains) != 1:
+            raise TraversalError(self.context, name)
+        source = brains[0].getObject()
+
+        # XXX: register this adapter on dx container and a second one for AT
+        if not IDexterityContent.providedBy(source):
+            # we are not on DX content, assume AT
             baseUrl = self.context.absolute_url()
             url = '%s/@@add_at_translation?type=%s' % (baseUrl, name)
             return self.request.response.redirect(url)
+
+        self.info['source_language'] = ILanguage(source)
+        self.info['portal_type'] = source.portal_type
+        self.info['tg'] = ITG(source)
+
         # set the self.context to the place where it should be stored
         if not IFolderish.providedBy(self.context):
             self.context = self.context.__parent__
-        if ti is not None:
-            add_view = queryMultiAdapter((self.context, self.request, ti),
-                                         name='babel_view')
-            if add_view is None:
-                add_view = queryMultiAdapter((self.context, self.request, ti))
-            if add_view is not None:
-                add_view.__name__ = ti.factory
-                return add_view.__of__(self.context)
 
-        raise TraversalError(self.context, name)
+        # get the type information
+        ttool = getToolByName(self.context, 'portal_types')
+        ti = ttool.getTypeInfo(self.info['portal_type'])
+
+        if ti is None:
+            logger.error('No type information found for {0}'.format(
+                self.info['portal_type'])
+            )
+            raise TraversalError(self.context, name)
+
+        add_view = queryMultiAdapter(
+            (self.context, self.request, ti),
+            name='babel_view'
+        )
+        if add_view is None:
+            add_view = queryMultiAdapter((self.context, self.request, ti))
+            if add_view is not None:
+                raise TraversalError(self.context, name)
+        add_view.__name__ = ti.factory
+        return add_view.__of__(self.context)
+
 
 
 @implementer(IMultilingualAddForm)
@@ -156,9 +185,7 @@ alsoProvides(
 
 
 def get_multilingual_add_form_tg_value(adapter):
-    session_manager = getToolByName(adapter.context, 'session_data_manager')
-    session_data = session_manager.getSessionData()
-    return session_data.get('tg', '')
+    return adapter.request.translation_info['tg']
 
 
 MultilingualAddFormTgValue = ComputedWidgetAttribute(
@@ -169,9 +196,7 @@ MultilingualAddFormTgValue = ComputedWidgetAttribute(
 
 
 def get_multilingual_add_form_old_lang_value(adapter):
-    session_manager = getToolByName(adapter.context, 'session_data_manager')
-    session_data = session_manager.getSessionData()
-    return session_data.get('old_lang', '')
+    return adapter.request.translation_info['source_language']
 
 
 MultilingualAddFormOldLangValue = ComputedWidgetAttribute(

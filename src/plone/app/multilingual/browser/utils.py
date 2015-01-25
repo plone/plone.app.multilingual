@@ -35,12 +35,10 @@ class BabelUtils(BrowserView):
         portal_state = getMultiAdapter((context, request),
                                        name="plone_portal_state")
         self.portal_url = portal_state.portal_url()
-        # If there is any session tg lets use the session tg
-        sdm = self.context.session_data_manager
-        session = sdm.getSessionData(create=True)
-        if 'tg' in session.keys():
-            self.group = TranslationManager(session['tg'])
-        else:
+        # If there is any translation_info lets use it
+        try:
+            self.group = TranslationManager(request.translation_info['tg'])
+        except AttributeError:
             self.group = ITranslationManager(self.context)
 
     def getGroup(self):
