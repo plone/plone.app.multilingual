@@ -10,6 +10,7 @@ from plone.app.multilingual.interfaces import IMutableTG
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
+from plone.dexterity.interfaces import IDexterityContent
 from plone.uuid.interfaces import IUUID
 from zope.component.hooks import getSite
 from zope.globalrequest import getRequest
@@ -134,32 +135,36 @@ def createdEvent(obj, event):
     # always equal to event.newParent.
     parent = aq_parent(event.object)
 
-    if ITranslatable.providedBy(parent):
-        # Normal use case
-        # We set the tg, linking
-        language = ILanguage(parent).get_language()
-        set_recursive_language(obj, language)
-        sdm = obj.session_data_manager
-        session = sdm.getSessionData()
-        portal = getSite()
-        portal_factory = getToolByName(portal, 'portal_factory', None)
-
-        request = getattr(event.object, 'REQUEST', getRequest())
-        has_pam_old_lang_in_form = (
-            request and
-            'form.widgets.pam_old_lang' not in request.form
-        )
-        if (not has_pam_old_lang_in_form
-                and 'tg' in session.keys()
-                and 'old_lang' in session.keys()
-                and (portal_factory is None
-                     or not portal_factory.isTemporary(obj))):
-            IMutableTG(obj).set(session['tg'])
-            modified(obj)
-            del session['tg']
-            tm = ITranslationManager(obj)
-            old_obj = tm.get_translation(session['old_lang'])
-            ILanguageIndependentFieldsManager(old_obj).copy_fields(obj)
-            del session['old_lang']
-    else:
+    # special parent handling
+    if not ITranslatable.providedBy(parent):
         set_recursive_language(obj, LANGUAGE_INDEPENDENT)
+        return
+
+    # Normal use case
+    # We set the tg, linking
+    language = ILanguage(parent).get_language()
+    set_recursive_language(obj, language)
+
+    request = getattr(event.object, 'REQUEST', getRequest())
+    if request and 'form.widgets.pam_old_lang' not in request.form:
+        return
+    try:
+        ti = request.translation_info
+    except AttributeError:
+        return
+
+    # AT check
+    portal = getSite()
+    portal_factory = getToolByName(portal, 'portal_factory', None)
+    if (
+        not IDexterityContent.providedBy(obj)
+        and portal_factory is not None
+        and not portal_factory.isTemporary(obj)
+    ):
+        return
+
+    IMutableTG(obj).set(ti['tg'])
+    modified(obj)
+    tm = ITranslationManager(obj)
+    old_obj = tm.get_translation(ti['source_language'])
+    ILanguageIndependentFieldsManager(old_obj).copy_fields(obj)

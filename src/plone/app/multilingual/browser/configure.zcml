@@ -129,7 +129,7 @@
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       view="plone.app.controlpanel.interfaces.IPloneControlPanelView"
       manager="plone.app.layout.viewlets.interfaces.IAboveContent"
-      class=".viewlets.oneLanguageConfiguredNoticeViewlet"
+      class=".viewlets.OneLanguageConfiguredNoticeViewlet"
       template="templates/languages-notice.pt"
       layer="..interfaces.IPloneAppMultilingualInstalled"
       permission="cmf.ManagePortal"/>
@@ -140,7 +140,7 @@
       for="*"
       view="plone.dexterity.browser.add.DefaultAddView"
       manager="plone.app.layout.viewlets.interfaces.IAboveContent"
-      class=".viewlets.addFormIsATranslationViewlet"
+      class=".viewlets.AddFormIsATranslationViewlet"
       template="templates/add-form-is-translation.pt"
       layer="..interfaces.IPloneAppMultilingualInstalled"
       permission="zope.Public"/>
