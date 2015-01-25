@@ -39,7 +39,7 @@
   <adapter
       for="plone.app.multilingual.dx.interfaces.IDexterityTranslatable"
       provides="plone.app.multilingual.interfaces.ILanguageIndependentFieldsManager"
-      factory=".languageindependent.LanguageIndependentFieldsManager"/>
+      factory=".cloner.LanguageIndependentFieldsManager"/>
 
   <adapter
       for="plone.dexterity.interfaces.IDexterityContent"
@@ -62,7 +62,7 @@
            plone.app.multilingual.dx.interfaces.ILanguageIndependentField
            *"
       provides="z3c.form.interfaces.IValidator"
-      factory=".languageindependent.LanguageIndependentFieldValidator"/>
+      factory=".form.LanguageIndependentFieldValidator"/>
 
   <adapter
       for="*
@@ -72,6 +72,6 @@
            *"
       provides="zope.pagetemplate.interfaces.IPageTemplate"
       name="input"
-      factory=".languageindependent.LanguageIndependentFieldInputTemplate"/>
+      factory=".form.LanguageIndependentFieldInputTemplate"/>
 
 </configure>

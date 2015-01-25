@@ -92,7 +92,7 @@
   <adapter
       for="plone.app.multilingual.dx.interfaces.IDexterityTranslatable"
       provides="plone.app.multilingual.interfaces.ILanguageIndependentFieldsManager"
-      factory="plone.app.multilingual.dx.languageindependent.LanguageIndependentFieldsManager"/>
+      factory="plone.app.multilingual.dx.cloner.LanguageIndependentFieldsManager"/>
 
 
   <!-- Language independent folder content indexers -->

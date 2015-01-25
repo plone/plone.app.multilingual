@@ -16,10 +16,7 @@ class Language(object):
         self.context = context
 
     def get_language(self):
-        language = self.context.language
-        if not language:
-            language = LANGUAGE_INDEPENDENT
-        return language
+        return self.context.language or LANGUAGE_INDEPENDENT
 
     def set_language(self, language):
         self.context.language = language
