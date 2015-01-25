@@ -75,7 +75,7 @@ I switch to English
 # Then
 
 I can view the document in English
-  Page Should Contain Element
+  Wait until page contains element
   ...  xpath=//*[contains(@class, 'documentFirstHeading')][./text()='An English Document']
-  Page Should Contain Element
+  Wait until page contains element
   ...  xpath=//ul[@id='portal-languageselector']/li[contains(@class, 'currentLanguage')]/a[@title='English']
