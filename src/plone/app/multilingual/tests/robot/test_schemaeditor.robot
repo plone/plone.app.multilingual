@@ -85,7 +85,7 @@ I unselect the language independent field setting
 # Then
 
 I can see the language independent field setting
-  Element should be visible  form-widgets-IFieldLanguageIndependent-languageindependent-0
+  Wait until page contains element  id=form-widgets-IFieldLanguageIndependent-languageindependent-0
 
 the language independent field setting is selected
   Checkbox should be selected  form-widgets-IFieldLanguageIndependent-languageindependent-0
