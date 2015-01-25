@@ -20,19 +20,65 @@ class TestAPI(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
 
+    def test_get_translation_manager(self):
+        a_ca = createContentInContainer(
+            self.portal['ca'],
+            'Document',
+            title=u"Test document"
+        )
+        tm = api.get_translation_manager(a_ca)
+        self.assertTrue(ITranslationManager.providedBy(tm))
+
     def test_translate(self):
         # Create
         a_ca = createContentInContainer(
-            self.portal['ca'], 'Document', title=u"Test document")
+            self.portal['ca'],
+            'Document',
+            title=u"Test document"
+        )
 
-        self.assertEqual(ITranslationManager(a_ca).get_translations(),
-                         {'ca': a_ca})
+        self.assertEqual(
+            api.get_translation_manager(a_ca).get_translations(),
+            {'ca': a_ca}
+        )
 
         # Translate
         a_en = api.translate(a_ca, 'en')
 
-        self.assertEqual(ITranslationManager(a_ca).get_translations(),
-                         {'ca': a_ca, 'en': a_en})
+        # check
+        self.assertEqual(
+            api.get_translation_manager(a_ca).get_translations(),
+            {'ca': a_ca, 'en': a_en}
+        )
+
+    def test_get_translation_group(self):
+        # Create
+        a_ca = createContentInContainer(
+            self.portal['ca'],
+            'Document',
+            title=u"Test document"
+        )
+        a_en = api.translate(a_ca, 'en')
+
+        # get groups
+        tg_ca = api.get_translation_group(a_en)
+        tg_en = api.get_translation_group(a_en)
+
+        # check
+        self.assertTrue(tg_ca is not None)
+        self.assertTrue(tg_en is not None)
+        self.assertEqual(tg_en, tg_ca)
+
+    def test_translateable(self):
+        # Create
+        a_ca = createContentInContainer(
+            self.portal['ca'],
+            'Document',
+            title=u"Test document"
+        )
+        # check
+        self.assertTrue(api.is_translatable(a_ca))
+        self.assertFalse(api.is_translatable(object()))
 
 
 class TestBasicAPI(unittest.TestCase):

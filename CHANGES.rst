@@ -4,6 +4,9 @@ Changelog
 2.0a4 (unreleased)
 ------------------
 
+- Add more common api functions and test them.
+  [jensens]
+
 - Refactor locations of code in dx to bundle stuff at a sane place.
   [jensens]
 
