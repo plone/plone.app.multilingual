@@ -11,6 +11,7 @@ extras/*
 develop-eggs/*
 var/*
 build/*
+buildout-cache/*
 dist/*
 docs/_build
 coverage
