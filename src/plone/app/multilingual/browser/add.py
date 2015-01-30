@@ -34,7 +34,7 @@ class AddViewTraverser(object):
             # we are not on DX content
             self.context.REQUEST.set('type', name)
             view = queryMultiAdapter((self.context, self.context.REQUEST),
-                                         name="add_at_translation")
+                                     name='add_at_translation')
             return view.__of__(self.context)
         # set the self.context to the place where it should be stored
         if not IFolderish.providedBy(self.context):
