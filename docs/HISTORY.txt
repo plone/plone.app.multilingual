@@ -4,6 +4,9 @@ Changelog
 1.2.2 (unreleased)
 ------------------
 
+- Fix Insufficient Privileges when we translate an archetype object into a none published Folder.
+  [bsuttor]
+
 - Make search look in "Language Shared" too.
   https://github.com/plone/plone.app.multilingual/issues/106
   [khink]
@@ -13,9 +16,6 @@ Changelog
 
 - Fix prefix matching for language independent fields from plone.autoform
   [huubbouma]
-
-- Fix Insufficient Privileges when we translate an archetype object into a none published Folder.
-  [bsuttor]
 
 
 1.2.1 2013-10-16
