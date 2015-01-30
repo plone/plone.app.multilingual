@@ -4,7 +4,14 @@ Changelog
 1.2.2 (unreleased)
 ------------------
 
-- Make search look in "Lanuguage Shared" too.
+- Fix ``archetypes.multilingual`` checkout, we have to use ``1.x`` branch
+  since we updated ``master`` to next major release.
+  [saily]
+
+- Fix Insufficient Privileges when we translate an archetype object into a none published Folder.
+  [bsuttor]
+
+- Make search look in "Language Shared" too.
   https://github.com/plone/plone.app.multilingual/issues/106
   [khink]
 
