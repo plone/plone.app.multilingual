@@ -22,7 +22,7 @@ Add translation
    Create a document with  uk  Це тестовий документ
     Click Element  css=#plone-contentmenu-multilingual .actionMenuHeader a
     Click Element  css=#_add_translations
-    Click Element  css=#formfield-form-widgets-content-widgets-query .searchButton 
+    Click Element  css=#formfield-form-widgets-content-widgets-query .searchButton
     Click Element  css=#form-widgets-content-contenttree a[href$='/plone/en']
     Wait until page contains  It is a test document
     Click Element  css=#form-widgets-content-contenttree a[href$='it-is-a-test-document']
@@ -39,12 +39,11 @@ Add translation
 
 I add new avaliable lang '${lang}'
     Go to  ${PLONE_URL}/@@language-controlpanel
-    Wait until page contains  name=form.available_languages.from
     Select From List  name=form.available_languages.from  ${lang}
     Click Element  name=from2toButton
     Click Element  name=form.actions.save
 
-Create a document with 
+Create a document with
   [Arguments]  ${lang}  ${title}
   Go to  ${PLONE_URL}/${lang}/createObject?type_name=Document
   Input text  css=#title  ${title}
