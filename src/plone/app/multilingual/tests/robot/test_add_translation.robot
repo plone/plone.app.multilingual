@@ -39,7 +39,6 @@ Add translation
 
 I add new avaliable lang '${lang}'
     Go to  ${PLONE_URL}/@@language-controlpanel
-    Wait until page contains  name=form.available_languages.from
     Select From List  name=form.available_languages.from  ${lang}
     Click Element  name=from2toButton
     Click Element  name=form.actions.save
