@@ -4,6 +4,9 @@ Changelog
 1.2.2 (unreleased)
 ------------------
 
+- Use plone.app.robotframework for robot tests.
+  [bsuttor]
+
 - Fix ``archetypes.multilingual`` checkout, we have to use ``1.x`` branch
   since we updated ``master`` to next major release.
   [saily]
