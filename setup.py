@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '2.0a4.dev0'
+version = '2.0a4.sfama-pre'
 
 setup(
     name='plone.app.multilingual',
