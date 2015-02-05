@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
 import os
 
@@ -40,6 +41,7 @@ setup(name='plone.app.multilingual',
           'archetypes': ['archetypes.multilingual'],
           'test': [
               'plone.app.testing[robot]>=4.2.2',
+              'plone.app.robotframework',
               'plone.multilingualbehavior',
               'archetypes.multilingual',
               'Products.LinguaPlone',

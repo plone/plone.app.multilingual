@@ -1,15 +1,13 @@
 *** Settings ***
 
-Variables  plone/app/testing/interfaces.py
-Variables  plone/app/multilingual/tests/robot/variables.py
+Resource  plone/app/robotframework/keywords.robot
+Resource  plone/app/robotframework/selenium.robot
 
-Library  Selenium2Library  timeout=${SELENIUM_TIMEOUT}  implicit_wait=${SELENIUM_IMPLICIT_WAIT}
+Library  Remote  ${PLONE_URL}/RobotRemote
 
-# Resource  library-settings.txt
-Resource  plone/app/multilingual/tests/robot/keywords.txt
+Test Setup  Run keywords  Open test browser
+Test Teardown  Close all browsers
 
-Suite Setup  Suite Setup
-Suite Teardown  Suite Teardown
 
 *** Test Cases ***
 
@@ -29,11 +27,8 @@ Scenario: Babel View for AT content
 
 *** Keywords ***
 
-a test user
-    Log in  ${TEST_USER_NAME}  ${TEST_USER_PASSWORD}
-
 a site owner
-    Log in  ${SITE_OWNER_NAME}  ${SITE_OWNER_PASSWORD}
+    Enable autologin as  Manager
 
 I translate the content '${content_id}' to '${lang}'
     Go to  ${PLONE_URL}/${content_id}/@@create_translation?language=${lang}

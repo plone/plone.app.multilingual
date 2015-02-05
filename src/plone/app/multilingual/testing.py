@@ -14,6 +14,7 @@ from plone.app.testing import setRoles
 from zope.configuration import xmlconfig
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.tests.utils import makeContent, makeTranslation
+from plone.app.robotframework.testing import REMOTE_LIBRARY_ROBOT_TESTING
 from plone.dexterity.utils import createContentInContainer
 from plone.multilingual.interfaces import ILanguage
 
@@ -93,9 +94,13 @@ PLONEAPPMULTILINGUAL_INTEGRATION_TESTING = IntegrationTesting(
 PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(PLONEAPPMULTILINGUAL_FIXTURE,),
     name="plone.app.multilingual:Functional")
+
 PLONEAPPMULTILINGUAL_ROBOT_TESTING = FunctionalTesting(
     bases=(PLONEAPPMULTILINGUAL_FIXTURE,
            TWO_LANGUAGES_FIXTURE,
+           REMOTE_LIBRARY_ROBOT_TESTING,
            z2.ZSERVER_FIXTURE),
     name="plone.app.multilingual:Robot")
+
+
 optionflags = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE)
