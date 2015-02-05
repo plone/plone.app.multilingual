@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2.2 (unreleased)
+1.2.2 (2015-02-05)
 ------------------
 
 - Use plone.app.robotframework for robot tests.
