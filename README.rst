@@ -1,7 +1,7 @@
 .. image:: http://jenkins.plone.org/view/PLIPS/job/job-plone.app.multilingual/badge/icon
     :target: http://jenkins.plone.org/view/All/job/job-plone.app.multilingual/
 
-.. image:: https://travis-ci.org/plone/plone.app.multilingual.png?branch=master
+.. image:: https://travis-ci.org/plone/plone.app.multilingual.png?branch=1.x
     :target: http://travis-ci.org/plone/plone.app.multilingual
 
 .. contents::
