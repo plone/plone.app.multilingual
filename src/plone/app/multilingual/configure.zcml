@@ -1,5 +1,6 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:five="http://namespaces.zope.org/five"
     xmlns:i18n="http://namespaces.zope.org/i18n"
@@ -44,10 +45,20 @@
 
   <!-- Generic plone.app.multilingual subscribers and adapters -->
 
-  <subscriber
-      for="plone.app.multilingual.interfaces.ITranslatable
-           zope.app.container.interfaces.IObjectAddedEvent"
-      handler="plone.app.multilingual.subscriber.createdEvent"/>
+  <configure zcml:condition="not-installed zope.container">
+      <subscriber
+          for="plone.app.multilingual.interfaces.ITranslatable
+               zope.app.container.interfaces.IObjectAddedEvent"
+          handler="plone.app.multilingual.subscriber.createdEvent"/>
+  </configure>
+
+  <configure zcml:condition="installed zope.container">
+    <subscriber
+          for="plone.app.multilingual.interfaces.ITranslatable
+               zope.container.interfaces.IObjectAddedEvent"
+          handler="plone.app.multilingual.subscriber.createdEvent"/>
+  </configure>
+
   <subscriber
       for="plone.app.multilingual.interfaces.ITranslatable
            zope.lifecycleevent.interfaces.IObjectCopiedEvent"

@@ -4,6 +4,9 @@ Changelog
 2.0a4 (unreleased)
 ------------------
 
+- Remove dependency on zope.app.container and zope.app.initd
+  [joka]
+
 - Add more common api functions and test them.
   [jensens]
 
