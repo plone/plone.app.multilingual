@@ -125,10 +125,14 @@ class AlternateLanguagesViewlet(ViewletBase):
         plone_site = getUtility(IPloneSiteRoot)
         portal_path = '/'.join(plone_site.getPhysicalPath())
         portal_path_len = len(portal_path)
+
         alternates = []
         for item in results:
-            path_len = portal_path_len + len('{0:s}/'.format(item.Language))
-            url = item.getURL(relative=1)[path_len:]
+            url = item.getURL(relative=1)
+            path_len = len('{0:s}/'.format(item.Language))
+            if url.startswith(portal_path):
+                path_len += portal_path_len
+            url = url[path_len:]
             alternates.append({
                 'lang': item.Language,
                 'url': url.strip('/'),
