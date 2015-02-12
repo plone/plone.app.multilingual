@@ -2,6 +2,7 @@
 from Acquisition import aq_parent
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
+from plone.app.multilingual.utils import get_parent
 from plone.app.multilingual.browser.utils import is_language_independent
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
