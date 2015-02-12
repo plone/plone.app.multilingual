@@ -2,6 +2,7 @@
 from Acquisition import aq_parent
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
+from plone.app.multilingual.utils import get_parent
 from plone.app.multilingual.browser.utils import is_language_independent
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
@@ -132,8 +133,7 @@ def createdEvent(obj, event):
 
     # On ObjectCopiedEvent and ObjectMovedEvent aq_parent(event.object) is
     # always equal to event.newParent.
-    parent = aq_parent(event.object)
-
+    parent = get_parent(event.object)
     if ITranslatable.providedBy(parent):
         # Normal use case
         # We set the tg, linking
