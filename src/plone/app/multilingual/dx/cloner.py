@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import pkg_resources
-
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
@@ -10,14 +8,15 @@ from plone.dexterity.utils import iterSchemata
 from z3c.relationfield import RelationValue
 from z3c.relationfield.interfaces import IRelationList
 from z3c.relationfield.interfaces import IRelationValue
+from zope.component import getUtility
+from zope.component import queryAdapter
+from zope.interface import implementer
+import pkg_resources
 try:
     pkg_resources.get_distribution('zope.initd')
     from zope.intid.interfaces import IIntIds
 except pkg_resources.DistributionNotFound:
     from zope.app.intid.interfaces import IIntIds
-from zope.component import getUtility
-from zope.component import queryAdapter
-from zope.interface import implementer
 
 _marker = object()
 
