@@ -129,13 +129,6 @@
       layer="..interfaces.IPloneAppMultilingualInstalled"
       permission="zope.Public"/>
 
-  <browser:page
-      name="multilingual-remove-tg-session"
-      for="*"
-      class=".helper_views.remove_tg_session"
-      permission="zope.Public"
-      layer="..interfaces.IPloneAppMultilingualInstalled"/>
-
   <!-- Universal Link -->
   <browser:page
       name="multilingual-universal-link"

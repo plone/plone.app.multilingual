@@ -146,8 +146,6 @@ def createdEvent(obj, event):
     set_recursive_language(obj, language)
 
     request = getattr(event.object, 'REQUEST', getRequest())
-    if request and 'form.widgets.pam_old_lang' not in request.form:
-        return
     try:
         ti = request.translation_info
     except AttributeError:

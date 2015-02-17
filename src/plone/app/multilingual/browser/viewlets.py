@@ -6,6 +6,7 @@ from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.memoize import ram
+from urllib import quote_plus
 from zope.component import getUtility
 
 
@@ -53,6 +54,51 @@ class AddFormIsATranslationViewlet(ViewletBase):
         if self.available:
             return self.index()
         return u""
+
+    def returnURL(self):
+        # Get translation info for getting the translation source
+        translation_info = getattr(self.request, 'translation_info', {})
+        translation_group = translation_info.get('tg')
+        source_language = translation_info.get('source_language')
+
+        if not (translation_group or source_language):
+            return ''
+
+        catalog = getToolByName(self.context, 'portal_catalog')
+        brains = catalog(Language=source_language,
+                         TranslationGroup=translation_group)
+        if len(brains) != 1:
+            return ''
+        source = brains[0].getObject()
+
+        # Get the factory
+        types_tool = getToolByName(source, 'portal_types')
+
+        # Note: we don't check 'allowed' or 'available' here,
+        # because these are slow. We assume the 'allowedTypes'
+        # list has already performed the necessary calculations
+        actions = types_tool.listActionInfos(
+            object=self.context,
+            check_permissions=False,
+            check_condition=False,
+            category='folder/add',
+        )
+
+        addActionsById = dict([(a['id'], a) for a in actions])
+
+        typeId = source.portal_type
+
+        addAction = addActionsById.get(typeId, None)
+        if addAction is None:
+            url = None
+        else:
+            url = addAction['url']
+        if not url:
+            url = '%s/createObject?type_name=%s' % (
+                source.absolute_url(),
+                quote_plus(typeId)
+            )
+        return url
 
     def update(self):
         try:

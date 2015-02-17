@@ -30,24 +30,6 @@ except ImportError:
     from Products.CMFPlone.interfaces.factory import IFactoryTool
 
 
-class remove_tg_session(BrowserView):
-    """ Removed the tg var from session
-    """
-
-    def __call__(self):
-        sdm = self.context.session_data_manager
-        session = sdm.getSessionData(create=True)
-        if 'tg' in session.keys():
-            del session['tg']
-        if 'old_lang' in session.keys():
-            del session['old_lang']
-
-        purl = getToolByName(self.context, 'portal_url')
-        url = self.request.get('redirect', purl())
-
-        self.request.RESPONSE.redirect(url)
-
-
 @implementer(IPublishTraverse)
 class universal_link(BrowserView):
     """ Redirects the user to the negotiated translated page

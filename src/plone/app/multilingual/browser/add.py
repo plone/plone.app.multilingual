@@ -45,12 +45,20 @@ class AddViewTraverser(object):
         self.info = self.request.translation_info
 
     def traverse(self, name, ignored):
-        self.info['target_language'] = ILanguage(self.context)
+        # Populate translation info
+        self.info['target_language'] = ILanguage(self.context).get_language()
+
         catalog = getToolByName(self.context, 'portal_catalog')
-        brains = catalog(UID=name)
+        # Search source object using unrestricted API,
+        # because user may be anonymous during traverse.
+        brains = catalog.unrestrictedSearchResults(UID=name)
         if len(brains) != 1:
             raise TraversalError(self.context, name)
-        source = brains[0].getObject()
+        source = brains[0]._unrestrictedGetObject()
+
+        self.info['source_language'] = ILanguage(source).get_language()
+        self.info['portal_type'] = source.portal_type
+        self.info['tg'] = ITG(source)
 
         # XXX: register this adapter on dx container and a second one for AT
         if not IDexterityContent.providedBy(source):
@@ -58,10 +66,6 @@ class AddViewTraverser(object):
             baseUrl = self.context.absolute_url()
             url = '%s/@@add_at_translation?type=%s' % (baseUrl, name)
             return self.request.response.redirect(url)
-
-        self.info['source_language'] = ILanguage(source)
-        self.info['portal_type'] = source.portal_type
-        self.info['tg'] = ITG(source)
 
         # set the self.context to the place where it should be stored
         if not IFolderish.providedBy(self.context):
@@ -77,14 +81,21 @@ class AddViewTraverser(object):
             )
             raise TraversalError(self.context, name)
 
-        add_view = queryMultiAdapter(
-            (self.context, self.request, ti),
-            name='babel_view'
-        )
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+
+        if not settings.redirect_babel_view:
+            add_view = None
+        else:
+            add_view = queryMultiAdapter(
+                (self.context, self.request, ti),
+                name='babel_view'
+            )
         if add_view is None:
             add_view = queryMultiAdapter((self.context, self.request, ti))
             if add_view is not None:
                 raise TraversalError(self.context, name)
+
         add_view.__name__ = ti.factory
         return add_view.__of__(self.context)
 

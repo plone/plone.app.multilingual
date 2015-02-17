@@ -3,7 +3,6 @@ from AccessControl import getSecurityManager
 from AccessControl.SecurityManagement import newSecurityManager
 from AccessControl.SecurityManagement import setSecurityManager
 from AccessControl.User import UnrestrictedUser
-from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
 from plone.app.multilingual.dx.interfaces import IDexterityTranslatable
 from plone.app.multilingual.interfaces import ILanguage
@@ -14,8 +13,8 @@ from plone.dexterity.interfaces import IDexterityFTI
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 from zope.component import queryAdapter
-from zope.component.hooks import getSite
 from zope.event import notify
+from zope.globalrequest import getRequest
 from zope.lifecycleevent import Attributes
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
@@ -26,15 +25,10 @@ class LanguageIndependentModifier(object):
 
     def __call__(self, content, event):
         """Called by the event system."""
-        if aq_parent(content) is None:
-            # The event is thrown on a non acquired object
-            # so we can't get the session_data_manager
-            sdm = getSite().session_data_manager
-        else:
-            sdm = getToolByName(content, 'session_data_manager')
+        request = getattr(event.object, 'REQUEST', getRequest())
+        translation_info = getattr(request, 'translation_info', {})
 
-        session = sdm.getSessionData()
-        if 'tg' in session.keys():
+        if 'tg' in translation_info.keys():
             # In case it's a on the fly translation avoid
             return
 

@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_inner
-from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from plone.app.multilingual import _
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.registry.interfaces import IRegistry
-from urllib import quote_plus
+from plone.uuid.interfaces import IUUID
 from zope.component import getUtility
 import json
 import urllib
@@ -82,50 +81,7 @@ class TranslationForm(BrowserView):
         if language:
             context = aq_inner(self.context)
             translation_manager = ITranslationManager(context)
-
             new_parent = translation_manager.add_translation_delegated(language)  # noqa
-
-            registry = getUtility(IRegistry)
-            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
-            sdm = self.context.session_data_manager
-            session = sdm.getSessionData(create=True)
-            session.set("tg", translation_manager.tg)
-            session.set("old_lang", ILanguage(self.context).get_language())
-
             baseUrl = new_parent.absolute_url()
-            # We set the language and redirect to babel_view or not
-            if settings.redirect_babel_view:
-                # Call the ++addtranslation++ adapter to show the babel
-                # add form
-                url = '%s/++addtranslation++%s' % (
-                    baseUrl, self.context.portal_type)
-                return self.request.response.redirect(url)
-            else:
-                # We look for the creation url for this content type
-
-                # Get the factory
-                types_tool = getToolByName(self.context, 'portal_types')
-
-                # Note: we don't check 'allowed' or 'available' here,
-                # because these are slow. We assume the 'allowedTypes'
-                # list has already performed the necessary calculations
-                actions = types_tool.listActionInfos(
-                    object=new_parent,
-                    check_permissions=False,
-                    check_condition=False,
-                    category='folder/add',
-                )
-
-                addActionsById = dict([(a['id'], a) for a in actions])
-
-                typeId = self.context.portal_type
-
-                addAction = addActionsById.get(typeId, None)
-
-                if addAction is not None:
-                    url = addAction['url']
-
-                if not url:
-                    url = '%s/createObject?type_name=%s' % (
-                        baseUrl, quote_plus(typeId))
-                return self.request.response.redirect(url)
+            url = '%s/++addtranslation++%s' % (baseUrl, IUUID(context))
+            return self.request.response.redirect(url)
