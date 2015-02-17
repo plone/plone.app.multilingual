@@ -32,6 +32,10 @@ class TranslateMenu(BrowserMenu):
     def getMenuItems(self, context, request):
         """Return menu item entries in a TAL-friendly form.
         """
+        try:
+            lang_names = request.locale.displayNames.languages
+        except AttributeError:
+            lang_names = {}
         menu = []
         url = context.absolute_url()
         lt = getToolByName(context, "portal_languages")
@@ -78,7 +82,7 @@ class TranslateMenu(BrowserMenu):
 
                 ulangs = untranslated_languages(context)
                 for lang in ulangs:
-                    lang_name = lang.title
+                    lang_name = lang_names.get(lang.value, lang.title)
                     lang_id = lang.value
                     icon = showflags and lt.getFlagForLanguageCode(lang_id)\
                         or None
@@ -115,7 +119,7 @@ class TranslateMenu(BrowserMenu):
                     if lang.value not in urls.by_token:
                         # omit if translation is not permitted to access.
                         continue
-                    lang_name = lang.title
+                    lang_name = lang_names.get(lang.value, lang.title)
                     lang_id = lang.value
                     icon = showflags and lt.getFlagForLanguageCode(lang_id)\
                         or None
