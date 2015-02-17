@@ -32,32 +32,6 @@
       name="addtranslation"
       factory=".add.AddViewTraverser"/>
 
-  <adapter
-      name="plone.app.multilingual.addtranslation.marker"
-      provides="plone.z3cform.fieldsets.interfaces.IFormExtender"
-      for="*
-      plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled
-      plone.app.multilingual.browser.add.MultilingualAddForm"
-      factory=".add.MultilingualAddFormExtender"/>
-
-  <adapter
-      provides="z3c.form.interfaces.IDataManager"
-      for="*
-      .add.IMultilingualAddFormMarkerFieldMarker"
-      factory=".add.FauxDataManager"/>
-
-  <adapter
-      name="default"
-      provides="z3c.form.interfaces.IValue"
-      factory=".add.MultilingualAddFormTgValue"/>
-
-
-
-  <adapter
-      name="default"
-      provides="z3c.form.interfaces.IValue"
-      factory=".add.MultilingualAddFormOldLangValue"/>
-
   <browser:page
       name="add_translations"
       for="plone.app.multilingual.interfaces.ITranslatable"

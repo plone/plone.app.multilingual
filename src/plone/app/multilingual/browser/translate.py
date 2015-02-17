@@ -74,21 +74,14 @@ class gtranslation_service_dexterity(BrowserView):
 
 
 class TranslationForm(BrowserView):
-    """ Translation Form """
+    """Translation Form
+    """
 
     def __call__(self):
         language = self.request.get('language', None)
         if language:
             context = aq_inner(self.context)
             translation_manager = ITranslationManager(context)
-            # if ILanguage(context).get_language() == LANGUAGE_INDEPENDENT:
-            #     # XXX : Why we need this ? the subscriber from pm should
-            #             maintain it
-            #     language_tool = getToolByName(context, 'portal_languages')
-            #     default_language = language_tool.getDefaultLanguage()
-            #     ILanguage(context).set_language(default_language)
-            #     translation_manager.update()
-            #     context.reindexObject()
 
             new_parent = translation_manager.add_translation_delegated(language)  # noqa
 
