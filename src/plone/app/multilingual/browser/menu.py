@@ -51,6 +51,14 @@ class TranslateMenu(BrowserMenu):
             ILanguage(context).get_language() == LANGUAGE_INDEPENDENT
             or is_language_independent(context)
         )
+
+        shared_folder_url = site_url + '/folder_contents'
+        pc = getToolByName(getSite(), 'portal_catalog')
+        results = pc.unrestrictedSearchResults(
+            portal_type='LIF', Language=ILanguage(context).get_language())
+        for brain in results:
+            shared_folder_url = brain.getURL() + '/folder_contents'
+
         if not is_neutral_content and not INavigationRoot.providedBy(context):
             menu.append({
                 "title": _(
@@ -249,7 +257,7 @@ class TranslateMenu(BrowserMenu):
                     default=u"Show the language shared (neutral language) "
                             u"folder"
                 ),
-                "action": site_url + '/folder_contents',
+                "action": shared_folder_url,
                 "selected": False,
                 "icon": None,
                 "extra": {
