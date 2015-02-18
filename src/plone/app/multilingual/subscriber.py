@@ -135,7 +135,7 @@ class CreationEvent(object):
         self.obj = obj
         self.event = event
 
-        if IObjectRemovedEvent.providedBy(event):
+        if not self.is_translatable:
             return
         # On ObjectCopiedEvent and ObjectMovedEvent aq_parent(event.object) is
         # always equal to event.newParent.
@@ -148,6 +148,11 @@ class CreationEvent(object):
             self.handle_created()
         else:
             set_recursive_language(obj, LANGUAGE_INDEPENDENT)
+
+    @property
+    def is_translatable(self):
+        return (not IObjectRemovedEvent.providedBy(self.event)
+                and IDexterityContent.providedBy(self.obj))
 
     @property
     def has_pam_old_lang_in_form(self):
