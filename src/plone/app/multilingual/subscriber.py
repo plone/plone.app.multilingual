@@ -11,6 +11,7 @@ from plone.app.multilingual.interfaces import IMutableTG
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
+from plone.dexterity.interfaces import IDexterityContent
 from plone.uuid.interfaces import IUUID
 from zope.component.hooks import getSite
 from zope.globalrequest import getRequest
@@ -134,7 +135,7 @@ class CreationEvent(object):
         self.obj = obj
         self.event = event
 
-        if IObjectRemovedEvent.providedBy(event):
+        if not self.is_translatable:
             return
         # On ObjectCopiedEvent and ObjectMovedEvent aq_parent(event.object) is
         # always equal to event.newParent.
@@ -147,6 +148,11 @@ class CreationEvent(object):
             self.handle_created()
         else:
             set_recursive_language(obj, LANGUAGE_INDEPENDENT)
+
+    @property
+    def is_translatable(self):
+        return (not IObjectRemovedEvent.providedBy(self.event)
+                and IDexterityContent.providedBy(self.obj))
 
     @property
     def has_pam_old_lang_in_form(self):
