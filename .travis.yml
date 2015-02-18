@@ -1,39 +1,33 @@
 language: python
 python:
-- 2.6
 - 2.7
+sudo: false
+addons:
+  artifacts:
+    paths:
+    - parts/test
+cache:
+  directories:
+  - eggs
 env:
   matrix:
-  - PLONE_VERSION=4.2
   - PLONE_VERSION=4.3
   - PLONE_VERSION=5.0
   global:
-  - ARTIFACTS_S3_BUCKET=plone.app.multilingual
-  - secure: nIhZCx2JXPSBllk9wQEscZ6qwRtQ2Z8gWZOTipVDjKCnls0J/qthd6svAVW3S+smHwWuQKMogym5xYWbH1kGbE/EZgYZJV4N8vDodpcbpW6HS2O85Zlb2PYcLMcxGy22RRahvJ39TaPMsq7uQMQA7rzZsLFlBxx3FSKd6pDUEE0=
-  - secure: fFW5rZPBumVoho2bHaTRyzOZr/2ZCQtwnCqobjnTxf6Upv4qf46Mqg+OApDhMo75Plqt+KupVO9gkYYK4IEoMxinUwxK0Weo51xiUZG3v3PR+vyj4BM1iNlwvzVvQg30FBDGB/a+DuhvQHeCvXE9pgcU3lXkLdO6UK7Xpc+qB7Q=
+  - ARTIFACTS_KEY=AKIAJP4TGKGJABPQ7YVA
+  - ARTIFACTS_BUCKET=plone-app-multilingual
+  - ARTIFACTS_CACHE_CONTROL=public
+  - ARTIFACTS_PERMISSIONS=public-read
+  - secure: "cTwAxlU9LxjLxQ8Gl4yUGKFmvsZmsAQlsRQQ3jwalnYT3ZHFlt3wxEe4u09Foj0ZTst9HWjfVc22sIHX9xiI96cS770uEjPY0Xc5jYidBGHG3FIcYpEAOcWbyF0tAfiQKTuxfR6lGIDcWzjF4Aj8dOAQ4tGBN0eg1OPUEQ9lzmY="
 matrix:
   allow_failures:
-  - python: 2.6
-    env: PLONE_VERSION=4.2
   - python: 2.7
-    env: PLONE_VERSION=4.2
-  - python: 2.7
-    env: PLONE_VERSION=5.0
-  exclude:
-  - python: 2.6
-    env: PLONE_VERSION=4.3
-  - python: 2.6
     env: PLONE_VERSION=5.0
 install:
-- sed -ie "s#test-plone-4.x.cfg#test-plone-$PLONE_VERSION.x.cfg#" travis.cfg
-- mkdir -p buildout-cache/downloads
-- python bootstrap.py --setuptools-version=8.3 --version=2.3.1 -c travis.cfg
-- bin/buildout -N -t 3 -c travis.cfg
+- sed -ie "s#test-plone-4.3.x.cfg#test-plone-$PLONE_VERSION.x.cfg#" buildout.cfg
+- python bootstrap.py --setuptools-version=8.3 --version=2.3.1
+- bin/buildout -N -t 3
 before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 script: bin/test --all -s plone.app.multilingual -t \!\#Plone5
-after_script:
-- gem install --version 0.8.9 faraday
-- gem install travis-artifacts
-- travis-artifacts upload --path parts/test

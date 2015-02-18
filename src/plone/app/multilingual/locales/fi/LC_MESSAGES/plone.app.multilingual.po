@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2013-07-05 11:58+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"PO-Revision-Date: 2015-02-18 10:06+0200\n"
 "Last-Translator: Asko Soukka <asko.soukka@iki.fi>\n"
 "Language-Team: Finnish <https://github.com/collective>\n"
 "MIME-Version: 1.0\n"
@@ -138,12 +138,12 @@ msgstr "<a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\">Haluan luoda täm�
 #. Default: "Create ${lang_name}"
 #: ./browser/menu.py:87
 msgid "create_translation"
-msgstr "Käännä ${lang_name}"
+msgstr "Käännä kielelle ${lang_name}"
 
 #. Default: "Create ${lang_name} folder"
 #: ./browser/menu.py:84
 msgid "create_translation_folder"
-msgstr "Luo kansio ${lang_name}"
+msgstr "Lisää kielikansio kielelle ${lang_name}"
 
 #. Default: "Add existing content as translation"
 #: ./browser/menu.py:124
@@ -168,12 +168,12 @@ msgstr "Kielet, joille tämän sivuston sisältöä tulisi kääntää"
 #. Default: "Edit with the babel_edit"
 #: ./browser/menu.py:46
 msgid "description_babel_edit"
-msgstr "Muokkaa rinnakkaisnäkymässä"
+msgstr "Muokkaa käännösnäkymässä"
 
 #. Default: "Babel edit ${lang_name}"
 #: ./browser/menu.py:102
 msgid "description_babeledit_menu"
-msgstr "Muokkaa rinnakkain kieltä ${lang_name}"
+msgstr "Muokkaa käännösnäkymässä kieliversiota ${lang_name}"
 
 #. Default: "Use browser language request negotiation."
 #: ./browser/controlpanel.py:182
@@ -606,32 +606,32 @@ msgstr ""
 #. Default: "Go to shared folder"
 #: ./browser/menu.py:189
 msgid "shared_folder"
-msgstr ""
+msgstr "Siirry jaettuun kansioon"
 
 #. Default: "Add translations..."
 #: ./browser/menu.py:136
 msgid "title_add_translations"
-msgstr ""
+msgstr "Linkitä käännöksiä..."
 
 #. Default: "Add translations for folder..."
 #: ./browser/menu.py:134
 msgid "title_add_translations_folder"
-msgstr ""
+msgstr "Linkitä käännöksiä kansiolle..."
 
 #. Default: "Available languages"
 #: ./browser/interfaces.py:41
 msgid "title_available_languages"
-msgstr ""
+msgstr "Kielet"
 
 #. Default: "Edit with babel view"
 #: ./browser/menu.py:44
 msgid "title_babel_edit"
-msgstr ""
+msgstr "Muokkaa käännösnäkymässä"
 
 #. Default: "Language"
 #: ./browser/interfaces.py:33
 msgid "title_language"
-msgstr ""
+msgstr "Kieli"
 
 #: ./browser/interfaces.py:67
 msgid "title_languages"
@@ -640,17 +640,17 @@ msgstr ""
 #. Default: "Remove translations..."
 #: ./browser/menu.py:141
 msgid "title_remove_translations"
-msgstr ""
+msgstr "Poista käännöksiä..."
 
 #. Default: "Set content language"
 #: ./browser/menu.py:204
 msgid "title_set_language"
-msgstr "Aseta sisällön kieli"
+msgstr "Aseta kieli"
 
 #. Default: "Manage translations for your content."
 #: ./browser/menu.py:224
 msgid "title_translate_menu"
-msgstr "Hallitse sisällön käännöksiä."
+msgstr "Hallitse käännöksiä"
 
 #. Default: "Translations:"
 #: ./browser/templates/mmap.pt:150
@@ -665,7 +665,7 @@ msgstr "Käännös kielelle ${language}"
 #. Default: "Universal Link"
 #: ./browser/menu.py:174
 msgid "universal_link"
-msgstr "Kielineutraali linkki"
+msgstr "Kieliriippumaton linkki"
 
 #: ./browser/remove_translation_form.py:29
 msgid "unlink selected"
