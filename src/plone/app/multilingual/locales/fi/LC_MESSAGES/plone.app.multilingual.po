@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2013-07-05 11:58+0000\n"
-"PO-Revision-Date: 2015-02-18 10:06+0200\n"
+"PO-Revision-Date: 2015-02-18 11:45+0200\n"
 "Last-Translator: Asko Soukka <asko.soukka@iki.fi>\n"
 "Language-Team: Finnish <https://github.com/collective>\n"
 "MIME-Version: 1.0\n"
@@ -148,7 +148,7 @@ msgstr "Lisää kielikansio kielelle ${lang_name}"
 #. Default: "Add existing content as translation"
 #: ./browser/menu.py:124
 msgid "description_add_translations"
-msgstr "Aseta olemassaoleva käännös"
+msgstr "Linkitä jokin olemassaoleva sivu tämän sivun käännnökseksi"
 
 #. Default: "This step will fix some lost dependencies to the ITranslatable interface hidden in the relation catalog and it gets rid of them. It must be run only when LinguaPlone is already uninstalled."
 #: ./browser/templates/migration.pt:225
@@ -168,7 +168,7 @@ msgstr "Kielet, joille tämän sivuston sisältöä tulisi kääntää"
 #. Default: "Edit with the babel_edit"
 #: ./browser/menu.py:46
 msgid "description_babel_edit"
-msgstr "Muokkaa käännösnäkymässä"
+msgstr "Muokkaa käännösnäkymässä rinnakkain toisen kieliversion kanssa"
 
 #. Default: "Babel edit ${lang_name}"
 #: ./browser/menu.py:102
@@ -253,7 +253,7 @@ msgstr ""
 #. Default: "Delete translations or remove the relations"
 #: ./browser/menu.py:143
 msgid "description_remove_translations"
-msgstr ""
+msgstr "Poista vanhoja käännöksiä tai riko käännöslinkkejä poistamatta sisältöä"
 
 #. Default: "The default language used for the content and the UI of this site."
 #: ./browser/controlpanel.py:206
@@ -268,7 +268,7 @@ msgstr ""
 #. Default: "Set or change the current content language"
 #: ./browser/menu.py:206
 msgid "description_set_language"
-msgstr ""
+msgstr "Aseta tai vaihda tämän sivun kielimääritys"
 
 #. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
 #: ./browser/controlpanel.py:156
@@ -278,7 +278,7 @@ msgstr ""
 #. Default: "Show the language shared (neutral language) folder"
 #: ./browser/menu.py:191
 msgid "description_shared_folder"
-msgstr ""
+msgstr "Siirry kieliriippumattoman eli jaetun sisällön kansioon"
 
 #. Default: "The default language used for the content and the UI of this site."
 #: ./browser/controlpanel.py:53
@@ -298,7 +298,7 @@ msgstr ""
 #. Default: "Translate into ${lang_name}"
 #: ./browser/menu.py:71
 msgid "description_translate_into"
-msgstr "Käännä kielelle ${lang_name}"
+msgstr "Tee tästä sivustä uusi käännös kielelle ${lang_name}"
 
 #. Default: "Translation map."
 #: ./browser/templates/mmap.pt:101
@@ -308,7 +308,7 @@ msgstr "Käännöskartta"
 #. Default: "Universal Language content link"
 #: ./browser/menu.py:176
 msgid "description_universal_link"
-msgstr "Kielineutraali linkki"
+msgstr "Kieliriippumaton linkki ohjaa suoraan käyttäjän omankieliseen versioon"
 
 #. Default: "Untranslated languages from the current content"
 #: ./browser/interfaces.py:42
@@ -645,7 +645,7 @@ msgstr "Poista käännöksiä..."
 #. Default: "Set content language"
 #: ./browser/menu.py:204
 msgid "title_set_language"
-msgstr "Aseta kieli"
+msgstr "Määritä tämän sivun kieli"
 
 #. Default: "Manage translations for your content."
 #: ./browser/menu.py:224
