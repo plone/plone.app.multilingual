@@ -60,6 +60,13 @@ class AddViewTraverser(object):
         self.info['portal_type'] = source.portal_type
         self.info['tg'] = ITG(source)
 
+        # If source has already been translated to this language, just redirect
+        for brain in catalog.unrestrictedSearchResults(
+                TranslationGroup=self.info['tg'],
+                Language=self.info['target_language']):
+            self.request.response.redirect(brain.getURL())
+            return u''
+
         # XXX: register this adapter on dx container and a second one for AT
         if not IDexterityContent.providedBy(source):
             # we are not on DX content, assume AT
