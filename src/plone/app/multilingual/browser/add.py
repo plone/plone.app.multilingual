@@ -71,6 +71,7 @@ class AddViewTraverser(object):
         if not IDexterityContent.providedBy(source):
             # we are not on DX content, assume AT
             self.context.REQUEST.set('type', name)
+            self.context.REQUEST.set('translation_info', self.info)
             view = queryMultiAdapter((self.context, self.context.REQUEST),
                                      name="add_at_translation")
             return view.__of__(self.context)
