@@ -178,15 +178,20 @@ class CreationEvent(object):
         return sdm.getSessionData()
 
     def handle_created(self):
-        session = self.get_session(self.obj)
-        if self.is_new_translation(session):
-            IMutableTG(self.obj).set(session['tg'])
-            modified(self.obj)
-            del session['tg']
-            tm = ITranslationManager(self.obj)
-            old_obj = tm.get_translation(session['old_lang'])
-            ILanguageIndependentFieldsManager(old_obj).copy_fields(self.obj)
-            del session['old_lang']
+        try:
+            ti = self.get_translation_info()
+        except AttributeError:
+            return
+
+        IMutableTG(self.obj).set(ti['tg'])
+        modified(self.obj)
+        tm = ITranslationManager(self.obj)
+        old_obj = tm.get_translation(ti['source_language'])
+        ILanguageIndependentFieldsManager(old_obj).copy_fields(self.obj)
+
+    def get_translation_info(self):
+        request = getattr(self.event.object, 'REQUEST', getRequest())
+        return request.translation_info
 
 
 createdEvent = CreationEvent()
