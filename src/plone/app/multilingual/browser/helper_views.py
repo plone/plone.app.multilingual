@@ -5,7 +5,7 @@ from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.PloneLanguageTool.interfaces import INegotiateLanguage
+from plone.i18n.interfaces import INegotiateLanguage
 from borg.localrole.interfaces import IFactoryTempFolder
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies

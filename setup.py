@@ -35,7 +35,7 @@ setup(
         'plone.app.z3cform',
         'plone.app.registry',
         'plone.formwidget.contenttree',
-        'Products.PloneLanguageTool',
+        # 'Products.PloneLanguageTool',
     ],
     extras_require={
         'archetypes': ['archetypes.multilingual'],
