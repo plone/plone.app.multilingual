@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0a4 (unreleased)
+2.0a4 (2015-03-04)
 ------------------
 
 - Remove dependency on zope.app.container and zope.app.initd
