@@ -73,13 +73,10 @@
   <browser:page
       name="language-controlpanel"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      class=".controlpanel.LanguageControlPanel"
+      class=".controlpanel.LanguageControlPanelPAM"
       permission="plone.app.controlpanel.Language"
       layer="..interfaces.IPloneAppMultilingualInstalled"/>
-  <adapter factory=".controlpanel.MultiLanguageControlPanelAdapter"/>
-  <adapter factory=".controlpanel.MultiLanguageOptionsControlPanelAdapter"/>
   <adapter factory=".controlpanel.MultiLanguageExtraOptionsAdapter"/>
-  <adapter factory=".controlpanel.MultiLanguagePoliciesAdapter"/>
 
 
   <!-- Migration Tab -->

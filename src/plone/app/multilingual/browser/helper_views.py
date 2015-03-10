@@ -8,7 +8,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.i18n.interfaces import INegotiateLanguage
 from borg.localrole.interfaces import IFactoryTempFolder
 from plone.app.layout.navigation.interfaces import INavigationRoot
-from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
 from plone.app.multilingual.browser.selector import addQuery
 from plone.app.multilingual.interfaces import ILanguageRootFolder
@@ -211,7 +211,7 @@ class selector_view(universal_link):
             url = self.wrapDestination(url)
         else:
             registry = getUtility(IRegistry)
-            policies = registry.forInterface(IMultiLanguagePolicies)
+            policies = registry.forInterface(IMultiLanguageExtraOptionsSchema)
             if policies.selector_lookup_translations_policy == 'closest':
                 url = self.getClosestDestination()
             else:
