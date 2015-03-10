@@ -68,10 +68,9 @@ class ValueBase(object):
 class AddingLanguageIndependentValue(ValueBase):
     # XXX Deprecated ???
     def getTranslationUuid(self):
-        sdm = self.context.session_data_manager
-        session = sdm.getSessionData(create=True)
-        if 'tg' in session.keys():
-            return session['tg']
+        translation_info = getattr(self.request, 'translation_info', {})
+        if 'tg' in translation_info.keys():
+            return translation_info['tg']
 
     def get(self):
         uuid = self.getTranslationUuid()

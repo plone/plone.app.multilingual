@@ -8,33 +8,28 @@ from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.app.multilingual.dx.interfaces import IMultilingualAddForm
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
-from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import ITranslationManager
-from plone.autoform import directives
 from plone.autoform.form import AutoExtensibleForm
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.dexterity.browser.add import DefaultAddForm
 from plone.dexterity.browser.add import DefaultAddView
-from plone.dexterity.interfaces import IDexterityFTI
+from plone.dexterity.interfaces import IDexterityContent
 from plone.registry.interfaces import IRegistry
-from plone.supermodel import model
-from plone.z3cform.fieldsets import extensible
 from plone.z3cform.fieldsets.group import Group
-from plone.z3cform.fieldsets.interfaces import IFormExtender
 from z3c.form import button
 from z3c.form.form import Form
-from z3c.form.interfaces import HIDDEN_MODE
-from z3c.form.interfaces import NO_VALUE
-from z3c.form.widget import ComputedWidgetAttribute
-from zope import schema
 from zope.component import adapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
 from zope.interface import Interface
-from zope.interface import alsoProvides
 from zope.interface import implementer
 from zope.traversing.interfaces import ITraversable
 from zope.traversing.interfaces import TraversalError
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 @adapter(IFolderish, Interface)
@@ -46,28 +41,70 @@ class AddViewTraverser(object):
     def __init__(self, context, request):
         self.context = context
         self.request = request
+        self.request.translation_info = dict()
+        self.info = self.request.translation_info
 
     def traverse(self, name, ignored):
-        ttool = getToolByName(self.context, 'portal_types')
-        ti = ttool.getTypeInfo(name)
-        if not IDexterityFTI.providedBy(ti):
-            # we are not on DX content
+        # Populate translation info
+        self.info['target_language'] = ILanguage(self.context).get_language()
+
+        catalog = getToolByName(self.context, 'portal_catalog')
+        # Search source object using unrestricted API,
+        # because user may be anonymous during traverse.
+        brains = catalog.unrestrictedSearchResults(UID=name)
+        if len(brains) != 1:
+            raise TraversalError(self.context, name)
+        source = brains[0]._unrestrictedGetObject()
+
+        self.info['source_language'] = ILanguage(source).get_language()
+        self.info['portal_type'] = source.portal_type
+        self.info['tg'] = ITG(source)
+
+        # If source has already been translated to this language, just redirect
+        for brain in catalog.unrestrictedSearchResults(
+                TranslationGroup=self.info['tg'],
+                Language=self.info['target_language']):
+            self.request.response.redirect(brain.getURL())
+            return u''
+
+        # XXX: register this adapter on dx container and a second one for AT
+        if not IDexterityContent.providedBy(source):
+            # we are not on DX content, assume AT
             baseUrl = self.context.absolute_url()
             url = '%s/@@add_at_translation?type=%s' % (baseUrl, name)
             return self.request.response.redirect(url)
+
         # set the self.context to the place where it should be stored
         if not IFolderish.providedBy(self.context):
             self.context = self.context.__parent__
-        if ti is not None:
-            add_view = queryMultiAdapter((self.context, self.request, ti),
-                                         name='babel_view')
-            if add_view is None:
-                add_view = queryMultiAdapter((self.context, self.request, ti))
-            if add_view is not None:
-                add_view.__name__ = ti.factory
-                return add_view.__of__(self.context)
 
-        raise TraversalError(self.context, name)
+        # get the type information
+        ttool = getToolByName(self.context, 'portal_types')
+        ti = ttool.getTypeInfo(self.info['portal_type'])
+
+        if ti is None:
+            logger.error('No type information found for {0}'.format(
+                self.info['portal_type'])
+            )
+            raise TraversalError(self.context, name)
+
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+
+        if not settings.redirect_babel_view:
+            add_view = None
+        else:
+            add_view = queryMultiAdapter(
+                (self.context, self.request, ti),
+                name='babel_view'
+            )
+        if add_view is None:
+            add_view = queryMultiAdapter((self.context, self.request, ti))
+            if add_view is not None:
+                raise TraversalError(self.context, name)
+
+        add_view.__name__ = ti.factory
+        return add_view.__of__(self.context)
 
 
 @implementer(IMultilingualAddForm)
@@ -132,105 +169,6 @@ class MultilingualAddForm(DefaultAddForm):
         self._process_language_independent(self.fields, self.widgets)
         for group in self.groups:
             self._process_language_independent(group.fields, group.widgets)
-
-
-class IMultilingualAddFormMarkerFieldMarker(Interface):
-    """Marker interfaces for add form marker fields"""
-
-
-class IMultilingualAddFormMarker(model.Schema):
-    """Marker metadata fields for multilingual add form"""
-    directives.mode(pam_tg=HIDDEN_MODE)
-    pam_tg = schema.ASCIILine(title=u"Translated content")
-    pam_old_lang = schema.ASCIILine(title=u"Old language")
-
-alsoProvides(
-    IMultilingualAddFormMarker['pam_tg'],
-    IMultilingualAddFormMarkerFieldMarker
-)
-
-alsoProvides(
-    IMultilingualAddFormMarker['pam_old_lang'],
-    IMultilingualAddFormMarkerFieldMarker
-)
-
-
-def get_multilingual_add_form_tg_value(adapter):
-    session_manager = getToolByName(adapter.context, 'session_data_manager')
-    session_data = session_manager.getSessionData()
-    return session_data.get('tg', '')
-
-
-MultilingualAddFormTgValue = ComputedWidgetAttribute(
-    get_multilingual_add_form_tg_value,
-    context=None, request=None, view=None, widget=None,
-    field=IMultilingualAddFormMarker['pam_tg']
-)
-
-
-def get_multilingual_add_form_old_lang_value(adapter):
-    session_manager = getToolByName(adapter.context, 'session_data_manager')
-    session_data = session_manager.getSessionData()
-    return session_data.get('old_lang', '')
-
-
-MultilingualAddFormOldLangValue = ComputedWidgetAttribute(
-    get_multilingual_add_form_old_lang_value,
-    context=None, request=None, view=None, widget=None,
-    field=IMultilingualAddFormMarker['pam_old_lang']
-)
-
-
-class FauxDataManager(object):
-    """Data manager for marker fields, which are not meant to be saved"""
-
-    def __init__(self, context, field):
-        self.context = context
-        self.field = field
-
-    def get(self):
-        raise AttributeError
-
-    def query(self, default=NO_VALUE):
-        return default
-
-    def set(self, value):
-        pass
-
-    def canAccess(self):
-        return False
-
-    def canWrite(self):
-        return False
-
-
-@implementer(IFormExtender)
-@adapter(Interface, IPloneAppMultilingualInstalled, MultilingualAddForm)
-class MultilingualAddFormExtender(extensible.FormExtender):
-
-    def __init__(self, context, request, form):
-        self.context = context
-        self.request = request
-        self.form = form
-
-    def update(self):
-        groups = getattr(self.form, 'groups', None)
-        if isinstance(groups, list) and len(groups):
-            for group in groups:
-                alsoProvides(group, IMultilingualAddForm)
-
-            group = groups[-1].__name__
-        else:
-            group = None
-
-        self.add(IMultilingualAddFormMarker, prefix='', group=group)
-
-        if group is None:
-            for name in IMultilingualAddFormMarker:
-                self.form.fields[name].mode = HIDDEN_MODE
-        else:
-            for name in IMultilingualAddFormMarker:
-                self.form.groups[-1].fields[name].mode = HIDDEN_MODE
 
 
 class DefaultMultilingualAddView(DefaultAddView):

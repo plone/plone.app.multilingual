@@ -56,6 +56,33 @@ class TestForm(unittest.TestCase):
         self.assertIn('translate_into_es', self.browser.contents)
         self.assertNotIn('translate_into_en', self.browser.contents)
 
+    def test_translation_form_prevents_translating_twice(self):
+        a_ca = createContentInContainer(
+            self.portal['ca'], 'Document', title=u"Test document")
+
+        transaction.commit()
+
+        # Translate content
+        self.browser.open(
+            a_ca.absolute_url() + '/@@create_translation?language=en')
+
+        # Save ++add++translation... URL
+        add_translation_url = self.browser.url
+
+        # Fill in translation details
+        self.browser.getControl(
+            name="form.widgets.IDublinCore.title").value = u"Test document"
+        self.browser.getControl(name="form.buttons.save").click()
+
+        self.portal._p_jar.sync()
+
+        # Revisit the saved ++add++translation... URL
+        self.browser.open(add_translation_url)
+
+        # Which should now redirect to the created translation
+        self.assertEqual(self.portal['en']['test-document'].absolute_url(),
+                         self.browser.url)
+
     def test_translation_can_be_unregistered(self):
         a_ca = createContentInContainer(
             self.portal['ca'], 'Document', title=u"Test document")

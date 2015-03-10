@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
-from Testing import ZopeTestCase as ztc
+from Testing import ZopeTestCase
 from email.header import Header
 from plone.app.contenttypes.testing import PLONE_APP_CONTENTTYPES_FIXTURE
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
@@ -35,12 +35,15 @@ import plone.app.multilingual
 
 
 class Sessions(z2.Layer):
+    # DEPRECATED: Sessions layer is no longer used by plone.app.multilingual,
+    # but is preserved to prevent breaking 3rd party tests setups, which
+    # possibly depending on it.
 
     defaultBases = (PLONE_FIXTURE,)
 
     def setUp(self):
         with z2.zopeApp() as app:
-            ztc.utils.setupCoreSessions(app)
+            ZopeTestCase.utils.setupCoreSessions(app)
 
     def testTearDown(self):
         with z2.zopeApp() as app:
@@ -57,7 +60,7 @@ SESSIONS_FIXTURE = Sessions()
 
 class PloneAppMultilingualLayer(PloneSandboxLayer):
 
-    defaultBases = (SESSIONS_FIXTURE, PLONE_APP_CONTENTTYPES_FIXTURE)
+    defaultBases = (PLONE_APP_CONTENTTYPES_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
         # Configure ZCML
