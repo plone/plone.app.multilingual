@@ -6,7 +6,7 @@ from logging import getLogger
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.multilingual.dx.interfaces import IDexterityTranslatable
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT

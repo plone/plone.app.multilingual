@@ -27,16 +27,6 @@ class ILanguageIndependentFolder(Interface):
     """
 
 
-# Language-support
-class ILanguage(Interface):
-
-    def get_language(self):
-        """ return the contents language """
-
-    def set_language(self):
-        """ return the contents language """
-
-
 # Marker interface
 class ITranslatable(Interface):
     """Marker interface for content types that support translation"""

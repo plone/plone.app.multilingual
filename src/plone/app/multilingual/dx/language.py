@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # from plone.app.dexterity.behaviors.metadata import ICategorization
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from zope.interface import implementer
 

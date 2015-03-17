@@ -12,7 +12,7 @@ from plone.app.form.validators import null_validator
 from plone.app.multilingual import isLPinstalled
 from plone.app.multilingual.browser.migrator import portal_types_blacklist
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.uuid.utils import uuidToObject
 from plone.protect import CheckAuthenticator

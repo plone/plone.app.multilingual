@@ -9,7 +9,7 @@ from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.multilingual import _
 from plone.app.multilingual.content.lrf import LanguageRootFolder
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.locking.interfaces import ILockable
 from zc.relation.interfaces import ICatalog

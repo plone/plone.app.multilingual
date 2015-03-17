@@ -7,7 +7,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFolder
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITranslationLocator

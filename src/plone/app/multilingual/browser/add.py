@@ -6,7 +6,7 @@ from plone.app.multilingual import _
 from plone.app.multilingual.browser.interfaces import IAddTranslation
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.app.multilingual.dx.interfaces import IMultilingualAddForm
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import ITranslationManager

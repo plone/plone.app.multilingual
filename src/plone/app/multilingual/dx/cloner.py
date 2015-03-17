@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
 from plone.app.multilingual.interfaces import ITranslationCloner
 from plone.app.multilingual.interfaces import ITranslationManager

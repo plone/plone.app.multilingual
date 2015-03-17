@@ -11,7 +11,7 @@ from plone.app.multilingual.browser.utils import is_language_independent
 from plone.app.multilingual.browser.vocabularies import translated_languages
 from plone.app.multilingual.browser.vocabularies import translated_urls
 from plone.app.multilingual.browser.vocabularies import untranslated_languages
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.interfaces import ITranslationManager
