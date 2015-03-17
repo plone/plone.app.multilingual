@@ -6,7 +6,8 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from Products.CMFPlone.controlpanel.bbb.language import LanguageControlPanelAdapter
 from Products.CMFPlone.controlpanel.browser.language import LanguageControlPanelForm
-from Products.CMFPlone.controlpanel.browser.language import LanguageControlPanel
+from plone.app.registry.browser import controlpanel
+
 from plone.app.form.validators import null_validator
 from plone.app.multilingual import isLPinstalled
 from plone.app.multilingual.browser.migrator import portal_types_blacklist
@@ -63,7 +64,7 @@ class IControlPanelLanguageOptions(IMultiLanguageExtraOptionsSchema):
 
 
 class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
-    implementsOnly(IControlPanelLanguageOptions)
+    implementsOnly(IMultiLanguageExtraOptionsSchema)
 
     def __init__(self, context):
         self.context = context
@@ -153,11 +154,11 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
 # policies.label = _(u'Policies')
 
 
-class LanguageControlPanelPAM(LanguageControlPanelForm):
+class LanguageControlPanelFormPAM(LanguageControlPanelForm):
     """A modified language control panel, allows selecting multiple languages.
     """
 
-    template = ViewPageTemplateFile('templates/controlpanel.pt')
+    # template = ViewPageTemplateFile('templates/controlpanel.pt')
 
     # form_fields = FormFieldsets(
     #     selection, options, policies, extras)
@@ -166,7 +167,7 @@ class LanguageControlPanelPAM(LanguageControlPanelForm):
     description = _("pam_controlpanel_description",
                     default=u"All the configuration of "
                             u"a multilingual Plone site")
-    form_name = _("Multilingual Settings")
+    schema = IMultiLanguageExtraOptionsSchema
 
     @form.action(_(u'label_save', default=u'Save'), name=u'save')
     def handle_save_action(self, action, data):
@@ -193,6 +194,10 @@ class LanguageControlPanelPAM(LanguageControlPanelForm):
         return ''
 
     isLPinstalled = isLPinstalled
+
+
+class LanguageControlPanel(controlpanel.ControlPanelFormWrapper):
+    form = LanguageControlPanelFormPAM
 
 
 class MigrationView(BrowserView):

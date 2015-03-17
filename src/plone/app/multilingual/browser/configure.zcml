@@ -69,13 +69,13 @@
       provides="plone.app.contentmenu.interfaces.IContentMenuItem"/>
 
   <!-- Control panel -->
-  <include package="plone.app.controlpanel"/>
   <browser:page
-      name="language-controlpanel"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      class=".controlpanel.LanguageControlPanelPAM"
-      permission="plone.app.controlpanel.Language"
-      layer="..interfaces.IPloneAppMultilingualInstalled"/>
+    name="language-controlpanel"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    class=".controlpanel.LanguageControlPanel"
+    permission="plone.app.controlpanel.Language"
+    layer="..interfaces.IPloneAppMultilingualInstalled"
+    />
   <adapter factory=".controlpanel.MultiLanguageExtraOptionsAdapter"/>
 
 
