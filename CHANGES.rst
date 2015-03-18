@@ -4,7 +4,8 @@ Changelog
 2.0a5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add Traditional Chinese translation.
+  [l34marr]
 
 
 2.0a4 (2015-03-04)
