@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from plone.app.multilingual import api
 from plone.app.multilingual.browser.utils import multilingualMoveObject
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.testing import TEST_USER_NAME
