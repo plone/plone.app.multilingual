@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest2 as unittest
 
-from Proucts.CMFPlone.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.dexterity.utils import createContentInContainer
 
