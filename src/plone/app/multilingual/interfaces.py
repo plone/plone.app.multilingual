@@ -6,6 +6,7 @@ from zope.interface import Interface
 from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
 from Products.CMFPlone.interfaces import ILanguageSchema
+from plone.supermodel import model
 
 # CONSTANTS
 SHARED_NAME = 'shared'
@@ -176,6 +177,19 @@ selector_policies = SimpleVocabulary(
 class IMultiLanguageExtraOptionsSchema(ILanguageSchema):
     """ Interface for language extra options - control panel fieldset
     """
+
+    model.fieldset(
+        'multilingual',
+        label=_(u'Multilingual', default=u'Multilingual'),
+        fields=[
+            'filter_content',
+            'redirect_babel_view',
+            'bypass_languageindependent_field_permission_check',
+            'buttons_babel_view_up_to_nr_translations',
+            'google_translation_key',
+            'selector_lookup_translations_policy'
+        ],
+    )
 
     filter_content = schema.Bool(
         title=_(

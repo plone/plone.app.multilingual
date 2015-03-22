@@ -35,10 +35,9 @@ setup(
         'plone.app.z3cform',
         'plone.app.registry',
         'plone.formwidget.contenttree',
-        # 'Products.PloneLanguageTool',
+        'archetypes.multilingual'
     ],
     extras_require={
-        'archetypes': ['archetypes.multilingual'],
         'test': [
             'plone.app.testing[robot]>=4.2.2',
             'plone.app.robotframework',
