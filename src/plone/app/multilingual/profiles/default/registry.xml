@@ -1,5 +1,26 @@
 <?xml version="1.0"?>
 <registry>
+  <records prefix="plone.resources/multilingual"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+    <value key="css">
+        <element>++resource++plone.app.multilingual.stylesheet/multilingual.css</element>
+    </value>
+  </records>
+  <records prefix="plone.bundles/plone-legacy"
+            interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+    <value key="resources" purge="false">
+        multilingual
+    </value>
+  </records>
+  <records interface="Products.CMFPlone.interfaces.ITinyMCEResourceTypesSchema" prefix="plone">
+    <value key="containsobjects" purge="false">LIF</value>
+  </records>
+  <records interface="Products.CMFPlone.interfaces.ILanguageSchema" prefix="plone">
+    <value key="use_cookie_negotiation">True</value>
+    <value key="use_request_negotiation">False</value>
+    <value key="use_content_negotiation">True</value>
+    <value key="display_flags">False</value>
+  </records>
   <records interface="plone.app.multilingual.interfaces.IMultiLanguageExtraOptionsSchema" prefix="plone">
     <value key="filter_content">True</value>
     <value key="redirect_babel_view">True</value>

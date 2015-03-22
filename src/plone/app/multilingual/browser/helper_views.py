@@ -150,7 +150,7 @@ class selector_view(universal_link):
 
         # We are going to see if there is the prefered language translation
         # Otherwise we get the first as context to look for translation
-        prefered = ltool.getPreferredLanguage()
+        prefered = ltool.getPreferredLanguage(self.request)
         if prefered in languages:
             context = languages[prefered]
         else:
@@ -211,7 +211,7 @@ class selector_view(universal_link):
             url = self.wrapDestination(url)
         else:
             registry = getUtility(IRegistry)
-            policies = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+            policies = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
             if policies.selector_lookup_translations_policy == 'closest':
                 url = self.getClosestDestination()
             else:

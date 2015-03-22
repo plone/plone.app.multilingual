@@ -89,7 +89,7 @@ class AddViewTraverser(object):
             raise TraversalError(self.context, name)
 
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
 
         if not settings.redirect_babel_view:
             add_view = None
@@ -122,7 +122,7 @@ class MultilingualAddForm(DefaultAddForm):
 
     def gtenabled(self):
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         return settings.google_translation_key != ''
 
     def portal_url(self):
@@ -139,7 +139,7 @@ class MultilingualAddForm(DefaultAddForm):
     @property
     def max_nr_of_buttons(self):
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         return settings.buttons_babel_view_up_to_nr_translations
 
     def _process_language_independent(self, fields, widgets):

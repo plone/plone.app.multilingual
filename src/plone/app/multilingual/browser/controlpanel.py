@@ -70,7 +70,7 @@ class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
         self.context = context
         self.registry = getUtility(IRegistry)
         self.settings = self.registry.forInterface(
-            IMultiLanguageExtraOptionsSchema, check=False)
+            IMultiLanguageExtraOptionsSchema, prefix="plone", check=False)
 
     def get_filter_content(self):
         return self.settings.filter_content

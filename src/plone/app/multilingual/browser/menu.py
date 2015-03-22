@@ -16,6 +16,7 @@ from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
+from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.permissions import ManageTranslations
 from plone.memoize import view
 from plone.registry.interfaces import IRegistry
@@ -41,10 +42,10 @@ class TranslateMenu(BrowserMenu):
         lt = getToolByName(context, "portal_languages")
 
         site_url = getSite().absolute_url()
-        showflags = lt.showFlags()
+        showflags = lt.showFlags
         context_id = ITranslationManager(context).tg
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         edit_view = 'babel_edit' if settings.redirect_babel_view else 'edit'
         # In case is neutral language show set language menu only
         is_neutral_content = (
@@ -80,14 +81,16 @@ class TranslateMenu(BrowserMenu):
                 "submenu": None,
             })
 
-            contexts = [context, ]
+            if ITranslatable.providedBy(context):
+                contexts = [context, ]
+            else:
+                contexts = []
             prt = aq_parent(context)
-            if isDefaultPage(prt, context):
+            if isDefaultPage(prt, context) and ITranslatable.providedBy(prt):
                 contexts.append(prt)
 
             for idx, context in enumerate(contexts):
                 url = context.absolute_url()
-
                 ulangs = untranslated_languages(context)
                 for lang in ulangs:
                     lang_name = lang_names.get(lang.value, lang.title)
