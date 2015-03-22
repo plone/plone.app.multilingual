@@ -7,25 +7,16 @@ from Products.statusmessages.interfaces import IStatusMessage
 from Products.CMFPlone.controlpanel.browser.language import LanguageControlPanelForm
 from plone.app.registry.browser import controlpanel
 
-from plone.app.form.validators import null_validator
 from plone.app.multilingual import isLPinstalled
 from plone.app.multilingual.browser.migrator import portal_types_blacklist
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.uuid.utils import uuidToObject
-from plone.protect import CheckAuthenticator
-from plone.registry import field as Record
-from plone.registry import field as registry_field
-from plone.registry.interfaces import IRegistry
 from zc.relation.interfaces import ICatalog as IRelationCatalog
-from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component.interfaces import ComponentLookupError
 from zope.i18nmessageid import MessageFactory
-from zope.interface import Interface
-from zope.interface import implementsOnly
-from zope.schema import Bool
 from zope.schema.interfaces import IVocabularyFactory
 from z3c.form import button
 
@@ -38,12 +29,6 @@ _ = MessageFactory('plone.app.multilingual')
 class LanguageControlPanelFormPAM(LanguageControlPanelForm):
     """A modified language control panel, allows selecting multiple languages.
     """
-
-    # template = ViewPageTemplateFile('templates/controlpanel.pt')
-
-    # form_fields = FormFieldsets(
-    #     selection, options, policies, extras)
-
     label = _("Multilingual Settings")
     description = _("pam_controlpanel_description",
                     default=u"All the configuration of "
@@ -77,18 +62,16 @@ class LanguageControlPanelFormPAM(LanguageControlPanelForm):
     @button.buttonAndHandler(_(u"Cancel"), name='cancel')
     def handleCancel(self, action):
         IStatusMessage(self.request).addStatusMessage(
-            _(u"Changes canceled."),
-            "info")
+            _(u"Changes canceled."), "info")
         self.request.response.redirect("%s/%s" % (
             self.context.absolute_url(),
             self.control_panel_view))
-
-    isLPinstalled = isLPinstalled
 
 
 class LanguageControlPanel(controlpanel.ControlPanelFormWrapper):
     form = LanguageControlPanelFormPAM
     index = ViewPageTemplateFile('templates/controlpanel.pt')
+    isLPinstalled = isLPinstalled
 
 
 class MigrationView(BrowserView):

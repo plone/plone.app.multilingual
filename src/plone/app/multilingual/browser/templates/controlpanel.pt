@@ -34,7 +34,8 @@
             </a>
             allows you to view in a graphical manner the already translated items and its relations.
           </p>
-          <p i18n:translate="">
+          <p i18n:translate=""
+             tal:condition="view/isLPinstalled">
             In case you want to migrate from Products.LinguaPlone access to the
             <a tal:attributes="href string:${context/absolute_url}/lp-migration">migration procedure.
             </a>
