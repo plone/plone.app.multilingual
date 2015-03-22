@@ -4,7 +4,6 @@ from Products.CMFPlone import PloneMessageFactory as _Plone
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
-from Products.CMFPlone.controlpanel.bbb.language import LanguageControlPanelAdapter
 from Products.CMFPlone.controlpanel.browser.language import LanguageControlPanelForm
 from plone.app.registry.browser import controlpanel
 
@@ -23,135 +22,17 @@ from zc.relation.interfaces import ICatalog as IRelationCatalog
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component.interfaces import ComponentLookupError
-from zope.formlib import form
 from zope.i18nmessageid import MessageFactory
 from zope.interface import Interface
 from zope.interface import implementsOnly
 from zope.schema import Bool
 from zope.schema.interfaces import IVocabularyFactory
+from z3c.form import button
 
 
 import json
 
 _ = MessageFactory('plone.app.multilingual')
-
-
-class IControlPanelLanguageOptions(IMultiLanguageExtraOptionsSchema):
-
-    set_default_language = Bool(
-        title=_(u"heading_set_default_language",
-                default=u"Set the default language"),
-        description=_(
-            u"description_set_default_language",
-            default=(u"Set the default language on all content without "
-                     u"language defined. This value is not stored so you need "
-                     u"to check every time you want to run it")),
-        default=False,
-        required=False,
-    )
-
-    move_content_to_language_folder = Bool(
-        title=_(u"heading_move_content_to_language_folder",
-                default=u"Move root content to default language folder"),
-        description=_(
-            u"description_move_content_to_language_folder",
-            default=(u"Move the content that is on the root folder to the "
-                     u"default language folder. This value is not stored so "
-                     u"you need to check every time you want to run it")),
-        default=False,
-        required=False,
-    )
-
-
-class MultiLanguageExtraOptionsAdapter(LanguageControlPanelAdapter):
-    implementsOnly(IMultiLanguageExtraOptionsSchema)
-
-    def __init__(self, context):
-        self.context = context
-        self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(
-            IMultiLanguageExtraOptionsSchema, prefix="plone", check=False)
-
-    def get_filter_content(self):
-        return self.settings.filter_content
-
-    def set_filter_content(self, value):
-        self.settings.filter_content = value
-
-    def get_google_translation_key(self):
-        return self.settings.google_translation_key
-
-    def set_google_translation_key(self, value):
-        self.settings.google_translation_key = value
-
-    def get_redirect_babel_view(self):
-        return self.settings.redirect_babel_view
-
-    def set_redirect_babel_view(self, value):
-        self.settings.redirect_babel_view = value
-
-    def get_buttons_babel_view_up_to_nr_translations(self):
-        return self.settings.buttons_babel_view_up_to_nr_translations
-
-    def set_buttons_babel_view_up_to_nr_translations(self, value):
-        # Backwards-compatibility for installations of PAM before this
-        # field was added.
-        # If no entry is present in the registry, initialize it with a
-        # dummy value
-        name = "%s.buttons_babel_view_up_to_nr_translations" % \
-            IMultiLanguageExtraOptionsSchema.__identifier__
-        if name not in self.registry.records:
-            int_field = registry_field.Int()
-            self.registry.records[name] = Record(int_field)
-        self.settings.buttons_babel_view_up_to_nr_translations = value
-
-    google_translation_key = property(get_google_translation_key,
-                                      set_google_translation_key)
-
-    filter_content = property(get_filter_content,
-                              set_filter_content)
-
-    redirect_babel_view = property(get_redirect_babel_view,
-                                   set_redirect_babel_view)
-
-    buttons_babel_view_up_to_nr_translations = property(
-        get_buttons_babel_view_up_to_nr_translations,
-        set_buttons_babel_view_up_to_nr_translations,
-    )
-
-    def set_bypass_languageindependent_field_permission_check(self, value):
-        self.settings.bypass_languageindependent_field_permission_check = value
-
-    def get_bypass_languageindependent_field_permission_check(self):
-        return self.settings.bypass_languageindependent_field_permission_check
-
-    bypass_languageindependent_field_permission_check = property(
-        get_bypass_languageindependent_field_permission_check,
-        set_bypass_languageindependent_field_permission_check,
-    )
-
-    def get_selector_lookup_translations_policy(self):
-        return self.settings.selector_lookup_translations_policy
-
-    def set_selector_lookup_translations_policy(self, value):
-        self.settings.selector_lookup_translations_policy = value
-
-    selector_lookup_translations_policy = property(
-        get_selector_lookup_translations_policy,
-        set_selector_lookup_translations_policy)
-
-
-# selection = FormFieldsets(IMultiLanguageSelectionSchema)
-# selection.label = _(u'Site languages')
-
-# options = FormFieldsets(IMultiLanguageOptionsSchema)
-# options.label = _(u'Negotiation scheme')
-
-# extras = FormFieldsets(IMultiLanguageExtraOptionsSchema)
-# extras.label = _(u'Extra options')
-
-# policies = FormFieldsets(IMultiLanguagePolicies)
-# policies.label = _(u'Policies')
 
 
 class LanguageControlPanelFormPAM(LanguageControlPanelForm):
@@ -169,29 +50,38 @@ class LanguageControlPanelFormPAM(LanguageControlPanelForm):
                             u"a multilingual Plone site")
     schema = IMultiLanguageExtraOptionsSchema
 
-    @form.action(_(u'label_save', default=u'Save'), name=u'save')
-    def handle_save_action(self, action, data):
-        CheckAuthenticator(self.request)
-        if form.applyChanges(self.context, self.form_fields, data,
-                             self.adapters):
-            self.status = _Plone("Changes saved.")
-            self._on_save(data)
-        else:
-            self.status = _Plone("No changes made.")
+    @button.buttonAndHandler(_(u"Save"), name='save')
+    def handleSave(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+
+        # We need to check if the default language is in available languages
+        if 'default_language' in data and 'available_languages' in data and \
+                data['default_language'] not in data['available_languages']:
+            IStatusMessage(self.request).addStatusMessage(
+                _(u"Default language not in available languages"),
+                "error")
+
+            # e = Invalid(_(u"Default language not in available languages"))
+            # raise WidgetActionExecutionError('default_language', e)
+            return
+
+        self.applyChanges(data)
+
         setupTool = SetupMultilingualSite()
         output = setupTool.setupSite(self.context)
         self.status += output
 
-    @form.action(_Plone(u'label_cancel', default=u'Cancel'),
-                 validator=null_validator,
-                 name=u'cancel')
-    def handle_cancel_action(self, action, data):
+    @button.buttonAndHandler(_(u"Cancel"), name='cancel')
+    def handleCancel(self, action):
         IStatusMessage(self.request).addStatusMessage(
-            _Plone("Changes canceled."), type="info")
-        url = getMultiAdapter((self.context, self.request),
-                              name='absolute_url')()
-        self.request.response.redirect(url + '/plone_control_panel')
-        return ''
+            _(u"Changes canceled."),
+            "info")
+        self.request.response.redirect("%s/%s" % (
+            self.context.absolute_url(),
+            self.control_panel_view))
 
     isLPinstalled = isLPinstalled
 

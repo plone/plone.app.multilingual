@@ -76,8 +76,6 @@
     permission="plone.app.controlpanel.Language"
     layer="..interfaces.IPloneAppMultilingualInstalled"
     />
-  <adapter factory=".controlpanel.MultiLanguageExtraOptionsAdapter"/>
-
 
   <!-- Migration Tab -->
   <browser:page
