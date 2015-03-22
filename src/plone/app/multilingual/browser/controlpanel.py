@@ -198,6 +198,7 @@ class LanguageControlPanelFormPAM(LanguageControlPanelForm):
 
 class LanguageControlPanel(controlpanel.ControlPanelFormWrapper):
     form = LanguageControlPanelFormPAM
+    index = ViewPageTemplateFile('templates/controlpanel.pt')
 
 
 class MigrationView(BrowserView):
