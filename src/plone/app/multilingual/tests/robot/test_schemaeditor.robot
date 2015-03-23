@@ -71,7 +71,7 @@ I select the language independent field setting
   Checkbox should be selected  form-widgets-IFieldLanguageIndependent-languageindependent-0
 
 I save the form
-  Click button  form-buttons-save
+  Click button  css=.pattern-modal-buttons #form-buttons-save
   Element should not be visible  .pb-ajax
 
 I open the form again

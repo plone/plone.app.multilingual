@@ -16,13 +16,6 @@ from zope.schema.vocabulary import SimpleVocabulary
 
 
 @provider(IContextSourceBinder)
-def addTranslation(context):
-    path = '/'.join(getSite().getPhysicalPath())
-    query = {"path": {'query': path, 'depth': 2}}
-    return ObjPathSourceBinder(navigation_tree_query=query)(context)
-
-
-@provider(IContextSourceBinder)
 def untranslated_languages(context):
     language_tool = getToolByName(context, 'portal_languages')
     language_infos = language_tool.getAvailableLanguages()
