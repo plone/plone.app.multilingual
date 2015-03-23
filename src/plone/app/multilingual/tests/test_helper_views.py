@@ -10,6 +10,9 @@ from plone.dexterity.utils import createContentInContainer
 from plone.testing.z2 import Browser
 import transaction
 import unittest2 as unittest
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility
+from Products.CMFPlone.interfaces import ILanguageSchema
 
 
 class PAMFuncTestHelperViews(unittest.TestCase):
@@ -25,8 +28,12 @@ class PAMFuncTestHelperViews(unittest.TestCase):
         self.browser.addHeader('Authorization',
                                'Basic %s:%s' % (TEST_USER_NAME,
                                                 TEST_USER_PASSWORD))
+        self.settings = getUtility(IRegistry).forInterface(
+            ILanguageSchema,
+            prefix='plone')
 
     def test_universal_link_view(self):
+        self.settings.use_request_negotiation = True
         self.browser.addHeader('Accept-Language', 'ca')
 
         a_ca = createContentInContainer(

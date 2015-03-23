@@ -9,11 +9,12 @@
   <records prefix="plone.bundles/plone-legacy"
             interface='Products.CMFPlone.interfaces.IBundleRegistry'>
     <value key="resources" purge="false">
-        multilingual
+      <element>multilingual</element>
     </value>
+    <value key="last_compilation"></value>
   </records>
   <records interface="Products.CMFPlone.interfaces.ITinyMCEResourceTypesSchema" prefix="plone">
-    <value key="containsobjects" purge="false">LIF</value>
+    <value key="containsobjects" purge="false"><element>LIF</element></value>
   </records>
   <records interface="Products.CMFPlone.interfaces.ILanguageSchema" prefix="plone">
     <value key="use_cookie_negotiation">True</value>

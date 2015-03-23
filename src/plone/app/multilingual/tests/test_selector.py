@@ -451,7 +451,6 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         }])
 
         # Check EN
-        import pdb; pdb.set_trace()
         self.browser.open(selector_languages[0]['url'])
         self.assertEqual(
             self.browser.url,
@@ -510,7 +509,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         f_en = self.portal['en']['test-folder']
         f_ca = self.portal['ca']['test-folder']
 
-        self.request['PATH_INFO'] = '/plone/en/test-folder/@@search'
+        self.request['PATH_INFO'] = '/plone/en/test-folder/contact-info'
 
         selector = LanguageSelectorViewlet(f_en, self.request, None, None)
         selector.update()
@@ -522,7 +521,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[0]['url'])
         self.assertEqual(
             self.browser.url,
-            f_en.absolute_url()+'/@@search?set_language=en'
+            f_en.absolute_url()+'/contact-info?set_language=en'
         )
         self.assertIn(
             u'lang="en"'.encode("utf-8"),
@@ -534,7 +533,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[1]['url'])
         self.assertEqual(
             self.browser.url,
-            f_ca.absolute_url()+'/@@search?set_language=ca'
+            f_ca.absolute_url()+'/contact-info?set_language=ca'
         )
         self.assertIn(
             u'lang="ca"'.encode("utf-8"),
@@ -568,7 +567,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[0]['url'])
         self.assertEqual(
             self.browser.url,
-            f_en.absolute_url()+'/@@search?set_language=en'
+            f_en.absolute_url()+'/contact-info?set_language=en'
         )
         self.assertIn(
             u'lang="en"'.encode("utf-8"),
@@ -580,7 +579,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[1]['url'])
         self.assertEqual(
             self.browser.url,
-            f_ca.absolute_url()+'/@@search?set_language=ca'
+            f_ca.absolute_url()+'/contact-info?set_language=ca'
         )
         self.assertIn(
             u'lang="ca"'.encode("utf-8"),
@@ -605,7 +604,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
     def assertLanguagesPreserveQuery(self, policy):
 
         self.setUpPartiallyTranslatedContent()
-        self.request['PATH_INFO'] = '/plone/en/test-folder/@@search'
+        self.request['PATH_INFO'] = '/plone/en/test-folder/contact-info'
         self.request.form['uni'] = u'pres\xd8rved'
         self.request.form['int'] = '1'
 
@@ -632,7 +631,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.assertEqual(
             self.browser.url,
             (f_en.absolute_url()
-             + '/@@search?int=1&uni=pres%C3%98rved&set_language=en')
+             + '/contact-info?int=1&uni=pres%C3%98rved&set_language=en')
         )
         self.assertIn(
             u'lang="en"'.encode("utf-8"),
@@ -645,7 +644,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.assertEqual(
             self.browser.url,
             (f_ca.absolute_url()
-             + '/@@search?int=1&uni=pres%C3%98rved&set_language=ca')
+             + '/contact-info?int=1&uni=pres%C3%98rved&set_language=ca')
         )
         self.assertIn(
             u'lang="ca"'.encode("utf-8"),
@@ -782,10 +781,10 @@ class TestLanguageSelectorPostPath(unittest.TestCase):
         )
 
     def test_findpath_view(self):
-        self.request['PATH_INFO'] = '/plone/ca/folder/document/@@search'
+        self.request['PATH_INFO'] = '/plone/ca/folder/document/contact-info'
         self.assertEqual(
             getPostPath(self.document, self.request),
-            '/@@search'
+            '/contact-info'
         )
 
     def test_findpath_vhr(self):
