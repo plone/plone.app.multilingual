@@ -218,7 +218,7 @@ class selector_view(universal_link):
                 url = self.getDialogDestination()
             # No wrapping cause that's up to the policies
             # (they should already have done that)
-        self.request.RESPONSE.redirect(url)
+        self.request.response.redirect(url)
 
 
 @implementer(IPublishTraverse)
@@ -262,4 +262,6 @@ class not_translated_yet(BrowserView):
         util = getUtility(IContentLanguageAvailability)
         data = util.getLanguages(True)
         lang_info = data.get(lang_code)
+        if lang_info is None:
+            return None
         return lang_info.get('native', None) or lang_info.get('name')

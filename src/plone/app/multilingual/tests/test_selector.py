@@ -451,6 +451,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         }])
 
         # Check EN
+        import pdb; pdb.set_trace()
         self.browser.open(selector_languages[0]['url'])
         self.assertEqual(
             self.browser.url,
