@@ -16,6 +16,7 @@ from zope.component.hooks import getSite
 from zope.globalrequest import getRequest
 from zope.lifecycleevent import modified
 from zope.lifecycleevent.interfaces import IObjectRemovedEvent
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 
 
 def _reindex_site_root(obj, root, language_codes):
@@ -131,6 +132,10 @@ def createdEvent(obj, event):
     if IObjectRemovedEvent.providedBy(event):
         return
 
+    request = getattr(event.object, 'REQUEST', getRequest())
+    if not IPloneAppMultilingualInstalled.providedBy(request):
+        return
+
     # On ObjectCopiedEvent and ObjectMovedEvent aq_parent(event.object) is
     # always equal to event.newParent.
     parent = aq_parent(event.object)
@@ -145,7 +150,6 @@ def createdEvent(obj, event):
     language = ILanguage(parent).get_language()
     set_recursive_language(obj, language)
 
-    request = getattr(event.object, 'REQUEST', getRequest())
     try:
         ti = request.translation_info
     except AttributeError:
