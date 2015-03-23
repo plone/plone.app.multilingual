@@ -13,6 +13,8 @@ import unittest2 as unittest
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 from Products.CMFPlone.interfaces import ILanguageSchema
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from zope.interface import alsoProvides
 
 
 class PAMFuncTestHelperViews(unittest.TestCase):
@@ -22,7 +24,7 @@ class PAMFuncTestHelperViews(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
         self.browser = Browser(self.layer['app'])
         self.browser.handleErrors = False
         self.browser.addHeader('Authorization',
@@ -55,6 +57,7 @@ class PAMIntTestHelperViews(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
 
     def test_move_content_proper_language_folder(self):
         f_ca = createContentInContainer(

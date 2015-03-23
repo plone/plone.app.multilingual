@@ -4,6 +4,8 @@ from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.dexterity.utils import createContentInContainer
 import unittest
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from zope.interface import alsoProvides
 
 
 class TestIndependentLanguageFolder(unittest.TestCase):
@@ -12,7 +14,7 @@ class TestIndependentLanguageFolder(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
         createContentInContainer(
             self.portal['en']['media'], 'Document', title=u"Test document")
         # ^ This will be shadowed to all language independent folders

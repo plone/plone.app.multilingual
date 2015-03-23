@@ -19,6 +19,8 @@ from zope.event import notify
 from zope.lifecycleevent import ObjectModifiedEvent
 import transaction
 import unittest2 as unittest
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from zope.interface import alsoProvides
 
 
 class EvilObject(object):
@@ -43,6 +45,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.portal = self.layer['portal']
         self.portal_url = self.portal.absolute_url()
         self.request = self.layer['request']
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
 
         # Setup testbrowser
         self.browser = Browser(self.layer['app'])
@@ -744,6 +747,7 @@ class TestLanguageSelectorPostPath(unittest.TestCase):
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
         self.portal = self.layer['portal']
         self.folder = createContentInContainer(
             self.portal['ca'], 'Folder', title=u"Folder")
@@ -821,6 +825,7 @@ class TestLanguageSelectorAddQuery(unittest.TestCase):
 
     def setUp(self):
         self.request = self.layer['request']
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
         self.url = '/foo/bar/'
 
     def test_formvariables(self):

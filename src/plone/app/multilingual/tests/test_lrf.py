@@ -8,6 +8,8 @@ from plone.dexterity.utils import createContentInContainer
 from plone.uuid.interfaces import IUUID
 from zope.event import notify
 import unittest2 as unittest
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from zope.interface import alsoProvides
 
 
 class TestLanguageRootFolder(unittest.TestCase):
@@ -17,6 +19,7 @@ class TestLanguageRootFolder(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
 
     def test_shared_content(self):
         # Create shared document
