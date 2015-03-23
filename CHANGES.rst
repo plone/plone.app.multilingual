@@ -1,12 +1,19 @@
 Changelog
 =========
 
-2.0a5 (unreleased)
+3.0 (unreleased)
 ------------------
+
+- Adaptation of plone.app.multilingual for Plone 5. Moved ILanguage to CMFPlone,
+  events only executed when browserlayer is installed, control panel integrated
+  on z3cform with Plone5.
+  [bloodbare]
+
+2.0 (unreleased)
+----------------
 
 - Add Traditional Chinese translation.
   [l34marr]
-
 
 2.0a4 (2015-03-04)
 ------------------
