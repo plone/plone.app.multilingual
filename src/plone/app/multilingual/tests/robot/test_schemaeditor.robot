@@ -45,6 +45,7 @@ a site owner
 
 a dexterity content type with a TTW field
   Create content type  Custom
+  debug
   Go to  ${PLONE_URL}/dexterity-types/Custom/@@fields
   Wait until page contains element  css=body.template-fields
 
@@ -65,7 +66,7 @@ a dexterity content type with a language independent TTW field
 I open the field settings
   Wait until page contains element  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
   Element should be visible  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
-  Click Link  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
+  Click Overlay Link  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
   Wait until page contains  Edit Field
   Page should contain  Language independent field
 
