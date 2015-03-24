@@ -65,7 +65,8 @@ a dexterity content type with a language independent TTW field
 I open the field settings
   Wait until page contains element  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
   Click Link  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
-  Wait until page contains  Language independent field
+  Wait until page contains  Edit Field
+  Page should contain  Language independent field
 
 I select the language independent field setting
   Select checkbox  form-widgets-IFieldLanguageIndependent-languageindependent-0
@@ -74,7 +75,7 @@ I select the language independent field setting
 I save the form
   Wait until page contains element  css=.pattern-modal-buttons #form-buttons-save
   Click button  css=.pattern-modal-buttons #form-buttons-save
-  Wait until keyword succeeds  1  10  Element should not be visible  .pb-ajax
+  Wait until keyword succeeds  1  10  Element should not be visible  .plone-modal-wrapper
 
 I open the form again
   Wait until page contains element  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
