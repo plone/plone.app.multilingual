@@ -51,7 +51,7 @@ a dexterity content type with a TTW field
 a dexterity content type field settings form
   Go to  ${PLONE_URL}/dexterity-types/Custom/@@fields
   Element should be visible  css=a.fieldSettings
-  Click link  css=a.fieldSettings
+  Click Overlay Link  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
   Wait until page contains  Language independent field
 
 a dexterity content type with a language independent TTW field
