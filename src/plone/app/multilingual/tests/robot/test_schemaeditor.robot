@@ -72,7 +72,7 @@ I select the language independent field setting
 
 I save the form
   Click button  css=.pattern-modal-buttons #form-buttons-save
-  Element should not be visible  .pb-ajax
+  Wait until keyword succeeds  1  10  Element should not be visible  .pb-ajax
 
 I open the form again
   Click Overlay Link  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
