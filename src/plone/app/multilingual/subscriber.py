@@ -135,7 +135,6 @@ def createdEvent(obj, event):
 
     request = getattr(event.object, 'REQUEST', getRequest())
     if not IPloneAppMultilingualInstalled.providedBy(request):
-    # if IPloneAppMultilingualInstalled not in registered_layers():
         return
 
     # On ObjectCopiedEvent and ObjectMovedEvent aq_parent(event.object) is
