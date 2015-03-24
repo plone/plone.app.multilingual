@@ -65,7 +65,7 @@ a dexterity content type with a language independent TTW field
 I open the field settings
   Wait until page contains element  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
   Click Link  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
-  Wait until page contains  Edit Field
+  Wait until page contains  Edit Field 'custom'
   Page should contain  Language independent field
 
 I select the language independent field setting
