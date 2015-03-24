@@ -63,7 +63,7 @@ a dexterity content type with a language independent TTW field
 # When
 
 I Open the field settings
-  Click link  xpath=//div[@data-field_id='custom']/div[@class='fieldControls']/a[contains(., 'Settings')]
+  Click Overlay Link  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
   Wait until page contains  Language independent field
 
 I select the language independent field setting
@@ -75,7 +75,7 @@ I save the form
   Element should not be visible  .pb-ajax
 
 I open the form again
-  Click link  xpath=//div[@data-field_id='custom']/div[@class='fieldControls']/a[contains(., 'Settings')]
+  Click Overlay Link  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
   Wait until page contains  Language independent field
 
 I unselect the language independent field setting
