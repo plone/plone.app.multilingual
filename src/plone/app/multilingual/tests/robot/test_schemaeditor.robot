@@ -62,7 +62,8 @@ a dexterity content type with a language independent TTW field
 
 # When
 
-I Open the field settings
+I open the field settings
+  Wait until page contains  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
   Click Overlay Link  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
   Wait until page contains  Language independent field
 
