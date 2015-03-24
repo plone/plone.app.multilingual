@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0a5 (unreleased)
+2.0.0 (2015-03-24)
 ------------------
 
 - Add Traditional Chinese translation.
