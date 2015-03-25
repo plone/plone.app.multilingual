@@ -34,7 +34,6 @@ setup(
         'plone.dexterity',
         'plone.app.z3cform',
         'plone.app.registry',
-        'plone.formwidget.contenttree',
         'archetypes.multilingual'
     ],
     extras_require={
