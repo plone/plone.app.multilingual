@@ -5,6 +5,8 @@ from plone.app.multilingual.browser.vocabularies import\
     AllContentLanguageVocabulary
 from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
 import unittest2 as unittest
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from zope.interface import alsoProvides
 
 
 class TestSetupMultilingualSite(unittest.TestCase):
@@ -14,6 +16,7 @@ class TestSetupMultilingualSite(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
 
     def test_add_all_supported_languages(self):
         """There was a language which code is 'id' and it broke the root

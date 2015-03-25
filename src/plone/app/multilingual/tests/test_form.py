@@ -6,6 +6,8 @@ from plone.dexterity.utils import createContentInContainer
 from plone.testing._z2_testbrowser import Browser
 import transaction
 import unittest2 as unittest
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from zope.interface import alsoProvides
 
 
 class TestForm(unittest.TestCase):
@@ -13,7 +15,7 @@ class TestForm(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
-
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
         # Setup test browser
         self.browser = Browser(self.layer['app'])
         self.browser.handleErrors = False
@@ -124,42 +126,43 @@ class TestForm(unittest.TestCase):
         # Content is still available
         self.assertIn('test-document', self.portal['en'].contentIds())
 
-    def test_registering_translation(self):
-        a_ca = createContentInContainer(
-            self.portal['ca'], 'Document', title=u"Test document")
+    # Removed because its testes on robot framework with the relation pattern
+    # def test_registering_translation(self):
+    #     a_ca = createContentInContainer(
+    #         self.portal['ca'], 'Document', title=u"Test document")
 
-        b_ca = createContentInContainer(
-            self.portal['ca'], 'Document', title=u"Test document")
+    #     b_ca = createContentInContainer(
+    #         self.portal['ca'], 'Document', title=u"Test document")
 
-        transaction.commit()
+    #     transaction.commit()
 
-        # Register translation
-        self.browser.open(
-            a_ca.absolute_url() + '/add_translations')
-        self.assertEqual(self.browser.getControl(
-            name="form.widgets.language:list").options, ['en', 'es'])
+    #     # Register translation
+    #     self.browser.open(
+    #         a_ca.absolute_url() + '/add_translations')
+    #     self.assertEqual(self.browser.getControl(
+    #         name="form.widgets.language:list").options, ['en', 'es'])
 
-        # Fill in form
-        form = self.browser.getForm(index=1)
-        form.mech_form.new_control(
-            type='radio',
-            name='form.widgets.content:list',
-            attrs=dict(checked='checked',
-                       value='%s' % '/'.join(b_ca.getPhysicalPath()),
-                       id='form-widgets-content-0'))
-        self.browser.getControl(
-            name="form.widgets.language:list").value = ['en']
-        self.browser.getControl(
-            name='form.buttons.add_translations').click()
+    #     # Fill in form
+    #     form = self.browser.getForm(index=1)
+    #     form.mech_form.new_control(
+    #         type='radio',
+    #         name='form.widgets.content:list',
+    #         attrs=dict(checked='checked',
+    #                    value='%s' % '/'.join(b_ca.getPhysicalPath()),
+    #                    id='form-widgets-content-0'))
+    #     self.browser.getControl(
+    #         name="form.widgets.language:list").value = ['en']
+    #     self.browser.getControl(
+    #         name='form.buttons.add_translations').click()
 
-        # Language is removed from nontranslated languages
-        self.assertEqual(self.browser.getControl(
-            name="form.widgets.language:list").options, ['es'])
+    #     # Language is removed from nontranslated languages
+    #     self.assertEqual(self.browser.getControl(
+    #         name="form.widgets.language:list").options, ['es'])
 
-        # And translation can be unregistered
-        self.browser.open(a_ca.absolute_url() + '/remove_translations')
-        self.assertEqual(self.browser.getControl(
-            name="form.widgets.languages:list").value, ['en'])
+    #     # And translation can be unregistered
+    #     self.browser.open(a_ca.absolute_url() + '/remove_translations')
+    #     self.assertEqual(self.browser.getControl(
+    #         name="form.widgets.languages:list").value, ['en'])
 
     def test_translation_can_be_removed_by_deleting(self):
         a_ca = createContentInContainer(

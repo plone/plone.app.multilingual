@@ -6,7 +6,7 @@ from plone.app.multilingual import _
 from plone.app.multilingual.browser.interfaces import IAddTranslation
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.app.multilingual.dx.interfaces import IMultilingualAddForm
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import ITranslationManager
@@ -89,7 +89,7 @@ class AddViewTraverser(object):
             raise TraversalError(self.context, name)
 
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
 
         if not settings.redirect_babel_view:
             add_view = None
@@ -122,7 +122,7 @@ class MultilingualAddForm(DefaultAddForm):
 
     def gtenabled(self):
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         return settings.google_translation_key != ''
 
     def portal_url(self):
@@ -139,7 +139,7 @@ class MultilingualAddForm(DefaultAddForm):
     @property
     def max_nr_of_buttons(self):
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         return settings.buttons_babel_view_up_to_nr_translations
 
     def _process_language_independent(self, fields, widgets):

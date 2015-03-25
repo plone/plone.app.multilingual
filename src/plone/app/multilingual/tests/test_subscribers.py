@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 import unittest2 as unittest
 
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.dexterity.utils import createContentInContainer
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from zope.interface import alsoProvides
 
 
 class TestSubscribers(unittest.TestCase):
@@ -17,6 +19,7 @@ class TestSubscribers(unittest.TestCase):
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
         self.portal = self.layer['portal']
 
     def test_created_event(self):

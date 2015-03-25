@@ -69,18 +69,13 @@
       provides="plone.app.contentmenu.interfaces.IContentMenuItem"/>
 
   <!-- Control panel -->
-  <include package="plone.app.controlpanel"/>
   <browser:page
-      name="language-controlpanel"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      class=".controlpanel.LanguageControlPanel"
-      permission="plone.app.controlpanel.Language"
-      layer="..interfaces.IPloneAppMultilingualInstalled"/>
-  <adapter factory=".controlpanel.MultiLanguageControlPanelAdapter"/>
-  <adapter factory=".controlpanel.MultiLanguageOptionsControlPanelAdapter"/>
-  <adapter factory=".controlpanel.MultiLanguageExtraOptionsAdapter"/>
-  <adapter factory=".controlpanel.MultiLanguagePoliciesAdapter"/>
-
+    name="language-controlpanel"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    class=".controlpanel.LanguageControlPanel"
+    permission="plone.app.controlpanel.Language"
+    layer="..interfaces.IPloneAppMultilingualInstalled"
+    />
 
   <!-- Migration Tab -->
   <browser:page

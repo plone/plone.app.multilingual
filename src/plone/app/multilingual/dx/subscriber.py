@@ -5,7 +5,7 @@ from AccessControl.SecurityManagement import setSecurityManager
 from AccessControl.User import UnrestrictedUser
 from Products.CMFCore.utils import getToolByName
 from plone.app.multilingual.dx.interfaces import IDexterityTranslatable
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITranslationManager

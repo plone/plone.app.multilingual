@@ -1,8 +1,9 @@
-<dl class="portalMessage info">
-  <dt i18n:translate="" i18n:domain="plone">
+<div class="container">
+  <div class="portalMessage info">
+  <strong i18n:translate="" i18n:domain="plone">
     Info
-  </dt>
-  <dd id="multilingual-add-form-is-translation" i18n:domain="plone.app.multilingual"
+  </strong>
+  <tal:block i18n:domain="plone.app.multilingual"
       i18n:translate="add-form-is-translation">
     This object is going to be a translation to <span tal:replace="view/language"></span> from: 
     <ul>
@@ -12,5 +13,6 @@
     If you want to create this object without being a translation press
     <a href="#" class="link-overlay" tal:attributes="href view/returnURL">here</a>
     </span>
-  </dd>
-</dl>
+  </tal:block>
+</div>
+</div>

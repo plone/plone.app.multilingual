@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 from plone.app.multilingual import _
-from plone.app.multilingual.browser.vocabularies import addTranslation
 from plone.app.multilingual.browser.vocabularies import deletable_languages
 from plone.app.multilingual.browser.vocabularies import untranslated_languages
 from plone.autoform import directives
 from plone.autoform.interfaces import IFormFieldProvider
-from plone.formwidget.contenttree import ContentTreeFieldWidget
 from plone.supermodel import model
 from z3c.relationfield.schema import RelationChoice
 from zope import interface
@@ -58,10 +56,9 @@ class IAddTranslation(model.Schema):
     )
     content = RelationChoice(
         title=_(u"content"),
-        source=addTranslation,
+        vocabulary="plone.app.vocabularies.Catalog",
         required=True,
     )
-    directives.widget(content=ContentTreeFieldWidget)
 
 
 class IRemoveTranslation(model.Schema):

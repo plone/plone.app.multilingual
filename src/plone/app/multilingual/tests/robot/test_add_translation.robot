@@ -47,22 +47,19 @@ I view the Catalan document
   Wait until page contains  A Catalan Document
 
 I add the document in English as a translation
-  Click Element  css=#plone-contentmenu-multilingual .actionMenuHeader a
+  Click Element  css=#plone-contentmenu-multilingual a
   Wait until element is visible  css=#_add_translations
 
   Click Element  css=#_add_translations
   Wait until page contains element
-  ...  css=#formfield-form-widgets-content-widgets-query .searchButton
+  ...  css=#formfield-form-widgets-content .select2-choices
 
-  Click Element  css=#formfield-form-widgets-content-widgets-query .searchButton
-  Wait until element is visible  css=#form-widgets-content-contenttree a[href$='/plone/en']
+  Click Element  css=#formfield-form-widgets-content .select2-choices
+  Wait until element is visible  css=#select2-drop
 
   Wait until keyword succeeds  5s  1s
-  ...  Click Element  css=#form-widgets-content-contenttree a[href$='/plone/en']
+  ...  Click Element  xpath=(//span[contains(., 'An English Document')])
   Wait until page contains  An English Document
-
-  Click link  xpath=//*[contains(text(), 'An English Document')]/parent::a
-  Click Element  css=.contentTreeAdd
 
   Select From List  name=form.widgets.language:list  en
   Click Element  css=#form-buttons-add_translations
@@ -70,7 +67,7 @@ I add the document in English as a translation
   Wait until page contains  A Catalan Document
 
 I switch to English
-  Click Link  English
+  Click Link  xpath=//a[@title='English']
   Wait until page contains  An English Document
 
 # Then

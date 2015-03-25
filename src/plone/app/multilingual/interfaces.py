@@ -3,6 +3,10 @@ from plone.app.multilingual import _
 from zope import schema
 from zope.interface import Attribute
 from zope.interface import Interface
+from zope.schema.vocabulary import SimpleTerm
+from zope.schema.vocabulary import SimpleVocabulary
+from Products.CMFPlone.interfaces import ILanguageSchema
+from plone.supermodel import model
 
 # CONSTANTS
 SHARED_NAME = 'shared'
@@ -22,16 +26,6 @@ class ILanguageRootFolder(Interface):
 class ILanguageIndependentFolder(Interface):
     """ Language independent shared folder between languages
     """
-
-
-# Language-support
-class ILanguage(Interface):
-
-    def get_language(self):
-        """ return the contents language """
-
-    def set_language(self):
-        """ return the contents language """
 
 
 # Marker interface
@@ -170,9 +164,32 @@ class IPloneAppMultilingualInstalled(Interface):
     """ layer """
 
 
-class IMultiLanguageExtraOptionsSchema(Interface):
+selector_policies = SimpleVocabulary(
+    [SimpleTerm(value=u'closest',
+                title=_(u'Search for closest translation in parent\'s content '
+                        u'chain.')),
+     SimpleTerm(value=u'dialog',
+                title=_(u'Show user dialog with information about the '
+                        u'available translations.'))]
+)
+
+
+class IMultiLanguageExtraOptionsSchema(ILanguageSchema):
     """ Interface for language extra options - control panel fieldset
     """
+
+    model.fieldset(
+        'multilingual',
+        label=_(u'Multilingual', default=u'Multilingual'),
+        fields=[
+            'filter_content',
+            'redirect_babel_view',
+            'bypass_languageindependent_field_permission_check',
+            'buttons_babel_view_up_to_nr_translations',
+            'google_translation_key',
+            'selector_lookup_translations_policy'
+        ],
+    )
 
     filter_content = schema.Bool(
         title=_(
@@ -241,4 +258,16 @@ class IMultiLanguageExtraOptionsSchema(Interface):
             default=u"Is a paying API in order to use google translation "
                     u"service"),
         required=False,
+    )
+
+    selector_lookup_translations_policy = schema.Choice(
+        title=_(u"heading_selector_lookup_translations_policy",
+                default=u"The policy used to determine how the lookup for "
+                        u"available translations will be made by the language "
+                        u"selector."),
+        description=_(u"description_selector_lookup_translations_policy",
+                      default=u"The default language used for the content "
+                              u"and the UI of this site."),
+        required=True,
+        vocabulary=selector_policies
     )

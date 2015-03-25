@@ -7,7 +7,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFolder
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITranslationLocator
@@ -56,7 +56,7 @@ class BabelUtils(BrowserView):
 
     def gtenabled(self):
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         key = settings.google_translation_key
         return key is not None and len(key.strip()) > 0
 
@@ -154,7 +154,7 @@ class BabelUtils(BrowserView):
 
     def max_nr_of_buttons(self):
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         return settings.buttons_babel_view_up_to_nr_translations
 
 

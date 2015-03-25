@@ -2,7 +2,7 @@
 from OFS.event import ObjectWillBeRemovedEvent
 from Products.CMFCore.utils import getToolByName
 from plone.app.multilingual import api
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITranslationIdChooser
 from plone.app.multilingual.interfaces import ITranslationLocator
 from plone.app.multilingual.interfaces import ITranslationManager
@@ -11,6 +11,8 @@ from plone.app.testing import logout
 from plone.dexterity.utils import createContentInContainer
 from zope.event import notify
 import unittest2 as unittest
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from zope.interface import alsoProvides
 
 
 class TestAPI(unittest.TestCase):
@@ -19,6 +21,7 @@ class TestAPI(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
 
     def test_get_translation_manager(self):
         a_ca = createContentInContainer(
@@ -87,7 +90,7 @@ class TestBasicAPI(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
         # Create
         self.a_ca = createContentInContainer(
             self.portal['ca'], 'Document', title=u"Test document")
@@ -162,6 +165,7 @@ class TestLanguageRootFolderAPI(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
 
     def test_initial_language_set(self):
         # Create

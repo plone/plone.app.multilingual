@@ -11,7 +11,7 @@
     <script src="++resource++plone.app.multilingual.javascript/babel_helper.js"></script>
     <input type="hidden" id="url_translate" value="" tal:attributes="value context/absolute_url"/>
     <input type="hidden" id="gtanslate_service" value="" tal:attributes="value view/gtenabled"/>
-    <div class='cell width-8 position-0'>
+    <div class='col-md-6'>
         <h1 i18n:translate="heading_available_translations">Available translations for this content</h1>
         <div id="trans-selector"
              tal:define="languages pamutils/translated_languages;
@@ -38,7 +38,7 @@
             The available translations for this content should be here
         </div>
     </div>
-    <div class='cell width-8 position-8'>
+    <div class='col-md-6'>
     <div id="header-translation">
         <h1 i18n:translate="translation_to">Translation to <span i18n:name="language" tal:content="pamutils/current_language_name" tal:omit-tag="">es</span></h1>
     </div>

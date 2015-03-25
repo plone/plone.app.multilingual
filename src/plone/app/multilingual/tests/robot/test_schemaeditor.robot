@@ -50,9 +50,8 @@ a dexterity content type with a TTW field
 
 a dexterity content type field settings form
   Go to  ${PLONE_URL}/dexterity-types/Custom/@@fields
-  Element should be visible  css=a.fieldSettings
-  Click link  css=a.fieldSettings
-  Wait until page contains  Edit Field 'custom'
+  Go to  ${PLONE_URL}/dexterity-types/Custom/custom
+  Wait until page contains  Language independent field
 
 a dexterity content type with a language independent TTW field
   Create content type  Custom
@@ -62,21 +61,22 @@ a dexterity content type with a language independent TTW field
 
 # When
 
-I Open the field settings
-  Click link  css=a.fieldSettings
-  Wait until page contains  Edit Field 'custom'
+I open the field settings
+  Go to  ${PLONE_URL}/dexterity-types/Custom/custom
+  Page should contain  Language independent field
 
 I select the language independent field setting
   Select checkbox  form-widgets-IFieldLanguageIndependent-languageindependent-0
   Checkbox should be selected  form-widgets-IFieldLanguageIndependent-languageindependent-0
 
 I save the form
-  Click button  form-buttons-save
-  Element should not be visible  .pb-ajax
+  Wait until page contains element  css=#form-buttons-save
+  Click button  css=#form-buttons-save
+  Wait until keyword succeeds  1  10  Element should not be visible  .plone-modal-wrapper
 
 I open the form again
-  Click link  css=a.fieldSettings
-  Wait until page contains  Edit Field 'custom'
+  Go to  ${PLONE_URL}/dexterity-types/Custom/custom
+  Wait until page contains  Language independent field
 
 I unselect the language independent field setting
   Unselect checkbox  form-widgets-IFieldLanguageIndependent-languageindependent-0

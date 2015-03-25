@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from plone.app.multilingual import api
 from plone.app.multilingual.browser.utils import multilingualMoveObject
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.testing import TEST_USER_NAME
@@ -10,6 +10,11 @@ from plone.dexterity.utils import createContentInContainer
 from plone.testing.z2 import Browser
 import transaction
 import unittest2 as unittest
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility
+from Products.CMFPlone.interfaces import ILanguageSchema
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from zope.interface import alsoProvides
 
 
 class PAMFuncTestHelperViews(unittest.TestCase):
@@ -19,14 +24,18 @@ class PAMFuncTestHelperViews(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
         self.browser = Browser(self.layer['app'])
         self.browser.handleErrors = False
         self.browser.addHeader('Authorization',
                                'Basic %s:%s' % (TEST_USER_NAME,
                                                 TEST_USER_PASSWORD))
+        self.settings = getUtility(IRegistry).forInterface(
+            ILanguageSchema,
+            prefix='plone')
 
     def test_universal_link_view(self):
+        self.settings.use_request_negotiation = True
         self.browser.addHeader('Accept-Language', 'ca')
 
         a_ca = createContentInContainer(
@@ -48,6 +57,7 @@ class PAMIntTestHelperViews(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
 
     def test_move_content_proper_language_folder(self):
         f_ca = createContentInContainer(

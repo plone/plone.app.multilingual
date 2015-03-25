@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
 from plone.app.multilingual.interfaces import ITranslationCloner
 from plone.app.multilingual.interfaces import ITranslationManager
@@ -13,7 +13,7 @@ from zope.component import queryAdapter
 from zope.interface import implementer
 import pkg_resources
 try:
-    pkg_resources.get_distribution('zope.initd')
+    # pkg_resources.get_distribution('zope.initd')
     from zope.intid.interfaces import IIntIds
 except pkg_resources.DistributionNotFound:
     from zope.app.intid.interfaces import IIntIds

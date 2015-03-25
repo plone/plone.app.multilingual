@@ -3,7 +3,7 @@ from Acquisition import aq_parent
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
 from plone.app.multilingual.browser.utils import is_language_independent
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
 from plone.app.multilingual.interfaces import ILanguageIndependentFolder
 from plone.app.multilingual.interfaces import IMutableTG
@@ -16,6 +16,8 @@ from zope.component.hooks import getSite
 from zope.globalrequest import getRequest
 from zope.lifecycleevent import modified
 from zope.lifecycleevent.interfaces import IObjectRemovedEvent
+from plone.browserlayer.utils import registered_layers
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 
 
 def _reindex_site_root(obj, root, language_codes):
@@ -129,6 +131,10 @@ def createdEvent(obj, event):
     - IObjectCopiedEvent
     """
     if IObjectRemovedEvent.providedBy(event):
+        return
+
+    request = getattr(event.object, 'REQUEST', getRequest())
+    if not IPloneAppMultilingualInstalled.providedBy(request):
         return
 
     # On ObjectCopiedEvent and ObjectMovedEvent aq_parent(event.object) is

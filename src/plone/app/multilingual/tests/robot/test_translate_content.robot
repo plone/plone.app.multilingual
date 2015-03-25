@@ -55,11 +55,11 @@ a document in English with Catalan translation
 I translate the document into Catalan
   Go to  ${PLONE_URL}/en/an-english-document/@@create_translation?language=ca
   Input Text  form.widgets.IDublinCore.title  A Catalan Document
-  Click Button  Save
-  Wait until page contains  Item created
+  Click Button  Guardar
+  Wait until page contains  Element creat
 
 I switch to Catalan
-  Click Link  Català
+  Click Link  xpath=//a[@title='Català']
   Wait until page contains  A Catalan Document
 
 # Then

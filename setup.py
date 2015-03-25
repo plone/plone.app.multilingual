@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '2.0.1.dev0'
+version = '3.0.dev0'
 
 setup(
     name='plone.app.multilingual',
@@ -34,11 +34,9 @@ setup(
         'plone.dexterity',
         'plone.app.z3cform',
         'plone.app.registry',
-        'plone.formwidget.contenttree',
-        'Products.PloneLanguageTool',
+        'archetypes.multilingual'
     ],
     extras_require={
-        'archetypes': ['archetypes.multilingual'],
         'test': [
             'plone.app.testing[robot]>=4.2.2',
             'plone.app.robotframework',

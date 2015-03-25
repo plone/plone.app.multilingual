@@ -6,6 +6,8 @@ from plone.dexterity.utils import createContentInContainer
 from plone.testing._z2_testbrowser import Browser
 import transaction
 import unittest2 as unittest
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from zope.interface import alsoProvides
 
 
 class TestMenu(unittest.TestCase):
@@ -13,7 +15,7 @@ class TestMenu(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
-
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
         # Setup test browser
         self.browser = Browser(self.layer['app'])
         self.browser.handleErrors = False

@@ -2,7 +2,7 @@
 from Acquisition import aq_inner
 from Products.Five import BrowserView
 from plone.app.multilingual import _
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.registry.interfaces import IRegistry
@@ -55,7 +55,7 @@ class gtranslation_service_dexterity(BrowserView):
         else:
             manager = ITranslationManager(self.context)
             registry = getUtility(IRegistry)
-            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
+            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
             lang_target = ILanguage(self.context).get_language()
             lang_source = self.request.form['lang_source']
             orig_object = manager.get_translation(lang_source)

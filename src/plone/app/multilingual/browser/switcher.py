@@ -16,7 +16,7 @@ class LanguageSwitcher(BrowserView):
         """
         context = aq_inner(self.context)
         plt = getToolByName(context, 'portal_languages')
-        pref = plt.getPreferredLanguage()
+        pref = plt.getPreferredLanguage(self.request)
         default = plt.getDefaultLanguage()
         ids = self.context.keys()
         target = (pref in ids) and pref or default

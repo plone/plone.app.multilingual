@@ -289,7 +289,7 @@ Native
 
 In your code::
 
-    from plone.multilingualbehavior.interfaces import ILanguageIndependentField
+    from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
     alsoProvides(ISchema['myField'], ILanguageIndependentField)
 
 Through the web
@@ -298,10 +298,10 @@ Through the web
 Via the content type definition in the *Dexterity Content Types* control panel.
 
 
-Internal design of plone.multilingual
+Internal design of plone.app.multilingual
 ======================================
 
-All the internal features are implemented on the package plone.multilingual.
+All the internal features are implemented on the package plone.app.multilingual.
 
 The key points are:
 
@@ -366,11 +366,11 @@ Language get/set via an unified adapter
 In order to access and modify the language of a content type regardless the
 type (Archetypes/Dexterity) there is a interface/adapter::
 
-    plone.multilingual.interfaces.ILanguage
+    Products.CMFPlone.interfaces.ILanguage
 
 You can use::
 
-    from plone.multilingual.interfaces import ILanguage
+    from Products.CMFPlone.interfaces import ILanguage
     language = ILanguage(context).get_language()
 
 or in case you want to set the language of a content::
@@ -383,7 +383,7 @@ Translatable marker interface
 
 In order to know if a content can be translated there is a marker interface::
 
-    plone.multilingual.interfaces.ITranslatable
+    plone.app.multilingual.interfaces.ITranslatable
 
 Source Code
 ===========

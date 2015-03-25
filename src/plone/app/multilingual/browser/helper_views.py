@@ -5,10 +5,10 @@ from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.PloneLanguageTool.interfaces import INegotiateLanguage
+from plone.i18n.interfaces import INegotiateLanguage
 from borg.localrole.interfaces import IFactoryTempFolder
 from plone.app.layout.navigation.interfaces import INavigationRoot
-from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
 from plone.app.multilingual.browser.selector import addQuery
 from plone.app.multilingual.interfaces import ILanguageRootFolder
@@ -150,7 +150,7 @@ class selector_view(universal_link):
 
         # We are going to see if there is the prefered language translation
         # Otherwise we get the first as context to look for translation
-        prefered = ltool.getPreferredLanguage()
+        prefered = ltool.getPreferredLanguage(self.request)
         if prefered in languages:
             context = languages[prefered]
         else:
@@ -211,14 +211,14 @@ class selector_view(universal_link):
             url = self.wrapDestination(url)
         else:
             registry = getUtility(IRegistry)
-            policies = registry.forInterface(IMultiLanguagePolicies)
+            policies = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
             if policies.selector_lookup_translations_policy == 'closest':
                 url = self.getClosestDestination()
             else:
                 url = self.getDialogDestination()
             # No wrapping cause that's up to the policies
             # (they should already have done that)
-        self.request.RESPONSE.redirect(url)
+        self.request.response.redirect(url)
 
 
 @implementer(IPublishTraverse)
@@ -262,4 +262,6 @@ class not_translated_yet(BrowserView):
         util = getUtility(IContentLanguageAvailability)
         data = util.getLanguages(True)
         lang_info = data.get(lang_code)
+        if lang_info is None:
+            return None
         return lang_info.get('native', None) or lang_info.get('name')

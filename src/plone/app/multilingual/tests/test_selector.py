@@ -2,7 +2,7 @@
 from Products.CMFCore.utils import getToolByName
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.app.multilingual import api
-from plone.app.multilingual.browser.controlpanel import IMultiLanguagePolicies
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.browser.helper_views import selector_view
 from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
 from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
@@ -19,6 +19,8 @@ from zope.event import notify
 from zope.lifecycleevent import ObjectModifiedEvent
 import transaction
 import unittest2 as unittest
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from zope.interface import alsoProvides
 
 
 class EvilObject(object):
@@ -43,6 +45,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.portal = self.layer['portal']
         self.portal_url = self.portal.absolute_url()
         self.request = self.layer['request']
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
 
         # Setup testbrowser
         self.browser = Browser(self.layer['app'])
@@ -160,14 +163,14 @@ class TestLanguageSelectorBasics(unittest.TestCase):
 
     def test_languages_fully_translated_by_closest(self):
         self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings = self.registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         self.settings.selector_lookup_translations_policy = 'closest'
 
         self.assertFullyTranslatedPages()
 
     def test_languages_fully_translated_by_dialog(self):
         self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings = self.registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         self.settings.selector_lookup_translations_policy = 'dialog'
 
         self.assertFullyTranslatedPages()
@@ -215,7 +218,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
     def test_languages_untranslated_by_closest(self):
         # Define selector policy
         self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings = self.registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         self.settings.selector_lookup_translations_policy = 'closest'
 
         wftool = getToolByName(self.portal, "portal_workflow")
@@ -250,7 +253,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
 
     def test_languages_partially_translated_by_closest(self):
         self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings = self.registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         self.settings.selector_lookup_translations_policy = 'closest'
 
         # Setup content
@@ -292,7 +295,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
 
     def test_languages_partially_translated_by_dialog(self):
         self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings = self.registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         self.settings.selector_lookup_translations_policy = 'dialog'
 
         # Setup content
@@ -389,14 +392,14 @@ class TestLanguageSelectorBasics(unittest.TestCase):
 
     def test_siteroot_by_closest(self):
         self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings = self.registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         self.settings.selector_lookup_translations_policy = 'closest'
 
         self.assertSiteRoot()
 
     def test_siteroot_by_dialog(self):
         self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings = self.registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         self.settings.selector_lookup_translations_policy = 'dialog'
 
         self.assertSiteRoot()
@@ -486,21 +489,21 @@ class TestLanguageSelectorBasics(unittest.TestCase):
 
     def test_languages_root_folders_by_dialog(self):
         self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings = self.registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         self.settings.selector_lookup_translations_policy = 'dialog'
 
         self.assertRootFolders()
 
     def test_languages_root_folders_by_closest(self):
         self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings = self.registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         self.settings.selector_lookup_translations_policy = 'closest'
 
         self.assertRootFolders()
 
     def test_languages_preserve_view(self):
         self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings = self.registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         self.settings.selector_lookup_translations_policy = 'closest'
 
         self.setUpPartiallyTranslatedContent()
@@ -509,7 +512,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         f_en = self.portal['en']['test-folder']
         f_ca = self.portal['ca']['test-folder']
 
-        self.request['PATH_INFO'] = '/plone/en/test-folder/@@search'
+        self.request['PATH_INFO'] = '/plone/en/test-folder/contact-info'
 
         selector = LanguageSelectorViewlet(f_en, self.request, None, None)
         selector.update()
@@ -521,7 +524,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[0]['url'])
         self.assertEqual(
             self.browser.url,
-            f_en.absolute_url()+'/@@search?set_language=en'
+            f_en.absolute_url()+'/contact-info?set_language=en'
         )
         self.assertIn(
             u'lang="en"'.encode("utf-8"),
@@ -533,7 +536,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[1]['url'])
         self.assertEqual(
             self.browser.url,
-            f_ca.absolute_url()+'/@@search?set_language=ca'
+            f_ca.absolute_url()+'/contact-info?set_language=ca'
         )
         self.assertIn(
             u'lang="ca"'.encode("utf-8"),
@@ -554,7 +557,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
 
         # Shouldn't do for the not-translated-yet thingie when dialog is on
         self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings = self.registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         self.settings.selector_lookup_translations_policy = 'dialog'
 
         selector = LanguageSelectorViewlet(f_en, self.request, None, None)
@@ -567,7 +570,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[0]['url'])
         self.assertEqual(
             self.browser.url,
-            f_en.absolute_url()+'/@@search?set_language=en'
+            f_en.absolute_url()+'/contact-info?set_language=en'
         )
         self.assertIn(
             u'lang="en"'.encode("utf-8"),
@@ -579,7 +582,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[1]['url'])
         self.assertEqual(
             self.browser.url,
-            f_ca.absolute_url()+'/@@search?set_language=ca'
+            f_ca.absolute_url()+'/contact-info?set_language=ca'
         )
         self.assertIn(
             u'lang="ca"'.encode("utf-8"),
@@ -604,7 +607,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
     def assertLanguagesPreserveQuery(self, policy):
 
         self.setUpPartiallyTranslatedContent()
-        self.request['PATH_INFO'] = '/plone/en/test-folder/@@search'
+        self.request['PATH_INFO'] = '/plone/en/test-folder/contact-info'
         self.request.form['uni'] = u'pres\xd8rved'
         self.request.form['int'] = '1'
 
@@ -631,7 +634,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.assertEqual(
             self.browser.url,
             (f_en.absolute_url()
-             + '/@@search?int=1&uni=pres%C3%98rved&set_language=en')
+             + '/contact-info?int=1&uni=pres%C3%98rved&set_language=en')
         )
         self.assertIn(
             u'lang="en"'.encode("utf-8"),
@@ -644,7 +647,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.assertEqual(
             self.browser.url,
             (f_ca.absolute_url()
-             + '/@@search?int=1&uni=pres%C3%98rved&set_language=ca')
+             + '/contact-info?int=1&uni=pres%C3%98rved&set_language=ca')
         )
         self.assertIn(
             u'lang="ca"'.encode("utf-8"),
@@ -665,14 +668,14 @@ class TestLanguageSelectorBasics(unittest.TestCase):
 
     def test_languages_preserve_by_closest(self):
         self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings = self.registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         self.settings.selector_lookup_translations_policy = 'closest'
 
         self.assertLanguagesPreserveQuery('closest')
 
     def test_languages_preserve_by_dialog(self):
         self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(IMultiLanguagePolicies)
+        self.settings = self.registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         self.settings.selector_lookup_translations_policy = 'dialog'
 
         self.assertLanguagesPreserveQuery('dialog')
@@ -698,7 +701,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
     #
     # def test_languages_vhr(self):
     #     registry = getUtility(IRegistry)
-    #     settings = registry.forInterface(IMultiLanguagePolicies)
+    #     settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
     #     settings.selector_lookup_translations_policy = 'dialog'
     #
     #     from Products.CMFCore.interfaces import ISiteRoot
@@ -744,6 +747,7 @@ class TestLanguageSelectorPostPath(unittest.TestCase):
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
         self.portal = self.layer['portal']
         self.folder = createContentInContainer(
             self.portal['ca'], 'Folder', title=u"Folder")
@@ -781,10 +785,10 @@ class TestLanguageSelectorPostPath(unittest.TestCase):
         )
 
     def test_findpath_view(self):
-        self.request['PATH_INFO'] = '/plone/ca/folder/document/@@search'
+        self.request['PATH_INFO'] = '/plone/ca/folder/document/contact-info'
         self.assertEqual(
             getPostPath(self.document, self.request),
-            '/@@search'
+            '/contact-info'
         )
 
     def test_findpath_vhr(self):
@@ -821,6 +825,7 @@ class TestLanguageSelectorAddQuery(unittest.TestCase):
 
     def setUp(self):
         self.request = self.layer['request']
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
         self.url = '/foo/bar/'
 
     def test_formvariables(self):

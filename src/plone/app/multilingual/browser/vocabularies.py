@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
 from plone.app.multilingual.browser.utils import is_language_independent
-from plone.app.multilingual.interfaces import ILanguage
+from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITranslationManager
-from plone.formwidget.contenttree import ObjPathSourceBinder
 from plone.i18n.locales.interfaces import ILanguageAvailability
 from zope.component import getGlobalSiteManager
 from zope.component.hooks import getSite
@@ -13,13 +12,6 @@ from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
-
-
-@provider(IContextSourceBinder)
-def addTranslation(context):
-    path = '/'.join(getSite().getPhysicalPath())
-    query = {"path": {'query': path, 'depth': 2}}
-    return ObjPathSourceBinder(navigation_tree_query=query)(context)
 
 
 @provider(IContextSourceBinder)

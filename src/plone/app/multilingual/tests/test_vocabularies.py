@@ -4,12 +4,15 @@ from plone.app.multilingual import api
 from plone.app.multilingual.browser.vocabularies import untranslated_languages
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.dexterity.utils import createContentInContainer
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from zope.interface import alsoProvides
 
 
 class TestVocabularies(unittest.TestCase):
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
         self.portal = self.layer['portal']
 
     def test_content_is_translated_into_all_languages(self):
