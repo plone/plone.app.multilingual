@@ -45,14 +45,12 @@ a site owner
 
 a dexterity content type with a TTW field
   Create content type  Custom
-  debug
   Go to  ${PLONE_URL}/dexterity-types/Custom/@@fields
   Wait until page contains element  css=body.template-fields
 
 a dexterity content type field settings form
   Go to  ${PLONE_URL}/dexterity-types/Custom/@@fields
-  Element should be visible  css=a.fieldSettings
-  Click Link  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
+  Go to ${PLONE_URL}/dexterity-types/Custom/custom
   Wait until page contains  Language independent field
 
 a dexterity content type with a language independent TTW field
@@ -64,10 +62,7 @@ a dexterity content type with a language independent TTW field
 # When
 
 I open the field settings
-  Wait until page contains element  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
-  Element should be visible  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
-  Click Overlay Link  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
-  Wait until page contains  Edit Field
+  Go to ${PLONE_URL}/dexterity-types/Custom/custom
   Page should contain  Language independent field
 
 I select the language independent field setting
@@ -75,13 +70,12 @@ I select the language independent field setting
   Checkbox should be selected  form-widgets-IFieldLanguageIndependent-languageindependent-0
 
 I save the form
-  Wait until page contains element  css=.pattern-modal-buttons #form-buttons-save
-  Click button  css=.pattern-modal-buttons #form-buttons-save
+  Wait until page contains element  css=#form-buttons-save
+  Click button  css=#form-buttons-save
   Wait until keyword succeeds  1  10  Element should not be visible  .plone-modal-wrapper
 
 I open the form again
-  Wait until page contains element  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
-  Click Link  xpath=//div[@data-field_id='custom']//a[@class='fieldSettings pat-modal']
+  Go to ${PLONE_URL}/dexterity-types/Custom/custom
   Wait until page contains  Language independent field
 
 I unselect the language independent field setting
