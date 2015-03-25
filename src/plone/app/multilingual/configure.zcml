@@ -10,7 +10,6 @@
   <include package="plone.dexterity" />
   <include package="plone.app.z3cform" />
   <include package="plone.app.registry" />
-  <include package="plone.formwidget.contenttree" />
   <!-- <include package="Products.PloneLanguageTool" /> -->
   <include package="z3c.relationfield" />
 
