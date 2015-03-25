@@ -50,7 +50,7 @@ a dexterity content type with a TTW field
 
 a dexterity content type field settings form
   Go to  ${PLONE_URL}/dexterity-types/Custom/@@fields
-  Go to ${PLONE_URL}/dexterity-types/Custom/custom
+  Go to  ${PLONE_URL}/dexterity-types/Custom/custom
   Wait until page contains  Language independent field
 
 a dexterity content type with a language independent TTW field
@@ -62,7 +62,7 @@ a dexterity content type with a language independent TTW field
 # When
 
 I open the field settings
-  Go to ${PLONE_URL}/dexterity-types/Custom/custom
+  Go to  ${PLONE_URL}/dexterity-types/Custom/custom
   Page should contain  Language independent field
 
 I select the language independent field setting
@@ -75,7 +75,7 @@ I save the form
   Wait until keyword succeeds  1  10  Element should not be visible  .plone-modal-wrapper
 
 I open the form again
-  Go to ${PLONE_URL}/dexterity-types/Custom/custom
+  Go to  ${PLONE_URL}/dexterity-types/Custom/custom
   Wait until page contains  Language independent field
 
 I unselect the language independent field setting
