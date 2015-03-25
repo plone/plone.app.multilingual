@@ -12,14 +12,12 @@ Test Teardown  Close all browsers
 *** Test Cases ***
 
 Scenario: As a site owner I can see language independent field setting
-          Pass Execution  This test fails on jenkins only, will fix later
     Given a site owner
       and a dexterity content type with a TTW field
      When I open the field settings
      Then I can see the language independent field setting
 
 Scenario: As a site owner I can set field language independent
-          Pass Execution  This test fails on jenkins only, will fix later
     Given a site owner
       and a dexterity content type with a TTW field
      When I open the field settings
@@ -29,7 +27,6 @@ Scenario: As a site owner I can set field language independent
      Then the language independent field setting is selected
 
 Scenario: As a site owner I can unset field from being language independent
-          Pass Execution  This test fails on jenkins only, will fix later
     Given a site owner
       and a dexterity content type with a language independent TTW field
      When I open the field settings
