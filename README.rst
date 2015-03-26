@@ -36,10 +36,12 @@ plone.app.multilingual is finally here.
 Versions
 ========
 
-* 1.x - Plone 4.x with Archetypes and Dexterity
+* ``1.x`` - Plone 4.x with Archetypes and Dexterity
 
-* 2.x - Plone >= 4.x with plone.app.contenttypes (Dexterity) and real shared content
+* ``2.x`` - Plone >= 4.x, < 5.0 with plone.app.contenttypes (Dexterity) and
+  real shared content
 
+* ``3.x`` - Plone >= 5.x
 
 Components
 ==========
@@ -299,7 +301,7 @@ Via the content type definition in the *Dexterity Content Types* control panel.
 
 
 Internal design of plone.app.multilingual
-======================================
+=========================================
 
 All the internal features are implemented on the package plone.app.multilingual.
 

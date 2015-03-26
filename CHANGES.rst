@@ -5,7 +5,8 @@ Changelog
 3.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Update version information for Plone 5 in ``README.rst``.
+  [saily]
 
 
 3.0.0 (2015-03-26)
@@ -17,7 +18,7 @@ Changelog
   [bloodbare]
 
 2.0.0 (2015-03-24)
-----------------
+------------------
 
 - Add Traditional Chinese translation.
   [l34marr]
