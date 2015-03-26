@@ -152,25 +152,15 @@ class CreationEvent(object):
     @property
     def is_translatable(self):
         return (not IObjectRemovedEvent.providedBy(self.event)
-                and IDexterityContent.providedBy(self.obj))
+                and IDexterityContent.providedBy(self.obj)
+                and not self.is_temporary)
 
     @property
-    def has_pam_old_lang_in_form(self):
-        request = getattr(self.event.object, 'REQUEST', getRequest())
-        return request and 'form.widgets.pam_old_lang' not in request.form
-
-    def is_new_translation(self, session):
+    def is_temporary(self):
         portal = getSite()
         portal_factory = getToolByName(portal, 'portal_factory', None)
-        return (not self.has_pam_old_lang_in_form
-                and 'tg' in session.keys()
-                and 'old_lang' in session.keys()
-                and (portal_factory is None
-                     or not portal_factory.isTemporary(self.obj)))
-
-    def get_session(self, obj):
-        sdm = obj.session_data_manager
-        return sdm.getSessionData()
+        return (portal_factory is not None
+                and portal_factory.isTemporary(self.obj))
 
     def handle_created(self):
         try:
