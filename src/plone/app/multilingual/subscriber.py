@@ -17,7 +17,6 @@ from zope.component.hooks import getSite
 from zope.globalrequest import getRequest
 from zope.lifecycleevent import modified
 from zope.lifecycleevent.interfaces import IObjectRemovedEvent
-from plone.browserlayer.utils import registered_layers
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 
 
