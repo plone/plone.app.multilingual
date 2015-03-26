@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-3.0 (unreleased)
+3.0.0 (2015-03-26)
 ------------------
 
 - Adaptation of plone.app.multilingual for Plone 5. Moved ILanguage to CMFPlone,
