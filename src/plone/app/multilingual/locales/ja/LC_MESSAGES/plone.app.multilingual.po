@@ -1,11 +1,12 @@
 # Jonathan Lewis <jonathan_lewis@mac.com, 2012.
+# Manabu TERADA <terada@cmscom.jp> 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.2b3\n"
 "POT-Creation-Date: 2013-07-05 11:58+0000\n"
-"PO-Revision-Date: 2012-03-23 16:45 +0000\n"
-"Last-Translator: jonathan_lewis@mac.com>\n"
-"Language-Team: plone-cat <plone-cat@plone.org>\n"
+"PO-Revision-Date: 2015-04-29 14:51+0900\n"
+"Last-Translator: Manabu TERADA <terada@cmscom.jp>\n"
+"Language-Team: Plone Japanese Team <https://github.com/plonejp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,9 +20,10 @@ msgstr ""
 msgid "After migration relation cleanup"
 msgstr ""
 
+# Default: "All the configuration of a multilingual Plone site"
 #: ./browser/controlpanel.py:439
 msgid "pam_controlpanel_description"
-msgstr ""
+msgstr "Ploneサイトのすべての多言語設定"
 
 #: ./browser/controlpanel.py:416
 msgid "Clean site setup"
@@ -30,7 +32,7 @@ msgstr ""
 #: ./browser/templates/cleanup.pt:93
 #: ./browser/templates/migration.pt:250
 msgid "Cleanup"
-msgstr ""
+msgstr "クリーンアップ"
 
 #: ./browser/controlpanel.py:410
 msgid "Extra options"
@@ -66,7 +68,7 @@ msgstr ""
 
 #: ./browser/controlpanel.py:407
 msgid "Negotiation scheme"
-msgstr ""
+msgstr "ネゴシエーションの方法"
 
 #: ./browser/controlpanel.py:569
 msgid "Not translated"
