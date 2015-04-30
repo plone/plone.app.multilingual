@@ -5,6 +5,9 @@ Changelog
 3.0.1 (unreleased)
 ------------------
 
+- Japanese translations.
+  [terapyon]
+
 - Update version information for Plone 5 in ``README.rst``.
   [saily]
 
