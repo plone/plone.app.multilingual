@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.1 (unreleased)
+3.0.1 (2015-05-04)
 ------------------
 
 - Japanese translations.
