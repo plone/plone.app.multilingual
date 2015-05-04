@@ -1,7 +1,6 @@
 Changelog
 =========
 
-
 3.0.1 (unreleased)
 ------------------
 
@@ -19,6 +18,7 @@ Changelog
   events only executed when browserlayer is installed, control panel integrated
   on z3cform with Plone5.
   [bloodbare]
+
 
 2.0.0 (2015-03-24)
 ------------------
