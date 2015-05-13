@@ -1,10 +1,11 @@
 Changelog
 =========
 
-3.0.2 (unreleased)
+3.0.2 (2015-05-13)
 ------------------
 
-- Nothing changed yet.
+- Fix ``containsobjects`` field, renamed to contains_objects
+  [gforcada]
 
 
 3.0.1 (2015-05-04)
