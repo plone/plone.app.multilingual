@@ -58,10 +58,8 @@ class TranslateMenu(BrowserMenu):
             portal_type='LIF', Language=ILanguage(context).get_language())
         for brain in results:
             shared_folder_url = brain.getURL() + '/folder_contents'
-        # minisites have the interface INavigationroot
-        # context.portal_url.getPortalObject() IS PLONESITE ROOT
-        # context is a minisite and it's not the real site root.
-        if not is_neutral_content and context.portal_url.getPortalObject() != context:
+
+        if not is_neutral_content and not INavigationRoot.providedBy(context):
             menu.append({
                 "title": _(
                     u"title_babel_edit",
