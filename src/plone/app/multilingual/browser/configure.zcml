@@ -190,7 +190,7 @@
     <adapter
         name="babel_view"
         for="Products.CMFCore.interfaces.IFolderish
-        Products.CMFDefault.interfaces.ICMFDefaultSkin
+             zope.publisher.interfaces.browser.IDefaultBrowserLayer
         plone.dexterity.interfaces.IDexterityFTI"
         provides="zope.publisher.interfaces.browser.IBrowserPage"
         factory=".add.DefaultMultilingualAddView"/>
