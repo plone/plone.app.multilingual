@@ -30,6 +30,7 @@ setup(
     install_requires=[
         'setuptools',
         'z3c.relationfield',
+        'zope.publisher',
         'plone.behavior',
         'plone.dexterity',
         'plone.app.z3cform',

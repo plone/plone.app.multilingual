@@ -4,7 +4,8 @@ Changelog
 3.0.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Remove CMFDefault dependency
+  [tomgross]
 
 
 3.0.2 (2015-05-13)
