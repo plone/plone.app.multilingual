@@ -140,7 +140,7 @@
   <!-- Selector -->
   <browser:page
       name="multilingual-selector"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="plone.app.layout.navigation.interfaces.INavigationRoot"
       class=".helper_views.selector_view"
       permission="zope.Public"
       layer="..interfaces.IPloneAppMultilingualInstalled"/>
