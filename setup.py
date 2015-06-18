@@ -30,14 +30,15 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
+        'Products.CMFPlone>=5.0b1',
+        'archetypes.multilingual',
+        'plone.app.registry',
+        'plone.app.z3cform',
+        'plone.behavior',
+        'plone.dexterity',
         'setuptools',
         'z3c.relationfield',
         'zope.publisher',
-        'plone.behavior',
-        'plone.dexterity',
-        'plone.app.z3cform',
-        'plone.app.registry',
-        'archetypes.multilingual'
     ],
     extras_require={
         'test': [
