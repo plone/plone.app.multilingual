@@ -33,8 +33,7 @@
   <plone:behavior
       title="Multilingual Support"
       description="Make this content type multilingual aware"
-      provides=".interfaces.IDexterityTranslatable"
-      for="plone.dexterity.interfaces.IDexterityContent"/>
+      provides=".interfaces.IDexterityTranslatable"/>
 
   <adapter
       for="plone.app.multilingual.dx.interfaces.IDexterityTranslatable"
