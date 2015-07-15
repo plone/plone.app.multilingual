@@ -2,6 +2,7 @@
 
 Resource  plone/app/robotframework/selenium.robot
 Resource  plone/app/robotframework/keywords.robot
+Resource  Products/CMFPlone/tests/robot/keywords.robot
 
 Library  Remote  ${PLONE_URL}/RobotRemote
 
@@ -51,6 +52,7 @@ I add the document in English as a translation
   Wait until element is visible  css=#_add_translations
 
   Click Element  css=#_add_translations
+  Given patterns are loaded
   Wait until page contains element
   ...  css=#formfield-form-widgets-content .select2-choices
 
