@@ -16,6 +16,8 @@ from plone.uuid.interfaces import IUUID
 from zope.event import notify
 from zope.interface import implementer
 from zope.site.hooks import getSite
+from plone.protect.interfaces import IDisableCSRFProtection
+from zope.interface import alsoProvides
 
 
 @implementer(ITranslationManager)
@@ -41,6 +43,7 @@ class TranslationManager(object):
         # We must ensure that this case can't happen, any object translatable
         # will have an UUID (in any case we can be at the portal factory!)
         except KeyError:
+            context._v_safe_write = True
             addAttributeUUID(context, None)
             context.reindexObject(idxs=['UID'])
             context_id = IUUID(context)
