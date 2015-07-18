@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.4 (unreleased)
+3.0.4 (2015-07-18)
 ------------------
 
 - Adapt to plone.protect in case its old content.
