@@ -4,8 +4,14 @@ Changelog
 3.0.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Adapt to plone.protect in case its old content.
+  [bloodbare]
 
+- Waiting for patterns to test the add translation on robot framework.
+  [bloodbare]
+
+- Remove superfluous 'for'.
+  [fulv]
 
 3.0.3 (2015-06-05)
 ------------------
