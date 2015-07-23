@@ -4,7 +4,8 @@ Changelog
 3.0.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Update Traditional Chinese translation.
+  [l34marr]
 
 
 3.0.4 (2015-07-18)
