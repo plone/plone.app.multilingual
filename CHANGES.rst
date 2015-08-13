@@ -4,6 +4,10 @@ Changelog
 3.0.5 (unreleased)
 ------------------
 
+- Move @@multilingual-selector registration from PloneRoot to Navigation root
+  This allows to hide language folders in nginx and to use different domains.
+  [do3cc]
+
 - Update Traditional Chinese translation.
   [l34marr]
 
