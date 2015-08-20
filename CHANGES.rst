@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.6 (unreleased)
+3.0.6 (2015-08-20)
 ------------------
 
 - Rerelease due to possible brown bag release.  Jenkins complains
