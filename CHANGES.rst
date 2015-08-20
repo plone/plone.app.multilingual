@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.5 (unreleased)
+3.0.5 (2015-08-20)
 ------------------
 
 - Move @@multilingual-selector registration from PloneRoot to Navigation root
