@@ -234,7 +234,7 @@ Dexterity
 ---------
 
 Users should mark a dexterity content type as translatable by assigning a the
-multilingual behavior to the definition of the content type either via file
+multilingual behavior (``plone.app.multilingual.dx.interfaces.IDexterityTranslatable``) to the definition of the content type either via file
 system, supermodel or through the web.
 
 
