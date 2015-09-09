@@ -4,7 +4,8 @@ Changelog
 3.0.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Updated basque translation
+  [erral]
 
 
 3.0.6 (2015-08-20)
