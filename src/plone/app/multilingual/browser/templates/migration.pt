@@ -19,7 +19,8 @@
           $('html, body').animate({
               scrollTop: $('.results').offset().top
           }, 2000);
-          $('.results').load('@@relocate-content #results',
+          var auth_key = $(this).find('input[name="_authenticator"]').val();
+          $('.results').load('@@relocate-content?_authenticator=' +  auth_key + ' #results',
                               {'blacklist': blacklist.split('\n')},
                               {dataType: 'json'}
           );
@@ -30,7 +31,8 @@
           $('html, body').animate({
               scrollTop: $('.results').offset().top
           }, 2000);
-          $('.results').load('@@transfer-lp-catalog #results');
+          var auth_key = $(this).find('input[name="_authenticator"]').val();
+          $('.results').load('@@transfer-lp-catalog?_authenticator=' +  auth_key + ' #results');
           return false;
         });
 
@@ -38,7 +40,8 @@
           $('html, body').animate({
               scrollTop: $('.results').offset().top
           }, 2000);
-          $('.results').load('@@after-migration-cleanup #results');
+          var auth_key = $(this).find('input[name="_authenticator"]').val();
+          $('.results').load('@@after-migration-cleanup?_authenticator=' +  auth_key + ' #results');
           return false;
         });
 
@@ -46,7 +49,8 @@
           $('html, body').animate({
               scrollTop: $('.results').offset().top
           }, 2000);
-          $('.results').load('@@reindex-language-index #results');
+          var auth_key = $(this).find('input[name="_authenticator"]').val();
+          $('.results').load('@@reindex-language-index?_authenticator=' +  auth_key + ' #results');
           return false;
         });
     });
