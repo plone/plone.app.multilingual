@@ -155,9 +155,8 @@ class moveContentToProperRLF(BrowserView):
 
     def __call__(self):
         """ Note: Steps names don't correspond with the control panel ones """
-        self.blacklist = [
-            x.strip() for x in
-            self.request.form.get('blacklist[]') if x.strip() != '']
+        blacklist = self.request.form.get('blacklist', '').split()
+        self.blacklist = [x.strip() for x in blacklist if x.strip() != '']
         self.results = self.step1andstep2()
         self.results += self.step3()
         return self.template()

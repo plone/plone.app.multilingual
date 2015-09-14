@@ -4,7 +4,8 @@ Changelog
 3.0.8 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix @@relocate-content.
+  [pbauer]
 
 
 3.0.7 (2015-09-12)
