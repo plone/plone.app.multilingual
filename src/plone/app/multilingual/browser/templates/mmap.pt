@@ -8,95 +8,78 @@
 
 <body>
 
-<div metal:fill-slot="prefs_configlet_content">
+<metal:block metal:fill-slot="prefs_configlet_main">
 
   <script type="text/javascript" src="++resource++plone.app.multilingual.javascript/jit-yc.js"></script>
   <script type="text/javascript" src="++resource++plone.app.multilingual.javascript/mmap_helper.js"></script>
-
-
-<style>
-#pam_mmap_toolbar {
-  border: 1px solid #000;
-  padding: 20px;
-}
-
-#pam_mmap_language_toolbar {
-  width: 50%;
-}
-
-#pam_ajax_buttons {
-  width: 50%;
-  margin-bottom: 20px;
-}
-
-#data_translation {
-    background: none repeat scroll 0 0 white;
-    border: 1px solid #000000;
+  <style>
+  #pam_mmap_toolbar {
+    border: 1px solid #000;
     padding: 20px;
-    position: absolute;
-    right: 72px;
-    top: 200px;
-    width: 40%;
-}
+  }
 
-#pam_language_buttons button, #pam_ajax_buttons button {
-  border: 1px solid black;
-  border-radius: 0.5em;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  color: black;
-  background-color: #ccc;
-}
+  #pam_mmap_language_toolbar {
+    width: 50%;
+  }
 
-#pam_language_buttons button.down, #pam_ajax_buttons button.down {
-  background-color: #777;
-  color: white;
-}
+  #pam_ajax_buttons {
+    width: 50%;
+    margin-bottom: 20px;
+  }
 
+  #data_translation {
+      background: none repeat scroll 0 0 white;
+      border: 1px solid #000000;
+      padding: 20px;
+      position: absolute;
+      right: 72px;
+      top: 200px;
+      width: 40%;
+  }
 
-</style>
+  #pam_language_buttons button, #pam_ajax_buttons button {
+    border: 1px solid black;
+    border-radius: 0.5em;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    color: black;
+    background-color: #ccc;
+  }
 
-  <div id="region-content" class="documentEditable">
+  #pam_language_buttons button.down, #pam_ajax_buttons button.down {
+    background-color: #777;
+    color: white;
+  }
+  </style>
 
-    <div id="edit-bar" i18n:domain="plone.app.multilingual">
-        <ul class="contentViews" id="content-views">
-          <li>
-            <a href=""
-               tal:attributes="href string:${portal_url}/@@language-controlpanel"
-               i18n:translate="label_general">General</a>
-          </li>
-          <li class="selected">
-            <a href=""
-               tal:attributes="href string:${portal_url}/@@multilingual-map"
-               i18n:translate="label_translation_map">Translation Map</a>
-          </li>
-          <li>
-            <a href=""
-               tal:attributes="href string:${portal_url}/@@lp-migration"
-               i18n:translate="label_migration">Migration</a>
-          </li>
-        </ul>
-        <div class="contentActions">&nbsp;</div>
-    </div>
+        <div i18n:domain="plone.app.multilingual">
+            <ul>
+              <li>
+                <a href=""
+                   tal:attributes="href string:${portal_url}/@@language-controlpanel"
+                   i18n:translate="label_general">General</a>
+              </li>
+              <li class="selected">
+                <a href=""
+                   tal:attributes="href string:${portal_url}/@@multilingual-map"
+                   i18n:translate="label_translation_map">Translation Map</a>
+              </li>
+              <li>
+                <a href=""
+                   tal:attributes="href string:${portal_url}/@@lp-migration"
+                   i18n:translate="label_migration">Migration</a>
+              </li>
+            </ul>
+        </div>
 
-    <div class="documentContent" id="content">
-      <a name="documentContent"></a>
+        <h1 class="documentFirstHeading"
+            i18n:translate="heading_translation_map">plone.app.multilingual translation map</h1>
 
         <div metal:use-macro="context/global_statusmessage/macros/portal_message">
         Portal status message
         </div>
 
-        <div class="configlet">
-
-            <h1 class="documentFirstHeading"
-                i18n:translate="heading_translation_map">plone.app.multilingual translation map</h1>
-
-            <a href=""
-                class="link-parent"
-                tal:attributes="href string:${portal_url}/plone_control_panel"
-                i18n:translate="label_up_to_plone_setup">
-                    Up to Site Setup
-            </a>
+        <div id="content-core">
 
             <p i18n:translate="description_translation_map">
                 Translation map.
@@ -161,10 +144,10 @@
               </ul>
             </div>
           </div>
+
         </div>
-      </div>
-    </div>
-</div>
+
+</metal:block>
 
 </body>
 </html>
