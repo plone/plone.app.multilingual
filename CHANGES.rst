@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.8 (unreleased)
+3.0.8 (2015-09-14)
 ------------------
 
 - Fix @@relocate-content.
