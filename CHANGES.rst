@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.9 (unreleased)
+3.0.9 (2015-09-14)
 ------------------
 
 - Add auth-key to pam-migration.
