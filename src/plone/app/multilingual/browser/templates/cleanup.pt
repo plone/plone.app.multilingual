@@ -8,7 +8,7 @@
 
 <body>
 
-<div metal:fill-slot="prefs_configlet_content">
+<metal:block metal:fill-slot="prefs_configlet_main">
 
 <script type="text/javascript">
 (function($) {
@@ -31,9 +31,8 @@
 })(jQuery);
 </script>
 
-  <div id="region-content" class="documentEditable">
 
-    <div id="edit-bar" i18n:domain="plone.app.multilingual">
+    <div i18n:domain="plone.app.multilingual">
         <ul class="contentViews" id="content-views">
           <li>
             <a href=""
@@ -53,29 +52,16 @@
         </ul>
     </div>
 
-    <div class="contentActions">
-      &#160;
-    </div>
-
-    <div class="documentContent" id="content">
-      <a name="documentContent"></a>
 
         <div metal:use-macro="context/global_statusmessage/macros/portal_message">
         Portal status message
         </div>
 
-        <div class="configlet">
+        <div class="content-core">
 
             <h1 class="documentFirstHeading"
                 i18n:domain="plone.app.multilingual"
                 i18n:translate="heading_migration_after">Products.LinguaPlone After Migration</h1>
-
-            <a href=""
-                class="link-parent"
-                tal:attributes="href string:${portal_url}/plone_control_panel"
-                i18n:translate="label_up_to_plone_setup">
-                    Up to Site Setup
-            </a>
 
             <p i18n:translate="description_migrate_after"
               i18n:domain="plone.app.multilingual">
@@ -89,23 +75,25 @@
             <form name="cleanup" tal:attributes="action request/URL" method="post">
 
                 <div class="formControls">
-                  <label>Catalog reload</label>
-                    <input
+
+                  <input
                         id="resetrelations"
                         type="submit"
                         name="form.button.Cleanup"
                         class="destructive"
                         value="Cleanup"
                         i18n:attributes="value" />
+                  <label>Catalog reload</label>
 
-                  <label>Move content to its corresponding language root folder</label>
-                    <input
+                  <span class="clearfix" />
+                  <input
                         id="move"
                         type="submit"
                         name="form.button.Move"
                         class="destructive"
                         value="Move"
                         i18n:attributes="value" />
+                  <label>Move content to its corresponding language root folder</label>
                 </div>
 
                 <input tal:replace="structure context/@@authenticator/authenticator" />
@@ -116,9 +104,8 @@
               <!-- The migration results -->
             </div>
         </div>
-      </div>
-    </div>
-</div>
+
+</metal:block>
 
 </body>
 </html>

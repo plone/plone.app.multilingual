@@ -4,7 +4,7 @@ Changelog
 3.0.10 (unreleased)
 -------------------
 
-- Fix migration-view.
+- Fix migration-view, lp-migration-after and after-migration-cleanup.
   [pbauer]
 
 - Fix translation-map.
