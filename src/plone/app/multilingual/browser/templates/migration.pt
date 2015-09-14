@@ -8,97 +8,93 @@
 
 <body>
 
-<div metal:fill-slot="prefs_configlet_content">
+<metal:block metal:fill-slot="prefs_configlet_main">
 
-<script type="text/javascript">
-(function($) {
+  <script type="text/javascript">
+  (function($) {
 
-    $().ready(function() {
-        $('#lp-migration-relocate-content').submit(function () {
-          var blacklist = $('textarea#blacklist')[0].value;
-          $('html, body').animate({
-              scrollTop: $('.results').offset().top
-          }, 2000);
-          var auth_key = $(this).find('input[name="_authenticator"]').val();
-          $('.results').load('@@relocate-content?_authenticator=' +  auth_key + ' #results',
-                              {'blacklist': blacklist.split('\n')},
-                              {dataType: 'json'}
-          );
-          return false;
-        });
+      $().ready(function() {
+          $('#lp-migration-relocate-content').submit(function () {
+            var blacklist = $('textarea#blacklist')[0].value;
+            $('html, body').animate({
+                scrollTop: $('.results').offset().top
+            }, 2000);
+            var auth_key = $(this).find('input[name="_authenticator"]').val();
+            $('.results').load('@@relocate-content?_authenticator=' +  auth_key + ' #results',
+                                {'blacklist': blacklist.split('\n')},
+                                {dataType: 'json'}
+            );
+            return false;
+          });
 
-        $('#lp-migration-transfer-catalog').submit(function () {
-          $('html, body').animate({
-              scrollTop: $('.results').offset().top
-          }, 2000);
-          var auth_key = $(this).find('input[name="_authenticator"]').val();
-          $('.results').load('@@transfer-lp-catalog?_authenticator=' +  auth_key + ' #results');
-          return false;
-        });
+          $('#lp-migration-transfer-catalog').submit(function () {
+            $('html, body').animate({
+                scrollTop: $('.results').offset().top
+            }, 2000);
+            var auth_key = $(this).find('input[name="_authenticator"]').val();
+            $('.results').load('@@transfer-lp-catalog?_authenticator=' +  auth_key + ' #results');
+            return false;
+          });
 
-        $('#lp-migration-after-migration').submit(function () {
-          $('html, body').animate({
-              scrollTop: $('.results').offset().top
-          }, 2000);
-          var auth_key = $(this).find('input[name="_authenticator"]').val();
-          $('.results').load('@@after-migration-cleanup?_authenticator=' +  auth_key + ' #results');
-          return false;
-        });
+          $('#lp-migration-after-migration').submit(function () {
+            $('html, body').animate({
+                scrollTop: $('.results').offset().top
+            }, 2000);
+            var auth_key = $(this).find('input[name="_authenticator"]').val();
+            $('.results').load('@@after-migration-cleanup?_authenticator=' +  auth_key + ' #results');
+            return false;
+          });
 
-       $('#lp-migration-reindex-content').submit(function () {
-          $('html, body').animate({
-              scrollTop: $('.results').offset().top
-          }, 2000);
-          var auth_key = $(this).find('input[name="_authenticator"]').val();
-          $('.results').load('@@reindex-language-index?_authenticator=' +  auth_key + ' #results');
-          return false;
-        });
-    });
+         $('#lp-migration-reindex-content').submit(function () {
+            $('html, body').animate({
+                scrollTop: $('.results').offset().top
+            }, 2000);
+            var auth_key = $(this).find('input[name="_authenticator"]').val();
+            $('.results').load('@@reindex-language-index?_authenticator=' +  auth_key + ' #results');
+            return false;
+          });
+      });
 
-})(jQuery);
-</script>
+  })(jQuery);
+  </script>
 
-  <div id="region-content" class="documentEditable">
+  <style>
+  .results {
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #eee;
+  }
 
-    <div id="edit-bar" i18n:domain="plone.app.multilingual">
-        <ul class="contentViews" id="content-views">
-          <li>
-            <a href=""
-               tal:attributes="href string:${portal_url}/@@language-controlpanel"
-               i18n:translate="label_general">General</a>
-          </li>
-          <li>
-            <a href=""
-               tal:attributes="href string:${portal_url}/@@multilingual-map"
-               i18n:translate="label_translation_map">Translation Map</a>
-          </li>
-          <li class="selected">
-            <a href=""
-               tal:attributes="href string:${portal_url}/@@lp-migration"
-               i18n:translate="label_migration">Migration</a>
-          </li>
-        </ul>
-        <div class="contentActions">&nbsp;</div>
-    </div>
+  </style>
 
-    <div class="documentContent" id="content">
-      <a name="documentContent"></a>
+        <div i18n:domain="plone.app.multilingual">
+            <ul>
+              <li>
+                <a href=""
+                   tal:attributes="href string:${portal_url}/@@language-controlpanel"
+                   i18n:translate="label_general">General</a>
+              </li>
+              <li>
+                <a href=""
+                   tal:attributes="href string:${portal_url}/@@multilingual-map"
+                   i18n:translate="label_translation_map">Translation Map</a>
+              </li>
+              <li class="selected">
+                <a href=""
+                   tal:attributes="href string:${portal_url}/@@lp-migration"
+                   i18n:translate="label_migration">Migration</a>
+              </li>
+            </ul>
+        </div>
+
+        <h1 class="documentFirstHeading"
+            i18n:translate="heading_migration">Products.LinguaPlone Migration</h1>
 
         <div metal:use-macro="context/global_statusmessage/macros/portal_message">
         Portal status message
         </div>
 
-        <div class="configlet">
-
-            <h1 class="documentFirstHeading"
-                i18n:translate="heading_migration">Products.LinguaPlone Migration</h1>
-
-            <a href=""
-                class="link-parent"
-                tal:attributes="href string:${portal_url}/plone_control_panel"
-                i18n:translate="label_up_to_plone_setup">
-                    Up to Site Setup
-            </a>
+        <div id="content-core">
 
             <p i18n:translate="description_migrate">
 
@@ -271,9 +267,8 @@
               </p>
             </div>
         </div>
-      </div>
-    </div>
-</div>
+
+</metal:block>
 
 </body>
 </html>

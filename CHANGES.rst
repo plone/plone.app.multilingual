@@ -4,6 +4,9 @@ Changelog
 3.0.10 (unreleased)
 -------------------
 
+- Fix migration-view.
+  [pbauer]
+
 - Fix translation-map.
   Fixes https://github.com/plone/plone.app.multilingual/issues/175
   [pbauer]
