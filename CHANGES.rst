@@ -4,7 +4,8 @@ Changelog
 3.0.9 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add auth-key to pam-migration.
+  [pbauer]
 
 
 3.0.8 (2015-09-14)
