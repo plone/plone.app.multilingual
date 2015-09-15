@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.10 (unreleased)
+3.0.10 (2015-09-15)
 -------------------
 
 - Fix migration-view, lp-migration-after and after-migration-cleanup.
