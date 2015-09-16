@@ -52,25 +52,12 @@
   }
   </style>
 
-        <div i18n:domain="plone.app.multilingual">
-            <ul>
-              <li>
-                <a href=""
-                   tal:attributes="href string:${portal_url}/@@language-controlpanel"
-                   i18n:translate="label_general">General</a>
-              </li>
-              <li class="selected">
-                <a href=""
-                   tal:attributes="href string:${portal_url}/@@multilingual-map"
-                   i18n:translate="label_translation_map">Translation Map</a>
-              </li>
-              <li>
-                <a href=""
-                   tal:attributes="href string:${portal_url}/@@lp-migration"
-                   i18n:translate="label_migration">Migration</a>
-              </li>
-            </ul>
-        </div>
+        <a href=""
+           id="setup-link"
+           tal:attributes="href string:$portal_url/plone_control_panel"
+           i18n:translate="">
+            Site Setup
+        </a>
 
         <h1 class="documentFirstHeading"
             i18n:translate="heading_translation_map">plone.app.multilingual translation map</h1>
