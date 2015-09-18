@@ -4,6 +4,8 @@ Changelog
 2.0.1 (unreleased)
 ------------------
 
+- fixed content relocation within migration from linguaplone
+  [agitator]
 - Move @@multilingual-selector registration from PloneRoot to Navigation root
   This allows to hide language folders in nginx and to use different domains.
   [do3cc]
