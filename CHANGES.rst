@@ -1,10 +1,14 @@
 Changelog
 =========
 
-3.0.11 (unreleased)
+3.0.11 (2015-09-20)
 -------------------
 
-- Nothing changed yet.
+- Fix the old fixed fake tabbing with the back to Site Setup link.
+  [sneridagh]
+
+- update French translations
+  [enclope]
 
 
 3.0.10 (2015-09-15)
