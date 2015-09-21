@@ -4,7 +4,8 @@ Changelog
 3.0.12 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Resolve deprecation warning for isDefaultPage.
+  [fulv]
 
 
 3.0.11 (2015-09-20)

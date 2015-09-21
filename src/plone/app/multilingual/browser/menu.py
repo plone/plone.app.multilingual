@@ -2,7 +2,6 @@
 from AccessControl import getSecurityManager
 from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
-from plone.app.layout.navigation.defaultpage import isDefaultPage
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.interfaces import ITranslateMenu
@@ -11,6 +10,7 @@ from plone.app.multilingual.browser.utils import is_language_independent
 from plone.app.multilingual.browser.vocabularies import translated_languages
 from plone.app.multilingual.browser.vocabularies import translated_urls
 from plone.app.multilingual.browser.vocabularies import untranslated_languages
+from Products.CMFPlone.defaultpage import is_default_page
 from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
@@ -86,7 +86,7 @@ class TranslateMenu(BrowserMenu):
             else:
                 contexts = []
             prt = aq_parent(context)
-            if isDefaultPage(prt, context) and ITranslatable.providedBy(prt):
+            if is_default_page(prt, context) and ITranslatable.providedBy(prt):
                 contexts.append(prt)
 
             for idx, context in enumerate(contexts):
