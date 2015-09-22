@@ -32,6 +32,11 @@ from zope.interface import noLongerProvides
 from zope.lifecycleevent import ObjectModifiedEvent
 import plone.app.dexterity
 import plone.app.multilingual
+try:
+    from plone.app.robotframework.utils import disableCSRFProtection
+except ImportError:
+    def disableCSRFProtection():
+        pass
 
 
 class PloneAppMultilingualLayer(PloneSandboxLayer):
@@ -105,6 +110,7 @@ class MultiLingual(RemoteLibrary):
 
     def create_content_type(self, portal_type):
         """Create dummy content type with a single custom field"""
+        disableCSRFProtection()
         fti = DexterityFTI(str(portal_type), title=portal_type)
         fti.behaviors = (
             'plone.app.dexterity.behaviors.metadata.IBasic',
@@ -131,6 +137,7 @@ class MultiLingual(RemoteLibrary):
         """Set the given field in the given portal type language independent
         or unset from being one
         """
+        disableCSRFProtection()
         for schema in iterSchemataForType(portal_type):
             if field in schema:
                 ob = schema[field]
@@ -149,6 +156,7 @@ class MultiLingual(RemoteLibrary):
 
             Create translation  /plone/en/foo  ca  title=Translated
         """
+        disableCSRFProtection()
         # Parse arguments:
         uid_or_path = args[0]
         target_language = args[1]
