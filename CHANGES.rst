@@ -4,6 +4,9 @@ Changelog
 3.0.12 (unreleased)
 -------------------
 
+- Disable csrf protection with multilingual.
+  [vangheem]
+ 
 - Resolve deprecation warning for isDefaultPage.
   [fulv]
 
