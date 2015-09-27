@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.12 (unreleased)
+3.0.12 (2015-09-27)
 -------------------
 
 - Disable csrf protection with multilingual.
