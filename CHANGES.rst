@@ -4,7 +4,8 @@ Changelog
 3.0.13 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Update Traditional Chinese translations.
+  [l34marr]
 
 
 3.0.12 (2015-09-27)
