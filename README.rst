@@ -10,13 +10,14 @@
 Introduction
 ============
 
-Talking about multi-language support in Plone is talk about
-Products.LinguaPlone. It has been the *defacto* standard for managing
-translations of Archetypes-based content types in Plone through the years.
-Somehow its functionality never made its way into the Plone core and today it is
-in legacy status. Nowadays, Plone faces the rising of Dexterity content types
-and its incoming adoption into the Plone core in the near future (4.3) and
-complete the transition to Plone as default content types in Plone 5.
+In the old days before Plone 4.3, talking about multi-language support in Plone
+is talk about Products.LinguaPlone. It has been the *defacto* standard for
+managing translations of Archetypes-based content types in Plone through the
+years. Somehow its functionality never made its way into the Plone core and
+today it is in legacy status. Nowadays, Plone faces the rising of Dexterity
+content types and its adoption into the core since Plone 4.3. With Plone 5
+released, the transition is completed and Dexterity is shipped as its default
+content type story.
 
 plone.app.multilingual was designed originally to provide Plone a whole
 multilingual story. Using ZCA technologies, enables translations to Dexterity
