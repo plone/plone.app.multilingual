@@ -130,7 +130,8 @@ class moveContentToProperRLF(BrowserView):
     def findContent(self, content, depth):
         # only handle portal content
         if not IDexterityContent.providedBy(content)\
-                and not IBaseObject.providedBy(content):
+                and not IBaseObject.providedBy(content)\
+                and not IPloneSiteRoot.providedBy(content):
             logger.warning('SKIP non-portal content %s (%s)' % (
                 content.absolute_url(), content.meta_type))
             return
