@@ -7,13 +7,16 @@ Changelog
 - Update Traditional Chinese translations.
   [l34marr]
 
+- Fix typo in Italian translation
+  [ale-rt]
+
 
 3.0.12 (2015-09-27)
 -------------------
 
 - Disable csrf protection with multilingual.
   [vangheem]
- 
+
 - Resolve deprecation warning for isDefaultPage.
   [fulv]
 
