@@ -4,10 +4,14 @@ Changelog
 3.0.13 (unreleased)
 -------------------
 
-- Update Traditional Chinese translations.
+New:
+
+- Updated Traditional Chinese translations.
   [l34marr]
 
-- Fix typo in Italian translation
+Fixes:
+
+- Fixed typo in Italian translation
   [ale-rt]
 
 
