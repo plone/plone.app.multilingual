@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.1 (unreleased)
+2.0.1 (2015-11-04)
 ------------------
 
 - fixed babel_view lookup with more specific interface
