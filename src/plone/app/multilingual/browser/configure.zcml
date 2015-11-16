@@ -218,7 +218,7 @@
     <adapter
         name="babel_view"
         for="Products.CMFCore.interfaces.IFolderish
-             Products.CMFDefault.interfaces.ICMFDefaultSkin
+             plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled
              plone.dexterity.interfaces.IDexterityFTI"
         provides="zope.publisher.interfaces.browser.IBrowserPage"
         factory=".add.DefaultMultilingualAddView"
