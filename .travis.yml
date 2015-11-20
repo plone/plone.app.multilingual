@@ -30,7 +30,7 @@ install:
 before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
-script: bin/test
+script: bin/test --all -s plone.app.multilingual
 after_script:
 - gem install --version 0.8.9 faraday
 - gem install travis-artifacts
