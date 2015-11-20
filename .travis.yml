@@ -37,6 +37,7 @@ before_script:
 script: bin/test --all -s plone.app.multilingual
 after_script:
 - gem install --version 0.8.9 faraday
+- gem install --version 2.9.2 net-ssh
 - gem install travis-artifacts
 - travis-artifacts upload --path parts/test
 notifications:
