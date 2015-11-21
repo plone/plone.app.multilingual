@@ -30,6 +30,7 @@ install:
 - sed -ie "s#test-plone-4.x.cfg#test-plone-$PLONE_VERSION.x.cfg#" travis.cfg
 - mkdir -p buildout-cache/downloads
 - python bootstrap.py -c travis.cfg
+- bin/buildout -Nc travis.cfg annotate
 - bin/buildout -Nc travis.cfg
 before_script:
 - export DISPLAY=:99.0
