@@ -52,9 +52,8 @@
   }
   </style>
 
-        <a href=""
-           id="setup-link"
-           tal:attributes="href string:$portal_url/plone_control_panel"
+        <a id="setup-link" class="link-parent"
+           tal:attributes="href string:$portal_url/@@overview-controlpanel"
            i18n:translate="">
             Site Setup
         </a>
