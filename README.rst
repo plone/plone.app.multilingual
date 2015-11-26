@@ -63,6 +63,11 @@ only need the following line::
 While archetypes is default in Plone for now, you can strip ``[archetypes]``.
 This may change in future so we recommend adding an appendix as shown above.
 
+If you want to use plone.app.multilingual with Plone 4.2, you will need to pin ``plone.formwidget.autocomplete``::
+
+    [versions]
+    plone.formwidget.autocomplete = 1.2.4
+
 
 Setup
 =====
