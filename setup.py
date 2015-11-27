@@ -34,16 +34,16 @@ setup(name='plone.app.multilingual',
         'plone.directives.form',
         'plone.formwidget.contenttree',
         'Products.PloneLanguageTool',
-        'archetypes.multilingual',  # required while archetypes is default in Plone
+        'archetypes.multilingual < 2.0',  # required while archetypes is default in Plone
       ],
       extras_require={
           'dexterity': ['plone.multilingualbehavior'],
-          'archetypes': ['archetypes.multilingual'],
+          'archetypes': ['archetypes.multilingual < 2.0'],
           'test': [
               'plone.app.testing[robot]>=4.2.2',
               'plone.app.robotframework',
               'plone.multilingualbehavior',
-              'archetypes.multilingual',
+              'archetypes.multilingual < 2.0',
               'Products.LinguaPlone',
               'decorator',  # BBB
           ],
