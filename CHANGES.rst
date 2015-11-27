@@ -6,7 +6,7 @@ Changelog
 
 New:
 
-- *add item here*
+- Updated Traditional Chinese translations.
 
 Fixes:
 
