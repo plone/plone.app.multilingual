@@ -434,7 +434,7 @@ clean_site_setup.description = _(
     u"you have set up your site's languages in the 'Site languages' tab and "
     u"have saved that setting. Finally, in case you have an existing Plone "
     u"site with Products.LinguaPlone installed, please do not run these steps "
-    u"but instead refer directly to the 'Migration' tab.")
+    u"but instead refer directly to the 'Migration' tab above.")
 
 
 class LanguageControlPanel(BasePanel):
