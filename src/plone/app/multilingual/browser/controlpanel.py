@@ -426,15 +426,17 @@ policies.label = _(u'Policies')
 clean_site_setup = FormFieldsets(IInitialCleanSiteSetupAdapter)
 clean_site_setup.label = _(u'Clean site setup')
 clean_site_setup.description = _(
-    u"If you are installing PAM for the first time in a Plone site, whether "
-    u"it's on an existing or a brand new site, you should run the following "
-    u"procedures in order to move the default site content to the correct root "
-    u"language folder and ensure that all the content has the language "
-    u"attribute set up correctly. Prior to running them, please make sure that "
-    u"you have set up your site's languages in the 'Site languages' tab and "
-    u"have saved that setting. Finally, in case you have an existing Plone "
-    u"site with Products.LinguaPlone installed, please do not run these steps "
-    u"but instead refer directly to the 'Migration' tab above.")
+    u'clean_site_setup_description',
+    default=u"If you are installing PAM for the first time in a Plone site, "
+    u"whether it's on an existing or a brand new site, you should run the "
+    u"following procedures in order to move the default site content to "
+    u"the correct root language folder and ensure that all the content "
+    u"has the language attribute set up correctly. Prior to running them, "
+    u"please make sure that you have set up your site's languages in the "
+    u"'Site languages' tab and have saved that setting. Finally, in case "
+    u"you have an existing Plone site with Products.LinguaPlone installed, "
+    u"please do not run these steps but instead refer directly to the "
+    u"'Migration' tab above.")
 
 
 class LanguageControlPanel(BasePanel):
