@@ -57,8 +57,7 @@ I add the document in English as a translation
   Click Element  css=#formfield-form-widgets-content-widgets-query .searchButton
   Wait until element is visible  css=#form-widgets-content-contenttree a[href$='/plone/en']
 
-  Wait until keyword succeeds  20s  5s
-  ...  Click Element  css=#form-widgets-content-contenttree li.collapsed a[href$='/plone/en']
+  Click Element  css=#form-widgets-content-contenttree li.collapsed a[href$='/plone/en']
   Wait until page contains  An English Document
 
   Click link  xpath=//*[contains(text(), 'An English Document')]/parent::a
