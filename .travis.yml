@@ -1,5 +1,9 @@
 sudo: false
 language: python
+addons:
+  artifacts:
+    paths:
+    - parts/test
 cache:
   directories:
   - buildout-cache
@@ -12,9 +16,11 @@ env:
   - PLONE_VERSION=4.2
   - PLONE_VERSION=4.3
   global:
-  - ARTIFACTS_S3_BUCKET=plone.app.multilingual
-  - secure: KuSwVhrRovthk4UkJsejjAbKDK24UQWNTDqz8ixF0kwbLVNEbv0gTDh9MylaD2hpgX8YzO2D9LhgJyf3hOsEywAer/lgY/E1P53lB9fR0ODGqATrMKfmxsApWDuomUbPn6s7lPSwMy49Xl8SdNR6DGnleefedjnw0C5Asizg0mI=
-  - secure: rTq4q8TAAA1nAHP0iw6/cHJbd05PJG5xzLD0WXgEZOC8jvHWEpnskPWS1S5rM0YeqliYA9QMvlnlB/6c8b+AytZU87hFm+qddNmT6DlsxNXwM+Tqi1rAEafPOhiowfxjzgsiJocWKds4ohdQOU0iVgONdKbm+0v+zF47NfPj4DU=
+  - ARTIFACTS_KEY=AKIAJP4TGKGJABPQ7YVA
+  - ARTIFACTS_BUCKET=plone-app-multilingual
+  - ARTIFACTS_CACHE_CONTROL=public
+  - ARTIFACTS_PERMISSIONS=public-read
+  - secure: "cTwAxlU9LxjLxQ8Gl4yUGKFmvsZmsAQlsRQQ3jwalnYT3ZHFlt3wxEe4u09Foj0ZTst9HWjfVc22sIHX9xiI96cS770uEjPY0Xc5jYidBGHG3FIcYpEAOcWbyF0tAfiQKTuxfR6lGIDcWzjF4Aj8dOAQ4tGBN0eg1OPUEQ9lzmY="
 matrix:
   allow_failures:
   - python: 2.6
@@ -36,11 +42,6 @@ before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 script: bin/test --all -s plone.app.multilingual
-after_script:
-- gem install --version 0.8.9 faraday
-- gem install --version 2.9.2 net-ssh
-- gem install travis-artifacts
-- travis-artifacts upload --path parts/test
 notifications:
   irc:
     channels:
