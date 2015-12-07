@@ -26,7 +26,9 @@ matrix:
 install:
 - sed -ie "s#test-plone-4.3.x.cfg#test-plone-$PLONE_VERSION.x.cfg#" buildout.cfg
 - python bootstrap.py --setuptools-version=8.3 --version=2.3.1
-- bin/buildout -N -t 3
+- bin/buildout -n annotate
+- bin/buildout -n -t 3
+- cat bin/test
 before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
