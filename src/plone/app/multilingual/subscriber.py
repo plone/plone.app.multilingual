@@ -2,6 +2,7 @@
 from Acquisition import aq_parent
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
+from plone.app.multilingual.utils import get_parent
 from plone.app.multilingual.browser.utils import is_language_independent
 from plone.app.multilingual.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
@@ -119,8 +120,8 @@ def set_recursive_language(ob, language):
             set_recursive_language(child, language)
 
 
-def createdEvent(obj, event):
-    """ Subscriber to set language on the child folder
+class CreationEvent(object):
+    """Subscriber to set language on the child folder
 
     It can be a
     - IObjectRemovedEvent - don't do anything
@@ -128,41 +129,54 @@ def createdEvent(obj, event):
     - IObjectAddedEvent
     - IObjectCopiedEvent
     """
-    if IObjectRemovedEvent.providedBy(event):
-        return
 
-    # On ObjectCopiedEvent and ObjectMovedEvent aq_parent(event.object) is
-    # always equal to event.newParent.
-    parent = aq_parent(event.object)
+    def __call__(self, obj, event):
+        """Called by the event system"""
+        self.obj = obj
+        self.event = event
 
-    # special parent handling
-    if not ITranslatable.providedBy(parent):
-        set_recursive_language(obj, LANGUAGE_INDEPENDENT)
-        return
+        if not self.is_translatable:
+            return
+        # On ObjectCopiedEvent and ObjectMovedEvent aq_parent(event.object) is
+        # always equal to event.newParent.
+        parent = get_parent(event.object)
+        if ITranslatable.providedBy(parent):
+            # Normal use case
+            # We set the translation group, linking
+            language = ILanguage(parent).get_language()
+            set_recursive_language(obj, language)
+            self.handle_created()
+        else:
+            set_recursive_language(obj, LANGUAGE_INDEPENDENT)
 
-    # Normal use case
-    # We set the tg, linking
-    language = ILanguage(parent).get_language()
-    set_recursive_language(obj, language)
+    @property
+    def is_translatable(self):
+        return (not IObjectRemovedEvent.providedBy(self.event)
+                and IDexterityContent.providedBy(self.obj)
+                and not self.is_temporary)
 
-    request = getattr(event.object, 'REQUEST', getRequest())
-    try:
-        ti = request.translation_info
-    except AttributeError:
-        return
+    @property
+    def is_temporary(self):
+        portal = getSite()
+        portal_factory = getToolByName(portal, 'portal_factory', None)
+        return (portal_factory is not None
+                and portal_factory.isTemporary(self.obj))
 
-    # AT check
-    portal = getSite()
-    portal_factory = getToolByName(portal, 'portal_factory', None)
-    if (
-        not IDexterityContent.providedBy(obj)
-        and portal_factory is not None
-        and not portal_factory.isTemporary(obj)
-    ):
-        return
+    def handle_created(self):
+        try:
+            ti = self.get_translation_info()
+        except AttributeError:
+            return
 
-    IMutableTG(obj).set(ti['tg'])
-    modified(obj)
-    tm = ITranslationManager(obj)
-    old_obj = tm.get_translation(ti['source_language'])
-    ILanguageIndependentFieldsManager(old_obj).copy_fields(obj)
+        IMutableTG(self.obj).set(ti['tg'])
+        modified(self.obj)
+        tm = ITranslationManager(self.obj)
+        old_obj = tm.get_translation(ti['source_language'])
+        ILanguageIndependentFieldsManager(old_obj).copy_fields(self.obj)
+
+    def get_translation_info(self):
+        request = getattr(self.event.object, 'REQUEST', getRequest())
+        return request.translation_info
+
+
+createdEvent = CreationEvent()
