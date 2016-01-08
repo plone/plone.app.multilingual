@@ -16,11 +16,6 @@ class MultilingualEditForm(DefaultEditForm):
 
     babel = ViewPageTemplateFile("templates/dexterity_edit.pt")
 
-    def gtenabled(self):
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema)
-        return settings.google_translation_key != ''
-
     def languages(self):
         """ Deprecated """
         context = aq_inner(self.context)
