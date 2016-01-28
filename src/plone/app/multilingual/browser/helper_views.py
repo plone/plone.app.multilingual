@@ -124,7 +124,7 @@ class selector_view(universal_link):
     def getClosestDestination(self):
         """Get the "closest translated object" URL.
         """
-        # We sould travel the parent chain using the catalog here,
+        # We should travel the parent chain using the catalog here,
         # but I think using the acquisition chain is faster
         # (or well, __parent__ pointers) because the catalog
         # would require a lot of queries, while technically,
@@ -138,7 +138,7 @@ class selector_view(universal_link):
         root = getToolByName(site, 'portal_url')
         ltool = getToolByName(site, 'portal_languages')
 
-        # We are useing TranslationManager to get the translations of a
+        # We are using TranslationManager to get the translations of a
         # string tg
         manager = TranslationManager(self.tg)
         context = None
@@ -148,7 +148,7 @@ class selector_view(universal_link):
             # we move to portal root
             return self.wrapDestination(root(), postpath=False)
 
-        # We are going to see if there is the prefered language translation
+        # We are going to see if there is the preferred language translation
         # Otherwise we get the first as context to look for translation
         prefered = ltool.getPreferredLanguage(self.request)
         if prefered in languages:
