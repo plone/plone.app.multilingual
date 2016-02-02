@@ -10,6 +10,7 @@ from plone.app.multilingual.interfaces import IMutableTG
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.dexterity.interfaces import IDexterityContent
 from plone.uuid.interfaces import IUUID
 from zope.component.hooks import getSite
@@ -108,7 +109,6 @@ def set_recursive_language(ob, language):
     """
     if is_language_independent(ob):
         ILanguage(ob).set_language(None)
-
     elif ILanguage(ob).get_language() != language:
         ILanguage(ob).set_language(language)
         ITranslationManager(ob).update()
@@ -128,6 +128,9 @@ def createdEvent(obj, event):
     - IObjectAddedEvent
     - IObjectCopiedEvent
     """
+    if (not IPloneAppMultilingualInstalled.providedBy(obj.REQUEST)):
+        return
+
     if IObjectRemovedEvent.providedBy(event):
         return
 
