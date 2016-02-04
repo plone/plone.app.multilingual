@@ -4,7 +4,11 @@ Changelog
 2.0.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+Fixes:
+
+- Migration error (archetype to dexterity in Plone 4.3.x), 
+  check if pam is installed when subscriber is used.
+  [bsuttor]
 
 
 2.0.1 (2015-11-04)
