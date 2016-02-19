@@ -28,6 +28,11 @@
       component=".vocabularies.AllAvailableLanguageVocabularyFactory"
       name="plone.app.multilingual.vocabularies.AllAvailableLanguageVocabulary"/>
 
+  <utility
+      factory=".vocabularies.RootCatalogVocabularyFactory"
+      name="plone.app.multilingual.RootCatalog"
+      />
+
   <adapter
       name="addtranslation"
       factory=".add.AddViewTraverser"/>

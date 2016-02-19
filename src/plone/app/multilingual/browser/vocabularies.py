@@ -3,6 +3,7 @@ from Products.CMFCore.utils import getToolByName
 from plone.app.multilingual.browser.utils import is_language_independent
 from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.vocabularies.catalog import CatalogVocabularyFactory
 from plone.i18n.locales.interfaces import ILanguageAvailability
 from zope.component import getGlobalSiteManager
 from zope.component.hooks import getSite
@@ -146,3 +147,12 @@ class AllAvailableLanguageVocabulary(object):
         return SimpleVocabulary(items)
 
 AllAvailableLanguageVocabularyFactory = AllAvailableLanguageVocabulary()
+
+
+class RootCatalogVocabularyFactory(CatalogVocabularyFactory):
+    """Catalog Vocabulary which always uses the site root"""
+
+    def __call__(self, context, query=None):
+        portal = getToolByName(context, 'portal_url').getPortalObject()
+        return super(RootCatalogVocabularyFactory, self).__call__(portal,
+                                                                  query)
