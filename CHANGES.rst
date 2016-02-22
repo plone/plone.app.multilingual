@@ -10,6 +10,10 @@ New:
 
 Fixes:
 
+- Use custom catalog vocabulary for translation content mapping widget,
+  which searches all site content.
+  [alecm]
+
 - Update Site Setup link in all control panels (fixes https://github.com/plone/Products.CMFPlone/issues/1255)
   [davilima6]
 

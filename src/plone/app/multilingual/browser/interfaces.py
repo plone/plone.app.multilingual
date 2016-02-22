@@ -56,7 +56,7 @@ class IAddTranslation(model.Schema):
     )
     content = RelationChoice(
         title=_(u"content"),
-        vocabulary="plone.app.vocabularies.Catalog",
+        vocabulary="plone.app.multilingual.RootCatalog",
         required=True,
     )
 
