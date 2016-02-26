@@ -133,7 +133,7 @@
             sync_element_vertically(original_field, destination_field, padding, index === 0);
 
             // Add the google translation field
-            if ($('#gtanslate_service').attr('value') === "True" && ((original_field.find('.richtext-field, .textline-field, .text-field, .localstatic-field, .ArchetypesField-TextField').length > 0) || ($('#at-babel-edit').length > 0))) {
+            if ($('#gtranslate_service_available').attr('value') === "True" && ((original_field.find('.richtext-field, .textline-field, .text-field, .localstatic-field, .ArchetypesField-TextField').length > 0) || ($('#at-babel-edit').length > 0))) {
                 original_field.prepend("<div class='translator-widget' id='item_translation_" + order + "'></div>");
                 original_field.children('.translator-widget').click(function () {
                     var field = $(value).attr("rel");

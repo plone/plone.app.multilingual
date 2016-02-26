@@ -10,7 +10,7 @@
 
     <script src="++resource++plone.app.multilingual.javascript/babel_helper.js"></script>
     <input type="hidden" id="url_translate" value="" tal:attributes="value context/absolute_url"/>
-    <input type="hidden" id="gtanslate_service" value="" tal:attributes="value view/gtenabled"/>
+    <input type="hidden" id="gtranslate_service_available" value="" tal:attributes="value pamutils/gtenabled"/>
     <div class='col-md-6'>
         <h1 i18n:translate="heading_available_translations">Available translations for this content</h1>
         <div id="trans-selector"
@@ -47,4 +47,3 @@
     </div>
     </div>
 </div>
-

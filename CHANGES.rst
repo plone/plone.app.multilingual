@@ -24,6 +24,7 @@ Fixes:
 
 - Clarify naming of Language Independent Folders
   [djowett]
+- Really don't show the Google Translate button when no API key set [djowett]
 
 
 3.0.14 (2016-02-25)
