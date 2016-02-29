@@ -276,8 +276,9 @@ msgstr "Встановити або змінити мову даного кон�
 msgid "description_set_language_cookie_always"
 msgstr "Завжди встановлювати куку мови, тобто також, коли відсутній параметр для 'set_language' запиту"
 
-#. Default: "Show the language shared (neutral language) folder"
-#: ./browser/menu.py:191
+#. Default: "Show the shared Language Independent Folder"
+#: ./browser/menu.py:255
+#, fuzzy
 msgid "description_shared_folder"
 msgstr "Показати мову загальної (нейтральної мови) теки"
 
