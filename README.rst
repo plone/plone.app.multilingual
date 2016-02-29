@@ -143,17 +143,24 @@ language does not exist (yet):
       translations for the current content.
 
 
-Neutral root folder support
----------------------------
+The "Media" folder - a shared "Language Independent Folder"
+-------------------------------------------------------
 
-The root language folders are used to place the tree of the correspondent
-language content. However, there are some use cases we need content that does
-not belongs to any language. For example, for assets or side resources like
-images, videos and documents. There is need to maintain a language neutral
-folder for place this kind of objects. After PAM setup, there is a special
-folder called *Language shared*. All items placed in this folder will have
-neutral as its default language and will be visible from the other root
-language folders as they were placed there.
+The root language folders are used to house the content tree for the
+corresponding language. However, there are some use cases where we need
+content that does not belong to any language. For example, for assets or side
+resources like images, videos and documents. For this reason PAM supplies a
+special Language Independent Folder to house these kind of objects.
+After PAM setup, there is a special folder called "Media", which can be
+accessed through the "Go to shared folder" item of the "Translate" menu. All
+items placed in this folder will have neutral as their default language and
+will be visible from the other root language folders as if they were placed
+there as well.
+
+Note: Language Independent Folder's have also been historically known as 
+"Neutral root folder", "language neutral folder" and 
+"language shared (folder)".  Also don't confuse Language Independent Folders 
+with Language Independent Fields
 
 
 Translation map
