@@ -250,12 +250,11 @@ class TranslateMenu(BrowserMenu):
             menu.append({
                 "title": _(
                     u"shared_folder",
-                    default=u"Go to shared folder"
+                    default=u"Go to Media folder"
                 ),
                 "description": _(
                     u"description_shared_folder",
-                    default=u"Show the language shared (neutral language) "
-                            u"folder"
+                    default=u"Show the shared Language Independent Folder"
                 ),
                 "action": shared_folder_url,
                 "selected": False,
