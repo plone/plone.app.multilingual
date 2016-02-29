@@ -603,8 +603,9 @@ msgstr ""
 msgid "remove selected"
 msgstr "Supprimer les traductions sélectionnées"
 
-#. Default: "Go to shared folder"
-#: ./browser/menu.py:189
+#. Default: "Go to Media folder"
+#: ./browser/menu.py:251
+#, fuzzy
 msgid "shared_folder"
 msgstr "Aller au dossier partagé"
 
@@ -675,4 +676,3 @@ msgstr "Dé-lier la sélection"
 #: ./browser/update_language_form.py:22
 msgid "update_language"
 msgstr "Mettre à jour la langue"
-

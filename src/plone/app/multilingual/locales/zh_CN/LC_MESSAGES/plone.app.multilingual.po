@@ -606,8 +606,8 @@ msgstr ""
 msgid "remove selected"
 msgstr "移除选择"
 
-#. Default: "Go to shared folder"
-#: ./browser/menu.py:189
+#. Default: "Go to Media folder"
+#: ./browser/menu.py:251
 msgid "shared_folder"
 msgstr ""
 
@@ -678,4 +678,3 @@ msgstr ""
 #: ./browser/update_language_form.py:22
 msgid "update_language"
 msgstr ""
-
