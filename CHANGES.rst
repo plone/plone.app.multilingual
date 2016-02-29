@@ -6,6 +6,9 @@ Changelog
 
 Fixes:
 
+- Really don't show the Google Translate button when no API key set 
+  [djowett]
+
 - Migration error (archetype to dexterity in Plone 4.3.x), 
   check if pam is installed when subscriber is used.
   [bsuttor]
