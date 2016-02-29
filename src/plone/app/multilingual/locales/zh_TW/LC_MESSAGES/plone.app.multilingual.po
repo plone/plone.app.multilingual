@@ -274,8 +274,9 @@ msgstr "設定目前的內容語系"
 msgid "description_set_language_cookie_always"
 msgstr "即使沒有 'set_language' 參數也會生效"
 
-#. Default: "Show the language shared (neutral language) folder"
-#: ./browser/menu.py:191
+#. Default: "Show the shared Language Independent Folder"
+#: ./browser/menu.py:258
+#, fuzzy
 msgid "description_shared_folder"
 msgstr "顯示語系共享的目錄"
 

@@ -276,8 +276,9 @@ msgstr "Préciser ou modifier la langue actuelle du contenu"
 msgid "description_set_language_cookie_always"
 msgstr "Toujours définir le cookie de langue, c-à-d même quand le paramètre 'set_language' est absent de la requête."
 
-#. Default: "Show the language shared (neutral language) folder"
-#: browser/menu.py:191
+#. Default: "Show the shared Language Independent Folder"
+#: browser/menu.py:258
+#, fuzzy
 msgid "description_shared_folder"
 msgstr "Afficher le dossier partagé (langue neutre)"
 
