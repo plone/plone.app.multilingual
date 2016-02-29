@@ -569,8 +569,9 @@ msgstr ""
 msgid "remove selected"
 msgstr "Aukeratutako ezabaldu"
 
-#. Default: "Go to shared folder"
+#. Default: "Go to Media folder"
 #: ../browser/menu.py:254
+#, fuzzy
 msgid "shared_folder"
 msgstr "Partekatutako karpetara joan"
 

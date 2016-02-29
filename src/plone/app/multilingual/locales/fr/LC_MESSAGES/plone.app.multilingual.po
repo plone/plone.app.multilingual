@@ -600,8 +600,9 @@ msgstr "Votre site n'a pas de catalogue de relations, et dans ce cas cette étap
 msgid "remove selected"
 msgstr "Supprimer les traductions sélectionnées"
 
-#. Default: "Go to shared folder"
-#: browser/menu.py:189
+#. Default: "Go to Media folder"
+#: browser/menu.py:254
+#, fuzzy
 msgid "shared_folder"
 msgstr "Aller au dossier partagé"
 
