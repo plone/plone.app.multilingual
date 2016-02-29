@@ -13,6 +13,9 @@ Fixes:
   check if pam is installed when subscriber is used.
   [bsuttor]
 
+- Clarify naming of Language Independent Folders
+  [djowett]
+
 
 2.0.1 (2015-11-04)
 ------------------

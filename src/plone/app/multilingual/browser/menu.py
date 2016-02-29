@@ -218,7 +218,7 @@ class TranslateMenu(BrowserMenu):
                 "selected": False,
                 "icon": None,
                 "extra": {
-                    "id": "_shared_folder",
+                    "id": "_language_folder",
                     "separator": None,
                     "class": ""
                 },
@@ -250,12 +250,11 @@ class TranslateMenu(BrowserMenu):
             menu.append({
                 "title": _(
                     u"shared_folder",
-                    default=u"Go to shared folder"
+                    default=u"Go to Media folder"
                 ),
                 "description": _(
                     u"description_shared_folder",
-                    default=u"Show the language shared (neutral language) "
-                            u"folder"
+                    default=u"Show the shared Language Independent Folder"
                 ),
                 "action": shared_folder_url,
                 "selected": False,

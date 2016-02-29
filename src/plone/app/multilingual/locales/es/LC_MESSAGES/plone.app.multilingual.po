@@ -275,8 +275,8 @@ msgstr ""
 msgid "description_set_language_cookie_always"
 msgstr ""
 
-#. Default: "Show the language shared (neutral language) folder"
-#: ./browser/menu.py:191
+#. Default: "Show the shared Language Independent Folder"
+#: ./browser/menu.py:255
 msgid "description_shared_folder"
 msgstr ""
 
@@ -603,8 +603,9 @@ msgstr ""
 msgid "remove selected"
 msgstr ""
 
-#. Default: "Go to shared folder"
-#: ./browser/menu.py:189
+#. Default: "Go to Media folder"
+#: ./browser/menu.py:251
+#, fuzzy
 msgid "shared_folder"
 msgstr "Ir a carpeta compartida"
 
@@ -675,4 +676,3 @@ msgstr ""
 #: ./browser/update_language_form.py:22
 msgid "update_language"
 msgstr ""
-

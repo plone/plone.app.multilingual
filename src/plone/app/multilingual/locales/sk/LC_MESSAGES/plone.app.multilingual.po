@@ -275,8 +275,9 @@ msgstr "Nastavenie alebo zmena aktuálneho jazyka obsahu"
 msgid "description_set_language_cookie_always"
 msgstr "Vždy nastaviť jazyk v cookie, a to aj v prípade neexistencie parametra 'set_language' v URL adrese."
 
-#. Default: "Show the language shared (neutral language) folder"
-#: ./browser/menu.py:191
+#. Default: "Show the shared Language Independent Folder"
+#: ./browser/menu.py:255
+#, fuzzy
 msgid "description_shared_folder"
 msgstr "Zobraziť priečinok s obsahom v neutrálnom jazyku"
 
@@ -603,8 +604,9 @@ msgstr ""
 msgid "remove selected"
 msgstr "Odstrániť vybrané"
 
-#. Default: "Go to shared folder"
-#: ./browser/menu.py:189
+#. Default: "Go to Media folder"
+#: ./browser/menu.py:251
+#, fuzzy
 msgid "shared_folder"
 msgstr "Choďte do zdieľanej zložky"
 
@@ -675,4 +677,3 @@ msgstr "Odstrániť odkaz na vybrané"
 #: ./browser/update_language_form.py:22
 msgid "update_language"
 msgstr "Aktualizovať jazyk"
-

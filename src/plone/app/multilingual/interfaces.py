@@ -20,7 +20,7 @@ class ILanguageRootFolder(Interface):
 
 
 class ILanguageIndependentFolder(Interface):
-    """ Language independent shared folder between languages
+    """ Language Independent Folder for content shared between languages
     """
 
 
