@@ -14,7 +14,8 @@ New:
 
 Fixes:
 
-- *add item here*
+- Clarify naming of Language Independent Folders
+  [djowett]
 
 
 3.0.14 (2016-02-25)

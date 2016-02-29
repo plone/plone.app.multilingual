@@ -277,8 +277,8 @@ msgstr ""
 msgid "description_set_language_cookie_always"
 msgstr "言語クッキーを常に設定する（set_languageリクエストパラメータがない場合にも）"
 
-#. Default: "Show the language shared (neutral language) folder"
-#: ./browser/menu.py:191
+#. Default: "Show the shared Language Independent Folder"
+#: ./browser/menu.py:258
 msgid "description_shared_folder"
 msgstr ""
 
@@ -606,8 +606,8 @@ msgstr ""
 msgid "remove selected"
 msgstr "選択したアイテムを取り除く"
 
-#. Default: "Go to shared folder"
-#: ./browser/menu.py:189
+#. Default: "Go to Media folder"
+#: ./browser/menu.py:254
 msgid "shared_folder"
 msgstr ""
 
@@ -678,4 +678,3 @@ msgstr "選択したアイテムのリンクを取り除く"
 #: ./browser/update_language_form.py:22
 msgid "update_language"
 msgstr ""
-

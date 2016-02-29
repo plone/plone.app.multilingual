@@ -276,8 +276,9 @@ msgstr "Встановити або змінити мову даного кон�
 msgid "description_set_language_cookie_always"
 msgstr "Завжди встановлювати куку мови, тобто також, коли відсутній параметр для 'set_language' запиту"
 
-#. Default: "Show the language shared (neutral language) folder"
-#: ./browser/menu.py:191
+#. Default: "Show the shared Language Independent Folder"
+#: ./browser/menu.py:258
+#, fuzzy
 msgid "description_shared_folder"
 msgstr "Показати мову загальної (нейтральної мови) теки"
 
@@ -604,8 +605,9 @@ msgstr "Ваш сайт не має ніякого каталогу віднош
 msgid "remove selected"
 msgstr "видалити вибране"
 
-#. Default: "Go to shared folder"
-#: ./browser/menu.py:189
+#. Default: "Go to Media folder"
+#: ./browser/menu.py:254
+#, fuzzy
 msgid "shared_folder"
 msgstr "Перейти до спільної теки"
 
@@ -676,4 +678,3 @@ msgstr "від'єднати вибрані"
 #: ./browser/update_language_form.py:22
 msgid "update_language"
 msgstr "Оновлення Мови"
-

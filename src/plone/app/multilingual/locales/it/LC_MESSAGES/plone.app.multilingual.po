@@ -273,8 +273,9 @@ msgstr "Imposta o cambia la lingua corrente di questo contenuto."
 msgid "description_set_language_cookie_always"
 msgstr ""
 
-#. Default: "Show the language shared (neutral language) folder"
-#: ../browser/menu.py:242
+#. Default: "Show the shared Language Independent Folder"
+#: ../browser/menu.py:258
+#, fuzzy
 msgid "description_shared_folder"
 msgstr "Visualizza la cartella condivisa tra le lingue (in lingua neutra)"
 
@@ -596,8 +597,9 @@ msgstr ""
 msgid "remove selected"
 msgstr "Rimuovi la traduzione selezionata"
 
-#. Default: "Go to shared folder"
-#: ../browser/menu.py:238
+#. Default: "Go to Media folder"
+#: ../browser/menu.py:254
+#, fuzzy
 msgid "shared_folder"
 msgstr "Vai alla cartella condivisa"
 
@@ -668,4 +670,3 @@ msgstr "Scollega la lingua selezionata"
 #: ../browser/update_language_form.py:25
 msgid "update_language"
 msgstr "Aggiorna lingua"
-

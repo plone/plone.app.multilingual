@@ -274,8 +274,9 @@ msgstr "設定目前的內容語系"
 msgid "description_set_language_cookie_always"
 msgstr "即使沒有 'set_language' 參數也會生效"
 
-#. Default: "Show the language shared (neutral language) folder"
-#: ./browser/menu.py:191
+#. Default: "Show the shared Language Independent Folder"
+#: ./browser/menu.py:258
+#, fuzzy
 msgid "description_shared_folder"
 msgstr "顯示語系共享的目錄"
 
@@ -602,8 +603,9 @@ msgstr "網站裡找不到 relation catalog 所以不需要執行昇級步驟。
 msgid "remove selected"
 msgstr "移除已選的項目"
 
-#. Default: "Go to shared folder"
-#: ./browser/menu.py:189
+#. Default: "Go to Media folder"
+#: ./browser/menu.py:254
+#, fuzzy
 msgid "shared_folder"
 msgstr "回到共享目錄"
 
@@ -674,4 +676,3 @@ msgstr "移除已選項目的翻譯關聯"
 #: ./browser/update_language_form.py:22
 msgid "update_language"
 msgstr "更新語系"
-
