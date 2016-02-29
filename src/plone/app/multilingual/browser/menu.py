@@ -218,7 +218,7 @@ class TranslateMenu(BrowserMenu):
                 "selected": False,
                 "icon": None,
                 "extra": {
-                    "id": "_shared_folder",
+                    "id": "_language_folder",
                     "separator": None,
                     "class": ""
                 },
