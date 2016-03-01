@@ -4,14 +4,6 @@ Changelog
 3.0.15 (unreleased)
 -------------------
 
-Incompatibilities:
-
-- *add item here*
-
-New:
-
-- *add item here*
-
 Fixes:
 
 - Clarify naming of Language Independent Folders
