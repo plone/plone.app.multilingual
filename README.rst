@@ -144,7 +144,7 @@ language does not exist (yet):
 
 
 The "Media" folder - a shared "Language Independent Folder"
--------------------------------------------------------
+-----------------------------------------------------------
 
 The root language folders are used to house the content tree for the
 corresponding language. However, there are some use cases where we need
@@ -157,9 +157,9 @@ items placed in this folder will have neutral as their default language and
 will be visible from the other root language folders as if they were placed
 there as well.
 
-Note: Language Independent Folder's have also been historically known as 
-"Neutral root folder", "language neutral folder" and 
-"language shared (folder)".  Also don't confuse Language Independent Folders 
+Note: Language Independent Folder's have also been historically known as
+"Neutral root folder", "language neutral folder" and
+"language shared (folder)".  Also don't confuse Language Independent Folders
 with Language Independent Fields
 
 
