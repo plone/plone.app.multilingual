@@ -64,7 +64,8 @@ I add the document in English as a translation
   ...  Click Element  css=#form-widgets-content-contenttree .navTreeItem.collapsed a[href$='/plone/en']
 
   Wait until page contains  An English Document
-  # Record what the above keyword passed in case the Click Link below fails (see #204) 
+  Wait until element is visible  xpath=//*[contains(text(), 'An English Document')]/parent::a
+  # Record what the above keyword passed in case the Click Link below fails (see #204)
   Capture Page Screenshot
 
   Click link  xpath=//*[contains(text(), 'An English Document')]/parent::a
