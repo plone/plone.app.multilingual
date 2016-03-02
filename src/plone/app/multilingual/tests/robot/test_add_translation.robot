@@ -57,10 +57,13 @@ I add the document in English as a translation
   Click Element  css=#formfield-form-widgets-content-widgets-query .searchButton
   Wait until element is visible  css=#form-widgets-content-contenttree a[href$='/plone/en']
 
-  Click Element  css=#form-widgets-content-contenttree a[href$='/plone/en']
-  Wait until keyword succeeds  5s  1s
-  ...  Click Element  xpath=(//span[contains(., 'English')])
+  # contenttree could load expanded or collapsed - so only try to open if it's collapsed
+  Run Keyword And Ignore Error
+  ...  Click Element  css=#form-widgets-content-contenttree .navTreeItem.collapsed a[href$='/plone/en']
+
   Wait until page contains  An English Document
+  # Record what the above keyword passed in case the Click Link below fails (see #204) 
+  Capture Page Screenshot
 
   Click link  xpath=//*[contains(text(), 'An English Document')]/parent::a
   Click Element  css=.contentTreeAdd
@@ -71,7 +74,7 @@ I add the document in English as a translation
   Wait until page contains  A Catalan Document
 
 I switch to English
-  Click Link  English
+  Click Link  xpath=//a[@title='English']
   Wait until page contains  An English Document
 
 # Then
