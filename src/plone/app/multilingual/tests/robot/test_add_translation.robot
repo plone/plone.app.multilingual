@@ -57,6 +57,8 @@ I add the document in English as a translation
   Click Element  css=#formfield-form-widgets-content-widgets-query .searchButton
   Wait until element is visible  css=#form-widgets-content-contenttree a[href$='/plone/en']
 
+  # Record whether contenttree loads expanded or collapsed in case the Click Link below fails (see #204) 
+  Capture Page Screenshot
   # contenttree could load expanded or collapsed - so only try to open if it's collapsed
   Run Keyword And Ignore Error
   ...  Click Element  css=#form-widgets-content-contenttree .navTreeItem.collapsed a[href$='/plone/en']
