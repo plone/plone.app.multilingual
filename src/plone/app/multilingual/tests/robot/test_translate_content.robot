@@ -81,7 +81,8 @@ I can view the document in Catalan
 
 I see information on the other existing translations
   Element should be visible  css=.portalMessage.info #multilingual-add-form-is-translation
-  Element should contain  css=.portalMessage.info  This object is going to be a translation to es
+  Element should contain  css=.portalMessage.info  This object is going to be a translation to Español
   Element should contain  css=.portalMessage.info  If you want to create this object without being a translation press here
-  Element should contain  css=.portalMessage.info  en An English Document
-  Element should contain  css=.portalMessage.info  ca A Catalan Document
+  Element should contain  css=.portalMessage.info  English An English Document
+  Element should contain  css=.portalMessage.info  Català A Catalan Document
+  Debug

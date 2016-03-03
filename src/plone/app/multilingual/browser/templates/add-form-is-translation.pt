@@ -8,7 +8,7 @@
     <ul>
         <li tal:repeat="origin view/origin">
           <a href="#" class="link-overlay" tal:attributes="href origin/getURL">
-            <span tal:content="origin/Language"></span>
+            <span tal:content="python:view.lookupLanguageName(origin.Language)"></span>
             <span tal:content="origin/Title"></span>
         </a></li>
     </ul>
