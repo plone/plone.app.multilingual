@@ -111,7 +111,7 @@ class AddFormIsATranslationViewlet(ViewletBase):
         else:
             self.lang = 'NaN'
         catalog = getToolByName(self.context, 'portal_catalog')
-        query = {'TranslationGroup': tg, 'Language': 'all'}
+        query = {'TranslationGroup': tg}
         self.origin = catalog.searchResults(query)
 
 
