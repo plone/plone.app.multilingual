@@ -110,6 +110,7 @@ class MultipleLanguagesLayer(z2.Layer):
             language_tool = getToolByName(portal, 'portal_languages')
             language_tool.addSupportedLanguage('ca')
             language_tool.addSupportedLanguage('es')
+            language_tool.addSupportedLanguage('fr')
 
             # Enable request negotiator
             language_tool.use_request_negotiation = True

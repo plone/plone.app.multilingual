@@ -26,7 +26,7 @@ Scenario: As a visitor I can view the translation
 Scenario: As an editor when I create a translation I see information what I am translating
     Given a site owner
       and a document in English with Catalan translation
-     When I start to translate the document into Spanish
+     When I start to translate the document into French
      Then I see information on the other existing translations
 
 
@@ -64,8 +64,8 @@ I translate the document into Catalan
   Click Button  Save
   Wait until page contains  Item created
 
-I start to translate the document into Spanish
-  Go to  ${PLONE_URL}/en/an-english-document/@@create_translation?language=es
+I start to translate the document into French
+  Go to  ${PLONE_URL}/en/an-english-document/@@create_translation?language=fr
 
 I switch to Catalan
   Click Link  Català
@@ -81,8 +81,7 @@ I can view the document in Catalan
 
 I see information on the other existing translations
   Element should be visible  css=.portalMessage.info #multilingual-add-form-is-translation
-  Element should contain  css=.portalMessage.info  This object is going to be a translation to Español
+  Element should contain  css=.portalMessage.info  This object is going to be a translation to Français
   Element should contain  css=.portalMessage.info  If you want to create this object without being a translation press here
   Element should contain  css=.portalMessage.info  English An English Document
   Element should contain  css=.portalMessage.info  Català A Catalan Document
-  Debug
