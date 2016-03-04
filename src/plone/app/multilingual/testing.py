@@ -81,6 +81,59 @@ PLONE_APP_MULTILINGUAL_INTEGRATION_TESTING = IntegrationTesting(
     name="plone.app.multilingual:Integration")
 
 
+class PloneAppMultiLingualPresetLayer(PloneSandboxLayer):
+    """Test installation with preset languages."""
+
+    defaultBases = (PLONE_APP_CONTENTTYPES_FIXTURE,)
+
+    def setUpZope(self, app, configurationContext):
+        # Configure ZCML
+        xmlconfig.file('testing.zcml', plone.app.multilingual,
+                       context=configurationContext)
+
+        xmlconfig.file('overrides.zcml', plone.app.multilingual,
+                       context=configurationContext)
+
+        # Enable languageindependent-field on IRelatedItems-behavior
+        from plone.app.relationfield.behavior import IRelatedItems
+        alsoProvides(IRelatedItems['relatedItems'], ILanguageIndependentField)
+
+    def setUpPloneSite(self, portal):
+        # Define available languages before installing PAM
+        # This simulates the behavior of having predefined languages
+        # in GenericSetup before installing PAM
+        language_tool = getToolByName(portal, 'portal_languages')
+        language_tool.addSupportedLanguage('ca')
+        language_tool.addSupportedLanguage('es')
+
+        # Enable request negotiator
+        language_tool.use_request_negotiation = True
+
+        # Activate product
+        applyProfile(portal, 'plone.app.multilingual:default')
+
+        # Empower test user
+        setRoles(portal, TEST_USER_ID, ['Manager'])
+
+        # Enable all errors
+        error_log = getToolByName(portal, 'error_log')
+        error_log._ignored_exceptions = ()
+
+        # Set default workflow
+        wftool = getToolByName(portal, 'portal_workflow')
+        wftool.setDefaultChain('simple_publication_workflow')
+
+        # Cleanup p.a.contenttypes stuff
+        if 'robot-test-folder' in portal.objectIds():
+            portal.manage_delObjects('robot-test-folder')
+
+PLONE_APP_MULTILINGUAL_PRESET_FIXTURE = PloneAppMultiLingualPresetLayer()
+
+PLONE_APP_MULTILINGUAL_PRESET_INTEGRATION_TESTING = IntegrationTesting(
+    bases=(PLONE_APP_MULTILINGUAL_PRESET_FIXTURE,),
+    name="plone.app.multilingual:PresetIntegration")
+
+
 class MultipleLanguagesLayer(z2.Layer):
 
     defaultBases = (PLONE_APP_MULTILINGUAL_FIXTURE,)
@@ -203,5 +256,6 @@ PLONE_APP_MULTILINGUAL_ROBOT_TESTING = FunctionalTesting(
 
 
 PAM_INTEGRATION_TESTING = PLONE_APP_MULTILINGUAL_INTEGRATION_TESTING
+PAM_INTEGRATION_PRESET_TESTING = PLONE_APP_MULTILINGUAL_PRESET_INTEGRATION_TESTING
 PAM_FUNCTIONAL_TESTING = PLONE_APP_MULTILINGUAL_FUNCTIONAL_TESTING
 PAM_ROBOT_TESTING = PLONE_APP_MULTILINGUAL_ROBOT_TESTING

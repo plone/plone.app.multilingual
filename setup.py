@@ -1,11 +1,14 @@
-from setuptools import setup, find_packages
-import os
+"""Setup plone.app.multilingual."""
 
-version = '3.0.16.dev0'
+import os
+from setuptools import setup, find_packages
+
+
+VERSION = '3.0.16.dev0'
 
 setup(
     name='plone.app.multilingual',
-    version=version,
+    version=VERSION,
     description="Multilingual Plone UI package, enables maintenance of "
                 "translations for both Dexterity types and Archetypes",
     long_description="\n\n".join([
@@ -32,6 +35,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'Products.CMFPlone>=5.0b1',
+        'Products.GenericSetup>=1.8.2',
         'archetypes.multilingual',
         'plone.app.registry',
         'plone.app.z3cform',
