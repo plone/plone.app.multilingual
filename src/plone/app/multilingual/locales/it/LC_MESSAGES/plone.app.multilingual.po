@@ -128,7 +128,7 @@ msgstr ""
 #. Default: "This object is going to be a translation to ${language_name} from:"
 #: ../browser/templates/add-form-is-translation.pt:7
 msgid "add-form-is-translation-intro"
-msgstr ""
+msgstr "Questo oggetto sta per diventare la traduzione di ${language_name} da:"
 
 #. Default: "Add translations"
 #: ../browser/add.py:194
@@ -142,13 +142,12 @@ msgstr "Contenuto"
 #. Default: "here"
 #: ../browser/templates/add-form-is-translation.pt:18
 msgid "create-object-here"
-msgstr ""
+msgstr "qui"
 
 #. Default: "If you want to create this object without being a translation press ${here}"
 #: ../browser/templates/add-form-is-translation.pt:18
-#, fuzzy
 msgid "create-object-without-translation"
-msgstr "Se vuoi creare l'oggetto senza che sia la traduzione del contenuto originario clicca <a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\">qui</a>"
+msgstr "Se vuoi creare l'oggetto senza che sia la traduzione del contenuto originario clicca ${here}"
 
 #. Default: "Create ${lang_name}"
 #: ../browser/menu.py:118
