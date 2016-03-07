@@ -24,6 +24,8 @@ matrix:
   - python: 2.7
     env: PLONE_VERSION=5.0
 install:
+- pip install zest.pocompile
+- pocompile src
 - sed -ie "s#test-plone-4.3.x.cfg#test-plone-$PLONE_VERSION.x.cfg#" buildout.cfg
 - python bootstrap.py --setuptools-version=8.3 --version=2.3.1
 - bin/buildout -N annotate

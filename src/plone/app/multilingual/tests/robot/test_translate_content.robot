@@ -23,6 +23,12 @@ Scenario: As a visitor I can view the translation
      When I switch to Catalan
      Then I can view the document in Catalan
 
+Scenario: As an editor when I create a translation I see information on what I am translating
+    Given a site owner
+      and a document in English with Catalan translation
+     When I start to translate the document into French
+     Then I see information on the other existing translations
+
 
 *** Keywords ***
 
@@ -58,6 +64,9 @@ I translate the document into Catalan
   Click Button  Save
   Wait until page contains  Item created
 
+I start to translate the document into French
+  Go to  ${PLONE_URL}/en/an-english-document/@@create_translation?language=fr
+
 I switch to Catalan
   Click Link  Català
   Wait until page contains  A Catalan Document
@@ -69,3 +78,12 @@ I can view the document in Catalan
   ...  xpath=//*[contains(@class, 'documentFirstHeading')][./text()='A Catalan Document']
   Page Should Contain Element
   ...  xpath=//ul[@id='portal-languageselector']/li[contains(@class, 'currentLanguage')]/a[@title='Català']
+
+I see information on the other existing translations
+  Element should be visible  css=.portalMessage.info #multilingual-add-form-is-translation
+  # Element should contain  css=.portalMessage.info  This object is going to be a translation to Français
+  Element should contain  css=.portalMessage.info  Cette élément est sur le point d'être traduit en Français à partir de :
+  # Element should contain  css=.portalMessage.info  If you want to create this object without being a translation press here
+  Element should contain  css=.portalMessage.info  Si vous souhaité créer cet élément sans rentrer dans le processus de traduction cliquez ici
+  Element should contain  css=.portalMessage.info  English An English Document
+  Element should contain  css=.portalMessage.info  Català A Catalan Document

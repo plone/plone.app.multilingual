@@ -70,3 +70,10 @@
 a.contentmenuflags img {
     margin-bottom: 2pt;
 }
+#multilingual-add-form-is-translation > ul {
+  list-style: inside none disc;
+  display:    inline-block;
+}
+#multilingual-add-form-is-translation li {
+  display: list-item;
+}

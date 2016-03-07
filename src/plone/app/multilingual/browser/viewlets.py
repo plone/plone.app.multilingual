@@ -22,6 +22,7 @@ def _cache_until_catalog_change(fun, self):
 
 
 class OneLanguageConfiguredNoticeViewlet(ViewletBase):
+
     """ Notice the user that PAM is installed and only one language
         is configured.
     """
@@ -40,6 +41,7 @@ class OneLanguageConfiguredNoticeViewlet(ViewletBase):
 
 
 class AddFormIsATranslationViewlet(ViewletBase):
+
     """ Notice the user that this add form is a translation
     """
     available = False
@@ -100,24 +102,38 @@ class AddFormIsATranslationViewlet(ViewletBase):
             )
         return url
 
+    def lookupLanguageName(self, langCode):
+        """ Resolves a language code to into a (hopefully) native language name
+
+        e.g 'pt' to 'Português' (or at least 'Portuguese') """
+        native = self.language_infos[langCode].get('native', None)
+        name = self.language_infos[langCode].get('name', langCode)
+        return (native or name)
+
     def update(self):
         try:
             tg = self.request.translation_info['tg']
         except AttributeError:
             return
         self.available = True
+
+        language_tool = getToolByName(self.context, 'portal_languages')
+        self.language_infos = language_tool.getAvailableLanguages()
+
         if ITranslatable.providedBy(self.context):
-            self.lang = ILanguage(self.context).get_language()
+            self.lang = self.lookupLanguageName(
+                ILanguage(self.context).get_language())
         else:
-            self.lang = 'NaN'
+            self.lang = '(Not Known)'
         catalog = getToolByName(self.context, 'portal_catalog')
-        query = {'TranslationGroup': tg, 'Language': 'all'}
+        query = {'TranslationGroup': tg}
         self.origin = catalog.searchResults(query)
 
 
 class AddFormATIsATranslationViewlet(AddFormIsATranslationViewlet):
     # XXX move this class to archetypes multilingual!
     # btw., it is not used in here.
+
     """ Notice the user that this AT add form is a translation
     """
 
@@ -130,6 +146,7 @@ class AddFormATIsATranslationViewlet(AddFormIsATranslationViewlet):
 
 
 class AlternateLanguagesViewlet(ViewletBase):
+
     """ Notice search engines about alternates languages of current
         content item
     """

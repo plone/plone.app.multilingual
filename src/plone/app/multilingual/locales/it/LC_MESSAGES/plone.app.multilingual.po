@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.2b3\n"
-"POT-Creation-Date: 2013-10-08 08:42+0000\n"
+"POT-Creation-Date: 2016-03-04 17:18+0000\n"
 "PO-Revision-Date: 2013-10-08 09:30+0000\n"
 "Last-Translator: Giorgio Borelli <giorgio@giorgioborelli.it>\n"
 "Language-Team: Plone italian translation group <plone-italian-translation-discussion@lists.coactivate.org>\n"
@@ -16,12 +16,8 @@ msgstr ""
 "Domain: plone.app.multilingual\n"
 "X-Is-Fallback-For: it-ch it-it\n"
 
-#: ../browser/migrator.py:67
+#: ../browser/migrator.py:85
 msgid "After migration relation cleanup"
-msgstr ""
-
-#: ../browser/controlpanel.py:412
-msgid "pam_controlpanel_description"
 msgstr ""
 
 #: ../browser/templates/cleanup.pt:93
@@ -29,7 +25,7 @@ msgstr ""
 msgid "Cleanup"
 msgstr ""
 
-#: ../browser/controlpanel.py:396
+#: ../browser/controlpanel.py:391
 msgid "Extra options"
 msgstr "Opzioni extra"
 
@@ -37,7 +33,11 @@ msgstr "Opzioni extra"
 msgid "However, this is the list of the already translated languages for the requested content."
 msgstr ""
 
-#: ../browser/translate.py:75
+#: ../configure.zcml:151
+msgid "Install to enable multilingual content support"
+msgstr ""
+
+#: ../browser/translate.py:68
 msgid "Invalid field"
 msgstr "Campo non valido"
 
@@ -45,27 +45,35 @@ msgstr "Campo non valido"
 msgid "Language control panel"
 msgstr "Pannello di controllo lingua"
 
+#: ../dx/configure.zcml:37
+msgid "Make this content type multilingual aware"
+msgstr ""
+
 #: ../browser/templates/cleanup.pt:102
 msgid "Move"
 msgstr "Sposta"
 
-#: ../browser/controlpanel.py:411
+#: ../browser/controlpanel.py:406
 msgid "Multilingual Settings"
 msgstr "Impostazioni linuga"
 
-#: ../browser/translate.py:61
+#: ../dx/configure.zcml:37
+msgid "Multilingual Support"
+msgstr ""
+
+#: ../browser/translate.py:54
 msgid "Need a field"
 msgstr ""
 
-#: ../browser/controlpanel.py:393
+#: ../browser/controlpanel.py:388
 msgid "Negotiation scheme"
 msgstr ""
 
-#: ../browser/controlpanel.py:542
+#: ../browser/controlpanel.py:536
 msgid "Not translated"
 msgstr "Non tradotto"
 
-#: ../browser/controlpanel.py:399
+#: ../browser/controlpanel.py:394
 msgid "Policies"
 msgstr "Policy"
 
@@ -77,19 +85,19 @@ msgstr "Re-indicizza"
 msgid "Relocate"
 msgstr ""
 
-#: ../browser/migrator.py:111
+#: ../browser/migrator.py:127
 msgid "Relocate content to the proper root language folder"
 msgstr ""
 
-#: ../browser/controlpanel.py:189
+#: ../browser/controlpanel.py:184
 msgid "Search for closest translation in parent's content chain."
 msgstr "Cerca la traduzione più vicina nella catena dei genitori del contenuto"
 
-#: ../browser/controlpanel.py:192
+#: ../browser/controlpanel.py:187
 msgid "Show user dialog with information about the available translations."
 msgstr ""
 
-#: ../browser/controlpanel.py:390
+#: ../browser/controlpanel.py:385
 msgid "Site languages"
 msgstr "Lingue del sito"
 
@@ -105,41 +113,54 @@ msgstr "Questo elemenento non ha ancora alcuna traduzione. Puoi tornare alla hom
 msgid "Transfer"
 msgstr ""
 
-#: ../browser/migrator.py:32
+#: ../browser/migrator.py:50
 msgid "Transfer multilingual catalog information"
 msgstr ""
 
-#. Default: "This object is going to be a translation to ${DYNAMIC_CONTENT} from: <ul> <li><a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\"> <span>${DYNAMIC_CONTENT}</span> <span>${DYNAMIC_CONTENT}</span></a></li> </ul> <span>x</span>"
-#: ../browser/templates/add-form-is-translation.pt:15
-msgid "add-form-is-translation"
-msgstr "Questo oggetto sta per diventare la traduzione di ${DYNAMIC_CONTENT} da: <ul> <li><a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\"> <span>${DYNAMIC_CONTENT}</span> <span>${DYNAMIC_CONTENT}</span></a></li> </ul> <span>x</span>"
+#: ../configure.zcml:159
+msgid "Uninstall plone.app.multilingual"
+msgstr ""
+
+#: ../configure.zcml:159
+msgid "Uninstall to remove multilingual content support"
+msgstr ""
+
+#. Default: "This object is going to be a translation to ${language_name} from:"
+#: ../browser/templates/add-form-is-translation.pt:7
+msgid "add-form-is-translation-intro"
+msgstr "Questo oggetto sta per diventare la traduzione di ${language_name} da:"
 
 #. Default: "Add translations"
-#: ../browser/add_translation_form.py:28
+#: ../browser/add.py:194
 msgid "add_translations"
 msgstr "Aggiungi traduzioni"
 
-#: ../browser/interfaces.py:57
+#: ../browser/interfaces.py:60
 msgid "content"
 msgstr "Contenuto"
 
-#. Default: "If you want to create this object without being a translation press <a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\">here</a>"
-#: ../browser/templates/add-form-is-translation.pt:15
+#. Default: "here"
+#: ../browser/templates/add-form-is-translation.pt:18
+msgid "create-object-here"
+msgstr "qui"
+
+#. Default: "If you want to create this object without being a translation press ${here}"
+#: ../browser/templates/add-form-is-translation.pt:18
 msgid "create-object-without-translation"
-msgstr "Se vuoi creare l'oggetto senza che sia la traduzione del contenuto originario clicca <a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\">qui</a>"
+msgstr "Se vuoi creare l'oggetto senza che sia la traduzione del contenuto originario clicca ${here}"
 
 #. Default: "Create ${lang_name}"
-#: ../browser/menu.py:105
+#: ../browser/menu.py:118
 msgid "create_translation"
 msgstr "Crea ${lang_name}"
 
 #. Default: "Create ${lang_name} folder"
-#: ../browser/menu.py:101
+#: ../browser/menu.py:114
 msgid "create_translation_folder"
 msgstr "Crea la cartella ${lang_name}"
 
 #. Default: "Add existing content as translation"
-#: ../browser/menu.py:150
+#: ../browser/menu.py:163
 msgid "description_add_translations"
 msgstr "Aggiungi un contenuto esistente come traduzione"
 
@@ -149,67 +170,67 @@ msgid "description_after_migration_cleanup"
 msgstr ""
 
 #. Default: "Authenticated users only. Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
-#: ../browser/controlpanel.py:143
+#: ../browser/controlpanel.py:138
 msgid "description_auth_ookie_manual_override"
 msgstr ""
 
 #. Default: "The languages in which the site should be translatable."
-#: ../browser/controlpanel.py:63
+#: ../browser/controlpanel.py:58
 msgid "description_available_languages"
 msgstr "Lingue disponibili per la traduzione del sito"
 
 #. Default: "Edit with the babel_edit"
-#: ../browser/menu.py:55
+#: ../browser/menu.py:68
 msgid "description_babel_edit"
 msgstr "Modifica le traduzioni con 'babel edit'"
 
 #. Default: "Babel edit ${lang_name}"
-#: ../browser/menu.py:122
+#: ../browser/menu.py:135
 msgid "description_babeledit_menu"
 msgstr "Babel edit ${lang_name}"
 
 #. Default: "Use browser language request negotiation."
-#: ../browser/controlpanel.py:182
+#: ../browser/controlpanel.py:177
 msgid "description_browser_language_request_negotiation"
 msgstr "Usa la negoziazione della lingua del browser."
 
 #. Default: "When there are many translations for an item, the number of displayed buttons for them might get too large to fit inside the template. Choose here from which number onwards a drop-down menu will be displayed instead of buttons. Zero means that buttons will always be used."
-#: ../interfaces.py:222
+#: ../interfaces.py:223
 msgid "description_buttons_babel_view_up_to_nr_translations"
 msgstr ""
 
 #. Default: "When updating an object with language independent the field will be synced to all target languages. That can produce Unauthorized error messages because if the editor of the canonical object is not allowed to update the target language objects. Enabling this bypasses this permission check. This could also be dangerous, so think about possible security issues before enabling this."
-#: ../interfaces.py:203
+#: ../interfaces.py:204
 msgid "description_bypass_languageindependent_field_permission_check"
 msgstr ""
 
 #. Default: "Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
-#: ../browser/controlpanel.py:133
+#: ../browser/controlpanel.py:128
 msgid "description_cookie_manual_override"
 msgstr "Usa i cookie per la sovrascrittura manuale della lingua (Richiesto dalla viewlet per la selezione della lingua)"
 
 #. Default: "Filter using language the content on folder_contents"
-#: ../interfaces.py:180
+#: ../interfaces.py:181
 msgid "description_filter_content"
 msgstr ""
 
 #. Default: "Is a paying API in order to use google translation service"
-#: ../interfaces.py:238
+#: ../interfaces.py:239
 msgid "description_google_translation_key"
 msgstr "Queste sono delle API a pagamento per utilizzare il servizio di traduzione di Google"
 
 #. Default: "Use language codes in URL path for manual override."
-#: ../browser/controlpanel.py:123
+#: ../browser/controlpanel.py:118
 msgid "description_language_codes_in_URL"
 msgstr "Usa i codici lingua nell'URL per la sovrascrittura manuale."
 
 #. Default: "Go to the user's browser preferred language related folder"
-#: ../browser/menu.py:199
+#: ../browser/menu.py:212
 msgid "description_language_folder"
 msgstr ""
 
 #. Default: "Use the language of the content item."
-#: ../browser/controlpanel.py:114
+#: ../browser/controlpanel.py:109
 msgid "description_language_of_the_content"
 msgstr "Usa la lingua del contenuto."
 
@@ -229,12 +250,12 @@ msgid "description_migration_results"
 msgstr ""
 
 #. Default: "Move the content that is on the root folder to the default language folder. This value is not stored so you need to check every time you want to run it"
-#: ../browser/controlpanel.py:97
+#: ../browser/controlpanel.py:92
 msgid "description_move_content_to_language_folder"
 msgstr ""
 
 #. Default: "After creating a new translation redirecto to babel view"
-#: ../interfaces.py:191
+#: ../interfaces.py:192
 msgid "description_redirect_babel_view"
 msgstr "Dopo aver creato una nuova traduzione redirigi l'utente alla 'babel view'"
 
@@ -249,43 +270,43 @@ msgid "description_relocate_content"
 msgstr ""
 
 #. Default: "Delete translations or remove the relations"
-#: ../browser/menu.py:177
+#: ../browser/menu.py:190
 msgid "description_remove_translations"
 msgstr "Cancella le traduzioni o rimuovi le relazioni tra i contenuti tradotti."
 
 #. Default: "The default language used for the content and the UI of this site."
-#: ../browser/controlpanel.py:206
+#: ../browser/controlpanel.py:201
 msgid "description_selector_lookup_translations_policy"
 msgstr "La lingua di default usata per i contenuti e la UI del sito."
 
 #. Default: "Set the default language on all content without language defined. This value is not stored so you need to check every time you want to run it"
-#: ../browser/controlpanel.py:85
+#: ../browser/controlpanel.py:80
 msgid "description_set_default_language"
 msgstr "Imposta la lingua di default di tutti i contenuti che non hanno la lingua ancora definita. Il valore di questa impostazione non viene salvato quindi devi reimpostarlo ogni volta che vuoi effettuare il controllo"
 
 #. Default: "Set or change the current content language"
-#: ../browser/menu.py:262
+#: ../browser/menu.py:274
 msgid "description_set_language"
 msgstr "Imposta o cambia la lingua corrente di questo contenuto."
 
 #. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
-#: ../browser/controlpanel.py:156
+#: ../browser/controlpanel.py:151
 msgid "description_set_language_cookie_always"
 msgstr ""
 
 #. Default: "Show the shared Language Independent Folder"
-#: ./browser/menu.py:255
+#: ../browser/menu.py:255
 #, fuzzy
 msgid "description_shared_folder"
 msgstr "Visualizza la cartella condivisa tra le lingue (in lingua neutra)"
 
 #. Default: "The default language used for the content and the UI of this site."
-#: ../browser/controlpanel.py:53
+#: ../browser/controlpanel.py:48
 msgid "description_site_language"
 msgstr "La lingua usata per il contenuto e l'interfaccia utente del sito."
 
 #. Default: "Use top-level domain (e.g.: www.plone.de)."
-#: ../browser/controlpanel.py:174
+#: ../browser/controlpanel.py:169
 msgid "description_top_level_domain"
 msgstr "Usa i domini per le lingue (es.: www.plone.it)."
 
@@ -295,7 +316,7 @@ msgid "description_transfer_multilingual_catalog_info"
 msgstr ""
 
 #. Default: "Translate into ${lang_name}"
-#: ../browser/menu.py:85
+#: ../browser/menu.py:98
 msgid "description_translate_into"
 msgstr "Traduci in ${lang_name}"
 
@@ -305,37 +326,52 @@ msgid "description_translation_map"
 msgstr "Mappa traduzioni"
 
 #. Default: "Universal Language content link"
-#: ../browser/menu.py:221
+#: ../browser/menu.py:234
 msgid "description_universal_link"
 msgstr "Link universale indipendente dalla lingua"
 
 #. Default: "Untranslated languages from the current content"
-#: ../browser/interfaces.py:42
+#: ../browser/interfaces.py:43
 msgid "description_update_language"
 msgstr "Lingue in cui il contenuto non è ancora stato tradotto"
 
 #. Default: "Use subdomain (e.g.: de.plone.org)."
-#: ../browser/controlpanel.py:166
+#: ../browser/controlpanel.py:161
 msgid "description_use_subdomain"
 msgstr "Usa i sottodomini (es.: it.plone.org)."
 
 #. Default: "Edit ${lang_name}"
-#: ../browser/menu.py:142
+#: ../browser/menu.py:155
 msgid "edit_translation"
 msgstr "Modifica ${lang_name}"
 
 #. Default: "Edit ${lang_name} folder"
-#: ../browser/menu.py:138
+#: ../browser/menu.py:151
 msgid "edit_translation_folder"
 msgstr "Modifica cartella ${lang_name}"
 
+#. Default: "Folder's id is not a valid language code"
+#: ../browser/migrator.py:310
+msgid "folder_to_lrf_id_not_language"
+msgstr ""
+
+#. Default: "Only folders just below the root can be transformed"
+#: ../browser/migrator.py:299
+msgid "folder_to_lrf_not_next_to_root"
+msgstr ""
+
+#. Default: "Folder has been successfully transformed to a language root folder"
+#: ../browser/migrator.py:333
+msgid "folder_to_lrf_success"
+msgstr ""
+
 #. Default: "Authenticated users only."
-#: ../browser/controlpanel.py:141
+#: ../browser/controlpanel.py:136
 msgid "heading_auth_cookie_manual_override"
 msgstr "Solo utenti autenticati."
 
 #. Default: "Available languages"
-#: ../browser/controlpanel.py:61
+#: ../browser/controlpanel.py:56
 msgid "heading_available_languages"
 msgstr "Lingue disponibili"
 
@@ -345,42 +381,42 @@ msgid "heading_available_translations"
 msgstr "Traduzioni disponibili per questo contenuto"
 
 #. Default: "Use browser language request negotiation."
-#: ../browser/controlpanel.py:180
+#: ../browser/controlpanel.py:175
 msgid "heading_browser_language_request_negotiation"
 msgstr "Usa la negoziazione della lingua del browser."
 
 #. Default: "Use buttons in the bable view for up to how many translations?"
-#: ../interfaces.py:218
+#: ../interfaces.py:219
 msgid "heading_buttons_babel_view_up_to_nr_translations"
 msgstr ""
 
 #. Default: "Bypass language independent field permission check"
-#: ../interfaces.py:200
+#: ../interfaces.py:201
 msgid "heading_bypass_languageindependent_field_permission_check"
 msgstr ""
 
 #. Default: "Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
-#: ../browser/controlpanel.py:130
+#: ../browser/controlpanel.py:125
 msgid "heading_cookie_manual_override"
 msgstr "Usa i cookie per la sovrascrittura manuale della lingua (Richiesto dalla viewlet per la selezione della lingua)"
 
 #. Default: "Filter content by language."
-#: ../interfaces.py:177
+#: ../interfaces.py:178
 msgid "heading_filter_content"
 msgstr "Filtra i contenuti per lingua"
 
 #. Default: "Google Translation API Key"
-#: ../interfaces.py:235
+#: ../interfaces.py:236
 msgid "heading_google_translation_key"
 msgstr "Chiave API di Google Translation"
 
 #. Default: "Use language codes in URL path for manual override."
-#: ../browser/controlpanel.py:120
+#: ../browser/controlpanel.py:115
 msgid "heading_language_codes_in_URL"
 msgstr "Usa i codici lingua nell'URL per la sovrascrittura manuale."
 
 #. Default: "Use the language of the content item."
-#: ../browser/controlpanel.py:112
+#: ../browser/controlpanel.py:107
 msgid "heading_language_of_the_content"
 msgstr "Usa la lingua del contenuto."
 
@@ -400,7 +436,7 @@ msgid "heading_migration_results"
 msgstr "Risultati migrazione"
 
 #. Default: "Move root content to default language folder"
-#: ../browser/controlpanel.py:95
+#: ../browser/controlpanel.py:90
 msgid "heading_move_content_to_language_folder"
 msgstr "Sposta il contenuto nella cartella principale nella cartella della lingua di default"
 
@@ -410,32 +446,32 @@ msgid "heading_not_available_in_language"
 msgstr "Non disponibile in ${language}"
 
 #. Default: "Redirect on creation to babel view."
-#: ../interfaces.py:188
+#: ../interfaces.py:189
 msgid "heading_redirect_babel_view"
 msgstr "Alla creazione usa la vista 'babel'"
 
 #. Default: "The policy used to determine how the lookup for available translations will be made by the language selector."
-#: ../browser/controlpanel.py:202
+#: ../browser/controlpanel.py:197
 msgid "heading_selector_lookup_translations_policy"
 msgstr ""
 
 #. Default: "Set the default language"
-#: ../browser/controlpanel.py:83
+#: ../browser/controlpanel.py:78
 msgid "heading_set_default_language"
 msgstr "Imposta la lingua di default"
 
 #. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
-#: ../browser/controlpanel.py:152
+#: ../browser/controlpanel.py:147
 msgid "heading_set_language_cookie_always"
 msgstr "Imposta sempre il cookie della lingua. Anche se il parametro 'set_language' non è presente"
 
 #. Default: "Default site language"
-#: ../browser/controlpanel.py:51
+#: ../browser/controlpanel.py:46
 msgid "heading_site_language"
 msgstr "Lingua di default del sito"
 
 #. Default: "Use top-level domain (e.g.: www.plone.de)."
-#: ../browser/controlpanel.py:172
+#: ../browser/controlpanel.py:167
 msgid "heading_top_level_domain"
 msgstr "Usa il dominio per le lingue (es.: www.plone.it)"
 
@@ -445,7 +481,7 @@ msgid "heading_translation_map"
 msgstr "Mappa delle traduzioni di plone.app.multilingua"
 
 #. Default: "Use subdomain (e.g.: de.plone.org)."
-#: ../browser/controlpanel.py:164
+#: ../browser/controlpanel.py:159
 msgid "heading_use_subdomain"
 msgstr "Usa i sottodomini per le lingue (e.g. it.plone.org)"
 
@@ -455,7 +491,7 @@ msgid "help_reindex_language_index"
 msgstr ""
 
 #. Default: "Add translations"
-#: ../browser/add_translation_form.py:20
+#: ../browser/add.py:185
 msgid "label_add_translations"
 msgstr "Aggiungi traduzioni"
 
@@ -494,12 +530,12 @@ msgid "label_missing_translations"
 msgstr "Traduzioni mancanti"
 
 #. Default: "Remove translations"
-#: ../browser/remove_translation_form.py:20
+#: ../browser/remove.py:16
 msgid "label_remove_translations"
 msgstr "Rimuovi traduzioni"
 
 #. Default: "Save"
-#: ../browser/controlpanel.py:418
+#: ../browser/controlpanel.py:412
 msgid "label_save"
 msgstr "Salva"
 
@@ -515,7 +551,7 @@ msgid "label_total_relations"
 msgstr "Numero di relazioni interessate:"
 
 #. Default: "Translate"
-#: ../browser/menu.py:283
+#: ../browser/menu.py:295
 msgid "label_translate_menu"
 msgstr "Traduci"
 
@@ -534,7 +570,7 @@ msgid "label_up_to_plone_setup"
 msgstr "Vai alla configurazione del sito"
 
 #. Default: "Return to language folder"
-#: ../browser/menu.py:195
+#: ../browser/menu.py:208
 msgid "language_folder"
 msgstr "Ritorna alla cartella lingua"
 
@@ -559,12 +595,12 @@ msgid "legend_transfer_multilingual_catalog_info"
 msgstr ""
 
 #. Default: "This form allows you to add currently existing objects to be the translations of the current object. You have to manually select both the language and the object."
-#: ../browser/add_translation_form.py:21
+#: ../browser/add.py:186
 msgid "long_description_add_translations"
 msgstr ""
 
 #. Default: "This form allows you to remove the existing translations of the current object. You can just delete the link between the objects or you can delete the object itself."
-#: ../browser/remove_translation_form.py:22
+#: ../browser/remove.py:18
 msgid "long_description_remove_translations"
 msgstr ""
 
@@ -583,6 +619,15 @@ msgstr "Lingue mandcanti:"
 msgid "not_configured_for_multiple_languages"
 msgstr ""
 
+#. Default: "All the configuration of a multilingual Plone site"
+#: ../browser/controlpanel.py:407
+msgid "pam_controlpanel_description"
+msgstr ""
+
+#: ../configure.zcml:151
+msgid "plone.app.multilingual"
+msgstr ""
+
 #. Default: "It's not possible to execute this step without uninstalling completely LinguaPlone: uninstall in the add-ons control panel, delete it from your buildout and re-run buildout. Then come here and try again."
 #: ../browser/templates/migration.pt:234
 msgid "relation_migration_with_lp_not_posible"
@@ -593,57 +638,57 @@ msgstr ""
 msgid "relation_migration_with_not_needed"
 msgstr ""
 
-#: ../browser/remove_translation_form.py:39
+#: ../browser/remove.py:37
 msgid "remove selected"
 msgstr "Rimuovi la traduzione selezionata"
 
 #. Default: "Go to Media folder"
-#: ./browser/menu.py:251
+#: ../browser/menu.py:251
 #, fuzzy
 msgid "shared_folder"
 msgstr "Vai alla cartella condivisa"
 
 #. Default: "Add translations..."
-#: ../browser/menu.py:166
+#: ../browser/menu.py:179
 msgid "title_add_translations"
 msgstr "Aggiungi traduzione..."
 
 #. Default: "Add translations for folder..."
-#: ../browser/menu.py:163
+#: ../browser/menu.py:176
 msgid "title_add_translations_folder"
 msgstr "Aggiungi traduzioni alla cartella"
 
 #. Default: "Available languages"
-#: ../browser/interfaces.py:41
+#: ../browser/interfaces.py:42
 msgid "title_available_languages"
 msgstr "Lingue disponibili"
 
 #. Default: "Edit with babel view"
-#: ../browser/menu.py:51
+#: ../browser/menu.py:64
 msgid "title_babel_edit"
 msgstr "Modifica con 'babel view'"
 
 #. Default: "Language"
-#: ../browser/interfaces.py:33
+#: ../browser/interfaces.py:34
 msgid "title_language"
 msgstr "Lingue"
 
-#: ../browser/interfaces.py:67
+#: ../browser/interfaces.py:70
 msgid "title_languages"
 msgstr "Lingue"
 
 #. Default: "Remove translations..."
-#: ../browser/menu.py:173
+#: ../browser/menu.py:186
 msgid "title_remove_translations"
 msgstr "Rimuovi le traduzioni..."
 
 #. Default: "Set content language"
-#: ../browser/menu.py:258
+#: ../browser/menu.py:270
 msgid "title_set_language"
 msgstr "Imposta la lingua del contenuto"
 
 #. Default: "Manage translations for your content."
-#: ../browser/menu.py:284
+#: ../browser/menu.py:296
 msgid "title_translate_menu"
 msgstr "Gestisci le traduzioni del contenuto"
 
@@ -658,15 +703,15 @@ msgid "translation_to"
 msgstr "Traduci in ${language}"
 
 #. Default: "Universal Link"
-#: ../browser/menu.py:217
+#: ../browser/menu.py:230
 msgid "universal_link"
 msgstr "Link universale"
 
-#: ../browser/remove_translation_form.py:29
+#: ../browser/remove.py:26
 msgid "unlink selected"
 msgstr "Scollega la lingua selezionata"
 
 #. Default: "Update Language"
-#: ../browser/update_language_form.py:25
+#: ../browser/update.py:20
 msgid "update_language"
 msgstr "Aggiorna lingua"

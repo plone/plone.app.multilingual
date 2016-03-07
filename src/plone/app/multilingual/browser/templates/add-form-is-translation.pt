@@ -2,15 +2,22 @@
   <dt i18n:translate="" i18n:domain="plone">
     Info
   </dt>
-  <dd id="multilingual-add-form-is-translation" i18n:domain="plone.app.multilingual"
-      i18n:translate="add-form-is-translation">
-    This object is going to be a translation to <span tal:replace="view/language"></span> from: 
+  <dd id="multilingual-add-form-is-translation" i18n:domain="plone.app.multilingual">
+    <div i18n:translate="add-form-is-translation-intro">
+      This object is going to be a translation to <span i18n:name="language_name" tal:replace="view/language"></span> from:
+    </div>
     <ul>
-        <li tal:repeat="origin view/origin"><a href="#" class="link-overlay" tal:attributes="href origin/getURL"> <span tal:content="origin/language"></span> <span tal:content="origin/Title"></span></a></li>
+        <li tal:repeat="origin view/origin">
+          <a href="#" class="link-overlay" tal:attributes="href origin/getURL">
+            <span class="langName"
+                  tal:content="python:view.lookupLanguageName(origin.Language)"></span>
+            <span class="itemTitle" tal:content="origin/Title"></span>
+        </a></li>
     </ul>
-    <span i18n:domain="plone.app.multilingual" i18n:translate="create-object-without-translation">
+    <div i18n:translate="create-object-without-translation">
     If you want to create this object without being a translation press
-    <a href="#" class="link-overlay" tal:attributes="href view/returnURL">here</a>
-    </span>
+    <a href="#" class="link-overlay" tal:attributes="href view/returnURL"
+       i18n:name="here" i18n:translate="create-object-here">here</a>
+    </div>
   </dd>
 </dl>
