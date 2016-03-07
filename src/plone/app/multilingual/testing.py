@@ -110,7 +110,6 @@ class MultipleLanguagesLayer(z2.Layer):
             language_tool = getToolByName(portal, 'portal_languages')
             language_tool.addSupportedLanguage('ca')
             language_tool.addSupportedLanguage('es')
-            language_tool.addSupportedLanguage('fr')
 
             # Enable request negotiator
             language_tool.use_request_negotiation = True
@@ -124,6 +123,32 @@ MULTIPLE_LANGUAGES_LAYER = MultipleLanguagesLayer()
 PLONE_APP_MULTILINGUAL_FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(MULTIPLE_LANGUAGES_LAYER,),
     name="plone.app.multilingual:Functional")
+
+class OneMoreLanguageLayer(z2.Layer):
+
+    defaultBases = (PLONE_APP_MULTILINGUAL_FIXTURE,)
+
+    def setUp(self):
+        with ploneSite() as portal:
+            # Add French
+            language_tool = getToolByName(portal, 'portal_languages')
+            language_tool.addSupportedLanguage('fr')
+
+            # Need to run this after making changes to supported languages
+            setupTool = SetupMultilingualSite()
+            setupTool.setupSite(portal)
+
+    def tearDown(self):
+        with ploneSite() as portal:
+            # Remove French
+            language_tool = getToolByName(portal, 'portal_languages')
+            language_tool.removeSupportedLanguages(['fr'])
+
+            # Need to run this after making changes to supported languages
+            setupTool = SetupMultilingualSite()
+            setupTool.setupSite(portal)
+
+ONE_MORE_LANGUAGE_LAYER = OneMoreLanguageLayer()
 
 
 class MultiLingual(RemoteLibrary):
@@ -214,6 +239,7 @@ REMOTE_LIBRARY_BUNDLE_FIXTURE = RemoteLibraryLayer(
 
 PLONE_APP_MULTILINGUAL_ROBOT_TESTING = FunctionalTesting(
     bases=(MULTIPLE_LANGUAGES_LAYER,
+           ONE_MORE_LANGUAGE_LAYER,
            REMOTE_LIBRARY_BUNDLE_FIXTURE,
            z2.ZSERVER_FIXTURE),
     name="plone.app.multilingual:Robot")

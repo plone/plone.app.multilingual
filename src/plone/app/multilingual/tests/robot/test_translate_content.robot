@@ -23,7 +23,7 @@ Scenario: As a visitor I can view the translation
      When I switch to Catalan
      Then I can view the document in Catalan
 
-Scenario: As an editor when I create a translation I see information what I am translating
+Scenario: As an editor when I create a translation I see information on what I am translating
     Given a site owner
       and a document in English with Catalan translation
      When I start to translate the document into French
