@@ -120,11 +120,6 @@ class MultilingualAddForm(DefaultAddForm):
 
     group_class = MultilingualAddFormGroup
 
-    def gtenabled(self):
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
-        return settings.google_translation_key != ''
-
     def portal_url(self):
         portal_tool = getToolByName(self.context, 'portal_url', None)
         if portal_tool is not None:

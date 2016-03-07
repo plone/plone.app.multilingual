@@ -14,8 +14,8 @@ New:
 
 Fixes:
 
-- *add item here*
-
+- Really don't show the Google Translate button when no API key set 
+  [djowett]
 
 3.0.15 (2016-03-01)
 -------------------
@@ -24,6 +24,7 @@ Fixes:
 
 - Clarify naming of Language Independent Folders
   [djowett]
+
 
 
 3.0.14 (2016-02-25)
