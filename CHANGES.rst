@@ -19,6 +19,12 @@ Fixes:
 - Pin archetypes.multilingual to 2.x releases of that product
   [djowett]
 
+- Fix 'is a translation' viewlet
+  [djowett]
+
+- Rebuild translations with rebuild.sh / i18ndude
+  [djowett]
+
 
 2.0.1 (2015-11-04)
 ------------------
