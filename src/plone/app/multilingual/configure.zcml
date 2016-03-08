@@ -147,8 +147,7 @@
       description="Install to enable multilingual content support"
       directory="profiles/default"
       provides="Products.GenericSetup.interfaces.EXTENSION"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      post_handler=".setuphandlers.init_pam"/>
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
   <genericsetup:registerProfile
       name="uninstall"

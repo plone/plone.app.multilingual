@@ -6,14 +6,11 @@ Changelog
 
 Incompatibilities:
 
-- No more compatible with GenericSetup below 1.8.2.
-  [iham]
+- *add item here*
 
 New:
 
-- Creating language folder(s) on installation.
-  (fixes https://github.com/plone/plone.app.multilingual/issues/214)
-  [iham]
+- *add item here*
 
 Fixes:
 

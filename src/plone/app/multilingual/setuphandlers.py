@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-from plone.api import portal
 from Products.CMFPlone.interfaces import INonInstallable
-from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from zope.interface import implementer
 import pkg_resources
 
@@ -11,7 +9,6 @@ except pkg_resources.DistributionNotFound:
     HAS_PLONE_APP_CONTENTTYPES = False
 else:
     HAS_PLONE_APP_CONTENTTYPES = True
-
 
 
 @implementer(INonInstallable)
@@ -25,12 +22,6 @@ class HiddenProfiles(object):
         return [
             u'plone.app.multilingual:uninstall',
         ]
-
-
-def init_pam(tool):
-    """After installation run setup to create LRF and LIF."""
-    setup_tool = SetupMultilingualSite()
-    setup_tool.setupSite(portal.get())
 
 
 def step_default_various(context):
