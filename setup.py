@@ -22,6 +22,7 @@ setup(
     ],
     url='https://github.com/plone/plone.app.multilingual',
     license='GPL',
+    keywords='language multilingual content',
     author='Ramon Navarro, Victor Fernandez de Alba, awello et al',
     author_email='r.navarro@iskra.cat',
     packages=find_packages('src'),
