@@ -38,7 +38,9 @@ Versions
 
 * 1.x - Plone 4.x with Archetypes and Dexterity
 
-* 2.x - Plone >= 4.x with plone.app.contenttypes (Dexterity) and real shared content
+* 2.x - Plone >= 4.x, < 5.0 with plone.app.contenttypes (Dexterity) and real shared content
+
+* 3.x - Plone >= 5.x
 
 
 Components
