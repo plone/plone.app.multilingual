@@ -124,6 +124,7 @@ PLONE_APP_MULTILINGUAL_FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(MULTIPLE_LANGUAGES_LAYER,),
     name="plone.app.multilingual:Functional")
 
+
 class OneMoreLanguageLayer(z2.Layer):
 
     defaultBases = (PLONE_APP_MULTILINGUAL_FIXTURE,)
