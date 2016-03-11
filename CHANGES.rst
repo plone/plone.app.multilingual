@@ -14,8 +14,12 @@ New:
 
 Fixes:
 
+- Fixed compatibility issue with archetypes contents: wrong URL were generated.
+  [keul, hvelarde]
+
 - Really don't show the Google Translate button when no API key set 
   [djowett]
+
 
 3.0.15 (2016-03-01)
 -------------------
