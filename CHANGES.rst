@@ -22,6 +22,9 @@ Fixes:
 
 Fixes:
 
+- Fixed compatibility issue with archetypes contents: wrong URL were generated.
+  [keul]
+
 - Really don't show the Google Translate button when no API key set 
   [djowett]
 
