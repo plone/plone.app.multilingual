@@ -14,7 +14,10 @@ New:
 
 Fixes:
 
-- *add item here*
+- Workaroud in robot test for TinyMCE overlap bug see 
+  https://github.com/plone/plone.app.multilingual/issues/227
+  for details
+  [jensens]
 
 
 3.0.16 (2016-03-31)
