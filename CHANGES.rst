@@ -14,7 +14,7 @@ New:
 
 Fixes:
 
-- Wait longer in robot test for keyword succeeded, since 5s was not enough.
+- Wait for visibility of select2 result, instead of time.
   [jensens]
 
 - Workaroud in robot test for TinyMCE overlap bug see 

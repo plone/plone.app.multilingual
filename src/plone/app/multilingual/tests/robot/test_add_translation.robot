@@ -58,9 +58,8 @@ I add the document in English as a translation
 
   Click Element  css=#formfield-form-widgets-content .select2-choices
   Wait until element is visible  css=#select2-drop
-
-  Wait until keyword succeeds  10s  1s
-  ...  Click Element  xpath=(//span[contains(., 'An English Document')])
+  Wait until element is visible  xpath=(//span[contains(., 'An English Document')])
+  Click Element  xpath=(//span[contains(., 'An English Document')])
   Wait until page contains  An English Document
 
   Select From List  name=form.widgets.language:list  en
