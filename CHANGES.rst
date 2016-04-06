@@ -14,6 +14,9 @@ New:
 
 Fixes:
 
+- Wait longer in robot test for keyword succeeded, since 5s was not enough.
+  [jensens]
+
 - Workaroud in robot test for TinyMCE overlap bug see 
   https://github.com/plone/plone.app.multilingual/issues/227
   for details
