@@ -4,14 +4,6 @@ Changelog
 3.0.17 (unreleased)
 -------------------
 
-Incompatibilities:
-
-- *add item here*
-
-New:
-
-- *add item here*
-
 Fixes:
 
 - Wait for visibility of select2 result, instead of time.
