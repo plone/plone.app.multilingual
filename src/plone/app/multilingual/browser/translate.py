@@ -55,7 +55,8 @@ class gtranslation_service_dexterity(BrowserView):
         else:
             manager = ITranslationManager(self.context)
             registry = getUtility(IRegistry)
-            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
+            settings = registry.forInterface(IMultiLanguageExtraOptionsSchema,
+                                             prefix="plone")
             lang_target = ILanguage(self.context).get_language()
             lang_source = self.request.form['lang_source']
             orig_object = manager.get_translation(lang_source)

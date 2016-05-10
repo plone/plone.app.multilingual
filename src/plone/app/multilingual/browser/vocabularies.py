@@ -6,7 +6,6 @@ from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.vocabularies.catalog import CatalogVocabularyFactory
 from plone.i18n.locales.interfaces import ILanguageAvailability
 from zope.component import getGlobalSiteManager
-from zope.component.hooks import getSite
 from zope.interface import implementer
 from zope.interface import provider
 from zope.schema.interfaces import IContextSourceBinder
