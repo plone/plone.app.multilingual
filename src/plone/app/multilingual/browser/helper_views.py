@@ -211,7 +211,8 @@ class selector_view(universal_link):
             url = self.wrapDestination(url)
         else:
             registry = getUtility(IRegistry)
-            policies = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
+            policies = registry.forInterface(IMultiLanguageExtraOptionsSchema,
+                                             prefix="plone")
             if policies.selector_lookup_translations_policy == 'closest':
                 url = self.getClosestDestination()
             else:

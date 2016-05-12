@@ -39,8 +39,8 @@ class DefaultTranslationLocator(object):
         parent = aq_parent(self.context)
         translated_parent = parent
         found = False
-        while not (IPloneSiteRoot.providedBy(parent)
-                   and not ILanguageRootFolder.providedBy(parent))\
+        while not (IPloneSiteRoot.providedBy(parent) and
+                   not ILanguageRootFolder.providedBy(parent))\
                 and not found:
             parent_translation = ITranslationManager(parent)
             if parent_translation.has_translation(language):

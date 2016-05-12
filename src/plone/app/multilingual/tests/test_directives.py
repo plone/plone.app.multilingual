@@ -7,8 +7,6 @@ from plone.supermodel.utils import mergedTaggedValueList
 from zope import schema
 from zope.interface import Interface
 import unittest
-from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
-from zope.interface import alsoProvides
 
 
 class TestDirectives(unittest.TestCase):
