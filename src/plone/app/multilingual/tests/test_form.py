@@ -92,8 +92,9 @@ class TestForm(unittest.TestCase):
         transaction.commit()
 
         # Create translation
-        self.browser.open(a_ca.absolute_url() +
-                          '/@@create_translation?language=en')
+        self.browser.open(
+            a_ca.absolute_url()
+            + '/@@create_translation?language=en')
 
         # Fill in translation details
         self.browser.getControl(
@@ -101,8 +102,8 @@ class TestForm(unittest.TestCase):
         self.browser.getControl(name="form.buttons.save").click()
 
         # Unregister translation
-        self.browser.open(a_ca.absolute_url() +
-                          '/remove_translations?set_language=en')
+        self.browser.open(a_ca.absolute_url()
+                          + '/remove_translations?set_language=en')
 
         self.portal._p_jar.sync()
 
@@ -170,8 +171,9 @@ class TestForm(unittest.TestCase):
         transaction.commit()
 
         # Translate content
-        self.browser.open(a_ca.absolute_url() +
-                          '/@@create_translation?language=en')
+        self.browser.open(
+            a_ca.absolute_url()
+            + '/@@create_translation?language=en')
 
         # Fill in translation details
         self.browser.getControl(
@@ -195,8 +197,9 @@ class TestForm(unittest.TestCase):
 
         transaction.commit()
 
-        self.browser.open(self.portal.absolute_url() +
-                          '/ca/test-folder/@@create_translation?language=en')
+        self.browser.open(
+            self.portal.absolute_url()
+            + '/ca/test-folder/@@create_translation?language=en')
 
         self.browser.getControl(
             name="form.widgets.IDublinCore.title").value = u"Test folder"
@@ -216,8 +219,9 @@ class TestForm(unittest.TestCase):
 
         transaction.commit()
 
-        self.browser.open(af_ca.absolute_url() + '/' + b_ca.id +
-                          '/@@create_translation?language=en')
+        self.browser.open(
+            af_ca.absolute_url() + '/' + b_ca.id
+            + '/@@create_translation?language=en')
 
         self.browser.getControl(
             name="form.widgets.IDublinCore.title").value = u"Test folder"

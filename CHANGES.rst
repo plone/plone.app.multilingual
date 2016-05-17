@@ -6,14 +6,11 @@ Changelog
 
 Breaking changes:
 
-- No more compatible with GenericSetup below 1.8.2.
-  [iham]
+- *add item here*
 
 New features:
 
-- Creating language folder(s) on installation.
-  (fixes https://github.com/plone/plone.app.multilingual/issues/214)
-  [iham]
+- *add item here*
 
 Bug fixes:
 
@@ -28,7 +25,7 @@ Fixes:
 - Wait for visibility of select2 result, instead of time.
   [jensens]
 
-- Workaroud in robot test for TinyMCE overlap bug see
+- Workaroud in robot test for TinyMCE overlap bug see 
   https://github.com/plone/plone.app.multilingual/issues/227
   for details
   [jensens]
@@ -42,7 +39,7 @@ Fixes:
 - Fixed compatibility issue with archetypes contents: wrong URL were generated.
   [keul, hvelarde]
 
-- Really don't show the Google Translate button when no API key set
+- Really don't show the Google Translate button when no API key set 
   [djowett]
 
 

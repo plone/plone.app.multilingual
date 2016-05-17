@@ -45,13 +45,12 @@ class TranslateMenu(BrowserMenu):
         showflags = lt.showFlags
         context_id = ITranslationManager(context).tg
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema,
-                                         prefix="plone")
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         edit_view = 'babel_edit' if settings.redirect_babel_view else 'edit'
         # In case is neutral language show set language menu only
         is_neutral_content = (
-            ILanguage(context).get_language() == LANGUAGE_INDEPENDENT or
-            is_language_independent(context)
+            ILanguage(context).get_language() == LANGUAGE_INDEPENDENT
+            or is_language_independent(context)
         )
 
         shared_folder_url = site_url + '/folder_contents'

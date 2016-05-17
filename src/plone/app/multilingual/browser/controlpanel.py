@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone import PloneMessageFactory as _Plone
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
-from Products.CMFPlone.controlpanel.browser.language import \
-    LanguageControlPanelForm
+from Products.CMFPlone.controlpanel.browser.language import LanguageControlPanelForm
 from plone.app.registry.browser import controlpanel
 
 from plone.app.multilingual import isLPinstalled

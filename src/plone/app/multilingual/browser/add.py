@@ -71,8 +71,7 @@ class AddViewTraverser(object):
         if not IDexterityContent.providedBy(source):
             # we are not on DX content, assume AT
             baseUrl = self.context.absolute_url()
-            url = '%s/@@add_at_translation?type=%s' % (baseUrl,
-                                                       source.portal_type)
+            url = '%s/@@add_at_translation?type=%s' % (baseUrl, source.portal_type)
             return self.request.response.redirect(url)
 
         # set the self.context to the place where it should be stored
@@ -90,8 +89,7 @@ class AddViewTraverser(object):
             raise TraversalError(self.context, name)
 
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema,
-                                         prefix="plone")
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
 
         if not settings.redirect_babel_view:
             add_view = None
@@ -136,8 +134,7 @@ class MultilingualAddForm(DefaultAddForm):
     @property
     def max_nr_of_buttons(self):
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema,
-                                         prefix="plone")
+        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema, prefix="plone")
         return settings.buttons_babel_view_up_to_nr_translations
 
     def _process_language_independent(self, fields, widgets):
