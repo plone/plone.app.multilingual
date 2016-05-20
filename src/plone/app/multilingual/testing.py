@@ -135,21 +135,8 @@ PLONE_APP_MULTILINGUAL_PRESET_INTEGRATION_TESTING = IntegrationTesting(
 
 class MultipleLanguagesLayer(z2.Layer):
 
-    defaultBases = (PLONE_APP_MULTILINGUAL_FIXTURE,)
+    defaultBases = (PLONE_APP_MULTILINGUAL_PRESET_FIXTURE,)
 
-    def setUp(self):
-        with ploneSite() as portal:
-            # Define available languages
-            language_tool = getToolByName(portal, 'portal_languages')
-            language_tool.addSupportedLanguage('ca')
-            language_tool.addSupportedLanguage('es')
-
-            # Enable request negotiator
-            language_tool.use_request_negotiation = True
-
-            # Setup language root folders
-            setupTool = SetupMultilingualSite()
-            setupTool.setupSite(portal)
 
 MULTIPLE_LANGUAGES_LAYER = MultipleLanguagesLayer()
 
