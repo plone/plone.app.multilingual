@@ -16,7 +16,6 @@ from zope.component.hooks import getSite
 from zope.globalrequest import getRequest
 from zope.lifecycleevent import modified
 from zope.lifecycleevent.interfaces import IObjectRemovedEvent
-from plone.browserlayer.utils import registered_layers
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 
 
@@ -160,11 +159,9 @@ def createdEvent(obj, event):
     # AT check
     portal = getSite()
     portal_factory = getToolByName(portal, 'portal_factory', None)
-    if (
-        not IDexterityContent.providedBy(obj)
-        and portal_factory is not None
-        and not portal_factory.isTemporary(obj)
-    ):
+    if (not IDexterityContent.providedBy(obj) and
+            portal_factory is not None and
+            not portal_factory.isTemporary(obj)):
         return
 
     IMutableTG(obj).set(ti['tg'])
