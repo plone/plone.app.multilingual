@@ -15,10 +15,6 @@ New features:
   (fixes https://github.com/plone/plone.app.multilingual/issues/214)
   [iham]
 
-Bug fixes:
-
-- *add item here*
-
 
 3.0.17 (2016-05-03)
 -------------------
