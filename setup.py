@@ -4,7 +4,7 @@ import os
 from setuptools import setup, find_packages
 
 
-version = '3.0.18.dev0'
+version = '4.0.0.dev0'
 
 setup(
     name='plone.app.multilingual',
