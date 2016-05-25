@@ -4,11 +4,11 @@ import os
 from setuptools import setup, find_packages
 
 
-VERSION = '3.0.18.dev0'
+version = '3.0.18.dev0'
 
 setup(
     name='plone.app.multilingual',
-    version=VERSION,
+    version=version,
     description="Multilingual Plone UI package, enables maintenance of "
                 "translations for both Dexterity types and Archetypes",
     long_description="\n\n".join([
