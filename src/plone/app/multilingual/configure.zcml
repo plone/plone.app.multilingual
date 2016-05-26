@@ -109,7 +109,7 @@
   <!-- Language independent folder content indexers -->
   <subscriber
       for="plone.dexterity.interfaces.IDexterityContent
-           zope.lifecycleevent.interfaces.IObjectAddedEvent"
+           zope.lifecycleevent.interfaces.IObjectMovedEvent"
       handler=".subscriber.reindex_language_independent"/>
 
   <subscriber
