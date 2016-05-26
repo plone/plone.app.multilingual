@@ -35,6 +35,10 @@ class TestSubscribers(unittest.TestCase):
         self.assertEqual(ILanguage(a_ca).get_language(), '')
 
     def test_moved_event(self):
+        """When an object is moved from within one Language Root Folder into
+        a different Language Root Folder it changes its language to that of the
+        folder it is copied into
+        """
         a_ca = createContentInContainer(
             self.portal['ca'], 'Document', title=u"Test document")
 
@@ -44,6 +48,10 @@ class TestSubscribers(unittest.TestCase):
         self.assertEqual(ILanguage(a_ca_copied).get_language(), 'en')
 
     def test_copied_event(self):
+        """When an object is copied from within one Language Root Folder into
+        a different Language Root Folder it changes its language to that of the
+        folder it is copied into
+        """
         a_ca = createContentInContainer(
             self.portal['ca'], 'Document', title=u"Test document")
 
