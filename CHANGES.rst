@@ -14,6 +14,10 @@ New:
 
 Fixes:
 
+- Correct event subscribers so that content cut from one LRF & pasted into the
+  Media folder is shown there when I switch to a second language.
+  [djowett]
+
 - *add item here*
 
 
