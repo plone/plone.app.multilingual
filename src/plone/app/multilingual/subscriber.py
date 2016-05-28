@@ -39,6 +39,9 @@ def reindex_language_independent(ob, event):
     if not is_language_independent(ob):
         return
 
+    if IObjectRemovedEvent.providedBy(event):
+        return
+
     pc = getToolByName(ob, 'portal_catalog')
     parent = aq_parent(ob)
 
