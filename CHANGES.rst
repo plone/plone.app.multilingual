@@ -18,8 +18,6 @@ Bug fixes:
   Media folder is shown there when I switch to a second language.
   [djowett]
 
-- *add item here*
-
 
 4.0.0 (2016-05-25)
 ------------------
