@@ -39,7 +39,9 @@ Versions
 * ``2.x`` - Plone >= 4.x, < 5.0 with plone.app.contenttypes (Dexterity) and
   real shared content
 
-* ``3.x`` - Plone >= 5.x
+* ``3.x`` - Plone >= 5.x.  3.0.17 will likely be the latest release on this branch.  You are encouraged to use 4.x.
+
+* ``4.x`` - Plone >= 5.x (5.0.3 minimum, due to GenericSetup dependency)
 
 Components
 ==========
