@@ -1,4 +1,4 @@
-.. image:: https://travis-ci.org/plone/plone.app.multilingual.png?branch=master
+.. image:: https://travis-ci.org/plone/plone.app.multilingual.png?branch=3.x
     :target: http://travis-ci.org/plone/plone.app.multilingual
 
 .. contents::
