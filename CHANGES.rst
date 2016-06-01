@@ -10,6 +10,9 @@ Incompatibilities:
 
 New:
 
+- Add new tests for sitemap.xml.gz (it is currently not listing any content)
+  [djowett]
+
 - *add item here*
 
 Fixes:
