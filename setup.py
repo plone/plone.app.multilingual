@@ -35,7 +35,6 @@ setup(name='plone.app.multilingual',
         'plone.formwidget.contenttree',
         'Products.PloneLanguageTool',
         'archetypes.multilingual < 2.0',  # required while archetypes is default in Plone
-        'plone.app.layout > 2.3.14'
       ],
       extras_require={
           'dexterity': ['plone.multilingualbehavior'],
