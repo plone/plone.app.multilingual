@@ -4,11 +4,14 @@ Changelog
 1.2.3 (unreleased)
 ------------------
 
+- Add new tests for sitemap.xml.gz (it is currently not listing any content)
+  [djowett]
+
 - Move @@multilingual-selector registration from PloneRoot to Navigation root
   This allows to hide language folders in nginx and to use different domains.
   [do3cc]
 
-- Fix: Improved English around description of "Clean Site Setup" 
+- Fix: Improved English around description of "Clean Site Setup"
   [djowett]
 
 - Fix: Really don't show Google Translate button when no API key
@@ -17,7 +20,7 @@ Changelog
 -	Fix: Pin archetypes.multilingual to 1.x releases of that product
   [djowett]
 
-- Fix and improve 1.x tests on Travis (use annotate & artifacts) 
+- Fix and improve 1.x tests on Travis (use annotate & artifacts)
   [djowett, maurits]
 
 
