@@ -4,14 +4,6 @@ Changelog
 4.0.1 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Correct event subscribers so that content cut from one LRF & pasted into the
