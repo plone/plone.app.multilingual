@@ -58,6 +58,7 @@ I translate the document into Catalan
   Click Link  Dates  # workaround for of TinyMCE editor field problem
   Click Button  Guardar
   Wait until page contains  Element creat
+  Wait until page contains  A Catalan Document
 
 I switch to Catalan
   Click Link  xpath=//a[@title='Català']
