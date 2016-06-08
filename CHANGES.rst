@@ -14,7 +14,7 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fixed unstable robot test by waiting until the expected text is on the page.  [maurits]
 
 
 4.0.1 (2016-06-07)
