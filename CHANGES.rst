@@ -4,14 +4,6 @@ Changelog
 4.0.2 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Fixed unstable robot test by waiting until the expected text is on the page.  [maurits]
