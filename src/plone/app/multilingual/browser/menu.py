@@ -24,11 +24,11 @@ from zope.browsermenu.menu import BrowserMenu
 from zope.browsermenu.menu import BrowserSubMenuItem
 from zope.component import getUtility
 from zope.component.hooks import getSite
-from zope.interface import implements
+from zope.interface import implementer
 
 
+@implementer(ITranslateMenu)
 class TranslateMenu(BrowserMenu):
-    implements(ITranslateMenu)
 
     def getMenuItems(self, context, request):
         """Return menu item entries in a TAL-friendly form.
@@ -293,8 +293,8 @@ class TranslateMenu(BrowserMenu):
         return menu
 
 
+@implementer(ITranslateSubMenuItem)
 class TranslateSubMenuItem(BrowserSubMenuItem):
-    implements(ITranslateSubMenuItem)
 
     title = _(u"label_translate_menu", default=u"Translate")
     description = _(u"title_translate_menu",
