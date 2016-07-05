@@ -53,16 +53,15 @@ def reindex_language_independent(ob, event):
             if lif != parent:
                 lif[ob.id].indexObject()
     # Re-index objects deeper inside language independent folder
+    # Force re-index objects inside folders in all languages
     else:
-        language_tool = getToolByName(ob, 'portal_languages')
-        language_codes = language_tool.supported_langs
-        parent_uuid = IUUID(parent).split('-')[0] + '-'
-        for code in language_codes:
-            results = pc.unrestrictedSearchResults(UID=parent_uuid + code)
-            # When we have results, parent has been indexed and we can reindex:
-            for brain in results:
-                tmp = ob.unrestrictedTraverse(brain.getPath() + '/' + ob.id)
-                tmp.reindexObject()
+        brains = pc.unrestrictedSearchResults(portal_type='LIF')
+        for brain in brains:
+            bpath = brain.getPath()
+            ob_path = ob.virtual_url_path().rpartition('media')
+            path_toreindex = bpath + ob_path[2]
+            tmp = ob.unrestrictedTraverse(path_toreindex)
+            tmp.reindexObject()
 
 
 def unindex_language_independent(ob, event):
