@@ -87,6 +87,11 @@ class universal_link(BrowserView):
             language = getMultiAdapter((self.context, self.request),
                                        INegotiateLanguage).language
             query = {'TranslationGroup': self.tg, 'Language': language}
+
+        # Comparison to plone/app/multilingual/browser/setup.py#L129
+        if query.get('Language') == 'id-id':
+            query['Language'] = 'id'
+
         results = ptool.searchResults(query)
         if len(results) > 0:
             url = results[0].getURL()
