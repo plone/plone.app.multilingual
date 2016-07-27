@@ -3,7 +3,6 @@ from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.multilingual import _
-from plone.app.multilingual.browser.interfaces import IAddTranslation
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.app.multilingual.dx.interfaces import IMultilingualAddForm
 from Products.CMFPlone.interfaces import ILanguage
@@ -179,31 +178,3 @@ class DefaultMultilingualAddView(DefaultAddView):
     """
 
     form = MultilingualAddForm
-
-
-class AddTranslationsForm(AutoExtensibleForm, Form):
-
-    schema = IFormFieldProvider(IAddTranslation)
-    ignoreContext = True
-    label = _(u"label_add_translations", default=u"Add translations")
-    description = _(
-        u"long_description_add_translations",
-        default=u"This form allows you to add currently existing "
-                u"objects to be the translations of the current "
-                u"object. You have to manually select both the "
-                u"language and the object."
-    )
-
-    @button.buttonAndHandler(_(u"add_translations",
-                               default=u"Add translations"))
-    def handle_add(self, action):
-        data, errors = self.extractData()
-        if not errors:
-            content = data['content']
-            language = data['language']
-            ITranslationManager(self.context)\
-                .register_translation(language, content)
-            ILanguage(content).set_language(language)
-
-        return self.request.response.redirect(
-            self.context.absolute_url() + '/add_translations')

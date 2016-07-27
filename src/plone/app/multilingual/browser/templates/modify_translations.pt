@@ -1,0 +1,95 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    xml:lang="en" lang="en"
+    metal:use-macro="context/main_template/macros/master"
+    i18n:domain="plone">
+
+<body>
+
+<!-- <metal:head fill-slot="top_slot"
+            tal:define="dummy python:request.set('disable_border',1);
+                        disable_column_one python:request.set('disable_plone.leftcolumn',1);
+                        disable_column_two python:request.set('disable_plone.rightcolumn',1);">
+</metal:head> -->
+
+<metal:main fill-slot="main">
+
+  <h1 class="documentFirstHeading"
+      i18n:translate=""
+      metal:define-slot="heading">
+    Modify translations
+  </h1>
+
+  <div class="documentDescription" i18n:translate="long_description_modify_translations">
+    This form allows you to add or remove translations for the current object.
+  </div>
+
+  <div id="content-core">
+
+    <table class="listing" id="translations-overview" summary="Translations overview">
+      <tal:langs repeat="lang view/available_languages">
+        <tr tal:define="translation python:view.get_translation(lang);
+                        oddrow repeat/lang/odd;"
+            tal:attributes="class python:oddrow and 'odd' or 'even'">
+          <td tal:define="activeLanguage context/Language|nothing">
+            <span tal:attributes="class python:lang == activeLanguage and 'activeLanguage' or None"
+                  tal:content="lang"></span>
+          </td>
+          <td>
+            <tal:hastranslation condition="translation">
+              <h3 class="translationTitle" tal:content="translation/Title">Title</h3>
+              <a class="translationURL" href="#" tal:attributes="href translation/absolute_url">
+                <span tal:replace="python:'/'.join(translation.getPhysicalPath())">URL</span>
+              </a>
+            </tal:hastranslation>
+            <tal:notranslation condition="not:translation">
+              <h3 class="translationTitle discreet" i18n:translate="">Translation missing</h3>
+            </tal:notranslation>
+          </td>
+          <td>
+            <tal:hastranslation condition="translation">
+              <a href="#" title="Disconnect translation" class="pat-plone-modal"
+                 tal:attributes="href string:${context/absolute_url}/disconnect_translation?came_from=${context/UID}&language=${lang}"
+                 i18n:attributes="title disconnect_translation">
+                <span class="icon-plone-disconnect-translation"></span>
+                <span class="actionLabel" i18n:translate="disconnect_translation">Disconnect translation</span>
+              </a>
+            </tal:hastranslation>
+            <tal:notranslation condition="not:translation">
+              <a href="#" title="Connect existing translation" class="pat-plone-modal"
+                 tal:attributes="href string:${context/absolute_url}/connect_translation?language=${lang}"
+                 i18n:attributes="title connect_existing_translation">
+                <span class="icon-plone-connect-existing-translation"></span>
+                <span class="actionLabel" i18n:translate="connect_existing_translation">Connect existing translation</span>
+              </a>
+            </tal:notranslation>
+          </td>
+          <td>
+            <tal:hastranslation condition="translation">
+              <a href="#" title="Delete translated item" class="pat-plone-modal"
+                 tal:attributes="href string:${context/absolute_url}/delete_confirmation"
+                 i18n:attributes="title delete_translated_item">
+                <span class="icon-plone-delete-translation"></span>
+                <span class="actionLabel" i18n:translate="delete_translated_item">Delete translated item</span>
+              </a>
+            </tal:hastranslation>
+            <tal:notranslation condition="not:translation">
+              <a href="#" title="Add translation" class="pat-plone-modal"
+                 tal:attributes="href string:${context/absolute_url}/@@create_translation?language=${lang}"
+                 i18n:attributes="title add_translation">
+                <span class="icon-plone-add-translation"></span>
+                <span class="actionLabel" i18n:translate="add_translation">Add translation</span>
+              </a>
+            </tal:notranslation>
+          </td>
+        </tr>
+      </tal:langs>
+    </table>
+
+  </div>
+
+</metal:main>
+</body>
+</html>

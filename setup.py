@@ -41,6 +41,7 @@ setup(
         'plone.app.z3cform',
         'plone.behavior',
         'plone.dexterity',
+        'plone.api',
         'setuptools',
         'z3c.relationfield',
         'zope.publisher',

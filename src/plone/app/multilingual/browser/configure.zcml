@@ -38,15 +38,23 @@
       factory=".add.AddViewTraverser"/>
 
   <browser:page
-      name="add_translations"
+      name="modify_translations"
       for="plone.app.multilingual.interfaces.ITranslatable"
-      class=".add.AddTranslationsForm"
+      class=".modify.ModifyTranslationsForm"
+      template="templates/modify_translations.pt"
       permission="plone.app.multilingual.ManageTranslations"/>
 
   <browser:page
-      name="remove_translations"
+      name="connect_translation"
       for="plone.app.multilingual.interfaces.ITranslatable"
-      class=".remove.RemoveTranslationsForm"
+      class=".modify.ConnectTranslation"
+      permission="plone.app.multilingual.ManageTranslations"/>
+
+  <browser:page
+      name="disconnect_translation"
+      for="plone.app.multilingual.interfaces.ITranslatable"
+      class=".modify.DisconnectTranslation"
+      template="templates/disconnect_translation.pt"
       permission="plone.app.multilingual.ManageTranslations"/>
 
   <browser:page

@@ -164,42 +164,19 @@ class TranslateMenu(BrowserMenu):
                     menu.append(item)
 
                 item = {
-                    "description": _(
-                        u"description_add_translations",
-                        default=u"Add existing content as translation"),
-                    "action": url + "/add_translations",
-                    "selected": False,
-                    "icon": None,
-                    "extra": {
-                        "id": "_add_translations",
-                        "separator": langs and "actionSeparator" or None,
-                        "class": ""
-                    },
-                    "submenu": None,
-                }
-                item['title'] = idx and _(
-                    u"title_add_translations_folder",
-                    default=u"Add translations for folder..."
-                ) or _(
-                    u"title_add_translations",
-                    default=u"Add translations..."
-                )
-                menu.append(item)
-
-                item = {
                     "title": _(
-                        u"title_remove_translations",
-                        default=u"Remove translations..."
+                        u"title_modify_translations",
+                        default=u"Modify translations..."
                     ),
                     "description": _(
-                        u"description_remove_translations",
-                        default=u"Delete translations or remove the relations"
+                        u"description_modify_translations",
+                        default=u"Add or delete translations"
                     ),
-                    "action": url + "/remove_translations",
+                    "action": url + "/modify_translations",
                     "selected": False,
                     "icon": None,
                     "extra": {
-                        "id": "_remove_translations",
+                        "id": "_modify_translations",
                         "separator": langs and "actionSeparator" or None,
                         "class": ""
                     },

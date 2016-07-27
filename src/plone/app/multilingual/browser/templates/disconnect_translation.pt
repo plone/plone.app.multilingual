@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1)" />
+
+    <body>
+
+        <metal:main fill-slot="main">
+
+        <h1 class="documentFirstHeading"
+            i18n:translate="alert_disconnect_translation">
+            Disconnect translation
+        </h1>
+
+        <div id="content-core">
+
+            <form action="" tal:attributes="action string:${context/absolute_url}/disconnect_translation">
+                <p i18n:translate="confirm_translation_disconnect">Do you really want to disconnect this translation?</p>
+                <input type="hidden" name="came_from" tal:attributes="value context/REQUEST/form/came_from">
+                <input type="hidden" name="language" tal:attributes="value context/REQUEST/form/language">
+                <input type="hidden" name="submitted" value="1">
+                <span tal:replace="structure context/@@authenticator/authenticator"/>
+                <button type="submit">Disconnect</button>
+            </form>
+
+        </div>
+
+        </metal:main>
+    </body>
+</html>

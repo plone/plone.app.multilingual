@@ -72,3 +72,30 @@ a.contentmenuflags img {
 }
 
 .icon-plone-contentmenu-multilingual:before { content: '\e81A'; } /* '' */
+
+#translations-overview td {
+    line-height: 1;
+}
+#translations-overview .activeLanguage {
+    font-weight: bold;
+    color: black;
+}
+#translations-overview h3 {
+    margin: 0;
+}
+#translations-overview h3.discreet {
+    font-style: italic;
+}
+#translations-overview .translationURL {
+    margin-top: 0.5em;
+    font-size: 80%;
+}
+#translations-overview .actionLabel {
+    display: none;
+}
+
+.icon-plone-connect-existing-translation:before { content: '\e84C'; } /* 'Link icon' */
+.icon-plone-disconnect-translation:before { content: '\f127'; } /* 'Unlink icon' */
+.icon-plone-add-translation:before { content: '\e80A'; } /* 'Trash icon' */
+.icon-plone-delete-translation:before { content: '\f1F8'; } /* 'Trash icon' */
+
