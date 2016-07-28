@@ -94,8 +94,8 @@ a.contentmenuflags img {
     display: none;
 }
 
-.icon-plone-connect-existing-translation:before { content: '\e84C'; } /* 'Link icon' */
-.icon-plone-disconnect-translation:before { content: '\f127'; } /* 'Unlink icon' */
-.icon-plone-add-translation:before { content: '\e80A'; } /* 'Trash icon' */
-.icon-plone-delete-translation:before { content: '\f1F8'; } /* 'Trash icon' */
+.plone-icon-connect-existing-translation:before { content: '\e84C'; } /* 'Link icon' */
+.plone-icon-disconnect-translation:before { content: '\f127'; } /* 'Unlink icon' */
+.plone-icon-add-translation:before { content: '\e80A'; } /* 'Trash icon' */
+.plone-icon-delete-translation:before { content: '\f1F8'; } /* 'Trash icon' */
 

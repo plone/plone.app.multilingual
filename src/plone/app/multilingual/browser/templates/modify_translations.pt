@@ -53,7 +53,7 @@
               <a href="#" title="Disconnect translation" class="pat-plone-modal"
                  tal:attributes="href string:${context/absolute_url}/disconnect_translation?came_from=${context/UID}&language=${lang}"
                  i18n:attributes="title disconnect_translation">
-                <span class="icon-plone-disconnect-translation"></span>
+                <span class="plone-icon-disconnect-translation"></span>
                 <span class="actionLabel" i18n:translate="disconnect_translation">Disconnect translation</span>
               </a>
             </tal:hastranslation>
@@ -61,7 +61,7 @@
               <a href="#" title="Connect existing translation" class="pat-plone-modal"
                  tal:attributes="href string:${context/absolute_url}/connect_translation?language=${lang}"
                  i18n:attributes="title connect_existing_translation">
-                <span class="icon-plone-connect-existing-translation"></span>
+                <span class="plone-icon-connect-existing-translation"></span>
                 <span class="actionLabel" i18n:translate="connect_existing_translation">Connect existing translation</span>
               </a>
             </tal:notranslation>
@@ -71,7 +71,7 @@
               <a href="#" title="Delete translated item" class="pat-plone-modal"
                  tal:attributes="href string:${context/absolute_url}/delete_confirmation"
                  i18n:attributes="title delete_translated_item">
-                <span class="icon-plone-delete-translation"></span>
+                <span class="plone-icon-delete-translation"></span>
                 <span class="actionLabel" i18n:translate="delete_translated_item">Delete translated item</span>
               </a>
             </tal:hastranslation>
@@ -79,7 +79,7 @@
               <a href="#" title="Add translation" class="pat-plone-modal"
                  tal:attributes="href string:${context/absolute_url}/@@create_translation?language=${lang}"
                  i18n:attributes="title add_translation">
-                <span class="icon-plone-add-translation"></span>
+                <span class="plone-icon-add-translation"></span>
                 <span class="actionLabel" i18n:translate="add_translation">Add translation</span>
               </a>
             </tal:notranslation>
