@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from plone import api
-from plone import api
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.interfaces import IConnectTranslation
 from plone.app.multilingual.interfaces import ITranslationManager
