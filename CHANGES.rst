@@ -14,7 +14,9 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Change RelatedItemsFieldWidget configuration from ``@@add_translations`` view to support Mockup 2.4.0, so that the widget is able to navigate beyond the INavigationRoot boundary and to access other translation trees.
+  This change keeps compatibility with older versions of Mockup or Mockup-less setups.
+  [thet]
 
 
 4.0.3 (2016-08-15)
