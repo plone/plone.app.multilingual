@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
 "POT-Creation-Date: 2016-03-04 17:18+0000\n"
-"PO-Revision-Date: 2015-03-18 23:05+0800\n"
+"PO-Revision-Date: 2016-08-25 11:05+0800\n"
 "Last-Translator: TsungWei Hu <marr.tw@gmail.com>\n"
 "Language-Team: Plone I18N <plone-i18n@lists.sourcegorge.net>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr ""
 
 #: ../browser/controlpanel.py:391
 msgid "Extra options"
-msgstr ""
+msgstr "其他選項"
 
 #: ../browser/templates/not_translated_yet.pt:28
 msgid "However, this is the list of the already translated languages for the requested content."
@@ -49,7 +49,7 @@ msgstr ""
 
 #: ../browser/templates/cleanup.pt:102
 msgid "Move"
-msgstr ""
+msgstr "移動"
 
 #: ../browser/controlpanel.py:406
 msgid "Multilingual Settings"
@@ -61,7 +61,7 @@ msgstr ""
 
 #: ../browser/translate.py:54
 msgid "Need a field"
-msgstr ""
+msgstr "需要欄位"
 
 #: ../browser/controlpanel.py:388
 msgid "Negotiation scheme"
@@ -69,11 +69,11 @@ msgstr ""
 
 #: ../browser/controlpanel.py:536
 msgid "Not translated"
-msgstr ""
+msgstr "未翻譯"
 
 #: ../browser/controlpanel.py:394
 msgid "Policies"
-msgstr ""
+msgstr "規則"
 
 #: ../browser/templates/migration.pt:128
 msgid "Reindex"
@@ -97,15 +97,15 @@ msgstr ""
 
 #: ../browser/controlpanel.py:385
 msgid "Site languages"
-msgstr ""
+msgstr "語系設定"
 
 #: ../browser/templates/not_translated_yet.pt:23
 msgid "This content is not translated yet to the language requested."
-msgstr ""
+msgstr "內容還沒翻譯成指定的語系。"
 
 #: ../browser/templates/not_translated_yet.pt:46
 msgid "This item doesn't have any translation yet. You can return to the portal site:"
-msgstr ""
+msgstr "這個項目完全沒有翻譯，你可以回到它的原始網址："
 
 #: ../browser/templates/migration.pt:204
 msgid "Transfer"
@@ -160,7 +160,7 @@ msgstr "新增 ${lang_name} 目錄"
 #. Default: "Add existing content as translation"
 #: ../browser/menu.py:163
 msgid "description_add_translations"
-msgstr "Bereits existierende Übersetzung hinzufügen"
+msgstr "為這個項目新增翻譯"
 
 #. Default: "This step will fix some lost dependencies to the ITranslatable interface hidden in the relation catalog and it gets rid of them. It must be run only when LinguaPlone is already uninstalled."
 #: ../browser/templates/migration.pt:225
@@ -180,12 +180,12 @@ msgstr ""
 #. Default: "Edit with the babel_edit"
 #: ../browser/menu.py:68
 msgid "description_babel_edit"
-msgstr ""
+msgstr "編輯翻譯"
 
 #. Default: "Babel edit ${lang_name}"
 #: ../browser/menu.py:135
 msgid "description_babeledit_menu"
-msgstr "Editieren mit Babel-Ansicht"
+msgstr "編輯 ${lang_name}"
 
 #. Default: "Use browser language request negotiation."
 #: ../browser/controlpanel.py:177
@@ -220,17 +220,17 @@ msgstr ""
 #. Default: "Use language codes in URL path for manual override."
 #: ../browser/controlpanel.py:118
 msgid "description_language_codes_in_URL"
-msgstr ""
+msgstr "使用網址路徑的語系代碼來手動指定。"
 
 #. Default: "Go to the user's browser preferred language related folder"
 #: ../browser/menu.py:212
 msgid "description_language_folder"
-msgstr ""
+msgstr "回到瀏覽器預設語系的目錄"
 
 #. Default: "Use the language of the content item."
 #: ../browser/controlpanel.py:109
 msgid "description_language_of_the_content"
-msgstr ""
+msgstr "使用內容項目的語系設定值。"
 
 #. Default: "The migration process is divided into four steps, listed below. Each one of the steps has a well defined purpose explained. Some of them are destructive, so please read each one of it and do not try to run it on production servers without testing it previously."
 #: ../browser/templates/migration.pt:99
@@ -270,7 +270,7 @@ msgstr ""
 #. Default: "Delete translations or remove the relations"
 #: ../browser/menu.py:190
 msgid "description_remove_translations"
-msgstr "Übersetzungen löschen oder die Verweise entfernen"
+msgstr "刪除翻譯或移除翻譯的關連項目"
 
 #. Default: "The default language used for the content and the UI of this site."
 #: ../browser/controlpanel.py:201
@@ -285,17 +285,17 @@ msgstr ""
 #. Default: "Set or change the current content language"
 #: ../browser/menu.py:274
 msgid "description_set_language"
-msgstr "Sprache setzen oder ändern."
+msgstr "設定目前的內容語系"
 
 #. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
 #: ../browser/controlpanel.py:151
 msgid "description_set_language_cookie_always"
-msgstr ""
+msgstr "即使沒有 'set_language' 參數也會生效"
 
 #. Default: "Show the shared Language Independent Folder"
 #: ../browser/menu.py:255
 msgid "description_shared_folder"
-msgstr ""
+msgstr "顯示語系共享的目錄"
 
 #. Default: "The default language used for the content and the UI of this site."
 #: ../browser/controlpanel.py:48
@@ -305,7 +305,7 @@ msgstr ""
 #. Default: "Use top-level domain (e.g.: www.plone.de)."
 #: ../browser/controlpanel.py:169
 msgid "description_top_level_domain"
-msgstr ""
+msgstr "例如 www.plone.tw"
 
 #. Default: "This step will transfer the relations between translations stored by LinguaPlone to the PAM catalog. This step is not destructive and can be executed as many times as needed."
 #: ../browser/templates/migration.pt:195
@@ -315,7 +315,7 @@ msgstr ""
 #. Default: "Translate into ${lang_name}"
 #: ../browser/menu.py:98
 msgid "description_translate_into"
-msgstr "Übersetzen in ${lang_name}"
+msgstr "翻譯為 ${lang_name}"
 
 #. Default: "Translation map."
 #: ../browser/templates/mmap.pt:101
@@ -325,27 +325,27 @@ msgstr ""
 #. Default: "Universal Language content link"
 #: ../browser/menu.py:234
 msgid "description_universal_link"
-msgstr ""
+msgstr "Universal Language 網址"
 
 #. Default: "Untranslated languages from the current content"
 #: ../browser/interfaces.py:43
 msgid "description_update_language"
-msgstr "Sprachen, in die der Inhalt noch nicht übersetzt wurde."
+msgstr "這個內容尚未翻譯的語系"
 
 #. Default: "Use subdomain (e.g.: de.plone.org)."
 #: ../browser/controlpanel.py:161
 msgid "description_use_subdomain"
-msgstr ""
+msgstr "例如 tw.plone.org"
 
 #. Default: "Edit ${lang_name}"
 #: ../browser/menu.py:155
 msgid "edit_translation"
-msgstr "${lang_name} editieren"
+msgstr "編輯 ${lang_name}"
 
 #. Default: "Edit ${lang_name} folder"
 #: ../browser/menu.py:151
 msgid "edit_translation_folder"
-msgstr "Editiere Übersetzung für Ordner"
+msgstr "編輯 ${lang_name} 目錄"
 
 #. Default: "Folder's id is not a valid language code"
 #: ../browser/migrator.py:310
@@ -395,7 +395,7 @@ msgstr ""
 #. Default: "Use cookie for manual override. (Required for the language selector viewlet to be rendered.)"
 #: ../browser/controlpanel.py:125
 msgid "heading_cookie_manual_override"
-msgstr ""
+msgstr "使用 Cookie 來手動指定"
 
 #. Default: "Filter content by language."
 #: ../interfaces.py:178
@@ -410,12 +410,12 @@ msgstr ""
 #. Default: "Use language codes in URL path for manual override."
 #: ../browser/controlpanel.py:115
 msgid "heading_language_codes_in_URL"
-msgstr ""
+msgstr "使用網址路徑的語系代碼"
 
 #. Default: "Use the language of the content item."
 #: ../browser/controlpanel.py:107
 msgid "heading_language_of_the_content"
-msgstr ""
+msgstr "使用項目的語系"
 
 #. Default: "Products.LinguaPlone Migration"
 #: ../browser/templates/migration.pt:89
@@ -440,7 +440,7 @@ msgstr ""
 #. Default: "Not available in ${language}"
 #: ../browser/templates/not_translated_yet.pt:20
 msgid "heading_not_available_in_language"
-msgstr ""
+msgstr "沒有 ${language} 翻譯內容"
 
 #. Default: "Redirect on creation to babel view."
 #: ../interfaces.py:189
@@ -460,7 +460,7 @@ msgstr ""
 #. Default: "Set the language cookie always, i.e. also when the 'set_language' request parameter is absent."
 #: ../browser/controlpanel.py:147
 msgid "heading_set_language_cookie_always"
-msgstr ""
+msgstr "指定語系 Cookie"
 
 #. Default: "Default site language"
 #: ../browser/controlpanel.py:46
@@ -470,7 +470,7 @@ msgstr ""
 #. Default: "Use top-level domain (e.g.: www.plone.de)."
 #: ../browser/controlpanel.py:167
 msgid "heading_top_level_domain"
-msgstr ""
+msgstr "使用頂級網域"
 
 #. Default: "plone.app.multilingual translation map"
 #: ../browser/templates/mmap.pt:91
@@ -480,7 +480,7 @@ msgstr ""
 #. Default: "Use subdomain (e.g.: de.plone.org)."
 #: ../browser/controlpanel.py:159
 msgid "heading_use_subdomain"
-msgstr ""
+msgstr "使用子網域"
 
 #. Default: "The migration of LinguaPlone content depends on an up-to-date Language index. Use this step to refresh this index. Warning: Depending on the number of items in your site, this can take a considerable amount of time."
 #: ../browser/templates/migration.pt:118
@@ -490,12 +490,12 @@ msgstr ""
 #. Default: "Add translations"
 #: ../browser/add.py:185
 msgid "label_add_translations"
-msgstr "Übersetzungen hinzufügen"
+msgstr "新增翻譯"
 
 #. Default: "All translations"
 #: ../browser/templates/mmap.pt:106
 msgid "label_all_translations"
-msgstr ""
+msgstr "所有的翻譯"
 
 #. Default: "Unfortunately a number of relations could not be translated and are lost! here is some debug information:"
 #: ../browser/templates/cleanup_results.pt:27
@@ -528,14 +528,13 @@ msgstr ""
 
 #. Default: "Remove translations"
 #: ../browser/remove.py:16
-#, fuzzy
 msgid "label_remove_translations"
-msgstr "Übersetzungen entfernen"
+msgstr "移除翻譯"
 
 #. Default: "Save"
 #: ../browser/controlpanel.py:412
 msgid "label_save"
-msgstr "Speichern"
+msgstr "儲存"
 
 #. Default: "Total objects handled:"
 #: ../browser/templates/migrator-results.pt:20
@@ -551,7 +550,7 @@ msgstr ""
 #. Default: "Translate"
 #: ../browser/menu.py:295
 msgid "label_translate_menu"
-msgstr "Übersetzen..."
+msgstr "翻譯"
 
 #. Default: "Translation Map"
 #: ../browser/templates/cleanup.pt:44
@@ -570,7 +569,7 @@ msgstr ""
 #. Default: "Return to language folder"
 #: ../browser/menu.py:208
 msgid "language_folder"
-msgstr ""
+msgstr "回到語系目錄"
 
 #. Default: "Step 3 - Cleanup after migration"
 #: ../browser/templates/migration.pt:221
@@ -595,12 +594,12 @@ msgstr ""
 #. Default: "This form allows you to add currently existing objects to be the translations of the current object. You have to manually select both the language and the object."
 #: ../browser/add.py:186
 msgid "long_description_add_translations"
-msgstr "Dieses Dialogfenster erlaubt es, bereits existierende Inhalte für Übersetzungen zu verwenden. Sie müssen Sprache und Inhalt auswählen."
+msgstr "這個表單可以讓你新增一個目前項目的翻譯。你必須手動選擇要翻譯的語系與項目。"
 
 #. Default: "This form allows you to remove the existing translations of the current object. You can just delete the link between the objects or you can delete the object itself."
 #: ../browser/remove.py:18
 msgid "long_description_remove_translations"
-msgstr "Sie können existierende Übersetzungen entfernen, indem Sie den Verweis auf das Objekt oder das Objekt selbst löschen."
+msgstr "這個表單可以讓你刪除目前項目已存在的翻譯。你可以直接刪除本項目與其翻譯頁面之間的關聯性，也可以刪除本項目。"
 
 #. Default: "The \"Language\" index was re-indexed correctly. Before, it contained ${previous_items_number} items, now it contains ${after_items_number}"
 #: ../browser/templates/reindex-results.pt:24
@@ -610,7 +609,7 @@ msgstr ""
 #. Default: "Missing languages:"
 #: ../browser/templates/mmap.pt:142
 msgid "missing_languages"
-msgstr ""
+msgstr "缺少語系:"
 
 #. Default: "Your site is not configured with more than one allowed language, but the add-on that provides support for content in multiple language is installed. You can add one or more additional languages from the ${control-panel-link}."
 #: ../browser/templates/languages-notice.pt:11
@@ -634,82 +633,81 @@ msgstr ""
 #. Default: "Your site has no relation catalog, and therefore this migration step is not needed"
 #: ../browser/templates/migration.pt:242
 msgid "relation_migration_with_not_needed"
-msgstr ""
+msgstr "網站裡找不到 relation catalog 所以不需要執行昇級步驟。"
 
 #: ../browser/remove.py:37
 msgid "remove selected"
-msgstr "Objekt löschen"
+msgstr "移除已選的項目"
 
 #. Default: "Go to Media folder"
 #: ../browser/menu.py:251
-#, fuzzy
 msgid "shared_folder"
-msgstr "Gehe zu 'shared'-Ordner"
+msgstr "回到共享目錄"
 
 #. Default: "Add translations..."
 #: ../browser/menu.py:179
 msgid "title_add_translations"
-msgstr "Übersetzung hinzufügen..."
+msgstr "新增翻譯..."
 
 #. Default: "Add translations for folder..."
 #: ../browser/menu.py:176
 msgid "title_add_translations_folder"
-msgstr "Übersetzung hinzufügen für Ordner"
+msgstr "為目錄新增翻譯"
 
 #. Default: "Available languages"
 #: ../browser/interfaces.py:42
 msgid "title_available_languages"
-msgstr "Verfügbare Sprachen"
+msgstr "可用的語系"
 
 #. Default: "Edit with babel view"
 #: ../browser/menu.py:64
 msgid "title_babel_edit"
-msgstr "Editieren in Babel-View"
+msgstr "透過 Babel View 編輯"
 
 #. Default: "Language"
 #: ../browser/interfaces.py:34
 msgid "title_language"
-msgstr "Sprache"
+msgstr "語系"
 
 #: ../browser/interfaces.py:70
 msgid "title_languages"
-msgstr "Sprachen"
+msgstr ""
 
 #. Default: "Remove translations..."
 #: ../browser/menu.py:186
 msgid "title_remove_translations"
-msgstr "Übersetzungen entfernen..."
+msgstr "移除語系..."
 
 #. Default: "Set content language"
 #: ../browser/menu.py:270
 msgid "title_set_language"
-msgstr "Sprache setzen"
+msgstr "設定內容語系"
 
 #. Default: "Manage translations for your content."
 #: ../browser/menu.py:296
 msgid "title_translate_menu"
-msgstr "Übersetzungen verwalten"
+msgstr "管理項目的翻譯"
 
 #. Default: "Translations:"
 #: ../browser/templates/mmap.pt:150
 msgid "translation"
-msgstr ""
+msgstr "翻譯:"
 
 #. Default: "Translation to ${language}"
 #: ../browser/templates/dexterity_edit.pt:43
 msgid "translation_to"
-msgstr "Übersetzen in ${language}"
+msgstr "翻譯成 ${language}"
 
 #. Default: "Universal Link"
 #: ../browser/menu.py:230
 msgid "universal_link"
-msgstr ""
+msgstr "Universal Link"
 
 #: ../browser/remove.py:26
 msgid "unlink selected"
-msgstr "Verweis löschen"
+msgstr "移除已選項目的翻譯關聯"
 
 #. Default: "Update Language"
 #: ../browser/update.py:20
 msgid "update_language"
-msgstr "Sprachzuweisung aktualisieren"
+msgstr "更新語系"

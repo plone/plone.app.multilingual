@@ -20,6 +20,9 @@ Fixes:
   
 - Resolve issue with cut&paste folder with contents into Media folder
 
+- Update Traditional Chinese Translations.
+  [l34marr]
+
 - *add item here*
 
 
