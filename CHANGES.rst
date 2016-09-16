@@ -4,14 +4,6 @@ Changelog
 4.0.4 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Change RelatedItemsFieldWidget configuration from ``@@add_translations`` view to support Mockup 2.4.0, so that the widget is able to navigate beyond the INavigationRoot boundary and to access other translation trees.
