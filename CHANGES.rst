@@ -6,7 +6,9 @@ Changelog
 
 Breaking changes:
 
-- *add item here*
+- Support for Archetypes content is only installed
+  if you install `archetypes.multilingual`.
+  [davisagli]
 
 New features:
 

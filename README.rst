@@ -50,7 +50,7 @@ PAM is composed of two packages, one is mandatory:
 
     * plone.app.multilingual (core, UI, enables Dexterity support via a behavior)
 
-and one optional (at least one should be installed):
+and one optional:
 
     * archetypes.multilingual (enables Archetypes support)
 
