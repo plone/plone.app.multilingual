@@ -6,8 +6,8 @@ Changelog
 
 Breaking changes:
 
-- Support for Archetypes content is only installed
-  if you install `archetypes.multilingual`.
+- Support for Archetypes content is only installed if you install `archetypes.multilingual.
+  For Archetypes support, there is a new ``archetypes`` ``extras_require``, which you can depend upon.
   [davisagli]
 
 New features:
