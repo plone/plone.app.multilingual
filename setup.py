@@ -37,7 +37,6 @@ setup(
     install_requires=[
         'Products.CMFPlone>=5.0b1',
         'Products.GenericSetup>=1.8.2',
-        'archetypes.multilingual',
         'plone.app.registry',
         'plone.app.z3cform',
         'plone.behavior',
@@ -47,6 +46,9 @@ setup(
         'zope.publisher',
     ],
     extras_require={
+        'archetypes': [
+            'archetypes.multilingual',
+        ],
         'test': [
             'plone.app.testing[robot]>=4.2.2',
             'plone.app.robotframework',
