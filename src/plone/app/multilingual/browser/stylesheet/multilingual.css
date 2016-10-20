@@ -86,16 +86,28 @@ a.contentmenuflags img {
 #translations-overview h3.discreet {
     font-style: italic;
 }
+
 #translations-overview .translationURL {
     margin-top: 0.5em;
     font-size: 80%;
 }
+#translations-overview .langColumn,
+#translations-overview .actionColumn {
+    width: 1em;
+    padding-top: 0.75em;
+}
+#translations-overview .actionColumn a {
+    height: 1em;
+    width: auto;
+    fill: #007bb3;
+    border: 0;
+}
+#translations-overview a svg {
+    height: 1.25em;
+    width: auto;
+    fill: #007bb3;
+}
 #translations-overview .actionLabel {
     display: none;
 }
-
-.plone-icon-connect-existing-translation:before { content: '\e84C'; } /* 'Link icon' */
-.plone-icon-disconnect-translation:before { content: '\f127'; } /* 'Unlink icon' */
-.plone-icon-add-translation:before { content: '\e80A'; } /* 'Trash icon' */
-.plone-icon-delete-translation:before { content: '\f1F8'; } /* 'Trash icon' */
 
