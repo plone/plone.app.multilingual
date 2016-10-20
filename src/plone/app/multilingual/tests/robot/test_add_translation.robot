@@ -49,9 +49,9 @@ I view the Catalan document
 
 I add the document in English as a translation
   Click Element  css=#plone-contentmenu-multilingual a
-  Wait until element is visible  css=#_add_translations
+  Wait until element is visible  css=#_modify_translations
 
-  Click Element  css=#_add_translations
+  Click Element  css=#_modify_translations
   Given patterns are loaded
   Wait until page contains element
   ...  css=#formfield-form-widgets-content .select2-choices
