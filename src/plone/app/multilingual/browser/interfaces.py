@@ -15,6 +15,7 @@ from zope.browsermenu.interfaces import IBrowserMenu
 from zope.browsermenu.interfaces import IBrowserSubMenuItem
 from zope.interface import provider
 from zope.schema.interfaces import IContextAwareDefaultFactory
+from zope.component.hooks import getSite
 
 import pkg_resources
 
