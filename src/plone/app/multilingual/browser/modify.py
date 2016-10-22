@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
-from plone import api
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.interfaces import IConnectTranslation
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.autoform.form import AutoExtensibleForm
 from plone.autoform.interfaces import IFormFieldProvider
+from plone.registry.interfaces import IRegistry
+from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ILanguage
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from z3c.form import button
 from z3c.form.form import Form
+from zope.component import getUtility
 import logging
 
 logger = logging.getLogger(__name__)
@@ -19,7 +21,8 @@ logger = logging.getLogger(__name__)
 class ModifyTranslationsForm(BrowserView):
 
     def available_languages(self):
-        return api.portal.get_registry_record('plone.available_languages')
+        registry = getUtility(IRegistry)
+        return registry['plone.available_languages']
 
     def get_translation(self, language):
 
@@ -61,7 +64,9 @@ class DisconnectTranslation(BrowserView):
 
         if self.request.form.get('submitted'):
             language = self.request.form['language']
-            context = api.content.find(UID=self.request.form['came_from'])
+            catalog = getToolByName(self.context, 'portal_catalog')
+            context = catalog.unrestrictedSearchResults(
+                UID=self.request.form['came_from'])
             if context:
                 context = context[0].getObject()
             if language and context:

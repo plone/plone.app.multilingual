@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from plone.api import portal
 from Products.CMFPlone.interfaces import INonInstallable
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
+from zope.component.hooks import getSite
 from zope.interface import implementer
+
 import pkg_resources
 
 try:
@@ -29,7 +30,7 @@ class HiddenProfiles(object):
 def init_pam(tool):
     """After installation run setup to create LRF and LIF."""
     setup_tool = SetupMultilingualSite()
-    setup_tool.setupSite(portal.get())
+    setup_tool.setupSite(getSite())
 
 
 def step_default_various(context):
