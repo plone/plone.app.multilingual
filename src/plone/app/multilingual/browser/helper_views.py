@@ -27,13 +27,14 @@ from zope.publisher.interfaces import IPublishTraverse
 from zope.publisher.interfaces import NotFound
 
 try:
+    # Archetypes installed
     from Products.ATContentTypes.interfaces.factory import IFactoryTool
 except ImportError:
     try:
+        # Plone 5.0 without Archetypes
         from Products.CMFPlone.interfaces.factory import IFactoryTool
     except ImportError:
-        # gone in Plone 5.1 w/o ATCT
-
+        # Plone 5.1 without Archetypes
         class IFactoryTool(Interface):
             pass
 
