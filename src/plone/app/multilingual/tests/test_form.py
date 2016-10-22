@@ -7,6 +7,7 @@ from plone.testing._z2_testbrowser import Browser
 import transaction
 import unittest2 as unittest
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.interfaces import ITranslationManager
 from zope.interface import alsoProvides
 
 
@@ -102,17 +103,22 @@ class TestForm(unittest.TestCase):
 
         # Unregister translation
         self.browser.open(a_ca.absolute_url() +
-                          '/remove_translations?set_language=en')
+                          '/disconnect_translation?came_from={0}&language=en'
+                          .format(a_ca.UID()))
+        self.browser.getForm(index=1).submit()
 
         self.portal._p_jar.sync()
 
-        self.assertEqual(
-            self.browser.getControl(name="form.widgets.languages:list").value,
-            ['en'])
-        self.browser.getControl(name='form.buttons.unlink').click()
-        self.assertEqual(
-            self.browser.getControl(name="form.widgets.languages:list").value,
-            [])
+        self.assertNotIn('en', ITranslationManager(a_ca).get_translations())
+
+
+        # self.assertEqual(
+        #     self.browser.getControl(name="form.widgets.languages:list").value,
+        #     ['en'])
+        # self.browser.getControl(name='form.buttons.unlink').click()
+        # self.assertEqual(
+        #     self.browser.getControl(name="form.widgets.languages:list").value,
+        #     [])
 
         # Translation is unregistered
         self.browser.open(a_ca.absolute_url())
@@ -179,15 +185,13 @@ class TestForm(unittest.TestCase):
         self.browser.getControl(name="form.buttons.save").click()
 
         # Remove translation
-        self.browser.open(a_ca.absolute_url() + '/remove_translations')
-        self.browser.getControl(name='form.buttons.remove').click()
-
-        self.assertEqual(self.browser.getControl(
-            name="form.widgets.languages:list").value, [])
+        self.browser.open(
+            ITranslationManager(a_ca).get_translation('en').absolute_url() +
+            '/delete_confirmation')
+        self.browser.getControl(name='form.buttons.Delete').click()
 
         self.portal._p_jar.sync()
-
-        self.assertNotIn('test-document', self.portal['en'].objectIds())
+        self.assertNotIn('en', ITranslationManager(a_ca).get_translations())
 
     def test_folderish_content_can_be_translated(self):
         createContentInContainer(
