@@ -8,16 +8,13 @@
   <!-- Resource Directories -->
   <browser:resourceDirectory
       name="plone.app.multilingual.javascript"
-      directory="javascript"
-      layer="..interfaces.IPloneAppMultilingualInstalled"/>
+      directory="javascript"/>
   <browser:resourceDirectory
       name="plone.app.multilingual.stylesheet"
-      directory="stylesheet"
-      layer="..interfaces.IPloneAppMultilingualInstalled"/>
+      directory="stylesheet"/>
   <browser:resourceDirectory
       name="plone.app.multilingual.images"
-      directory="images"
-      layer="..interfaces.IPloneAppMultilingualInstalled"/>
+      directory="images"/>
 
   <!-- Vocabulary all languages -->
   <utility
