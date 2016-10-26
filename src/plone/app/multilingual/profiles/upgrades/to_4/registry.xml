@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<registry>
+
+  <!-- remove old resource and bundle registration -->
+  <record name="plone.bundles/plone-legacy.resources"
+          interface="Products.CMFPlone.interfaces.resources.IBundleRegistry" field="resources">
+    <value purge="false">
+      <element remove="true">multilingual</element>
+    </value>
+  </record>
+  <records prefix="plone.resources/multilingual"
+           interface='Products.CMFPlone.interfaces.IResourceRegistry'
+           remove="true">
+  </records>
+
+</registry>

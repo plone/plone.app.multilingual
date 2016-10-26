@@ -71,4 +71,42 @@ a.contentmenuflags img {
     margin-bottom: 2pt;
 }
 
-.icon-plone-contentmenu-multilingual:before { content: '\e81A'; } /* '' */
+.plone-icon-contentmenu-multilingual:before { content: '\e81A'; } /* '' */
+
+#translations-overview td {
+    line-height: 1;
+}
+#translations-overview .activeLanguage {
+    font-weight: bold;
+    color: black;
+}
+#translations-overview h3 {
+    margin: 0;
+}
+#translations-overview h3.discreet {
+    font-style: italic;
+}
+
+#translations-overview .translationURL {
+    margin-top: 0.5em;
+    font-size: 80%;
+}
+#translations-overview .langColumn,
+#translations-overview .actionColumn {
+    width: 1em;
+    padding-top: 0.75em;
+}
+#translations-overview .actionColumn a {
+    height: 1em;
+    width: auto;
+    border: 0;
+}
+#translations-overview a svg {
+    height: 1.25em;
+    width: auto;
+    fill: currentColor;
+}
+#translations-overview .actionLabel {
+    display: none;
+}
+

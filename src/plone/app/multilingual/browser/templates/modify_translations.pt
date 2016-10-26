@@ -1,0 +1,89 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    xml:lang="en" lang="en"
+    metal:use-macro="context/main_template/macros/master"
+    i18n:domain="plone">
+
+<body>
+
+<metal:main fill-slot="main">
+
+  <h1 class="documentFirstHeading"
+      i18n:translate=""
+      metal:define-slot="heading">
+    Modify translations
+  </h1>
+
+  <div class="documentDescription" i18n:translate="long_description_modify_translations">
+    This form allows you to add or remove translations for the current object.
+  </div>
+
+  <div id="content-core">
+
+    <table class="listing" id="translations-overview" summary="Translations overview">
+      <tal:langs repeat="lang view/available_languages">
+        <tr tal:define="translation python:view.get_translation(lang);
+                        oddrow repeat/lang/odd;"
+            tal:attributes="class python:oddrow and 'odd' or 'even'">
+          <td class="langColumn" tal:define="activeLanguage context/Language|nothing">
+            <span tal:attributes="class python:lang == activeLanguage and 'activeLanguage' or None"
+                  tal:content="lang"></span>
+          </td>
+          <td>
+            <tal:hastranslation condition="translation">
+              <h3 class="translationTitle" tal:content="translation/Title">Title</h3>
+              <a class="translationURL" href="#" tal:attributes="href translation/absolute_url">
+                <span tal:replace="python:'/'.join(translation.getPhysicalPath())">URL</span>
+              </a>
+            </tal:hastranslation>
+            <tal:notranslation condition="not:translation">
+              <h3 class="translationTitle discreet" i18n:translate="">Translation missing</h3>
+            </tal:notranslation>
+          </td>
+          <td class="actionColumn">
+            <tal:hastranslation condition="python:translation and translation != context">
+              <a href="#" title="Disconnect translation" class="pat-plone-modal disconnectTranslationAction"
+                 tal:attributes="href string:${context/absolute_url}/disconnect_translation?came_from=${context/UID}&language=${lang}"
+                 i18n:attributes="title disconnect_translation">
+                  <svg aria-hidden="true" width="14" height="14" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z"/></svg>
+                <span class="actionLabel" i18n:translate="disconnect_translation">Disconnect translation</span>
+              </a>
+            </tal:hastranslation>
+            <tal:notranslation condition="not:translation">
+              <a href="#" title="Connect existing translation" class="pat-plone-modal connectTranslationAction"
+                 tal:attributes="href string:${context/absolute_url}/connect_translation?language=${lang}"
+                 i18n:attributes="title connect_existing_translation">
+                  <svg aria-hidden="true" width="14" height="14" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg>
+                <span class="actionLabel" i18n:translate="connect_existing_translation">Connect existing translation</span>
+              </a>
+            </tal:notranslation>
+          </td>
+          <td class="actionColumn">
+            <tal:hastranslation condition="python:translation and translation != context">
+              <a href="#" title="Delete translated item" class="pat-plone-modal deleteTranslationAction"
+                 tal:attributes="href string:${context/absolute_url}/delete_confirmation"
+                 i18n:attributes="title delete_translated_item">
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path class="icon" d="M704 1376v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm-544-992h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z"/></svg>
+                <span class="actionLabel" i18n:translate="delete_translated_item">Delete translated item</span>
+              </a>
+            </tal:hastranslation>
+            <tal:notranslation condition="not:translation">
+              <a href="#" title="Add translation" class="pat-plone-modal addTranslationAction"
+                 tal:attributes="href string:${context/absolute_url}/@@create_translation?language=${lang}"
+                 i18n:attributes="title add_translation">
+                  <svg aria-hidden="true" width="14" height="14" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"/></svg>
+                <span class="actionLabel" i18n:translate="add_translation">Add translation</span>
+              </a>
+            </tal:notranslation>
+          </td>
+        </tr>
+      </tal:langs>
+    </table>
+
+  </div>
+
+</metal:main>
+</body>
+</html>

@@ -13,6 +13,8 @@ from zope import interface
 from zope import schema
 from zope.browsermenu.interfaces import IBrowserMenu
 from zope.browsermenu.interfaces import IBrowserSubMenuItem
+from zope.interface import provider
+from zope.schema.interfaces import IContextAwareDefaultFactory
 from zope.component.hooks import getSite
 
 import pkg_resources
@@ -68,11 +70,17 @@ class IUpdateLanguage(interface.Interface):
     )
 
 
-class IAddTranslation(model.Schema):
+@provider(IContextAwareDefaultFactory)
+def request_language(context):
+    return context.REQUEST.form.get('language')
+
+
+class IConnectTranslation(model.Schema):
 
     language = schema.Choice(
         title=_(u"title_language", default=u"Language"),
         source=untranslated_languages,
+        defaultFactory=request_language,
         required=True,
     )
     content = RelationChoice(
@@ -90,19 +98,5 @@ class IAddTranslation(model.Schema):
             }
         )
 
-
-class IRemoveTranslation(model.Schema):
-
-    languages = schema.List(
-        title=_(u"title_languages"),
-        value_type=schema.Choice(
-            title=_(u"title_language", default=u"Language"),
-            source=deletable_languages,
-        ),
-        required=True,
-    )
-    directives.widget(languages='z3c.form.browser.select.SelectFieldWidget')
-
 interface.alsoProvides(IUpdateLanguage, IFormFieldProvider)
-interface.alsoProvides(IAddTranslation, IFormFieldProvider)
-interface.alsoProvides(IRemoveTranslation, IFormFieldProvider)
+interface.alsoProvides(IConnectTranslation, IFormFieldProvider)

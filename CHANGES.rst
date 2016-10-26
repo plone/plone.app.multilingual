@@ -12,7 +12,13 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Replaced add_translations and remove_translations with combined modify_translations.
+  Modify translations page gives you an overview of existing translations and has actions
+  to connect, disconnect existing translations, as well as actions to create or delete a translation for you content item.
+  [agitator]
+
+- Moved stylesheet from legacy bundle to logged-in bundle
+  [agitator]
 
 Bug fixes:
 

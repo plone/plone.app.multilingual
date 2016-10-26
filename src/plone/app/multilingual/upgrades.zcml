@@ -20,4 +20,21 @@
       handler="plone.app.multilingual.upgrades.migration_pam_1_to_2"
       profile="plone.app.multilingual:default"/>
 
+  <genericsetup:registerProfile
+      name="to_4"
+      title="Update bundle regristration"
+      directory="profiles/upgrades/to_4"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:upgradeStep
+      profile="plone.app.multilingual:default"
+      source="3"
+      destination="4"
+      title="Update bundle regristration"
+      handler=".upgrades.upgrade_to_4"
+      />
+
+
 </configure>
