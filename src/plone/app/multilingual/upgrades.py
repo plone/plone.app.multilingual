@@ -10,6 +10,7 @@ import transaction
 
 SHARED_NAME = 'shared'  # old shared folder name
 OLD_PREFIX = 'old_'  # temporary prefix while migrating
+PROFILE_ID = 'profile-plone.app.multilingual:default'
 
 
 def reimport_css_registry(context):
@@ -116,3 +117,10 @@ def migration_pam_1_to_2(context):
                     .format(SHARED_NAME, time() - s6))
 
     logger.info("All finished in {0}.".format(time() - s1))
+
+
+def upgrade_to_4(context):
+    context.runImportStepFromProfile(
+        PROFILE_ID.replace('default', 'to_4'),
+        'plone.app.registry'
+    )

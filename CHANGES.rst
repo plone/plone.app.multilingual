@@ -17,6 +17,9 @@ New features:
   to connect, disconnect existing translations, as well as actions to create or delete a translation for you content item.
   [agitator]
 
+- Moved stylesheet from legacy bundle to logged-in bundle
+  [agitator]
+
 Bug fixes:
 
 - *add item here*
