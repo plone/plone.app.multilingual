@@ -99,13 +99,12 @@ a.contentmenuflags img {
 #translations-overview .actionColumn a {
     height: 1em;
     width: auto;
-    fill: #007bb3;
     border: 0;
 }
 #translations-overview a svg {
     height: 1.25em;
     width: auto;
-    fill: #007bb3;
+    fill: currentColor;
 }
 #translations-overview .actionLabel {
     display: none;
