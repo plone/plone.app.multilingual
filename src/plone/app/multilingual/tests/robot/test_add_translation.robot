@@ -1,3 +1,13 @@
+# ============================================================================
+# Tests plone.app.multilingual add translation
+# ============================================================================
+#
+# $ bin/robot-server --reload-path src/plone.app.multilingual/src/plone/app/multilingual/ plone.app.multilingual.testing.PAM_ROBOT_TESTING
+#
+# $ bin/robot src/plone.app.multilingual/src/plone/app/multilingual/tests/robot/test_add_translation.robot
+#
+# ============================================================================
+
 *** Settings ***
 
 Resource  plone/app/robotframework/selenium.robot
@@ -8,7 +18,7 @@ Library  Remote  ${PLONE_URL}/RobotRemote
 
 Test Setup  Open test browser
 Test Teardown  Close all browsers
-Suite setup  Set Selenium speed  0.5s
+#Suite setup  Set Selenium speed  0.5s
 
 *** Test Cases ***
 
