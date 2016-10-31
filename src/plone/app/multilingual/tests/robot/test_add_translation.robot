@@ -63,8 +63,6 @@ I link the document in English as a translation
   Click Element  xpath=(//span[contains(., 'An English Document')])
   Wait until page contains  An English Document
 
-  #Select From List  name=form.widgets.language:list  en
-  #Click Element  css=.select2-choices
   Click Element  xpath=(//*[contains(@class, 'plone-modal-footer')]//input[@id='form-buttons-connect_translation'])
   Wait until element is visible  xpath=(//h3[@class="translationTitle"])
   Focus  xpath=(//h3[@class="translationTitle" and ./text() = "A Catalan Document"]/following-sibling::*[1])
