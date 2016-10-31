@@ -65,8 +65,8 @@ I link the document in English as a translation
 
   Click Element  xpath=(//*[contains(@class, 'plone-modal-footer')]//input[@id='form-buttons-connect_translation'])
   Wait until element is visible  xpath=(//h3[@class="translationTitle"])
-  Focus  xpath=(//h3[@class="translationTitle" and ./text() = "A Catalan Document"]/following-sibling::*[1])
-  Click Element  xpath=(//h3[@class="translationTitle" and ./text() = "A Catalan Document"]/following-sibling::*[1])
+  Focus  xpath=(//*[@class="odd"]//a[contains(@href,"a-catalan-document")])
+  Click Element  xpath=(//*[@class="odd"]//a[contains(@href,"a-catalan-document")])
   Wait until page contains  A Catalan Document
 
 I switch to English
