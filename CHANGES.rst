@@ -22,7 +22,14 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Made robot tests more robust, I hope.
+  Before using 'Wait until element is visible',
+  first call   'Wait until page contains element'.
+  The first one only works reliably when the element was already on the page initially.
+  If the element was created dynamically, you need to use the 'page contains' call first,
+  otherwise you sometimes get an error:
+  'Element not found in the cache - perhaps the page has changed since it was looked up.'
+  [maurits]
 
 
 4.0.4 (2016-09-16)
