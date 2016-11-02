@@ -49,6 +49,7 @@ I view the Catalan document
 
 I link the document in English as a translation
   Click Element  css=#plone-contentmenu-multilingual a
+  Wait until page contains element  css=#_modify_translations
   Wait until element is visible  css=#_modify_translations
 
   Click Element  css=#_modify_translations
@@ -57,14 +58,17 @@ I link the document in English as a translation
   ...  css=#translations-overview .connectTranslationAction
 
   Click Element  css=#translations-overview .connectTranslationAction
+  Wait until page contains element  css=.select2-choices
   Wait until element is visible  css=.select2-choices
   Click Element  css=#formfield-form-widgets-content .select2-choices
+  Wait until page contains element  xpath=(//span[contains(., 'An English Document')])
   Wait until element is visible  xpath=(//span[contains(., 'An English Document')])
   Click Element  xpath=(//span[contains(., 'An English Document')])
   Wait until page contains  An English Document
 
   Click Element  xpath=(//*[contains(@class, 'plone-modal-footer')]//input[@id='form-buttons-connect_translation'])
   Wait until page contains element  xpath=(//h3[@class="translationTitle"])
+  Sleep  5
   Wait until element is visible  xpath=(//h3[@class="translationTitle"])
   Focus  xpath=(//*[@class="odd"]//a[contains(@href,"a-catalan-document")])
   Click Element  xpath=(//*[@class="odd"]//a[contains(@href,"a-catalan-document")])
