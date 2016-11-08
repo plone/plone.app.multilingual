@@ -143,8 +143,8 @@
 
   <genericsetup:registerProfile
       name="default"
-      title="plone.app.multilingual"
-      description="Install to enable multilingual content support"
+      title="Multilingual Support"
+      description="Install to enable multilingual content support with plone.app.multilingual"
       directory="profiles/default"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
@@ -152,8 +152,8 @@
 
   <genericsetup:registerProfile
       name="uninstall"
-      title="Uninstall plone.app.multilingual"
-      description="Uninstall to remove multilingual content support"
+      title="Multilingual Support [uninstall]"
+      description="Uninstall, removes multilingual content support with plone.app.multilingual"
       directory="profiles/uninstall"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
