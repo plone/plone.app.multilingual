@@ -7,7 +7,10 @@ from plone.indexer import indexer
 
 @indexer(ITranslatable)
 def itgIndexer(obj):
-    return ITG(obj, None)
+    itg = ITG(obj, None)
+    if not itg:
+        raise AttributeError
+    return itg
 
 
 @indexer(ITranslatable)

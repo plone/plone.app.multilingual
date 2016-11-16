@@ -14,10 +14,13 @@ New:
 
 Fixes:
 
+- Do not index TranslationGroup if ITG is empty.
+  [bsuttor]
+
 - Correct event subscribers so that content cut from one LRF & pasted into the
   Media folder is shown there when I switch to a second language.
   [djowett]
-  
+
 - Resolve issue with cut&paste folder with contents into Media folder
 
 - Update Traditional Chinese Translations.
@@ -34,10 +37,10 @@ Fixes:
 - Fixed compatibility issue with archetypes contents: wrong URL were generated.
   [keul]
 
-- Really don't show the Google Translate button when no API key set 
+- Really don't show the Google Translate button when no API key set
   [djowett]
 
-- Migration error (archetype to dexterity in Plone 4.3.x), 
+- Migration error (archetype to dexterity in Plone 4.3.x),
   check if pam is installed when subscriber is used.
   [bsuttor]
 
