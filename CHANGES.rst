@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Allow to work in an Archtypes free Plone 5.1.
+  [jensens]
 
 
 5.0 (2016-11-17)
