@@ -2,6 +2,7 @@
 from StringIO import StringIO
 from Products.CMFCore.utils import getToolByName
 from gzip import GzipFile
+from plone import api
 from plone.app.multilingual.testing import PLONEAPPMULTILINGUAL_FUNCTIONAL_TESTING
 from zope.component import getMultiAdapter
 from .utils import makeContent
@@ -10,6 +11,8 @@ from zope.interface import alsoProvides
 from plone.app.layout.navigation.interfaces import INavigationRoot
 
 import unittest
+
+PLONE_VERSION = api.env.plone_version()
 
 # This class largely inspired by plone/app/layout/sitemap/tests/test_sitemap.py
 class TestSitemap(unittest.TestCase):
@@ -59,6 +62,8 @@ class TestSitemap(unittest.TestCase):
         unziped.close()
         return xml
 
+    @unittest.skipIf(PLONE_VERSION < '4.3',
+                     "expect portalroot sitemap broken for Plone 4.2")
     def test_portalroot_sitemap(self):
         '''
         Requests for the sitemap on portalroot return all languages
@@ -71,6 +76,8 @@ class TestSitemap(unittest.TestCase):
         self.assertTrue(
             '<loc>http://nohost/plone/es/test-document</loc>' in xml)
 
+    @unittest.skipIf(PLONE_VERSION < '4.3',
+                     "expect navroot sitemap broken for Plone 4.2")
     def test_navroot_sitemap(self):
         '''
         Sitemap generated from a LanguageRootFolder (an INavigationRoot)

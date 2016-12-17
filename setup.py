@@ -40,6 +40,7 @@ setup(name='plone.app.multilingual',
           'dexterity': ['plone.multilingualbehavior'],
           'archetypes': ['archetypes.multilingual < 2.0'],
           'test': [
+              'plone.api', # for skipping tests based on Plone version  
               'plone.app.testing[robot]>=4.2.2',
               'plone.app.robotframework',
               'plone.multilingualbehavior',
