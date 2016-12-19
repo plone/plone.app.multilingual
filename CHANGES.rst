@@ -26,6 +26,9 @@ Fixes:
 - Update Traditional Chinese Translations.
   [l34marr]
 
+- Fix for broken sitemap.xml.gz (which was not listing any content #209)
+  [djowett]
+
 - *add item here*
 
 
