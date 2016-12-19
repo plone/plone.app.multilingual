@@ -32,6 +32,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'Products.PloneLanguageTool',
+        'plone.app.layout >= 2.3.16, < 2.4',
         'plone.app.registry',
         'plone.app.z3cform',
         'plone.behavior',
