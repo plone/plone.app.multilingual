@@ -48,13 +48,13 @@ class TestSitemap(unittest.TestCase):
         '''
 
         xml = self.uncompress(self.sitemap())
-        self.assertTrue('<loc>http://nohost/plone/ca/test-document</loc>' in xml)
-        self.assertTrue('<loc>http://nohost/plone/en/test-document</loc>' in xml)
-        self.assertTrue('<loc>http://nohost/plone/es/test-document</loc>' in xml)
+        self.assertIn('<loc>http://nohost/plone/ca/test-document</loc>', xml)
+        self.assertIn('<loc>http://nohost/plone/en/test-document</loc>', xml)
+        self.assertIn('<loc>http://nohost/plone/es/test-document</loc>', xml)
 
-        self.assertTrue('<loc>http://nohost/plone/ca/media/test-document</loc>' in xml)
-        self.assertTrue('<loc>http://nohost/plone/en/media/test-document</loc>' in xml)
-        self.assertTrue('<loc>http://nohost/plone/es/media/test-document</loc>' in xml)
+        self.assertIn('<loc>http://nohost/plone/ca/media/test-document</loc>', xml)
+        self.assertIn('<loc>http://nohost/plone/en/media/test-document</loc>', xml)
+        self.assertIn('<loc>http://nohost/plone/es/media/test-document</loc>', xml)
 
 
     def test_navroot_sitemap(self):
@@ -64,10 +64,10 @@ class TestSitemap(unittest.TestCase):
         sitemap = getMultiAdapter((self.portal.es, self.portal.REQUEST),
                                        name='sitemap.xml.gz')
         xml = self.uncompress(sitemap())
-        self.assertFalse('<loc>http://nohost/plone/ca/test-document</loc>' in xml)
-        self.assertFalse('<loc>http://nohost/plone/en/test-document</loc>' in xml)
-        self.assertTrue('<loc>http://nohost/plone/es/test-document</loc>' in xml)
+        self.assertNotIn('<loc>http://nohost/plone/ca/test-document</loc>', xml)
+        self.assertNotIn('<loc>http://nohost/plone/en/test-document</loc>', xml)
+        self.assertIn('<loc>http://nohost/plone/es/test-document</loc>', xml)
 
-        self.assertFalse('<loc>http://nohost/plone/ca/media/test-document</loc>' in xml)
-        self.assertFalse('<loc>http://nohost/plone/en/media/test-document</loc>' in xml)
-        self.assertTrue('<loc>http://nohost/plone/es/media/test-document</loc>' in xml)
+        self.assertNotIn('<loc>http://nohost/plone/ca/media/test-document</loc>', xml)
+        self.assertNotIn('<loc>http://nohost/plone/en/media/test-document</loc>', xml)
+        self.assertIn('<loc>http://nohost/plone/es/media/test-document</loc>', xml)
