@@ -4,9 +4,6 @@ Changelog
 1.2.3 (unreleased)
 ------------------
 
-- Add new tests for sitemap.xml.gz (it is currently not listing any content)
-  [djowett]
-
 - Move @@multilingual-selector registration from PloneRoot to Navigation root
   This allows to hide language folders in nginx and to use different domains.
   [do3cc]
@@ -22,6 +19,13 @@ Changelog
 
 - Fix and improve 1.x tests on Travis (use annotate & artifacts)
   [djowett, maurits]
+
+- Keep sitemap.xml.gz working with versions of plone.app.layout >= 2.3.16
+  (It is broken in other versions of PAM, requiring changes in p.a.layout)
+  [djowett]
+
+- Add new (regression) tests to check that sitemap.xml.gz stays working!
+  [djowett]
 
 
 1.2.2 (2015-02-05)
