@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 from StringIO import StringIO
-from Products.CMFCore.utils import getToolByName
 from gzip import GzipFile
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.dexterity.utils import createContentInContainer
+from plone.registry.interfaces import IRegistry
+from Products.CMFPlone.interfaces import ISiteSchema
 from zope.component import getMultiAdapter
+from zope.component import getUtility
+from zope.interface import alsoProvides
 
 import unittest
 
@@ -15,12 +19,14 @@ class TestSitemap(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
+
+        registry = getUtility(IRegistry)
+        self.site_settings = registry.forInterface(ISiteSchema, prefix="plone")
+        self.site_settings.enable_sitemap = True
 
         self.sitemap = getMultiAdapter((self.portal, self.portal.REQUEST),
                                        name='sitemap.xml.gz')
-        self.site_properties = getToolByName(
-            self.portal, 'portal_properties').site_properties
-        self.site_properties.manage_changeProperties(enable_sitemap=True)
 
         createContentInContainer(
             self.portal['en']['media'], 'Document', title=u"Test document")
