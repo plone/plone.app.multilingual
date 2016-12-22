@@ -302,6 +302,19 @@
     permission="zope2.View"
     />
 
+
+  <!-- Override the sitemap view to handle the catalog patch -->
+
+  <browser:page
+      name="sitemap.xml.gz"
+      for="plone.app.layout.navigation.interfaces.INavigationRoot"
+      class=".sitemap.PAM1xSiteMapView"
+      permission="zope2.Public"
+      layer="..interfaces.IPloneAppMultilingualInstalled"
+     />
+
+
+
   <!-- Migration Views -->
 
   <!-- Optional initial step - reindex Language index -->
