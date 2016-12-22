@@ -5,7 +5,7 @@ from plone.app.testing import SITE_OWNER_PASSWORD
 from plone.dexterity.utils import createContentInContainer
 from plone.testing._z2_testbrowser import Browser
 import transaction
-import unittest2 as unittest
+import unittest
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.interfaces import ITranslationManager
 from zope.interface import alsoProvides

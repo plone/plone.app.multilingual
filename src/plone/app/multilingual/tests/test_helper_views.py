@@ -9,7 +9,7 @@ from plone.app.testing import TEST_USER_PASSWORD
 from plone.dexterity.utils import createContentInContainer
 from plone.testing.z2 import Browser
 import transaction
-import unittest2 as unittest
+import unittest
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 from Products.CMFPlone.interfaces import ILanguageSchema
