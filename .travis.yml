@@ -11,7 +11,8 @@ cache:
   - eggs
 env:
   matrix:
-  - PLONE_VERSION=5.0
+    - PLONE_VERSION=5.0
+    - PLONE_VERSION=5.1
   global:
   - ARTIFACTS_KEY=AKIAJP4TGKGJABPQ7YVA
   - ARTIFACTS_BUCKET=plone-app-multilingual
