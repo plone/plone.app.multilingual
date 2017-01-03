@@ -4,14 +4,6 @@ Changelog
 5.0.1 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Allow to work in an Archtypes free Plone 5.1.
