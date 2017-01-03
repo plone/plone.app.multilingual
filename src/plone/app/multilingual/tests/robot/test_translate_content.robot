@@ -56,8 +56,11 @@ I translate the document into Catalan
   Go to  ${PLONE_URL}/en/an-english-document/@@create_translation?language=ca
   Input Text  form.widgets.IDublinCore.title  A Catalan Document
   Click Link  Dates  # workaround for of TinyMCE editor field problem
-  Click Button  Guardar
-  Wait until page contains  Element creat
+  Click button  css=#form-buttons-save
+  
+  # Wait until page contains  Element creat
+  # (Catalan translations not currently available)
+
   Wait until page contains  A Catalan Document
 
 I switch to Catalan

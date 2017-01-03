@@ -11,17 +11,14 @@ cache:
   - eggs
 env:
   matrix:
-  - PLONE_VERSION=5.0
+    - PLONE_VERSION=5.0
+    - PLONE_VERSION=5.1
   global:
   - ARTIFACTS_KEY=AKIAJP4TGKGJABPQ7YVA
   - ARTIFACTS_BUCKET=plone-app-multilingual
   - ARTIFACTS_CACHE_CONTROL=public
   - ARTIFACTS_PERMISSIONS=public-read
   - secure: "cTwAxlU9LxjLxQ8Gl4yUGKFmvsZmsAQlsRQQ3jwalnYT3ZHFlt3wxEe4u09Foj0ZTst9HWjfVc22sIHX9xiI96cS770uEjPY0Xc5jYidBGHG3FIcYpEAOcWbyF0tAfiQKTuxfR6lGIDcWzjF4Aj8dOAQ4tGBN0eg1OPUEQ9lzmY="
-matrix:
-  allow_failures:
-  - python: 2.7
-    env: PLONE_VERSION=5.0
 install:
 - sed -ie "s#test-plone-5.0.x.cfg#test-plone-$PLONE_VERSION.x.cfg#" buildout.cfg
 - python bootstrap.py --setuptools-version=8.3 --version=2.3.1
