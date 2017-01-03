@@ -1,6 +1,22 @@
 Changelog
 =========
 
+5.0.2 (unreleased)
+------------------
+
+Breaking changes:
+
+- *add item here*
+
+New features:
+
+- *add item here*
+
+Bug fixes:
+
+- *add item here*
+
+
 5.0.1 (2017-01-02)
 ------------------
 
