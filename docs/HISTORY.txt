@@ -14,7 +14,7 @@ Changelog
 - Fix: Really don't show Google Translate button when no API key
   [djowett]
 
--	Fix: Pin archetypes.multilingual to 1.x releases of that product
+- Fix: Pin archetypes.multilingual to 1.x releases of that product
   [djowett]
 
 - Fix and improve 1.x tests on Travis (use annotate & artifacts)
