@@ -4,14 +4,6 @@ Changelog
 2.0.3 (unreleased)
 ------------------
 
-Incompatibilities:
-
-- *add item here*
-
-New:
-
-- *add item here*
-
 Fixes:
 
 - Do not index TranslationGroup if ITG is empty.
@@ -28,8 +20,6 @@ Fixes:
 
 - Fix for broken sitemap.xml.gz (which was not listing any content #209)
   [djowett]
-
-- *add item here*
 
 
 2.0.2 (2016-03-10)
