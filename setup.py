@@ -12,7 +12,11 @@ setup(name='plone.app.multilingual',
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       classifiers=[
         "Framework :: Plone",
+        "Framework :: Plone :: 4.2",
+        "Framework :: Plone :: 4.3",
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2.6",
+        "Programming Language :: Python :: 2.7",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
       url='https://github.com/plone/plone.app.multilingual',
@@ -40,7 +44,7 @@ setup(name='plone.app.multilingual',
           'dexterity': ['plone.multilingualbehavior'],
           'archetypes': ['archetypes.multilingual < 2.0'],
           'test': [
-              'plone.api', # for skipping tests based on Plone version  
+              'plone.api', # for skipping tests based on Plone version
               'plone.app.testing[robot]>=4.2.2',
               'plone.app.robotframework',
               'plone.multilingualbehavior',
