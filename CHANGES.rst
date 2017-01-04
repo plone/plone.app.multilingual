@@ -4,20 +4,10 @@ Changelog
 5.0.2 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
+Bug fixes:
 
 - Add new tests for sitemap.xml.gz (it is currently not listing any content)
   [djowett]
-
-- *add item here*
-
-Bug fixes:
-
-- *add item here*
 
 
 5.0.1 (2017-01-02)
