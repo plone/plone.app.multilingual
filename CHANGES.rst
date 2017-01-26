@@ -14,7 +14,9 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fix error in folder_paste script when you copy/paste AT folder, 
+  some objects into container has no request.
+  [bsuttor]
 
 
 2.0.3 (2017-01-04)
