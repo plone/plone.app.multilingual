@@ -130,7 +130,8 @@ def createdEvent(obj, event):
     - IObjectAddedEvent
     - IObjectCopiedEvent
     """
-    if (not IPloneAppMultilingualInstalled.providedBy(obj.get('REQUEST', ''))):
+    if (not IPloneAppMultilingualInstalled.providedBy(
+            getattr(obj, 'REQUEST', getRequest()))):
         return
 
     if IObjectRemovedEvent.providedBy(event):
