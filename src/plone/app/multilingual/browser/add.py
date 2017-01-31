@@ -105,7 +105,7 @@ class AddViewTraverser(object):
                 raise TraversalError(self.context, name)
 
         add_view.__name__ = ti.factory
-        return add_view.__of__(self.context)
+        return add_view
 
 
 @implementer(IMultilingualAddForm)
