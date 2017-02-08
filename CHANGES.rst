@@ -10,7 +10,8 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Show Translate menu in INavigationRoot items and hide in ILanguageRootFolders
+  [erral]
 
 Bug fixes:
 

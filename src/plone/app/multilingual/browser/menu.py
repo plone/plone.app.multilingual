@@ -2,7 +2,7 @@
 from AccessControl import getSecurityManager
 from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
-from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.app.multilingual.interfaces import ILanguageRootFolder
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.interfaces import ITranslateMenu
 from plone.app.multilingual.browser.interfaces import ITranslateSubMenuItem
@@ -61,7 +61,7 @@ class TranslateMenu(BrowserMenu):
         for brain in results:
             shared_folder_url = brain.getURL() + '/folder_contents'
 
-        if not is_neutral_content and not INavigationRoot.providedBy(context):
+        if not is_neutral_content and not ILanguageRootFolder.providedBy(context):
             menu.append({
                 "title": _(
                     u"title_babel_edit",
