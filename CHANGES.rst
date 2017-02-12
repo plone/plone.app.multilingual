@@ -4,18 +4,12 @@ Changelog
 5.0.3 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 
 - Show Translate menu in INavigationRoot items and hide in ILanguageRootFolders
   [erral]
 
 Bug fixes:
-
-- *add item here*
 
 - Remove deprecated __of__ calls on BrowserViews
   [MrTango]
