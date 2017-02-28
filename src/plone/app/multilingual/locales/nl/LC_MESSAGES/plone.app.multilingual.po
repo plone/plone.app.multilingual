@@ -34,15 +34,15 @@ msgstr "Opschonen"
 
 #: ../browser/controlpanel.py:49
 msgid "Default language not in available languages"
-msgstr "Standaardtaal niet in beschikbare talen"
+msgstr "Standaardtaal niet gesteld in beschikbare talen"
 
 #: ../browser/templates/not_translated_yet.pt:28
 msgid "However, this is the list of the already translated languages for the requested content."
-msgstr ""
+msgstr "Hoewel, dit is de lijst met overige vertalingen."
 
 #: ../configure.zcml:151
 msgid "Install to enable multilingual content support with plone.app.multilingual"
-msgstr ""
+msgstr "Installeren om meertaligheid in te schakelen"
 
 #: ../browser/translate.py:69
 msgid "Invalid field"
@@ -107,7 +107,7 @@ msgstr "Zoek naar vertaling in de bovenliggende map"
 
 #: ../interfaces.py:172
 msgid "Show user dialog with information about the available translations."
-msgstr ""
+msgstr "Toon venster met informatie over beschikbare vertalingen"
 
 #: ../browser/templates/mmap.pt:55
 msgid "Site Setup"
@@ -131,11 +131,11 @@ msgstr "Meertaligheidsinformatie overnemen"
 
 #: ../configure.zcml:159
 msgid "Uninstall, removes multilingual content support with plone.app.multilingual"
-msgstr ""
+msgstr "Deactiveren, verwijderd meertaligheid."
 
 #: ../upgrades.zcml:29
 msgid "Update bundle regristration"
-msgstr ""
+msgstr "Bundel registratie bijwerken."
 
 #. Default: "This object is going to be a translation to ${DYNAMIC_CONTENT} from: <ul> <li><a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\"> <span>${DYNAMIC_CONTENT}</span> <span>${DYNAMIC_CONTENT}</span></a></li> </ul> <span>x</span>"
 #: ../browser/templates/add-form-is-translation.pt:14
@@ -184,17 +184,21 @@ msgstr "${lang_name} bewerken met Babel"
 #. Default: "When there are many translations for an item, the number of displayed buttons for them might get too large to fit inside the template. Choose here from which number onwards a drop-down menu will be displayed instead of buttons. Zero means that buttons will always be used."
 #: ../interfaces.py:240
 msgid "description_buttons_babel_view_up_to_nr_translations"
-msgstr ""
+msgstr "Als er veel talen voor een item zijn, passen de button wellicht niet binnen het ontwerp. "
+"Kies hier vanaf welk aantal de talen in een dropdown getoond moeten worden"
 
 #. Default: "When updating an object with language independent the field will be synced to all target languages. That can produce Unauthorized error messages because if the editor of the canonical object is not allowed to update the target language objects. Enabling this bypasses this permission check. This could also be dangerous, so think about possible security issues before enabling this."
 #: ../interfaces.py:221
 msgid "description_bypass_languageindependent_field_permission_check"
-msgstr ""
+msgstr "Indien u een item met een taalonafhankelijk veld opslaat wordt "
+"de waarde van dat veld overgenomen in de vertaalde versies. Dit zou "
+"fout kunnen geven als de gebruiker geen rechten heeft op de vertalingen. "
+"Schakel deze optie in om deze fouten te negeren en de waarde te overschrijven."
 
 #. Default: "Filter using language the content on folder_contents"
 #: ../interfaces.py:198
 msgid "description_filter_content"
-msgstr ""
+msgstr "Filter op taal bij Inhoud"
 
 #. Default: "Is a paying API in order to use google translation service"
 #: ../interfaces.py:256
@@ -234,12 +238,18 @@ msgstr "Na het aanmaken van een vertaling de Babel weergave tonen"
 #. Default: "Use this field to define portal types that will not be traversed for finding content to move. All content of those types will be moved with all contained sub-items. This is useful for content types that are themselves translatable, but contain sub-content that is not translatable or does not have a language set.<br /> This list is pre-filled with some portal types, but you can add additional ones if needed, one per line."
 #: ../browser/templates/migration.pt:161
 msgid "description_relocate_blacklist"
-msgstr ""
+msgstr "Gebruik deze optie om type op te geven die niet verplaatst moeten "
+"worden. Deze items zullen inclusief subitems verplaatst worden. Dit kan "
+"handig zijn voor taalafhankelijke items die taalonafhankelijke subitems "
+"gebruiken.
 
 #. Default: "This step will move the site's content to its corresponding root language folder and previously will make a search for misplaced content through the site's content tree and will move them to its nearest translated parent. This step is destructive as it will alter your content tree structure. Make sure you have previously configured your site's languages properly in the 'Site Languages' tab of the 'Languages' control panel."
 #: ../browser/templates/migration.pt:149
 msgid "description_relocate_content"
-msgstr "Deze stap zal de inhoud verplaatsen naar de overeenkomstige talen waar mogelijk. Indien de taal niet duidelijk is, wordt deze zo veel mogelijk één-op-één overgenomen. Controleer of alle beschikbare talen zijn ingesteld via website-instellingen > Taal"
+msgstr "Deze stap zal de inhoud verplaatsen naar de overeenkomstige talen waar"
+"mogelijk. Indien de taal niet duidelijk is, wordt deze zo veel mogelijk "
+"één-op-één overgenomen. Controleer of alle beschikbare talen zijn ingesteld "
+"via website-instellingen > Taal"
 
 #. Default: "The default language used for the content and the UI of this site."
 #: ../interfaces.py:268
@@ -314,7 +324,8 @@ msgstr "Beschikbare vertalingen voor deze inhoud"
 #. Default: "Use buttons in the bable view for up to how many translations?"
 #: ../interfaces.py:236
 msgid "heading_buttons_babel_view_up_to_nr_translations"
-msgstr ""
+msgstr "Gebruik knoppen in de taalkiezer tot het onderstaande aantal, toon "
+"daarboven een dropdown."
 
 #. Default: "Bypass language independent field permission check"
 #: ../interfaces.py:218
@@ -364,7 +375,7 @@ msgstr "Het beleid dat bepaald welke beschikbare taal gebruikt wordt in de taalk
 #. Default: "plone.app.multilingual translation map"
 #: ../browser/templates/mmap.pt:61
 msgid "heading_translation_map"
-msgstr ""
+msgstr "Meertaligheidsoverzicht"
 
 #. Default: "The migration of LinguaPlone content depends on an up-to-date Language index. Use this step to refresh this index. Warning: Depending on the number of items in your site, this can take a considerable amount of time."
 #: ../browser/templates/migration.pt:118
