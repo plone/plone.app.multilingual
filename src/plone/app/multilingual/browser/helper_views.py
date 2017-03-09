@@ -9,6 +9,7 @@ from plone.i18n.interfaces import INegotiateLanguage
 from borg.localrole.interfaces import IFactoryTempFolder
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
 from plone.app.multilingual.browser.selector import addQuery
 from plone.app.multilingual.interfaces import ILanguageRootFolder
@@ -278,3 +279,11 @@ class not_translated_yet(BrowserView):
         if lang_info is None:
             return None
         return lang_info.get('native', None) or lang_info.get('name')
+
+
+class TGView(BrowserView):
+    """A simple browser view that renders the TG of its context
+    """
+
+    def __call__(self):
+        return str(ITG(self.context, u""))

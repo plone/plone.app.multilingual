@@ -3,6 +3,7 @@ from OFS.event import ObjectWillBeRemovedEvent
 from Products.CMFCore.utils import getToolByName
 from plone.app.multilingual import api
 from Products.CMFPlone.interfaces import ILanguage
+from plone.app.multilingual.interfaces import ATTRIBUTE_NAME
 from plone.app.multilingual.interfaces import ITranslationIdChooser
 from plone.app.multilingual.interfaces import ITranslationLocator
 from plone.app.multilingual.interfaces import ITranslationManager
@@ -293,3 +294,13 @@ class TestLanguageRootFolderAPI(unittest.TestCase):
 
         child_locator = ITranslationLocator(subfolder_ca)
         self.assertEqual(child_locator('es'), folder_es)
+
+    def test_tg_view(self):
+        a_ca = createContentInContainer(
+            self.portal['ca'],
+            'Document',
+            title=u"Test document"
+        )
+        tg = getattr(a_ca, ATTRIBUTE_NAME)
+        self.assertTrue(bool(tg))
+        self.assertEqual(a_ca.restrictedTraverse('@@tg')(), tg)
