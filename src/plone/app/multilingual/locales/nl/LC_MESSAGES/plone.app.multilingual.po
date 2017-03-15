@@ -241,7 +241,7 @@ msgid "description_relocate_blacklist"
 msgstr "Gebruik deze optie om type op te geven die niet verplaatst moeten "
 "worden. Deze items zullen inclusief subitems verplaatst worden. Dit kan "
 "handig zijn voor taalafhankelijke items die taalonafhankelijke subitems "
-"gebruiken.
+"gebruiken."
 
 #. Default: "This step will move the site's content to its corresponding root language folder and previously will make a search for misplaced content through the site's content tree and will move them to its nearest translated parent. This step is destructive as it will alter your content tree structure. Make sure you have previously configured your site's languages properly in the 'Site Languages' tab of the 'Languages' control panel."
 #: ../browser/templates/migration.pt:149
