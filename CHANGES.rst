@@ -4,19 +4,11 @@ Changelog
 5.0.4 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 
 - Add a new view ``@@tg`` for translatable content. It will return the
   current translation group of the content, matching the bahavior of ``@@uuid``
   of ``plone.app.uuid`` returning UUID of the content.  [datakurre]
-
-Bug fixes:
-
-- *add item here*
 
 
 5.0.3 (2017-02-12)
