@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fix robot tests to work with improved related items widget.
+  [thet]
 
 
 5.0.4 (2017-03-26)

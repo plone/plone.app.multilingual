@@ -54,13 +54,12 @@ I link the document in English as a translation
 
   Click Element  css=#_modify_translations
   Given patterns are loaded
-  Wait until page contains element
-  ...  css=#translations-overview .connectTranslationAction
+  Wait until page contains element  css=#translations-overview .connectTranslationAction
 
   Click Element  css=#translations-overview .connectTranslationAction
   Wait until page contains element  css=.select2-choices
   Wait until element is visible  css=.select2-choices
-  Click Element  css=#formfield-form-widgets-content .select2-choices
+  Input Text  css=#formfield-form-widgets-content .select2-input  en
   Wait until page contains element  xpath=(//span[contains(., 'An English Document')])
   Wait until element is visible  xpath=(//span[contains(., 'An English Document')])
   Click Element  xpath=(//span[contains(., 'An English Document')])
