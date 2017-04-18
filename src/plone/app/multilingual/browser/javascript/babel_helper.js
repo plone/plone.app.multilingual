@@ -169,7 +169,7 @@
         });
     }
 
-    $(document).ready(function () {
+    $(window).load(function () {
 
         /* alert about language independent field */
         $('.languageindependent').click(function () {

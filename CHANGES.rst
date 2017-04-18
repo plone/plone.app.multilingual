@@ -15,6 +15,7 @@ New features:
 Bug fixes:
 
 - Remove travis integration because plone.app.mutlilingual is part of plonecore and should be tested there.
+- Fix bug where formcontrols were overlaped by fields.
   [agitator]
 
 - Fix robot tests to work with improved related items widget.
