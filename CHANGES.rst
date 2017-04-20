@@ -14,6 +14,9 @@ New features:
 
 Bug fixes:
 
+- Remove travis integration because plone.app.mutlilingual is part of plonecore and should be tested there.
+  [agitator]
+
 - Fix robot tests to work with improved related items widget.
   [thet]
 
