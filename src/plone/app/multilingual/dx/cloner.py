@@ -12,6 +12,7 @@ from zope.component import getUtility
 from zope.component import queryAdapter
 from zope.interface import implementer
 import pkg_resources
+from Products.CMFPlone.utils import safe_unicode
 try:
     # pkg_resources.get_distribution('zope.initd')
     from zope.intid.interfaces import IIntIds
@@ -74,7 +75,7 @@ class LanguageIndependentFieldsManager(object):
                         value = map(relation_copier, value or [])
 
                     doomed = True
-                    setattr(schema(translation), field_name, value)
+                    setattr(schema(translation), field_name, safe_unicode(value))
 
         # If at least one field has been copied over to the translation
         # we need to inform subscriber to trigger an ObjectModifiedEvent
