@@ -1,7 +1,7 @@
 Changelog
 =========
 
-5.0.5 (unreleased)
+5.0.5 (2017-04-27)
 ------------------
 
 Breaking changes:
