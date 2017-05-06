@@ -4,7 +4,7 @@ Changelog
 5.0.6 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Update import of UnauthorizedUser. [davisagli]
 
 
 5.0.5 (2017-04-27)
