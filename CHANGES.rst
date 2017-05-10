@@ -10,14 +10,6 @@ Changelog
 5.0.5 (2017-04-27)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Remove travis integration because plone.app.mutlilingual is part of plonecore and should be tested there.
