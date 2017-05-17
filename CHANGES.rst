@@ -14,6 +14,8 @@ New features:
 
 Bug fixes:
 
+- Fixed language alternate viewlet #153 [erral]
+
 - removed unittest2 dependency
   [kakshay21]
 
