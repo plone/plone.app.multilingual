@@ -37,9 +37,6 @@ class TestAlternateLanguagesViewlet(unittest.TestCase):
         for item in viewlet.alternates:
             self.assertIn(item['lang'], translations)
             self.assertEqual(
-                "{0}/{1}/{2}".format(
-                    self.portal.absolute_url(),
-                    item['lang'],
-                    item['url']),
+                item['url'],
                 translations[item['lang']].absolute_url()
             )
