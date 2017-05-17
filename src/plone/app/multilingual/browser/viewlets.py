@@ -146,16 +146,12 @@ class AlternateLanguagesViewlet(ViewletBase):
         catalog = getToolByName(self.context, 'portal_catalog')
         results = catalog(TranslationGroup=tm.query_canonical())
 
-        plone_site = getUtility(IPloneSiteRoot)
-        portal_path = '/'.join(plone_site.getPhysicalPath())
-        portal_path_len = len(portal_path)
         alternates = []
         for item in results:
-            path_len = portal_path_len + len('{0:s}/'.format(item.Language))
-            url = item.getURL(relative=1)[path_len:]
+            url = item.getURL()
             alternates.append({
                 'lang': item.Language,
-                'url': url.strip('/'),
+                'url': url,
             })
 
         return alternates
