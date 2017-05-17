@@ -42,7 +42,7 @@ class TestAlternateLanguagesViewlet(unittest.TestCase):
 
         for item in viewlet.alternates:
             self.assertIn(item['lang'], translations)
-            self.assertEqual("{0}/{1}".format(viewlet.site_url, item['url']),
+            self.assertEqual(item['url'],
                              translations[item['lang']].absolute_url())
 
     def test_alternates_AT(self):
