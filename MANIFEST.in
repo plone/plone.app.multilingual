@@ -1,8 +1,4 @@
 include *.rst
-
-recursive-include src *
-recursive-include docs *
-
-global-exclude *.pyc
-global-exclude *.pyo
-global-exclude .DS_Store
+graft src
+graft docs
+global-exclude *.py[co]
