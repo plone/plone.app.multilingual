@@ -4,7 +4,7 @@ from plone.app.multilingual.browser.viewlets import AlternateLanguagesViewlet
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.dexterity.utils import createContentInContainer
-import unittest2 as unittest
+import unittest
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from zope.interface import alsoProvides
 
