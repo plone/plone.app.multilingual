@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import unittest2 as unittest
+import unittest
 from zope.interface import alsoProvides
 
 from Products.CMFCore.utils import getToolByName

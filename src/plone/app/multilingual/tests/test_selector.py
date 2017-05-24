@@ -18,7 +18,7 @@ from zope.component import getUtility
 from zope.event import notify
 from zope.lifecycleevent import ObjectModifiedEvent
 import transaction
-import unittest2 as unittest
+import unittest
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from zope.interface import alsoProvides
 
