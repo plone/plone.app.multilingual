@@ -122,15 +122,12 @@ class AlternateLanguagesViewlet(ViewletBase):
         results = catalog(TranslationGroup=tm.query_canonical(),
                           Language='all')
 
-        portal_path_len = len(
-            '/'.join(self.portal_state.portal().getPhysicalPath()))
-
         alternates = []
         for item in results:
-            url = item.getURL(relative=1)[portal_path_len:]
+            url = item.getURL()
             alternates.append({
                 'lang': item.Language,
-                'url': url.strip('/'),
+                'url': url,
             })
 
         return alternates

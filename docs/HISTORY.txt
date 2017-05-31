@@ -14,7 +14,7 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fix language alternate viewlet #153 [erral]
 
 
 1.2.3 (2017-01-04)
