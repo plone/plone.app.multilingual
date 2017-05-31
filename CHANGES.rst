@@ -14,7 +14,9 @@ New features:
 
 Bug fixes:
 
-- Fix error in folder_paste script when you copy/paste AT folder, 
+- Fix language alternate viewlet #153 [erral]
+
+- Fix error in folder_paste script when you copy/paste AT folder,
   some objects into container has no request.
   [bsuttor]
 
