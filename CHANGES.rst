@@ -1,7 +1,7 @@
 Changelog
 =========
 
-5.0.7 (unreleased)
+5.0.8 (unreleased)
 ------------------
 
 Breaking changes:
@@ -15,6 +15,12 @@ New features:
 Bug fixes:
 
 - Fixed language alternate viewlet #153 [erral]
+
+
+5.0.7 (2017-05-31)
+------------------
+
+Bug fixes:
 
 - removed unittest2 dependency
   [kakshay21]
