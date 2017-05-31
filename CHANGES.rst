@@ -14,7 +14,7 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fix language alternate viewlet #153 [erral]
 
 
 3.0.17 (2016-05-03)
@@ -25,7 +25,7 @@ Fixes:
 - Wait for visibility of select2 result, instead of time.
   [jensens]
 
-- Workaroud in robot test for TinyMCE overlap bug see 
+- Workaroud in robot test for TinyMCE overlap bug see
   https://github.com/plone/plone.app.multilingual/issues/227
   for details
   [jensens]
@@ -39,7 +39,7 @@ Fixes:
 - Fixed compatibility issue with archetypes contents: wrong URL were generated.
   [keul, hvelarde]
 
-- Really don't show the Google Translate button when no API key set 
+- Really don't show the Google Translate button when no API key set
   [djowett]
 
 
