@@ -88,6 +88,9 @@ Bug fixes:
 - Allow to work in an Archtypes free Plone 5.1.
   [jensens]
 
+- Replace unittest2 with unittest.
+  [jensens]
+
 
 5.0 (2016-11-17)
 ----------------
