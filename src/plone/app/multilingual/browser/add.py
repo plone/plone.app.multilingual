@@ -1,30 +1,29 @@
 # -*- coding: utf-8 -*-
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import ILanguage
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from plone.app.multilingual import _
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.app.multilingual.dx.interfaces import IMultilingualAddForm
 from Products.CMFPlone.interfaces import ILanguage
+from plone.app.multilingual.events import ObjectTranslatedEvent
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITG
-from plone.app.multilingual.interfaces import ITranslationManager
-from plone.autoform.form import AutoExtensibleForm
-from plone.autoform.interfaces import IFormFieldProvider
+from plone.app.uuid.utils import uuidToObject
 from plone.dexterity.browser.add import DefaultAddForm
 from plone.dexterity.browser.add import DefaultAddView
 from plone.dexterity.interfaces import IDexterityContent
 from plone.registry.interfaces import IRegistry
 from plone.z3cform.fieldsets.group import Group
-from z3c.form import button
-from z3c.form.form import Form
 from zope.component import adapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
+from zope.event import notify
 from zope.interface import Interface
 from zope.interface import implementer
 from zope.traversing.interfaces import ITraversable
 from zope.traversing.interfaces import TraversalError
+
 import logging
 
 
@@ -124,13 +123,24 @@ class MultilingualAddForm(DefaultAddForm):
     def portal_url(self):
         portal_tool = getToolByName(self.context, 'portal_url', None)
         if portal_tool is not None:
-            return portal_tool.getPortalObject().absolute_url()
+            return portal_tool()
         return None
 
     def render(self):
         self.request['disable_border'] = True
         self.babel_content = super(MultilingualAddForm, self).render()
         return self.babel()
+
+    def add(self, object):
+        super(MultilingualAddForm, self).add(object)
+        language = ILanguage(object).get_language()
+        # extract UID from URL to get source object
+        # probably there is a better way to do that!?
+        parts = self.request.getURL().split('++')
+        if not parts:
+            return
+        source = uuidToObject(parts[-1])
+        notify(ObjectTranslatedEvent(source, object, language))
 
     @property
     def max_nr_of_buttons(self):
