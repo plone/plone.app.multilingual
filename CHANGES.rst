@@ -16,6 +16,9 @@ Bug fixes:
 
 - Fixed language alternate viewlet #153 [erral]
 
+- Notify ObjectTranslatedEvent if translating with babel view
+  #277 [tomgross]
+
 
 5.0.7 (2017-05-31)
 ------------------
