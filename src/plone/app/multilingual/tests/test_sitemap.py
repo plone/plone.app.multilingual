@@ -12,6 +12,7 @@ from zope.interface import alsoProvides
 
 import unittest
 
+
 # This class largely inspired by plone/app/layout/sitemap/tests/test_sitemap.py
 class TestSitemap(unittest.TestCase):
     layer = PAM_FUNCTIONAL_TESTING
@@ -58,22 +59,21 @@ class TestSitemap(unittest.TestCase):
         self.assertIn('<loc>http://nohost/plone/en/test-document</loc>', xml)
         self.assertIn('<loc>http://nohost/plone/es/test-document</loc>', xml)
 
-        self.assertIn('<loc>http://nohost/plone/ca/media/test-document</loc>', xml)
-        self.assertIn('<loc>http://nohost/plone/en/media/test-document</loc>', xml)
-        self.assertIn('<loc>http://nohost/plone/es/media/test-document</loc>', xml)
-
+        self.assertIn('<loc>http://nohost/plone/ca/media/test-document</loc>', xml)  # noqa
+        self.assertIn('<loc>http://nohost/plone/en/media/test-document</loc>', xml)  # noqa
+        self.assertIn('<loc>http://nohost/plone/es/media/test-document</loc>', xml)  # noqa
 
     def test_navroot_sitemap(self):
         '''
         Sitemap generated from a LanguageRootFolder (an INavigationRoot)
         '''
         sitemap = getMultiAdapter((self.portal.es, self.portal.REQUEST),
-                                       name='sitemap.xml.gz')
+                                  name='sitemap.xml.gz')
         xml = self.uncompress(sitemap())
-        self.assertNotIn('<loc>http://nohost/plone/ca/test-document</loc>', xml)
-        self.assertNotIn('<loc>http://nohost/plone/en/test-document</loc>', xml)
+        self.assertNotIn('<loc>http://nohost/plone/ca/test-document</loc>', xml)  # noqa
+        self.assertNotIn('<loc>http://nohost/plone/en/test-document</loc>', xml)  # noqa
         self.assertIn('<loc>http://nohost/plone/es/test-document</loc>', xml)
 
-        self.assertNotIn('<loc>http://nohost/plone/ca/media/test-document</loc>', xml)
-        self.assertNotIn('<loc>http://nohost/plone/en/media/test-document</loc>', xml)
-        self.assertIn('<loc>http://nohost/plone/es/media/test-document</loc>', xml)
+        self.assertNotIn('<loc>http://nohost/plone/ca/media/test-document</loc>', xml)  # noqa
+        self.assertNotIn('<loc>http://nohost/plone/en/media/test-document</loc>', xml)  # noqa
+        self.assertIn('<loc>http://nohost/plone/es/media/test-document</loc>', xml)  # noqa

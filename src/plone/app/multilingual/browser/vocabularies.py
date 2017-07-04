@@ -116,6 +116,7 @@ class AllContentLanguageVocabulary(object):
         items = [SimpleTerm(i[0], i[0], i[1]) for i in items]
         return SimpleVocabulary(items)
 
+
 AllContentLanguageVocabularyFactory = AllContentLanguageVocabulary()
 
 
@@ -144,6 +145,7 @@ class AllAvailableLanguageVocabulary(object):
         items.sort(key=sort_key)
         items = [SimpleTerm(i[0], i[0], i[1]) for i in items]
         return SimpleVocabulary(items)
+
 
 AllAvailableLanguageVocabularyFactory = AllAvailableLanguageVocabulary()
 

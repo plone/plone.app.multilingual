@@ -30,4 +30,5 @@ class UpdateLanguageForm(form.Form):
         return self.request.response.redirect(
             new_object.absolute_url() + '?set_language=' + language)
 
+
 update_language_form = wrap_form(UpdateLanguageForm)
