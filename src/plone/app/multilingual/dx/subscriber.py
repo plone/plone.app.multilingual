@@ -106,4 +106,5 @@ class LanguageIndependentModifier(object):
         translations.remove(content_lang)
         return translations
 
+
 handler = LanguageIndependentModifier()

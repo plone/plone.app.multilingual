@@ -65,10 +65,9 @@ class TestSubscribers(unittest.TestCase):
         a_ca_copied = self.portal['en'][a_ca.id]
         self.assertEqual(ILanguage(a_ca_copied).get_language(), 'en')
 
-
     def test_moved_to_media_folder(self):
         """When an object is moved from within one Language Root Folder into
-        the Language Independent Folder (named 'Media') it becomes language 
+        the Language Independent Folder (named 'Media') it becomes language
         independent, and it should be visible from the media folder accessed
         from within other Language Root Folders
         """
@@ -87,7 +86,7 @@ class TestSubscribers(unittest.TestCase):
         # Get both media folders afresh
         ca_media_subfolder = self.portal['ca']['media'][subfolder_name]
         en_media_subfolder = self.portal['en']['media'][subfolder_name]
-        
+
         # Check it is in both folder listings
         self.assertTrue(a_ca.id in ca_media_subfolder)
         self.assertTrue(a_ca.id in en_media_subfolder)
@@ -109,10 +108,9 @@ class TestSubscribers(unittest.TestCase):
         en_folder_contents = [r.id for r in catalog(path=en_subfolder_path)]
         self.assertTrue(a_ca.id in en_folder_contents)
 
-
     def test_copied_to_media_folder(self):
         """When an object is copied from within one Language Root Folder into
-        the Language Independent Folder (named 'Media') it becomes language 
+        the Language Independent Folder (named 'Media') it becomes language
         independent, and it should be visible from the media folder accessed
         from within other Language Root Folders
         """
@@ -130,7 +128,7 @@ class TestSubscribers(unittest.TestCase):
         # Get both media folders afresh
         ca_media_subfolder = self.portal['ca']['media'][subfolder_name]
         en_media_subfolder = self.portal['en']['media'][subfolder_name]
-        
+
         # Check it is in both folder listings
         self.assertTrue(a_ca.id in ca_media_subfolder)
         self.assertTrue(a_ca.id in en_media_subfolder)

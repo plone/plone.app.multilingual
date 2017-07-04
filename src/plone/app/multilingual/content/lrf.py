@@ -35,5 +35,7 @@ class LRFNameChooser(NormalizingNameChooser):
 @implementer(ILanguageRootFolder, INavigationRoot)
 class LanguageRootFolder(Container):
     """Deprecated LanguageRootFolder custom base class"""
+
+
 deprecated('LanguageRootFolder',
            'LanguageRootFolders should be migrate to DexterityContainers')

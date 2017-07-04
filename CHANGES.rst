@@ -27,6 +27,10 @@ Bug fixes:
 - Notify ObjectTranslatedEvent if translating with babel view
   #277 [tomgross]
 
+- Fixed issue where delete action on modify translations view deleted
+  the current page instead of the selected translation
+  [datakurre]
+
 
 5.0.7 (2017-05-31)
 ------------------

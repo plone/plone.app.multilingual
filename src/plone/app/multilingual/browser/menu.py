@@ -61,7 +61,7 @@ class TranslateMenu(BrowserMenu):
         for brain in results:
             shared_folder_url = brain.getURL() + '/folder_contents'
 
-        if not is_neutral_content and not ILanguageRootFolder.providedBy(context):
+        if not is_neutral_content and not ILanguageRootFolder.providedBy(context):  # noqa
             menu.append({
                 "title": _(
                     u"title_babel_edit",

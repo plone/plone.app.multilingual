@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_parent
 from plone.app.multilingual import _
-from plone.app.multilingual.browser.vocabularies import deletable_languages
 from plone.app.multilingual.browser.vocabularies import untranslated_languages
 from plone.app.z3cform.widget import RelatedItemsFieldWidget
 from plone.autoform import directives
@@ -97,6 +96,7 @@ class IConnectTranslation(model.Schema):
                 'basePath': make_relation_root_path,
             }
         )
+
 
 interface.alsoProvides(IUpdateLanguage, IFormFieldProvider)
 interface.alsoProvides(IConnectTranslation, IFormFieldProvider)

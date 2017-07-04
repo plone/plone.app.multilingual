@@ -111,7 +111,6 @@ class TestForm(unittest.TestCase):
 
         self.assertNotIn('en', ITranslationManager(a_ca).get_translations())
 
-
         # self.assertEqual(
         #     self.browser.getControl(name="form.widgets.languages:list").value,
         #     ['en'])

@@ -2,7 +2,6 @@
 from Products.CMFCore.utils import getToolByName
 from email.header import Header
 from plone.app.contenttypes.testing import PLONE_APP_CONTENTTYPES_FIXTURE
-from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.robotframework import AutoLogin
@@ -15,7 +14,6 @@ from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import applyProfile
-from plone.app.testing import ploneSite
 from plone.app.testing import setRoles
 from plone.dexterity.fti import DexterityFTI
 from plone.dexterity.utils import iterSchemata
@@ -73,6 +71,7 @@ class PloneAppMultilingualLayer(PloneSandboxLayer):
         if 'robot-test-folder' in portal.objectIds():
             portal.manage_delObjects('robot-test-folder')
 
+
 PLONE_APP_MULTILINGUAL_FIXTURE = PloneAppMultilingualLayer()
 
 PLONE_APP_MULTILINGUAL_INTEGRATION_TESTING = IntegrationTesting(
@@ -125,6 +124,7 @@ class PloneAppMultiLingualPresetLayer(PloneSandboxLayer):
         # Cleanup p.a.contenttypes stuff
         if 'robot-test-folder' in portal.objectIds():
             portal.manage_delObjects('robot-test-folder')
+
 
 PLONE_APP_MULTILINGUAL_PRESET_FIXTURE = PloneAppMultiLingualPresetLayer()
 

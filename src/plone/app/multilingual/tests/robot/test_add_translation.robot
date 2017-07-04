@@ -6,9 +6,8 @@ Resource  Products/CMFPlone/tests/robot/keywords.robot
 
 Library  Remote  ${PLONE_URL}/RobotRemote
 
-Test Setup  Open test browser
+Test Setup  Setup test browser
 Test Teardown  Close all browsers
-Suite setup  Set Selenium speed  0.5s
 
 *** Test Cases ***
 
@@ -23,6 +22,11 @@ Scenario: As an editor I can add new translation
 
 
 *** Keywords ***
+
+Setup test browser
+  Set Selenium speed  0.5s
+  Open test browser
+  Set window size  1200  900
 
 # Given
 
@@ -48,6 +52,9 @@ I view the Catalan document
   Wait until page contains  A Catalan Document
 
 I link the document in English as a translation
+  Page should contain element  css=#plone-contentmenu-multilingual a
+  Capture page screenshot
+  Element should be visible  css=#plone-contentmenu-multilingual a
   Click Element  css=#plone-contentmenu-multilingual a
   Wait until page contains element  css=#_modify_translations
   Wait until element is visible  css=#_modify_translations

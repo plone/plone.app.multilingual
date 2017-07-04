@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ILanguage
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.app.multilingual.dx.interfaces import IMultilingualAddForm

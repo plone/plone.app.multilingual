@@ -121,3 +121,29 @@ class PAMIntTestHelperViews(unittest.TestCase):
         translations = ITranslationManager(self.portal['en'][a_en.id])
         self.assertEqual(translations.get_translations(),
                          {'en': self.portal['en'][a_en.id]})
+
+    def test_modify_translations_delete(self):
+        createContentInContainer(
+            self.portal['ca'], 'Folder', title=u"Test folder")
+
+        a_ca = createContentInContainer(
+            self.portal['ca']['test-folder'],
+            'Document', title=u"Test document")
+
+        a_en = api.translate(a_ca, 'en')
+
+        view = a_en.restrictedTraverse('modify_translations')()
+        self.assertIn(
+            'href="http://nohost/plone/ca/test-folder/test-document/delete_confirmation" '  # noqa§
+            'title="Delete translated item"',
+            view,
+            'modify_translations was missing delete link for translation'
+        )
+
+        # Test https://github.com/plone/plone.app.multilingual/pull/283
+        self.assertNotIn(
+            'href="http://nohost/plone/en/test-document/delete_confirmation" '  # noqa§
+            'title="Delete translated item"',
+            view,
+            'modify_translations contained delete link for the context'
+        )
