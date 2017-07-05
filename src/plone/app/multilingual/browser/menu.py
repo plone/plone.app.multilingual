@@ -231,7 +231,7 @@ class TranslateMenu(BrowserMenu):
             menu.append({
                 "title": _(
                     u"shared_folder",
-                    default=u"Go to Media folder"
+                    default=u"Go to Assets folder"
                 ),
                 "description": _(
                     u"description_shared_folder",

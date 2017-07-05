@@ -139,7 +139,7 @@ language does not exist (yet):
       translations for the current content.
 
 
-The "Media" folder - a shared "Language Independent Folder"
+The "Assets" folder - a shared "Language Independent Folder"
 -----------------------------------------------------------
 
 The root language folders are used to house the content tree for the
@@ -147,7 +147,7 @@ corresponding language. However, there are some use cases where we need
 content that does not belong to any language. For example, for assets or side
 resources like images, videos and documents. For this reason PAM supplies a
 special Language Independent Folder to house these kind of objects.
-After PAM setup, there is a special folder called "Media", which can be
+After PAM setup, there is a special folder called "Assets", which can be
 accessed through the "Go to shared folder" item of the "Translate" menu. All
 items placed in this folder will have neutral as their default language and
 will be visible from the other root language folders as if they were placed

@@ -10,7 +10,8 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Rename ``media``folder to a more generic name ``assets``
+  [agitator]
 
 Bug fixes:
 

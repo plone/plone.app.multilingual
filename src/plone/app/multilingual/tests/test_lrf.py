@@ -24,34 +24,34 @@ class TestLanguageRootFolder(unittest.TestCase):
     def test_shared_content(self):
         # Create shared document
         createContentInContainer(
-            self.portal.en.media, 'Document', title=u"Test document")
+            self.portal.en.assets, 'Document', title=u"Test document")
 
         # Check shared document is there
-        self.assertEqual(self.portal.en.media['test-document'],
-                         self.portal.ca.media['test-document'])
-        self.assertEqual(self.portal.en.media['test-document'],
-                         self.portal.es.media['test-document'])
+        self.assertEqual(self.portal.en.assets['test-document'],
+                         self.portal.ca.assets['test-document'])
+        self.assertEqual(self.portal.en.assets['test-document'],
+                         self.portal.es.assets['test-document'])
 
         # Delete shared document
-        notify(ObjectWillBeRemovedEvent(self.portal.en.media['test-document']))
-        self.portal.en.media.manage_delObjects('test-document')
+        notify(ObjectWillBeRemovedEvent(self.portal.en.assets['test-document']))
+        self.portal.en.assets.manage_delObjects('test-document')
 
         # Check that it is not available in LRFs
-        self.assertNotIn('test-document', self.portal.ca.media.objectIds())
-        self.assertNotIn('test-document', self.portal.es.media.objectIds())
+        self.assertNotIn('test-document', self.portal.ca.assets.objectIds())
+        self.assertNotIn('test-document', self.portal.es.assets.objectIds())
 
     def test_shared_content_indexing(self):
         # Create shared document
         createContentInContainer(
-            self.portal.en.media, 'Document', title=u"Test document")
+            self.portal.en.assets, 'Document', title=u"Test document")
 
         # Check that shared document is indexed in all LRFs
         elements = self.portal.portal_catalog.searchResults(id='test-document')
         self.assertEqual(len(elements), 3)
 
         # Remove shared document
-        notify(ObjectWillBeRemovedEvent(self.portal.en.media['test-document']))
-        self.portal.en.media.manage_delObjects('test-document')
+        notify(ObjectWillBeRemovedEvent(self.portal.en.assets['test-document']))
+        self.portal.en.assets.manage_delObjects('test-document')
 
         # Check that shared document is unindexed
         elements = self.portal.portal_catalog.searchResults(id='test-document')
@@ -60,45 +60,45 @@ class TestLanguageRootFolder(unittest.TestCase):
     def test_shared_content_uuid(self):
         # Create shared document
         createContentInContainer(
-            self.portal, 'LIF', title=u"Media", checkConstraints=False)
+            self.portal, 'LIF', title=u"Assets", checkConstraints=False)
         createContentInContainer(
-            self.portal.media, 'Document', title=u"Test document")
+            self.portal.assets, 'Document', title=u"Test document")
 
-        root_uuid = IUUID(self.portal.media['test-document'])
-        shared_uuid = IUUID(self.portal.ca.media['test-document'])
+        root_uuid = IUUID(self.portal.assets['test-document'])
+        shared_uuid = IUUID(self.portal.ca.assets['test-document'])
 
         self.assertEqual('{0:s}-ca'.format(root_uuid), shared_uuid)
 
     def test_moving_shared_content_to_lrf(self):
         # Create shared document
         createContentInContainer(
-            self.portal, 'LIF', title=u"Media", checkConstraints=False)
+            self.portal, 'LIF', title=u"Assets", checkConstraints=False)
         createContentInContainer(
-            self.portal.media, 'Document', title=u"Test document")
-        uuid = IUUID(self.portal.media['test-document'])
+            self.portal.assets, 'Document', title=u"Test document")
+        uuid = IUUID(self.portal.assets['test-document'])
 
         # Check that ghost is ghost
         self.assertTrue(
-            is_language_independent(self.portal.ca.media['test-document']))
+            is_language_independent(self.portal.ca.assets['test-document']))
 
         # Check is in the catalog
         brains = self.portal.portal_catalog.searchResults(UID=uuid)
         self.assertEqual(len(brains), 1)
-        self.assertEqual(brains[0].getPath(), '/plone/media/test-document')
+        self.assertEqual(brains[0].getPath(), '/plone/assets/test-document')
 
         brains = self.portal.portal_catalog.searchResults(
             UID='{0:s}-ca'.format(uuid))
         self.assertEqual(len(brains), 1)
-        self.assertEqual(brains[0].getPath(), '/plone/ca/media/test-document')
+        self.assertEqual(brains[0].getPath(), '/plone/ca/assets/test-document')
 
         brains = self.portal.portal_catalog.searchResults(
             UID='{0:s}-es'.format(uuid))
         self.assertEqual(len(brains), 1)
-        self.assertEqual(brains[0].getPath(), '/plone/es/media/test-document')
+        self.assertEqual(brains[0].getPath(), '/plone/es/assets/test-document')
 
         # MOVE!
         moved = multilingualMoveObject(
-            self.portal.ca.media['test-document'], 'ca')
+            self.portal.ca.assets['test-document'], 'ca')
 
         # Check that the old and the new uuid are the same
         moved_uuid = IUUID(self.portal.ca['test-document'])

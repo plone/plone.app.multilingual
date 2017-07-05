@@ -30,7 +30,7 @@ class TestSitemap(unittest.TestCase):
                                        name='sitemap.xml.gz')
 
         createContentInContainer(
-            self.portal['en']['media'], 'Document', title=u"Test document")
+            self.portal['en']['assets'], 'Document', title=u"Test document")
         # ^ This will be shadowed to all language independent folders
 
         createContentInContainer(
@@ -59,9 +59,16 @@ class TestSitemap(unittest.TestCase):
         self.assertIn('<loc>http://nohost/plone/en/test-document</loc>', xml)
         self.assertIn('<loc>http://nohost/plone/es/test-document</loc>', xml)
 
+<<<<<<< Updated upstream
         self.assertIn('<loc>http://nohost/plone/ca/media/test-document</loc>', xml)  # noqa
         self.assertIn('<loc>http://nohost/plone/en/media/test-document</loc>', xml)  # noqa
         self.assertIn('<loc>http://nohost/plone/es/media/test-document</loc>', xml)  # noqa
+=======
+        self.assertIn('<loc>http://nohost/plone/ca/assets/test-document</loc>', xml)
+        self.assertIn('<loc>http://nohost/plone/en/assets/test-document</loc>', xml)
+        self.assertIn('<loc>http://nohost/plone/es/assets/test-document</loc>', xml)
+
+>>>>>>> Stashed changes
 
     def test_navroot_sitemap(self):
         '''
@@ -74,6 +81,12 @@ class TestSitemap(unittest.TestCase):
         self.assertNotIn('<loc>http://nohost/plone/en/test-document</loc>', xml)  # noqa
         self.assertIn('<loc>http://nohost/plone/es/test-document</loc>', xml)
 
+<<<<<<< Updated upstream
         self.assertNotIn('<loc>http://nohost/plone/ca/media/test-document</loc>', xml)  # noqa
         self.assertNotIn('<loc>http://nohost/plone/en/media/test-document</loc>', xml)  # noqa
         self.assertIn('<loc>http://nohost/plone/es/media/test-document</loc>', xml)  # noqa
+=======
+        self.assertNotIn('<loc>http://nohost/plone/ca/assets/test-document</loc>', xml)
+        self.assertNotIn('<loc>http://nohost/plone/en/assets/test-document</loc>', xml)
+        self.assertIn('<loc>http://nohost/plone/es/assets/test-document</loc>', xml)
+>>>>>>> Stashed changes

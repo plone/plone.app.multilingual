@@ -38,7 +38,7 @@ class SetupMultilingualSite(object):
     # portal_type that is added as root language folder
     folder_type = 'LRF'
 
-    # portal_type that is added as language independent media folder
+    # portal_type that is added as language independent asset folder
     folder_type_language_independent = 'LIF'
 
     def __init__(self, context=None):
@@ -137,15 +137,15 @@ class SetupMultilingualSite(object):
         if folder is None:
             _createObjectByType(self.folder_type, self.context, folderId)
             _createObjectByType(self.folder_type_language_independent,
-                                self.context[folderId], 'media')
+                                self.context[folderId], 'assets')
 
             folder = self.context[folderId]
 
             ILanguage(folder).set_language(code)
             folder.setTitle(name)
 
-            ILanguage(folder['media']).set_language(code)
-            folder['media'].setTitle(u'Media')
+            ILanguage(folder['assets']).set_language(code)
+            folder['assets'].setTitle(u'Assets')
 
             # This assumes a direct 'publish' transition from the initial state
             # We are going to check if its private and has publish action for
@@ -156,24 +156,24 @@ class SetupMultilingualSite(object):
             if state != 'published' and 'publish' in available_transitions:
                 wftool.doActionFor(folder, 'publish')
 
-            state = wftool.getInfoFor(folder['media'], 'review_state', None)
+            state = wftool.getInfoFor(folder['assets'], 'review_state', None)
             available_transitions = [t['id'] for t in
-                                     wftool.getTransitionsFor(folder['media'])]
+                                     wftool.getTransitionsFor(folder['assets'])]
             if state != 'published' and 'publish' in available_transitions:
-                wftool.doActionFor(folder['media'], 'publish')
+                wftool.doActionFor(folder['assets'], 'publish')
 
             # Exclude folder from navigation (if applicable)
             adapter = IExcludeFromNavigation(folder, None)
             if adapter is not None:
                 adapter.exclude_from_nav = True
 
-            adapter = IExcludeFromNavigation(folder['media'], None)
+            adapter = IExcludeFromNavigation(folder['assets'], None)
             if adapter is not None:
                 adapter.exclude_from_nav = True
 
             # We've modified the object; reindex.
             notify(modified(folder))
-            notify(modified(folder['media']))
+            notify(modified(folder['assets']))
 
             doneSomething = True
             logger.info(u"Added '%s' folder: %s" % (code, folderId))
