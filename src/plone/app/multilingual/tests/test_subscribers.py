@@ -65,18 +65,10 @@ class TestSubscribers(unittest.TestCase):
         a_ca_copied = self.portal['en'][a_ca.id]
         self.assertEqual(ILanguage(a_ca_copied).get_language(), 'en')
 
-<<<<<<< Updated upstream
-    def test_moved_to_media_folder(self):
-        """When an object is moved from within one Language Root Folder into
-        the Language Independent Folder (named 'Media') it becomes language
-        independent, and it should be visible from the media folder accessed
-=======
-
     def test_moved_to_assets_folder(self):
         """When an object is moved from within one Language Root Folder into
         the Language Independent Folder (named 'Assets') it becomes language
         independent, and it should be visible from the assets folder accessed
->>>>>>> Stashed changes
         from within other Language Root Folders
         """
         a_ca = createContentInContainer(
@@ -95,13 +87,6 @@ class TestSubscribers(unittest.TestCase):
         ca_assets_subfolder = self.portal['ca']['assets'][subfolder_name]
         en_assets_subfolder = self.portal['en']['assets'][subfolder_name]
 
-<<<<<<< Updated upstream
-        # Get both media folders afresh
-        ca_media_subfolder = self.portal['ca']['media'][subfolder_name]
-        en_media_subfolder = self.portal['en']['media'][subfolder_name]
-
-=======
->>>>>>> Stashed changes
         # Check it is in both folder listings
         self.assertTrue(a_ca.id in ca_assets_subfolder)
         self.assertTrue(a_ca.id in en_assets_subfolder)
@@ -123,18 +108,10 @@ class TestSubscribers(unittest.TestCase):
         en_folder_contents = [r.id for r in catalog(path=en_subfolder_path)]
         self.assertTrue(a_ca.id in en_folder_contents)
 
-<<<<<<< Updated upstream
-    def test_copied_to_media_folder(self):
-        """When an object is copied from within one Language Root Folder into
-        the Language Independent Folder (named 'Media') it becomes language
-        independent, and it should be visible from the media folder accessed
-=======
-
     def test_copied_to_assets_folder(self):
         """When an object is copied from within one Language Root Folder into
         the Language Independent Folder (named 'Assets') it becomes language
         independent, and it should be visible from the assets folder accessed
->>>>>>> Stashed changes
         from within other Language Root Folders
         """
         a_ca = createContentInContainer(
@@ -152,13 +129,6 @@ class TestSubscribers(unittest.TestCase):
         ca_assets_subfolder = self.portal['ca']['assets'][subfolder_name]
         en_assets_subfolder = self.portal['en']['assets'][subfolder_name]
 
-<<<<<<< Updated upstream
-        # Get both media folders afresh
-        ca_media_subfolder = self.portal['ca']['media'][subfolder_name]
-        en_media_subfolder = self.portal['en']['media'][subfolder_name]
-
-=======
->>>>>>> Stashed changes
         # Check it is in both folder listings
         self.assertTrue(a_ca.id in ca_assets_subfolder)
         self.assertTrue(a_ca.id in en_assets_subfolder)
