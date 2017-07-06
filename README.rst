@@ -101,15 +101,15 @@ While browsing the site, the language selector viewlet allows users to switch si
     * Shows the user an informative view that shows the current available translations for the current content.
 
 
-The "Assets" folder - a shared "Language Independent Folder"
-------------------------------------------------------------
+The assets folder - a shared "Language Independent Folder"
+----------------------------------------------------------
 
-The root language folders are used to house the content tree for the corresponding language. However, there are some use cases where we need content that does not belong to any language. For example, for assets or side resources like images, videos and documents. For this reason PAM supplies a special Language Independent Folder to house these kind of objects. After PAM setup, there is a special folder called "Assets", which can be accessed through the "Go to shared folder" item of the "Translate" menu. All items placed in this folder will have neutral as their default language and will be visible from the other root language folders as if they were placed there as well.
+The root language folders are used to house the content tree for the corresponding language. However, there are some use cases where we need content that does not belong to any language. For example, for assets or side resources like images, videos and documents. For this reason PAM supplies a special Language Independent Folder to house these kind of objects. After PAM setup, there is a special folder called "Assets" (folder title may depend on the language), which can be accessed through the "Go to Assets folder" item of the "Translate" menu. All items placed in this folder will have neutral as their default language and will be visible from the other root language folders as if they were placed there as well.
 
 Note:
     * Language Independent Folder's have also been historically known as "Neutral root folder", "language neutral folder" and "language shared (folder)".
     * Also don't confuse Language Independent Folders with Language Independent Fields
-    * The Language Independent Folder formerly known as ``Media`` folder, was renamed to the more generic name ``Assets``.
+    * The Language Independent Folder formerly known as ``Media`` folder, was renamed to the more generic name ``Assets`` (the name may depend on the language).
 
 
 Translation map

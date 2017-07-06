@@ -7,6 +7,7 @@ from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.multilingual.dx.interfaces import IDexterityTranslatable
 from Products.CMFPlone.interfaces import ILanguage
+from plone.app.multilingual import _
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
@@ -16,6 +17,7 @@ from plone.i18n.locales.languages import _combinedlanguagelist
 from plone.i18n.locales.languages import _languagelist
 from zope.component.hooks import getSite
 from zope.event import notify
+from zope.i18n import translate
 from zope.interface import alsoProvides
 from zope.lifecycleevent import modified
 
@@ -134,18 +136,25 @@ class SetupMultilingualSite(object):
         folder = getattr(self.context, folderId, None)
         wftool = getToolByName(self.context, 'portal_workflow')
 
+        assets_folder_id = translate(_('assets_folder_id',
+                                       default='assets'),
+                                     target_language=folderId)
+        assets_folder_title = translate(_('assets_folder_title',
+                                          default=u'Assets'),
+                                        target_language=folderId)
+
         if folder is None:
             _createObjectByType(self.folder_type, self.context, folderId)
             _createObjectByType(self.folder_type_language_independent,
-                                self.context[folderId], 'assets')
+                                self.context[folderId], assets_folder_id)
 
             folder = self.context[folderId]
 
             ILanguage(folder).set_language(code)
             folder.setTitle(name)
 
-            ILanguage(folder['assets']).set_language(code)
-            folder['assets'].setTitle(u'Assets')
+            ILanguage(folder[assets_folder_id]).set_language(code)
+            folder[assets_folder_id].setTitle(assets_folder_title)
 
             # This assumes a direct 'publish' transition from the initial state
             # We are going to check if its private and has publish action for
@@ -156,24 +165,25 @@ class SetupMultilingualSite(object):
             if state != 'published' and 'publish' in available_transitions:
                 wftool.doActionFor(folder, 'publish')
 
-            state = wftool.getInfoFor(folder['assets'], 'review_state', None)
+            state = wftool.getInfoFor(folder[assets_folder_id],
+                                      'review_state', None)
             available_transitions = [t['id'] for t in
-                                     wftool.getTransitionsFor(folder['assets'])]
+                                     wftool.getTransitionsFor(folder[assets_folder_id])]  # noqa
             if state != 'published' and 'publish' in available_transitions:
-                wftool.doActionFor(folder['assets'], 'publish')
+                wftool.doActionFor(folder[assets_folder_id], 'publish')
 
             # Exclude folder from navigation (if applicable)
             adapter = IExcludeFromNavigation(folder, None)
             if adapter is not None:
                 adapter.exclude_from_nav = True
 
-            adapter = IExcludeFromNavigation(folder['assets'], None)
+            adapter = IExcludeFromNavigation(folder[assets_folder_id], None)
             if adapter is not None:
                 adapter.exclude_from_nav = True
 
             # We've modified the object; reindex.
             notify(modified(folder))
-            notify(modified(folder['assets']))
+            notify(modified(folder[assets_folder_id]))
 
             doneSomething = True
             logger.info(u"Added '%s' folder: %s" % (code, folderId))
