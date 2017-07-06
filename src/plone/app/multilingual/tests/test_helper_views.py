@@ -46,7 +46,7 @@ class PAMFuncTestHelperViews(unittest.TestCase):
         transaction.commit()
 
         self.browser.open(a_en.absolute_url())
-        self.browser.getLink("Universal Link").click()
+        self.browser.getLink("Universal link").click()
         self.assertEqual(self.browser.url, a_ca.absolute_url())
 
 
