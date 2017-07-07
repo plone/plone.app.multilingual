@@ -182,15 +182,10 @@ msgstr "Erstelle Übersetzung für Ordner"
 msgid "description_after_migration_cleanup"
 msgstr ""
 
-#. Default: "Edit with the babel_edit"
-#: ../browser/menu.py:70
-msgid "description_babel_edit"
-msgstr ""
-
-#. Default: "Babel edit ${lang_name}"
-#: ../browser/menu.py:139
+#. Default: "Edit {lang_name} with the two-column translation view"
+#: ../browser/menu.py:117
 msgid "description_babeledit_menu"
-msgstr "Editieren mit Babel-Ansicht"
+msgstr "Editieren"
 
 #. Default: "When there are many translations for an item, the number of displayed buttons for them might get too large to fit inside the template. Choose here from which number onwards a drop-down menu will be displayed instead of buttons. Zero means that buttons will always be used."
 #: ../interfaces.py:240
@@ -520,11 +515,10 @@ msgstr ""
 msgid "relation_migration_with_not_needed"
 msgstr ""
 
-#. Default: "Go to Assets folder"
-#: ../browser/menu.py:232
-#, fuzzy
+#. Default: "Open ${title} folder"
+#: ../browser/menu.py:440
 msgid "shared_folder"
-msgstr "Gehe zu 'shared'-Ordner"
+msgstr "${title} Ordner öffnen"
 
 #. Default: "Available languages"
 #: ../browser/interfaces.py:62
@@ -544,7 +538,7 @@ msgstr "Sprache"
 #. Default: "Modify translations..."
 #: ../browser/menu.py:167
 msgid "title_modify_translations"
-msgstr ""
+msgstr "Übersetzungen verwalten"
 
 #. Default: "Set content language"
 #: ../browser/menu.py:251
