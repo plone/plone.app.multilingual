@@ -10,7 +10,9 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Rename ``media`` folder to a more generic name ``assets`` by default and
+  add i18nize it to be localization aware
+  [agitator, datakurre]
 
 Bug fixes:
 

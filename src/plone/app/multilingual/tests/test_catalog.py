@@ -16,7 +16,7 @@ class TestIndependentLanguageFolder(unittest.TestCase):
         self.request = self.layer['request']
         alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
         createContentInContainer(
-            self.portal['en']['media'], 'Document', title=u"Test document")
+            self.portal['en']['assets'], 'Document', title=u"Test document")
         # ^ This will be shadowed to all language independent folders
 
         createContentInContainer(
