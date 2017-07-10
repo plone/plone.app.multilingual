@@ -36,7 +36,8 @@
                    tal:content="python:trans_obj.Title()">Translation Link</a></li>
               <li tal:condition="python:not trans_obj.Title()">
                 <span tal:content="python:trans_obj"></span>
-                <a tal:attributes="href python:trans_obj.absolute_url() + '?set_language=' + code">
+                <a tal:attributes="href python:trans_obj.absolute_url() + '?set_language=' + code"
+                    i18n:translate="label_no_title">
                   (No Title)</a></li>
               </tal:defines>
             </tal:list>

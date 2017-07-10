@@ -34,7 +34,7 @@
             </tal:block>
           </div>
         </div>
-        <div id="frame-content">
+        <div id="frame-content" i18n:translate="label_translations_should_be_here">
             The available translations for this content should be here
         </div>
     </div>
