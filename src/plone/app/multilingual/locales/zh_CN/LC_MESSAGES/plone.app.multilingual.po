@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2017-02-28 08:22+0000\n"
+"POT-Creation-Date: 2017-07-10 06:24+0000\n"
 "PO-Revision-Date: 2012-03-24 23:31+0800\n"
 "Last-Translator: Jian Aijun <jianaijun@gmail.com>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -120,7 +120,7 @@ msgstr ""
 msgid "This content is not translated yet to the language requested."
 msgstr ""
 
-#: ../browser/templates/not_translated_yet.pt:46
+#: ../browser/templates/not_translated_yet.pt:47
 msgid "This item doesn't have any translation yet. You can return to the portal site:"
 msgstr ""
 
@@ -145,12 +145,22 @@ msgstr ""
 msgid "add-form-is-translation"
 msgstr ""
 
+#. Default: "assets"
+#: ../browser/setup.py:139
+msgid "assets_folder_id"
+msgstr ""
+
+#. Default: "Assets"
+#: ../browser/setup.py:142
+msgid "assets_folder_title"
+msgstr ""
+
 #. Default: "Connect translation"
 #: ../browser/modify.py:44
 msgid "connect_translation"
 msgstr ""
 
-#: ../browser/interfaces.py:87
+#: ../browser/interfaces.py:86
 msgid "content"
 msgstr "内容"
 
@@ -280,7 +290,7 @@ msgid "description_universal_link"
 msgstr ""
 
 #. Default: "Untranslated languages from the current content"
-#: ../browser/interfaces.py:64
+#: ../browser/interfaces.py:63
 msgid "description_update_language"
 msgstr ""
 
@@ -384,6 +394,11 @@ msgstr ""
 msgid "label_bad_relations"
 msgstr ""
 
+#. Default: "Catalog reload"
+#: ../browser/templates/cleanup.pt:86
+msgid "label_catalog_reload"
+msgstr ""
+
 #. Default: "Cleanup actions"
 #: ../browser/templates/cleanup.pt:48
 msgid "label_cleanup"
@@ -410,6 +425,16 @@ msgstr ""
 msgid "label_missing_translations"
 msgstr ""
 
+#. Default: "Move content to its corresponding language root folder"
+#: ../browser/templates/cleanup.pt:96
+msgid "label_move_content_to_languages"
+msgstr ""
+
+#. Default: "(No Title)"
+#: ../browser/templates/not_translated_yet.pt:39
+msgid "label_no_title"
+msgstr ""
+
 #. Default: "Total objects handled:"
 #: ../browser/templates/migrator-results.pt:20
 #: ../browser/templates/relocate-results.pt:20
@@ -431,6 +456,11 @@ msgstr "翻译成..."
 #: ../browser/templates/cleanup.pt:43
 #: ../browser/templates/migration.pt:78
 msgid "label_translation_map"
+msgstr ""
+
+#. Default: "The available translations for this content should be here"
+#: ../browser/templates/dexterity_edit.pt:37
+msgid "label_translations_should_be_here"
 msgstr ""
 
 #. Default: "Return to language folder"
@@ -493,13 +523,13 @@ msgstr ""
 msgid "relation_migration_with_not_needed"
 msgstr ""
 
-#. Default: "Go to Media folder"
+#. Default: "Go to Assets folder"
 #: ../browser/menu.py:232
 msgid "shared_folder"
 msgstr ""
 
 #. Default: "Available languages"
-#: ../browser/interfaces.py:63
+#: ../browser/interfaces.py:62
 msgid "title_available_languages"
 msgstr ""
 
@@ -509,7 +539,7 @@ msgid "title_babel_edit"
 msgstr ""
 
 #. Default: "Language"
-#: ../browser/interfaces.py:55
+#: ../browser/interfaces.py:54
 msgid "title_language"
 msgstr "语言"
 

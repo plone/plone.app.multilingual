@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
-"POT-Creation-Date: 2017-02-28 08:22+0000\n"
+"POT-Creation-Date: 2017-07-10 06:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Radek Jankiewicz <backup.rlacko@gmail.com>\n"
 "Language-Team: plone-cat <plone-cat@plone.org>\n"
@@ -117,7 +117,7 @@ msgstr ""
 msgid "This content is not translated yet to the language requested."
 msgstr "Tento objekt ešte nie je preložený do požadovaného jazyka."
 
-#: ../browser/templates/not_translated_yet.pt:46
+#: ../browser/templates/not_translated_yet.pt:47
 msgid "This item doesn't have any translation yet. You can return to the portal site:"
 msgstr ""
 
@@ -142,12 +142,22 @@ msgstr ""
 msgid "add-form-is-translation"
 msgstr ""
 
+#. Default: "assets"
+#: ../browser/setup.py:139
+msgid "assets_folder_id"
+msgstr ""
+
+#. Default: "Assets"
+#: ../browser/setup.py:142
+msgid "assets_folder_title"
+msgstr ""
+
 #. Default: "Connect translation"
 #: ../browser/modify.py:44
 msgid "connect_translation"
 msgstr ""
 
-#: ../browser/interfaces.py:87
+#: ../browser/interfaces.py:86
 msgid "content"
 msgstr "obsah"
 
@@ -279,7 +289,7 @@ msgid "description_universal_link"
 msgstr "Odkaz na obsah v univerzálnom preklade"
 
 #. Default: "Untranslated languages from the current content"
-#: ../browser/interfaces.py:64
+#: ../browser/interfaces.py:63
 msgid "description_update_language"
 msgstr "Nepreložené jazyky pre tento objekt"
 
@@ -383,6 +393,11 @@ msgstr "Všetky preklady"
 msgid "label_bad_relations"
 msgstr ""
 
+#. Default: "Catalog reload"
+#: ../browser/templates/cleanup.pt:86
+msgid "label_catalog_reload"
+msgstr ""
+
 #. Default: "Cleanup actions"
 #: ../browser/templates/cleanup.pt:48
 msgid "label_cleanup"
@@ -409,6 +424,16 @@ msgstr "Migrácia"
 msgid "label_missing_translations"
 msgstr "Chýbajúce preklady"
 
+#. Default: "Move content to its corresponding language root folder"
+#: ../browser/templates/cleanup.pt:96
+msgid "label_move_content_to_languages"
+msgstr ""
+
+#. Default: "(No Title)"
+#: ../browser/templates/not_translated_yet.pt:39
+msgid "label_no_title"
+msgstr ""
+
 #. Default: "Total objects handled:"
 #: ../browser/templates/migrator-results.pt:20
 #: ../browser/templates/relocate-results.pt:20
@@ -430,6 +455,11 @@ msgstr "Preložiť"
 #: ../browser/templates/migration.pt:78
 msgid "label_translation_map"
 msgstr "Mapa prekladov"
+
+#. Default: "The available translations for this content should be here"
+#: ../browser/templates/dexterity_edit.pt:37
+msgid "label_translations_should_be_here"
+msgstr ""
 
 #. Default: "Return to language folder"
 #: ../browser/menu.py:189
@@ -491,14 +521,14 @@ msgstr ""
 msgid "relation_migration_with_not_needed"
 msgstr ""
 
-#. Default: "Go to Media folder"
+#. Default: "Go to Assets folder"
 #: ../browser/menu.py:232
 #, fuzzy
 msgid "shared_folder"
 msgstr "Choďte do zdieľanej zložky"
 
 #. Default: "Available languages"
-#: ../browser/interfaces.py:63
+#: ../browser/interfaces.py:62
 msgid "title_available_languages"
 msgstr "Dostupné jazyky"
 
@@ -508,7 +538,7 @@ msgid "title_babel_edit"
 msgstr "Upraviť pomocou editora Babel"
 
 #. Default: "Language"
-#: ../browser/interfaces.py:55
+#: ../browser/interfaces.py:54
 msgid "title_language"
 msgstr "Jazyk"
 

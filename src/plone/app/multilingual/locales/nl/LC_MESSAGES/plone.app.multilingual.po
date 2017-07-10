@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
-"POT-Creation-Date: 2017-02-28 08:22+0000\n"
+"POT-Creation-Date: 2017-07-10 06:24+0000\n"
 "PO-Revision-Date: 2017-02-28 10:22+0100\n"
 "Last-Translator: Jean-Paul Ladage <j.ladage@zestsoftware.nl>\n"
 "Language-Team: Nederlands <translators@plone.nl>\n"
@@ -28,7 +28,8 @@ msgstr "Annuleren"
 msgid "Changes canceled."
 msgstr "Wijzigingen annuleren"
 
-#: ../browser/templates/cleanup.pt:79 ../browser/templates/migration.pt:250
+#: ../browser/templates/cleanup.pt:79
+#: ../browser/templates/migration.pt:250
 msgid "Cleanup"
 msgstr "Opschonen"
 
@@ -69,13 +70,14 @@ msgstr "Meertaligheid"
 msgid "Multilingual Settings"
 msgstr "Meertaligheid instelling"
 
-#: ../configure.zcml:151 ../dx/configure.zcml:36
-msgid "Meertaligheidsondersteuning"
-msgstr "Meertaligheid"
+#: ../configure.zcml:151
+#: ../dx/configure.zcml:36
+msgid "Multilingual Support"
+msgstr ""
 
 #: ../configure.zcml:159
-msgid "Multilingual Support [deactiveren]"
-msgstr "Meertaligheidsondersteuning"
+msgid "Multilingual Support [uninstall]"
+msgstr ""
 
 #: ../browser/translate.py:54
 msgid "Need a field"
@@ -117,7 +119,7 @@ msgstr "Website-instellingen"
 msgid "This content is not translated yet to the language requested."
 msgstr "Deze inhoud is nog niet vertaald."
 
-#: ../browser/templates/not_translated_yet.pt:46
+#: ../browser/templates/not_translated_yet.pt:47
 msgid "This item doesn't have any translation yet. You can return to the portal site:"
 msgstr "Dit item heeft nog geen vertaling. U kunt terug naar de site:"
 
@@ -142,12 +144,22 @@ msgstr "Bundel registratie bijwerken."
 msgid "add-form-is-translation"
 msgstr "Dit wordt een vertaling naar ${DYNAMIC_CONTENT} van <ul> <li><a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\"> <span>${DYNAMIC_CONTENT}</span> <span>${DYNAMIC_CONTENT}</span></a></li> </ul> <span>x</span>"
 
+#. Default: "assets"
+#: ../browser/setup.py:139
+msgid "assets_folder_id"
+msgstr ""
+
+#. Default: "Assets"
+#: ../browser/setup.py:142
+msgid "assets_folder_title"
+msgstr ""
+
 #. Default: "Connect translation"
 #: ../browser/modify.py:44
 msgid "connect_translation"
 msgstr "Vertaling koppelen"
 
-#: ../browser/interfaces.py:87
+#: ../browser/interfaces.py:86
 msgid "content"
 msgstr "Inhoud"
 
@@ -184,16 +196,12 @@ msgstr "${lang_name} bewerken met Babel"
 #. Default: "When there are many translations for an item, the number of displayed buttons for them might get too large to fit inside the template. Choose here from which number onwards a drop-down menu will be displayed instead of buttons. Zero means that buttons will always be used."
 #: ../interfaces.py:240
 msgid "description_buttons_babel_view_up_to_nr_translations"
-msgstr "Als er veel talen voor een item zijn, passen de button wellicht niet binnen het ontwerp. "
-"Kies hier vanaf welk aantal de talen in een dropdown getoond moeten worden"
+msgstr "Als er veel talen voor een item zijn, passen de button wellicht niet binnen het ontwerp. Kies hier vanaf welk aantal de talen in een dropdown getoond moeten worden"
 
 #. Default: "When updating an object with language independent the field will be synced to all target languages. That can produce Unauthorized error messages because if the editor of the canonical object is not allowed to update the target language objects. Enabling this bypasses this permission check. This could also be dangerous, so think about possible security issues before enabling this."
 #: ../interfaces.py:221
 msgid "description_bypass_languageindependent_field_permission_check"
-msgstr "Indien u een item met een taalonafhankelijk veld opslaat wordt "
-"de waarde van dat veld overgenomen in de vertaalde versies. Dit zou "
-"fout kunnen geven als de gebruiker geen rechten heeft op de vertalingen. "
-"Schakel deze optie in om deze fouten te negeren en de waarde te overschrijven."
+msgstr "Indien u een item met een taalonafhankelijk veld opslaat wordt de waarde van dat veld overgenomen in de vertaalde versies. Dit zou fout kunnen geven als de gebruiker geen rechten heeft op de vertalingen. Schakel deze optie in om deze fouten te negeren en de waarde te overschrijven."
 
 #. Default: "Filter using language the content on folder_contents"
 #: ../interfaces.py:198
@@ -238,18 +246,12 @@ msgstr "Na het aanmaken van een vertaling de Babel weergave tonen"
 #. Default: "Use this field to define portal types that will not be traversed for finding content to move. All content of those types will be moved with all contained sub-items. This is useful for content types that are themselves translatable, but contain sub-content that is not translatable or does not have a language set.<br /> This list is pre-filled with some portal types, but you can add additional ones if needed, one per line."
 #: ../browser/templates/migration.pt:161
 msgid "description_relocate_blacklist"
-msgstr "Gebruik deze optie om type op te geven die niet verplaatst moeten "
-"worden. Deze items zullen inclusief subitems verplaatst worden. Dit kan "
-"handig zijn voor taalafhankelijke items die taalonafhankelijke subitems "
-"gebruiken."
+msgstr "Gebruik deze optie om type op te geven die niet verplaatst moeten worden. Deze items zullen inclusief subitems verplaatst worden. Dit kan handig zijn voor taalafhankelijke items die taalonafhankelijke subitems gebruiken."
 
 #. Default: "This step will move the site's content to its corresponding root language folder and previously will make a search for misplaced content through the site's content tree and will move them to its nearest translated parent. This step is destructive as it will alter your content tree structure. Make sure you have previously configured your site's languages properly in the 'Site Languages' tab of the 'Languages' control panel."
 #: ../browser/templates/migration.pt:149
 msgid "description_relocate_content"
-msgstr "Deze stap zal de inhoud verplaatsen naar de overeenkomstige talen waar"
-"mogelijk. Indien de taal niet duidelijk is, wordt deze zo veel mogelijk "
-"één-op-één overgenomen. Controleer of alle beschikbare talen zijn ingesteld "
-"via website-instellingen > Taal"
+msgstr "Deze stap zal de inhoud verplaatsen naar de overeenkomstige talen waarmogelijk. Indien de taal niet duidelijk is, wordt deze zo veel mogelijk één-op-één overgenomen. Controleer of alle beschikbare talen zijn ingesteld via website-instellingen > Taal"
 
 #. Default: "The default language used for the content and the UI of this site."
 #: ../interfaces.py:268
@@ -287,7 +289,7 @@ msgid "description_universal_link"
 msgstr "Universele taal link"
 
 #. Default: "Untranslated languages from the current content"
-#: ../browser/interfaces.py:64
+#: ../browser/interfaces.py:63
 msgid "description_update_language"
 msgstr "Ontbrekende vertalingen voor dit item"
 
@@ -324,8 +326,7 @@ msgstr "Beschikbare vertalingen voor deze inhoud"
 #. Default: "Use buttons in the bable view for up to how many translations?"
 #: ../interfaces.py:236
 msgid "heading_buttons_babel_view_up_to_nr_translations"
-msgstr "Gebruik knoppen in de taalkiezer tot het onderstaande aantal, toon "
-"daarboven een dropdown."
+msgstr "Gebruik knoppen in de taalkiezer tot het onderstaande aantal, toon daarboven een dropdown."
 
 #. Default: "Bypass language independent field permission check"
 #: ../interfaces.py:218
@@ -392,6 +393,11 @@ msgstr "Alle vertalingen"
 msgid "label_bad_relations"
 msgstr "Helaas kon een aantal koppelingen niet vertaald worden en zijn verloren gegaan. Zie onderstaande debug-informatie:"
 
+#. Default: "Catalog reload"
+#: ../browser/templates/cleanup.pt:86
+msgid "label_catalog_reload"
+msgstr ""
+
 #. Default: "Cleanup actions"
 #: ../browser/templates/cleanup.pt:48
 msgid "label_cleanup"
@@ -403,7 +409,8 @@ msgid "label_connect_translation"
 msgstr "Vertaling koppelen"
 
 #. Default: "General"
-#: ../browser/templates/cleanup.pt:38 ../browser/templates/migration.pt:73
+#: ../browser/templates/cleanup.pt:38
+#: ../browser/templates/migration.pt:73
 msgid "label_general"
 msgstr "Algemeen"
 
@@ -416,6 +423,16 @@ msgstr "Migratie"
 #: ../browser/templates/mmap.pt:74
 msgid "label_missing_translations"
 msgstr "Ontbrekende vertalingen"
+
+#. Default: "Move content to its corresponding language root folder"
+#: ../browser/templates/cleanup.pt:96
+msgid "label_move_content_to_languages"
+msgstr ""
+
+#. Default: "(No Title)"
+#: ../browser/templates/not_translated_yet.pt:39
+msgid "label_no_title"
+msgstr ""
 
 #. Default: "Total objects handled:"
 #: ../browser/templates/migrator-results.pt:20
@@ -434,9 +451,15 @@ msgid "label_translate_menu"
 msgstr "Vertalen"
 
 #. Default: "Translation Map"
-#: ../browser/templates/cleanup.pt:43 ../browser/templates/migration.pt:78
+#: ../browser/templates/cleanup.pt:43
+#: ../browser/templates/migration.pt:78
 msgid "label_translation_map"
 msgstr "Vertalingsoverzicht"
+
+#. Default: "The available translations for this content should be here"
+#: ../browser/templates/dexterity_edit.pt:37
+msgid "label_translations_should_be_here"
+msgstr ""
 
 #. Default: "Return to language folder"
 #: ../browser/menu.py:189
@@ -498,13 +521,14 @@ msgstr "Het is niet mogelijk om deze stap uit te voeren voordat LinguaPlone comp
 msgid "relation_migration_with_not_needed"
 msgstr "Uw website heeft geen relatie catalogus, deze migratie-stap in niet nodig."
 
-#. Default: "Go to Media folder"
+#. Default: "Go to Assets folder"
 #: ../browser/menu.py:232
+#, fuzzy
 msgid "shared_folder"
 msgstr "Ga naar Media map"
 
 #. Default: "Available languages"
-#: ../browser/interfaces.py:63
+#: ../browser/interfaces.py:62
 msgid "title_available_languages"
 msgstr "Beschikbare talen"
 
@@ -514,7 +538,7 @@ msgid "title_babel_edit"
 msgstr "Bewerken met babel weergave"
 
 #. Default: "Language"
-#: ../browser/interfaces.py:55
+#: ../browser/interfaces.py:54
 msgid "title_language"
 msgstr "Taal"
 

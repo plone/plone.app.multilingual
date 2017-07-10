@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.2b3\n"
-"POT-Creation-Date: 2017-02-28 08:22+0000\n"
+"POT-Creation-Date: 2017-07-10 06:24+0000\n"
 "PO-Revision-Date: 2013-10-08 09:30+0000\n"
 "Last-Translator: Giorgio Borelli <giorgio@giorgioborelli.it>\n"
 "Language-Team: Plone italian translation group <plone-italian-translation-discussion@lists.coactivate.org>\n"
@@ -119,7 +119,7 @@ msgstr ""
 msgid "This content is not translated yet to the language requested."
 msgstr "Questo contenuto non è ancora stato tradotto nella lingua richiesta"
 
-#: ../browser/templates/not_translated_yet.pt:46
+#: ../browser/templates/not_translated_yet.pt:47
 msgid "This item doesn't have any translation yet. You can return to the portal site:"
 msgstr "Questo elemenento non ha ancora alcuna traduzione. Puoi tornare alla home del sito:"
 
@@ -144,12 +144,22 @@ msgstr ""
 msgid "add-form-is-translation"
 msgstr "Questo oggetto sta per diventare la traduzione di ${DYNAMIC_CONTENT} da: <ul> <li><a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\"> <span>${DYNAMIC_CONTENT}</span> <span>${DYNAMIC_CONTENT}</span></a></li> </ul> <span>x</span>"
 
+#. Default: "assets"
+#: ../browser/setup.py:139
+msgid "assets_folder_id"
+msgstr ""
+
+#. Default: "Assets"
+#: ../browser/setup.py:142
+msgid "assets_folder_title"
+msgstr ""
+
 #. Default: "Connect translation"
 #: ../browser/modify.py:44
 msgid "connect_translation"
 msgstr ""
 
-#: ../browser/interfaces.py:87
+#: ../browser/interfaces.py:86
 msgid "content"
 msgstr "Contenuto"
 
@@ -280,7 +290,7 @@ msgid "description_universal_link"
 msgstr "Link universale indipendente dalla lingua"
 
 #. Default: "Untranslated languages from the current content"
-#: ../browser/interfaces.py:64
+#: ../browser/interfaces.py:63
 msgid "description_update_language"
 msgstr "Lingue in cui il contenuto non è ancora stato tradotto"
 
@@ -384,6 +394,11 @@ msgstr "Tutte le traduzioni"
 msgid "label_bad_relations"
 msgstr ""
 
+#. Default: "Catalog reload"
+#: ../browser/templates/cleanup.pt:86
+msgid "label_catalog_reload"
+msgstr ""
+
 #. Default: "Cleanup actions"
 #: ../browser/templates/cleanup.pt:48
 msgid "label_cleanup"
@@ -410,6 +425,16 @@ msgstr "Migrazione"
 msgid "label_missing_translations"
 msgstr "Traduzioni mancanti"
 
+#. Default: "Move content to its corresponding language root folder"
+#: ../browser/templates/cleanup.pt:96
+msgid "label_move_content_to_languages"
+msgstr ""
+
+#. Default: "(No Title)"
+#: ../browser/templates/not_translated_yet.pt:39
+msgid "label_no_title"
+msgstr ""
+
 #. Default: "Total objects handled:"
 #: ../browser/templates/migrator-results.pt:20
 #: ../browser/templates/relocate-results.pt:20
@@ -431,6 +456,11 @@ msgstr "Traduci"
 #: ../browser/templates/migration.pt:78
 msgid "label_translation_map"
 msgstr "Mappa traduzioni"
+
+#. Default: "The available translations for this content should be here"
+#: ../browser/templates/dexterity_edit.pt:37
+msgid "label_translations_should_be_here"
+msgstr ""
 
 #. Default: "Return to language folder"
 #: ../browser/menu.py:189
@@ -492,14 +522,14 @@ msgstr ""
 msgid "relation_migration_with_not_needed"
 msgstr ""
 
-#. Default: "Go to Media folder"
+#. Default: "Go to Assets folder"
 #: ../browser/menu.py:232
 #, fuzzy
 msgid "shared_folder"
 msgstr "Vai alla cartella condivisa"
 
 #. Default: "Available languages"
-#: ../browser/interfaces.py:63
+#: ../browser/interfaces.py:62
 msgid "title_available_languages"
 msgstr "Lingue disponibili"
 
@@ -509,7 +539,7 @@ msgid "title_babel_edit"
 msgstr "Modifica con 'babel view'"
 
 #. Default: "Language"
-#: ../browser/interfaces.py:55
+#: ../browser/interfaces.py:54
 msgid "title_language"
 msgstr "Lingue"
 
