@@ -83,7 +83,7 @@
                         class="destructive"
                         value="Cleanup"
                         i18n:attributes="value" />
-                  <label>Catalog reload</label>
+                  <label i18n:translate="label_catalog_reload">Catalog reload</label>
 
                   <span class="clearfix" />
                   <input
@@ -93,7 +93,7 @@
                         class="destructive"
                         value="Move"
                         i18n:attributes="value" />
-                  <label>Move content to its corresponding language root folder</label>
+                  <label i18n:translate="label_move_content_to_languages">Move content to its corresponding language root folder</label>
                 </div>
 
                 <input tal:replace="structure context/@@authenticator/authenticator" />

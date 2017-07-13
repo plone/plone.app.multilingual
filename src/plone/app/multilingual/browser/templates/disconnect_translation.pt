@@ -25,7 +25,7 @@
                 <input type="hidden" name="language" tal:attributes="value context/REQUEST/form/language">
                 <input type="hidden" name="submitted" value="1">
                 <span tal:replace="structure context/@@authenticator/authenticator"/>
-                <button type="submit">Disconnect</button>
+                <button type="submit" i18n:translate="label_disconnect">Disconnect</button>
             </form>
 
         </div>

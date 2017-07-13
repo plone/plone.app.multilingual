@@ -10,13 +10,17 @@ Breaking changes:
 
 New features:
 
+- Rebuilt po files
+  [erral]  
+
 - Rename ``media`` folder to a more generic name ``assets`` by default and
   add i18nize it to be localization aware
   [agitator, datakurre]
 
 Bug fixes:
 
-- *add item here*
+- Add missing i18n:translate tags
+  [erral]
 
 
 5.0.8 (2017-07-03)

@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.2b3\n"
-"POT-Creation-Date: 2017-02-28 08:22+0000\n"
+"POT-Creation-Date: 2017-07-10 06:24+0000\n"
 "PO-Revision-Date: 2015-09-16 01:58+0100\n"
 "Last-Translator: Encolpe DEGOUTE <encolpe.degoute@free.fr>\n"
 "Language-Team: Plone-fr <plone-fr@lists.plone.org>\n"
@@ -120,7 +120,7 @@ msgstr ""
 msgid "This content is not translated yet to the language requested."
 msgstr "Ce contenu n'est pas encore traduit dans la langue demandée"
 
-#: ../browser/templates/not_translated_yet.pt:46
+#: ../browser/templates/not_translated_yet.pt:47
 msgid "This item doesn't have any translation yet. You can return to the portal site:"
 msgstr "Cet élément n'a aucune traduction pour le moment. Vous pouvez revenir au site:"
 
@@ -145,12 +145,22 @@ msgstr ""
 msgid "add-form-is-translation"
 msgstr "Cette élément est sur le point d'être traduit en ${DYNAMIC_CONTENT} à partir de : <ul> <li><a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\"> <span>${DYNAMIC_CONTENT}</span> <span>${DYNAMIC_CONTENT}</span></a></li> </ul> <span>x</span>"
 
+#. Default: "assets"
+#: ../browser/setup.py:139
+msgid "assets_folder_id"
+msgstr ""
+
+#. Default: "Assets"
+#: ../browser/setup.py:142
+msgid "assets_folder_title"
+msgstr ""
+
 #. Default: "Connect translation"
 #: ../browser/modify.py:44
 msgid "connect_translation"
 msgstr ""
 
-#: ../browser/interfaces.py:87
+#: ../browser/interfaces.py:86
 msgid "content"
 msgstr "Contenu"
 
@@ -281,7 +291,7 @@ msgid "description_universal_link"
 msgstr "Lien universel du contenu (langue automatique)"
 
 #. Default: "Untranslated languages from the current content"
-#: ../browser/interfaces.py:64
+#: ../browser/interfaces.py:63
 msgid "description_update_language"
 msgstr "Langues non traduites pour ce contenu"
 
@@ -385,6 +395,11 @@ msgstr "Toutes les traductions"
 msgid "label_bad_relations"
 msgstr "Malheureusement un certain nombre de relations ne peuvent être traduites et sont perdues ! Voici quelques informations de débogage :"
 
+#. Default: "Catalog reload"
+#: ../browser/templates/cleanup.pt:86
+msgid "label_catalog_reload"
+msgstr ""
+
 #. Default: "Cleanup actions"
 #: ../browser/templates/cleanup.pt:48
 msgid "label_cleanup"
@@ -411,6 +426,16 @@ msgstr "Migration"
 msgid "label_missing_translations"
 msgstr "Traduction manquantes"
 
+#. Default: "Move content to its corresponding language root folder"
+#: ../browser/templates/cleanup.pt:96
+msgid "label_move_content_to_languages"
+msgstr ""
+
+#. Default: "(No Title)"
+#: ../browser/templates/not_translated_yet.pt:39
+msgid "label_no_title"
+msgstr ""
+
 #. Default: "Total objects handled:"
 #: ../browser/templates/migrator-results.pt:20
 #: ../browser/templates/relocate-results.pt:20
@@ -432,6 +457,11 @@ msgstr "Traduire"
 #: ../browser/templates/migration.pt:78
 msgid "label_translation_map"
 msgstr "Liste des traductions"
+
+#. Default: "The available translations for this content should be here"
+#: ../browser/templates/dexterity_edit.pt:37
+msgid "label_translations_should_be_here"
+msgstr ""
 
 #. Default: "Return to language folder"
 #: ../browser/menu.py:189
@@ -493,14 +523,14 @@ msgstr "Il n'est pas possible d'exécuter cette étape de migration sans désins
 msgid "relation_migration_with_not_needed"
 msgstr "Votre site n'a pas de catalogue de relations, et dans ce cas cette étape de migration n'est pas nécessaire"
 
-#. Default: "Go to Media folder"
+#. Default: "Go to Assets folder"
 #: ../browser/menu.py:232
 #, fuzzy
 msgid "shared_folder"
 msgstr "Aller au dossier partagé"
 
 #. Default: "Available languages"
-#: ../browser/interfaces.py:63
+#: ../browser/interfaces.py:62
 msgid "title_available_languages"
 msgstr "Langues disponibles"
 
@@ -510,7 +540,7 @@ msgid "title_babel_edit"
 msgstr "Modifier avec la vue babel"
 
 #. Default: "Language"
-#: ../browser/interfaces.py:55
+#: ../browser/interfaces.py:54
 msgid "title_language"
 msgstr "Langue"
 

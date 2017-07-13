@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
-"POT-Creation-Date: 2017-02-28 08:22+0000\n"
+"POT-Creation-Date: 2017-07-10 06:24+0000\n"
 "PO-Revision-Date: 2015-11-27 14:20+0800\n"
 "Last-Translator: TsungWei Hu <marr.tw@gmail.com>\n"
 "Language-Team: Plone I18N <plone-i18n@lists.sourcegorge.net>\n"
@@ -117,7 +117,7 @@ msgstr ""
 msgid "This content is not translated yet to the language requested."
 msgstr "內容還沒翻譯成指定的語系。"
 
-#: ../browser/templates/not_translated_yet.pt:46
+#: ../browser/templates/not_translated_yet.pt:47
 msgid "This item doesn't have any translation yet. You can return to the portal site:"
 msgstr "這個項目完全沒有翻譯，你可以回到它的原始網址："
 
@@ -142,12 +142,22 @@ msgstr ""
 msgid "add-form-is-translation"
 msgstr ""
 
+#. Default: "assets"
+#: ../browser/setup.py:139
+msgid "assets_folder_id"
+msgstr ""
+
+#. Default: "Assets"
+#: ../browser/setup.py:142
+msgid "assets_folder_title"
+msgstr ""
+
 #. Default: "Connect translation"
 #: ../browser/modify.py:44
 msgid "connect_translation"
 msgstr ""
 
-#: ../browser/interfaces.py:87
+#: ../browser/interfaces.py:86
 msgid "content"
 msgstr "內容"
 
@@ -278,7 +288,7 @@ msgid "description_universal_link"
 msgstr "Universal Language 網址"
 
 #. Default: "Untranslated languages from the current content"
-#: ../browser/interfaces.py:64
+#: ../browser/interfaces.py:63
 msgid "description_update_language"
 msgstr "這個內容尚未翻譯的語系"
 
@@ -382,6 +392,11 @@ msgstr "所有的翻譯"
 msgid "label_bad_relations"
 msgstr ""
 
+#. Default: "Catalog reload"
+#: ../browser/templates/cleanup.pt:86
+msgid "label_catalog_reload"
+msgstr ""
+
 #. Default: "Cleanup actions"
 #: ../browser/templates/cleanup.pt:48
 msgid "label_cleanup"
@@ -408,6 +423,16 @@ msgstr ""
 msgid "label_missing_translations"
 msgstr ""
 
+#. Default: "Move content to its corresponding language root folder"
+#: ../browser/templates/cleanup.pt:96
+msgid "label_move_content_to_languages"
+msgstr ""
+
+#. Default: "(No Title)"
+#: ../browser/templates/not_translated_yet.pt:39
+msgid "label_no_title"
+msgstr ""
+
 #. Default: "Total objects handled:"
 #: ../browser/templates/migrator-results.pt:20
 #: ../browser/templates/relocate-results.pt:20
@@ -428,6 +453,11 @@ msgstr "翻譯"
 #: ../browser/templates/cleanup.pt:43
 #: ../browser/templates/migration.pt:78
 msgid "label_translation_map"
+msgstr ""
+
+#. Default: "The available translations for this content should be here"
+#: ../browser/templates/dexterity_edit.pt:37
+msgid "label_translations_should_be_here"
 msgstr ""
 
 #. Default: "Return to language folder"
@@ -490,14 +520,14 @@ msgstr ""
 msgid "relation_migration_with_not_needed"
 msgstr "網站裡找不到 relation catalog 所以不需要執行昇級步驟。"
 
-#. Default: "Go to Media folder"
+#. Default: "Go to Assets folder"
 #: ../browser/menu.py:232
 #, fuzzy
 msgid "shared_folder"
 msgstr "回到共享目錄"
 
 #. Default: "Available languages"
-#: ../browser/interfaces.py:63
+#: ../browser/interfaces.py:62
 msgid "title_available_languages"
 msgstr "可用的語系"
 
@@ -507,7 +537,7 @@ msgid "title_babel_edit"
 msgstr "透過 Babel View 編輯"
 
 #. Default: "Language"
-#: ../browser/interfaces.py:55
+#: ../browser/interfaces.py:54
 msgid "title_language"
 msgstr "語系"
 
