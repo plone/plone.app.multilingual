@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
-"POT-Creation-Date: 2017-07-10 06:24+0000\n"
+"POT-Creation-Date: 2017-07-13 21:35+0000\n"
 "PO-Revision-Date: 2017-02-28 10:22+0100\n"
 "Last-Translator: Jean-Paul Ladage <j.ladage@zestsoftware.nl>\n"
 "Language-Team: Nederlands <translators@plone.nl>\n"
@@ -169,27 +169,18 @@ msgid "create-object-without-translation"
 msgstr "Als u dit item wilt aanmaken zonder vertaling <a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\">klik hier</a>"
 
 #. Default: "Create ${lang_name}"
-#: ../browser/menu.py:122
+#: ../browser/menu.py:161
 msgid "create_translation"
 msgstr "${lang_name} aanmaken"
-
-#. Default: "Create ${lang_name} folder"
-#: ../browser/menu.py:118
-msgid "create_translation_folder"
-msgstr "Map ${lang_name} aanmaken"
 
 #. Default: "This step will fix some lost dependencies to the ITranslatable interface hidden in the relation catalog and it gets rid of them. It must be run only when LinguaPlone is already uninstalled."
 #: ../browser/templates/migration.pt:225
 msgid "description_after_migration_cleanup"
 msgstr "Deze stap wil hersteld enkele vertalingen en schoont de catalogus op. Alleen uitvoeren als LinguaPlone al actief is"
 
-#. Default: "Edit with the babel_edit"
-#: ../browser/menu.py:70
-msgid "description_babel_edit"
-msgstr "Bewerken met Babel "
-
-#. Default: "Babel edit ${lang_name}"
-#: ../browser/menu.py:139
+#. Default: "Edit {lang_name} with the two-column translation view"
+#: ../browser/menu.py:117
+#, fuzzy
 msgid "description_babeledit_menu"
 msgstr "${lang_name} bewerken met Babel"
 
@@ -214,7 +205,7 @@ msgid "description_google_translation_key"
 msgstr "Google Translation API Key"
 
 #. Default: "Go to the user's browser preferred language related folder"
-#: ../browser/menu.py:193
+#: ../browser/menu.py:466
 msgid "description_language_folder"
 msgstr "Ga terug naar de taalafhankelijke map"
 
@@ -234,7 +225,7 @@ msgid "description_migration_results"
 msgstr "Hier ziet u de resultaten van het migratieproces."
 
 #. Default: "Add or delete translations"
-#: ../browser/menu.py:171
+#: ../browser/menu.py:219
 msgid "description_modify_translations"
 msgstr "Vertalingen toevoegen of verwijderen"
 
@@ -258,13 +249,15 @@ msgstr "Deze stap zal de inhoud verplaatsen naar de overeenkomstige talen waarmo
 msgid "description_selector_lookup_translations_policy"
 msgstr "De standaardtaal wordt gebruikt voor de inhoud en de UI van deze site."
 
-#. Default: "Set or change the current content language"
-#: ../browser/menu.py:255
+#. Default: "Move the translation under another language folder"
+#: ../browser/menu.py:140
+#, fuzzy
 msgid "description_set_language"
 msgstr "Huidige taal instellen of wijzigen"
 
-#. Default: "Show the shared Language Independent Folder"
-#: ../browser/menu.py:236
+#. Default: "Open the language independent assets folder"
+#: ../browser/menu.py:445
+#, fuzzy
 msgid "description_shared_folder"
 msgstr "Toon de gedeelde taalonafhankelijke map"
 
@@ -274,7 +267,7 @@ msgid "description_transfer_multilingual_catalog_info"
 msgstr "Deze stap de relaties tussen vertalingen overzetten naar de PAM catalogus. Deze stap breekt niets en kan meerdere keren uitgevoerd worden."
 
 #. Default: "Translate into ${lang_name}"
-#: ../browser/menu.py:102
+#: ../browser/menu.py:166
 msgid "description_translate_into"
 msgstr "Vertaal naar ${lang_name}"
 
@@ -283,8 +276,9 @@ msgstr "Vertaal naar ${lang_name}"
 msgid "description_translation_map"
 msgstr "Vertaaloverzicht"
 
-#. Default: "Universal Language content link"
-#: ../browser/menu.py:215
+#. Default: "Universal link to the content in user's preferred language"
+#: ../browser/menu.py:239
+#, fuzzy
 msgid "description_universal_link"
 msgstr "Universele taal link"
 
@@ -294,14 +288,9 @@ msgid "description_update_language"
 msgstr "Ontbrekende vertalingen voor dit item"
 
 #. Default: "Edit ${lang_name}"
-#: ../browser/menu.py:159
+#: ../browser/menu.py:112
 msgid "edit_translation"
 msgstr "${lang_name} bewerken"
-
-#. Default: "Edit ${lang_name} folder"
-#: ../browser/menu.py:155
-msgid "edit_translation_folder"
-msgstr "${lang_name} map bewerken"
 
 #. Default: "Folder's id is not a valid language code"
 #: ../browser/migrator.py:308
@@ -446,7 +435,7 @@ msgid "label_total_relations"
 msgstr "Aantal aangepaste koppelingen"
 
 #. Default: "Translate"
-#: ../browser/menu.py:276
+#: ../browser/menu.py:491
 msgid "label_translate_menu"
 msgstr "Vertalen"
 
@@ -462,7 +451,7 @@ msgid "label_translations_should_be_here"
 msgstr ""
 
 #. Default: "Return to language folder"
-#: ../browser/menu.py:189
+#: ../browser/menu.py:462
 msgid "language_folder"
 msgstr "Terug naar taalmap"
 
@@ -521,8 +510,8 @@ msgstr "Het is niet mogelijk om deze stap uit te voeren voordat LinguaPlone comp
 msgid "relation_migration_with_not_needed"
 msgstr "Uw website heeft geen relatie catalogus, deze migratie-stap in niet nodig."
 
-#. Default: "Go to Assets folder"
-#: ../browser/menu.py:232
+#. Default: "Open ${title} folder"
+#: ../browser/menu.py:440
 #, fuzzy
 msgid "shared_folder"
 msgstr "Ga naar Media map"
@@ -532,28 +521,35 @@ msgstr "Ga naar Media map"
 msgid "title_available_languages"
 msgstr "Beschikbare talen"
 
-#. Default: "Edit with babel view"
-#: ../browser/menu.py:66
-msgid "title_babel_edit"
-msgstr "Bewerken met babel weergave"
-
 #. Default: "Language"
 #: ../browser/interfaces.py:54
 msgid "title_language"
 msgstr "Taal"
 
-#. Default: "Modify translations..."
-#: ../browser/menu.py:167
+#. Default: "Manage translations"
+#: ../browser/menu.py:215
+#, fuzzy
 msgid "title_modify_translations"
 msgstr "Vertalingen aanpassen"
 
-#. Default: "Set content language"
-#: ../browser/menu.py:251
+#. Default: "Change content language"
+#: ../browser/menu.py:136
+#, fuzzy
 msgid "title_set_language"
 msgstr "Taal instellen"
 
+#. Default: "Folder translation"
+#: ../browser/menu.py:258
+msgid "title_translate_current_folder"
+msgstr ""
+
+#. Default: "Item translation"
+#: ../browser/menu.py:422
+msgid "title_translate_current_item"
+msgstr ""
+
 #. Default: "Manage translations for your content."
-#: ../browser/menu.py:277
+#: ../browser/menu.py:492
 msgid "title_translate_menu"
 msgstr "Talen beheren voor uw inhoud"
 
@@ -567,8 +563,9 @@ msgstr "Vertalingen:"
 msgid "translation_to"
 msgstr "Vertaling naar ${language}"
 
-#. Default: "Universal Link"
-#: ../browser/menu.py:211
+#. Default: "Universal link"
+#: ../browser/menu.py:235
+#, fuzzy
 msgid "universal_link"
 msgstr "Universele link"
 

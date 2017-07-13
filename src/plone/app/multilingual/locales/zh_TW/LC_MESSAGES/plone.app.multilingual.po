@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
-"POT-Creation-Date: 2017-07-10 06:24+0000\n"
+"POT-Creation-Date: 2017-07-13 21:35+0000\n"
 "PO-Revision-Date: 2015-11-27 14:20+0800\n"
 "Last-Translator: TsungWei Hu <marr.tw@gmail.com>\n"
 "Language-Team: Plone I18N <plone-i18n@lists.sourcegorge.net>\n"
@@ -167,27 +167,18 @@ msgid "create-object-without-translation"
 msgstr ""
 
 #. Default: "Create ${lang_name}"
-#: ../browser/menu.py:122
+#: ../browser/menu.py:161
 msgid "create_translation"
 msgstr "新增 ${lang_name}"
-
-#. Default: "Create ${lang_name} folder"
-#: ../browser/menu.py:118
-msgid "create_translation_folder"
-msgstr "新增 ${lang_name} 目錄"
 
 #. Default: "This step will fix some lost dependencies to the ITranslatable interface hidden in the relation catalog and it gets rid of them. It must be run only when LinguaPlone is already uninstalled."
 #: ../browser/templates/migration.pt:225
 msgid "description_after_migration_cleanup"
 msgstr ""
 
-#. Default: "Edit with the babel_edit"
-#: ../browser/menu.py:70
-msgid "description_babel_edit"
-msgstr "編輯翻譯"
-
-#. Default: "Babel edit ${lang_name}"
-#: ../browser/menu.py:139
+#. Default: "Edit {lang_name} with the two-column translation view"
+#: ../browser/menu.py:117
+#, fuzzy
 msgid "description_babeledit_menu"
 msgstr "編輯 ${lang_name}"
 
@@ -212,7 +203,7 @@ msgid "description_google_translation_key"
 msgstr ""
 
 #. Default: "Go to the user's browser preferred language related folder"
-#: ../browser/menu.py:193
+#: ../browser/menu.py:466
 msgid "description_language_folder"
 msgstr "回到瀏覽器預設語系的目錄"
 
@@ -232,7 +223,7 @@ msgid "description_migration_results"
 msgstr ""
 
 #. Default: "Add or delete translations"
-#: ../browser/menu.py:171
+#: ../browser/menu.py:219
 msgid "description_modify_translations"
 msgstr ""
 
@@ -256,13 +247,14 @@ msgstr ""
 msgid "description_selector_lookup_translations_policy"
 msgstr ""
 
-#. Default: "Set or change the current content language"
-#: ../browser/menu.py:255
+#. Default: "Move the translation under another language folder"
+#: ../browser/menu.py:140
+#, fuzzy
 msgid "description_set_language"
 msgstr "設定目前的內容語系"
 
-#. Default: "Show the shared Language Independent Folder"
-#: ../browser/menu.py:236
+#. Default: "Open the language independent assets folder"
+#: ../browser/menu.py:445
 #, fuzzy
 msgid "description_shared_folder"
 msgstr "顯示語系共享的目錄"
@@ -273,7 +265,7 @@ msgid "description_transfer_multilingual_catalog_info"
 msgstr ""
 
 #. Default: "Translate into ${lang_name}"
-#: ../browser/menu.py:102
+#: ../browser/menu.py:166
 msgid "description_translate_into"
 msgstr "翻譯為 ${lang_name}"
 
@@ -282,8 +274,9 @@ msgstr "翻譯為 ${lang_name}"
 msgid "description_translation_map"
 msgstr ""
 
-#. Default: "Universal Language content link"
-#: ../browser/menu.py:215
+#. Default: "Universal link to the content in user's preferred language"
+#: ../browser/menu.py:239
+#, fuzzy
 msgid "description_universal_link"
 msgstr "Universal Language 網址"
 
@@ -293,14 +286,9 @@ msgid "description_update_language"
 msgstr "這個內容尚未翻譯的語系"
 
 #. Default: "Edit ${lang_name}"
-#: ../browser/menu.py:159
+#: ../browser/menu.py:112
 msgid "edit_translation"
 msgstr "編輯 ${lang_name}"
-
-#. Default: "Edit ${lang_name} folder"
-#: ../browser/menu.py:155
-msgid "edit_translation_folder"
-msgstr "編輯 ${lang_name} 目錄"
 
 #. Default: "Folder's id is not a valid language code"
 #: ../browser/migrator.py:308
@@ -445,7 +433,7 @@ msgid "label_total_relations"
 msgstr ""
 
 #. Default: "Translate"
-#: ../browser/menu.py:276
+#: ../browser/menu.py:491
 msgid "label_translate_menu"
 msgstr "翻譯"
 
@@ -461,7 +449,7 @@ msgid "label_translations_should_be_here"
 msgstr ""
 
 #. Default: "Return to language folder"
-#: ../browser/menu.py:189
+#: ../browser/menu.py:462
 msgid "language_folder"
 msgstr "回到語系目錄"
 
@@ -520,8 +508,8 @@ msgstr ""
 msgid "relation_migration_with_not_needed"
 msgstr "網站裡找不到 relation catalog 所以不需要執行昇級步驟。"
 
-#. Default: "Go to Assets folder"
-#: ../browser/menu.py:232
+#. Default: "Open ${title} folder"
+#: ../browser/menu.py:440
 #, fuzzy
 msgid "shared_folder"
 msgstr "回到共享目錄"
@@ -531,28 +519,34 @@ msgstr "回到共享目錄"
 msgid "title_available_languages"
 msgstr "可用的語系"
 
-#. Default: "Edit with babel view"
-#: ../browser/menu.py:66
-msgid "title_babel_edit"
-msgstr "透過 Babel View 編輯"
-
 #. Default: "Language"
 #: ../browser/interfaces.py:54
 msgid "title_language"
 msgstr "語系"
 
-#. Default: "Modify translations..."
-#: ../browser/menu.py:167
+#. Default: "Manage translations"
+#: ../browser/menu.py:215
 msgid "title_modify_translations"
 msgstr ""
 
-#. Default: "Set content language"
-#: ../browser/menu.py:251
+#. Default: "Change content language"
+#: ../browser/menu.py:136
+#, fuzzy
 msgid "title_set_language"
 msgstr "設定內容語系"
 
+#. Default: "Folder translation"
+#: ../browser/menu.py:258
+msgid "title_translate_current_folder"
+msgstr ""
+
+#. Default: "Item translation"
+#: ../browser/menu.py:422
+msgid "title_translate_current_item"
+msgstr ""
+
 #. Default: "Manage translations for your content."
-#: ../browser/menu.py:277
+#: ../browser/menu.py:492
 msgid "title_translate_menu"
 msgstr "管理項目的翻譯"
 
@@ -566,8 +560,9 @@ msgstr "翻譯:"
 msgid "translation_to"
 msgstr "翻譯成 ${language}"
 
-#. Default: "Universal Link"
-#: ../browser/menu.py:211
+#. Default: "Universal link"
+#: ../browser/menu.py:235
+#, fuzzy
 msgid "universal_link"
 msgstr "Universal Link"
 
