@@ -19,6 +19,9 @@ New features:
 
 Bug fixes:
 
+- Complete es translations
+  [erral]
+
 - Add missing i18n:translate tags
   [erral]
 
