@@ -4,10 +4,6 @@ Changelog
 5.1.0 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 
 - Rebuilt po files
