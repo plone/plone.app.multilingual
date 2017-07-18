@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.2b3\n"
-"POT-Creation-Date: 2017-07-10 06:24+0000\n"
+"POT-Creation-Date: 2017-07-13 21:35+0000\n"
 "PO-Revision-Date: 2015-09-16 01:58+0100\n"
 "Last-Translator: Encolpe DEGOUTE <encolpe.degoute@free.fr>\n"
 "Language-Team: Plone-fr <plone-fr@lists.plone.org>\n"
@@ -170,27 +170,18 @@ msgid "create-object-without-translation"
 msgstr "Si vous souhaité créer cet élément sans rentrer dans le processus de traduction cliquez <a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\">ici</a>"
 
 #. Default: "Create ${lang_name}"
-#: ../browser/menu.py:122
+#: ../browser/menu.py:161
 msgid "create_translation"
 msgstr "Créer ${lang_name}"
-
-#. Default: "Create ${lang_name} folder"
-#: ../browser/menu.py:118
-msgid "create_translation_folder"
-msgstr "Créer le dossier ${lang_name}"
 
 #. Default: "This step will fix some lost dependencies to the ITranslatable interface hidden in the relation catalog and it gets rid of them. It must be run only when LinguaPlone is already uninstalled."
 #: ../browser/templates/migration.pt:225
 msgid "description_after_migration_cleanup"
 msgstr "Cet migration fixera les dépendances perdues à l'interface ITranslatable cachée dans le catalogue des relations et les supprimera. Elle doit être executée seulement une fois que LinguaPlone a été complètement désinstallé."
 
-#. Default: "Edit with the babel_edit"
-#: ../browser/menu.py:70
-msgid "description_babel_edit"
-msgstr "Modifier avec la vue babel"
-
-#. Default: "Babel edit ${lang_name}"
-#: ../browser/menu.py:139
+#. Default: "Edit {lang_name} with the two-column translation view"
+#: ../browser/menu.py:117
+#, fuzzy
 msgid "description_babeledit_menu"
 msgstr "Modifier (Babel) ${lang_name}"
 
@@ -215,7 +206,7 @@ msgid "description_google_translation_key"
 msgstr "C'est une API payante pour utiliser le service de traduction de Google"
 
 #. Default: "Go to the user's browser preferred language related folder"
-#: ../browser/menu.py:193
+#: ../browser/menu.py:466
 msgid "description_language_folder"
 msgstr "Aller dans le dossier indiqué par la langue préférée du navigateur de l'utilisateur"
 
@@ -235,7 +226,7 @@ msgid "description_migration_results"
 msgstr "Vous verrez ici les résultats de la migration"
 
 #. Default: "Add or delete translations"
-#: ../browser/menu.py:171
+#: ../browser/menu.py:219
 msgid "description_modify_translations"
 msgstr ""
 
@@ -259,13 +250,14 @@ msgstr "Cet étape de migration déplacera le contenu dans le dossier racine du 
 msgid "description_selector_lookup_translations_policy"
 msgstr "La langue par défaut pour le contenu et les interfaces de ce site."
 
-#. Default: "Set or change the current content language"
-#: ../browser/menu.py:255
+#. Default: "Move the translation under another language folder"
+#: ../browser/menu.py:140
+#, fuzzy
 msgid "description_set_language"
 msgstr "Préciser ou modifier la langue actuelle du contenu"
 
-#. Default: "Show the shared Language Independent Folder"
-#: ../browser/menu.py:236
+#. Default: "Open the language independent assets folder"
+#: ../browser/menu.py:445
 #, fuzzy
 msgid "description_shared_folder"
 msgstr "Afficher le dossier partagé (langue neutre)"
@@ -276,7 +268,7 @@ msgid "description_transfer_multilingual_catalog_info"
 msgstr "Cette étape transfèrera les relations entre les traductions stoquées par LinguaPlone dans le catalog de PAM. Cette étape n'est pas destructive est peut être executée autant que nécessaire."
 
 #. Default: "Translate into ${lang_name}"
-#: ../browser/menu.py:102
+#: ../browser/menu.py:166
 msgid "description_translate_into"
 msgstr "Traduire en ${lang_name}"
 
@@ -285,8 +277,9 @@ msgstr "Traduire en ${lang_name}"
 msgid "description_translation_map"
 msgstr "Liste des traductions."
 
-#. Default: "Universal Language content link"
-#: ../browser/menu.py:215
+#. Default: "Universal link to the content in user's preferred language"
+#: ../browser/menu.py:239
+#, fuzzy
 msgid "description_universal_link"
 msgstr "Lien universel du contenu (langue automatique)"
 
@@ -296,14 +289,9 @@ msgid "description_update_language"
 msgstr "Langues non traduites pour ce contenu"
 
 #. Default: "Edit ${lang_name}"
-#: ../browser/menu.py:159
+#: ../browser/menu.py:112
 msgid "edit_translation"
 msgstr "Modifier ${lang_name}"
-
-#. Default: "Edit ${lang_name} folder"
-#: ../browser/menu.py:155
-msgid "edit_translation_folder"
-msgstr "Modifier le dossier ${lang_name}"
 
 #. Default: "Folder's id is not a valid language code"
 #: ../browser/migrator.py:308
@@ -448,7 +436,7 @@ msgid "label_total_relations"
 msgstr "Nombre total de relation mises à jour :"
 
 #. Default: "Translate"
-#: ../browser/menu.py:276
+#: ../browser/menu.py:491
 msgid "label_translate_menu"
 msgstr "Traduire"
 
@@ -464,7 +452,7 @@ msgid "label_translations_should_be_here"
 msgstr ""
 
 #. Default: "Return to language folder"
-#: ../browser/menu.py:189
+#: ../browser/menu.py:462
 msgid "language_folder"
 msgstr "Revenir au dossier de langue"
 
@@ -523,8 +511,8 @@ msgstr "Il n'est pas possible d'exécuter cette étape de migration sans désins
 msgid "relation_migration_with_not_needed"
 msgstr "Votre site n'a pas de catalogue de relations, et dans ce cas cette étape de migration n'est pas nécessaire"
 
-#. Default: "Go to Assets folder"
-#: ../browser/menu.py:232
+#. Default: "Open ${title} folder"
+#: ../browser/menu.py:440
 #, fuzzy
 msgid "shared_folder"
 msgstr "Aller au dossier partagé"
@@ -534,28 +522,34 @@ msgstr "Aller au dossier partagé"
 msgid "title_available_languages"
 msgstr "Langues disponibles"
 
-#. Default: "Edit with babel view"
-#: ../browser/menu.py:66
-msgid "title_babel_edit"
-msgstr "Modifier avec la vue babel"
-
 #. Default: "Language"
 #: ../browser/interfaces.py:54
 msgid "title_language"
 msgstr "Langue"
 
-#. Default: "Modify translations..."
-#: ../browser/menu.py:167
+#. Default: "Manage translations"
+#: ../browser/menu.py:215
 msgid "title_modify_translations"
 msgstr ""
 
-#. Default: "Set content language"
-#: ../browser/menu.py:251
+#. Default: "Change content language"
+#: ../browser/menu.py:136
+#, fuzzy
 msgid "title_set_language"
 msgstr "Définir la langue du contenu"
 
+#. Default: "Folder translation"
+#: ../browser/menu.py:258
+msgid "title_translate_current_folder"
+msgstr ""
+
+#. Default: "Item translation"
+#: ../browser/menu.py:422
+msgid "title_translate_current_item"
+msgstr ""
+
 #. Default: "Manage translations for your content."
-#: ../browser/menu.py:277
+#: ../browser/menu.py:492
 msgid "title_translate_menu"
 msgstr "Gérer les traductions du contenu"
 
@@ -569,8 +563,9 @@ msgstr "Traductions :"
 msgid "translation_to"
 msgstr "Traduire en ${language}"
 
-#. Default: "Universal Link"
-#: ../browser/menu.py:211
+#. Default: "Universal link"
+#: ../browser/menu.py:235
+#, fuzzy
 msgid "universal_link"
 msgstr "Lien universel"
 

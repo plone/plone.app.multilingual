@@ -109,4 +109,12 @@ a.contentmenuflags img {
 #translations-overview .actionLabel {
     display: none;
 }
-
+#edit-zone nav > ul ul li.plonetoolbar-multilingual.actionSeparator {
+    margin: 0;
+    padding: 5px 0 0;
+    border-top: 1px solid rgba(255,255,255,0.17);
+}
+#edit-zone nav>ul ul li.plonetoolbar-multilingual.actionSeparator>span {
+    font-weight: 400;
+    color: #ccc;
+}

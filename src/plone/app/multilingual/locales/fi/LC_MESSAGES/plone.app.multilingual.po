@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2017-07-10 06:24+0000\n"
+"POT-Creation-Date: 2017-07-13 21:35+0000\n"
 "PO-Revision-Date: 2015-02-18 11:45+0200\n"
 "Last-Translator: Asko Soukka <asko.soukka@iki.fi>\n"
 "Language-Team: Finnish <https://github.com/collective>\n"
@@ -16,15 +16,15 @@ msgstr ""
 
 #: ../browser/migrator.py:85
 msgid "After migration relation cleanup"
-msgstr "Sisältöviittausten korjaus migraation jälkeen"
+msgstr "Korjaa viittaukset sisällössä migraation jälkeen"
 
 #: ../browser/controlpanel.py:62
 msgid "Cancel"
-msgstr ""
+msgstr "Peruuta"
 
 #: ../browser/controlpanel.py:65
 msgid "Changes canceled."
-msgstr ""
+msgstr "Muutokset peruttu."
 
 #: ../browser/templates/cleanup.pt:79
 #: ../browser/templates/migration.pt:250
@@ -33,7 +33,7 @@ msgstr "Siivous"
 
 #: ../browser/controlpanel.py:49
 msgid "Default language not in available languages"
-msgstr ""
+msgstr "Oletuskieli ei ole sallittujen kielten joukossa"
 
 #: ../browser/templates/not_translated_yet.pt:28
 msgid "However, this is the list of the already translated languages for the requested content."
@@ -167,29 +167,19 @@ msgid "create-object-without-translation"
 msgstr "<a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\">Haluan luoda tämän sivun, mutta en halua siitä tulevan linkitettyä käännöstä.</a>"
 
 #. Default: "Create ${lang_name}"
-#: ../browser/menu.py:122
+#: ../browser/menu.py:161
 msgid "create_translation"
-msgstr "Käännä kielelle ${lang_name}"
-
-#. Default: "Create ${lang_name} folder"
-#: ../browser/menu.py:118
-msgid "create_translation_folder"
-msgstr "Lisää kielikansio kielelle ${lang_name}"
+msgstr "Käännä: ${lang_name}"
 
 #. Default: "This step will fix some lost dependencies to the ITranslatable interface hidden in the relation catalog and it gets rid of them. It must be run only when LinguaPlone is already uninstalled."
 #: ../browser/templates/migration.pt:225
 msgid "description_after_migration_cleanup"
 msgstr ""
 
-#. Default: "Edit with the babel_edit"
-#: ../browser/menu.py:70
-msgid "description_babel_edit"
-msgstr "Muokkaa käännösnäkymässä rinnakkain toisen kieliversion kanssa"
-
-#. Default: "Babel edit ${lang_name}"
-#: ../browser/menu.py:139
+#. Default: "Edit {lang_name} with the two-column translation view"
+#: ../browser/menu.py:117
 msgid "description_babeledit_menu"
-msgstr "Muokkaa käännösnäkymässä kieliversiota ${lang_name}"
+msgstr "Muokkaa käännöstä (${lang_name}) kaksipalstaisessa kääntäjässä"
 
 #. Default: "When there are many translations for an item, the number of displayed buttons for them might get too large to fit inside the template. Choose here from which number onwards a drop-down menu will be displayed instead of buttons. Zero means that buttons will always be used."
 #: ../interfaces.py:240
@@ -212,7 +202,7 @@ msgid "description_google_translation_key"
 msgstr "Maksullinen API-avain Googlen käännöspalvelun käyttöön"
 
 #. Default: "Go to the user's browser preferred language related folder"
-#: ../browser/menu.py:193
+#: ../browser/menu.py:466
 msgid "description_language_folder"
 msgstr "Siirry käyttäjän selaimen suosittaman kielen kielikansioon"
 
@@ -232,7 +222,7 @@ msgid "description_migration_results"
 msgstr ""
 
 #. Default: "Add or delete translations"
-#: ../browser/menu.py:171
+#: ../browser/menu.py:219
 msgid "description_modify_translations"
 msgstr ""
 
@@ -256,16 +246,15 @@ msgstr ""
 msgid "description_selector_lookup_translations_policy"
 msgstr ""
 
-#. Default: "Set or change the current content language"
-#: ../browser/menu.py:255
+#. Default: "Move the translation under another language folder"
+#: ../browser/menu.py:140
 msgid "description_set_language"
-msgstr "Aseta tai vaihda tämän sivun kielimääritys"
+msgstr "Vaihda sisällön kieli ja siirrä sisältö toiselle kielialueelle"
 
-#. Default: "Show the shared Language Independent Folder"
-#: ../browser/menu.py:236
-#, fuzzy
+#. Default: "Open the language independent assets folder"
+#: ../browser/menu.py:445
 msgid "description_shared_folder"
-msgstr "Siirry kieliriippumattoman eli jaetun sisällön kansioon"
+msgstr "Siirry kieliriippumattomaan jaetun sisällön kansioon"
 
 #. Default: "This step will transfer the relations between translations stored by LinguaPlone to the PAM catalog. This step is not destructive and can be executed as many times as needed."
 #: ../browser/templates/migration.pt:195
@@ -273,7 +262,7 @@ msgid "description_transfer_multilingual_catalog_info"
 msgstr ""
 
 #. Default: "Translate into ${lang_name}"
-#: ../browser/menu.py:102
+#: ../browser/menu.py:166
 msgid "description_translate_into"
 msgstr "Tee tästä sivustä uusi käännös kielelle ${lang_name}"
 
@@ -282,10 +271,10 @@ msgstr "Tee tästä sivustä uusi käännös kielelle ${lang_name}"
 msgid "description_translation_map"
 msgstr "Käännöskartta"
 
-#. Default: "Universal Language content link"
-#: ../browser/menu.py:215
+#. Default: "Universal link to the content in user's preferred language"
+#: ../browser/menu.py:239
 msgid "description_universal_link"
-msgstr "Kieliriippumaton linkki ohjaa suoraan käyttäjän omankieliseen versioon"
+msgstr "Kieliriippumaton linkki ohjaa suoraan käännöseen käyttäjän omalla kielellä"
 
 #. Default: "Untranslated languages from the current content"
 #: ../browser/interfaces.py:63
@@ -293,14 +282,9 @@ msgid "description_update_language"
 msgstr "Kielet, joille tätä sivua ei ole käännetty"
 
 #. Default: "Edit ${lang_name}"
-#: ../browser/menu.py:159
+#: ../browser/menu.py:112
 msgid "edit_translation"
-msgstr "Muokkaa kieltä ${lang_name}"
-
-#. Default: "Edit ${lang_name} folder"
-#: ../browser/menu.py:155
-msgid "edit_translation_folder"
-msgstr "Muokkaa kansiota kielelle ${lang_name}"
+msgstr "Muokkaa: ${lang_name}"
 
 #. Default: "Folder's id is not a valid language code"
 #: ../browser/migrator.py:308
@@ -325,7 +309,7 @@ msgstr "Tämän sivun käännökset"
 #. Default: "Use buttons in the bable view for up to how many translations?"
 #: ../interfaces.py:236
 msgid "heading_buttons_babel_view_up_to_nr_translations"
-msgstr "Kuinka monelle kielelle näyettään painikkeet rinnakkaiskäännösnäkymässä?"
+msgstr "Kuinka monelle kielelle näyettään painikkeet rinnakkaiskääntäjässä?"
 
 #. Default: "Bypass language independent field permission check"
 #: ../interfaces.py:218
@@ -445,9 +429,9 @@ msgid "label_total_relations"
 msgstr ""
 
 #. Default: "Translate"
-#: ../browser/menu.py:276
+#: ../browser/menu.py:491
 msgid "label_translate_menu"
-msgstr ""
+msgstr "Käännä"
 
 #. Default: "Translation Map"
 #: ../browser/templates/cleanup.pt:43
@@ -461,7 +445,7 @@ msgid "label_translations_should_be_here"
 msgstr ""
 
 #. Default: "Return to language folder"
-#: ../browser/menu.py:189
+#: ../browser/menu.py:462
 msgid "language_folder"
 msgstr ""
 
@@ -520,39 +504,43 @@ msgstr ""
 msgid "relation_migration_with_not_needed"
 msgstr ""
 
-#. Default: "Go to Assets folder"
-#: ../browser/menu.py:232
-#, fuzzy
+#. Default: "Open ${title} folder"
+#: ../browser/menu.py:440
 msgid "shared_folder"
-msgstr "Siirry jaettuun kansioon"
+msgstr "Avaa ${title}-kansio"
 
 #. Default: "Available languages"
 #: ../browser/interfaces.py:62
 msgid "title_available_languages"
 msgstr "Kielet"
 
-#. Default: "Edit with babel view"
-#: ../browser/menu.py:66
-msgid "title_babel_edit"
-msgstr "Muokkaa käännösnäkymässä"
-
 #. Default: "Language"
 #: ../browser/interfaces.py:54
 msgid "title_language"
 msgstr "Kieli"
 
-#. Default: "Modify translations..."
-#: ../browser/menu.py:167
+#. Default: "Manage translations"
+#: ../browser/menu.py:215
 msgid "title_modify_translations"
-msgstr ""
+msgstr "Hallitse käännöksiä"
 
-#. Default: "Set content language"
-#: ../browser/menu.py:251
+#. Default: "Change content language"
+#: ../browser/menu.py:136
 msgid "title_set_language"
 msgstr "Määritä tämän sivun kieli"
 
+#. Default: "Folder translation"
+#: ../browser/menu.py:258
+msgid "title_translate_current_folder"
+msgstr "Kansion käännökset"
+
+#. Default: "Item translation"
+#: ../browser/menu.py:422
+msgid "title_translate_current_item"
+msgstr "Sivun käännökset"
+
 #. Default: "Manage translations for your content."
-#: ../browser/menu.py:277
+#: ../browser/menu.py:492
 msgid "title_translate_menu"
 msgstr "Hallitse käännöksiä"
 
@@ -566,8 +554,8 @@ msgstr "Käännökset"
 msgid "translation_to"
 msgstr "Käännös kielelle ${language}"
 
-#. Default: "Universal Link"
-#: ../browser/menu.py:211
+#. Default: "Universal link"
+#: ../browser/menu.py:235
 msgid "universal_link"
 msgstr "Kieliriippumaton linkki"
 

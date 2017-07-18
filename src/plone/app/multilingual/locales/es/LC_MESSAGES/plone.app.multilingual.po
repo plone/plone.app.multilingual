@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.2b3\n"
-"POT-Creation-Date: 2017-07-10 06:24+0000\n"
+"POT-Creation-Date: 2017-07-13 21:35+0000\n"
 "PO-Revision-Date: 2012-03-23 16:45 +0000\n"
 "Last-Translator: ramon.nb@gmail.com>\n"
 "Language-Team: plone-cat <plone-cat@plone.org>\n"
@@ -168,27 +168,17 @@ msgid "create-object-without-translation"
 msgstr ""
 
 #. Default: "Create ${lang_name}"
-#: ../browser/menu.py:122
+#: ../browser/menu.py:161
 msgid "create_translation"
 msgstr "Crear ${lang_name}"
-
-#. Default: "Create ${lang_name} folder"
-#: ../browser/menu.py:118
-msgid "create_translation_folder"
-msgstr ""
 
 #. Default: "This step will fix some lost dependencies to the ITranslatable interface hidden in the relation catalog and it gets rid of them. It must be run only when LinguaPlone is already uninstalled."
 #: ../browser/templates/migration.pt:225
 msgid "description_after_migration_cleanup"
 msgstr ""
 
-#. Default: "Edit with the babel_edit"
-#: ../browser/menu.py:70
-msgid "description_babel_edit"
-msgstr ""
-
-#. Default: "Babel edit ${lang_name}"
-#: ../browser/menu.py:139
+#. Default: "Edit {lang_name} with the two-column translation view"
+#: ../browser/menu.py:117
 msgid "description_babeledit_menu"
 msgstr ""
 
@@ -213,7 +203,7 @@ msgid "description_google_translation_key"
 msgstr ""
 
 #. Default: "Go to the user's browser preferred language related folder"
-#: ../browser/menu.py:193
+#: ../browser/menu.py:466
 msgid "description_language_folder"
 msgstr ""
 
@@ -233,7 +223,7 @@ msgid "description_migration_results"
 msgstr ""
 
 #. Default: "Add or delete translations"
-#: ../browser/menu.py:171
+#: ../browser/menu.py:219
 msgid "description_modify_translations"
 msgstr ""
 
@@ -257,13 +247,13 @@ msgstr ""
 msgid "description_selector_lookup_translations_policy"
 msgstr ""
 
-#. Default: "Set or change the current content language"
-#: ../browser/menu.py:255
+#. Default: "Move the translation under another language folder"
+#: ../browser/menu.py:140
 msgid "description_set_language"
 msgstr ""
 
-#. Default: "Show the shared Language Independent Folder"
-#: ../browser/menu.py:236
+#. Default: "Open the language independent assets folder"
+#: ../browser/menu.py:445
 msgid "description_shared_folder"
 msgstr ""
 
@@ -273,7 +263,7 @@ msgid "description_transfer_multilingual_catalog_info"
 msgstr ""
 
 #. Default: "Translate into ${lang_name}"
-#: ../browser/menu.py:102
+#: ../browser/menu.py:166
 msgid "description_translate_into"
 msgstr ""
 
@@ -282,8 +272,8 @@ msgstr ""
 msgid "description_translation_map"
 msgstr ""
 
-#. Default: "Universal Language content link"
-#: ../browser/menu.py:215
+#. Default: "Universal link to the content in user's preferred language"
+#: ../browser/menu.py:239
 msgid "description_universal_link"
 msgstr ""
 
@@ -293,13 +283,8 @@ msgid "description_update_language"
 msgstr ""
 
 #. Default: "Edit ${lang_name}"
-#: ../browser/menu.py:159
+#: ../browser/menu.py:112
 msgid "edit_translation"
-msgstr ""
-
-#. Default: "Edit ${lang_name} folder"
-#: ../browser/menu.py:155
-msgid "edit_translation_folder"
 msgstr ""
 
 #. Default: "Folder's id is not a valid language code"
@@ -445,7 +430,7 @@ msgid "label_total_relations"
 msgstr ""
 
 #. Default: "Translate"
-#: ../browser/menu.py:276
+#: ../browser/menu.py:491
 msgid "label_translate_menu"
 msgstr "Traducciones"
 
@@ -461,7 +446,7 @@ msgid "label_translations_should_be_here"
 msgstr ""
 
 #. Default: "Return to language folder"
-#: ../browser/menu.py:189
+#: ../browser/menu.py:462
 msgid "language_folder"
 msgstr ""
 
@@ -520,8 +505,8 @@ msgstr ""
 msgid "relation_migration_with_not_needed"
 msgstr ""
 
-#. Default: "Go to Assets folder"
-#: ../browser/menu.py:232
+#. Default: "Open ${title} folder"
+#: ../browser/menu.py:440
 #, fuzzy
 msgid "shared_folder"
 msgstr "Ir a carpeta compartida"
@@ -531,28 +516,34 @@ msgstr "Ir a carpeta compartida"
 msgid "title_available_languages"
 msgstr ""
 
-#. Default: "Edit with babel view"
-#: ../browser/menu.py:66
-msgid "title_babel_edit"
-msgstr "Editar con vista babel"
-
 #. Default: "Language"
 #: ../browser/interfaces.py:54
 msgid "title_language"
 msgstr ""
 
-#. Default: "Modify translations..."
-#: ../browser/menu.py:167
+#. Default: "Manage translations"
+#: ../browser/menu.py:215
 msgid "title_modify_translations"
 msgstr ""
 
-#. Default: "Set content language"
-#: ../browser/menu.py:251
+#. Default: "Change content language"
+#: ../browser/menu.py:136
+#, fuzzy
 msgid "title_set_language"
 msgstr "Establecer idioma del contenido"
 
+#. Default: "Folder translation"
+#: ../browser/menu.py:258
+msgid "title_translate_current_folder"
+msgstr ""
+
+#. Default: "Item translation"
+#: ../browser/menu.py:422
+msgid "title_translate_current_item"
+msgstr ""
+
 #. Default: "Manage translations for your content."
-#: ../browser/menu.py:277
+#: ../browser/menu.py:492
 msgid "title_translate_menu"
 msgstr ""
 
@@ -566,8 +557,9 @@ msgstr ""
 msgid "translation_to"
 msgstr ""
 
-#. Default: "Universal Link"
-#: ../browser/menu.py:211
+#. Default: "Universal link"
+#: ../browser/menu.py:235
+#, fuzzy
 msgid "universal_link"
 msgstr "Link universal"
 

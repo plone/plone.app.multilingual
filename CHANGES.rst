@@ -1,7 +1,7 @@
 Changelog
 =========
 
-5.0.9 (unreleased)
+5.1.0 (unreleased)
 ------------------
 
 Breaking changes:
@@ -16,6 +16,22 @@ New features:
 - Rename ``media`` folder to a more generic name ``assets`` by default and
   add i18nize it to be localization aware
   [agitator, datakurre]
+- When viewing a folder with a default page, the translation menu shows all
+  options for both the folder and then the default page in the
+  same order and with the same titles. The option to edit the current page in
+  babel view have been merged with the options to edit the other translations
+  to make the menu more consistent
+  [datakurre]
+
+- Translation menu show the title of the language independent folder on
+  the language independent folder link in translation menu as
+  "Open ${title} folder"
+  [datakurre]
+
+- Translation menu no longer includes "Set content language"-menuitem, which
+  was redundant (but less transparent in its behavior) to just cutting and
+  pasting a content under the desired language folder
+  [datakurre]
 
 Bug fixes:
 
