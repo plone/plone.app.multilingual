@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
-from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
 from plone.app.multilingual.interfaces import ITranslationCloner
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.dexterity.utils import iterSchemata
+from Products.CMFPlone.interfaces import ILanguage
+from Products.CMFPlone.utils import safe_unicode
 from z3c.relationfield import RelationValue
 from z3c.relationfield.interfaces import IRelationList
 from z3c.relationfield.interfaces import IRelationValue
 from zope.component import getUtility
 from zope.component import queryAdapter
 from zope.interface import implementer
+
 import pkg_resources
 try:
     # pkg_resources.get_distribution('zope.initd')
@@ -74,7 +76,8 @@ class LanguageIndependentFieldsManager(object):
                         value = map(relation_copier, value or [])
 
                     doomed = True
-                    setattr(schema(translation), field_name, value)
+                    setattr(schema(translation),
+                            field_name, safe_unicode(value))
 
         # If at least one field has been copied over to the translation
         # we need to inform subscriber to trigger an ObjectModifiedEvent

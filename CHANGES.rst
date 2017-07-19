@@ -23,7 +23,7 @@ Bug fixes:
 New features:
 
 - Rebuilt po files
-  [erral]  
+  [erral]
 
 - Rename ``media`` folder to a more generic name ``assets`` by default and
   add i18nize it to be localization aware
@@ -46,6 +46,10 @@ New features:
   [datakurre]
 
 Bug fixes:
+
+- Safely convert field value to unicode
+  [agitator, GerardRodes]
+
 
 - Add missing i18n:translate tags
   [erral]
