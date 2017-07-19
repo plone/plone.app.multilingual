@@ -1,7 +1,8 @@
 """Setup plone.app.multilingual."""
+from setuptools import find_packages
+from setuptools import setup
 
 import os
-from setuptools import setup, find_packages
 
 
 version = '5.1.1.dev0'
@@ -9,24 +10,24 @@ version = '5.1.1.dev0'
 setup(
     name='plone.app.multilingual',
     version=version,
-    description="Multilingual Plone UI package, enables maintenance of "
-                "translations for both Dexterity types and Archetypes",
-    long_description="\n\n".join([
-        open("README.rst").read(),
-        open(os.path.join("docs", "CREDITS.txt")).read(),
-        open("CHANGES.rst").read(),
+    description='Multilingual Plone UI package, enables maintenance of '
+                'translations for both Dexterity types and Archetypes',
+    long_description='\n\n'.join([
+        open('README.rst').read(),
+        open(os.path.join('docs', 'CREDITS.txt')).read(),
+        open('CHANGES.rst').read(),
     ]),
     classifiers=[
-        "Framework :: Plone",
-        "Framework :: Plone :: 5.0",
-        "Framework :: Plone :: 5.1",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 2.7",
-        "Topic :: Software Development :: Libraries :: Python Modules",
+        'Framework :: Plone',
+        'Framework :: Plone :: 5.0',
+        'Framework :: Plone :: 5.1',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2.7',
+        'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     url='https://github.com/plone/plone.app.multilingual',
     license='GPL',
-    keywords="language multilingual content",
+    keywords='language multilingual content',
     author='Ramon Navarro, Victor Fernandez de Alba, awello et al',
     author_email='r.navarro@iskra.cat',
     packages=find_packages('src'),
