@@ -4,17 +4,10 @@ Changelog
 5.1.1 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
-- *add item here*
+- Safely convert field value to unicode
+  [agitator, GerardRodes]
 
 
 5.1 (2017-07-18)
@@ -46,10 +39,6 @@ New features:
   [datakurre]
 
 Bug fixes:
-
-- Safely convert field value to unicode
-  [agitator, GerardRodes]
-
 
 - Add missing i18n:translate tags
   [erral]
