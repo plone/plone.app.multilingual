@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from plone.app.i18n.locales.browser.selector import LanguageSelector
+from plone.app.multilingual import logger
 from plone.app.multilingual.api import get_translation_manager
 from plone.app.multilingual.interfaces import ITG
-from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import NOTG
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
@@ -85,14 +85,11 @@ class LanguageSelectorViewlet(LanguageSelector):
         if translation_group is None:
             translation_group = NOTG
 
-        # for some reason there is no ITranslationManager provided by
-        # context even if the api method get_translation_manager
-        # returns a translation_manager
         try:
             translation_manager = get_translation_manager(self.context)
             translations = translation_manager.get_translated_languages()
-        except:  # noqa
-            pass
+        except TypeError as e:
+            logger.debug(e)
 
         for lang_info in languages_info:
 
