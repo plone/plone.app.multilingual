@@ -85,6 +85,8 @@ class LanguageSelectorViewlet(LanguageSelector):
         if translation_group is None:
             translation_group = NOTG
 
+        # there is no translation_manager on site root
+        # using try/except to prevent failing for now
         try:
             translation_manager = get_translation_manager(self.context)
             translations = translation_manager.get_translated_languages()
