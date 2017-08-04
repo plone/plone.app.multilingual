@@ -10,7 +10,8 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Complete spanish translation
+  [erral]
 
 Bug fixes:
 
