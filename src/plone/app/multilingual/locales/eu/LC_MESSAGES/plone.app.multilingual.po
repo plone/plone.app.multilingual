@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
 "POT-Creation-Date: 2017-07-13 21:35+0000\n"
-"PO-Revision-Date: 2017-07-10 08:29+0200\n"
+"PO-Revision-Date: 2017-08-04 14:07+0200\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: eu <eu@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,8 +31,7 @@ msgstr "Utzi"
 msgid "Changes canceled."
 msgstr "Aldaketak bertan behera utzi dira"
 
-#: ../browser/templates/cleanup.pt:79
-#: ../browser/templates/migration.pt:250
+#: ../browser/templates/cleanup.pt:79 ../browser/templates/migration.pt:250
 msgid "Cleanup"
 msgstr "Garbitu"
 
@@ -73,8 +72,7 @@ msgstr "Multilingual"
 msgid "Multilingual Settings"
 msgstr "Eleaniztasun-aukerak"
 
-#: ../configure.zcml:151
-#: ../dx/configure.zcml:36
+#: ../configure.zcml:151 ../dx/configure.zcml:36
 msgid "Multilingual Support"
 msgstr "Eleaniztasun-aukerak"
 
@@ -183,9 +181,8 @@ msgstr "Pausu honek ITranslatabe interfazearen dependentzia batzuk kkonponduko d
 
 #. Default: "Edit {lang_name} with the two-column translation view"
 #: ../browser/menu.py:117
-#, fuzzy
 msgid "description_babeledit_menu"
-msgstr "Babel edizioa ${lang_name}"
+msgstr "${lang_name} editatu bi zutabetako bistan"
 
 #. Default: "When there are many translations for an item, the number of displayed buttons for them might get too large to fit inside the template. Choose here from which number onwards a drop-down menu will be displayed instead of buttons. Zero means that buttons will always be used."
 #: ../interfaces.py:240
@@ -254,13 +251,11 @@ msgstr "Defektuzko hizkuntza erabiltzen da edukiarentzat eta interfazearentzat."
 
 #. Default: "Move the translation under another language folder"
 #: ../browser/menu.py:140
-#, fuzzy
 msgid "description_set_language"
-msgstr "Elementu honen hizkuntza ezarri edo aldatu"
+msgstr "Elementu hau beste hizkuntza batera mugitu"
 
 #. Default: "Open the language independent assets folder"
 #: ../browser/menu.py:445
-#, fuzzy
 msgid "description_shared_folder"
 msgstr "Hizkuntzen artean partekatutako karpeta erakutsi"
 
@@ -281,9 +276,8 @@ msgstr "Itzulpenen mapa"
 
 #. Default: "Universal link to the content in user's preferred language"
 #: ../browser/menu.py:239
-#, fuzzy
 msgid "description_universal_link"
-msgstr "Elementuaren lotura unibertsala"
+msgstr "Erabiltzailearen hizkuntzan ikusiko den elementuaren lotura unibertsala"
 
 #. Default: "Untranslated languages from the current content"
 #: ../browser/interfaces.py:63
@@ -401,8 +395,7 @@ msgid "label_connect_translation"
 msgstr "Itzulpena lotu"
 
 #. Default: "General"
-#: ../browser/templates/cleanup.pt:38
-#: ../browser/templates/migration.pt:73
+#: ../browser/templates/cleanup.pt:38 ../browser/templates/migration.pt:73
 msgid "label_general"
 msgstr "Orokorra"
 
@@ -443,8 +436,7 @@ msgid "label_translate_menu"
 msgstr "Itzuli..."
 
 #. Default: "Translation Map"
-#: ../browser/templates/cleanup.pt:43
-#: ../browser/templates/migration.pt:78
+#: ../browser/templates/cleanup.pt:43 ../browser/templates/migration.pt:78
 msgid "label_translation_map"
 msgstr "Itzulpen-mapa"
 
@@ -515,9 +507,8 @@ msgstr "Zure atariak ez du erlazio-kataloorik eta beraz, ez pausu hau ez da beha
 
 #. Default: "Open ${title} folder"
 #: ../browser/menu.py:440
-#, fuzzy
 msgid "shared_folder"
-msgstr "Partekatutako karpetara joan"
+msgstr "${title} karpeta ireki"
 
 #. Default: "Available languages"
 #: ../browser/interfaces.py:62
@@ -531,25 +522,23 @@ msgstr "Hizkuntza"
 
 #. Default: "Manage translations"
 #: ../browser/menu.py:215
-#, fuzzy
 msgid "title_modify_translations"
-msgstr "Itzulpenak aldatu..."
+msgstr "Itzulpenak kudeatu"
 
 #. Default: "Change content language"
 #: ../browser/menu.py:136
-#, fuzzy
 msgid "title_set_language"
-msgstr "Edukiaren hizkuntza ezarri"
+msgstr "Elementuaren hizkuntza aldatu"
 
 #. Default: "Folder translation"
 #: ../browser/menu.py:258
 msgid "title_translate_current_folder"
-msgstr ""
+msgstr "Karpetaren itzulpena"
 
 #. Default: "Item translation"
 #: ../browser/menu.py:422
 msgid "title_translate_current_item"
-msgstr ""
+msgstr "Elementuaren itzulpena"
 
 #. Default: "Manage translations for your content."
 #: ../browser/menu.py:492
@@ -568,7 +557,6 @@ msgstr "Itzulpena: ${language}"
 
 #. Default: "Universal link"
 #: ../browser/menu.py:235
-#, fuzzy
 msgid "universal_link"
 msgstr "Lotura Unibertsala"
 
