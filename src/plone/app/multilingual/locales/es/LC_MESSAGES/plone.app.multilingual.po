@@ -3,169 +3,176 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.2b3\n"
 "POT-Creation-Date: 2017-07-13 21:35+0000\n"
-"PO-Revision-Date: 2012-03-23 16:45 +0000\n"
-"Last-Translator: ramon.nb@gmail.com>\n"
+"PO-Revision-Date: 2017-08-04 13:46+0200\n"
+"Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: plone-cat <plone-cat@plone.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Language-Code: ca\n"
 "Language-Name: Catalan\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone.app.multilingual\n"
+"Language: es\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: ../browser/migrator.py:85
 msgid "After migration relation cleanup"
-msgstr ""
+msgstr "Limpieza a realizar tras la migración"
 
 #: ../browser/controlpanel.py:62
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: ../browser/controlpanel.py:65
 msgid "Changes canceled."
-msgstr ""
+msgstr "Cambios cancelados."
 
-#: ../browser/templates/cleanup.pt:79
-#: ../browser/templates/migration.pt:250
+#: ../browser/templates/cleanup.pt:79 ../browser/templates/migration.pt:250
 msgid "Cleanup"
-msgstr ""
+msgstr "Limpieza"
 
 #: ../browser/controlpanel.py:49
 msgid "Default language not in available languages"
-msgstr ""
+msgstr "El idioma por defecto no está entre los idiomas disponibles"
 
 #: ../browser/templates/not_translated_yet.pt:28
 msgid "However, this is the list of the already translated languages for the requested content."
-msgstr ""
+msgstr "Sin embargo, esta es la lista de los idiomas para los que ya hay traducciones."
 
 #: ../configure.zcml:151
 msgid "Install to enable multilingual content support with plone.app.multilingual"
-msgstr ""
+msgstr "Instalar para activar el soporte de contenido multilingüe con plone.app.multilingual"
 
 #: ../browser/translate.py:69
 msgid "Invalid field"
-msgstr ""
+msgstr "Campo no válido"
 
 #: ../browser/templates/languages-notice.pt:11
 msgid "Language control panel"
-msgstr ""
+msgstr "Panel de Control de Idioma"
 
 #: ../dx/configure.zcml:36
 msgid "Make this content type multilingual aware"
-msgstr ""
+msgstr "Hacer este tipo de contenido traducible"
 
 #: ../browser/templates/cleanup.pt:89
 msgid "Move"
-msgstr ""
+msgstr "Mover"
 
 #. Default: "Multilingual"
 #: ../interfaces.py:183
 msgid "Multilingual"
-msgstr ""
+msgstr "Multilingual"
 
 #: ../browser/controlpanel.py:32
 msgid "Multilingual Settings"
-msgstr ""
+msgstr "Configuración Multiidioma"
 
-#: ../configure.zcml:151
-#: ../dx/configure.zcml:36
+#: ../configure.zcml:151 ../dx/configure.zcml:36
 msgid "Multilingual Support"
-msgstr ""
+msgstr "Soporte Multiidioma"
 
 #: ../configure.zcml:159
 msgid "Multilingual Support [uninstall]"
-msgstr ""
+msgstr "Soporte Multiidioma [desinstalar]"
 
 #: ../browser/translate.py:54
 msgid "Need a field"
-msgstr ""
+msgstr "Se necesita un campo"
 
 #: ../browser/controlpanel.py:174
 msgid "Not translated"
-msgstr ""
+msgstr "No traducidos"
 
 #: ../browser/templates/migration.pt:128
 msgid "Reindex"
-msgstr ""
+msgstr "Refrescar"
 
 #: ../browser/templates/migration.pt:174
 msgid "Relocate"
-msgstr ""
+msgstr "Recolocar"
 
 #: ../browser/migrator.py:127
 msgid "Relocate content to the proper root language folder"
-msgstr ""
+msgstr "Recolocar el contenido en el idioma adecuado"
 
 #: ../browser/controlpanel.py:38
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #: ../interfaces.py:169
 msgid "Search for closest translation in parent's content chain."
-msgstr ""
+msgstr "Buscar la traducción más cercana entre los ancestros."
 
 #: ../interfaces.py:172
 msgid "Show user dialog with information about the available translations."
-msgstr ""
+msgstr "Mostrar una pantalla con información sobre las traducciones disponibles."
 
 #: ../browser/templates/mmap.pt:55
 msgid "Site Setup"
-msgstr ""
+msgstr "Configuración del Sitio"
 
 #: ../browser/templates/not_translated_yet.pt:23
 msgid "This content is not translated yet to the language requested."
-msgstr ""
+msgstr "El contenido no está traducido al idioma solicitado."
 
 #: ../browser/templates/not_translated_yet.pt:47
 msgid "This item doesn't have any translation yet. You can return to the portal site:"
-msgstr ""
+msgstr "Este elemento no tiene traducciones. Puede volver al sitio web:"
 
 #: ../browser/templates/migration.pt:204
 msgid "Transfer"
-msgstr ""
+msgstr "Transferir"
 
 #: ../browser/migrator.py:50
 msgid "Transfer multilingual catalog information"
-msgstr ""
+msgstr "Transferir información del catálogo multiidioma"
 
 #: ../configure.zcml:159
 msgid "Uninstall, removes multilingual content support with plone.app.multilingual"
-msgstr ""
+msgstr "Desinstalar, elimina el soporte de contenido multiidioma de plone.app.multilingual"
 
 #: ../upgrades.zcml:29
 msgid "Update bundle regristration"
-msgstr ""
+msgstr "Actualizar el registro "
 
 #. Default: "This object is going to be a translation to ${DYNAMIC_CONTENT} from: <ul> <li><a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\"> <span>${DYNAMIC_CONTENT}</span> <span>${DYNAMIC_CONTENT}</span></a></li> </ul> <span>x</span>"
 #: ../browser/templates/add-form-is-translation.pt:14
 msgid "add-form-is-translation"
 msgstr ""
+"Este elemento va a ser una traducción al $\n"
+"{DYNAMIC_CONTENT} de:  <ul> <li><a href=\\\"$\n"
+"{DYNAMIC_CONTENT}\\\" class=\\\"link-overlay\\\"> <span>$\n"
+"{DYNAMIC_CONTENT}</span> <span>${DYNAMIC_CONTENT}</\n"
+"span></a></li> </ul> <span>x</span>\""
 
 #. Default: "assets"
 #: ../browser/setup.py:139
 msgid "assets_folder_id"
-msgstr ""
+msgstr "recursos"
 
 #. Default: "Assets"
 #: ../browser/setup.py:142
 msgid "assets_folder_title"
-msgstr ""
+msgstr "Recursos"
 
 #. Default: "Connect translation"
 #: ../browser/modify.py:44
 msgid "connect_translation"
-msgstr ""
+msgstr "Conectar traducción"
 
 #: ../browser/interfaces.py:86
 msgid "content"
-msgstr ""
+msgstr "Contenido"
 
 #. Default: "If you want to create this object without being a translation press <a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\">here</a>"
 #: ../browser/templates/add-form-is-translation.pt:14
 msgid "create-object-without-translation"
 msgstr ""
+"Si quieres crear este contenido sin que sea una traducción, pulse <a href=\\\"${DYNAMIC_CONTENT}\\\" class=\\\"link-\n"
+"overlay\\\">aquí</a>"
 
 #. Default: "Create ${lang_name}"
 #: ../browser/menu.py:161
@@ -175,259 +182,258 @@ msgstr "Crear ${lang_name}"
 #. Default: "This step will fix some lost dependencies to the ITranslatable interface hidden in the relation catalog and it gets rid of them. It must be run only when LinguaPlone is already uninstalled."
 #: ../browser/templates/migration.pt:225
 msgid "description_after_migration_cleanup"
-msgstr ""
+msgstr "Este paso arreglará algunas dependencias de la interfaz ITranslatable que se guardan en el catálogo de relaciones. Se deberá ejecutarla solo cuando haya desinstalado LinguaPlone"
 
 #. Default: "Edit {lang_name} with the two-column translation view"
 #: ../browser/menu.py:117
 msgid "description_babeledit_menu"
-msgstr ""
+msgstr "Editar ${lang_name} con la vista de dos columnas"
 
 #. Default: "When there are many translations for an item, the number of displayed buttons for them might get too large to fit inside the template. Choose here from which number onwards a drop-down menu will be displayed instead of buttons. Zero means that buttons will always be used."
 #: ../interfaces.py:240
 msgid "description_buttons_babel_view_up_to_nr_translations"
-msgstr ""
+msgstr "Cuando haya muchas traducciones de un elemento, el número de botones que se muestran para la selección de idioma puede que sea demasiado alto para que se muestren de forma correcta. Elija aquí el número de traducciones a partir del cual se mostrará un desplegable en vez de botones. Si introduce cero, indicará que se muestren siempre los botones."
 
 #. Default: "When updating an object with language independent the field will be synced to all target languages. That can produce Unauthorized error messages because if the editor of the canonical object is not allowed to update the target language objects. Enabling this bypasses this permission check. This could also be dangerous, so think about possible security issues before enabling this."
 #: ../interfaces.py:221
 msgid "description_bypass_languageindependent_field_permission_check"
-msgstr ""
+msgstr "Cuando se actualiza un elemento con un campo independiente respecto al idioma, ese campo se sincronizará a todos los idiomas. Esto puede producir errores de permisos porque el editor puede que no tenga permiso para actualizar una de las traducciones. Activando esta opción se permitirá saltar esa comprobación de permisos. Esto puede ser peligroso, por lo que tenga en cuenta cualquier situación que pueda crear problemas de seguridad antes de activarla."
 
 #. Default: "Filter using language the content on folder_contents"
 #: ../interfaces.py:198
 msgid "description_filter_content"
-msgstr ""
+msgstr "Filtrar la vista de los contenidos de la carpeta según el idioma"
 
 #. Default: "Is a paying API in order to use google translation service"
 #: ../interfaces.py:256
 msgid "description_google_translation_key"
-msgstr ""
+msgstr "Es un servicio de pago para utilizar el API de traducciones de Google"
 
 #. Default: "Go to the user's browser preferred language related folder"
 #: ../browser/menu.py:466
 msgid "description_language_folder"
-msgstr ""
+msgstr "Ir al idioma preferido según las preferencias del usuario"
 
 #. Default: "The migration process is divided into four steps, listed below. Each one of the steps has a well defined purpose explained. Some of them are destructive, so please read each one of it and do not try to run it on production servers without testing it previously."
 #: ../browser/templates/migration.pt:99
 msgid "description_migrate"
-msgstr ""
+msgstr "El proceso de migración está dividido en cuatro partes que se indican a continuación. Cada uno de los pasos tiene un objetivo predefinido. Algunos de ellos son destructivos, por lo que lea la explicación y no la ejecute en servidores de producción sin haberla probado antes."
 
 #. Default: "It can happen that there are relations left that contain LinguaPlone relations. By executing this step, the catalog gets reset and rebuilt. It CAN happen that things go bad. In that case relations get lost. It is therefor important that you have a backup!"
 #: ../browser/templates/cleanup.pt:66
 msgid "description_migrate_after"
-msgstr ""
+msgstr "Puede suceder que queden restos de relaciones que contengan relaciones de LinguaPlone. Ejecutando este paso, el catálogo se reseteará y se reconstrucirá. PUEDE suceder que las cosas vayan mal. En ese caso las relaciones se perderán. Es muy importante que tenga una copia de seguridad."
 
 #. Default: "Here you will see the results of the migration process"
 #: ../browser/templates/migration.pt:265
 msgid "description_migration_results"
-msgstr ""
+msgstr "Aquí verá los resultados de la migración"
 
 #. Default: "Add or delete translations"
 #: ../browser/menu.py:219
 msgid "description_modify_translations"
-msgstr ""
+msgstr "Añadir o eliminar traducciones"
 
 #. Default: "After creating a new translation redirecto to babel view"
 #: ../interfaces.py:209
 msgid "description_redirect_babel_view"
-msgstr ""
+msgstr "Redirigir a la vista babel tras crear una nueva traducción"
 
 #. Default: "Use this field to define portal types that will not be traversed for finding content to move. All content of those types will be moved with all contained sub-items. This is useful for content types that are themselves translatable, but contain sub-content that is not translatable or does not have a language set.<br /> This list is pre-filled with some portal types, but you can add additional ones if needed, one per line."
 #: ../browser/templates/migration.pt:161
 msgid "description_relocate_blacklist"
-msgstr ""
+msgstr "Utilice este campo para definir a qué tipos de elementos no se accederá para encontrar contenido a mover. Todos los elementos de estos tipos se moverán tal cual con todos sus contenidos. Esto es útil para tipos de elemento que son por ellos mismos traducibles, pero que contienen otros elementos que no son traducibles o no tienen ningún idioma fijado.<br /> Este listado está pre-rellenado con algunos tipos, pero puede añadir nuevos, uno por línea"
 
 #. Default: "This step will move the site's content to its corresponding root language folder and previously will make a search for misplaced content through the site's content tree and will move them to its nearest translated parent. This step is destructive as it will alter your content tree structure. Make sure you have previously configured your site's languages properly in the 'Site Languages' tab of the 'Languages' control panel."
 #: ../browser/templates/migration.pt:149
 msgid "description_relocate_content"
-msgstr ""
+msgstr "Este paso moverá el contenido del portal a la carpeta raíz de idioma correspondiente y primero hará una búsqueda en el portal para encontrar contenido que no está situado correctamente y moverlo a un sitio adecuado. Este paso es destructivo y modificará la estructura de su portal. Asegúrese de haber configurado correctamente los idiomas de su portal adecuadamente."
 
 #. Default: "The default language used for the content and the UI of this site."
 #: ../interfaces.py:268
 msgid "description_selector_lookup_translations_policy"
-msgstr ""
+msgstr "El idioma por defecto que se utilizará para el contenido y el interfaz de este sitio."
 
 #. Default: "Move the translation under another language folder"
 #: ../browser/menu.py:140
 msgid "description_set_language"
-msgstr ""
+msgstr "Mover la traducción a la carpeta de otro idioma"
 
 #. Default: "Open the language independent assets folder"
 #: ../browser/menu.py:445
 msgid "description_shared_folder"
-msgstr ""
+msgstr "Abrir la carpeta de recursos compartida entre idiomas"
 
 #. Default: "This step will transfer the relations between translations stored by LinguaPlone to the PAM catalog. This step is not destructive and can be executed as many times as needed."
 #: ../browser/templates/migration.pt:195
 msgid "description_transfer_multilingual_catalog_info"
-msgstr ""
+msgstr "Este paso transferirá las relaciones de las traducciones guardadas por LinguaPlone al catálogo de plone.app.multilingual. Este paso no es destructivo y se puede ejecutar tantas veces como sea necesario."
 
 #. Default: "Translate into ${lang_name}"
 #: ../browser/menu.py:166
 msgid "description_translate_into"
-msgstr ""
+msgstr "Traducir a ${lang_name}"
 
 #. Default: "Translation map."
 #: ../browser/templates/mmap.pt:70
 msgid "description_translation_map"
-msgstr ""
+msgstr "Mapa de traducciones."
 
 #. Default: "Universal link to the content in user's preferred language"
 #: ../browser/menu.py:239
 msgid "description_universal_link"
-msgstr ""
+msgstr "Enlace universal al contenido en el idioma preferido del usuario"
 
 #. Default: "Untranslated languages from the current content"
 #: ../browser/interfaces.py:63
 msgid "description_update_language"
-msgstr ""
+msgstr "Idiomas sin traducciones del contenido actual"
 
 #. Default: "Edit ${lang_name}"
 #: ../browser/menu.py:112
 msgid "edit_translation"
-msgstr ""
+msgstr "Editar ${lang_name}"
 
 #. Default: "Folder's id is not a valid language code"
 #: ../browser/migrator.py:308
 msgid "folder_to_lrf_id_not_language"
-msgstr ""
+msgstr "El identificador de la carpeta no es un idioma válido"
 
 #. Default: "Only folders just below the root can be transformed"
 #: ../browser/migrator.py:297
 msgid "folder_to_lrf_not_next_to_root"
-msgstr ""
+msgstr "Solo se pueden transformar las carpetas de debajo de la raíz"
 
 #. Default: "Folder has been successfully transformed to a language root folder"
 #: ../browser/migrator.py:331
 msgid "folder_to_lrf_success"
-msgstr ""
+msgstr "La carpeta se ha transformado correctamente a una carpeta de idioma"
 
 #. Default: "Available translations for this content"
 #: ../browser/templates/dexterity_edit.pt:15
 msgid "heading_available_translations"
-msgstr ""
+msgstr "Traducciones disponibles para este elemento"
 
 #. Default: "Use buttons in the bable view for up to how many translations?"
 #: ../interfaces.py:236
 msgid "heading_buttons_babel_view_up_to_nr_translations"
-msgstr ""
+msgstr "¿Utilizar botones en la vista babel?"
 
 #. Default: "Bypass language independent field permission check"
 #: ../interfaces.py:218
 msgid "heading_bypass_languageindependent_field_permission_check"
-msgstr ""
+msgstr "Saltar las comprobaciones de permisos en campos independientes respecto al idioma"
 
 #. Default: "Filter content by language."
 #: ../interfaces.py:195
 msgid "heading_filter_content"
-msgstr ""
+msgstr "Filtrar contenido por idioma"
 
 #. Default: "Google Translation API Key"
 #: ../interfaces.py:253
 msgid "heading_google_translation_key"
-msgstr ""
+msgstr "Google Translation API Key"
 
 #. Default: "Products.LinguaPlone Migration"
 #: ../browser/templates/migration.pt:90
 msgid "heading_migration"
-msgstr ""
+msgstr "Migración de Products.LinguaPlone"
 
 #. Default: "Products.LinguaPlone After Migration"
 #: ../browser/templates/cleanup.pt:62
 msgid "heading_migration_after"
-msgstr ""
+msgstr "Migración posterior de Products.LinguaPlone"
 
 #. Default: "Migration results"
 #: ../browser/templates/migration.pt:264
 msgid "heading_migration_results"
-msgstr ""
+msgstr "Resultados de la migración"
 
 #. Default: "Not available in ${language}"
 #: ../browser/templates/not_translated_yet.pt:20
 msgid "heading_not_available_in_language"
-msgstr ""
+msgstr "No está disponible en ${language}"
 
 #. Default: "Redirect on creation to babel view."
 #: ../interfaces.py:206
 msgid "heading_redirect_babel_view"
-msgstr ""
+msgstr "Redirigir a la vista babel tras la creación"
 
 #. Default: "The policy used to determine how the lookup for available translations will be made by the language selector."
 #: ../interfaces.py:264
 msgid "heading_selector_lookup_translations_policy"
-msgstr ""
+msgstr "La política que se utilizará para encontrar las traducciones disponibles en el selector de idioma"
 
 #. Default: "plone.app.multilingual translation map"
 #: ../browser/templates/mmap.pt:61
 msgid "heading_translation_map"
-msgstr ""
+msgstr "Mapa de traducciones de plone.app.multilingual"
 
 #. Default: "The migration of LinguaPlone content depends on an up-to-date Language index. Use this step to refresh this index. Warning: Depending on the number of items in your site, this can take a considerable amount of time."
 #: ../browser/templates/migration.pt:118
 msgid "help_reindex_language_index"
-msgstr ""
+msgstr "La migración del contenido LinguaPlone depende de un índice de idioma actualizado. Utilice este paso para actualizar este índice. Atención: dependiendo del número de elementos de su portal, esto puede durar mucho tiempo."
 
 #. Default: "All translations"
 #: ../browser/templates/mmap.pt:75
 msgid "label_all_translations"
-msgstr ""
+msgstr "Todas las traducciones"
 
 #. Default: "Unfortunately a number of relations could not be translated and are lost! here is some debug information:"
 #: ../browser/templates/cleanup_results.pt:27
 msgid "label_bad_relations"
-msgstr ""
+msgstr "Lamentablemente unas cuantas relaciones no se han podido traducir y se han perdido. Aquí tiene información sobre ello:"
 
 #. Default: "Catalog reload"
 #: ../browser/templates/cleanup.pt:86
 msgid "label_catalog_reload"
-msgstr ""
+msgstr "Refrescar el catálogo"
 
 #. Default: "Cleanup actions"
 #: ../browser/templates/cleanup.pt:48
 msgid "label_cleanup"
-msgstr ""
+msgstr "Acciones de limpieza"
 
 #. Default: "Connect translation"
 #: ../browser/modify.py:37
 msgid "label_connect_translation"
-msgstr ""
+msgstr "Conectar traducción"
 
 #. Default: "General"
-#: ../browser/templates/cleanup.pt:38
-#: ../browser/templates/migration.pt:73
+#: ../browser/templates/cleanup.pt:38 ../browser/templates/migration.pt:73
 msgid "label_general"
-msgstr ""
+msgstr "General"
 
 #. Default: "Migration"
 #: ../browser/templates/migration.pt:83
 msgid "label_migration"
-msgstr ""
+msgstr "Migración"
 
 #. Default: "Missing translations"
 #: ../browser/templates/mmap.pt:74
 msgid "label_missing_translations"
-msgstr ""
+msgstr "Traducciones que faltan"
 
 #. Default: "Move content to its corresponding language root folder"
 #: ../browser/templates/cleanup.pt:96
 msgid "label_move_content_to_languages"
-msgstr ""
+msgstr "Mover contenido a su idioma correspondiente"
 
 #. Default: "(No Title)"
 #: ../browser/templates/not_translated_yet.pt:39
 msgid "label_no_title"
-msgstr ""
+msgstr "(Sin título)"
 
 #. Default: "Total objects handled:"
 #: ../browser/templates/migrator-results.pt:20
 #: ../browser/templates/relocate-results.pt:20
 msgid "label_total_objects_translated"
-msgstr ""
+msgstr "Total de objetos gestionados:"
 
 #. Default: "Number of relations touched:"
 #: ../browser/templates/cleanup_results.pt:21
 msgid "label_total_relations"
-msgstr ""
+msgstr "Número de relaciones modificadas:"
 
 #. Default: "Translate"
 #: ../browser/menu.py:491
@@ -435,135 +441,131 @@ msgid "label_translate_menu"
 msgstr "Traducciones"
 
 #. Default: "Translation Map"
-#: ../browser/templates/cleanup.pt:43
-#: ../browser/templates/migration.pt:78
+#: ../browser/templates/cleanup.pt:43 ../browser/templates/migration.pt:78
 msgid "label_translation_map"
-msgstr ""
+msgstr "Mapa de traducciones"
 
 #. Default: "The available translations for this content should be here"
 #: ../browser/templates/dexterity_edit.pt:37
 msgid "label_translations_should_be_here"
-msgstr ""
+msgstr "Las traducciones disponibles deberían mostrarse aquí"
 
 #. Default: "Return to language folder"
 #: ../browser/menu.py:462
 msgid "language_folder"
-msgstr ""
+msgstr "Volver a la carpeta del idioma"
 
 #. Default: "Step 3 - Cleanup after migration"
 #: ../browser/templates/migration.pt:221
 msgid "legend_after_migration_cleanup"
-msgstr ""
+msgstr "Paso 3 - Limpieza tras la migración"
 
 #. Default: "Optional step - Reindex the Language index"
 #: ../browser/templates/migration.pt:114
 msgid "legend_reindex_language_index"
-msgstr ""
+msgstr "Paso opcional - Refrescar el índice de idioma"
 
 #. Default: "Step 1 - Relocate content to the proper root language folder"
 #: ../browser/templates/migration.pt:145
 msgid "legend_relocate_content"
-msgstr ""
+msgstr "Paso 1 - Recolocar el contenido en el idioma adecuado"
 
 #. Default: "Step 2 - Transfer multilingual catalog information"
 #: ../browser/templates/migration.pt:191
 msgid "legend_transfer_multilingual_catalog_info"
-msgstr ""
+msgstr "Paso 2 - Transferir la información del catálogo"
 
 #. Default: "This form allows you to connect a currently existing translations of the current object."
 #: ../browser/modify.py:38
 msgid "long_description_connect_translation"
-msgstr ""
+msgstr "Este formulario le ayuda a conectar las traducciones existentes con este contenido"
 
 #. Default: "The \"Language\" index was re-indexed correctly. Before, it contained ${previous_items_number} items, now it contains ${after_items_number}"
 #: ../browser/templates/reindex-results.pt:24
 msgid "migration_reindex_results"
-msgstr ""
+msgstr "El índice \\\"Language\\\" se ha refrescado correctamente. Antes contenía ${previous_items_number} elementos y ahora  ${after_items_number}."
 
 #. Default: "Missing languages:"
 #: ../browser/templates/mmap.pt:111
 msgid "missing_languages"
-msgstr ""
+msgstr "Idiomas que faltan:"
 
 #. Default: "Your site is not configured with more than one allowed language, but the add-on that provides support for content in multiple language is installed. You can add one or more additional languages from the ${control-panel-link}."
 #: ../browser/templates/languages-notice.pt:11
 msgid "not_configured_for_multiple_languages"
-msgstr ""
+msgstr "Su sitio no está configurado para soportar más de un idioma, pero ha instalado el soporte multiidioma para contenido. Puede añadir más idiomas desde la ${control-panel-link}."
 
 #. Default: "All the configuration of a multilingual Plone site"
 #: ../browser/controlpanel.py:33
 msgid "pam_controlpanel_description"
-msgstr ""
+msgstr "Toda la configuración multiidioma de Plone"
 
 #. Default: "It's not possible to execute this step without uninstalling completely LinguaPlone: uninstall in the add-ons control panel, delete it from your buildout and re-run buildout. Then come here and try again."
 #: ../browser/templates/migration.pt:234
 msgid "relation_migration_with_lp_not_posible"
-msgstr ""
+msgstr "No es posible ejecutar este paso sin desinstalar completamente LinguaPlone: desinstale el producto desde el panel de control, elimínelo del buildout y ejecute buildout. Después venga aquí e inténtelo de nuevo."
 
 #. Default: "Your site has no relation catalog, and therefore this migration step is not needed"
 #: ../browser/templates/migration.pt:242
 msgid "relation_migration_with_not_needed"
-msgstr ""
+msgstr "Su portal no tiene catálogo de relaciones y por lo tanto no es necesario ejecutar este paso."
 
 #. Default: "Open ${title} folder"
 #: ../browser/menu.py:440
-#, fuzzy
 msgid "shared_folder"
-msgstr "Ir a carpeta compartida"
+msgstr "Ir a la carpeta ${title}"
 
 #. Default: "Available languages"
 #: ../browser/interfaces.py:62
 msgid "title_available_languages"
-msgstr ""
+msgstr "Idiomas disponibles"
 
 #. Default: "Language"
 #: ../browser/interfaces.py:54
 msgid "title_language"
-msgstr ""
+msgstr "Idioma"
 
 #. Default: "Manage translations"
 #: ../browser/menu.py:215
 msgid "title_modify_translations"
-msgstr ""
+msgstr "Modificar traducciones..."
 
 #. Default: "Change content language"
 #: ../browser/menu.py:136
-#, fuzzy
 msgid "title_set_language"
-msgstr "Establecer idioma del contenido"
+msgstr "Modificar idioma del contenido"
 
 #. Default: "Folder translation"
 #: ../browser/menu.py:258
 msgid "title_translate_current_folder"
-msgstr ""
+msgstr "Traducción de la carpeta"
 
 #. Default: "Item translation"
 #: ../browser/menu.py:422
 msgid "title_translate_current_item"
-msgstr ""
+msgstr "Traducción del elemento"
 
 #. Default: "Manage translations for your content."
 #: ../browser/menu.py:492
 msgid "title_translate_menu"
-msgstr ""
+msgstr "Gestionar traducciones de su contenido."
 
 #. Default: "Translations:"
 #: ../browser/templates/mmap.pt:119
 msgid "translation"
-msgstr ""
+msgstr "Traducciones:"
 
 #. Default: "Translation to ${language}"
 #: ../browser/templates/dexterity_edit.pt:43
 msgid "translation_to"
-msgstr ""
+msgstr "Traducir a ${language}"
 
 #. Default: "Universal link"
 #: ../browser/menu.py:235
-#, fuzzy
 msgid "universal_link"
-msgstr "Link universal"
+msgstr "Enlace universal"
 
 #. Default: "Update Language"
 #: ../browser/update.py:20
 msgid "update_language"
-msgstr ""
+msgstr "Actualizar idioma"
