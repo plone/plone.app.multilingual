@@ -4,10 +4,6 @@ Changelog
 5.1.2 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 
 - Complete basque translation
@@ -15,10 +11,6 @@ New features:
 
 - Complete spanish translation
   [erral]
-
-Bug fixes:
-
-- *add item here*
 
 
 5.1.1 (2017-07-20)
