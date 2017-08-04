@@ -10,6 +10,9 @@ Breaking changes:
 
 New features:
 
+- Complete basque translation
+  [erral]
+
 - Complete spanish translation
   [erral]
 
