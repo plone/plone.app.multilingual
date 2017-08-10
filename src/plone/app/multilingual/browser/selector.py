@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
-from ZTUtils import make_query
 from plone.app.i18n.locales.browser.selector import LanguageSelector
+from plone.app.multilingual import logger
+from plone.app.multilingual.api import get_translation_manager
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import NOTG
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility
 from zope.component import queryAdapter
 from zope.component.hooks import getSite
+from ZTUtils import make_query
 
 
 def addQuery(request, url, exclude=tuple(), **extras):
@@ -72,14 +76,34 @@ class LanguageSelectorViewlet(LanguageSelector):
 
     def languages(self):
         languages_info = super(LanguageSelectorViewlet, self).languages()
+        registry = getUtility(IRegistry)
+        always_show_selector = registry['plone.always_show_selector']
         results = []
+        translations = []
         translation_group = queryAdapter(self.context, ITG)
+
         if translation_group is None:
             translation_group = NOTG
+
+        # there is no translation_manager on site root
+        # using try/except to prevent failing for now
+        try:
+            translation_manager = get_translation_manager(self.context)
+            translations = translation_manager.get_translated_languages()
+        except TypeError as e:
+            logger.debug(e)
+
         for lang_info in languages_info:
+
+            if not (always_show_selector or
+                    lang_info['code'] in translations or
+                    translation_group == 'notg'
+                    ):
+                continue
+
             # Avoid to modify the original language dict
             data = lang_info.copy()
-            data['translated'] = True
+            data['translated'] = lang_info['code'] in translations
             query_extras = {
                 'set_language': data['code'],
             }
@@ -87,12 +111,19 @@ class LanguageSelectorViewlet(LanguageSelector):
             if post_path:
                 query_extras['post_path'] = post_path
             site = getSite()
-            data['url'] = addQuery(self.request,
-                                   site.absolute_url().rstrip("/") +
-                                   "/@@multilingual-selector/%s/%s" % (
-                                       translation_group,
-                                       lang_info['code']
-                                   ),
-                                   **query_extras)
+            # if there is no translationgroup,
+            # we still want to switch language in the same context
+            if translation_group == 'notg':
+                data['url'] = self.context.absolute_url() + \
+                    '/?set_language=' + lang_info['code']
+            else:
+                data['url'] = addQuery(self.request,
+                                       site.absolute_url().rstrip("/") +
+                                       "/@@multilingual-selector/%s/%s" % (
+                                           translation_group,
+                                           lang_info['code']
+                                       ),
+                                       **query_extras)
             results.append(data)
+
         return results
