@@ -151,7 +151,7 @@ msgstr ""
 #. Default: "assets"
 #: ../browser/setup.py:139
 msgid "assets_folder_id"
-msgstr "recursos"
+msgstr ""
 
 #. Default: "Assets"
 #: ../browser/setup.py:142

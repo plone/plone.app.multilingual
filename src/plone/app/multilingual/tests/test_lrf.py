@@ -30,7 +30,7 @@ class TestLanguageRootFolder(unittest.TestCase):
         self.assertEqual(self.portal.en.assets['test-document'],
                          self.portal.ca.assets['test-document'])
         self.assertEqual(self.portal.en.assets['test-document'],
-                         self.portal.es.recursos['test-document'])
+                         self.portal.es.assets['test-document'])
 
         # Delete shared document
         notify(ObjectWillBeRemovedEvent(self.portal.en.assets['test-document']))
@@ -38,7 +38,7 @@ class TestLanguageRootFolder(unittest.TestCase):
 
         # Check that it is not available in LRFs
         self.assertNotIn('test-document', self.portal.ca.assets.objectIds())
-        self.assertNotIn('test-document', self.portal.es.recursos.objectIds())
+        self.assertNotIn('test-document', self.portal.es.assets.objectIds())
 
     def test_shared_content_indexing(self):
         # Create shared document
@@ -94,7 +94,7 @@ class TestLanguageRootFolder(unittest.TestCase):
         brains = self.portal.portal_catalog.searchResults(
             UID='{0:s}-es'.format(uuid))
         self.assertEqual(len(brains), 1)
-        self.assertEqual(brains[0].getPath(), '/plone/es/recursos/test-document')
+        self.assertEqual(brains[0].getPath(), '/plone/es/assets/test-document')
 
         # MOVE!
         moved = multilingualMoveObject(
