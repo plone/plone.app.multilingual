@@ -14,7 +14,12 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Language selector should only show translated languages if always_show_selector is set to false
+  [agitator]
+
+- Keep assets_folder_id lang neutral for default setup
+  [agitator]
+
 
 
 5.1.2 (2017-08-05)
@@ -67,9 +72,6 @@ New features:
   [datakurre]
 
 Bug fixes:
-
-- Language selector should only show translated languages if always_show_selector is set to false
-  [agitator]
 
 - Add missing i18n:translate tags
   [erral]

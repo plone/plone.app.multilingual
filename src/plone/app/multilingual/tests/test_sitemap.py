@@ -61,7 +61,7 @@ class TestSitemap(unittest.TestCase):
 
         self.assertIn('<loc>http://nohost/plone/ca/assets/test-document</loc>', xml)
         self.assertIn('<loc>http://nohost/plone/en/assets/test-document</loc>', xml)
-        self.assertIn('<loc>http://nohost/plone/es/recursos/test-document</loc>', xml)
+        self.assertIn('<loc>http://nohost/plone/es/assets/test-document</loc>', xml)
 
     def test_navroot_sitemap(self):
         '''
@@ -76,4 +76,4 @@ class TestSitemap(unittest.TestCase):
 
         self.assertNotIn('<loc>http://nohost/plone/ca/assets/test-document</loc>', xml)
         self.assertNotIn('<loc>http://nohost/plone/en/assets/test-document</loc>', xml)
-        self.assertIn('<loc>http://nohost/plone/es/recursos/test-document</loc>', xml)
+        self.assertIn('<loc>http://nohost/plone/es/assets/test-document</loc>', xml)
