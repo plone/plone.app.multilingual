@@ -68,9 +68,6 @@ New features:
 
 Bug fixes:
 
-- Language selector should only show translated languages if always_show_selector is set to false
-  [agitator]
-
 - Add missing i18n:translate tags
   [erral]
 
