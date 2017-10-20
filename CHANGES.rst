@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fix serialization of query variables for selector links in Zope 4.
+  [davisagli]
 
 
 5.1.2 (2017-08-05)

@@ -18,7 +18,11 @@ def addQuery(request, url, exclude=tuple(), **extras):
                 formvariables[k] = v.encode('utf-8')
             else:
                 formvariables[k] = v
-    formvariables.update(extras)
+    for k, v in extras.items():
+        if isinstance(v, unicode):
+            formvariables[k] = v.encode('utf-8')
+        else:
+            formvariables[k] = v
     try:
         if len(formvariables) > 0:
             url += '?' + make_query(formvariables)
