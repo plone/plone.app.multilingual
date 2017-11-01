@@ -10,7 +10,8 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Set shortname ``plone.translatable`` to behavior ``plone.app.multilingual.dx.interfaces.IDexterityTranslatable``.
+  [jensens]
 
 Bug fixes:
 
