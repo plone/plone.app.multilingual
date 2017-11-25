@@ -4,10 +4,6 @@ Changelog
 5.1.3 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 
 - Set shortname ``plone.translatable`` to behavior ``plone.app.multilingual.dx.interfaces.IDexterityTranslatable``.
