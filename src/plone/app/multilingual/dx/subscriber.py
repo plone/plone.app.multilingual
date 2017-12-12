@@ -103,7 +103,8 @@ class LanguageIndependentModifier(object):
         """Return all translations excluding the just modified content"""
         content_lang = queryAdapter(content, ILanguage).get_language()
         translations = ITranslationManager(content).get_translated_languages()
-        translations.remove(content_lang)
+        while content_lang in translations:
+            translations.remove(content_lang)
         return translations
 
 
