@@ -15,6 +15,21 @@ New features:
 Bug fixes:
 
 - *add item here*
+- Fix issue where rendering translation menu did write on get when translations
+  were enabled on old site with existing content
+  [datakurre]
+
+- Fix issue where DX multilingual subscriber was executed even multilingual
+  was not installed
+  [Asko Soukka]
+
+- Fix edge case where ValueError was raised from DX translatable subscriber
+  when no translations were yet available for the content
+  [datakurre]
+
+- Fix issue where rendering universal link failed when trnanslation information
+  was not yet available for the content
+  [datakurre]
 
 
 5.1.3 (2017-11-25)
