@@ -8,6 +8,7 @@ from plone.app.multilingual.dx.interfaces import IDexterityTranslatable
 from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.dexterity.interfaces import IDexterityFTI
 from plone.registry.interfaces import IRegistry
@@ -26,6 +27,10 @@ class LanguageIndependentModifier(object):
     def __call__(self, content, event):
         """Called by the event system."""
         request = getattr(event.object, 'REQUEST', getRequest())
+
+        if not IPloneAppMultilingualInstalled.providedBy(request):
+            return
+
         translation_info = getattr(request, 'translation_info', {})
 
         if 'tg' in translation_info.keys():
