@@ -15,9 +15,10 @@ from Products.CMFPlone.defaultpage import is_default_page
 from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.interfaces import ITG
+from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
-from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.permissions import ManageTranslations
 from plone.memoize import view
 from plone.registry.interfaces import IRegistry
@@ -62,7 +63,7 @@ class TranslateMenu(BrowserMenu):
         )
         content_translated = translated_languages(content)
         content_untranslated = untranslated_languages(content)
-        content_translation_group = ITranslationManager(content).tg
+        content_translation_group = ITG(content, '')
         if not ITranslatable.providedBy(content):
             content = None
 
@@ -80,7 +81,7 @@ class TranslateMenu(BrowserMenu):
             )
             folder_translated = translated_languages(folder)
             folder_untranslated = untranslated_languages(folder)
-            folder_translation_group = ITranslationManager(folder).tg
+            folder_translation_group = ITG(folder, '')
         else:
             folder_url = ''
             folder_language = ''
