@@ -15,9 +15,10 @@ from Products.CMFPlone.defaultpage import is_default_page
 from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.interfaces import ITG
+from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
-from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.permissions import ManageTranslations
 from plone.memoize import view
 from plone.registry.interfaces import IRegistry
@@ -62,7 +63,7 @@ class TranslateMenu(BrowserMenu):
         )
         content_translated = translated_languages(content)
         content_untranslated = untranslated_languages(content)
-        content_translation_group = ITranslationManager(content).tg
+        content_translation_group = ITG(content, '')
         if not ITranslatable.providedBy(content):
             content = None
 
@@ -80,7 +81,7 @@ class TranslateMenu(BrowserMenu):
             )
             folder_translated = translated_languages(folder)
             folder_untranslated = untranslated_languages(folder)
-            folder_translation_group = ITranslationManager(folder).tg
+            folder_translation_group = ITG(folder, '')
         else:
             folder_url = ''
             folder_language = ''
@@ -231,26 +232,27 @@ class TranslateMenu(BrowserMenu):
                 "submenu": None,
             })
             # Universal link
-            results_folder.append({
-                "title": _(
-                    u"universal_link",
-                    default=u"Universal link"
-                ),
-                "description": _(
-                    u"description_universal_link",
-                    default=u"Universal link to the content in user's preferred language"  # noqa
-                ),
-                "action": "%s/@@multilingual-universal-link/%s" % (
-                    site_url, folder_translation_group),
-                "selected": False,
-                "icon": None,
-                "extra": {
-                    "id": "_universal_folder_link",
-                    "separator": None,
-                    "class": ""
-                },
-                "submenu": None,
-            })
+            if folder_translation_group:
+                results_folder.append({
+                    "title": _(
+                        u"universal_link",
+                        default=u"Universal link"
+                    ),
+                    "description": _(
+                        u"description_universal_link",
+                        default=u"Universal link to the content in user's preferred language"  # noqa
+                    ),
+                    "action": "%s/@@multilingual-universal-link/%s" % (
+                        site_url, folder_translation_group),
+                    "selected": False,
+                    "icon": None,
+                    "extra": {
+                        "id": "_universal_folder_link",
+                        "separator": None,
+                        "class": ""
+                    },
+                    "submenu": None,
+                })
 
         if results_folder:
             # Folder translation separator
@@ -395,26 +397,27 @@ class TranslateMenu(BrowserMenu):
                 "submenu": None,
             })
             # Universal link
-            results_content.append({
-                "title": _(
-                    u"universal_link",
-                    default=u"Universal link"
-                ),
-                "description": _(
-                    u"description_universal_link",
-                    default=u"Universal link to the content in user's preferred language"  # noqa
-                ),
-                "action": "%s/@@multilingual-universal-link/%s" % (
-                    site_url, content_translation_group),
-                "selected": False,
-                "icon": None,
-                "extra": {
-                    "id": "_universal_link",
-                    "separator": None,
-                    "class": ""
-                },
-                "submenu": None,
-            })
+            if content_translation_group:
+                results_content.append({
+                    "title": _(
+                        u"universal_link",
+                        default=u"Universal link"
+                    ),
+                    "description": _(
+                        u"description_universal_link",
+                        default=u"Universal link to the content in user's preferred language"  # noqa
+                    ),
+                    "action": "%s/@@multilingual-universal-link/%s" % (
+                        site_url, content_translation_group),
+                    "selected": False,
+                    "icon": None,
+                    "extra": {
+                        "id": "_universal_link",
+                        "separator": None,
+                        "class": ""
+                    },
+                    "submenu": None,
+                })
 
         if results_folder and results_content:
             # Item translations separator
