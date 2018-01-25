@@ -7,6 +7,9 @@ from zope.component import queryAdapter
 from zope.component.hooks import getSite
 
 
+import six
+
+
 def addQuery(request, url, exclude=tuple(), **extras):
     """Adds the incoming GET query to the end of the url
     so that is propagated through the redirect hoops
@@ -14,12 +17,12 @@ def addQuery(request, url, exclude=tuple(), **extras):
     formvariables = {}
     for k, v in request.form.items():
         if k not in exclude:
-            if isinstance(v, unicode):
+            if isinstance(v, six.text_type):
                 formvariables[k] = v.encode('utf-8')
             else:
                 formvariables[k] = v
     for k, v in extras.items():
-        if isinstance(v, unicode):
+        if isinstance(v, six.text_type):
             formvariables[k] = v.encode('utf-8')
         else:
             formvariables[k] = v

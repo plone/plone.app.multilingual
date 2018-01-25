@@ -167,7 +167,7 @@ class selector_view(universal_link):
         if prefered in languages:
             context = languages[prefered]
         else:
-            context = languages[languages.keys()[0]]
+            context = languages[list(languages.keys())[0]]
 
         checkPermission = getSecurityManager().checkPermission
         chain = self.getParentChain(context)

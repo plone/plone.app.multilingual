@@ -9,7 +9,8 @@ from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import IUUID
 from zope.component import getUtility
 import json
-import urllib
+
+from six.moves import urllib
 
 
 def google_translate(question, key, lang_target, lang_source):
@@ -27,9 +28,9 @@ def google_translate(question, key, lang_target, lang_source):
                 'target': lang_target,
                 'source': lang_source,
                 'q': temp_question}
-        params = urllib.urlencode(data)
+        params = urllib.parse.urlencode(data)
 
-        retorn = urllib.urlopen(url + '?' + params)
+        retorn = urllib.request.urlopen(url + '?' + params)
         translated += json.loads(
             retorn.read())['data']['translations'][0]['translatedText']
 
@@ -37,9 +38,9 @@ def google_translate(question, key, lang_target, lang_source):
             'target': lang_target,
             'source': lang_source,
             'q': temp_question}
-    params = urllib.urlencode(data)
+    params = urllib.parse.urlencode(data)
 
-    retorn = urllib.urlopen(url + '?' + params)
+    retorn = urllib.request.urlopen(url + '?' + params)
     translated += json.loads(
         retorn.read())['data']['translations'][0]['translatedText']
     return json.dumps({'data': translated})

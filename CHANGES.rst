@@ -42,7 +42,7 @@ New features:
 
 Bug fixes:
 - Imports are Python3 compatible
-  [ale-rt]
+  [ale-rt, jensens]
 
 - Fix serialization of query variables for selector links in Zope 4.
   [davisagli]

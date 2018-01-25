@@ -95,7 +95,7 @@ class SetupMultilingualSite(object):
 
         try:
             canonical = ITranslationManager(self.folders[self.defaultLanguage])
-        except TypeError, e:
+        except TypeError as e:
             raise TypeError(str(e) + u' Are your folders ITranslatable?')
 
         for language in self.languages:
@@ -234,7 +234,7 @@ class SetupMultilingualSite(object):
 
         try:
             target.manage_pasteObjects(objects)
-        except ValueError, exc:
+        except ValueError as exc:
             # This portal_type may not be allowed.  This should not be
             # fatal, so we only log a warning.
             logger.warn((u"Could not move default page '{0:s}' j"

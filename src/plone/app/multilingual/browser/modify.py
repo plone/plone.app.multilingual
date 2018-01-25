@@ -73,7 +73,7 @@ class DisconnectTranslation(BrowserView):
                 manager = ITranslationManager(context)
                 try:
                     manager.remove_translation(language)
-                except Exception, e:
+                except Exception as e:
                     messages = IStatusMessage(self.request)
                     messages.addStatusMessage(e, type='error')
 

@@ -81,7 +81,7 @@ class AddingLanguageIndependentValue(ValueBase):
 
             if len(result) >= 1:
 
-                orig_lang = result.keys()[0]
+                orig_lang = list(result.keys())[0]
                 obj = result[orig_lang]
                 name = self.field.__name__
                 # XXX

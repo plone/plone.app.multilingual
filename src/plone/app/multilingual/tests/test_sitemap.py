@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from gzip import GzipFile
-from plone.app.multilingual._compat import StringIO
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.dexterity.utils import createContentInContainer
@@ -11,6 +10,9 @@ from zope.component import getUtility
 from zope.interface import alsoProvides
 
 import unittest
+
+
+from six import StringIO
 
 
 # This class largely inspired by plone/app/layout/sitemap/tests/test_sitemap.py
