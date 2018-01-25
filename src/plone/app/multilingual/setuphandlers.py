@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-from Products.CMFPlone.interfaces import INonInstallable
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
+from Products.CMFPlone.interfaces import INonInstallable
 from zope.component.hooks import getSite
 from zope.interface import implementer
 
 import pkg_resources
+
 
 try:
     pkg_resources.get_distribution('plone.app.contenttypes')

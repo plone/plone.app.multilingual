@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from plone.app.multilingual.testing import PAM_ROBOT_TESTING
 from plone.testing import layered
+
 import robotsuite
 import unittest
 

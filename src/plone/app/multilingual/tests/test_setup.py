@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
-import unittest
-from zope.interface import alsoProvides
-
-from Products.CMFCore.utils import getToolByName
-
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
-from plone.app.multilingual.browser.vocabularies import\
-    AllContentLanguageVocabulary
-from plone.app.multilingual.testing import (PAM_INTEGRATION_TESTING,
-                                            PAM_INTEGRATION_PRESET_TESTING)
+from plone.app.multilingual.testing import PAM_INTEGRATION_PRESET_TESTING
+from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
+from Products.CMFCore.utils import getToolByName
+from zope.interface import alsoProvides
+
+import unittest
 
 
 class TestSetupMultilingualSite(unittest.TestCase):

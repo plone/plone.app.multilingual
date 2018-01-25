@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-from ZTUtils import make_query
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import NOTG
 from zope.component import queryAdapter
 from zope.component.hooks import getSite
-
+from ZTUtils import make_query
 
 import six
 

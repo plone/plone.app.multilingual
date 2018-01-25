@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_inner
-from Products.Five import BrowserView
 from plone.app.multilingual import _
-from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import IUUID
-from zope.component import getUtility
-import json
-
+from Products.CMFPlone.interfaces import ILanguage
+from Products.Five import BrowserView
 from six.moves import urllib
+from zope.component import getUtility
+
+import json
 
 
 def google_translate(question, key, lang_target, lang_source):

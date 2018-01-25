@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-from Products.CMFCore.utils import getToolByName
 from plone.app.multilingual.events import ObjectTranslatedEvent
 from plone.app.multilingual.events import ObjectWillBeTranslatedEvent
-from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMutableTG
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import ITranslationFactory
@@ -13,6 +11,8 @@ from plone.app.multilingual.itg import addAttributeTG
 from plone.app.uuid.utils import uuidToObject
 from plone.uuid.handlers import addAttributeUUID
 from plone.uuid.interfaces import IUUID
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import ILanguage
 from zope.event import notify
 from zope.interface import implementer
 from zope.site.hooks import getSite

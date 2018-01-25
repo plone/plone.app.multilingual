@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from Products.CMFCore.utils import getToolByName
 from email.header import Header
 from plone.app.contenttypes.testing import PLONE_APP_CONTENTTYPES_FIXTURE
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
@@ -8,13 +7,13 @@ from plone.app.robotframework import AutoLogin
 from plone.app.robotframework import Content
 from plone.app.robotframework import RemoteLibraryLayer
 from plone.app.robotframework.remote import RemoteLibrary
+from plone.app.testing import applyProfile
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
-from plone.app.testing import TEST_USER_ID
-from plone.app.testing import applyProfile
 from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
 from plone.dexterity.fti import DexterityFTI
 from plone.dexterity.utils import iterSchemata
 from plone.dexterity.utils import iterSchemataForType
@@ -22,13 +21,17 @@ from plone.rfc822 import constructMessageFromSchemata
 from plone.rfc822 import initializeObjectFromSchemata
 from plone.testing import z2
 from plone.uuid.interfaces import IUUID
+from Products.CMFCore.utils import getToolByName
 from zope.configuration import xmlconfig
 from zope.event import notify
 from zope.interface import alsoProvides
 from zope.interface import noLongerProvides
 from zope.lifecycleevent import ObjectModifiedEvent
+
 import plone.app.dexterity
 import plone.app.multilingual
+
+
 try:
     from plone.app.robotframework.utils import disableCSRFProtection
 except ImportError:

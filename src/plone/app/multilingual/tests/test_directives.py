@@ -6,6 +6,7 @@ from plone.supermodel import model
 from plone.supermodel.utils import mergedTaggedValueList
 from zope import schema
 from zope.interface import Interface
+
 import unittest
 
 

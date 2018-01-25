@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_parent
-from Products.CMFCore.interfaces import IFolderish
-from Products.CMFCore.utils import getToolByName
 from plone.app.multilingual.browser.utils import is_language_independent
-from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
 from plone.app.multilingual.interfaces import ILanguageIndependentFolder
 from plone.app.multilingual.interfaces import IMutableTG
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.dexterity.interfaces import IDexterityContent
 from plone.uuid.interfaces import IUUID
+from Products.CMFCore.interfaces import IFolderish
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import ILanguage
 from zope.component.hooks import getSite
 from zope.globalrequest import getRequest
 from zope.lifecycleevent import modified
 from zope.lifecycleevent.interfaces import IObjectRemovedEvent
-from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 
 
 def _reindex_site_root(obj, root, language_codes):

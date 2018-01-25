@@ -5,14 +5,12 @@ from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.dexterity.utils import createContentInContainer
 from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.interfaces import ISiteSchema
+from six import StringIO
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.interface import alsoProvides
 
 import unittest
-
-
-from six import StringIO
 
 
 # This class largely inspired by plone/app/layout/sitemap/tests/test_sitemap.py

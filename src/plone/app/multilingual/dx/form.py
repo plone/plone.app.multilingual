@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_base
-from Products.CMFCore.utils import getToolByName
 from interfaces import ILanguageIndependentField
 from plone.app.multilingual.manager import TranslationManager
+from Products.CMFCore.utils import getToolByName
 from z3c.form.interfaces import DISPLAY_MODE
 from z3c.form.interfaces import IValue
 from z3c.form.interfaces import NO_VALUE

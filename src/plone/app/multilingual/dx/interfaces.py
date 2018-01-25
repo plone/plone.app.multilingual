@@ -2,6 +2,7 @@
 from plone.app.multilingual.interfaces import ITranslatable
 from zope.interface import Interface
 
+
 MULTILINGUAL_KEY = u'plone.app.multilingual.languageindependent'
 
 

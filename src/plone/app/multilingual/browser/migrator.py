@@ -2,21 +2,22 @@
 from Acquisition import aq_base
 from Acquisition import aq_inner
 from Acquisition import aq_parent
+from plone.app.multilingual import _
+from plone.app.multilingual.content.lrf import LanguageRootFolder
+from plone.app.multilingual.interfaces import ITranslationManager
+from plone.locking.interfaces import ILockable
 from Products.CMFCore.exceptions import ResourceLockedError
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import ILanguage
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from plone.app.multilingual import _
-from plone.app.multilingual.content.lrf import LanguageRootFolder
-from Products.CMFPlone.interfaces import ILanguage
-from plone.app.multilingual.interfaces import ITranslationManager
-from plone.locking.interfaces import ILockable
 from zc.relation.interfaces import ICatalog
 from zope.component import getUtility
 from zope.component.hooks import getSite
 from zope.component.interfaces import ComponentLookupError
 from zope.interface import Interface
+
 import logging
 
 

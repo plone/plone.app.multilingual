@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_inner
-from Products.CMFCore.utils import getToolByName
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
@@ -9,6 +7,8 @@ from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.dexterity.browser.edit import DefaultEditForm
 from plone.registry.interfaces import IRegistry
 from plone.z3cform import layout
+from Products.CMFCore.utils import getToolByName
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component import getUtility
 
 
