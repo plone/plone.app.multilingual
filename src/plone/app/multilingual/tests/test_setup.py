@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
+from plone.app.multilingual.browser.vocabularies import AllContentLanguageVocabulary  # noqa: E501
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.testing import PAM_INTEGRATION_PRESET_TESTING
 from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
