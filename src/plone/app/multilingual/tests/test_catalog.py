@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-from Products.CMFCore.utils import getToolByName
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.dexterity.utils import createContentInContainer
-import unittest
-from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from Products.CMFCore.utils import getToolByName
 from zope.interface import alsoProvides
+
+import unittest
 
 
 class TestIndependentLanguageFolder(unittest.TestCase):

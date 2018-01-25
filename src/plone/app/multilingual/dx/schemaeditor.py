@@ -6,12 +6,13 @@ from zope import schema
 from zope.component import adapter
 from zope.component import provideAdapter
 from zope.i18nmessageid import MessageFactory
-from zope.interface import Interface
 from zope.interface import alsoProvides
 from zope.interface import implementer
+from zope.interface import Interface
 from zope.interface import noLongerProvides
 from zope.schema import interfaces
 from zope.schema.interfaces import IField
+
 
 PMF = MessageFactory('plone.app.multilingual')
 

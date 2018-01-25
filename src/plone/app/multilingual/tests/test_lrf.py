@@ -2,14 +2,15 @@
 from OFS.event import ObjectWillBeRemovedEvent
 from plone.app.multilingual.browser.utils import is_language_independent
 from plone.app.multilingual.browser.utils import multilingualMoveObject
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.dexterity.utils import createContentInContainer
 from plone.uuid.interfaces import IUUID
 from zope.event import notify
-import unittest
-from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from zope.interface import alsoProvides
+
+import unittest
 
 
 class TestLanguageRootFolder(unittest.TestCase):

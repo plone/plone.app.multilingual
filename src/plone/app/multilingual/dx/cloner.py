@@ -14,6 +14,8 @@ from zope.component import queryAdapter
 from zope.interface import implementer
 
 import pkg_resources
+
+
 try:
     # pkg_resources.get_distribution('zope.initd')
     from zope.intid.interfaces import IIntIds

@@ -13,7 +13,9 @@ from Products.statusmessages.interfaces import IStatusMessage
 from z3c.form import button
 from z3c.form.form import Form
 from zope.component import getUtility
+
 import logging
+
 
 logger = logging.getLogger(__name__)
 
@@ -73,7 +75,7 @@ class DisconnectTranslation(BrowserView):
                 manager = ITranslationManager(context)
                 try:
                     manager.remove_translation(language)
-                except Exception, e:
+                except Exception as e:
                     messages = IStatusMessage(self.request)
                     messages.addStatusMessage(e, type='error')
 

@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-from ZTUtils import make_query
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import NOTG
 from zope.component import queryAdapter
 from zope.component.hooks import getSite
+from ZTUtils import make_query
+
+import six
 
 
 def addQuery(request, url, exclude=tuple(), **extras):
@@ -14,12 +16,12 @@ def addQuery(request, url, exclude=tuple(), **extras):
     formvariables = {}
     for k, v in request.form.items():
         if k not in exclude:
-            if isinstance(v, unicode):
+            if isinstance(v, six.text_type):
                 formvariables[k] = v.encode('utf-8')
             else:
                 formvariables[k] = v
     for k, v in extras.items():
-        if isinstance(v, unicode):
+        if isinstance(v, six.text_type):
             formvariables[k] = v.encode('utf-8')
         else:
             formvariables[k] = v

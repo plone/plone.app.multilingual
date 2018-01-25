@@ -3,8 +3,8 @@ from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.app.multilingual.dx.interfaces import MULTILINGUAL_KEY
 from plone.supermodel.directives import CheckerPlugin
 from plone.supermodel.directives import MetadataListDirective
-from zope.interface import Interface
 from zope.interface import alsoProvides
+from zope.interface import Interface
 from zope.interface.interfaces import IInterface
 
 

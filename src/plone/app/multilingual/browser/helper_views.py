@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
 from AccessControl.SecurityManagement import getSecurityManager
 from Acquisition import aq_chain
+from borg.localrole.interfaces import IFactoryTempFolder
+from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.app.multilingual.browser.selector import addQuery
+from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
+from plone.app.multilingual.interfaces import ILanguageRootFolder
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.app.multilingual.interfaces import ITG
+from plone.app.multilingual.interfaces import ITranslatable
+from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.manager import TranslationManager
+from plone.i18n.interfaces import INegotiateLanguage
+from plone.i18n.locales.interfaces import IContentLanguageAvailability
+from plone.registry.interfaces import IRegistry
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from plone.i18n.interfaces import INegotiateLanguage
-from borg.localrole.interfaces import IFactoryTempFolder
-from plone.app.layout.navigation.interfaces import INavigationRoot
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
-from plone.app.multilingual.interfaces import ITG
-from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
-from plone.app.multilingual.browser.selector import addQuery
-from plone.app.multilingual.interfaces import ILanguageRootFolder
-from plone.app.multilingual.interfaces import ITranslatable
-from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.multilingual.manager import TranslationManager
-from plone.i18n.locales.interfaces import IContentLanguageAvailability
-from plone.registry.interfaces import IRegistry
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component.hooks import getSite
@@ -25,6 +25,7 @@ from zope.interface import implementer
 from zope.interface import Interface
 from zope.publisher.interfaces import IPublishTraverse
 from zope.publisher.interfaces import NotFound
+
 
 try:
     from Products.ATContentTypes.interfaces.factory import IFactoryTool
@@ -167,7 +168,7 @@ class selector_view(universal_link):
         if prefered in languages:
             context = languages[prefered]
         else:
-            context = languages[languages.keys()[0]]
+            context = languages[list(languages.keys())[0]]
 
         checkPermission = getSecurityManager().checkPermission
         chain = self.getParentChain(context)

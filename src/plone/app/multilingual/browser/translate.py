@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_inner
-from Products.Five import BrowserView
 from plone.app.multilingual import _
-from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import IUUID
+from Products.CMFPlone.interfaces import ILanguage
+from Products.Five import BrowserView
+from six.moves import urllib
 from zope.component import getUtility
+
 import json
-import urllib
 
 
 def google_translate(question, key, lang_target, lang_source):
@@ -27,9 +28,9 @@ def google_translate(question, key, lang_target, lang_source):
                 'target': lang_target,
                 'source': lang_source,
                 'q': temp_question}
-        params = urllib.urlencode(data)
+        params = urllib.parse.urlencode(data)
 
-        retorn = urllib.urlopen(url + '?' + params)
+        retorn = urllib.request.urlopen(url + '?' + params)
         translated += json.loads(
             retorn.read())['data']['translations'][0]['translatedText']
 
@@ -37,9 +38,9 @@ def google_translate(question, key, lang_target, lang_source):
             'target': lang_target,
             'source': lang_source,
             'q': temp_question}
-    params = urllib.urlencode(data)
+    params = urllib.parse.urlencode(data)
 
-    retorn = urllib.urlopen(url + '?' + params)
+    retorn = urllib.request.urlopen(url + '?' + params)
     translated += json.loads(
         retorn.read())['data']['translations'][0]['translatedText']
     return json.dumps({'data': translated})

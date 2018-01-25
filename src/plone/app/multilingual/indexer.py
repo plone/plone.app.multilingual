@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.indexer import indexer
+from Products.CMFPlone.interfaces import ILanguage
 
 
 @indexer(ITranslatable)

@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
-from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import _createObjectByType
-from Products.Five import BrowserView
 from logging import getLogger
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.layout.navigation.interfaces import INavigationRoot
-from plone.app.multilingual.dx.interfaces import IDexterityTranslatable
-from Products.CMFPlone.interfaces import ILanguage
 from plone.app.multilingual import _
+from plone.app.multilingual.dx.interfaces import IDexterityTranslatable
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
@@ -15,11 +11,16 @@ from plone.app.multilingual.subscriber import set_recursive_language
 from plone.dexterity.interfaces import IDexterityFTI
 from plone.i18n.locales.languages import _combinedlanguagelist
 from plone.i18n.locales.languages import _languagelist
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import ILanguage
+from Products.CMFPlone.utils import _createObjectByType
+from Products.Five import BrowserView
 from zope.component.hooks import getSite
 from zope.event import notify
 from zope.i18n import translate
 from zope.interface import alsoProvides
 from zope.lifecycleevent import modified
+
 
 logger = getLogger('plone.app.multilingual')
 
@@ -95,7 +96,7 @@ class SetupMultilingualSite(object):
 
         try:
             canonical = ITranslationManager(self.folders[self.defaultLanguage])
-        except TypeError, e:
+        except TypeError as e:
             raise TypeError(str(e) + u' Are your folders ITranslatable?')
 
         for language in self.languages:
@@ -234,7 +235,7 @@ class SetupMultilingualSite(object):
 
         try:
             target.manage_pasteObjects(objects)
-        except ValueError, exc:
+        except ValueError as exc:
             # This portal_type may not be allowed.  This should not be
             # fatal, so we only log a warning.
             logger.warn((u"Could not move default page '{0:s}' j"
