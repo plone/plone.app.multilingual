@@ -14,7 +14,10 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Marked 'Scenario: As an editor I can translate a document' as noncritical.
+  This is a 'robot' test that has been unstable for a long time.
+  [maurits]
+
 - Fix issue where rendering translation menu did write on get when translations
   were enabled on old site with existing content
   [datakurre]
