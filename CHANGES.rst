@@ -44,6 +44,7 @@ New features:
   [jensens]
 
 Bug fixes:
+
 - Imports are Python3 compatible
   [ale-rt, jensens]
 
