@@ -14,6 +14,10 @@ New features:
 
 Bug fixes:
 
+- Removed ``Extensions/Install.py``.  This was only there as wrapper for
+  applying our uninstall profile, but that wrapper is no longer needed.
+  [maurits]
+
 - Marked 'Scenario: As an editor I can translate a document' as noncritical.
   This is a 'robot' test that has been unstable for a long time.
   [maurits]
@@ -30,7 +34,7 @@ Bug fixes:
   when no translations were yet available for the content
   [datakurre]
 
-- Fix issue where rendering universal link failed when trnanslation information
+- Fix issue where rendering universal link failed when translation information
   was not yet available for the content
   [datakurre]
 
