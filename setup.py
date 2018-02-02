@@ -5,7 +5,7 @@ from setuptools import setup
 import os
 
 
-version = '5.1.4.dev0'
+version = '5.1.4'
 
 setup(
     name='plone.app.multilingual',
