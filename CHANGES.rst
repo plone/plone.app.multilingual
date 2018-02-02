@@ -4,14 +4,6 @@ Changelog
 5.1.4 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Removed ``Extensions/Install.py``.  This was only there as wrapper for
