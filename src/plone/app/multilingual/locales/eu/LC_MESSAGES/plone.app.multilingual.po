@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: plone.app.multilingual\n"
-"POT-Creation-Date: 2017-07-13 21:35+0000\n"
-"PO-Revision-Date: 2017-08-04 14:07+0200\n"
+"POT-Creation-Date: 2018-03-19 06:49+0000\n"
+"PO-Revision-Date: 2018-03-19 07:52+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: eu <eu@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,15 +19,15 @@ msgstr ""
 "Language: eu\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../browser/migrator.py:85
+#: ../browser/migrator.py:86
 msgid "After migration relation cleanup"
 msgstr "Migrazioaren osteko garbiketa"
 
-#: ../browser/controlpanel.py:62
+#: ../browser/controlpanel.py:60
 msgid "Cancel"
 msgstr "Utzi"
 
-#: ../browser/controlpanel.py:65
+#: ../browser/controlpanel.py:63
 msgid "Changes canceled."
 msgstr "Aldaketak bertan behera utzi dira"
 
@@ -35,7 +35,7 @@ msgstr "Aldaketak bertan behera utzi dira"
 msgid "Cleanup"
 msgstr "Garbitu"
 
-#: ../browser/controlpanel.py:49
+#: ../browser/controlpanel.py:47
 msgid "Default language not in available languages"
 msgstr "Defektuzko hizkuntza ez dago webguneko hizkuntzen artean"
 
@@ -47,7 +47,7 @@ msgstr "Hala ere, hemen dituzu hizkuntza batzuetan eginda dauden elementu honen 
 msgid "Install to enable multilingual content support with plone.app.multilingual"
 msgstr "Eduki eleanitza izateko konfigurazioa aktibatu: plone.app.multilingual"
 
-#: ../browser/translate.py:69
+#: ../browser/translate.py:70
 msgid "Invalid field"
 msgstr "Eremua ez da zuzena"
 
@@ -55,7 +55,7 @@ msgstr "Eremua ez da zuzena"
 msgid "Language control panel"
 msgstr "Hizkuntzen kontrol-panela"
 
-#: ../dx/configure.zcml:36
+#: ../dx/configure.zcml:37
 msgid "Make this content type multilingual aware"
 msgstr "Elementu-mota hauek itzulgarri egin"
 
@@ -64,15 +64,15 @@ msgid "Move"
 msgstr "Mugitu"
 
 #. Default: "Multilingual"
-#: ../interfaces.py:183
+#: ../interfaces.py:184
 msgid "Multilingual"
 msgstr "Multilingual"
 
-#: ../browser/controlpanel.py:32
+#: ../browser/controlpanel.py:30
 msgid "Multilingual Settings"
 msgstr "Eleaniztasun-aukerak"
 
-#: ../configure.zcml:151 ../dx/configure.zcml:36
+#: ../configure.zcml:151 ../dx/configure.zcml:37
 msgid "Multilingual Support"
 msgstr "Eleaniztasun-aukerak"
 
@@ -80,11 +80,11 @@ msgstr "Eleaniztasun-aukerak"
 msgid "Multilingual Support [uninstall]"
 msgstr "Eleaniztasun-aukerak [kendu]"
 
-#: ../browser/translate.py:54
+#: ../browser/translate.py:55
 msgid "Need a field"
 msgstr "Eremua behar da"
 
-#: ../browser/controlpanel.py:174
+#: ../browser/controlpanel.py:172
 msgid "Not translated"
 msgstr "Itzuli gabe"
 
@@ -96,19 +96,19 @@ msgstr "Berindexatu"
 msgid "Relocate"
 msgstr "Birkokatu"
 
-#: ../browser/migrator.py:127
+#: ../browser/migrator.py:128
 msgid "Relocate content to the proper root language folder"
 msgstr "Edukia dagokion hizkuntzaren karpetan kokatu"
 
-#: ../browser/controlpanel.py:38
+#: ../browser/controlpanel.py:36
 msgid "Save"
 msgstr "Gorde"
 
-#: ../interfaces.py:169
+#: ../interfaces.py:170
 msgid "Search for closest translation in parent's content chain."
 msgstr "Gurasoengandik hasita itzulpena duen elementurik gertukoena aurkitu."
 
-#: ../interfaces.py:172
+#: ../interfaces.py:173
 msgid "Show user dialog with information about the available translations."
 msgstr "Itzulpenik ez dagoela dioen mezua erakutsi."
 
@@ -128,7 +128,7 @@ msgstr "Elementu honek ez du itzulpenenik. Atariaren sarrerara itzuli zaitezke"
 msgid "Transfer"
 msgstr "Migratu"
 
-#: ../browser/migrator.py:50
+#: ../browser/migrator.py:51
 msgid "Transfer multilingual catalog information"
 msgstr "LinguaPloneren informazioa katalogora migratu"
 
@@ -140,23 +140,23 @@ msgstr "Desinstalatu, eduki eleanitza izateko konfigurazioa desaktibatu: plone.a
 msgid "Update bundle regristration"
 msgstr "Bildumak berriz erregistratu"
 
-#. Default: "This object is going to be a translation to ${DYNAMIC_CONTENT} from: <ul> <li><a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\"> <span>${DYNAMIC_CONTENT}</span> <span>${DYNAMIC_CONTENT}</span></a></li> </ul> <span>x</span>"
-#: ../browser/templates/add-form-is-translation.pt:14
+#. Default: "This object is going to be a translation to ${language} from:"
+#: ../browser/templates/add-form-is-translation.pt:8
 msgid "add-form-is-translation"
-msgstr "Elementu hau ${DYNAMIC_CONTENT}-rako itzulpen bat izango da, jatorrizkoak: <ul> <li><a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\"> <span>${DYNAMIC_CONTENT}</span> <span>${DYNAMIC_CONTENT}</span></a></li> </ul> <span>x</span>\""
+msgstr "Elementu hau ${language}-rako itzulpen bat izango da."
 
 #. Default: "assets"
-#: ../browser/setup.py:139
+#: ../browser/setup.py:140
 msgid "assets_folder_id"
 msgstr "media"
 
 #. Default: "Assets"
-#: ../browser/setup.py:142
+#: ../browser/setup.py:143
 msgid "assets_folder_title"
 msgstr "Media"
 
 #. Default: "Connect translation"
-#: ../browser/modify.py:44
+#: ../browser/modify.py:46
 msgid "connect_translation"
 msgstr "Itzulpenak lotu"
 
@@ -164,13 +164,13 @@ msgstr "Itzulpenak lotu"
 msgid "content"
 msgstr "Edukia"
 
-#. Default: "If you want to create this object without being a translation press <a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\">here</a>"
-#: ../browser/templates/add-form-is-translation.pt:14
+#. Default: "If you want to create this object without being a translation press ${url}"
+#: ../browser/templates/add-form-is-translation.pt:15
 msgid "create-object-without-translation"
-msgstr "Elementu hau itzulpena izan gabe sortzeko <a href=\"${DYNAMIC_CONTENT}\" class=\"link-overlay\">sakatu hemen</a>"
+msgstr "Elementu hau itzulpena izan gabe sortzeko sakatu ${url}"
 
 #. Default: "Create ${lang_name}"
-#: ../browser/menu.py:161
+#: ../browser/menu.py:162
 msgid "create_translation"
 msgstr "${lang_name} itzulpena sortu"
 
@@ -180,32 +180,32 @@ msgid "description_after_migration_cleanup"
 msgstr "Pausu honek ITranslatabe interfazearen dependentzia batzuk kkonponduko ditu. LinguaPlone guztiz desinstalatuta dagoenen bakarrik exekutatu behar da."
 
 #. Default: "Edit {lang_name} with the two-column translation view"
-#: ../browser/menu.py:117
+#: ../browser/menu.py:118
 msgid "description_babeledit_menu"
 msgstr "${lang_name} editatu bi zutabetako bistan"
 
 #. Default: "When there are many translations for an item, the number of displayed buttons for them might get too large to fit inside the template. Choose here from which number onwards a drop-down menu will be displayed instead of buttons. Zero means that buttons will always be used."
-#: ../interfaces.py:240
+#: ../interfaces.py:241
 msgid "description_buttons_babel_view_up_to_nr_translations"
 msgstr "Elementu baten itzulpen asko dagoenean, agertzen den botoi kopurua gehiegizkoa izan daiteke pantailan ondo ikusteko. Ezarri hemen noiz agertuko den menu desplegablea botoiak beharrean. Zero jartzen baduzu, beti botoiak agertuko dira."
 
 #. Default: "When updating an object with language independent the field will be synced to all target languages. That can produce Unauthorized error messages because if the editor of the canonical object is not allowed to update the target language objects. Enabling this bypasses this permission check. This could also be dangerous, so think about possible security issues before enabling this."
-#: ../interfaces.py:221
+#: ../interfaces.py:222
 msgid "description_bypass_languageindependent_field_permission_check"
 msgstr "Hizkuntzarekiko independentea den eremu bat duen elementu bat aldatzen denean, eremuaren balioa beste hizkuntzetara sinkronizatuko da. Horrek baimen arazoak eman ditzake editoreak beste hizkuntzetako elementuak aldatzeko baimenik ez badu. Hau aktibatzen baduzu, baimenen egiaztaketa ez da egingo. Arriskutsua ere izan daiteke, beraz aktibatu aurretik aztertu zure baimen-sistema."
 
 #. Default: "Filter using language the content on folder_contents"
-#: ../interfaces.py:198
+#: ../interfaces.py:199
 msgid "description_filter_content"
 msgstr "Karpetaren edukien bistan (folder_contents), edukia hizkuntzaren arabera filtratu"
 
 #. Default: "Is a paying API in order to use google translation service"
-#: ../interfaces.py:256
+#: ../interfaces.py:257
 msgid "description_google_translation_key"
 msgstr "Google-ren itzulpen zerbitzua erabiltzeko API gakoa (ordainpeko zerbitzua)"
 
 #. Default: "Go to the user's browser preferred language related folder"
-#: ../browser/menu.py:466
+#: ../browser/menu.py:469
 msgid "description_language_folder"
 msgstr "Erabiltzailearen nabigatzailearen hobespenek dioten hizkuntzara joan"
 
@@ -225,12 +225,12 @@ msgid "description_migration_results"
 msgstr "Hemen migrazioaren emaitzak ikusiko dituzu"
 
 #. Default: "Add or delete translations"
-#: ../browser/menu.py:219
+#: ../browser/menu.py:220
 msgid "description_modify_translations"
 msgstr "Itzulpenak gehitu edo ezabatu"
 
 #. Default: "After creating a new translation redirecto to babel view"
-#: ../interfaces.py:209
+#: ../interfaces.py:210
 msgid "description_redirect_babel_view"
 msgstr "Itzulpen berria sortu ostean babel bistara joan."
 
@@ -245,17 +245,17 @@ msgid "description_relocate_content"
 msgstr "Pausu honek, elementuak beren hizkuntzaren arabera dagokien tokira mugituko ditu. Horretarako eduki zuhaitzean zehar gaizki kokatuta dauden elementuak topatuko ditu (adibidez, gaztelania hizkuntza gisa duten elementuak euskarazko zuhaitzean) eta dagokien tokira mugituko ditu. Pausu hau atzeraezina da eta zure eduki-zuhaitza aldatuko du. Ziurta zaitez aurrez zure atariaren hizkuntzak ondo konfiguratu dituzula 'Hizkuntzen kontrol-panelean'. Zerbitzariaren errore-erregistroan agertuko dira mugitu beharreko elementuen datuak."
 
 #. Default: "The default language used for the content and the UI of this site."
-#: ../interfaces.py:268
+#: ../interfaces.py:269
 msgid "description_selector_lookup_translations_policy"
 msgstr "Defektuzko hizkuntza erabiltzen da edukiarentzat eta interfazearentzat."
 
 #. Default: "Move the translation under another language folder"
-#: ../browser/menu.py:140
+#: ../browser/menu.py:141
 msgid "description_set_language"
 msgstr "Elementu hau beste hizkuntza batera mugitu"
 
 #. Default: "Open the language independent assets folder"
-#: ../browser/menu.py:445
+#: ../browser/menu.py:448
 msgid "description_shared_folder"
 msgstr "Hizkuntzen artean partekatutako karpeta erakutsi"
 
@@ -265,7 +265,7 @@ msgid "description_transfer_multilingual_catalog_info"
 msgstr "Pausu honek LinguaPloneren elementuen arteko erlazioak sistema berrira migratuko ditu. Pausu honek ez du ezer deusezten eta nahi adina aldiz exekutatu daiteke."
 
 #. Default: "Translate into ${lang_name}"
-#: ../browser/menu.py:166
+#: ../browser/menu.py:167
 msgid "description_translate_into"
 msgstr "${lang_name} hizkuntzara itzuli"
 
@@ -275,7 +275,7 @@ msgid "description_translation_map"
 msgstr "Itzulpenen mapa"
 
 #. Default: "Universal link to the content in user's preferred language"
-#: ../browser/menu.py:239
+#: ../browser/menu.py:241
 msgid "description_universal_link"
 msgstr "Erabiltzailearen hizkuntzan ikusiko den elementuaren lotura unibertsala"
 
@@ -285,22 +285,22 @@ msgid "description_update_language"
 msgstr "Uneko elementuaren itzuli gabeko bertsioak"
 
 #. Default: "Edit ${lang_name}"
-#: ../browser/menu.py:112
+#: ../browser/menu.py:113
 msgid "edit_translation"
 msgstr "${lang_name} itzulpena editatu"
 
 #. Default: "Folder's id is not a valid language code"
-#: ../browser/migrator.py:308
+#: ../browser/migrator.py:309
 msgid "folder_to_lrf_id_not_language"
 msgstr "Karpetaren id-a ez da hizkuntza-kode zuzena"
 
 #. Default: "Only folders just below the root can be transformed"
-#: ../browser/migrator.py:297
+#: ../browser/migrator.py:298
 msgid "folder_to_lrf_not_next_to_root"
 msgstr "Erroan dauden karpetak bakarrik aldatu daitezke"
 
 #. Default: "Folder has been successfully transformed to a language root folder"
-#: ../browser/migrator.py:331
+#: ../browser/migrator.py:332
 msgid "folder_to_lrf_success"
 msgstr "Karpeta, Hizkuntzen Erro Karpeta izatera ondo aldatu da"
 
@@ -310,22 +310,22 @@ msgid "heading_available_translations"
 msgstr "Elementu honek dituen itzulpenak"
 
 #. Default: "Use buttons in the bable view for up to how many translations?"
-#: ../interfaces.py:236
+#: ../interfaces.py:237
 msgid "heading_buttons_babel_view_up_to_nr_translations"
 msgstr "Babel bistan botoiak erabili hizkuntza kopuru hau eduki arte:"
 
 #. Default: "Bypass language independent field permission check"
-#: ../interfaces.py:218
+#: ../interfaces.py:219
 msgid "heading_bypass_languageindependent_field_permission_check"
 msgstr "Hizkuntzarekiko independenteak diren eremuen baimen-kontrola saltatu."
 
 #. Default: "Filter content by language."
-#: ../interfaces.py:195
+#: ../interfaces.py:196
 msgid "heading_filter_content"
 msgstr "Edukia hizkuntzaren arabera filtratu."
 
 #. Default: "Google Translation API Key"
-#: ../interfaces.py:253
+#: ../interfaces.py:254
 msgid "heading_google_translation_key"
 msgstr "Google Translate API gakoa"
 
@@ -350,12 +350,12 @@ msgid "heading_not_available_in_language"
 msgstr "Ez dago ${language }z"
 
 #. Default: "Redirect on creation to babel view."
-#: ../interfaces.py:206
+#: ../interfaces.py:207
 msgid "heading_redirect_babel_view"
 msgstr "Sortzerakoan babel bistara berbideratu"
 
 #. Default: "The policy used to determine how the lookup for available translations will be made by the language selector."
-#: ../interfaces.py:264
+#: ../interfaces.py:265
 msgid "heading_selector_lookup_translations_policy"
 msgstr "Hizkuntza aldatzerakoan erabiliko den politika"
 
@@ -368,6 +368,10 @@ msgstr "Edukiaren itzulpenen mapa"
 #: ../browser/templates/migration.pt:118
 msgid "help_reindex_language_index"
 msgstr "LinguaPlonetik migrazioa egiteko hizkuntzari dagokion indizea guztiz eguneratuta egon behar da. Horretarako erabili orrialde hau. Oharra: zure atariak duen elementu-kopuruaren arabera, prozesu honek denbora asko har lezake."
+
+#: ../browser/templates/add-form-is-translation.pt:15
+msgid "here"
+msgstr "hemen"
 
 #. Default: "All translations"
 #: ../browser/templates/mmap.pt:75
@@ -390,7 +394,7 @@ msgid "label_cleanup"
 msgstr "Garbiketa-ekintzak"
 
 #. Default: "Connect translation"
-#: ../browser/modify.py:37
+#: ../browser/modify.py:39
 msgid "label_connect_translation"
 msgstr "Itzulpena lotu"
 
@@ -431,7 +435,7 @@ msgid "label_total_relations"
 msgstr "Ukitutako erlazio kopurua:"
 
 #. Default: "Translate"
-#: ../browser/menu.py:491
+#: ../browser/menu.py:494
 msgid "label_translate_menu"
 msgstr "Itzuli..."
 
@@ -446,7 +450,7 @@ msgid "label_translations_should_be_here"
 msgstr "Elementu honen itzulpenak hemen agertu beharko lirateke"
 
 #. Default: "Return to language folder"
-#: ../browser/menu.py:462
+#: ../browser/menu.py:465
 msgid "language_folder"
 msgstr "Hizkuntzaren karpetara joan"
 
@@ -471,7 +475,7 @@ msgid "legend_transfer_multilingual_catalog_info"
 msgstr "2. pausua - Itzulpenen informazioa migratu"
 
 #. Default: "This form allows you to connect a currently existing translations of the current object."
-#: ../browser/modify.py:38
+#: ../browser/modify.py:40
 msgid "long_description_connect_translation"
 msgstr "Formulario honek uneko elementua webgunean jada existitzen den beste elementu baten itzulpen gisa gordetzeko aukera ematen dizu"
 
@@ -491,7 +495,7 @@ msgid "not_configured_for_multiple_languages"
 msgstr "Zure ataria ez dago hizkuntza bat baino gehiago erabiltzeko konfiguratuta, baina eduki eleanitza izateko produktua instalatuta dago. Hizkuntza gehiago hemendik gehitu dezakezu: ${control-panel-link}."
 
 #. Default: "All the configuration of a multilingual Plone site"
-#: ../browser/controlpanel.py:33
+#: ../browser/controlpanel.py:31
 msgid "pam_controlpanel_description"
 msgstr "plone.app.multilingual produktuaren konfigurazioa. Hizkuntzarik ez duten hizkuntzei defektuzko hizkuntza ezarri nahi badiezu, edo elementuak hizkuntzaren arabera dagokien tokira mugitu nahi baditzu, joan aukera gehigarrietara."
 
@@ -506,7 +510,7 @@ msgid "relation_migration_with_not_needed"
 msgstr "Zure atariak ez du erlazio-kataloorik eta beraz, ez pausu hau ez da beharrezkoa."
 
 #. Default: "Open ${title} folder"
-#: ../browser/menu.py:440
+#: ../browser/menu.py:443
 msgid "shared_folder"
 msgstr "${title} karpeta ireki"
 
@@ -521,27 +525,27 @@ msgid "title_language"
 msgstr "Hizkuntza"
 
 #. Default: "Manage translations"
-#: ../browser/menu.py:215
+#: ../browser/menu.py:216
 msgid "title_modify_translations"
 msgstr "Itzulpenak kudeatu"
 
 #. Default: "Change content language"
-#: ../browser/menu.py:136
+#: ../browser/menu.py:137
 msgid "title_set_language"
 msgstr "Elementuaren hizkuntza aldatu"
 
 #. Default: "Folder translation"
-#: ../browser/menu.py:258
+#: ../browser/menu.py:260
 msgid "title_translate_current_folder"
 msgstr "Karpetaren itzulpena"
 
 #. Default: "Item translation"
-#: ../browser/menu.py:422
+#: ../browser/menu.py:425
 msgid "title_translate_current_item"
 msgstr "Elementuaren itzulpena"
 
 #. Default: "Manage translations for your content."
-#: ../browser/menu.py:492
+#: ../browser/menu.py:495
 msgid "title_translate_menu"
 msgstr "Zure edukiaren itzulpenak kudeatu."
 
@@ -556,7 +560,7 @@ msgid "translation_to"
 msgstr "Itzulpena: ${language}"
 
 #. Default: "Universal link"
-#: ../browser/menu.py:235
+#: ../browser/menu.py:237
 msgid "universal_link"
 msgstr "Lotura Unibertsala"
 

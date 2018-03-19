@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fix i18n markup of the viewlet shown in the translation creation view.
+  [erral] 
 
 
 5.1.4 (2018-02-02)
