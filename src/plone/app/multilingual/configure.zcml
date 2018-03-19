@@ -15,8 +15,6 @@
 
   <five:registerPackage package="."/> <!-- Required for uninstall profile -->
 
-  <i18n:registerTranslations directory="locales"/>
-
   <include package="Products.CMFCore" file="permissions.zcml"/>
 
   <include file="permissions.zcml"/>
