@@ -4,7 +4,7 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:five="http://namespaces.zope.org/five"
     xmlns:i18n="http://namespaces.zope.org/i18n"
-    i18n_domain="plone.app.multilingual">
+    i18n_domain="plone">
 
   <include package="plone.behavior" />
   <include package="plone.dexterity" />
@@ -14,8 +14,6 @@
   <include package="z3c.relationfield" />
 
   <five:registerPackage package="."/> <!-- Required for uninstall profile -->
-
-  <i18n:registerTranslations directory="locales"/>
 
   <include package="Products.CMFCore" file="permissions.zcml"/>
 

@@ -4,7 +4,7 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
     lang="en"
     metal:use-macro="context/prefs_main_template/macros/master"
-    i18n:domain="plone.app.multilingual">
+    i18n:domain="plone">
 
 <body>
 
@@ -32,7 +32,7 @@
 </script>
 
 
-    <div i18n:domain="plone.app.multilingual">
+    <div i18n:domain="plone">
         <ul class="contentViews" id="content-views">
           <li>
             <a href=""
@@ -60,11 +60,11 @@
         <div class="content-core">
 
             <h1 class="documentFirstHeading"
-                i18n:domain="plone.app.multilingual"
+                i18n:domain="plone"
                 i18n:translate="heading_migration_after">Products.LinguaPlone After Migration</h1>
 
             <p i18n:translate="description_migrate_after"
-              i18n:domain="plone.app.multilingual">
+              i18n:domain="plone">
                 It can happen that there are relations left that contain
                 LinguaPlone relations. By executing this step, the catalog
                 gets reset and rebuilt. It CAN happen that things go bad.
