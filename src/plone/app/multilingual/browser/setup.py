@@ -139,9 +139,11 @@ class SetupMultilingualSite(object):
 
         assets_folder_id = translate(_('assets_folder_id',
                                        default='assets'),
+                                     domain='plone',
                                      target_language=folderId)
         assets_folder_title = translate(_('assets_folder_title',
                                           default=u'Assets'),
+                                        domain='plone',
                                         target_language=folderId)
 
         if folder is None:
