@@ -13,4 +13,4 @@ else:
     isLPinstalled = True
 
 logger = logging.getLogger('plone.app.multilingual')
-_ = MessageFactory('plone.app.multilingual')
+_ = MessageFactory('plone')

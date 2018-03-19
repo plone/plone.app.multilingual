@@ -2,7 +2,7 @@
   <dt i18n:translate="" i18n:domain="plone">
     Warning
   </dt>
-  <dd id="multilingual-languages-notice" i18n:domain="plone.app.multilingual"
+  <dd id="multilingual-languages-notice" i18n:domain="plone"
       tal:define="portal_url context/portal_url"
       i18n:translate="not_configured_for_multiple_languages">
     Your site is not configured with more than one allowed language,

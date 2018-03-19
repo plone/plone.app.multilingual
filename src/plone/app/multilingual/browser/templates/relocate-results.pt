@@ -4,7 +4,7 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
     lang="en"
     metal:use-macro="context/prefs_main_template/macros/master"
-    i18n:domain="plone.app.multilingual">
+    i18n:domain="plone">
 
 <body>
 
@@ -12,7 +12,7 @@
 
 <div id="results">
 
-<div class="resultInfo" i18n:domain="plone.app.multilingual">
+<div class="resultInfo" i18n:domain="plone">
     <h2 i18n:translate=""
         tal:content="view/stepinfo">
         Relocate content to the proper root language folder
