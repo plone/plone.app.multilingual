@@ -45,8 +45,20 @@ class AddFormIsATranslationViewlet(ViewletBase):
     def language(self):
         return self.lang
 
-    def origin(self):
-        return self.origin
+    def languages(self):
+        """Returns list of languages."""
+        self.tool = getToolByName(self.context, 'portal_languages', None)
+        if self.tool is None:
+            return []
+
+        languages = {lang: info for (lang, info) in
+                        self.tool.getAvailableLanguageInformation().items()
+                        if info["selected"]}
+
+        return languages
+
+    def language_name(self, lang_code):
+        return self.languages().get(lang_code).get('native')
 
     def render(self):
         if self.available:
