@@ -29,14 +29,14 @@
         <div>
           <p i18n:translate="">
             The
-            <a tal:attributes="href string:${context/absolute_url}/multilingual-map">multilingual map view
+            <a i18n:name="url" i18n:translate="" tal:attributes="href string:${context/absolute_url}/multilingual-map">multilingual map view
             </a>
             allows you to view in a graphical manner the already translated items and its relations.
           </p>
           <p i18n:translate=""
              tal:condition="view/isLPinstalled">
             In case you want to migrate from Products.LinguaPlone access to the
-            <a tal:attributes="href string:${context/absolute_url}/lp-migration">migration procedure.
+            <a i18n:name="url" i18n:translate="" tal:attributes="href string:${context/absolute_url}/lp-migration">migration procedure.
             </a>
           </p>
         </div>
