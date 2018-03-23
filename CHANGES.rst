@@ -15,6 +15,9 @@ New features:
 
 Bug fixes:
 
+- Fix i18n markup in multilingual map to avoid ${DYNAMIC_CONTENT} strings in po files
+  [erral]
+
 - Fix i18n markup of the viewlet shown in the translation creation view.
   [erral] 
 
