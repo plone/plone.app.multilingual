@@ -15,6 +15,9 @@ New features:
 
 Bug fixes:
 
+- Remove `language-switcher` from available view methods when uninstalling
+  [erral]
+
 - Fix i18n markup in multilingual map to avoid ${DYNAMIC_CONTENT} strings in po files
   [erral]
 
