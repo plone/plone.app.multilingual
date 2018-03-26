@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+from logging import getLogger
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from Products.CMFPlone.interfaces import INonInstallable
+from Products.CMFPlone.utils import getToolByName
 from zope.component.hooks import getSite
 from zope.interface import implementer
 
@@ -63,6 +65,7 @@ def step_uninstall_various(context):
         return
     portal = context.getSite()
     disable_translatable_behavior(portal)
+    disable_language_switcher(portal)
 
 
 def disable_translatable_behavior(portal):
@@ -81,3 +84,16 @@ def disable_translatable_behavior(portal):
             'plone.app.multilingual.dx.interfaces.IDexterityTranslatable'
         ]
         fti._updateProperty('behaviors', behaviors)
+
+
+def disable_language_switcher(portal):
+    """Remove the use of language-switcher as default view for Plone Site"""
+    tt = getToolByName(portal, 'portal_types')
+    site = tt['Plone Site']
+    methods = site.view_methods
+    site.view_methods = [m for m in methods if m != 'language-switcher']
+    if site.default_view == 'language-switcher':
+        site.default_view = 'listing_view'
+
+    log = getLogger('setuphandlers.disable_language_switcher')
+    log.info('Language switcher disabled')
