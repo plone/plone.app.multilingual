@@ -15,6 +15,9 @@ New features:
 
 Bug fixes:
 
+- Fix Python 3 import.
+  [pbauer]
+
 - Remove `language-switcher` from available view methods when uninstalling
   [erral]
 
