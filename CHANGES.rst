@@ -4,10 +4,6 @@ Changelog
 5.2.0 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 
 - Move translations to plone.app.locales. Fixes #191
