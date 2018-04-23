@@ -29,7 +29,7 @@ class TestLanguageRootFolder(unittest.TestCase):
 
         # Check shared document is there
         self.assertEqual(self.portal.en.assets['test-document'],
-                         self.portal.ca.assets['test-document'])
+                         self.portal.ca.recursos['test-document'])
         self.assertEqual(self.portal.en.assets['test-document'],
                          self.portal.es.recursos['test-document'])
 
@@ -38,7 +38,7 @@ class TestLanguageRootFolder(unittest.TestCase):
         self.portal.en.assets.manage_delObjects('test-document')
 
         # Check that it is not available in LRFs
-        self.assertNotIn('test-document', self.portal.ca.assets.objectIds())
+        self.assertNotIn('test-document', self.portal.ca.recursos.objectIds())
         self.assertNotIn('test-document', self.portal.es.recursos.objectIds())
 
     def test_shared_content_indexing(self):
@@ -66,7 +66,7 @@ class TestLanguageRootFolder(unittest.TestCase):
             self.portal.assets, 'Document', title=u"Test document")
 
         root_uuid = IUUID(self.portal.assets['test-document'])
-        shared_uuid = IUUID(self.portal.ca.assets['test-document'])
+        shared_uuid = IUUID(self.portal.ca.recursos['test-document'])
 
         self.assertEqual('{0:s}-ca'.format(root_uuid), shared_uuid)
 
@@ -80,7 +80,7 @@ class TestLanguageRootFolder(unittest.TestCase):
 
         # Check that ghost is ghost
         self.assertTrue(
-            is_language_independent(self.portal.ca.assets['test-document']))
+            is_language_independent(self.portal.ca.recursos['test-document']))
 
         # Check is in the catalog
         brains = self.portal.portal_catalog.searchResults(UID=uuid)
@@ -90,7 +90,7 @@ class TestLanguageRootFolder(unittest.TestCase):
         brains = self.portal.portal_catalog.searchResults(
             UID='{0:s}-ca'.format(uuid))
         self.assertEqual(len(brains), 1)
-        self.assertEqual(brains[0].getPath(), '/plone/ca/assets/test-document')
+        self.assertEqual(brains[0].getPath(), '/plone/ca/recursos/test-document')
 
         brains = self.portal.portal_catalog.searchResults(
             UID='{0:s}-es'.format(uuid))
@@ -99,7 +99,7 @@ class TestLanguageRootFolder(unittest.TestCase):
 
         # MOVE!
         moved = multilingualMoveObject(
-            self.portal.ca.assets['test-document'], 'ca')
+            self.portal.ca.recursos['test-document'], 'ca')
 
         # Check that the old and the new uuid are the same
         moved_uuid = IUUID(self.portal.ca['test-document'])
