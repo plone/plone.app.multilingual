@@ -76,7 +76,7 @@ class TestSubscribers(unittest.TestCase):
 
         # Test a paste into a subfolder to be ultra cautious
         ca_assets_subfolder = createContentInContainer(
-            self.portal['ca']['assets'], 'Folder', title=u"A Folder")
+            self.portal['ca']['recursos'], 'Folder', title=u"A Folder")
 
         subfolder_name = ca_assets_subfolder.id
 
@@ -84,7 +84,7 @@ class TestSubscribers(unittest.TestCase):
         ca_assets_subfolder.manage_pasteObjects(id_)
 
         # Get both assets folders afresh
-        ca_assets_subfolder = self.portal['ca']['assets'][subfolder_name]
+        ca_assets_subfolder = self.portal['ca']['recursos'][subfolder_name]
         en_assets_subfolder = self.portal['en']['assets'][subfolder_name]
 
         # Check it is in both folder listings
@@ -119,14 +119,14 @@ class TestSubscribers(unittest.TestCase):
 
         # Test a paste into a subfolder to be ultra cautious
         ca_assets_subfolder = createContentInContainer(
-            self.portal['ca']['assets'], 'Folder', title=u"A Folder")
+            self.portal['ca']['recursos'], 'Folder', title=u"A Folder")
 
         subfolder_name = ca_assets_subfolder.id
         id_ = self.portal['ca'].manage_copyObjects(a_ca.id)
         ca_assets_subfolder.manage_pasteObjects(id_)
 
         # Get both assets folders afresh
-        ca_assets_subfolder = self.portal['ca']['assets'][subfolder_name]
+        ca_assets_subfolder = self.portal['ca']['recursos'][subfolder_name]
         en_assets_subfolder = self.portal['en']['assets'][subfolder_name]
 
         # Check it is in both folder listings

@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fixed tests now that Catalan has translated 'assets' into 'recursos'.
+  [maurits]
 
 
 5.2.0 (2018-04-04)
@@ -37,7 +38,7 @@ Bug fixes:
   [erral]
 
 - Fix i18n markup of the viewlet shown in the translation creation view.
-  [erral] 
+  [erral]
 
 
 5.1.4 (2018-02-02)

@@ -59,7 +59,7 @@ class TestSitemap(unittest.TestCase):
         self.assertIn('<loc>http://nohost/plone/en/test-document</loc>', xml)
         self.assertIn('<loc>http://nohost/plone/es/test-document</loc>', xml)
 
-        self.assertIn('<loc>http://nohost/plone/ca/assets/test-document</loc>', xml)
+        self.assertIn('<loc>http://nohost/plone/ca/recursos/test-document</loc>', xml)
         self.assertIn('<loc>http://nohost/plone/en/assets/test-document</loc>', xml)
         self.assertIn('<loc>http://nohost/plone/es/recursos/test-document</loc>', xml)
 
@@ -74,6 +74,6 @@ class TestSitemap(unittest.TestCase):
         self.assertNotIn('<loc>http://nohost/plone/en/test-document</loc>', xml)  # noqa
         self.assertIn('<loc>http://nohost/plone/es/test-document</loc>', xml)
 
-        self.assertNotIn('<loc>http://nohost/plone/ca/assets/test-document</loc>', xml)
+        self.assertNotIn('<loc>http://nohost/plone/ca/recursos/test-document</loc>', xml)
         self.assertNotIn('<loc>http://nohost/plone/en/assets/test-document</loc>', xml)
         self.assertIn('<loc>http://nohost/plone/es/recursos/test-document</loc>', xml)

@@ -32,7 +32,8 @@ class TestMenu(unittest.TestCase):
 
     def test_menu_is_visible(self):
         self.browser.open(self.a_ca.absolute_url())
-        self.assertIn('Translate', self.browser.contents)
+        # 'Translate' in Catalan:
+        self.assertIn('Tradueix', self.browser.contents)
 
     def test_menu_contains_translatable_entries(self):
         self.browser.open(self.a_ca.absolute_url())
