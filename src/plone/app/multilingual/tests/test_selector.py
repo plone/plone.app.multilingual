@@ -155,12 +155,12 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.assertEqual(self.browser.url,
                          a_ca.absolute_url() + '?set_language=ca')
 
-        self.assertIn(u'lang="ca"'.encode("utf-8"), self.browser.contents)
+        self.assertIn('lang="ca"', self.browser.contents)
 
         self.browser.open(selector_viewlet_languages[2]['url'])
         self.assertEqual(self.browser.url,
                          a_es.absolute_url() + '?set_language=es')
-        self.assertIn(u'lang="es"'.encode("utf-8"), self.browser.contents)
+        self.assertIn('lang="es"', self.browser.contents)
 
     def test_languages_fully_translated_by_closest(self):
         self.registry = getUtility(IRegistry)
@@ -277,7 +277,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.browser.url,
             a_en.absolute_url() + '?set_language=en'
         )
-        self.assertIn(u'lang="en"'.encode("utf-8"), self.browser.contents)
+        self.assertIn('lang="en"', self.browser.contents)
         # But extra check, because English is the default?
         self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
 
@@ -288,7 +288,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.browser.url,
             f_ca.absolute_url() + '?set_language=ca'
         )
-        self.assertIn(u'lang="ca"'.encode("utf-8"), self.browser.contents)
+        self.assertIn('lang="ca"', self.browser.contents)
 
         # Check that ES translation is missing and only the LRF is found
         self.browser.open(selector_languages[2]['url'])
@@ -296,7 +296,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.browser.url,
             self.portal['es'].absolute_url() + '?set_language=es'
         )
-        self.assertIn(u'lang="es"'.encode("utf-8"), self.browser.contents)
+        self.assertIn('lang="es"', self.browser.contents)
 
     def test_languages_partially_translated_by_dialog(self):
         self.registry = getUtility(IRegistry)
@@ -320,7 +320,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             a_en.absolute_url()+'?set_language=en'
         )
         # But extra check, because English is the default?
-        self.assertIn(u'lang="en"'.encode("utf-8"), self.browser.contents)
+        self.assertIn('lang="en"', self.browser.contents)
         self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
 
         tgid = selector_languages[1]['url'].split('/')[-2]
@@ -333,10 +333,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             NOT_TRANSLATED_YET_TEMPLATE +
             '/' + tgid + '?set_language=ca'
         )
-        self.assertIn(
-            u'lang="ca"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn('lang="ca"', self.browser.contents)
 
         # Check that ES is not yet translated
         self.browser.open(selector_languages[2]['url'])
@@ -346,10 +343,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             NOT_TRANSLATED_YET_TEMPLATE +
             '/' + tgid + '?set_language=es'
         )
-        self.assertIn(
-            u'lang="es"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn('lang="es"', self.browser.contents)
 
     def assertSiteRoot(self):
         self.selector_viewlet = LanguageSelectorViewlet(
@@ -366,10 +360,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
              '/@@multilingual-selector/notg/en?set_language=en')
         )
         self.browser.open(selector_languages[0]['url'])
-        self.assertIn(
-            u'lang="en"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn('lang="en"', self.browser.contents)
         self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
 
         # Check CA root
@@ -379,10 +370,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
              '/@@multilingual-selector/notg/ca?set_language=ca')
         )
         self.browser.open(selector_languages[1]['url'])
-        self.assertIn(
-            u'lang="ca"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn('lang="ca"', self.browser.contents)
 
         # Check ES root
         self.browser.open(selector_languages[2]['url'])
@@ -391,10 +379,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             (self.portal.absolute_url() +
              '/@@multilingual-selector/notg/es?set_language=es')
         )
-        self.assertIn(
-            u'lang="es"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn('lang="es"', self.browser.contents)
 
     def test_siteroot_by_closest(self):
         self.registry = getUtility(IRegistry)
@@ -467,10 +452,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.browser.url,
             self.portal['en'].absolute_url()+'?set_language=en'
         )
-        self.assertIn(
-            u'lang="en"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn('lang="en"', self.browser.contents)
         self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
 
         # Check CA
@@ -479,10 +461,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.browser.url,
             self.portal.ca.absolute_url()+'?set_language=ca'
         )
-        self.assertIn(
-            u'lang="ca"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn('lang="ca"', self.browser.contents)
 
         # Check ES
         self.browser.open(selector_languages[2]['url'])
@@ -490,10 +469,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.browser.url,
             self.portal.es.absolute_url()+'?set_language=es'
         )
-        self.assertIn(
-            u'lang="es"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn('lang="es"', self.browser.contents)
 
     def test_languages_root_folders_by_dialog(self):
         self.registry = getUtility(IRegistry)
@@ -537,10 +513,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.browser.url,
             f_en.absolute_url()+'/contact-info?set_language=en'
         )
-        self.assertIn(
-            u'lang="en"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn('lang="en"', self.browser.contents)
         self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
 
         # Check CA
@@ -549,10 +522,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.browser.url,
             f_ca.absolute_url()+'/contact-info?set_language=ca'
         )
-        self.assertIn(
-            u'lang="ca"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn('lang="ca"', self.browser.contents)
 
         # Check ES
         self.browser.open(selector_languages[2]['url'])
@@ -561,10 +531,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.browser.url,
             self.portal.es.absolute_url()+'?set_language=es'
         )
-        self.assertIn(
-            u'lang="es"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn('lang="es"', self.browser.contents)
 
         # Shouldn't do for the not-translated-yet thingie when dialog is on
         self.registry = getUtility(IRegistry)
@@ -584,10 +551,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.browser.url,
             f_en.absolute_url()+'/contact-info?set_language=en'
         )
-        self.assertIn(
-            u'lang="en"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn('lang="en"', self.browser.contents)
         self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
 
         # Check CA
@@ -596,10 +560,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.browser.url,
             f_ca.absolute_url()+'/contact-info?set_language=ca'
         )
-        self.assertIn(
-            u'lang="ca"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn('lang="ca"', self.browser.contents)
 
         # Check ES
         self.browser.open(selector_languages[2]['url'])
@@ -611,10 +572,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             NOT_TRANSLATED_YET_TEMPLATE +
             '/' + tgid + '?set_language=es'
         )
-        self.assertIn(
-            u'lang="es"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn('lang="es"', self.browser.contents)
 
     def assertLanguagesPreserveQuery(self, policy):
 
@@ -648,10 +606,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             (f_en.absolute_url() +
              '/contact-info?int=1&uni=pres%C3%98rved&set_language=en')
         )
-        self.assertIn(
-            u'lang="en"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn('lang="en"', self.browser.contents)
         self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
 
         # Check CA
@@ -661,10 +616,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             (f_ca.absolute_url() +
              '/contact-info?int=1&uni=pres%C3%98rved&set_language=ca')
         )
-        self.assertIn(
-            u'lang="ca"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn('lang="ca"', self.browser.contents)
 
         # Check ES
         self.browser.open(selector_languages[2]['url'])
@@ -673,10 +625,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.browser.url,
             untranslated_url[policy]
         )
-        self.assertIn(
-            u'lang="es"'.encode("utf-8"),
-            self.browser.contents
-        )
+        self.assertIn('lang="es"', self.browser.contents)
 
     def test_languages_preserve_by_closest(self):
         self.registry = getUtility(IRegistry)
@@ -867,7 +816,7 @@ class TestLanguageSelectorAddQuery(unittest.TestCase):
         )
 
     def test_formvariables_utf8(self):
-        self.request.form['one'] = u'Før'.encode("utf-8")
+        self.request.form['one'] = u'Før'
         self.request.form['two'] = u'foo'
         self.assertEqual(
             addQuery(self.request, self.url),
