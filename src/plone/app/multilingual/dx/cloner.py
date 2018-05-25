@@ -75,7 +75,7 @@ class LanguageIndependentFieldsManager(object):
                     elif IRelationValue.providedBy(value):
                         value = self.copy_relation(value, target_language)
                     elif IRelationList.providedBy(schema[field_name]):
-                        value = map(relation_copier, value or [])
+                        value = list(map(relation_copier, value or []))
 
                     doomed = True
                     setattr(schema(translation),
