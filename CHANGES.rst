@@ -4,14 +4,6 @@ Changelog
 5.2.1 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Fixed tests now that Catalan has translated 'assets' into 'recursos'.
