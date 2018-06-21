@@ -17,6 +17,8 @@ Bug fixes:
 - Fixed tests now that Catalan has translated 'assets' into 'recursos'.
   [maurits]
 
+- Fix type of default *tg* attribute in helper views to omit errors, if called without parameters
+  [tomgross]
 
 5.2.0 (2018-04-04)
 ------------------
