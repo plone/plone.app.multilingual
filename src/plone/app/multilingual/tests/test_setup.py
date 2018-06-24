@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
+from Acquisition import aq_base
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.browser.vocabularies import AllContentLanguageVocabulary  # noqa: E501
+from plone.app.multilingual.interfaces import ATTRIBUTE_NAME
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.interfaces import ITG
+from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.testing import PAM_INTEGRATION_PRESET_TESTING
 from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
 from Products.CMFCore.utils import getToolByName
@@ -26,6 +30,14 @@ class TestSetupMultilingualSite(unittest.TestCase):
     def test_single_language(self):
         """Only one language is set."""
         self.assertEqual(len(self.languages), 1)
+
+    def test_portal_has_tg_attribute(self):
+        """The site root should have the TG attribute set after installing"""
+        # Check the attribute
+        tg_attribute = getattr(aq_base(self.portal), ATTRIBUTE_NAME, None)
+        self.assertIsNotNone(tg_attribute)
+        # Which should allow adapting to ITG.
+        ITG(self.portal)
 
     def test_no_languagefolder_created(self):
         """On a single language no folder creation is done."""

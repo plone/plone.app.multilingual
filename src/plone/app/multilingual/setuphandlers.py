@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from logging import getLogger
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
+from plone.app.multilingual.interfaces import ITranslatable
+from plone.app.multilingual.itg import addAttributeTG
 from Products.CMFPlone.interfaces import INonInstallable
 from Products.CMFPlone.utils import getToolByName
 from zope.component.hooks import getSite
@@ -41,6 +43,9 @@ def step_default_various(context):
         return
     portal = context.getSite()
     enable_translatable_behavior(portal)
+
+    # Add the attribute to the site root now so plone.protect won't cry.
+    addAttributeTG(portal, None)
 
 
 def enable_translatable_behavior(portal):
