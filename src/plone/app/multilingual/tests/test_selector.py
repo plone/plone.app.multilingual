@@ -15,6 +15,8 @@ from plone.dexterity.utils import createContentInContainer
 from plone.registry.interfaces import IRegistry
 from plone.testing.z2 import Browser
 from Products.CMFCore.utils import getToolByName
+from six.moves.urllib.parse import parse_qs
+from six.moves.urllib.parse import urlparse
 from zope.component import getUtility
 from zope.event import notify
 from zope.interface import alsoProvides
@@ -601,7 +603,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
 
         # Check EN
         self.browser.open(selector_languages[0]['url'])
-        self.assertEqual(
+        self.assertUrlsEqual(
             self.browser.url,
             (f_en.absolute_url() +
              '/contact-info?int=1&uni=pres%C3%98rved&set_language=en')
@@ -611,7 +613,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
 
         # Check CA
         self.browser.open(selector_languages[1]['url'])
-        self.assertEqual(
+        self.assertUrlsEqual(
             self.browser.url,
             (f_ca.absolute_url() +
              '/contact-info?int=1&uni=pres%C3%98rved&set_language=ca')
@@ -621,7 +623,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         # Check ES
         self.browser.open(selector_languages[2]['url'])
         # Here @@search isn't preserved because we've got the dialog
-        self.assertEqual(
+        self.assertUrlsEqual(
             self.browser.url,
             untranslated_url[policy]
         )
@@ -703,6 +705,20 @@ class TestLanguageSelectorBasics(unittest.TestCase):
     #          'selected': False,
     #          'url': base + 'pres%C3%98rved&set_language=no'}]
     #     self.assertEqual(selector.languages(), expected)
+
+    def assertUrlsEqual(self, url1, url2):
+        """The order of query-strings is sometimes random in python 3
+        This compares urls disregarding the order.
+        """
+        parsed_url_1 = urlparse(url1)
+        parse_qs_1 = parse_qs(parsed_url_1.query)
+        parsed_url_2 = urlparse(url2)
+        parse_qs_2 = parse_qs(parsed_url_2.query)
+        self.assertEqual(parsed_url_1[0], parsed_url_2[0])
+        self.assertEqual(parsed_url_1[1], parsed_url_2[1])
+        self.assertEqual(parsed_url_1[2], parsed_url_2[2])
+        self.assertEqual(parsed_url_1[3], parsed_url_2[3])
+        self.assertEqual(parse_qs_1, parse_qs_2)
 
 
 class TestLanguageSelectorPostPath(unittest.TestCase):
@@ -794,7 +810,7 @@ class TestLanguageSelectorAddQuery(unittest.TestCase):
     def test_formvariables(self):
         self.request.form['one'] = 1
         self.request.form['two'] = 2
-        self.assertEqual(
+        self.assertUrlsEqual(
             addQuery(self.request, self.url),
             self.url+'?two:int=2&one:int=1'
         )
@@ -802,7 +818,7 @@ class TestLanguageSelectorAddQuery(unittest.TestCase):
     def test_formvariables_sequences(self):
         self.request.form['one'] = ('a', )
         self.request.form['two'] = ['b', 2]
-        self.assertEqual(
+        self.assertUrlsEqual(
             addQuery(self.request, self.url),
             self.url+'?two:list=b&two:int:list=2&one=%28%27a%27%2C%29'
         )
@@ -810,7 +826,7 @@ class TestLanguageSelectorAddQuery(unittest.TestCase):
     def test_formvariables_unicode(self):
         self.request.form['one'] = u'Før'
         self.request.form['two'] = u'foo'
-        self.assertEqual(
+        self.assertUrlsEqual(
             addQuery(self.request, self.url),
             self.url+'?two=foo&one=F%C3%B8r'
         )
@@ -818,7 +834,7 @@ class TestLanguageSelectorAddQuery(unittest.TestCase):
     def test_formvariables_utf8(self):
         self.request.form['one'] = u'Før'
         self.request.form['two'] = u'foo'
-        self.assertEqual(
+        self.assertUrlsEqual(
             addQuery(self.request, self.url),
             self.url+'?two=foo&one=F%C3%B8r'
         )
@@ -826,7 +842,7 @@ class TestLanguageSelectorAddQuery(unittest.TestCase):
     def test_formvariables_object(self):
         self.request.form['one'] = '1'
         self.request.form['two'] = EvilObject()
-        self.assertEqual(
+        self.assertUrlsEqual(
             addQuery(self.request, self.url),
             self.url
         )
@@ -834,7 +850,7 @@ class TestLanguageSelectorAddQuery(unittest.TestCase):
     def test_formvariables_exclude(self):
         self.request.form['one'] = 1
         self.request.form['two'] = 2
-        self.assertEqual(
+        self.assertUrlsEqual(
             addQuery(self.request, self.url, exclude=('two',)),
             self.url+'?one:int=1'
         )
@@ -842,7 +858,21 @@ class TestLanguageSelectorAddQuery(unittest.TestCase):
     def test_formvariables_extras(self):
         self.request.form['one'] = 1
         self.request.form['two'] = 2
-        self.assertEqual(
+        self.assertUrlsEqual(
             addQuery(self.request, self.url, three=3),
             self.url+'?one:int=1&three:int=3&two:int=2'
         )
+
+    def assertUrlsEqual(self, url1, url2):
+        """The order of query-strings is sometimes random in python 3
+        This compares urls disregarding the order.
+        """
+        parsed_url_1 = urlparse(url1)
+        parse_qs_1 = parse_qs(parsed_url_1.query)
+        parsed_url_2 = urlparse(url2)
+        parse_qs_2 = parse_qs(parsed_url_2.query)
+        self.assertEqual(parsed_url_1[0], parsed_url_2[0])
+        self.assertEqual(parsed_url_1[1], parsed_url_2[1])
+        self.assertEqual(parsed_url_1[2], parsed_url_2[2])
+        self.assertEqual(parsed_url_1[3], parsed_url_2[3])
+        self.assertEqual(parse_qs_1, parse_qs_2)
