@@ -14,6 +14,10 @@ New features:
 
 Bug fixes:
 
+- Do not show deprecation warning when loading migrator code, 
+  as it is intended to load old LRF there.
+  [jensens]
+
 - Fixed tests now that Catalan has translated 'assets' into 'recursos'.
   [maurits]
 

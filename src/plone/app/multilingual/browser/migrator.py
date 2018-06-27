@@ -3,7 +3,6 @@ from Acquisition import aq_base
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 from plone.app.multilingual import _
-from plone.app.multilingual.content.lrf import LanguageRootFolder
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.locking.interfaces import ILockable
 from Products.CMFCore.exceptions import ResourceLockedError
@@ -19,6 +18,7 @@ from zope.component.interfaces import ComponentLookupError
 from zope.interface import Interface
 
 import logging
+import warnings
 
 
 try:
@@ -36,6 +36,14 @@ try:
 except ImportError:
     class IBaseObject(Interface):
         pass
+
+with warnings.catch_warnings():
+    warnings.filterwarnings(
+        "ignore", 
+        message="LanguageRootFolder: LanguageRootFolders should be migrate "
+                "to DexterityContainers",
+    )
+    from plone.app.multilingual.content.lrf import LanguageRootFolder
 
 
 LP_TRANSLATABLE = 'Products.LinguaPlone.interfaces.ITranslatable'
