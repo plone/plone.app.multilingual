@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 from plone.app.multilingual import logger
+from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ILanguage
 from Products.CMFPlone.utils import _createObjectByType
 from time import time
+from zope.component import getUtility
 
 import transaction
 
@@ -119,8 +121,25 @@ def migration_pam_1_to_2(context):
     logger.info("All finished in {0}.".format(time() - s1))
 
 
+def upgrade_to_3(context):
+    registry = getUtility(IRegistry)
+
+    # don't re-create if it already exists
+    key = (
+        'plone.app.multilingual.interfaces.IMultiLanguageExtraOptionsSchema.'
+        'bypass_languageindependent_field_permission_check'
+    )
+    if key in registry:
+        return
+
+    context.runImportStepFromProfile(
+        PROFILE_ID.replace('default', 'to_3'),
+        'plone.app.registry',
+    )
+
+
 def upgrade_to_4(context):
     context.runImportStepFromProfile(
         PROFILE_ID.replace('default', 'to_4'),
-        'plone.app.registry'
+        'plone.app.registry',
     )

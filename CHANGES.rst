@@ -14,7 +14,10 @@ New features:
 
 Bug fixes:
 
-- Do not show deprecation warning when loading migrator code, 
+- Upgrade step to profile version 3 was lost and now recreated.
+  [jensens, 2silver]
+
+- Do not show deprecation warning when loading migrator code,
   as it is intended to load old LRF there.
   [jensens]
 

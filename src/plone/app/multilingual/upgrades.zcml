@@ -21,8 +21,24 @@
       profile="plone.app.multilingual:default"/>
 
   <genericsetup:registerProfile
+      name="to_3"
+      title="Update new registry key"
+      directory="profiles/upgrades/to_3"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:upgradeStep
+      profile="plone.app.multilingual:default"
+      source="2"
+      destination="3"
+      title="Add new registry entry"
+      handler=".upgrades.upgrade_to_3"
+      />
+
+  <genericsetup:registerProfile
       name="to_4"
-      title="Update bundle regristration"
+      title="Update bundle registration"
       directory="profiles/upgrades/to_4"
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -32,9 +48,8 @@
       profile="plone.app.multilingual:default"
       source="3"
       destination="4"
-      title="Update bundle regristration"
+      title="Update bundle registration"
       handler=".upgrades.upgrade_to_4"
       />
-
 
 </configure>
