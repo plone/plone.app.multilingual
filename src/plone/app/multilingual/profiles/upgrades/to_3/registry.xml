@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<registry>
+ <records interface="plone.app.multilingual.interfaces.IMultiLanguageExtraOptionsSchema"
+          prefix="plone">
+    <value key="bypass_languageindependent_field_permission_check">False</value>
+ </records>
+</registry>
