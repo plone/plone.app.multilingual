@@ -10,7 +10,8 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Make plone.app.controlpanel optional (no longer there in Plone 5.2).
+  [jensens]
 
 Bug fixes:
 

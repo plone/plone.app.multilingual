@@ -6,7 +6,7 @@ from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.registry.browser import controlpanel
 from plone.app.uuid.utils import uuidToObject
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.controlpanel.browser.language import LanguageControlPanelForm
+from Products.CMFPlone.controlpanel.browser.language import LanguageControlPanelForm  # noqa
 from Products.CMFPlone.interfaces import ILanguage
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
