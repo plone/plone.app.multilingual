@@ -104,9 +104,20 @@
 
   <!-- Notices Viewlets -->
   <browser:viewlet
+      zcml:condition="installed plone.app.controlpanel"
       name="plone.app.multilingual.supported-languages-notice"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       view="plone.app.controlpanel.interfaces.IPloneControlPanelView"
+      manager="plone.app.layout.viewlets.interfaces.IAboveContent"
+      class=".viewlets.OneLanguageConfiguredNoticeViewlet"
+      template="templates/languages-notice.pt"
+      layer="..interfaces.IPloneAppMultilingualInstalled"
+      permission="cmf.ManagePortal"/>
+  <browser:viewlet
+      zcml:condition="not-installed plone.app.controlpanel"
+      name="plone.app.multilingual.supported-languages-notice"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      view="Products.CMFPlone.interfaces.controlpanel.IPloneControlPanelView"
       manager="plone.app.layout.viewlets.interfaces.IAboveContent"
       class=".viewlets.OneLanguageConfiguredNoticeViewlet"
       template="templates/languages-notice.pt"
