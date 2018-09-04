@@ -25,6 +25,8 @@ Bug fixes:
 - Fixed tests now that Catalan has translated 'assets' into 'recursos'.
   [maurits]
 
+- Don't fail, if multilingual selector is called without query
+  [tomgross]
 
 5.2.0 (2018-04-04)
 ------------------

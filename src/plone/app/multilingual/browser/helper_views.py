@@ -154,9 +154,11 @@ class selector_view(universal_link):
 
         # We are using TranslationManager to get the translations of a
         # string tg
-        manager = TranslationManager(self.tg)
-        context = None
-        languages = manager.get_translations()
+        try:
+            manager = TranslationManager(self.tg)
+            languages = manager.get_translations()
+        except AttributeError:
+            languages = []
         if len(languages) == 0:
             # If there is no results there are no translations
             # we move to portal root
