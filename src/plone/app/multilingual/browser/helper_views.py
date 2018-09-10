@@ -47,7 +47,7 @@ class universal_link(BrowserView):
 
     def __init__(self, context, request):
         super(universal_link, self).__init__(context, request)
-        self.tg = None
+        self.tg = ''
         self.lang = None
 
     def publishTraverse(self, request, name):
