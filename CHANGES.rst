@@ -13,6 +13,9 @@ New features:
 - Make plone.app.controlpanel optional (no longer there in Plone 5.2).
   [jensens]
 
+- Add compatability with python 3
+  [pbauer]
+
 Bug fixes:
 
 - Upgrade step to profile version 3 was lost and now recreated.
@@ -27,6 +30,10 @@ Bug fixes:
 
 - Don't fail, if multilingual selector is called without query
   [tomgross]
+
+- Fix tests for py3
+  [pbauer]
+
 
 5.2.0 (2018-04-04)
 ------------------
