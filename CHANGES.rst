@@ -4,10 +4,6 @@ Changelog
 5.2.1 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 
 - Make plone.app.controlpanel optional (no longer there in Plone 5.2).
