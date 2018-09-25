@@ -83,9 +83,8 @@ class TranslationManager(object):
 
         # register the new translation in the canonical
         IMutableTG(content_obj).set(self.tg)
-        content_obj.reindexObject()
-
-        return
+        content_obj.reindexObject(
+            idxs=('Language', 'TranslationGroup'))
 
     def update(self):
         """ see interfaces"""

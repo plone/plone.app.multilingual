@@ -28,6 +28,9 @@ Bug fixes:
 - Don't fail, if multilingual selector is called without query
   [tomgross]
 
+- Fix connecting of documents
+  [tomgross]
+
 5.2.0 (2018-04-04)
 ------------------
 
