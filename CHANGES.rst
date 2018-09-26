@@ -4,14 +4,6 @@ Changelog
 5.2.3 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Rerelease, as 5.2.1 was somehow released twice, once in June, once in September.
