@@ -1,12 +1,33 @@
 Changelog
 =========
 
-5.2.1 (unreleased)
+5.2.4 (unreleased)
 ------------------
 
 Breaking changes:
 
 - *add item here*
+
+New features:
+
+- *add item here*
+
+Bug fixes:
+
+- *add item here*
+
+
+5.2.3 (2018-09-26)
+------------------
+
+Bug fixes:
+
+- Rerelease, as 5.2.1 was somehow released twice, once in June, once in September.
+  [maurits]
+
+
+5.2.2 (2018-09-25)
+------------------
 
 New features:
 
@@ -25,14 +46,23 @@ Bug fixes:
   as it is intended to load old LRF there.
   [jensens]
 
-- Fixed tests now that Catalan has translated 'assets' into 'recursos'.
-  [maurits]
-
 - Don't fail, if multilingual selector is called without query
   [tomgross]
 
 - Fix tests for py3
   [pbauer]
+
+- Fix connecting of documents
+  [tomgross]
+
+
+5.2.1 (2018-06-20)
+------------------
+
+Bug fixes:
+
+- Fixed tests now that Catalan has translated ‘assets’ into ‘recursos’. 
+  [maurits]
 
 
 5.2.0 (2018-04-04)

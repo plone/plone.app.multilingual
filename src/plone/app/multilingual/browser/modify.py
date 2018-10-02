@@ -5,6 +5,7 @@ from plone.app.multilingual.interfaces import ITranslationManager
 from plone.autoform.form import AutoExtensibleForm
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.registry.interfaces import IRegistry
+from plone.uuid.interfaces import IUUID
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ILanguage
 from Products.Five.browser import BrowserView
@@ -50,10 +51,13 @@ class ConnectTranslation(AutoExtensibleForm, Form):
         if not errors:
             content = data['content']
             language = data['language']
-            ITranslationManager(self.context)\
-                .register_translation(language, content)
             ILanguage(content).set_language(language)
-
+            itm = ITranslationManager(self.context)
+            # the 'register_translation'-method takes content OR
+            # UUID as second parameter. We need to use the UUID
+            # here because otherwise the catalog can't be acquired
+            # and the translation index is not updated
+            itm.register_translation(language, IUUID(content))
         return self.request.response.redirect(
             self.context.absolute_url() + '/modify_translations')
 
