@@ -23,6 +23,7 @@ from zope.interface import alsoProvides
 from zope.lifecycleevent import ObjectModifiedEvent
 
 import transaction
+import six
 import unittest
 
 
@@ -623,8 +624,11 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         # Check ES
         self.browser.open(selector_languages[2]['url'])
         # Here @@search isn't preserved because we've got the dialog
+        url = self.browser.url
+        if six.PY2 and isinstance(url, six.binary_type):
+            url = url.decode('utf8')
         self.assertUrlsEqual(
-            self.browser.url,
+            url,
             untranslated_url[policy]
         )
         self.assertIn('lang="es"', self.browser.contents)
