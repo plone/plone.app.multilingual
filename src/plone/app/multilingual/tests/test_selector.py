@@ -15,6 +15,7 @@ from plone.dexterity.utils import createContentInContainer
 from plone.registry.interfaces import IRegistry
 from plone.testing.z2 import Browser
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import safe_nativestring
 from six.moves.urllib.parse import parse_qs
 from six.moves.urllib.parse import urlparse
 from zope.component import getUtility
@@ -778,9 +779,9 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         """The order of query-strings is sometimes random in python 3
         This compares urls disregarding the order.
         """
-        parsed_url_1 = urlparse(url1)
+        parsed_url_1 = urlparse(safe_nativestring(url1))
         parse_qs_1 = parse_qs(parsed_url_1.query)
-        parsed_url_2 = urlparse(url2)
+        parsed_url_2 = urlparse(safe_nativestring(url2))
         parse_qs_2 = parse_qs(parsed_url_2.query)
         self.assertEqual(parsed_url_1[0], parsed_url_2[0])
         self.assertEqual(parsed_url_1[1], parsed_url_2[1])
