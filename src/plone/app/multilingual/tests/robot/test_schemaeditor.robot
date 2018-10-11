@@ -62,12 +62,7 @@ a dexterity content type with a language independent TTW field
 # When
 
 I open the field settings
-  Go to  ${PLONE_URL}/dexterity-types/Custom/@@modeleditor
-  Capture page screenshot
-  Go to  ${PLONE_URL}/portal_types/Custom/manage_propertiesForm
-  Capture page screenshot
   Go to  ${PLONE_URL}/dexterity-types/Custom/custom
-  Capture page screenshot
   Page should contain  Language independent field
 
 I select the language independent field setting
