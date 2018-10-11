@@ -63,6 +63,7 @@ a dexterity content type with a language independent TTW field
 
 I open the field settings
   Go to  ${PLONE_URL}/dexterity-types/Custom/custom
+  Capture page screenshot
   Page should contain  Language independent field
 
 I select the language independent field setting
