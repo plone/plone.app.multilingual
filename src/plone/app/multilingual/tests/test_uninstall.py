@@ -2,6 +2,7 @@ from plone import api
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.multilingual.testing import PLONE_APP_MULTILINGUAL_INTEGRATION_TESTING  # noqa
+from Products.CMFPlone.utils import get_installer
 
 import unittest
 
@@ -11,15 +12,15 @@ class TestUninstall(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
-        self.installer = api.portal.get_tool('portal_quickinstaller')
         roles_before = api.user.get_roles(TEST_USER_ID)
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        self.installer.uninstallProducts(['plone.app.multilingual'])
+        self.installer = get_installer(self.portal)
+        self.installer.uninstall_product('plone.app.multilingual')
         setRoles(self.portal, TEST_USER_ID, roles_before)
 
     def test_product_uninstalled(self):
         """Test if plone.app.multilingual is cleanly uninstalled."""
-        self.assertFalse(self.installer.isProductInstalled(
+        self.assertFalse(self.installer.is_product_installed(
             'plone.app.multilingual'))
 
     def test_browserlayer_removed(self):

@@ -128,6 +128,18 @@ class PloneAppMultiLingualPresetLayer(PloneSandboxLayer):
         if 'robot-test-folder' in portal.objectIds():
             portal.manage_delObjects('robot-test-folder')
 
+        # PLEASE DELETE ME!
+        # I am a ugly hack to work around
+        # https://github.com/plone/Products.CMFPlone/issues/2589
+        # until it is solved properly.
+        from plone.app.multilingual.dx.schemaeditor import get_li_schema
+        from plone.schemaeditor.interfaces import IFieldEditorExtender
+        from zope.component import provideAdapter
+        provideAdapter(
+            get_li_schema,
+            provides=IFieldEditorExtender,
+            name='plone.schemaeditor.languageindependent')
+
 
 PLONE_APP_MULTILINGUAL_PRESET_FIXTURE = PloneAppMultiLingualPresetLayer()
 

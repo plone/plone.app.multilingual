@@ -16,12 +16,12 @@ def addQuery(request, url, exclude=tuple(), **extras):
     formvariables = {}
     for k, v in request.form.items():
         if k not in exclude:
-            if isinstance(v, six.text_type):
+            if six.PY2 and isinstance(v, six.text_type):
                 formvariables[k] = v.encode('utf-8')
             else:
                 formvariables[k] = v
     for k, v in extras.items():
-        if isinstance(v, six.text_type):
+        if six.PY2 and isinstance(v, six.text_type):
             formvariables[k] = v.encode('utf-8')
         else:
             formvariables[k] = v

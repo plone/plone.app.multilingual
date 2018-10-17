@@ -5,7 +5,7 @@ from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.dexterity.utils import createContentInContainer
 from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.interfaces import ISiteSchema
-from six import StringIO
+from six import BytesIO
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.interface import alsoProvides
@@ -43,7 +43,7 @@ class TestSitemap(unittest.TestCase):
             self.portal['en'], 'Document', title=u"Test document")
 
     def uncompress(self, sitemapdata):
-        sio = StringIO(sitemapdata)
+        sio = BytesIO(sitemapdata)
         unziped = GzipFile(fileobj=sio)
         xml = unziped.read()
         unziped.close()
@@ -55,13 +55,13 @@ class TestSitemap(unittest.TestCase):
         '''
 
         xml = self.uncompress(self.sitemap())
-        self.assertIn('<loc>http://nohost/plone/ca/test-document</loc>', xml)
-        self.assertIn('<loc>http://nohost/plone/en/test-document</loc>', xml)
-        self.assertIn('<loc>http://nohost/plone/es/test-document</loc>', xml)
+        self.assertIn(b'<loc>http://nohost/plone/ca/test-document</loc>', xml)
+        self.assertIn(b'<loc>http://nohost/plone/en/test-document</loc>', xml)
+        self.assertIn(b'<loc>http://nohost/plone/es/test-document</loc>', xml)
 
-        self.assertIn('<loc>http://nohost/plone/ca/recursos/test-document</loc>', xml)
-        self.assertIn('<loc>http://nohost/plone/en/assets/test-document</loc>', xml)
-        self.assertIn('<loc>http://nohost/plone/es/recursos/test-document</loc>', xml)
+        self.assertIn(b'<loc>http://nohost/plone/ca/recursos/test-document</loc>', xml)
+        self.assertIn(b'<loc>http://nohost/plone/en/assets/test-document</loc>', xml)
+        self.assertIn(b'<loc>http://nohost/plone/es/recursos/test-document</loc>', xml)
 
     def test_navroot_sitemap(self):
         '''
@@ -70,10 +70,10 @@ class TestSitemap(unittest.TestCase):
         sitemap = getMultiAdapter((self.portal.es, self.portal.REQUEST),
                                   name='sitemap.xml.gz')
         xml = self.uncompress(sitemap())
-        self.assertNotIn('<loc>http://nohost/plone/ca/test-document</loc>', xml)  # noqa
-        self.assertNotIn('<loc>http://nohost/plone/en/test-document</loc>', xml)  # noqa
-        self.assertIn('<loc>http://nohost/plone/es/test-document</loc>', xml)
+        self.assertNotIn(b'<loc>http://nohost/plone/ca/test-document</loc>', xml)  # noqa
+        self.assertNotIn(b'<loc>http://nohost/plone/en/test-document</loc>', xml)  # noqa
+        self.assertIn(b'<loc>http://nohost/plone/es/test-document</loc>', xml)
 
-        self.assertNotIn('<loc>http://nohost/plone/ca/recursos/test-document</loc>', xml)
-        self.assertNotIn('<loc>http://nohost/plone/en/assets/test-document</loc>', xml)
-        self.assertIn('<loc>http://nohost/plone/es/recursos/test-document</loc>', xml)
+        self.assertNotIn(b'<loc>http://nohost/plone/ca/recursos/test-document</loc>', xml)
+        self.assertNotIn(b'<loc>http://nohost/plone/en/assets/test-document</loc>', xml)
+        self.assertIn(b'<loc>http://nohost/plone/es/recursos/test-document</loc>', xml)
