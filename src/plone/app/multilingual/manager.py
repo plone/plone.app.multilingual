@@ -171,7 +171,7 @@ class TranslationManager(object):
         brains = self.pcatalog.unrestrictedSearchResults(
             TranslationGroup=self.tg)
         for brain in brains:
-            translations[brain.Language] = brain.getObject()
+            translations[brain.Language] = brain._unrestrictedGetObject()
         return translations
 
     def get_restricted_translations(self):
