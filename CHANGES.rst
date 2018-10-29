@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fix unrestricted access of object in get_translation-method
+  [tomgross]
 
 
 5.2.3 (2018-09-26)
