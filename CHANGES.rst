@@ -1,7 +1,7 @@
 Changelog
 =========
 
-5.3.0 (unreleased)
+5.3.0 (2018-11-05)
 ------------------
 
 New features:
