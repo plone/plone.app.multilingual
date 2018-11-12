@@ -43,7 +43,7 @@ setup(
         'z3c.relationfield',
     ],
     extras_require={
-        'archetypes': ['archetypes.multilingual < 3.0'],
+        'archetypes': ['archetypes.multilingual >= 2.0.1dev, < 3.0'],
         'test': [
             'plone.app.testing[robot]>=4.2.2',
             'plone.app.robotframework',
