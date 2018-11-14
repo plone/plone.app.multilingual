@@ -12,7 +12,6 @@ Test Teardown  Close all browsers
 *** Test Cases ***
 
 Scenario: As an editor I can translate a document
-    [Tags]  unstable
     Given a site owner
       and a document in English
      When I translate the document into Catalan
