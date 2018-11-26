@@ -71,7 +71,8 @@ class AddViewTraverser(object):
         if not IDexterityContent.providedBy(source):
             # we are not on DX content, assume AT
             baseUrl = self.context.absolute_url()
-            url = '%s/@@add_at_translation?uid=%s' % (baseUrl, name)
+            url = '%s/@@add_at_translation?type=%s&uid=%s' % (
+                baseUrl, source.portal_type, name)
             return self.request.response.redirect(url)
 
         # set the self.context to the place where it should be stored
