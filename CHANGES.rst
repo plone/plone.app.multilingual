@@ -14,6 +14,10 @@ New features:
 
 Bug fixes:
 
+- Pass the source object's UUID when adding a new translation for
+  archetypes content.
+  [witsch]
+
 - Fix language alternate viewlet #153 [erral, petschki]
 
 - Fix error in folder_paste script when you copy/paste AT folder,
