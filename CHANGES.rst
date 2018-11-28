@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Hide left and right portlet columns on babel_edit. Fixes #327
+  [erral]
 
 
 5.3.0 (2018-11-05)

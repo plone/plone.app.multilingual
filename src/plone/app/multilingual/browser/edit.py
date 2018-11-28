@@ -62,6 +62,8 @@ class MultilingualEditForm(DefaultEditForm):
 
     def render(self):
         self.request['disable_border'] = True
+        self.request['disable_plone.leftcolumn'] = True
+        self.request['disable_plone.rightcolumn'] = True
 
         for field in self.fields.keys():
             if field in self.schema:
