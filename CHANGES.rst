@@ -4,14 +4,6 @@ Changelog
 5.3.1 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Hide left and right portlet columns on babel_edit. Fixes #327
