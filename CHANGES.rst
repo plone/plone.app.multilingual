@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- a11y: Added role attribute for portalMessage
+  [nzambello]
 
 
 5.3.1 (2018-12-11)
