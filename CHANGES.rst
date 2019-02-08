@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+5.3.2 (2019-02-08)
+------------------
+
+Bug fixes:
+
+
+- a11y: Added role attribute for portalMessage [nzambello] (#332)
+
+
 5.3.1 (2018-12-11)
 ------------------
 
