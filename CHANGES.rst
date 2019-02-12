@@ -4,14 +4,6 @@ Changelog
 2.0.4 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Pass the source object's UUID when adding a new translation for
