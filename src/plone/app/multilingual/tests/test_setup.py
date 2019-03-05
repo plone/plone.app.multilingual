@@ -33,11 +33,8 @@ class TestSetupMultilingualSite(unittest.TestCase):
 
     def test_portal_has_tg_attribute(self):
         """The site root should have the TG attribute set after installing"""
-        # Check the attribute
         tg_attribute = getattr(aq_base(self.portal), ATTRIBUTE_NAME, None)
         self.assertIsNotNone(tg_attribute)
-        # Which should allow adapting to ITG.
-        ITG(self.portal)
 
     def test_no_languagefolder_created(self):
         """On a single language no folder creation is done."""
