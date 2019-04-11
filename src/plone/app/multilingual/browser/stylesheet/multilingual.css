@@ -71,7 +71,7 @@ a.contentmenuflags img {
     margin-bottom: 2pt;
 }
 
-.plone-icon-contentmenu-multilingual:before { content: '\e81A'; } /* '' */
+.toolbar-menu-icon.icon-plone-contentmenu-multilingual:before { content: '\E81A'; } /* '' */
 
 #translations-overview td {
     line-height: 1;
