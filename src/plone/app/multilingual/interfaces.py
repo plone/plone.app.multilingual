@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 from plone.app.multilingual import _
 from plone.supermodel import model
-from Products.CMFPlone.interfaces import ILanguageSchema
 from zope import schema
 from zope.interface import Attribute
 from zope.interface import Interface
 from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
+
+try:
+    from plone.i18n.interfaces import ILanguageSchema
+except ImportError:
+    # BBB for Plone 5.1, remove with Plone 6
+    from Products.CMFPlone.interfaces import ILanguageSchema
 
 
 # CONSTANTS
