@@ -4,13 +4,13 @@
 Introduction
 ============
 
-In the old days before Plone 4.3, talking about multi-language support in Plone is talk about Products.LinguaPlone. It has been the *defacto* standard for managing translations of Archetypes-based content types in Plone through the years. Somehow its functionality never made its way into the Plone core and today it is in legacy status. Nowadays, Plone faces the rising of Dexterity content types and its adoption into the core since Plone 4.3. With Plone 5 released, the transition is completed and Dexterity is shipped as its default content type story.
+In the old days before Plone 4.3, talking about multi-language support in Plone was talk about Products.LinguaPlone. It has been the *defacto* standard for managing translations of Archetypes-based content types in Plone through the years. Somehow its functionality never made its way into the Plone core and today it is in legacy status. Nowadays, Plone faces the rising of Dexterity content types and its adoption into the core since Plone 4.3. With Plone 5 released, the transition is completed and Dexterity is shipped as its default content type story.
 
-plone.app.multilingual was designed originally to provide Plone a whole multilingual story. Using ZCA technologies, enables translations to Dexterity and Archetypes content types as well managed via an unified UI.
+plone.app.multilingual was designed originally to add a whole multilingual story to Plone. Using ZCA technologies, it enables translations to Dexterity and Archetypes content types managed via a unified UI.
 
 This module provides the user interface for managing content translations. It's the app package of the next generation Plone multilingual engine. It's designed to work with Dexterity content types and the *old fashioned* Archetypes based content types as well. It only works with Plone 4.1 and above due to the use of UUIDs for referencing the translations.
 
-After more than 7 years, a GSOC, redesigns, reimplementations due to deprecated libraries, two major Plone versions finally we are able to say that plone.app.multilingual is finally here.
+After more than 7 years, a GSOC, redesigns, reimplementations due to deprecated libraries and two major Plone versions we are finally able to say that plone.app.multilingual has arrived.
 
 
 Versions
@@ -29,7 +29,7 @@ Versions
 Components
 ==========
 
-PAM is composed of two packages, one is mandatory:
+PAM is composed of two packages. One is mandatory:
 
     * plone.app.multilingual (core, UI, enables Dexterity support via a behavior)
 
@@ -67,7 +67,7 @@ These are the most important features PAM provides.
 Root Language folders
 ---------------------
 
-After the setup, PAM will create root folders for each of your site's languages and put translated content into the appropriate folders. A language folder implements INavigationRoot, so from the user's point of view, each language is "jailed" inside its correspondent language folder. There are event subscribers in place to capture user interaction with content and update the language in contents accordingly, for example when user moves or copy content between language folders.
+After the setup, PAM will create root folders for each of your site's languages and put translated content into the appropriate folders. A language folder implements INavigationRoot, so from the user's point of view, each language is "jailed" inside its corresponding language folder. There are event subscribers in place to capture user interaction with content and update the language in contents accordingly, for example when a user moves or copies content between language folders.
 
 
 Babel view
@@ -79,15 +79,15 @@ An evolution of the LP *translate* view, unified for either Archetypes and Dexte
 Language independent fields
 ---------------------------
 
-PAM has support for language independent fields, but with a twist respect the LP implementation. As PAM does design does not give more relevance to one translated object above the others siblings (has no canonical object), fields marked as language independent get copied over all the members of the translation group always. The PAM UI will warn you about this behavior by reminding you that the values in the field on the other group participants will be overwritten.
+PAM has support for language independent fields, but with a twist regarding the LP implementation. As PAM's design does not give more relevance to one translated object than to its siblings (has no canonical object), fields marked as language independent are always copied over to all members of the translation group. The PAM UI will remind you about this behavior by warning you that the values in the corresponding field of all members of the translation group will be overwritten.
 
 
 Translation locator policy
 --------------------------
 
-When translating content, this policy decides how it would be placed in the site's structure. There are two policies in place:
+When translating content, the policy influences how the translated content will be placed in the site's structure. There are two policies to choose from:
 
-    * LP way, the translation gets placed in the nearest translated folder in parent's hierarchy
+    * LP way, the translation gets placed in the nearest translated folder in the parent's hierarchy
 
     * Ask user where to place the translated element in the destination language root folder
 
@@ -95,10 +95,10 @@ When translating content, this policy decides how it would be placed in the site
 Language selector policy
 ------------------------
 
-While browsing the site, the language selector viewlet allows users to switch site's content language and ease access between translations of the current content. There are two policies in place in case the translation of a specific language does not exist (yet):
+While browsing the site, the language selector viewlet allows users to switch the site's content language. There are two policies in place in case the translation of a specific language does not exist (yet):
 
     * LP way, the selector shows the nearest translated container.
-    * Shows the user an informative view that shows the current available translations for the current content.
+    * Shows the user an informative view that shows the currently available translations for the current content.
 
 
 The assets folder - a shared "Language Independent Folder"
