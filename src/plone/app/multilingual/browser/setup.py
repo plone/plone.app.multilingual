@@ -265,7 +265,7 @@ class SetupMultilingualSite(object):
         site = tt['Plone Site']
 
         if 'language-switcher' not in site.view_methods:
-            methods = site.view_methods
+            methods = tuple(site.view_methods)
             site.view_methods = methods + ('language-switcher', )
             site.default_view = 'language-switcher'
             self.context.reindexObject()
