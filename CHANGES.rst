@@ -8,6 +8,17 @@ Changelog
 
 .. towncrier release notes start
 
+5.3.3 (2019-04-29)
+------------------
+
+Bug fixes:
+
+
+- Fix toolbar icon
+  [agitator] (#338)
+- Fix DeprecationWarning ``ILanguageSchema`` was moved to ``plone.i18n``. [jensens] (#339)
+
+
 5.3.2 (2019-02-08)
 ------------------
 
