@@ -25,7 +25,7 @@
   <property name="behaviors">
     <element value="plone.dublincore"/>
     <element value="plone.namefromtitle"/>
-    <element value="Products.constraintypes"/>
+    <element value="plone.constraintypes"/>
     <element value="plone.translatable" />
     <element value="plone.excludefromnavigation"/>
   </property>
