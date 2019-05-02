@@ -3,7 +3,7 @@
   <hidden manager="plone.portalheader" skinname="Plone Default">
     <viewlet name="plone.app.i18n.locales.languageselector" />
   </hidden>
-  <order manager="plone.portalheader" skinname="Plone Default">
-    <viewlet name="plone.app.multilingual.languageselector" insert-after="plone.personal_bar" />
-  </order>
+  <hidden manager="plone.portalheader" skinname="Plone Default">
+    <viewlet name="plone.app.multilingual.languageselector" remove="True" insert-after="plone.personal_bar" />
+  </hidden>
 </object>
