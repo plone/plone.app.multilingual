@@ -23,11 +23,11 @@
   <property name="add_permission">cmf.ManagePortal</property>
   <property name="klass">plone.dexterity.content.Container</property>
   <property name="behaviors">
-    <element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>
-    <element value="plone.app.content.interfaces.INameFromTitle"/>
-    <element value="Products.CMFPlone.interfaces.constrains.ISelectableConstrainTypes"/>
-    <element value="plone.app.multilingual.dx.interfaces.IDexterityTranslatable" />
-    <element value="plone.app.dexterity.behaviors.exclfromnav.IExcludeFromNavigation"/>
+    <element value="plone.dublincore"/>
+    <element value="plone.namefromtitle"/>
+    <element value="Products.constraintypes"/>
+    <element value="plone.translatable" />
+    <element value="plone.excludefromnavigation"/>
   </property>
   <property name="schema">plone.app.multilingual.interfaces.ILanguageIndependentFolder</property>
   <property name="model_source"></property>
