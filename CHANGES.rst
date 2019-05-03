@@ -8,6 +8,11 @@ Changelog
 
 .. towncrier release notes start
 
+
+Bug fixes
+
+- Fix language selector not switching site language after re-installing add-on [nngu36]
+
 5.3.3 (2019-04-29)
 ------------------
 
