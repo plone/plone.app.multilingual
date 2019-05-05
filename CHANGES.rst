@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+5.3.4 (2019-05-04)
+------------------
+
+Bug fixes:
+
+
+- Moved to named behaviors. [iham] (#342)
+
+
 5.3.3 (2019-04-29)
 ------------------
 
