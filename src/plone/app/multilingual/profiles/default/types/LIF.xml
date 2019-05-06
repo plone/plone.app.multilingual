@@ -21,7 +21,7 @@
   </property>
   <property name="default_view_fallback">False</property>
   <property name="add_permission">cmf.ManagePortal</property>
-  <property name="klass">plone.dexterity.content.Container</property>
+  <property name="klass">plone.app.multilingual.content.lif.LanguageIndependentFolder</property>
   <property name="behaviors">
     <element value="plone.dublincore"/>
     <element value="plone.namefromtitle"/>

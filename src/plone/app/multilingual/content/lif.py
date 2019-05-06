@@ -3,6 +3,13 @@ from BTrees.OOBTree import OOBTree
 from Products.CMFCore.utils import getToolByName
 from zope.component.hooks import getSite
 
+from plone.dexterity.content import Container
+
+
+class LanguageIndependentFolder(Container):
+    """class definition for nicer output."""
+    pass
+
 
 def connect_with_others(ob, event):
     pc = getToolByName(getSite(), 'portal_catalog')
