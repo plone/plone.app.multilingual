@@ -54,7 +54,7 @@ def enable_translatable_behavior(portal):
         # Enable translatable behavior for all types
         behaviors = list(fti.behaviors)
         behaviors.extend([
-            'plone.app.multilingual.dx.interfaces.IDexterityTranslatable',
+            'plone.translatable',
         ])
         behaviors = tuple(set(behaviors))
         fti._updateProperty('behaviors', behaviors)
@@ -81,7 +81,7 @@ def disable_translatable_behavior(portal):
         # Disable translatable behavior from all types
         behaviors = [
             i for i in fti.behaviors if i !=
-            'plone.app.multilingual.dx.interfaces.IDexterityTranslatable'
+            'plone.translatable'
         ]
         fti._updateProperty('behaviors', behaviors)
 
