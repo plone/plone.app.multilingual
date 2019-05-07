@@ -35,9 +35,9 @@ class TestLanguageIndependentFieldOnAddTranslationForm(unittest.TestCase):
 
         fti = DexterityFTI('Feedback')
         fti.behaviors = (
-            'plone.app.dexterity.behaviors.metadata.IBasic',
-            'plone.app.content.interfaces.INameFromTitle',
-            'plone.app.multilingual.dx.interfaces.IDexterityTranslatable',
+            'plone.basic',
+            'plone.namefromtitle',
+            'plone.translatable',
         )
         fti.model_source = u"""\
 <model xmlns="http://namespaces.plone.org/supermodel/schema"

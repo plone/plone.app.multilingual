@@ -167,8 +167,8 @@ class MultiLingual(RemoteLibrary):
         disableCSRFProtection()
         fti = DexterityFTI(str(portal_type), title=portal_type)
         fti.behaviors = (
-            'plone.app.dexterity.behaviors.metadata.IBasic',
-            'plone.app.multilingual.dx.interfaces.IDexterityTranslatable'
+            'plone.basic',
+            'plone.translatable',
         )
         fti.model_source = u"""\
 <model xmlns="http://namespaces.plone.org/supermodel/schema">
