@@ -60,7 +60,6 @@ def get_li_schema(schema_context, field):
         ),
     )
     fti_behaviors = set(getattr(fti, 'behaviors', []))
-    import pdb; pdb.set_trace()
     if lang_behavior.intersection(fti_behaviors):
         return IFieldLanguageIndependent
 
