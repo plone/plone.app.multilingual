@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fix "Insufficient Privileges" error when adding translations.
+  [witsch]
 
 
 2.0.4 (2019-02-12)
