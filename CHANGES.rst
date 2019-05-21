@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+5.3.5 (2019-05-21)
+------------------
+
+Bug fixes:
+
+
+- Setting named behavior instead of dotted on fti during install. [iham] (#345)
+
+
 5.3.4 (2019-05-04)
 ------------------
 
