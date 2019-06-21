@@ -281,6 +281,6 @@ class SetupMultilingualSite(object):
 
         if IDexterityFTI.providedBy(fti):
             behaviors = list(fti.behaviors)
-            behaviors.append(IDexterityTranslatable.__identifier__)
+            behaviors.append('plone.translatable')
             behaviors = tuple(set(behaviors))
             fti._updateProperty('behaviors', behaviors)
