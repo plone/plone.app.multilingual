@@ -84,7 +84,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         selector_adapter.update()
         selector_adapter_languages = selector_adapter.languages()
 
-        self.assertNotEquals(
+        self.assertNotEqual(
             selector_adapter_languages, selector_viewlet_languages
         )
 
