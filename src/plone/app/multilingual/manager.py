@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from plone.app.multilingual.events import ObjectTranslatedEvent
 from plone.app.multilingual.events import ObjectWillBeTranslatedEvent
+from plone.app.multilingual.events import TranslationRegisteredEvent
+from plone.app.multilingual.events import TranslationRemovedEvent
+from plone.app.multilingual.events import TranslationUpdatedEvent
 from plone.app.multilingual.interfaces import IMutableTG
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import ITranslationFactory
@@ -27,7 +30,6 @@ class TranslationManager(object):
             self.tg = context
         else:
             self.tg = self.get_tg(context)
-        self._canonical = None
         site = getSite()
         self.pcatalog = getToolByName(site, 'portal_catalog', None)
 
@@ -71,44 +73,53 @@ class TranslationManager(object):
             raise KeyError('There is no target language')
 
         if type(content) == str:
-            content_obj = uuidToObject(content)
-        else:
-            content_obj = content
+            content = uuidToObject(content)
 
         # Check if exists and is not myself
         brains = self.pcatalog.unrestrictedSearchResults(
             TranslationGroup=self.tg, Language=language)
-        if len(brains) > 0 and brains[0].UID != self.get_id(content_obj):
+        if len(brains) > 0 and brains[0].UID != self.get_id(content):
             raise KeyError("Translation already exists")
 
         # register the new translation in the canonical
-        IMutableTG(content_obj).set(self.tg)
-        content_obj.reindexObject(
-            idxs=('Language', 'TranslationGroup'))
+        IMutableTG(content).set(self.tg)
+        content.reindexObject(idxs=('Language', 'TranslationGroup'))
+        notify(TranslationRegisteredEvent(self.context, content, language))
 
     def update(self):
-        """ see interfaces"""
+        """ Update the adapted item.
+
+        If unregistered, register a Translation-Grouup (TG) for it and exit.
+
+        Check that there aren't two translations on the same language
+        This is to be used for changing the contexts language.
+        If there is already an item in the same language,
+        Remove the other items TG information and make the current adapted
+        context the active language for the current TG.
+
+        """
         language = ILanguage(self.context).get_language()
-        # self.context.reindexObject(idxs=("Language", "TranslationGroup", ))
-        # In case language is already on the translated languages we are
-        # going to orphan the old translation
         brains = self.pcatalog.unrestrictedSearchResults(
-            TranslationGroup=self.tg, Language=language)
+            TranslationGroup=self.tg,
+            Language=language,
+        )
         if len(brains) == 0:
-            # There is not a translation with this tg on this language
+            # There is no translation within current TG for this language.
             self.register_translation(language, self.context)
-        else:
-            # We need to check if the language has changed
-            brain = brains[0]
-            content_id = self.get_id(self.context)
-            if brain.UID != content_id:
-                # Is a different object -> remove the old one
-                # We get the old uuid
-                old_object = brain.getObject()
-                IMutableTG(old_object).set(NOTG)
-                old_object.reindexObject(idxs=(
-                    "Language", "TranslationGroup",
-                ))
+            return
+        # In case the language is already within the translated languages we are
+        # going to orphan the old translation.
+        brain = brains[0]
+        content_id = self.get_id(self.context)
+        if brain.UID == content_id:
+            return
+
+        # It is a different object -> remove the old one
+        # We get the old uuid
+        old_object = brain.getObject()
+        IMutableTG(old_object).set(NOTG)
+        old_object.reindexObject(idxs=("TranslationGroup",))
+        notify(TranslationUpdatedEvent(self.context, old_object, language))
 
     def add_translation(self, language):
         """ see interfaces """
@@ -125,9 +136,7 @@ class TranslationManager(object):
         # register the new translation
         self.register_translation(language, translated_object)
         # event
-        notify(ObjectTranslatedEvent(self.context,
-               translated_object, language))
-        return
+        notify(ObjectTranslatedEvent(self.context, translated_object, language))
 
     def add_translation_delegated(self, language):
         """
@@ -147,7 +156,8 @@ class TranslationManager(object):
         """ see interfaces """
         translation = self.get_translation(language)
         IMutableTG(translation).set(NOTG)
-        translation.reindexObject()
+        translation.reindexObject(idxs=("TranslationGroup",))
+        notify(TranslationRemovedEvent(self.context, translation, language))
 
     def get_translation(self, language):
         """ see interfaces """
@@ -169,7 +179,8 @@ class TranslationManager(object):
         """ see interfaces """
         translations = {}
         brains = self.pcatalog.unrestrictedSearchResults(
-            TranslationGroup=self.tg)
+            TranslationGroup=self.tg,
+        )
         for brain in brains:
             translations[brain.Language] = brain.getObject()
         return translations
