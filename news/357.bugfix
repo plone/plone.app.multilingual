@@ -1,0 +1,5 @@
+Remove any dependency to ``archetypes.multilingual``, since this is a indirection.
+Remove all dependencies that are already part of ``Products.CMFPlone``.
+All version specifications were reduced to use a recent ``Products.CMFPlone``.
+The ``decorator`` dependency is no longer used.
+[jensens]
