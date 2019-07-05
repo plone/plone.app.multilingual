@@ -49,7 +49,6 @@ setup(
         'test': [
             'plone.app.testing[robot]',
             'plone.app.robotframework',
-            'decorator',  # BBB
         ],
     },
     entry_points="""
