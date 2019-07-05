@@ -262,21 +262,26 @@ Adapt all the steps on translation
 
 The different aspects involved on a translation are adapted, so it's possible to create different policies for different types, sites, etc.
 
-* ITranslationFactory - General factory used to create a new content
+``ITranslationFactory``
+    General factory used to create a new content
 
-    * ITranslationLocator - Where we are going to locate the new translated content
+``ITranslationLocator``
+    Where we are going to locate the new translated content
 
-        Default : If the parent folder is translated create the content on the translated parent folder, otherwise create on the parent folder.
+    Default : If the parent folder is translated create the content on the translated parent folder, otherwise create on the parent folder.
 
-    * ITranslationCloner - Method to clone the original object to the new one
+``ITranslationCloner``
+    Method to clone the original object to the new one
 
-        Default : Nothing
+    Default : Nothing
 
-    * ITranslationIdChooser - Which id is the translation
+``ITranslationIdChooser``
+    Which id is the translation
 
-        Default : The original id + lang code-block
+    Default : The original id + lang code-block
 
-* ILanguageIndependentFieldsManager - Manager for language independent fields
+``ILanguageIndependentFieldsManager``
+    Manager for language independent fields
 
     Default: Nothing
 
