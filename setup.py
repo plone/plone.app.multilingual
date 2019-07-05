@@ -38,28 +38,17 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'Products.CMFPlone>=5.0b1',
-        'Products.GenericSetup>=1.8.2',
-        # we want p.a.layout >= 2.5.22 on 2.5.x branch OR >= 2.6.3
-        'plone.app.layout>=2.5.22,!=2.6.0,!=2.6.1,!=2.6.2',
-        'plone.app.registry',
-        'plone.app.z3cform',
-        'plone.behavior',
-        'plone.dexterity',
+        'Products.CMFPlone>=5.2rc4',
         'setuptools',
         'six',
-        'z3c.relationfield',
-        'zope.publisher',
     ],
     extras_require={
         'archetypes': [
             'archetypes.multilingual',
         ],
         'test': [
-            'plone.app.testing[robot]>=4.2.2',
+            'plone.app.testing[robot]',
             'plone.app.robotframework',
-            'plone.app.contenttypes',
-            'archetypes.multilingual',
             'decorator',  # BBB
         ],
     },
