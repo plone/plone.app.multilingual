@@ -31,11 +31,11 @@ Components
 
 PAM is composed of two packages, one is mandatory:
 
-    * plone.app.multilingual (core, UI, enables Dexterity support via a behavior)
+* plone.app.multilingual (core, UI, enables Dexterity support via a behavior)
 
 and one optional:
 
-    * archetypes.multilingual (enables Archetypes support)
+* archetypes.multilingual (enables Archetypes support)
 
 
 Usage
@@ -87,9 +87,9 @@ Translation locator policy
 
 When translating content, this policy decides how it would be placed in the site's structure. There are two policies in place:
 
-    * LP way, the translation gets placed in the nearest translated folder in parent's hierarchy
+* LP way, the translation gets placed in the nearest translated folder in parent's hierarchy
 
-    * Ask user where to place the translated element in the destination language root folder
+* Ask user where to place the translated element in the destination language root folder
 
 
 Language selector policy
@@ -97,8 +97,8 @@ Language selector policy
 
 While browsing the site, the language selector viewlet allows users to switch site's content language and ease access between translations of the current content. There are two policies in place in case the translation of a specific language does not exist (yet):
 
-    * LP way, the selector shows the nearest translated container.
-    * Shows the user an informative view that shows the current available translations for the current content.
+* LP way, the selector shows the nearest translated container.
+* Shows the user an informative view that shows the current available translations for the current content.
 
 
 The assets folder - a shared "Language Independent Folder"
@@ -237,12 +237,12 @@ All the internal features are implemented on the package plone.app.multilingual.
 
 The key points are:
 
-    1. Each translation is a content object
-    2. There is no canonical object
-    3. The translation reference storage is external to the content object
-    4. Adapt all the steps on translation
-    5. Language get/set via an unified adapter
-    6. Translatable marker interface(s)
+1. Each translation is a content object
+2. There is no canonical object
+3. The translation reference storage is external to the content object
+4. Adapt all the steps on translation
+5. Language get/set via an unified adapter
+6. Translatable marker interface(s)
 
 
 There is no canonical content object
@@ -262,7 +262,7 @@ Adapt all the steps on translation
 
 The different aspects involved on a translation are adapted, so it's possible to create different policies for different types, sites, etc.
 
-  * ITranslationFactory - General factory used to create a new content
+* ITranslationFactory - General factory used to create a new content
 
     * ITranslationLocator - Where we are going to locate the new translated content
 
@@ -276,7 +276,7 @@ The different aspects involved on a translation are adapted, so it's possible to
 
         Default : The original id + lang code-block
 
-  * ILanguageIndependentFieldsManager - Manager for language independent fields
+* ILanguageIndependentFieldsManager - Manager for language independent fields
 
     Default: Nothing
 
