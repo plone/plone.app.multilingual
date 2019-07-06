@@ -236,7 +236,7 @@ class TestLanguageRootFolderAPI(unittest.TestCase):
         id_a_ca = ITranslationManager(a_ca).query_canonical()
         id_another_es = ITranslationManager(another_es).query_canonical()
 
-        self.assertNotEquals(id_another_es, id_a_ca)
+        self.assertNotEqual(id_another_es, id_a_ca)
         self.assertTrue(isinstance(id_another_es, str))
         self.assertTrue(isinstance(id_a_ca, str))
 

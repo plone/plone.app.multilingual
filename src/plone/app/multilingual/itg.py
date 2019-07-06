@@ -40,9 +40,11 @@ class MutableAttributeTG(object):
 @adapter(ITranslatable, IObjectCreatedEvent)
 def addAttributeTG(obj, event):
 
-    if not IObjectCopiedEvent.providedBy(event):
-        if getattr(aq_base(obj), ATTRIBUTE_NAME, None):
-            return  # defensive: keep existing TG on non-copy create
+    if (
+        not IObjectCopiedEvent.providedBy(event)
+        and getattr(aq_base(obj), ATTRIBUTE_NAME, None)
+    ):
+        return  # defensive: keep existing TG on non-copy create
 
     generator = queryUtility(IUUIDGenerator)
     if generator is None:
