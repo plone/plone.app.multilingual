@@ -22,6 +22,8 @@ Bug fixes:
 
 Bug fixes:
 
+- Avoid browser to permanently cache first redirection to negotiated lang (#347)
+  [laulaz]
 
 - Moved to named behaviors. [iham] (#342)
 
