@@ -8,6 +8,34 @@ Changelog
 
 .. towncrier release notes start
 
+5.4.0 (2019-07-18)
+------------------
+
+New features:
+
+
+- Add low level events and notifies:
+  on register, update and remove of a translation to a translation groups.
+  [jensens] (#256)
+
+
+Bug fixes:
+
+
+- Remove deprecation warnings in tests.
+  Increase readability
+  Add code comments.
+  Remove superfluos reindex of "Language" in manager.
+  [jensens] (#256)
+- wrong check for default addview in addtranslation traverser
+  [mauro] (#355)
+- Remove any dependency to ``archetypes.multilingual``, since this is a indirection.
+  Remove all dependencies that are already part of ``Products.CMFPlone``.
+  All version specifications were reduced to use a recent ``Products.CMFPlone``.
+  The ``decorator`` dependency is no longer used.
+  [jensens] (#357)
+
+
 5.3.5 (2019-05-21)
 ------------------
 
