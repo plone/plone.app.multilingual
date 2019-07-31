@@ -20,12 +20,14 @@ class UpdateLanguageForm(form.Form):
     @button.buttonAndHandler(_(u"update_language", default=u"Update Language"))
     def handle_update(self, action):
         data, errors = self.extractData()
-        new_object = self.context
+        if errors:
+            self.status = self.formErrorsMessage
+            return
 
-        if not errors:
-            language = data['language']
-            # We need to move the object to its place!!
-            new_object = multilingualMoveObject(self.context, language)
+        new_object = self.context
+        language = data['language']
+        # We need to move the object to its place!!
+        new_object = multilingualMoveObject(self.context, language)
 
         return self.request.response.redirect(
             new_object.absolute_url() + '?set_language=' + language)
