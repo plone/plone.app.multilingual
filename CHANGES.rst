@@ -8,6 +8,18 @@ Changelog
 
 .. towncrier release notes start
 
+5.4.1 (2019-08-23)
+------------------
+
+Bug fixes:
+
+
+- fix adding new language when Language Independent Folder has content
+  [petschki] (#358)
+- add/update translation forms doesn't show error return from z3c form validation
+  [mamico] (#360)
+
+
 5.4.0 (2019-07-18)
 ------------------
 
