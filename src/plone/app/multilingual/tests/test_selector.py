@@ -11,10 +11,12 @@ from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
+from plone.app.multilingual.testing import PAM_INTEGRATION_PRESET_TESTING
 from plone.dexterity.utils import createContentInContainer
 from plone.registry.interfaces import IRegistry
 from plone.testing.z2 import Browser
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import ILanguageSchema
 from zope.component import getUtility
 from zope.event import notify
 from zope.interface import alsoProvides
@@ -896,4 +898,143 @@ class TestLanguageSelectorAddQuery(unittest.TestCase):
         self.assertEqual(
             addQuery(self.request, self.url, three=3),
             self.url+'?one:int=1&three:int=3&two:int=2'
+        )
+
+class TestLanguageSelectorSetLanguage(unittest.TestCase):
+    layer = PAM_INTEGRATION_PRESET_TESTING
+
+    def setUp(self):
+        # Set test variables
+        self.portal = self.layer['portal']
+        self.portal_url = self.portal.absolute_url()
+        self.request = self.layer['request']
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
+
+        registry = getUtility(IRegistry)
+        self.settings = registry.forInterface(ILanguageSchema, prefix="plone")
+
+    def test_set_language_is_present(self):
+        """ test the presence of set_language parameter in the urls created in the language selector"""
+
+        self.settings.set_cookie_always = False
+        self.selector_viewlet = LanguageSelectorViewlet(
+            self.portal['en'], self.request, None, None
+        )
+        self.selector_viewlet.update()
+
+        selector_languages = self.selector_viewlet.languages()
+        tg = ITG(self.portal['en'])
+
+        self.assertListEqual(
+            selector_languages,
+            [
+                {
+                    'code': u'en',
+                    u'flag': u'/++resource++country-flags/gb.gif',
+                    u'name': u'English',
+                    u'native': u'English',
+                    'url': SELECTOR_VIEW_TEMPLATE
+                    % {
+                        'url': self.portal.absolute_url(),
+                        'tg': tg,
+                        'lang': 'en',
+                        'query': '?set_language=en',
+                    },
+                    'selected': True,
+                    'translated': True,
+                },
+                {
+                    'code': u'ca',
+                    u'flag': u'/++resource++language-flags/ca.gif',
+                    u'name': u'Catalan',
+                    u'native': u'Catal\xe0',
+                    'url': SELECTOR_VIEW_TEMPLATE
+                    % {
+                        'url': self.portal.absolute_url(),
+                        'tg': tg,
+                        'lang': 'ca',
+                        'query': '?set_language=ca',
+                    },
+                    'selected': False,
+                    'translated': True,
+                },
+                {
+                    'code': u'es',
+                    u'flag': u'/++resource++country-flags/es.gif',
+                    u'name': u'Spanish',
+                    u'native': u'Espa\xf1ol',
+                    'url': SELECTOR_VIEW_TEMPLATE
+                    % {
+                        'url': self.portal.absolute_url(),
+                        'tg': tg,
+                        'lang': 'es',
+                        'query': '?set_language=es',
+                    },
+                    'selected': False,
+                    'translated': True,
+                },
+            ],
+        )
+
+
+    def test_set_language_is_not_present_when_always_set_cookie_is_set(self):
+        """ test the absence of set_language parameter in the urls created in the language selector"""
+        self.settings.set_cookie_always = True
+        self.selector_viewlet = LanguageSelectorViewlet(
+            self.portal['en'], self.request, None, None
+        )
+        self.selector_viewlet.update()
+
+        selector_languages = self.selector_viewlet.languages()
+        tg = ITG(self.portal['en'])
+
+        self.assertListEqual(
+            selector_languages,
+            [
+                {
+                    'code': u'en',
+                    u'flag': u'/++resource++country-flags/gb.gif',
+                    u'name': u'English',
+                    u'native': u'English',
+                    'url': SELECTOR_VIEW_TEMPLATE
+                    % {
+                        'url': self.portal.absolute_url(),
+                        'tg': tg,
+                        'lang': 'en',
+                        'query': '',
+                    },
+                    'selected': True,
+                    'translated': True,
+                },
+                {
+                    'code': u'ca',
+                    u'flag': u'/++resource++language-flags/ca.gif',
+                    u'name': u'Catalan',
+                    u'native': u'Catal\xe0',
+                    'url': SELECTOR_VIEW_TEMPLATE
+                    % {
+                        'url': self.portal.absolute_url(),
+                        'tg': tg,
+                        'lang': 'ca',
+                        'query': '',
+                    },
+                    'selected': False,
+                    'translated': True,
+                },
+                {
+                    'code': u'es',
+                    u'flag': u'/++resource++country-flags/es.gif',
+                    u'name': u'Spanish',
+                    u'native': u'Espa\xf1ol',
+                    'url': SELECTOR_VIEW_TEMPLATE
+                    % {
+                        'url': self.portal.absolute_url(),
+                        'tg': tg,
+                        'lang': 'es',
+                        'query': '',
+                    },
+                    'selected': False,
+                    'translated': True,
+                },
+            ],
         )

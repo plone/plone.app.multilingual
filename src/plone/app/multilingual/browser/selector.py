@@ -2,6 +2,9 @@
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import NOTG
+from plone.registry.interfaces import IRegistry
+from Products.CMFPlone.interfaces import ILanguageSchema
+from zope.component import getUtility
 from zope.component import queryAdapter
 from zope.component.hooks import getSite
 from ZTUtils import make_query
@@ -79,16 +82,21 @@ class LanguageSelectorViewlet(LanguageSelector):
     def languages(self):
         languages_info = super(LanguageSelectorViewlet, self).languages()
         results = []
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ILanguageSchema, prefix="plone")
         translation_group = queryAdapter(self.context, ITG)
         if translation_group is None:
             translation_group = NOTG
+
         for lang_info in languages_info:
             # Avoid to modify the original language dict
             data = lang_info.copy()
             data['translated'] = True
-            query_extras = {
-                'set_language': data['code'],
-            }
+            query_extras = {}
+            if not settings.set_cookie_always:
+                query_extras.update({
+                    'set_language': data['code'],
+                })
             post_path = getPostPath(self.context, self.request)
             if post_path:
                 query_extras['post_path'] = post_path
