@@ -70,10 +70,11 @@ class AddViewTraverser(object):
         # XXX: register this adapter on dx container and a second one for AT
         if not IDexterityContent.providedBy(source):
             # we are not on DX content, assume AT
-            baseUrl = self.context.absolute_url()
-            url = '%s/@@add_at_translation?type=%s&uid=%s' % (
-                baseUrl, source.portal_type, name)
-            return self.request.response.redirect(url)
+            self.request.set('type', source.portal_type)
+            self.request.set('uid', name)
+            view = queryMultiAdapter(
+                (self.context, self.request), name="add_at_translation")
+            return view.__of__(self.context)
 
         # set the self.context to the place where it should be stored
         if not IFolderish.providedBy(self.context):
