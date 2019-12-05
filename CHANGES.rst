@@ -4,14 +4,6 @@ Changelog
 2.0.5 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Fix "Insufficient Privileges" error when adding translations.
