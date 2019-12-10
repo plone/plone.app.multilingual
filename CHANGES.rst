@@ -8,6 +8,56 @@ Changelog
 
 .. towncrier release notes start
 
+5.4.2 (2019-11-25)
+------------------
+
+Bug fixes:
+
+
+- Use the shared 'Plone test setup' and 'Plone test teardown' keywords in Robot tests.
+  [Rotonen] (#349)
+
+
+5.4.1 (2019-08-23)
+------------------
+
+Bug fixes:
+
+
+- fix adding new language when Language Independent Folder has content
+  [petschki] (#358)
+- add/update translation forms doesn't show error return from z3c form validation
+  [mamico] (#360)
+
+
+5.4.0 (2019-07-18)
+------------------
+
+New features:
+
+
+- Add low level events and notifies:
+  on register, update and remove of a translation to a translation groups.
+  [jensens] (#256)
+
+
+Bug fixes:
+
+
+- Remove deprecation warnings in tests.
+  Increase readability
+  Add code comments.
+  Remove superfluos reindex of "Language" in manager.
+  [jensens] (#256)
+- wrong check for default addview in addtranslation traverser
+  [mauro] (#355)
+- Remove any dependency to ``archetypes.multilingual``, since this is a indirection.
+  Remove all dependencies that are already part of ``Products.CMFPlone``.
+  All version specifications were reduced to use a recent ``Products.CMFPlone``.
+  The ``decorator`` dependency is no longer used.
+  [jensens] (#357)
+
+
 5.3.5 (2019-05-21)
 ------------------
 
@@ -22,6 +72,8 @@ Bug fixes:
 
 Bug fixes:
 
+- Avoid browser to permanently cache first redirection to negotiated lang (#347)
+  [laulaz]
 
 - Moved to named behaviors. [iham] (#342)
 

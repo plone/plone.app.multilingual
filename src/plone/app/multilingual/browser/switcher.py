@@ -28,4 +28,4 @@ class LanguageSwitcher(BrowserView):
         if not langCookie or langCookie != target:
             self.request.response.setCookie('I18N_LANGUAGE', target, path='/')
 
-        self.request.response.redirect(url, status=301)
+        self.request.response.redirect(url, status=302)

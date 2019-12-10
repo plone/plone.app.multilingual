@@ -89,13 +89,14 @@ def unindex_language_independent(ob, event):
 
     language_tool = getToolByName(ob, 'portal_languages')
     language_codes = language_tool.supported_langs
-
+    portal = getSite()
     uuid = IUUID(ob).split('-')[0]
+
     for code in language_codes:
         for brain in pc.unrestrictedSearchResults(UID=uuid + '-' + code):
-            ob.unrestrictedTraverse(brain.getPath()).unindexObject()
+            portal.unrestrictedTraverse(brain.getPath()).unindexObject()
         for brain in pc.unrestrictedSearchResults(UID=uuid):
-            ob.unrestrictedTraverse(brain.getPath()).unindexObject()
+            portal.unrestrictedTraverse(brain.getPath()).unindexObject()
 
 
 # Multilingual subscribers
