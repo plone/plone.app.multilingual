@@ -2,3 +2,6 @@ include *.rst
 graft src
 graft docs
 global-exclude *.py[co]
+include pyproject.toml
+recursive-exclude news *
+exclude news
