@@ -26,7 +26,7 @@ Scenario: As an editor I can add new translation
 Setup test browser
   Set Selenium speed  0.5s
   Open test browser
-  Set window size  1200  900
+  Set window size  1400  1200
 
 # Given
 
@@ -76,7 +76,10 @@ I link the document in English as a translation
   Wait until page contains element  xpath=(//h3[@class="translationTitle"])
   Sleep  5
   Wait until element is visible  xpath=(//h3[@class="translationTitle"])
-  Focus  xpath=(//*[@class="odd"]//a[contains(@href,"a-catalan-document")])
+  Wait until page contains element  xpath=(//*[@class="odd"]//a[contains(@href,"a-catalan-document")])
+  Wait until element is visible  xpath=(//*[@class="odd"]//a[contains(@href,"a-catalan-document")])
+  Set Focus To Element  xpath=(//*[@class="odd"]//a[contains(@href,"a-catalan-document")])
+  Sleep  2
   Click Element  xpath=(//*[@class="odd"]//a[contains(@href,"a-catalan-document")])
   Wait until page contains  A Catalan Document
 
