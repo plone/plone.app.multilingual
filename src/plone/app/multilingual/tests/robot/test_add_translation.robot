@@ -12,6 +12,7 @@ Test Teardown  Close all browsers
 *** Test Cases ***
 
 Scenario: As an editor I can add new translation
+    [Tags]  unstable
     Given a site owner
       and a document in English
       and a document in Catalan

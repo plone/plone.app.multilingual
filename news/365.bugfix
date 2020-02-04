@@ -1,0 +1,4 @@
+Marked robot test for adding translation as unstable.
+On Jenkins it has not succeeded on Plone 5.1 for long, and is unstable on 5.2.
+Locally the test passes fine on Chrome and Firefox.
+[maurits]
