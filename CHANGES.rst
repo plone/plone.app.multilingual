@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+5.5.0 (2019-12-11)
+------------------
+
+New features:
+
+
+- Remove the 'set_language' parameter when 'always_set_cookie' is enabled in language control panel. See #362
+  [erral] (#362)
+
+
 5.4.2 (2019-11-25)
 ------------------
 
