@@ -1,0 +1,3 @@
+Retry failing robot tests twice.
+Some are unstable.
+[maurits]

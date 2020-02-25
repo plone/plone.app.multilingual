@@ -17,7 +17,7 @@ def test_suite():
     suite.level = ROBOT_TEST_LEVEL
     suite.addTests([
         layered(
-            robotsuite.RobotTestSuite('robot', noncritical=['unstable']),
+            robotsuite.RobotTestSuite('robot', noncritical=['unstable'], retry_count=2),
             layer=PAM_ROBOT_TESTING),
     ])
     return suite
