@@ -8,6 +8,18 @@ Changelog
 
 .. towncrier release notes start
 
+5.2.4 (2020-03-09)
+------------------
+
+Bug fixes:
+
+
+- Marked robot test for adding translation as unstable.
+  On Jenkins it has not succeeded on Plone 5.1 for long, and is unstable on 5.2.
+  Locally the test passes fine on Chrome and Firefox.
+  [maurits] (#365)
+
+
 5.2.3 (2018-09-26)
 ------------------
 
