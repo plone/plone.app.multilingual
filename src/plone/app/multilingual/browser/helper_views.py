@@ -246,6 +246,9 @@ class not_translated_yet(BrowserView):
             lang_code = self.request.get('set_language')
         else:
             lang_code = lang
+        if not lang_code:
+            # For shared content, lang_code is an empty string.
+            return ''
         util = getUtility(IContentLanguageAvailability)
         data = util.getLanguages(True)
         lang_info = data.get(lang_code)
