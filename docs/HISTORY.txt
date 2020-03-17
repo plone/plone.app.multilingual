@@ -14,6 +14,8 @@ New features:
 
 Bug fixes:
 
+- Fix AttributeError when using the language switcher on content in the shared folder.  [maurits]
+
 - Fix language alternate viewlet #153 [erral]
 
 
