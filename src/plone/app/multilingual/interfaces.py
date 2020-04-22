@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone.app.multilingual import _
+from plone.app.z3cform.interfaces import IPloneFormLayer
 from plone.supermodel import model
 from zope import schema
 from zope.interface import Attribute
@@ -166,8 +167,8 @@ class ITG(Interface):
     """
 
 
-class IPloneAppMultilingualInstalled(Interface):
-    """ layer """
+class IPloneAppMultilingualInstalled(IPloneFormLayer):
+    """ layer inherits from PloneFormLayer for better LIF widget overriding """
 
 
 selector_policies = SimpleVocabulary(
