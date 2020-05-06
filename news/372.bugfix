@@ -1,2 +1,0 @@
-Move metadata to setup.cfg in order to avoid encoding problems in CHANGES.rst running Plone 6.0 on Python 3.6, see #372.
-[jensens]

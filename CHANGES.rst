@@ -8,6 +8,24 @@ Changelog
 
 .. towncrier release notes start
 
+5.6.0 (2020-05-06)
+------------------
+
+New features:
+
+
+- Inherit IPloneAppMultilingualInstalled layer from IPloneFormLayer for better
+  LIF widget overriding.
+  [petschki] (#371)
+
+
+Bug fixes:
+
+
+- Move metadata to setup.cfg in order to avoid encoding problems in CHANGES.rst running Plone 6.0 on Python 3.6, see #372.
+  [jensens] (#372)
+
+
 5.5.1 (2020-04-20)
 ------------------
 
