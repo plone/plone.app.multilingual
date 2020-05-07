@@ -127,6 +127,8 @@ class MultilingualAddForm(DefaultAddForm):
 
     def render(self):
         self.request['disable_border'] = True
+        self.request['disable_plone.leftcolumn'] = True
+        self.request['disable_plone.rightcolumn'] = True
         self.babel_content = super(MultilingualAddForm, self).render()
         return self.babel()
 
