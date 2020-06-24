@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+5.6.1 (2020-06-24)
+------------------
+
+Bug fixes:
+
+
+- Hide left and right portlet columns on babel add view. Fixes #373 [iham] (#373)
+
+
 5.6.0 (2020-05-06)
 ------------------
 
