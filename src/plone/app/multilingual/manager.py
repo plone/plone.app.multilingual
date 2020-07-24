@@ -12,6 +12,7 @@ from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import NOTG
 from plone.app.multilingual.itg import addAttributeTG
 from plone.app.uuid.utils import uuidToObject
+from plone.protect.auto import safeWrite
 from plone.uuid.handlers import addAttributeUUID
 from plone.uuid.interfaces import IUUID
 from Products.CMFCore.utils import getToolByName
@@ -43,7 +44,7 @@ class TranslationManager(object):
         # We must ensure that this case can't happen, any object translatable
         # will have an UUID (in any case we can be at the portal factory!)
         except KeyError:
-            context._v_safe_write = True
+            safeWrite(context)
             addAttributeUUID(context, None)
             context.reindexObject(idxs=['UID'])
             context_id = IUUID(context)
@@ -59,6 +60,7 @@ class TranslationManager(object):
         # We must ensure that this case can't happen, any object translatable
         # will have an UUID (in any case we can be at the portal factory!)
         except TypeError:
+            safeWrite(context)
             addAttributeTG(context, None)
             context.reindexObject(idxs=['TranslationGroup'])
             context_id = ITG(context)
