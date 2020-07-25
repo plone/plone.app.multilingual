@@ -12,12 +12,14 @@ from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import NOTG
 from plone.app.multilingual.itg import addAttributeTG
 from plone.app.uuid.utils import uuidToObject
-from plone.protect.auto import safeWrite
+from plone.protect.interfaces import IDisableCSRFProtection
 from plone.uuid.handlers import addAttributeUUID
 from plone.uuid.interfaces import IUUID
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ILanguage
+from zope.globalrequest import getRequest
 from zope.event import notify
+from zope.interface import alsoProvides
 from zope.interface import implementer
 from zope.site.hooks import getSite
 
@@ -44,7 +46,7 @@ class TranslationManager(object):
         # We must ensure that this case can't happen, any object translatable
         # will have an UUID (in any case we can be at the portal factory!)
         except KeyError:
-            safeWrite(context)
+            alsoProvides(getRequest(), IDisableCSRFProtection)
             addAttributeUUID(context, None)
             context.reindexObject(idxs=['UID'])
             context_id = IUUID(context)
@@ -58,9 +60,9 @@ class TranslationManager(object):
         try:
             context_id = ITG(context)
         # We must ensure that this case can't happen, any object translatable
-        # will have an UUID (in any case we can be at the portal factory!)
+        # will have an TG (in any case we can be at the portal factory!)
         except TypeError:
-            safeWrite(context)
+            alsoProvides(getRequest(), IDisableCSRFProtection)
             addAttributeTG(context, None)
             context.reindexObject(idxs=['TranslationGroup'])
             context_id = ITG(context)
