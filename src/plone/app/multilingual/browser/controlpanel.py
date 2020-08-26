@@ -14,7 +14,7 @@ from Products.statusmessages.interfaces import IStatusMessage
 from z3c.form import button
 from zc.relation.interfaces import ICatalog as IRelationCatalog
 from zope.component import getUtility
-from zope.component.interfaces import ComponentLookupError
+from zope.interface.interfaces import ComponentLookupError
 from zope.i18nmessageid import MessageFactory
 from zope.schema.interfaces import IVocabularyFactory
 
