@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from zope.component.interfaces import IObjectEvent
 from zope.interface import Attribute
 from zope.interface import implementer
+from zope.interface.interfaces import IObjectEvent
 
 
 class IObjectWillBeTranslatedEvent(IObjectEvent):

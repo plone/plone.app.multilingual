@@ -18,10 +18,10 @@ from plone.uuid.interfaces import IUUID
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ILanguage
 from zope.globalrequest import getRequest
+from zope.component.hooks import getSite
 from zope.event import notify
 from zope.interface import alsoProvides
 from zope.interface import implementer
-from zope.site.hooks import getSite
 
 
 @implementer(ITranslationManager)
