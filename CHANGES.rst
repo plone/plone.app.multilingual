@@ -8,6 +8,19 @@ Changelog
 
 .. towncrier release notes start
 
+5.6.2 (2020-09-26)
+------------------
+
+Bug fixes:
+
+
+- Fixed deprecation warning for ComponentLookupError.
+  Fixed deprecation warning for ILanguageSchema, depend on ``plone.i18n`` 4.0.4.
+  Fixed deprecation warning for IObjectEvent from zope.component.
+  Fixed deprecation warning for zope.site.hooks.
+  [maurits] (#3130)
+
+
 5.6.1 (2020-06-24)
 ------------------
 
