@@ -171,7 +171,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.assertEqual(
             self.browser.url, a.absolute_url() + '?set_language=en'
         )
-        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+        self.assertRegexpMatches(self.browser.contents, r"Distributed under the")
 
         self.browser.open(selector_viewlet_languages[1]['url'])
         self.assertEqual(
@@ -311,7 +311,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         )
         self.assertIn('lang="en"', self.browser.contents)
         # But extra check, because English is the default?
-        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+        self.assertRegexpMatches(self.browser.contents, r"Distributed under the")
 
         # Check that CA translation is only partial and a parent folder
         # is found
@@ -352,7 +352,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         )
         # But extra check, because English is the default?
         self.assertIn('lang="en"', self.browser.contents)
-        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+        self.assertRegexpMatches(self.browser.contents, r"Distributed under the")
 
         tgid = selector_languages[1]['url'].split('/')[-2]
 
@@ -399,7 +399,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         )
         self.browser.open(selector_languages[0]['url'])
         self.assertIn('lang="en"', self.browser.contents)
-        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+        self.assertRegexpMatches(self.browser.contents, r"Distributed under the")
 
         # Check CA root
         self.assertEqual(
@@ -508,7 +508,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.portal['en'].absolute_url() + '?set_language=en',
         )
         self.assertIn('lang="en"', self.browser.contents)
-        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+        self.assertRegexpMatches(self.browser.contents, r"Distributed under the")
 
         # Check CA
         self.browser.open(selector_languages[1]['url'])
@@ -572,7 +572,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             f_en.absolute_url() + '/contact-info?set_language=en',
         )
         self.assertIn('lang="en"', self.browser.contents)
-        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+        self.assertRegexpMatches(self.browser.contents, r"Distributed under the")
 
         # Check CA
         self.browser.open(selector_languages[1]['url'])
@@ -611,7 +611,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             f_en.absolute_url() + '/contact-info?set_language=en',
         )
         self.assertIn('lang="en"', self.browser.contents)
-        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+        self.assertRegexpMatches(self.browser.contents, r"Distributed under the")
 
         # Check CA
         self.browser.open(selector_languages[1]['url'])
@@ -676,7 +676,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             ),
         )
         self.assertIn('lang="en"', self.browser.contents)
-        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+        self.assertRegexpMatches(self.browser.contents, r"Distributed under the")
 
         # Check CA
         self.browser.open(selector_languages[1]['url'])
