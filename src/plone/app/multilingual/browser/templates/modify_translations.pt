@@ -47,21 +47,18 @@
               <a href="#" title="Disconnect translation" class="pat-plone-modal disconnectTranslationAction"
                  tal:attributes="href string:${context/absolute_url}/disconnect_translation?came_from=${context/UID}&language=${lang}"
                  i18n:attributes="title disconnect_translation">
-
-                  <img src="" alt="" width="20" height="20" class="icalIcon"
-                           tal:attributes="src string:++plone++bootstrap-icons/unlock.svg"/>
-                <span class="d-none d-md-inline-block text-xs-right" i18n:translate="disconnect_translation">Disconnect translation</span>
+                  <img src="" alt="" width="20" height="20" class="icon me-2"
+                           tal:attributes="src string:++plone++bootstrap-icons/arrows-angle-expand.svg"/><span 
+                    class="d-none d-md-inline-block text-xs-right" i18n:translate="disconnect_translation">Disconnect translation</span>
               </a>
             </tal:hastranslation>
             <tal:notranslation condition="not:translation">
               <a href="#" title="Connect existing translation" class="pat-plone-modal connectTranslationAction"
                  tal:attributes="href string:${context/absolute_url}/connect_translation?language=${lang}"
                  i18n:attributes="title connect_existing_translation">
-
-                  <img src="" alt="" width="20" height="20" class="icalIcon"
-                           tal:attributes="src string:++plone++bootstrap-icons/lock.svg"/>
-
-                <span class="d-none d-md-inline-block" i18n:translate="connect_existing_translation">Connect existing translation</span>
+                  <img src="" alt="" width="20" height="20" class="icon me-2"
+                           tal:attributes="src string:++plone++bootstrap-icons/arrows-angle-contract.svg"/><span 
+                    class="d-none d-md-inline-block" i18n:translate="connect_existing_translation">Connect existing translation</span>
               </a>
             </tal:notranslation>
           </td>
@@ -70,11 +67,9 @@
               <a href="#" title="Delete translated item" class="pat-plone-modal deleteTranslationAction"
                  tal:attributes="href string:${translation/absolute_url}/delete_confirmation"
                  i18n:attributes="title delete_translated_item">
-
-                  <img src="" alt="" width="20" height="20" class="icalIcon"
-                           tal:attributes="src string:++plone++bootstrap-icons/trash.svg"/>
-
-                <span class="d-none d-md-inline-block" i18n:translate="delete_translated_item">Delete translated item</span>
+                  <img src="" alt="" width="20" height="20" class="icon me-2"
+                           tal:attributes="src string:++plone++bootstrap-icons/trash.svg"/><span 
+                    class="d-none d-md-inline-block" i18n:translate="delete_translated_item">Delete translated item</span>
               </a>
             </tal:hastranslation>
             <tal:notranslation condition="not:translation">
@@ -82,8 +77,8 @@
                  tal:attributes="href string:${context/absolute_url}/@@create_translation?language=${lang}"
                  i18n:attributes="title add_translation">
                   <img src="" alt="" width="20" height="20"
-                           tal:attributes="src string:++plone++bootstrap-icons/plus.svg"/>
-                <span class="d-none d-md-inline-block" i18n:translate="add_translation">Add translation</span>
+                           tal:attributes="src string:++plone++bootstrap-icons/plus.svg"/><span 
+                    class="d-none d-md-inline-block" i18n:translate="add_translation">Add translation</span>
               </a>
             </tal:notranslation>
           </td>
