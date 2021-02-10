@@ -91,7 +91,7 @@ def disable_language_switcher(portal):
     tt = getToolByName(portal, 'portal_types')
     site = tt['Plone Site']
     methods = site.view_methods
-    site.view_methods = [m for m in methods if m != 'language-switcher']
+    site.view_methods = tuple([m for m in methods if m != 'language-switcher'])
     if site.default_view == 'language-switcher':
         site.default_view = 'listing_view'
 
