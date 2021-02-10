@@ -55,7 +55,7 @@ def enable_translatable_behavior(portal):
     all_ftis = types_tool.listTypeInfo()
     dx_ftis = (
         fti for fti in all_ftis
-        if getattr(fti, 'behaviors', False) and fti.getId() == 'Plone Site'
+        if getattr(fti, 'behaviors', False) and fti.getId() != 'Plone Site'
     )
     for fti in dx_ftis:
         # Enable translatable behavior for all types
