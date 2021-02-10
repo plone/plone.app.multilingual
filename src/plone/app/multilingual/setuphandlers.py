@@ -51,13 +51,13 @@ def step_default_various(context):
 def enable_translatable_behavior(portal):
     types_tool = portal.portal_types
 
-    # Iterate through all Dexterity content type
+    # Iterate through all Dexterity content type, except the site root
     all_ftis = types_tool.listTypeInfo()
-    dx_ftis = [x for x in all_ftis if getattr(x, 'behaviors', False)]
+    dx_ftis = (
+        fti for fti in all_ftis
+        if getattr(fti, 'behaviors', False) and fti.getId() == 'Plone Site'
+    )
     for fti in dx_ftis:
-        if fti.getId() == 'Plone Site':
-            continue
-
         # Enable translatable behavior for all types
         behaviors = list(fti.behaviors)
         behaviors.extend([
@@ -97,8 +97,9 @@ def disable_language_switcher(portal):
     """Remove the use of language-switcher as default view for Plone Site"""
     tt = getToolByName(portal, 'portal_types')
     site = tt['Plone Site']
-    methods = site.view_methods
-    site.view_methods = [m for m in methods if m != 'language-switcher']
+    site.view_methods = tuple(
+        method for method in site.view_methods if method != 'language-switcher'
+    )
     if site.default_view == 'language-switcher':
         site.default_view = 'listing_view'
 

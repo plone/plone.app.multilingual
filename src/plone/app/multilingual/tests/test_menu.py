@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled, ITranslatable
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.testing import SITE_OWNER_NAME
 from plone.app.testing import SITE_OWNER_PASSWORD
