@@ -74,6 +74,6 @@ I switch to Catalan
 
 I can view the document in Catalan
   Page Should Contain Element
-  ...  xpath=//*[contains(@class, 'documentFirstHeading')][./text()='A Catalan Document']
+  ...  xpath=//h1[1][text()='A Catalan Document']
   Page Should Contain Element
   ...  xpath=//ul[@id='portal-languageselector']/li[contains(@class, 'currentLanguage')]/a[@title='Català']
