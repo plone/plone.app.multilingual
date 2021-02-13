@@ -72,13 +72,13 @@ I link the document in English as a translation
   Wait until element is visible  xpath=(//span[contains(., 'An English Document')])
   Click Element  xpath=(//span[contains(., 'An English Document')])
   Wait until page contains  An English Document
-
-  Click Element  xpath=(//*[contains(@class, 'plone-modal-footer')]//input[@id='form-buttons-connect_translation'])
+  
+  Click Element  xpath=(//*[contains(@class, 'plone-modal-footer')]//button[@id='form-buttons-connect_translation'])
   Wait until page contains element  xpath=(//h3[@class="translationTitle"])
   Sleep  5
   Wait until element is visible  xpath=(//h3[@class="translationTitle"])
-  Focus  xpath=(//*[@class="odd"]//a[contains(@href,"a-catalan-document")])
-  Click Element  xpath=(//*[@class="odd"]//a[contains(@href,"a-catalan-document")])
+  Focus  xpath=(//*[@id="translations-overview"]//a[contains(@href,"a-catalan-document")])
+  Click Element  xpath=(//*[@id="translations-overview"]//a[contains(text(),'/plone/ca/a-catalan-document')])
   Wait until page contains  A Catalan Document
 
 I switch to English
@@ -89,6 +89,6 @@ I switch to English
 
 I can view the document in English
   Wait until page contains element
-  ...  xpath=//*[contains(@class, 'documentFirstHeading')][./text()='An English Document']
+  ...  xpath=//h1[1][contains(text(),'English Document')]
   Wait until page contains element
   ...  xpath=//ul[@id='portal-languageselector']/li[contains(@class, 'currentLanguage')]/a[@title='English']
