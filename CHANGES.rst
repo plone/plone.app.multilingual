@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+5.6.3 (2021-02-16)
+------------------
+
+Bug fixes:
+
+
+- Force view_methods to be a tuple on setup and uninstall (#337)
+
+
 5.6.2 (2020-09-26)
 ------------------
 
