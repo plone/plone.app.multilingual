@@ -48,7 +48,7 @@ class TestForm(unittest.TestCase):
 
         # Fill in translation details
         self.browser.getControl(
-            name="form.widgets.IDublinCore.title").value = u"Test document"
+            name="form.widgets.title").value = u"Test document"
         self.browser.getControl(name="form.buttons.save").click()
 
         self.portal._p_jar.sync()
@@ -75,7 +75,7 @@ class TestForm(unittest.TestCase):
 
         # Fill in translation details
         self.browser.getControl(
-            name="form.widgets.IDublinCore.title").value = u"Test document"
+            name="form.widgets.title").value = u"Test document"
         self.browser.getControl(name="form.buttons.save").click()
 
         self.portal._p_jar.sync()
@@ -99,7 +99,7 @@ class TestForm(unittest.TestCase):
 
         # Fill in translation details
         self.browser.getControl(
-            name="form.widgets.IDublinCore.title").value = u"Test document"
+            name="form.widgets.title").value = u"Test document"
         self.browser.getControl(name="form.buttons.save").click()
 
         # Unregister translation
@@ -181,7 +181,7 @@ class TestForm(unittest.TestCase):
 
         # Fill in translation details
         self.browser.getControl(
-            name="form.widgets.IDublinCore.title").value = u"Test document"
+            name="form.widgets.title").value = u"Test document"
         self.browser.getControl(name="form.buttons.save").click()
 
         # Remove translation
@@ -203,7 +203,7 @@ class TestForm(unittest.TestCase):
                           '/ca/test-folder/@@create_translation?language=en')
 
         self.browser.getControl(
-            name="form.widgets.IDublinCore.title").value = u"Test folder"
+            name="form.widgets.title").value = u"Test folder"
         self.browser.getControl(name="form.buttons.save").click()
 
         self.portal._p_jar.sync()
@@ -224,7 +224,7 @@ class TestForm(unittest.TestCase):
                           '/@@create_translation?language=en')
 
         self.browser.getControl(
-            name="form.widgets.IDublinCore.title").value = u"Test folder"
+            name="form.widgets.title").value = u"Test folder"
         self.browser.getControl(name="form.buttons.save").click()
 
         self.portal._p_jar.sync()

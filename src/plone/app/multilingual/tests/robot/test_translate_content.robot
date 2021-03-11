@@ -56,7 +56,7 @@ a document in English with Catalan translation
 I translate the document into Catalan
   Go to  ${PLONE_URL}/en/an-english-document/@@create_translation?language=ca
   Capture page screenshot
-  Input Text  form.widgets.IDublinCore.title  A Catalan Document
+  Input Text  form.widgets.title  A Catalan Document
   Click Link  Dates  # workaround for of TinyMCE editor field problem
   Capture page screenshot
   Click button  css=#form-buttons-save

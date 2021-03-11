@@ -67,8 +67,8 @@ I open the field settings
   Page should contain  Language independent field
 
 I select the language independent field setting
-  Select checkbox  form-widgets-IFieldLanguageIndependent-languageindependent-0
-  Checkbox should be selected  form-widgets-IFieldLanguageIndependent-languageindependent-0
+  Select checkbox  form-widgets-languageindependent-0
+  Checkbox should be selected  form-widgets-languageindependent-0
 
 I save the form
   Wait until page contains element  css=#form-buttons-save
@@ -80,16 +80,16 @@ I open the form again
   Wait until page contains  Language independent field
 
 I unselect the language independent field setting
-  Unselect checkbox  form-widgets-IFieldLanguageIndependent-languageindependent-0
-  Checkbox should not be selected  form-widgets-IFieldLanguageIndependent-languageindependent-0
+  Unselect checkbox  form-widgets-languageindependent-0
+  Checkbox should not be selected  form-widgets-languageindependent-0
 
 # Then
 
 I can see the language independent field setting
-  Wait until page contains element  id=form-widgets-IFieldLanguageIndependent-languageindependent-0
+  Wait until page contains element  id=form-widgets-languageindependent-0
 
 the language independent field setting is selected
-  Checkbox should be selected  form-widgets-IFieldLanguageIndependent-languageindependent-0
+  Checkbox should be selected  form-widgets-languageindependent-0
 
 the language independent field setting is not selected
-  Checkbox should not be selected  form-widgets-IFieldLanguageIndependent-languageindependent-0
+  Checkbox should not be selected  form-widgets-languageindependent-0
