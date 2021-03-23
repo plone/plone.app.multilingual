@@ -32,13 +32,13 @@
                   tal:content="lang"></span>
           </td>
           <td>
-            <tal:hastranslation condition="translation">
+            <tal:hastranslation condition="python:translation">
               <h3 class="translationTitle" tal:content="translation/Title">Title</h3>
               <a class="translationURL" href="#" tal:attributes="href translation/absolute_url">
                 <span tal:replace="python:'/'.join(translation.getPhysicalPath())">URL</span>
               </a>
             </tal:hastranslation>
-            <tal:notranslation condition="not:translation">
+            <tal:notranslation condition="python:not translation">
               <h3 class="translationTitle discreet" i18n:translate="">Translation missing</h3>
             </tal:notranslation>
           </td>
@@ -52,7 +52,7 @@
                     class="d-none d-md-inline-block text-xs-right" i18n:translate="disconnect_translation">Disconnect translation</span>
               </a>
             </tal:hastranslation>
-            <tal:notranslation condition="not:translation">
+            <tal:notranslation condition="python:not translation">
               <a href="#" title="Connect existing translation" class="pat-plone-modal connectTranslationAction"
                  tal:attributes="href string:${context/absolute_url}/connect_translation?language=${lang}"
                  i18n:attributes="title connect_existing_translation">
@@ -72,7 +72,7 @@
                     class="d-none d-md-inline-block" i18n:translate="delete_translated_item">Delete translated item</span>
               </a>
             </tal:hastranslation>
-            <tal:notranslation condition="not:translation">
+            <tal:notranslation condition="python:not translation">
               <a href="#" title="Add translation" class="pat-plone-modal addTranslationAction"
                  tal:attributes="href string:${context/absolute_url}/@@create_translation?language=${lang}"
                  i18n:attributes="title add_translation">
