@@ -25,7 +25,6 @@ from zope.event import notify
 from zope.interface import alsoProvides
 from zope.lifecycleevent import ObjectModifiedEvent
 
-import lxml
 import six
 import transaction
 import unittest
@@ -120,7 +119,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             [
                 {
                     'code': u'en',
-                    u'flag': u'countryflag/gb',
+                    u'flag': u'/++resource++country-flags/gb.gif',
                     u'name': u'English',
                     u'native': u'English',
                     'url': SELECTOR_VIEW_TEMPLATE
@@ -135,7 +134,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 },
                 {
                     'code': u'ca',
-                    u'flag': u'languageflag/ca',
+                    u'flag': u'/++resource++language-flags/ca.gif',
                     u'name': u'Catalan',
                     u'native': u'Catal\xe0',
                     'url': SELECTOR_VIEW_TEMPLATE
@@ -150,7 +149,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 },
                 {
                     'code': u'es',
-                    u'flag': u'countryflag/es',
+                    u'flag': u'/++resource++country-flags/es.gif',
                     u'name': u'Spanish',
                     u'native': u'Espa\xf1ol',
                     'url': SELECTOR_VIEW_TEMPLATE
@@ -456,7 +455,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             [
                 {
                     'code': u'en',
-                    u'flag': u'countryflag/gb',
+                    u'flag': u'/++resource++country-flags/gb.gif',
                     u'name': u'English',
                     u'native': u'English',
                     'url': SELECTOR_VIEW_TEMPLATE
@@ -471,7 +470,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 },
                 {
                     'code': u'ca',
-                    u'flag': u'languageflag/ca',
+                    u'flag': u'/++resource++language-flags/ca.gif',
                     u'name': u'Catalan',
                     u'native': u'Catal\xe0',
                     'url': SELECTOR_VIEW_TEMPLATE
@@ -486,7 +485,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 },
                 {
                     'code': u'es',
-                    u'flag': u'countryflag/es',
+                    u'flag': u'/++resource++country-flags/es.gif',
                     u'name': u'Spanish',
                     u'native': u'Espa\xf1ol',
                     'url': SELECTOR_VIEW_TEMPLATE
@@ -965,7 +964,7 @@ class TestLanguageSelectorSetLanguage(unittest.TestCase):
             [
                 {
                     'code': u'en',
-                    u'flag': u'countryflag/gb',
+                    u'flag': u'/++resource++country-flags/gb.gif',
                     u'name': u'English',
                     u'native': u'English',
                     'url': SELECTOR_VIEW_TEMPLATE
@@ -980,7 +979,7 @@ class TestLanguageSelectorSetLanguage(unittest.TestCase):
                 },
                 {
                     'code': u'ca',
-                    u'flag': u'languageflag/ca',
+                    u'flag': u'/++resource++language-flags/ca.gif',
                     u'name': u'Catalan',
                     u'native': u'Catal\xe0',
                     'url': SELECTOR_VIEW_TEMPLATE
@@ -995,7 +994,7 @@ class TestLanguageSelectorSetLanguage(unittest.TestCase):
                 },
                 {
                     'code': u'es',
-                    u'flag': u'countryflag/es',
+                    u'flag': u'/++resource++country-flags/es.gif',
                     u'name': u'Spanish',
                     u'native': u'Espa\xf1ol',
                     'url': SELECTOR_VIEW_TEMPLATE
@@ -1027,7 +1026,7 @@ class TestLanguageSelectorSetLanguage(unittest.TestCase):
             [
                 {
                     'code': u'en',
-                    u'flag': u'countryflag/gb',
+                    u'flag': u'/++resource++country-flags/gb.gif',
                     u'name': u'English',
                     u'native': u'English',
                     'url': SELECTOR_VIEW_TEMPLATE
@@ -1042,7 +1041,7 @@ class TestLanguageSelectorSetLanguage(unittest.TestCase):
                 },
                 {
                     'code': u'ca',
-                    u'flag': u'languageflag/ca',
+                    u'flag': u'/++resource++language-flags/ca.gif',
                     u'name': u'Catalan',
                     u'native': u'Catal\xe0',
                     'url': SELECTOR_VIEW_TEMPLATE
@@ -1057,7 +1056,7 @@ class TestLanguageSelectorSetLanguage(unittest.TestCase):
                 },
                 {
                     'code': u'es',
-                    u'flag': u'countryflag/es',
+                    u'flag': u'/++resource++country-flags/es.gif',
                     u'name': u'Spanish',
                     u'native': u'Espa\xf1ol',
                     'url': SELECTOR_VIEW_TEMPLATE
@@ -1072,33 +1071,3 @@ class TestLanguageSelectorSetLanguage(unittest.TestCase):
                 },
             ],
         )
-
-
-class TestLanguageSelectorDisplayOptions(unittest.TestCase):
-
-    layer = PAM_FUNCTIONAL_TESTING
-
-    def setUp(self):
-        # Set test variables
-        self.portal = self.layer['portal']
-        self.portal_url = self.portal.absolute_url()
-        self.request = self.layer['request']
-        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
-
-        # Setup testbrowser
-        self.browser = Browser(self.layer['app'])
-        self.browser.handleErrors = False
-
-    def test_language_selector_flag_is_a_svg(self):
-
-        registry = getUtility(IRegistry)
-        self.settings = registry.forInterface(ILanguageSchema, prefix='plone')
-        self.settings.display_flags = True
-        self.settings.always_show_selector = True
-
-        transaction.commit()
-
-        self.browser.open(self.portal_url)
-        output = lxml.html.fromstring(self.browser.contents)
-        svgs = output.xpath('//svg[contains(@class, "plone-icon-flag")]')
-        self.assertGreater(len(svgs), 0)
