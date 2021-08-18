@@ -49,6 +49,9 @@ class LanguageIndependentFieldsManager(object):
         return False
 
     def copy_relation(self, relation_value, target_language):
+        if not relation_value or relation_value.isBroken():
+            return
+
         obj = relation_value.to_object
         intids = getUtility(IIntIds)
         translation = ITranslationManager(obj).get_translation(target_language)
@@ -62,20 +65,24 @@ class LanguageIndependentFieldsManager(object):
 
         target_language = queryAdapter(translation, ILanguage).get_language()
 
-        def relation_copier(rel, lang=target_language, fun=self.copy_relation):
-            return fun(rel, lang)
-
         for schema in iterSchemata(self.context):
             for field_name in schema:
                 if ILanguageIndependentField.providedBy(schema[field_name]):
                     value = getattr(schema(self.context), field_name, _marker)
-
                     if value == _marker:
                         continue
                     elif IRelationValue.providedBy(value):
                         value = self.copy_relation(value, target_language)
                     elif IRelationList.providedBy(schema[field_name]):
-                        value = list(map(relation_copier, value or []))
+                        if not value:
+                            value = []
+                        else:
+                            new_value = []
+                            for relation in value:
+                                copied_relation = self.copy_relation(relation, target_language)
+                                if copied_relation:
+                                    new_value.append(copied_relation)
+                            value = new_value
 
                     doomed = True
                     setattr(schema(translation),
