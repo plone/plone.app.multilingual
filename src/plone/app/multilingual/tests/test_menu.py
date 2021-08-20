@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.testing import SITE_OWNER_NAME
 from plone.app.testing import SITE_OWNER_PASSWORD
@@ -45,6 +46,7 @@ class TestMenu(unittest.TestCase):
         self.assertNotIn('translate_into_ca', self.browser.contents)
 
     def test_menu_does_not_appear_without_ITranslatable(self):
+        self.assertFalse(ITranslatable.providedBy(self.portal))
         self.browser.open(self.portal.absolute_url() + '/folder_listing')
         self.assertNotIn('Translate', self.browser.contents)
 

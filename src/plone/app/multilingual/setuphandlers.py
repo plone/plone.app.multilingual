@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from logging import getLogger
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
+from plone.app.multilingual.interfaces import ITranslatable
+from plone.app.multilingual.itg import addAttributeTG
 from Products.CMFPlone.interfaces import INonInstallable
 from Products.CMFPlone.utils import getToolByName
 from zope.component.hooks import getSite
@@ -42,15 +44,20 @@ def step_default_various(context):
     portal = context.getSite()
     enable_translatable_behavior(portal)
 
+    # Add the attribute to the site root now so plone.protect won't cry.
+    addAttributeTG(portal, None)
+
 
 def enable_translatable_behavior(portal):
     types_tool = portal.portal_types
 
-    # Iterate through all Dexterity content type
+    # Iterate through all Dexterity content type, except the site root
     all_ftis = types_tool.listTypeInfo()
-    dx_ftis = [x for x in all_ftis if getattr(x, 'behaviors', False)]
+    dx_ftis = (
+        fti for fti in all_ftis
+        if getattr(fti, 'behaviors', False) and fti.getId() != 'Plone Site'
+    )
     for fti in dx_ftis:
-
         # Enable translatable behavior for all types
         behaviors = list(fti.behaviors)
         behaviors.extend([
@@ -90,8 +97,9 @@ def disable_language_switcher(portal):
     """Remove the use of language-switcher as default view for Plone Site"""
     tt = getToolByName(portal, 'portal_types')
     site = tt['Plone Site']
-    methods = site.view_methods
-    site.view_methods = tuple([m for m in methods if m != 'language-switcher'])
+    site.view_methods = tuple(
+        method for method in site.view_methods if method != 'language-switcher'
+    )
     if site.default_view == 'language-switcher':
         site.default_view = 'listing_view'
 

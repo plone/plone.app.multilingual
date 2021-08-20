@@ -260,6 +260,10 @@ Bug fixes:
 - Fixed tests now that Catalan has translated ‘assets’ into ‘recursos’.
   [maurits]
 
+- Run addAttributeTG for the site root when installing. This prevents
+  triggering plone.protect.
+  [jaroel]
+
 
 5.2.0 (2018-04-04)
 ------------------
