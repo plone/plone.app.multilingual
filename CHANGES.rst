@@ -8,6 +8,17 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0a2 (2021-09-01)
+--------------------
+
+Bug fixes:
+
+
+- Force view_methods to be a tuple on setup and uninstall (#337)
+- Fix deleting items with broken relation in languageindependent field
+  [pbauer] (#390)
+
+
 6.0.0a1 (2021-04-28)
 --------------------
 
