@@ -12,7 +12,6 @@ setup(
     zip_safe=False,
     install_requires=[
         'plone.i18n>=4.0.4',
-        'Products.CMFPlone>=5.2rc4',
         'setuptools',
         'six',
     ],
