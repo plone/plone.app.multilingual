@@ -1,1 +1,1 @@
-Fix missing "safewrite" during the setting of TG attribute. [mamico]
+Disable CSRF protection during the setting of TG attribute. [mamico]
