@@ -8,6 +8,84 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0a3 (2021-09-15)
+--------------------
+
+Bug fixes:
+
+
+- Remove cyclic dependency with Products.CMFPlone
+  [ericof] (#391)
+
+
+6.0.0a2 (2021-09-01)
+--------------------
+
+Bug fixes:
+
+
+- Force view_methods to be a tuple on setup and uninstall (#337)
+- Fix deleting items with broken relation in languageindependent field
+  [pbauer] (#390)
+
+
+6.0.0a1 (2021-04-28)
+--------------------
+
+Breaking changes:
+
+
+- Bootstrapify for barceloneta-lts (#380)
+
+      * Init add to own branch
+
+      * Add back missing html tag
+
+      * Fix double msgs & add full width
+
+      * Fix headings
+
+      * Init add to own branch
+
+      * Add back missing html tag
+
+      * Fix headings
+
+      * fix test, use string from footer
+
+      * fix test, check h1 not documentFirstHeading
+
+      * fix test, use contains text
+
+      * update icons
+
+      * Jquery load is removed with jq3.
+
+      * major version bump
+
+      Co-authored-by: Peter Holzer <peter.holzer@agitator.com>
+      Co-authored-by: Peter Mathis <peter.mathis@kombinat.at> (#380)
+
+
+Bug fixes:
+
+
+- Force view_methods to be a tuple on setup and uninstall (#337)
+
+
+5.6.2 (2020-09-26)
+------------------
+
+Bug fixes:
+
+
+- Fixed deprecation warning for ComponentLookupError.
+  Fixed deprecation warning for ILanguageSchema, depend on ``plone.i18n`` 4.0.4.
+  Fixed deprecation warning for IObjectEvent from zope.component.
+  Fixed deprecation warning for zope.site.hooks.
+  [maurits] (#3130)
+
+
 5.6.1 (2020-06-24)
 ------------------
 
@@ -202,6 +280,10 @@ Bug fixes:
 
 - Fixed tests now that Catalan has translated ‘assets’ into ‘recursos’.
   [maurits]
+
+- Run addAttributeTG for the site root when installing. This prevents
+  triggering plone.protect.
+  [jaroel]
 
 
 5.2.0 (2018-04-04)
