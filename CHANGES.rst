@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0a4 (2021-10-13)
+--------------------
+
+Bug fixes:
+
+
+- Disable CSRF protection during the setting of TG attribute. [mamico] (#375)
+
+
 6.0.0a3 (2021-09-15)
 --------------------
 
