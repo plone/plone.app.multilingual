@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0a5 (2021-10-16)
+--------------------
+
+Bug fixes:
+
+
+- Manage Translations view should not call translation objects. [mliebischer] (#384)
+
+
 6.0.0a4 (2021-10-13)
 --------------------
 
