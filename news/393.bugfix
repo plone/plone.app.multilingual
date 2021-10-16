@@ -1,1 +1,0 @@
-Disable CSRF protection during the setting of TG attribute. #375 backport [mamico]
