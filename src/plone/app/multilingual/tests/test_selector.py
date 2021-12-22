@@ -11,7 +11,9 @@ from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
+from plone.app.multilingual.testing import PAM_INTEGRATION_PRESET_TESTING
 from plone.dexterity.utils import createContentInContainer
+from plone.i18n.interfaces import ILanguageSchema
 from plone.registry.interfaces import IRegistry
 from plone.testing.z2 import Browser
 from Products.CMFCore.utils import getToolByName
@@ -84,7 +86,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         selector_adapter.update()
         selector_adapter_languages = selector_adapter.languages()
 
-        self.assertNotEquals(
+        self.assertNotEqual(
             selector_adapter_languages, selector_viewlet_languages
         )
 
@@ -169,7 +171,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.assertEqual(
             self.browser.url, a.absolute_url() + '?set_language=en'
         )
-        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+        self.assertRegexpMatches(self.browser.contents, r"Distributed under the")
 
         self.browser.open(selector_viewlet_languages[1]['url'])
         self.assertEqual(
@@ -309,7 +311,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         )
         self.assertIn('lang="en"', self.browser.contents)
         # But extra check, because English is the default?
-        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+        self.assertRegexpMatches(self.browser.contents, r"Distributed under the")
 
         # Check that CA translation is only partial and a parent folder
         # is found
@@ -350,7 +352,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         )
         # But extra check, because English is the default?
         self.assertIn('lang="en"', self.browser.contents)
-        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+        self.assertRegexpMatches(self.browser.contents, r"Distributed under the")
 
         tgid = selector_languages[1]['url'].split('/')[-2]
 
@@ -397,7 +399,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         )
         self.browser.open(selector_languages[0]['url'])
         self.assertIn('lang="en"', self.browser.contents)
-        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+        self.assertRegexpMatches(self.browser.contents, r"Distributed under the")
 
         # Check CA root
         self.assertEqual(
@@ -506,7 +508,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             self.portal['en'].absolute_url() + '?set_language=en',
         )
         self.assertIn('lang="en"', self.browser.contents)
-        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+        self.assertRegexpMatches(self.browser.contents, r"Distributed under the")
 
         # Check CA
         self.browser.open(selector_languages[1]['url'])
@@ -570,7 +572,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             f_en.absolute_url() + '/contact-info?set_language=en',
         )
         self.assertIn('lang="en"', self.browser.contents)
-        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+        self.assertRegexpMatches(self.browser.contents, r"Distributed under the")
 
         # Check CA
         self.browser.open(selector_languages[1]['url'])
@@ -609,7 +611,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             f_en.absolute_url() + '/contact-info?set_language=en',
         )
         self.assertIn('lang="en"', self.browser.contents)
-        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+        self.assertRegexpMatches(self.browser.contents, r"Distributed under the")
 
         # Check CA
         self.browser.open(selector_languages[1]['url'])
@@ -674,7 +676,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             ),
         )
         self.assertIn('lang="en"', self.browser.contents)
-        self.assertRegexpMatches(self.browser.contents, r"You\s*are here")
+        self.assertRegexpMatches(self.browser.contents, r"Distributed under the")
 
         # Check CA
         self.browser.open(selector_languages[1]['url'])
@@ -930,3 +932,142 @@ class TestLanguageSelectorAddQuery(unittest.TestCase):
         self.assertEqual(parsed_url_1[2], parsed_url_2[2])
         self.assertEqual(parsed_url_1[3], parsed_url_2[3])
         self.assertEqual(parse_qs_1, parse_qs_2)
+
+
+class TestLanguageSelectorSetLanguage(unittest.TestCase):
+    layer = PAM_INTEGRATION_PRESET_TESTING
+
+    def setUp(self):
+        # Set test variables
+        self.portal = self.layer['portal']
+        self.portal_url = self.portal.absolute_url()
+        self.request = self.layer['request']
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
+
+        registry = getUtility(IRegistry)
+        self.settings = registry.forInterface(ILanguageSchema, prefix="plone")
+
+    def test_set_language_is_present(self):
+        """ test the presence of set_language parameter in the urls created in the language selector"""
+
+        self.settings.set_cookie_always = False
+        self.selector_viewlet = LanguageSelectorViewlet(
+            self.portal['en'], self.request, None, None
+        )
+        self.selector_viewlet.update()
+
+        selector_languages = self.selector_viewlet.languages()
+        tg = ITG(self.portal['en'])
+
+        self.assertListEqual(
+            selector_languages,
+            [
+                {
+                    'code': u'en',
+                    u'flag': u'/++resource++country-flags/gb.gif',
+                    u'name': u'English',
+                    u'native': u'English',
+                    'url': SELECTOR_VIEW_TEMPLATE
+                    % {
+                        'url': self.portal.absolute_url(),
+                        'tg': tg,
+                        'lang': 'en',
+                        'query': '?set_language=en',
+                    },
+                    'selected': True,
+                    'translated': True,
+                },
+                {
+                    'code': u'ca',
+                    u'flag': u'/++resource++language-flags/ca.gif',
+                    u'name': u'Catalan',
+                    u'native': u'Catal\xe0',
+                    'url': SELECTOR_VIEW_TEMPLATE
+                    % {
+                        'url': self.portal.absolute_url(),
+                        'tg': tg,
+                        'lang': 'ca',
+                        'query': '?set_language=ca',
+                    },
+                    'selected': False,
+                    'translated': True,
+                },
+                {
+                    'code': u'es',
+                    u'flag': u'/++resource++country-flags/es.gif',
+                    u'name': u'Spanish',
+                    u'native': u'Espa\xf1ol',
+                    'url': SELECTOR_VIEW_TEMPLATE
+                    % {
+                        'url': self.portal.absolute_url(),
+                        'tg': tg,
+                        'lang': 'es',
+                        'query': '?set_language=es',
+                    },
+                    'selected': False,
+                    'translated': True,
+                },
+            ],
+        )
+
+    def test_set_language_is_not_present_when_always_set_cookie_is_set(self):
+        """ test the absence of set_language parameter in the urls created in the language selector"""
+        self.settings.set_cookie_always = True
+        self.selector_viewlet = LanguageSelectorViewlet(
+            self.portal['en'], self.request, None, None
+        )
+        self.selector_viewlet.update()
+
+        selector_languages = self.selector_viewlet.languages()
+        tg = ITG(self.portal['en'])
+
+        self.assertListEqual(
+            selector_languages,
+            [
+                {
+                    'code': u'en',
+                    u'flag': u'/++resource++country-flags/gb.gif',
+                    u'name': u'English',
+                    u'native': u'English',
+                    'url': SELECTOR_VIEW_TEMPLATE
+                    % {
+                        'url': self.portal.absolute_url(),
+                        'tg': tg,
+                        'lang': 'en',
+                        'query': '',
+                    },
+                    'selected': True,
+                    'translated': True,
+                },
+                {
+                    'code': u'ca',
+                    u'flag': u'/++resource++language-flags/ca.gif',
+                    u'name': u'Catalan',
+                    u'native': u'Catal\xe0',
+                    'url': SELECTOR_VIEW_TEMPLATE
+                    % {
+                        'url': self.portal.absolute_url(),
+                        'tg': tg,
+                        'lang': 'ca',
+                        'query': '',
+                    },
+                    'selected': False,
+                    'translated': True,
+                },
+                {
+                    'code': u'es',
+                    u'flag': u'/++resource++country-flags/es.gif',
+                    u'name': u'Spanish',
+                    u'native': u'Espa\xf1ol',
+                    'url': SELECTOR_VIEW_TEMPLATE
+                    % {
+                        'url': self.portal.absolute_url(),
+                        'tg': tg,
+                        'lang': 'es',
+                        'query': '',
+                    },
+                    'selected': False,
+                    'translated': True,
+                },
+            ],
+        )

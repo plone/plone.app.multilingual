@@ -1,1 +1,0 @@
-Fix DeprecationWarning ``ILanguageSchema`` was moved to ``plone.i18n``. [jensens]

@@ -31,9 +31,6 @@ MKcodeintel
 # Mac
 .DS_Store
 
-# Local development
-local.cfg
-
 # Emacs
 .emacs.desktop*
 

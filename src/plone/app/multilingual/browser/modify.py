@@ -48,16 +48,18 @@ class ConnectTranslation(AutoExtensibleForm, Form):
                                default=u"Connect translation"))
     def handle_add(self, action):
         data, errors = self.extractData()
-        if not errors:
-            content = data['content']
-            language = data['language']
-            ILanguage(content).set_language(language)
-            itm = ITranslationManager(self.context)
-            # the 'register_translation'-method takes content OR
-            # UUID as second parameter. We need to use the UUID
-            # here because otherwise the catalog can't be acquired
-            # and the translation index is not updated
-            itm.register_translation(language, IUUID(content))
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+        content = data['content']
+        language = data['language']
+        ILanguage(content).set_language(language)
+        itm = ITranslationManager(self.context)
+        # the 'register_translation'-method takes content OR
+        # UUID as second parameter. We need to use the UUID
+        # here because otherwise the catalog can't be acquired
+        # and the translation index is not updated
+        itm.register_translation(language, IUUID(content))
         return self.request.response.redirect(
             self.context.absolute_url() + '/modify_translations')
 

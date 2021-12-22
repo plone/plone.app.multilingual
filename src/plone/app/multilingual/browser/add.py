@@ -99,7 +99,7 @@ class AddViewTraverser(object):
             )
         if add_view is None:
             add_view = queryMultiAdapter((self.context, self.request, ti))
-            if add_view is not None:
+            if add_view is None:
                 raise TraversalError(self.context, name)
 
         add_view.__name__ = ti.factory
@@ -127,6 +127,8 @@ class MultilingualAddForm(DefaultAddForm):
 
     def render(self):
         self.request['disable_border'] = True
+        self.request['disable_plone.leftcolumn'] = True
+        self.request['disable_plone.rightcolumn'] = True
         self.babel_content = super(MultilingualAddForm, self).render()
         return self.babel()
 

@@ -5,9 +5,11 @@ from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
 from plone.app.multilingual.interfaces import ILanguageIndependentFolder
 from plone.app.multilingual.interfaces import IMutableTG
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
+from plone.app.multilingual.itg import addAttributeTG
 from plone.dexterity.interfaces import IDexterityContent
 from plone.uuid.interfaces import IUUID
 from Products.CMFCore.interfaces import IFolderish
@@ -89,13 +91,14 @@ def unindex_language_independent(ob, event):
 
     language_tool = getToolByName(ob, 'portal_languages')
     language_codes = language_tool.supported_langs
-
+    portal = getSite()
     uuid = IUUID(ob).split('-')[0]
+
     for code in language_codes:
         for brain in pc.unrestrictedSearchResults(UID=uuid + '-' + code):
-            ob.unrestrictedTraverse(brain.getPath()).unindexObject()
+            portal.unrestrictedTraverse(brain.getPath()).unindexObject()
         for brain in pc.unrestrictedSearchResults(UID=uuid):
-            ob.unrestrictedTraverse(brain.getPath()).unindexObject()
+            portal.unrestrictedTraverse(brain.getPath()).unindexObject()
 
 
 # Multilingual subscribers
@@ -115,6 +118,9 @@ def set_recursive_language(ob, language):
 
     elif ILanguage(ob).get_language() != language:
         ILanguage(ob).set_language(language)
+        if ITG(ob, None) is None:
+            addAttributeTG(ob, None)
+            ob.reindexObject(idxs=['TranslationGroup'])
         ITranslationManager(ob).update()
         reindex_object(ob)
 

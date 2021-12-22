@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from zope.component.interfaces import IObjectEvent
 from zope.interface import Attribute
 from zope.interface import implementer
+from zope.interface.interfaces import IObjectEvent
 
 
 class IObjectWillBeTranslatedEvent(IObjectEvent):
@@ -17,6 +17,39 @@ class IObjectTranslatedEvent(IObjectEvent):
     object = Attribute("The object to be translated.")
     target = Attribute("The translation target object.")
     language = Attribute("Target language.")
+
+
+class ITranslationRegisteredEvent(IObjectEvent):
+    """Sent after a new translation was registered.
+
+    This is meant to be notified on low-level manager level only.
+    """
+
+    object = Attribute("The base object.")
+    target = Attribute("The translated object.")
+    language = Attribute("The language of the translated obejct.")
+
+
+class ITranslationUpdatedEvent(IObjectEvent):
+    """Sent after an translation was moved to point to a different object
+
+    This is meant to be notified on low-level manager level only.
+    """
+
+    object = Attribute("The base object.")
+    old_object = Attribute("The old translation, now orphaned.")
+    language = Attribute("The language of the objects.")
+
+
+class ITranslationRemovedEvent(IObjectEvent):
+    """Sent after an translation was removed.
+
+    This is meant to be notified on low-level manager level only.
+    """
+
+    object = Attribute("The base object.")
+    old_object = Attribute("The old translation, now orphaned.")
+    language = Attribute("The language of the objects.")
 
 
 @implementer(IObjectWillBeTranslatedEvent)
@@ -35,4 +68,37 @@ class ObjectTranslatedEvent(object):
     def __init__(self, context, target, language):
         self.object = context
         self.target = target
+        self.language = language
+
+
+@implementer(ITranslationRegisteredEvent)
+class TranslationRegisteredEvent(object):
+    """Sent after a new translation was registered.
+    """
+
+    def __init__(self, context, target, language):
+        self.object = context
+        self.target = target
+        self.language = language
+
+
+@implementer(ITranslationUpdatedEvent)
+class TranslationUpdatedEvent(object):
+    """Sent after an translation was moved to point to a different object
+    """
+
+    def __init__(self, context, old_object, language):
+        self.object = context
+        self.old_object = old_object
+        self.language = language
+
+
+@implementer(ITranslationRemovedEvent)
+class TranslationRemovedEvent(object):
+    """Sent after an translation was moved to point to a different object
+    """
+
+    def __init__(self, context, old_object, language):
+        self.object = context
+        self.old_object = old_object
         self.language = language

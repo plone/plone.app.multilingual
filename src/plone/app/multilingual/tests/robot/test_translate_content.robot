@@ -1,12 +1,13 @@
 *** Settings ***
 
-Resource  plone/app/robotframework/selenium.robot
 Resource  plone/app/robotframework/keywords.robot
+Resource  plone/app/robotframework/saucelabs.robot
+Resource  plone/app/robotframework/selenium.robot
 
 Library  Remote  ${PLONE_URL}/RobotRemote
 
-Test Setup  Open test browser
-Test Teardown  Close all browsers
+Test Setup  Run Keywords  Plone test setup
+Test Teardown  Run keywords  Plone test teardown
 
 
 *** Test Cases ***
@@ -73,6 +74,6 @@ I switch to Catalan
 
 I can view the document in Catalan
   Page Should Contain Element
-  ...  xpath=//*[contains(@class, 'documentFirstHeading')][./text()='A Catalan Document']
+  ...  xpath=//h1[1][text()='A Catalan Document']
   Page Should Contain Element
   ...  xpath=//ul[@id='portal-languageselector']/li[contains(@class, 'currentLanguage')]/a[@title='Català']

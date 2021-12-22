@@ -8,6 +8,229 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0a5 (2021-10-16)
+--------------------
+
+Bug fixes:
+
+
+- Manage Translations view should not call translation objects. [mliebischer] (#384)
+
+
+6.0.0a4 (2021-10-13)
+--------------------
+
+Bug fixes:
+
+
+- Disable CSRF protection during the setting of TG attribute. [mamico] (#375)
+
+
+6.0.0a3 (2021-09-15)
+--------------------
+
+Bug fixes:
+
+
+- Remove cyclic dependency with Products.CMFPlone
+  [ericof] (#391)
+
+
+6.0.0a2 (2021-09-01)
+--------------------
+
+Bug fixes:
+
+
+- Force view_methods to be a tuple on setup and uninstall (#337)
+- Fix deleting items with broken relation in languageindependent field
+  [pbauer] (#390)
+
+
+6.0.0a1 (2021-04-28)
+--------------------
+
+Breaking changes:
+
+
+- Bootstrapify for barceloneta-lts (#380)
+
+      * Init add to own branch
+
+      * Add back missing html tag
+
+      * Fix double msgs & add full width
+
+      * Fix headings
+
+      * Init add to own branch
+
+      * Add back missing html tag
+
+      * Fix headings
+
+      * fix test, use string from footer
+
+      * fix test, check h1 not documentFirstHeading
+
+      * fix test, use contains text
+
+      * update icons
+
+      * Jquery load is removed with jq3.
+
+      * major version bump
+
+      Co-authored-by: Peter Holzer <peter.holzer@agitator.com>
+      Co-authored-by: Peter Mathis <peter.mathis@kombinat.at> (#380)
+
+
+Bug fixes:
+
+
+- Force view_methods to be a tuple on setup and uninstall (#337)
+
+
+5.6.2 (2020-09-26)
+------------------
+
+Bug fixes:
+
+
+- Fixed deprecation warning for ComponentLookupError.
+  Fixed deprecation warning for ILanguageSchema, depend on ``plone.i18n`` 4.0.4.
+  Fixed deprecation warning for IObjectEvent from zope.component.
+  Fixed deprecation warning for zope.site.hooks.
+  [maurits] (#3130)
+
+
+5.6.1 (2020-06-24)
+------------------
+
+Bug fixes:
+
+
+- Hide left and right portlet columns on babel add view. Fixes #373 [iham] (#373)
+
+
+5.6.0 (2020-05-06)
+------------------
+
+New features:
+
+
+- Inherit IPloneAppMultilingualInstalled layer from IPloneFormLayer for better
+  LIF widget overriding.
+  [petschki] (#371)
+
+
+Bug fixes:
+
+
+- Move metadata to setup.cfg in order to avoid encoding problems in CHANGES.rst running Plone 6.0 on Python 3.6, see #372.
+  [jensens] (#372)
+
+
+5.5.1 (2020-04-20)
+------------------
+
+Bug fixes:
+
+
+- Minor packaging updates. (#1)
+
+
+5.5.0 (2019-12-11)
+------------------
+
+New features:
+
+
+- Remove the 'set_language' parameter when 'always_set_cookie' is enabled in language control panel. See #362
+  [erral] (#362)
+
+
+5.4.2 (2019-11-25)
+------------------
+
+Bug fixes:
+
+
+- Use the shared 'Plone test setup' and 'Plone test teardown' keywords in Robot tests.
+  [Rotonen] (#349)
+
+
+5.4.1 (2019-08-23)
+------------------
+
+Bug fixes:
+
+
+- fix adding new language when Language Independent Folder has content
+  [petschki] (#358)
+- add/update translation forms doesn't show error return from z3c form validation
+  [mamico] (#360)
+
+
+5.4.0 (2019-07-18)
+------------------
+
+New features:
+
+
+- Add low level events and notifies:
+  on register, update and remove of a translation to a translation groups.
+  [jensens] (#256)
+
+
+Bug fixes:
+
+
+- Remove deprecation warnings in tests.
+  Increase readability
+  Add code comments.
+  Remove superfluos reindex of "Language" in manager.
+  [jensens] (#256)
+- wrong check for default addview in addtranslation traverser
+  [mauro] (#355)
+- Remove any dependency to ``archetypes.multilingual``, since this is a indirection.
+  Remove all dependencies that are already part of ``Products.CMFPlone``.
+  All version specifications were reduced to use a recent ``Products.CMFPlone``.
+  The ``decorator`` dependency is no longer used.
+  [jensens] (#357)
+
+
+5.3.5 (2019-05-21)
+------------------
+
+Bug fixes:
+
+
+- Setting named behavior instead of dotted on fti during install. [iham] (#345)
+
+
+5.3.4 (2019-05-04)
+------------------
+
+Bug fixes:
+
+- Avoid browser to permanently cache first redirection to negotiated lang (#347)
+  [laulaz]
+
+- Moved to named behaviors. [iham] (#342)
+
+
+5.3.3 (2019-04-29)
+------------------
+
+Bug fixes:
+
+
+- Fix toolbar icon
+  [agitator] (#338)
+- Fix DeprecationWarning ``ILanguageSchema`` was moved to ``plone.i18n``. [jensens] (#339)
+
+
 5.3.2 (2019-02-08)
 ------------------
 
@@ -75,6 +298,10 @@ Bug fixes:
 
 - Fixed tests now that Catalan has translated ‘assets’ into ‘recursos’.
   [maurits]
+
+- Run addAttributeTG for the site root when installing. This prevents
+  triggering plone.protect.
+  [jaroel]
 
 
 5.2.0 (2018-04-04)

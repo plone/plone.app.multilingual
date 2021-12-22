@@ -264,8 +264,8 @@ class SetupMultilingualSite(object):
         tt = getToolByName(self.context, 'portal_types')
         site = tt['Plone Site']
 
-        if 'language-switcher' not in site.view_methods:
-            methods = site.view_methods
+        methods = tuple(site.view_methods)
+        if 'language-switcher' not in methods:
             site.view_methods = methods + ('language-switcher', )
             site.default_view = 'language-switcher'
             self.context.reindexObject()
@@ -281,6 +281,6 @@ class SetupMultilingualSite(object):
 
         if IDexterityFTI.providedBy(fti):
             behaviors = list(fti.behaviors)
-            behaviors.append(IDexterityTranslatable.__identifier__)
+            behaviors.append('plone.translatable')
             behaviors = tuple(set(behaviors))
             fti._updateProperty('behaviors', behaviors)
