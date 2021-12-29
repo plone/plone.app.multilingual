@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0a6 (2021-12-29)
+--------------------
+
+Bug fixes:
+
+
+- Fix typos in documentation.  [telshock] (#340)
+
+
 6.0.0a5 (2021-10-16)
 --------------------
 
