@@ -14,7 +14,7 @@
     <value key="contains_objects" purge="false"><element>LIF</element></value>
   </records>
 
-  <records interface="Products.CMFPlone.interfaces.ILanguageSchema" prefix="plone">
+  <records interface="plone.i18n.interfaces.ILanguageSchema" prefix="plone">
     <value key="use_cookie_negotiation">True</value>
     <value key="use_request_negotiation">False</value>
     <value key="use_content_negotiation">True</value>
