@@ -72,8 +72,10 @@ I link the document in English as a translation
   Wait until element is visible  xpath=(//span[contains(., 'An English Document')])
   Click Element  xpath=(//span[contains(., 'An English Document')])
   Wait until page contains  An English Document
-  
-  Click Element  xpath=(//*[contains(@class, 'plone-modal-footer')]//button[@id='form-buttons-connect_translation'])
+
+  # We need a complicated xpath, because for some reason a button with this id is there twice.
+  # The first one is hidden.
+  Click Element  xpath=(//*[contains(@class, 'modal-footer')]//button[@id='form-buttons-connect_translation'])
   Wait until page contains element  xpath=(//h3[@class="translationTitle"])
   Sleep  5
   Wait until element is visible  xpath=(//h3[@class="translationTitle"])
