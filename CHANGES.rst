@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0a7 (2022-01-19)
+--------------------
+
+Bug fixes:
+
+
+- In CMFPlone the ILanguage schema was moved to plone.i18n and is referenced as such there, here the change was missing.
+  [jensens] (#394)
+
+
 6.0.0a6 (2021-12-29)
 --------------------
 
