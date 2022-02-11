@@ -1,6 +1,5 @@
 import unittest
 
-import six
 import transaction
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.dexterity.utils import createContentInContainer
@@ -9,7 +8,7 @@ from plone.registry.interfaces import IRegistry
 from plone.testing.z2 import Browser
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_nativestring
-from six.moves.urllib.parse import parse_qs, urlparse
+from urllib.parse import parse_qs, urlparse
 from zope.component import getUtility
 from zope.event import notify
 from zope.interface import alsoProvides
@@ -668,8 +667,6 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[2]["url"])
         # Here @@search isn't preserved because we've got the dialog
         url = self.browser.url
-        if six.PY2 and isinstance(url, bytes):
-            url = url.decode("utf8")
         self.assertUrlsEqual(url, untranslated_url[policy])
         self.assertIn('lang="es"', self.browser.contents)
 

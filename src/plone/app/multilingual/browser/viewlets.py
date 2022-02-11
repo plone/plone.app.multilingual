@@ -2,7 +2,7 @@ from plone.app.layout.viewlets.common import ViewletBase
 from plone.memoize import ram
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ILanguage
-from six.moves.urllib.parse import quote_plus
+from urllib.parse import quote_plus
 
 from plone.app.multilingual.interfaces import (ITranslatable,
                                                ITranslationManager)

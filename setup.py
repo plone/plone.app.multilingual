@@ -11,7 +11,6 @@ setup(
     install_requires=[
         "plone.i18n>=4.0.4",
         "setuptools",
-        "six",
     ],
     extras_require={
         "archetypes": [

@@ -5,7 +5,7 @@ from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import IUUID
 from Products.CMFPlone.interfaces import ILanguage
 from Products.Five import BrowserView
-from six.moves import urllib
+import urllib
 from zope.component import getUtility
 
 from plone.app.multilingual import _

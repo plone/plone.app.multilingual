@@ -4,7 +4,7 @@ from gzip import GzipFile
 from plone.dexterity.utils import createContentInContainer
 from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.interfaces import ISiteSchema
-from six import BytesIO
+from io import BytesIO
 from zope.component import getMultiAdapter, getUtility
 from zope.interface import alsoProvides
 
