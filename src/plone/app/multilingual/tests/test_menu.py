@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
-from plone.app.multilingual.interfaces import ITranslatable
-from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
-from plone.app.testing import SITE_OWNER_NAME
-from plone.app.testing import SITE_OWNER_PASSWORD
+import unittest
+
+import transaction
+from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
 from plone.dexterity.utils import createContentInContainer
 from plone.testing._z2_testbrowser import Browser
 from zope.interface import alsoProvides
 
-import transaction
-import unittest
+from plone.app.multilingual.interfaces import (IPloneAppMultilingualInstalled,
+                                               ITranslatable)
+from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 
 
 class TestMenu(unittest.TestCase):

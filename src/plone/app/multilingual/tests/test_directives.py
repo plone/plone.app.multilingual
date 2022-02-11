@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
-from plone.app.multilingual.dx.directives import languageindependent
-from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
-from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
+import unittest
+
 from plone.supermodel import model
 from plone.supermodel.utils import mergedTaggedValueList
 from zope import schema
 from zope.interface import Interface
 
-import unittest
+from plone.app.multilingual.dx.directives import languageindependent
+from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
+from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
 
 
 class TestDirectives(unittest.TestCase):

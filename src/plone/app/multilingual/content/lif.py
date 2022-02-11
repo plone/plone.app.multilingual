@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from BTrees.OOBTree import OOBTree
+from plone.dexterity.content import Container
 from Products.CMFCore.utils import getToolByName
 from zope.component.hooks import getSite
-
-from plone.dexterity.content import Container
 
 
 def connect_with_others(ob, event):

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-from plone.app.multilingual.interfaces import ITG
-from plone.app.multilingual.interfaces import ITranslatable
-from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.interfaces import (ITG, ITranslatable,
+                                               ITranslationManager)
 
 
 def get_translation_group(content):

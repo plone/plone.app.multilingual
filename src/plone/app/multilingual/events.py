@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from zope.interface import Attribute
-from zope.interface import implementer
+from zope.interface import Attribute, implementer
 from zope.interface.interfaces import IObjectEvent
 
 

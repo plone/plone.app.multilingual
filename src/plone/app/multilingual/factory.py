@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_parent
-from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
-from plone.app.multilingual.interfaces import ILanguageRootFolder
-from plone.app.multilingual.interfaces import ITranslationCloner
-from plone.app.multilingual.interfaces import ITranslationFactory
-from plone.app.multilingual.interfaces import ITranslationIdChooser
-from plone.app.multilingual.interfaces import ITranslationLocator
-from plone.app.multilingual.interfaces import ITranslationManager
 from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
 from zope.interface import implementer
+
+from plone.app.multilingual.interfaces import (
+    ILanguageIndependentFieldsManager, ILanguageRootFolder, ITranslationCloner,
+    ITranslationFactory, ITranslationIdChooser, ITranslationLocator,
+    ITranslationManager)
 
 
 @implementer(ILanguageIndependentFieldsManager)

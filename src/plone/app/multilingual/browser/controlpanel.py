@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
-from plone.app.multilingual import isLPinstalled
-from plone.app.multilingual.browser.migrator import portal_types_blacklist
-from plone.app.multilingual.browser.setup import SetupMultilingualSite
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+import json
+
 from plone.app.registry.browser import controlpanel
 from plone.app.uuid.utils import uuidToObject
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.controlpanel.browser.language import (
-    LanguageControlPanelForm,
-)  # noqa
+from Products.CMFPlone.controlpanel.browser.language import \
+    LanguageControlPanelForm  # noqa
 from Products.CMFPlone.interfaces import ILanguage
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -16,12 +13,14 @@ from Products.statusmessages.interfaces import IStatusMessage
 from z3c.form import button
 from zc.relation.interfaces import ICatalog as IRelationCatalog
 from zope.component import getUtility
-from zope.interface.interfaces import ComponentLookupError
 from zope.i18nmessageid import MessageFactory
+from zope.interface.interfaces import ComponentLookupError
 from zope.schema.interfaces import IVocabularyFactory
 
-import json
-
+from plone.app.multilingual import isLPinstalled
+from plone.app.multilingual.browser.migrator import portal_types_blacklist
+from plone.app.multilingual.browser.setup import SetupMultilingualSite
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 
 _ = MessageFactory("plone.app.multilingual")
 

@@ -1,18 +1,14 @@
 # -*- coding: utf-8 -*-
-from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
-from plone.schemaeditor.interfaces import IFieldEditorExtender
-from plone.schemaeditor.interfaces import ISchemaContext
+from plone.schemaeditor.interfaces import IFieldEditorExtender, ISchemaContext
 from zope import schema
-from zope.component import adapter
-from zope.component import provideAdapter
+from zope.component import adapter, provideAdapter
 from zope.i18nmessageid import MessageFactory
-from zope.interface import alsoProvides
-from zope.interface import implementer
-from zope.interface import Interface
-from zope.interface import noLongerProvides
+from zope.interface import (Interface, alsoProvides, implementer,
+                            noLongerProvides)
 from zope.schema import interfaces
 from zope.schema.interfaces import IField
 
+from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 
 PMF = MessageFactory("plone.app.multilingual")
 

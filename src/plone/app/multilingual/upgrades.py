@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-from plone.app.multilingual import logger
+from time import time
+
+import transaction
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ILanguage
 from Products.CMFPlone.utils import _createObjectByType
-from time import time
 from zope.component import getUtility
 
-import transaction
-
+from plone.app.multilingual import logger
 
 SHARED_NAME = "shared"  # old shared folder name
 OLD_PREFIX = "old_"  # temporary prefix while migrating

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from plone.app.multilingual.testing import PAM_ROBOT_TESTING
-from plone.testing import layered
-
-import robotsuite
 import unittest
 
+import robotsuite
+from plone.testing import layered
+
+from plone.app.multilingual.testing import PAM_ROBOT_TESTING
 
 UNIT_TEST_LEVEL = 1
 INTEGRATION_TEST_LEVEL = 2

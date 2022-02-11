@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
+from plone.z3cform.layout import wrap_form
+from z3c.form import button, field, form
+
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.interfaces import IUpdateLanguage
 from plone.app.multilingual.browser.utils import multilingualMoveObject
-from plone.z3cform.layout import wrap_form
-from z3c.form import button
-from z3c.form import field
-from z3c.form import form
 
 
 class UpdateLanguageForm(form.Form):

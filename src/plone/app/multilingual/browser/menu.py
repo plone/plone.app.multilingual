@@ -1,32 +1,28 @@
 # -*- coding: utf-8 -*-
 from AccessControl import getSecurityManager
 from Acquisition import aq_parent
-from plone.app.multilingual import _
-from plone.app.multilingual.browser.interfaces import ITranslateMenu
-from plone.app.multilingual.browser.interfaces import ITranslateSubMenuItem
-from plone.app.multilingual.browser.utils import is_language_independent
-from plone.app.multilingual.browser.vocabularies import translated_languages
-from plone.app.multilingual.browser.vocabularies import translated_urls
-from plone.app.multilingual.browser.vocabularies import untranslated_languages
-from plone.app.multilingual.interfaces import ILanguageRootFolder
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
-from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
-from plone.app.multilingual.interfaces import ITG
-from plone.app.multilingual.interfaces import ITranslatable
-from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
-from plone.app.multilingual.permissions import ManageTranslations
 from plone.memoize import view
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.defaultpage import is_default_page
 from Products.CMFPlone.interfaces import ILanguage
 from Products.CMFPlone.utils import safe_unicode
-from zope.browsermenu.menu import BrowserMenu
-from zope.browsermenu.menu import BrowserSubMenuItem
+from zope.browsermenu.menu import BrowserMenu, BrowserSubMenuItem
 from zope.component import getUtility
 from zope.component.hooks import getSite
 from zope.interface import implementer
+
+from plone.app.multilingual import _
+from plone.app.multilingual.browser.interfaces import (ITranslateMenu,
+                                                       ITranslateSubMenuItem)
+from plone.app.multilingual.browser.utils import is_language_independent
+from plone.app.multilingual.browser.vocabularies import (
+    translated_languages, translated_urls, untranslated_languages)
+from plone.app.multilingual.interfaces import (
+    ITG, LANGUAGE_INDEPENDENT, ILanguageRootFolder,
+    IMultiLanguageExtraOptionsSchema, IPloneAppMultilingualInstalled,
+    ITranslatable, ITranslationManager)
+from plone.app.multilingual.permissions import ManageTranslations
 
 
 @implementer(ITranslateMenu)

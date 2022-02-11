@@ -1,12 +1,11 @@
-from plone import api
-from plone.app.testing import setRoles
-from plone.app.testing import TEST_USER_ID
-from plone.app.multilingual.testing import (
-    PLONE_APP_MULTILINGUAL_INTEGRATION_TESTING,
-)  # noqa
+import unittest
+
+from plone.app.testing import TEST_USER_ID, setRoles
 from Products.CMFPlone.utils import get_installer
 
-import unittest
+from plone import api
+from plone.app.multilingual.testing import \
+    PLONE_APP_MULTILINGUAL_INTEGRATION_TESTING  # noqa
 
 
 class TestUninstall(unittest.TestCase):
@@ -27,8 +26,10 @@ class TestUninstall(unittest.TestCase):
 
     def test_browserlayer_removed(self):
         """Test that IPloneAppMultilingualInstalled is removed."""
-        from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
         from plone.browserlayer import utils
+
+        from plone.app.multilingual.interfaces import \
+            IPloneAppMultilingualInstalled
 
         self.assertNotIn(IPloneAppMultilingualInstalled, utils.registered_layers())
 

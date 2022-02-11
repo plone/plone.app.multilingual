@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-from plone.app.multilingual import _
-from plone.app.multilingual.browser.interfaces import IConnectTranslation
-from plone.app.multilingual.interfaces import ITranslationManager
+import logging
+
 from plone.autoform.form import AutoExtensibleForm
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.registry.interfaces import IRegistry
@@ -15,8 +14,9 @@ from z3c.form import button
 from z3c.form.form import Form
 from zope.component import getUtility
 
-import logging
-
+from plone.app.multilingual import _
+from plone.app.multilingual.browser.interfaces import IConnectTranslation
+from plone.app.multilingual.interfaces import ITranslationManager
 
 logger = logging.getLogger(__name__)
 

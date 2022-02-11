@@ -1,33 +1,31 @@
 # -*- coding: utf-8 -*-
+import unittest
+
+import six
+import transaction
 from plone.app.i18n.locales.browser.selector import LanguageSelector
-from plone.app.multilingual import api
-from plone.app.multilingual.browser.helper_views import selector_view
-from plone.app.multilingual.browser.selector import addQuery
-from plone.app.multilingual.browser.selector import getPostPath
-from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
-from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
-from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
-from plone.app.multilingual.interfaces import ITG
-from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
-from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
-from plone.app.multilingual.testing import PAM_INTEGRATION_PRESET_TESTING
 from plone.dexterity.utils import createContentInContainer
 from plone.i18n.interfaces import ILanguageSchema
 from plone.registry.interfaces import IRegistry
 from plone.testing.z2 import Browser
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_nativestring
-from six.moves.urllib.parse import parse_qs
-from six.moves.urllib.parse import urlparse
+from six.moves.urllib.parse import parse_qs, urlparse
 from zope.component import getUtility
 from zope.event import notify
 from zope.interface import alsoProvides
 from zope.lifecycleevent import ObjectModifiedEvent
 
-import six
-import transaction
-import unittest
+from plone.app.multilingual import api
+from plone.app.multilingual.browser.helper_views import selector_view
+from plone.app.multilingual.browser.selector import (
+    NOT_TRANSLATED_YET_TEMPLATE, LanguageSelectorViewlet, addQuery,
+    getPostPath)
+from plone.app.multilingual.interfaces import (
+    ITG, IMultiLanguageExtraOptionsSchema, IPloneAppMultilingualInstalled)
+from plone.app.multilingual.testing import (PAM_FUNCTIONAL_TESTING,
+                                            PAM_INTEGRATION_PRESET_TESTING,
+                                            PAM_INTEGRATION_TESTING)
 
 
 class EvilObject(object):

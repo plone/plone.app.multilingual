@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
+import six
 from plone.app.i18n.locales.browser.selector import LanguageSelector
-from plone.app.multilingual.interfaces import ITG
-from plone.app.multilingual.interfaces import NOTG
 from plone.i18n.interfaces import ILanguageSchema
 from plone.registry.interfaces import IRegistry
-from zope.component import getUtility
-from zope.component import queryAdapter
+from zope.component import getUtility, queryAdapter
 from zope.component.hooks import getSite
 from ZTUtils import make_query
 
-import six
+from plone.app.multilingual.interfaces import ITG, NOTG
 
 
 def addQuery(request, url, exclude=tuple(), **extras):

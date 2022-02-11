@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
-from Acquisition import aq_base
-from Acquisition import aq_chain
-from plone.app.multilingual.content.lrf import ILanguageRootFolder
-from plone.app.multilingual.interfaces import ILanguageIndependentFolder
-from plone.uuid.interfaces import ATTRIBUTE_NAME
-from plone.uuid.interfaces import IAttributeUUID
-from plone.uuid.interfaces import IUUID
+from Acquisition import aq_base, aq_chain
+from plone.uuid.interfaces import ATTRIBUTE_NAME, IUUID, IAttributeUUID
 from zope.component import adapter
 from zope.interface import implementer
+
+from plone.app.multilingual.content.lrf import ILanguageRootFolder
+from plone.app.multilingual.interfaces import ILanguageIndependentFolder
 
 
 @implementer(IUUID)

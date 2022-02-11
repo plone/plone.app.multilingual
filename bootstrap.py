@@ -18,17 +18,16 @@ The script accepts buildout command-line options, so you can
 use the -c option to specify an alternate configuration file.
 """
 
-from optparse import OptionParser
-
 import os
-import pkg_resources
-import setuptools
 import shutil
 import subprocess
 import sys
 import tempfile
-import zc.buildout.buildout
+from optparse import OptionParser
 
+import pkg_resources
+import setuptools
+import zc.buildout.buildout
 
 tmpeggs = tempfile.mkdtemp()
 
@@ -89,6 +88,7 @@ if not options.allow_site_packages:
     # this will remove them from the path to ensure that incompatible versions
     # of setuptools are not in the path
     import site
+
     # inside a virtualenv, there is no 'getsitepackages'.
     # We can't remove these reliably
     if hasattr(site, 'getsitepackages'):

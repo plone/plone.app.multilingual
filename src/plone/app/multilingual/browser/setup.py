@@ -1,16 +1,10 @@
 # -*- coding: utf-8 -*-
 from logging import getLogger
+
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.layout.navigation.interfaces import INavigationRoot
-from plone.app.multilingual import _
-from plone.app.multilingual.dx.interfaces import IDexterityTranslatable
-from plone.app.multilingual.interfaces import ITranslatable
-from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
-from plone.app.multilingual.subscriber import set_recursive_language
 from plone.dexterity.interfaces import IDexterityFTI
-from plone.i18n.locales.languages import _combinedlanguagelist
-from plone.i18n.locales.languages import _languagelist
+from plone.i18n.locales.languages import _combinedlanguagelist, _languagelist
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ILanguage
 from Products.CMFPlone.utils import _createObjectByType
@@ -21,6 +15,12 @@ from zope.i18n import translate
 from zope.interface import alsoProvides
 from zope.lifecycleevent import modified
 
+from plone.app.multilingual import _
+from plone.app.multilingual.dx.interfaces import IDexterityTranslatable
+from plone.app.multilingual.interfaces import (LANGUAGE_INDEPENDENT,
+                                               ITranslatable,
+                                               ITranslationManager)
+from plone.app.multilingual.subscriber import set_recursive_language
 
 logger = getLogger("plone.app.multilingual")
 
