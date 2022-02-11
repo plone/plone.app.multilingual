@@ -1,14 +1,14 @@
-import unittest
-
-import transaction
-from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
+from plone.app.testing import SITE_OWNER_NAME
+from plone.app.testing import SITE_OWNER_PASSWORD
 from plone.dexterity.utils import createContentInContainer
 from plone.testing._z2_testbrowser import Browser
 from zope.interface import alsoProvides
 
-from plone.app.multilingual.interfaces import (IPloneAppMultilingualInstalled,
-                                               ITranslationManager)
-from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
+import transaction
+import unittest
 
 
 class TestForm(unittest.TestCase):

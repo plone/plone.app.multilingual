@@ -1,3 +1,15 @@
+from plone.app.multilingual.events import ObjectTranslatedEvent
+from plone.app.multilingual.events import ObjectWillBeTranslatedEvent
+from plone.app.multilingual.events import TranslationRegisteredEvent
+from plone.app.multilingual.events import TranslationRemovedEvent
+from plone.app.multilingual.events import TranslationUpdatedEvent
+from plone.app.multilingual.interfaces import IMutableTG
+from plone.app.multilingual.interfaces import ITG
+from plone.app.multilingual.interfaces import ITranslationFactory
+from plone.app.multilingual.interfaces import ITranslationLocator
+from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.interfaces import NOTG
+from plone.app.multilingual.itg import addAttributeTG
 from plone.app.uuid.utils import uuidToObject
 from plone.protect.interfaces import IDisableCSRFProtection
 from plone.uuid.handlers import addAttributeUUID
@@ -7,18 +19,8 @@ from Products.CMFPlone.interfaces import ILanguage
 from zope.component.hooks import getSite
 from zope.event import notify
 from zope.globalrequest import getRequest
-from zope.interface import alsoProvides, implementer
-
-from plone.app.multilingual.events import (ObjectTranslatedEvent,
-                                           ObjectWillBeTranslatedEvent,
-                                           TranslationRegisteredEvent,
-                                           TranslationRemovedEvent,
-                                           TranslationUpdatedEvent)
-from plone.app.multilingual.interfaces import (ITG, NOTG, IMutableTG,
-                                               ITranslationFactory,
-                                               ITranslationLocator,
-                                               ITranslationManager)
-from plone.app.multilingual.itg import addAttributeTG
+from zope.interface import alsoProvides
+from zope.interface import implementer
 
 
 @implementer(ITranslationManager)

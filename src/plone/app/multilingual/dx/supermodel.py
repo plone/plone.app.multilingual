@@ -1,8 +1,8 @@
+from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.supermodel.interfaces import IFieldMetadataHandler
 from plone.supermodel.utils import ns
-from zope.interface import alsoProvides, implementer
-
-from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
+from zope.interface import alsoProvides
+from zope.interface import implementer
 
 
 @implementer(IFieldMetadataHandler)

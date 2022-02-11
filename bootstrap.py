@@ -18,16 +18,17 @@ The script accepts buildout command-line options, so you can
 use the -c option to specify an alternate configuration file.
 """
 
+from optparse import OptionParser
+
 import os
+import pkg_resources
+import setuptools
 import shutil
 import subprocess
 import sys
 import tempfile
-from optparse import OptionParser
-
-import pkg_resources
-import setuptools
 import zc.buildout.buildout
+
 
 tmpeggs = tempfile.mkdtemp()
 

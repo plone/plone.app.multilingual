@@ -1,11 +1,13 @@
-import logging
-import warnings
-
-from Acquisition import aq_base, aq_inner, aq_parent
+from Acquisition import aq_base
+from Acquisition import aq_inner
+from Acquisition import aq_parent
+from plone.app.multilingual import _
+from plone.app.multilingual.interfaces import ITranslationManager
 from plone.locking.interfaces import ILockable
 from Products.CMFCore.exceptions import ResourceLockedError
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ILanguage, IPloneSiteRoot
+from Products.CMFPlone.interfaces import ILanguage
+from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zc.relation.interfaces import ICatalog
@@ -14,8 +16,9 @@ from zope.component.hooks import getSite
 from zope.interface import Interface
 from zope.interface.interfaces import ComponentLookupError
 
-from plone.app.multilingual import _
-from plone.app.multilingual.interfaces import ITranslationManager
+import logging
+import warnings
+
 
 try:
     from Products.LinguaPlone.interfaces import ITranslatable

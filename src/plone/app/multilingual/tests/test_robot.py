@@ -1,9 +1,9 @@
-import unittest
-
-import robotsuite
+from plone.app.multilingual.testing import PAM_ROBOT_TESTING
 from plone.testing import layered
 
-from plone.app.multilingual.testing import PAM_ROBOT_TESTING
+import robotsuite
+import unittest
+
 
 UNIT_TEST_LEVEL = 1
 INTEGRATION_TEST_LEVEL = 2

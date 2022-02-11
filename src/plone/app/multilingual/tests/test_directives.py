@@ -1,13 +1,12 @@
-import unittest
-
+from plone.app.multilingual.dx.directives import languageindependent
+from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
+from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
 from plone.supermodel import model
 from plone.supermodel.utils import mergedTaggedValueList
 from zope import schema
 from zope.interface import Interface
 
-from plone.app.multilingual.dx.directives import languageindependent
-from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
-from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
+import unittest
 
 
 class TestDirectives(unittest.TestCase):

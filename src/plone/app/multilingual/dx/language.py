@@ -1,8 +1,8 @@
 # from plone.app.dexterity.behaviors.metadata import ICategorization
+from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from Products.CMFPlone.interfaces import ILanguage
 from zope.interface import implementer
 
-from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 
 # Patch for hiding 'language' field from the edit form
 # ICategorization['language'].readonly = True

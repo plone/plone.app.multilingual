@@ -1,10 +1,13 @@
-import json
-
+from plone.app.multilingual import isLPinstalled
+from plone.app.multilingual.browser.migrator import portal_types_blacklist
+from plone.app.multilingual.browser.setup import SetupMultilingualSite
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.registry.browser import controlpanel
 from plone.app.uuid.utils import uuidToObject
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.controlpanel.browser.language import \
-    LanguageControlPanelForm  # noqa
+from Products.CMFPlone.controlpanel.browser.language import (  # noqa
+    LanguageControlPanelForm,
+)
 from Products.CMFPlone.interfaces import ILanguage
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -16,10 +19,8 @@ from zope.i18nmessageid import MessageFactory
 from zope.interface.interfaces import ComponentLookupError
 from zope.schema.interfaces import IVocabularyFactory
 
-from plone.app.multilingual import isLPinstalled
-from plone.app.multilingual.browser.migrator import portal_types_blacklist
-from plone.app.multilingual.browser.setup import SetupMultilingualSite
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+import json
+
 
 _ = MessageFactory("plone.app.multilingual")
 

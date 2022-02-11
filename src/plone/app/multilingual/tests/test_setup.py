@@ -1,17 +1,18 @@
-import unittest
-
 from Acquisition import aq_base
+from plone.app.multilingual.browser.setup import SetupMultilingualSite
+from plone.app.multilingual.browser.vocabularies import (  # noqa: E501
+    AllContentLanguageVocabulary,
+)
+from plone.app.multilingual.interfaces import ATTRIBUTE_NAME
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.interfaces import ITG
+from plone.app.multilingual.interfaces import ITranslatable
+from plone.app.multilingual.testing import PAM_INTEGRATION_PRESET_TESTING
+from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
 from Products.CMFCore.utils import getToolByName
 from zope.interface import alsoProvides
 
-from plone.app.multilingual.browser.setup import SetupMultilingualSite
-from plone.app.multilingual.browser.vocabularies import \
-    AllContentLanguageVocabulary  # noqa: E501
-from plone.app.multilingual.interfaces import (ATTRIBUTE_NAME, ITG,
-                                               IPloneAppMultilingualInstalled,
-                                               ITranslatable)
-from plone.app.multilingual.testing import (PAM_INTEGRATION_PRESET_TESTING,
-                                            PAM_INTEGRATION_TESTING)
+import unittest
 
 
 class TestSetupMultilingualSite(unittest.TestCase):

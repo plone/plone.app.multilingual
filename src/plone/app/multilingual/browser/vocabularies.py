@@ -1,14 +1,16 @@
+from plone.app.multilingual.browser.utils import is_language_independent
+from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.vocabularies.catalog import CatalogVocabularyFactory
 from plone.i18n.locales.interfaces import ILanguageAvailability
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ILanguage
 from zope.component import getGlobalSiteManager
-from zope.interface import implementer, provider
-from zope.schema.interfaces import IContextSourceBinder, IVocabularyFactory
-from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
-
-from plone.app.multilingual.browser.utils import is_language_independent
-from plone.app.multilingual.interfaces import ITranslationManager
+from zope.interface import implementer
+from zope.interface import provider
+from zope.schema.interfaces import IContextSourceBinder
+from zope.schema.interfaces import IVocabularyFactory
+from zope.schema.vocabulary import SimpleTerm
+from zope.schema.vocabulary import SimpleVocabulary
 
 
 @provider(IContextSourceBinder)

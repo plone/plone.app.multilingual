@@ -1,7 +1,8 @@
-import logging
-
-import pkg_resources
 from zope.i18nmessageid import MessageFactory
+
+import logging
+import pkg_resources
+
 
 try:
     pkg_resources.get_distribution("Products.LinguaPlone")

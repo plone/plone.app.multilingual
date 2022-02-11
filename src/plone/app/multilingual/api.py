@@ -1,5 +1,6 @@
-from plone.app.multilingual.interfaces import (ITG, ITranslatable,
-                                               ITranslationManager)
+from plone.app.multilingual.interfaces import ITG
+from plone.app.multilingual.interfaces import ITranslatable
+from plone.app.multilingual.interfaces import ITranslationManager
 
 
 def get_translation_group(content):

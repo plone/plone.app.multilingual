@@ -1,19 +1,22 @@
 from AccessControl.SecurityManagement import getSecurityManager
-from Acquisition import aq_chain, aq_inner, aq_parent
+from Acquisition import aq_chain
+from Acquisition import aq_inner
+from Acquisition import aq_parent
 from plone.app.i18n.locales.browser.selector import LanguageSelector
+from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
+from plone.app.multilingual.interfaces import ILanguageIndependentFolder
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.app.multilingual.interfaces import ITranslationLocator
+from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.manager import TranslationManager
 from plone.i18n.locales.interfaces import IContentLanguageAvailability
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ILanguage
 from Products.Five import BrowserView
-from zope.component import getMultiAdapter, getUtility
+from zope.component import getMultiAdapter
+from zope.component import getUtility
 from zope.component.hooks import getSite
-
-from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
-from plone.app.multilingual.interfaces import (
-    ILanguageIndependentFolder, IMultiLanguageExtraOptionsSchema,
-    ITranslationLocator, ITranslationManager)
-from plone.app.multilingual.manager import TranslationManager
 
 
 def is_language_independent(ob):

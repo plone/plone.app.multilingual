@@ -1,24 +1,25 @@
-import unittest
-
+from plone.app.multilingual import api
+from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.relationfield.behavior import IRelatedItems
 from plone.dexterity.fti import DexterityFTI
 from plone.dexterity.utils import createContentInContainer
 from plone.uuid.interfaces import IUUID
 from Products.CMFCore.utils import getToolByName
-from z3c.form.interfaces import IDataManager, IValidator
+from z3c.form.interfaces import IDataManager
+from z3c.form.interfaces import IValidator
 from z3c.relationfield import RelationValue
 from zope.component import getMultiAdapter
 from zope.event import notify
-from zope.interface import alsoProvides, noLongerProvides
+from zope.interface import alsoProvides
+from zope.interface import noLongerProvides
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.pagetemplate.interfaces import IPageTemplate
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.schema._bootstrapinterfaces import RequiredMissing
 
-from plone.app.multilingual import api
-from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
-from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
-from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
+import unittest
 
 
 class TestLanguageIndependentFieldOnAddTranslationForm(unittest.TestCase):

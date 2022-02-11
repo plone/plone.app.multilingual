@@ -1,7 +1,10 @@
-import unittest
-
-import transaction
-from plone.app.testing import TEST_USER_NAME, TEST_USER_PASSWORD
+from plone.app.multilingual import api
+from plone.app.multilingual.browser.utils import multilingualMoveObject
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
+from plone.app.testing import TEST_USER_NAME
+from plone.app.testing import TEST_USER_PASSWORD
 from plone.dexterity.utils import createContentInContainer
 from plone.i18n.interfaces import ILanguageSchema
 from plone.registry.interfaces import IRegistry
@@ -10,11 +13,8 @@ from Products.CMFPlone.interfaces import ILanguage
 from zope.component import getUtility
 from zope.interface import alsoProvides
 
-from plone.app.multilingual import api
-from plone.app.multilingual.browser.utils import multilingualMoveObject
-from plone.app.multilingual.interfaces import (IPloneAppMultilingualInstalled,
-                                               ITranslationManager)
-from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
+import transaction
+import unittest
 
 
 class PAMFuncTestHelperViews(unittest.TestCase):

@@ -1,12 +1,11 @@
-import unittest
-
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
+from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.dexterity.utils import createContentInContainer
 from Products.CMFCore.utils import getToolByName
 from zope.interface import alsoProvides
 
-from plone.app.multilingual.interfaces import (LANGUAGE_INDEPENDENT,
-                                               IPloneAppMultilingualInstalled)
-from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
+import unittest
 
 
 class TestIndependentLanguageFolder(unittest.TestCase):

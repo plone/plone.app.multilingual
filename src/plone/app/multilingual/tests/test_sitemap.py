@@ -1,15 +1,15 @@
-import unittest
 from gzip import GzipFile
-
+from io import BytesIO
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.dexterity.utils import createContentInContainer
 from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.interfaces import ISiteSchema
-from io import BytesIO
-from zope.component import getMultiAdapter, getUtility
+from zope.component import getMultiAdapter
+from zope.component import getUtility
 from zope.interface import alsoProvides
 
-from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
-from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
+import unittest
 
 
 # This class largely inspired by plone/app/layout/sitemap/tests/test_sitemap.py

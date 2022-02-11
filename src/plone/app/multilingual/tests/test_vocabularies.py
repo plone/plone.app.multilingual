@@ -1,12 +1,11 @@
-import unittest
-
-from plone.dexterity.utils import createContentInContainer
-from zope.interface import alsoProvides
-
 from plone.app.multilingual import api
 from plone.app.multilingual.browser.vocabularies import untranslated_languages
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
+from plone.dexterity.utils import createContentInContainer
+from zope.interface import alsoProvides
+
+import unittest
 
 
 class TestVocabularies(unittest.TestCase):

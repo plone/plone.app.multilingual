@@ -1,19 +1,22 @@
-import pkg_resources
 from Acquisition import aq_parent
+from plone.app.multilingual import _
+from plone.app.multilingual.browser.vocabularies import untranslated_languages
 from plone.app.z3cform.widget import RelatedItemsFieldWidget
 from plone.autoform import directives
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.supermodel import model
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from z3c.relationfield.schema import RelationChoice
-from zope import interface, schema
-from zope.browsermenu.interfaces import IBrowserMenu, IBrowserSubMenuItem
+from zope import interface
+from zope import schema
+from zope.browsermenu.interfaces import IBrowserMenu
+from zope.browsermenu.interfaces import IBrowserSubMenuItem
 from zope.component.hooks import getSite
 from zope.interface import provider
 from zope.schema.interfaces import IContextAwareDefaultFactory
 
-from plone.app.multilingual import _
-from plone.app.multilingual.browser.vocabularies import untranslated_languages
+import pkg_resources
+
 
 HAS_MOCKUP_240 = False
 try:

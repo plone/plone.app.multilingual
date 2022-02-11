@@ -1,9 +1,11 @@
-from plone.supermodel.directives import CheckerPlugin, MetadataListDirective
-from zope.interface import Interface, alsoProvides
+from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
+from plone.app.multilingual.dx.interfaces import MULTILINGUAL_KEY
+from plone.supermodel.directives import CheckerPlugin
+from plone.supermodel.directives import MetadataListDirective
+from zope.interface import alsoProvides
+from zope.interface import Interface
 from zope.interface.interfaces import IInterface
 
-from plone.app.multilingual.dx.interfaces import (MULTILINGUAL_KEY,
-                                                  ILanguageIndependentField)
 
 LANGUAGE_INDEPENDENT_KEY = MULTILINGUAL_KEY
 

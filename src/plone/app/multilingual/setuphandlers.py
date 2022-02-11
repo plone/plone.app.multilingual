@@ -1,14 +1,14 @@
 from logging import getLogger
-
-import pkg_resources
+from plone.app.multilingual.browser.setup import SetupMultilingualSite
+from plone.app.multilingual.interfaces import ITranslatable
+from plone.app.multilingual.itg import addAttributeTG
 from Products.CMFPlone.interfaces import INonInstallable
 from Products.CMFPlone.utils import getToolByName
 from zope.component.hooks import getSite
 from zope.interface import implementer
 
-from plone.app.multilingual.browser.setup import SetupMultilingualSite
-from plone.app.multilingual.interfaces import ITranslatable
-from plone.app.multilingual.itg import addAttributeTG
+import pkg_resources
+
 
 try:
     pkg_resources.get_distribution("plone.app.contenttypes")

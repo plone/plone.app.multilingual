@@ -1,11 +1,10 @@
 from plone.app.layout.viewlets.common import ViewletBase
+from plone.app.multilingual.interfaces import ITranslatable
+from plone.app.multilingual.interfaces import ITranslationManager
 from plone.memoize import ram
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ILanguage
 from urllib.parse import quote_plus
-
-from plone.app.multilingual.interfaces import (ITranslatable,
-                                               ITranslationManager)
 
 
 def _cache_until_catalog_change(fun, self):

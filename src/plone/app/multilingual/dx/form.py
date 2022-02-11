@@ -1,14 +1,14 @@
+from .interfaces import ILanguageIndependentField
 from Acquisition import aq_base
+from plone.app.multilingual.manager import TranslationManager
 from Products.CMFCore.utils import getToolByName
-from z3c.form.interfaces import DISPLAY_MODE, NO_VALUE, IValue
+from z3c.form.interfaces import DISPLAY_MODE
+from z3c.form.interfaces import IValue
+from z3c.form.interfaces import NO_VALUE
 from z3c.form.validator import StrictSimpleFieldValidator
 from zope.component import getMultiAdapter
 from zope.interface import implementer
 from zope.pagetemplate.interfaces import IPageTemplate
-
-from plone.app.multilingual.manager import TranslationManager
-
-from .interfaces import ILanguageIndependentField
 
 
 def isLanguageIndependent(field):

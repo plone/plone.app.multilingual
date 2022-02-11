@@ -1,16 +1,15 @@
-import json
-
 from Acquisition import aq_inner
+from plone.app.multilingual import _
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.app.multilingual.interfaces import ITranslationManager
 from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import IUUID
 from Products.CMFPlone.interfaces import ILanguage
 from Products.Five import BrowserView
-import urllib
 from zope.component import getUtility
 
-from plone.app.multilingual import _
-from plone.app.multilingual.interfaces import (
-    IMultiLanguageExtraOptionsSchema, ITranslationManager)
+import json
+import urllib
 
 
 def google_translate(question, key, lang_target, lang_source):

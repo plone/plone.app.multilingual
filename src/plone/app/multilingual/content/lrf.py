@@ -1,13 +1,13 @@
 from plone.app.content.namechooser import NormalizingNameChooser
 from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.app.multilingual.interfaces import ILanguageRootFolder
+from plone.app.multilingual.interfaces import ITranslationIdChooser
 from plone.dexterity.content import Container
 from zope.component import adapter
 from zope.container.interfaces import INameChooser
 from zope.deprecation import deprecated
 from zope.interface import implementer
 
-from plone.app.multilingual.interfaces import (ILanguageRootFolder,
-                                               ITranslationIdChooser)
 
 _marker = object()
 
