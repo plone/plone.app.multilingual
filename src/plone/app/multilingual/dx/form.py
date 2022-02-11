@@ -24,8 +24,9 @@ def isLanguageIndependent(field):
 
 class LanguageIndependentFieldValidator(StrictSimpleFieldValidator):
     """Override validator so we can ignore language independent fields,
-       these will be automatically filled later on by subscriber.createdEvent
+    these will be automatically filled later on by subscriber.createdEvent
     """
+
     def validate(self, value, force=False):
         # always pass
         pass
@@ -33,9 +34,10 @@ class LanguageIndependentFieldValidator(StrictSimpleFieldValidator):
 
 class LanguageIndependentFieldInputTemplate(object):
     """Override input template for language independent fields with
-       display widget, because values will be automatically filled
-       by later on by subscriber.createdEvent.
+    display widget, because values will be automatically filled
+    by later on by subscriber.createdEvent.
     """
+
     def __init__(self, context, request, view, field, widget):
         self.context = context
         self.request = request
@@ -45,14 +47,21 @@ class LanguageIndependentFieldInputTemplate(object):
 
     def __call__(self, widget):
         template = getMultiAdapter(
-            (self.context, self.request, self.view, self.field, self.widget,),
-            IPageTemplate, name=DISPLAY_MODE)
+            (
+                self.context,
+                self.request,
+                self.view,
+                self.field,
+                self.widget,
+            ),
+            IPageTemplate,
+            name=DISPLAY_MODE,
+        )
         return template(widget)
 
 
 @implementer(IValue)
 class ValueBase(object):
-
     def __init__(self, context, request, form, field, widget):
         self.context = context
         self.request = request
@@ -62,15 +71,15 @@ class ValueBase(object):
 
     @property
     def catalog(self):
-        return getToolByName(self.context, 'portal_catalog')
+        return getToolByName(self.context, "portal_catalog")
 
 
 class AddingLanguageIndependentValue(ValueBase):
     # XXX Deprecated ???
     def getTranslationUuid(self):
-        translation_info = getattr(self.request, 'translation_info', {})
-        if 'tg' in translation_info.keys():
-            return translation_info['tg']
+        translation_info = getattr(self.request, "translation_info", {})
+        if "tg" in translation_info.keys():
+            return translation_info["tg"]
 
     def get(self):
         uuid = self.getTranslationUuid()

@@ -27,7 +27,6 @@ _marker = object()
 
 @implementer(ITranslationCloner)
 class Cloner(object):
-
     def __init__(self, context):
         self.context = context
 
@@ -37,7 +36,6 @@ class Cloner(object):
 
 @implementer(ILanguageIndependentFieldsManager)
 class LanguageIndependentFieldsManager(object):
-
     def __init__(self, context):
         self.context = context
 
@@ -79,14 +77,15 @@ class LanguageIndependentFieldsManager(object):
                         else:
                             new_value = []
                             for relation in value:
-                                copied_relation = self.copy_relation(relation, target_language)
+                                copied_relation = self.copy_relation(
+                                    relation, target_language
+                                )
                                 if copied_relation:
                                     new_value.append(copied_relation)
                             value = new_value
 
                     doomed = True
-                    setattr(schema(translation),
-                            field_name, safe_unicode(value))
+                    setattr(schema(translation), field_name, safe_unicode(value))
 
         # If at least one field has been copied over to the translation
         # we need to inform subscriber to trigger an ObjectModifiedEvent

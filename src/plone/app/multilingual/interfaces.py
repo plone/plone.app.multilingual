@@ -11,23 +11,21 @@ from zope.schema.vocabulary import SimpleVocabulary
 
 
 # CONSTANTS
-SHARED_NAME = 'shared'
+SHARED_NAME = "shared"
 
-LANGUAGE_INDEPENDENT = ''
+LANGUAGE_INDEPENDENT = ""
 
-ATTRIBUTE_NAME = '_plone.tg'
+ATTRIBUTE_NAME = "_plone.tg"
 
-NOTG = 'notg'
+NOTG = "notg"
 
 
 class ILanguageRootFolder(Interface):
-    """ Language Root Folder content type interface
-    """
+    """Language Root Folder content type interface"""
 
 
 class ILanguageIndependentFolder(Interface):
-    """ Language Independent Folder for content shared between languages
-    """
+    """Language Independent Folder for content shared between languages"""
 
 
 # Marker interface
@@ -38,18 +36,18 @@ class ITranslatable(Interface):
 # adapters
 class ITranslationFactory(Interface):
     """Adapts ITranslated and is capable of returning
-       a translation clone to be added.
+    a translation clone to be added.
     """
 
     def __call__(language):
         """Create a clone of the context
-           for translation to the given language
+        for translation to the given language
         """
 
 
 class ITranslationLocator(Interface):
     """Find a parent folder for a translation.
-       Adapts ITranslated.
+    Adapts ITranslated.
     """
 
     def __call__(language):
@@ -58,17 +56,17 @@ class ITranslationLocator(Interface):
 
 class ITranslationIdChooser(Interface):
     """Find a valid id for a translation
-       Adapts ITranslated.
+    Adapts ITranslated.
     """
 
     def __call__(parent, language):
-        """ Return a valid id for the translation """
+        """Return a valid id for the translation"""
 
 
 class ITranslationCloner(Interface):
     """Subscription adapters to perform various aspects of cloning an object.
-       Allows componentisation of things like workflow history cloning.
-       Adapts ITranslated.
+    Allows componentisation of things like workflow history cloning.
+    Adapts ITranslated.
     """
 
     def __call__(object):
@@ -76,7 +74,6 @@ class ITranslationCloner(Interface):
 
 
 class ITranslationManager(Interface):
-
     def add_translation(object, intid):
         """
         create the translated content and register the translation
@@ -137,7 +134,7 @@ class ILanguageIndependentFieldsManager(Interface):
     context = Attribute("context", "A translatable object")
 
     def copy_fields(translation):
-        """ Copy language independent fields to translation."""
+        """Copy language independent fields to translation."""
 
 
 class IMutableTG(Interface):
@@ -146,12 +143,12 @@ class IMutableTG(Interface):
     Be sure of what you are doing. Translation Group (TG) is supposed to
     be stable and widely used
     """
+
     def get():
         """Return the TG of the context"""
 
     def set(tg):
-        """Set the unique id of the context with the tg value.
-        """
+        """Set the unique id of the context with the tg value."""
 
 
 class ITG(Interface):
@@ -163,113 +160,122 @@ class ITG(Interface):
 
 
 class IPloneAppMultilingualInstalled(IPloneFormLayer):
-    """ layer inherits from PloneFormLayer for better LIF widget overriding """
+    """layer inherits from PloneFormLayer for better LIF widget overriding"""
 
 
 selector_policies = SimpleVocabulary(
-    [SimpleTerm(value=u'closest',
-                title=_(u'Search for closest translation in parent\'s content '
-                        u'chain.')),
-     SimpleTerm(value=u'dialog',
-                title=_(u'Show user dialog with information about the '
-                        u'available translations.'))]
+    [
+        SimpleTerm(
+            value="closest",
+            title=_("Search for closest translation in parent's content " "chain."),
+        ),
+        SimpleTerm(
+            value="dialog",
+            title=_(
+                "Show user dialog with information about the " "available translations."
+            ),
+        ),
+    ]
 )
 
 
 class IMultiLanguageExtraOptionsSchema(ILanguageSchema):
-    """ Interface for language extra options - control panel fieldset
-    """
+    """Interface for language extra options - control panel fieldset"""
 
     model.fieldset(
-        'multilingual',
-        label=_(u'Multilingual', default=u'Multilingual'),
+        "multilingual",
+        label=_("Multilingual", default="Multilingual"),
         fields=[
-            'filter_content',
-            'redirect_babel_view',
-            'bypass_languageindependent_field_permission_check',
-            'buttons_babel_view_up_to_nr_translations',
-            'google_translation_key',
-            'selector_lookup_translations_policy'
+            "filter_content",
+            "redirect_babel_view",
+            "bypass_languageindependent_field_permission_check",
+            "buttons_babel_view_up_to_nr_translations",
+            "google_translation_key",
+            "selector_lookup_translations_policy",
         ],
     )
 
     filter_content = schema.Bool(
-        title=_(
-            u"heading_filter_content",
-            default=u"Filter content by language."),
+        title=_("heading_filter_content", default="Filter content by language."),
         description=_(
-            u"description_filter_content",
-            default=u"Filter using language the content on folder_contents"),
+            "description_filter_content",
+            default="Filter using language the content on folder_contents",
+        ),
         default=True,
         required=False,
-        )
+    )
 
     redirect_babel_view = schema.Bool(
         title=_(
-            u"heading_redirect_babel_view",
-            default=u"Redirect on creation to babel view."),
+            "heading_redirect_babel_view", default="Redirect on creation to babel view."
+        ),
         description=_(
-            u"description_redirect_babel_view",
-            default=(u"After creating a new translation redirecto to babel "
-                     u"view")),
+            "description_redirect_babel_view",
+            default=("After creating a new translation redirecto to babel " "view"),
+        ),
         default=True,
         required=False,
-        )
+    )
 
     bypass_languageindependent_field_permission_check = schema.Bool(
         title=_(
-            u"heading_bypass_languageindependent_field_permission_check",
-            default=u"Bypass language independent field permission check"),
+            "heading_bypass_languageindependent_field_permission_check",
+            default="Bypass language independent field permission check",
+        ),
         description=_(
-            u"description_bypass_languageindependent_field_permission_check",
-            default=u"When updating an object with language independent the "
-                    u"field will be synced to all target languages. That can "
-                    u"produce Unauthorized error messages because if the "
-                    u"editor of the canonical object is not allowed to update "
-                    u"the target language objects. Enabling this bypasses "
-                    u"this permission check. This could also be dangerous, so "
-                    u"think about possible security issues before enabling "
-                    u"this."),
+            "description_bypass_languageindependent_field_permission_check",
+            default="When updating an object with language independent the "
+            "field will be synced to all target languages. That can "
+            "produce Unauthorized error messages because if the "
+            "editor of the canonical object is not allowed to update "
+            "the target language objects. Enabling this bypasses "
+            "this permission check. This could also be dangerous, so "
+            "think about possible security issues before enabling "
+            "this.",
+        ),
         default=False,
         required=False,
     )
 
     buttons_babel_view_up_to_nr_translations = schema.Int(
         title=_(
-            u"heading_buttons_babel_view_up_to_nr_translations",
-            default=u"Use buttons in the bable view for up to how many "
-                    u"translations?"),
+            "heading_buttons_babel_view_up_to_nr_translations",
+            default="Use buttons in the bable view for up to how many " "translations?",
+        ),
         description=_(
-            u"description_buttons_babel_view_up_to_nr_translations",
-            default=u"When there are many translations for an item, the "
-                    u"number of displayed buttons for them might get too "
-                    u"large to fit inside the template. Choose here from "
-                    u"which number onwards a drop-down menu will be displayed "
-                    u"instead of buttons. Zero means that buttons will always "
-                    u"be used."),
+            "description_buttons_babel_view_up_to_nr_translations",
+            default="When there are many translations for an item, the "
+            "number of displayed buttons for them might get too "
+            "large to fit inside the template. Choose here from "
+            "which number onwards a drop-down menu will be displayed "
+            "instead of buttons. Zero means that buttons will always "
+            "be used.",
+        ),
         default=7,
         required=False,
     )
 
     google_translation_key = schema.TextLine(
-        title=_(
-            u"heading_google_translation_key",
-            default=u"Google Translation API Key"),
+        title=_("heading_google_translation_key", default="Google Translation API Key"),
         description=_(
-            u"description_google_translation_key",
-            default=u"Is a paying API in order to use google translation "
-                    u"service"),
+            "description_google_translation_key",
+            default="Is a paying API in order to use google translation " "service",
+        ),
         required=False,
     )
 
     selector_lookup_translations_policy = schema.Choice(
-        title=_(u"heading_selector_lookup_translations_policy",
-                default=u"The policy used to determine how the lookup for "
-                        u"available translations will be made by the language "
-                        u"selector."),
-        description=_(u"description_selector_lookup_translations_policy",
-                      default=u"The default language used for the content "
-                              u"and the UI of this site."),
+        title=_(
+            "heading_selector_lookup_translations_policy",
+            default="The policy used to determine how the lookup for "
+            "available translations will be made by the language "
+            "selector.",
+        ),
+        description=_(
+            "description_selector_lookup_translations_policy",
+            default="The default language used for the content "
+            "and the UI of this site.",
+        ),
         required=True,
-        vocabulary=selector_policies
+        vocabulary=selector_policies,
     )

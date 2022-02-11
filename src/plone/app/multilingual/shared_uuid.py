@@ -30,6 +30,6 @@ def attributeUUID(context):
         if ILanguageIndependentFolder.providedBy(element):
             is_language_independent = True
         if ILanguageRootFolder.providedBy(element) and is_language_independent:
-            uid = getattr(aq_base(context), ATTRIBUTE_NAME, None) or ''
-            return uid + '-' + element.id if uid is not None else None
+            uid = getattr(aq_base(context), ATTRIBUTE_NAME, None) or ""
+            return uid + "-" + element.id if uid is not None else None
     return getattr(context, ATTRIBUTE_NAME, None)

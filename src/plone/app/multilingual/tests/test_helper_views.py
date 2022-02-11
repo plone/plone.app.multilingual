@@ -23,26 +23,27 @@ class PAMFuncTestHelperViews(unittest.TestCase):
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        self.request = self.layer['request']
-        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
-        self.browser = Browser(self.layer['app'])
+        self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
+        alsoProvides(self.layer["request"], IPloneAppMultilingualInstalled)
+        self.browser = Browser(self.layer["app"])
         self.browser.handleErrors = False
-        self.browser.addHeader('Authorization',
-                               'Basic %s:%s' % (TEST_USER_NAME,
-                                                TEST_USER_PASSWORD))
+        self.browser.addHeader(
+            "Authorization", "Basic %s:%s" % (TEST_USER_NAME, TEST_USER_PASSWORD)
+        )
         self.settings = getUtility(IRegistry).forInterface(
-            ILanguageSchema,
-            prefix='plone')
+            ILanguageSchema, prefix="plone"
+        )
 
     def test_universal_link_view(self):
         self.settings.use_request_negotiation = True
-        self.browser.addHeader('Accept-Language', 'ca')
+        self.browser.addHeader("Accept-Language", "ca")
 
         a_ca = createContentInContainer(
-            self.portal['ca'], 'Document', title=u"Test document")
-        a_en = api.translate(a_ca, 'en')
-        api.translate(a_ca, 'es')
+            self.portal["ca"], "Document", title="Test document"
+        )
+        a_en = api.translate(a_ca, "en")
+        api.translate(a_ca, "es")
 
         transaction.commit()
 
@@ -56,89 +57,96 @@ class PAMIntTestHelperViews(unittest.TestCase):
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        self.request = self.layer['request']
-        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
+        self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
+        alsoProvides(self.layer["request"], IPloneAppMultilingualInstalled)
 
     def test_move_content_proper_language_folder(self):
         f_ca = createContentInContainer(
-            self.portal['ca'], 'Folder', title=u"Test folder")
+            self.portal["ca"], "Folder", title="Test folder"
+        )
 
         a_ca = createContentInContainer(
-            self.portal['ca']['test-folder'],
-            'Document', title=u"Test document")
+            self.portal["ca"]["test-folder"], "Document", title="Test document"
+        )
 
         # Change the content language of the created folder to 'es'
-        multilingualMoveObject(f_ca, 'es')
+        multilingualMoveObject(f_ca, "es")
 
-        self.assertIn(f_ca.id, self.portal['es'].objectIds())
-        self.assertEqual(f_ca, self.portal['es'][f_ca.id])
+        self.assertIn(f_ca.id, self.portal["es"].objectIds())
+        self.assertEqual(f_ca, self.portal["es"][f_ca.id])
 
-        self.assertIn(a_ca.id, self.portal['es'][f_ca.id].objectIds())
-        self.assertEqual(a_ca, self.portal['es'][f_ca.id][a_ca.id])
+        self.assertIn(a_ca.id, self.portal["es"][f_ca.id].objectIds())
+        self.assertEqual(a_ca, self.portal["es"][f_ca.id][a_ca.id])
 
-        adapter = ILanguage(self.portal['es'][f_ca.id])
-        self.assertEqual(adapter.get_language(), 'es')
+        adapter = ILanguage(self.portal["es"][f_ca.id])
+        self.assertEqual(adapter.get_language(), "es")
 
-        adapter = ILanguage(self.portal['es'][f_ca.id][a_ca.id])
-        self.assertEqual(adapter.get_language(), 'es')
+        adapter = ILanguage(self.portal["es"][f_ca.id][a_ca.id])
+        self.assertEqual(adapter.get_language(), "es")
 
     def test_move_content_existing_translation_inside(self):
         f_ca = createContentInContainer(
-            self.portal['ca'], 'Folder', title=u"Test folder")
+            self.portal["ca"], "Folder", title="Test folder"
+        )
 
         a_ca = createContentInContainer(
-            self.portal['ca']['test-folder'],
-            'Document', title=u"Test document")
+            self.portal["ca"]["test-folder"], "Document", title="Test document"
+        )
 
-        a_en = api.translate(a_ca, 'en')
-        translations = ITranslationManager(self.portal['en'][a_en.id])
-        self.assertEqual(translations.get_translations(),
-                         {'ca': self.portal['ca'][f_ca.id][a_ca.id],
-                          'en': self.portal['en'][a_ca.id]})
+        a_en = api.translate(a_ca, "en")
+        translations = ITranslationManager(self.portal["en"][a_en.id])
+        self.assertEqual(
+            translations.get_translations(),
+            {
+                "ca": self.portal["ca"][f_ca.id][a_ca.id],
+                "en": self.portal["en"][a_ca.id],
+            },
+        )
 
-        self.assertIn(a_en.id, self.portal['en'].objectIds())
-        self.assertEqual(a_en, self.portal['en'][a_en.id])
+        self.assertIn(a_en.id, self.portal["en"].objectIds())
+        self.assertEqual(a_en, self.portal["en"][a_en.id])
 
         # Change the content language of the created folder to 'en'
-        multilingualMoveObject(f_ca, 'en')
+        multilingualMoveObject(f_ca, "en")
 
-        self.assertIn(f_ca.id, self.portal['en'].objectIds())
-        self.assertEqual(f_ca, self.portal['en'][f_ca.id])
+        self.assertIn(f_ca.id, self.portal["en"].objectIds())
+        self.assertEqual(f_ca, self.portal["en"][f_ca.id])
 
-        self.assertIn(a_ca.id, self.portal['en'][f_ca.id].objectIds())
-        self.assertEqual(a_ca, self.portal['en'][f_ca.id][a_ca.id])
+        self.assertIn(a_ca.id, self.portal["en"][f_ca.id].objectIds())
+        self.assertEqual(a_ca, self.portal["en"][f_ca.id][a_ca.id])
 
-        adapter = ILanguage(self.portal['en'][f_ca.id])
-        self.assertEqual(adapter.get_language(), 'en')
+        adapter = ILanguage(self.portal["en"][f_ca.id])
+        self.assertEqual(adapter.get_language(), "en")
 
-        adapter = ILanguage(self.portal['en'][f_ca.id][a_ca.id])
-        self.assertEqual(adapter.get_language(), 'en')
+        adapter = ILanguage(self.portal["en"][f_ca.id][a_ca.id])
+        self.assertEqual(adapter.get_language(), "en")
 
-        translations = ITranslationManager(self.portal['en'][f_ca.id][a_ca.id])
-        self.assertEqual(translations.get_translations(),
-                         {'en': self.portal['en'][f_ca.id][a_ca.id]})
+        translations = ITranslationManager(self.portal["en"][f_ca.id][a_ca.id])
+        self.assertEqual(
+            translations.get_translations(), {"en": self.portal["en"][f_ca.id][a_ca.id]}
+        )
 
-        translations = ITranslationManager(self.portal['en'][a_en.id])
-        self.assertEqual(translations.get_translations(),
-                         {'en': self.portal['en'][a_en.id]})
+        translations = ITranslationManager(self.portal["en"][a_en.id])
+        self.assertEqual(
+            translations.get_translations(), {"en": self.portal["en"][a_en.id]}
+        )
 
     def test_modify_translations_delete(self):
-        createContentInContainer(
-            self.portal['ca'], 'Folder', title=u"Test folder")
+        createContentInContainer(self.portal["ca"], "Folder", title="Test folder")
 
         a_ca = createContentInContainer(
-            self.portal['ca']['test-folder'],
-            'Document', title=u"Test document")
+            self.portal["ca"]["test-folder"], "Document", title="Test document"
+        )
 
-        a_en = api.translate(a_ca, 'en')
+        a_en = api.translate(a_ca, "en")
 
-        view = a_en.restrictedTraverse('modify_translations')()
+        view = a_en.restrictedTraverse("modify_translations")()
         self.assertIn(
             'href="http://nohost/plone/ca/test-folder/test-document/delete_confirmation" '  # noqa§
             'title="Delete translated item"',
             view,
-            'modify_translations was missing delete link for translation'
+            "modify_translations was missing delete link for translation",
         )
 
         # Test https://github.com/plone/plone.app.multilingual/pull/283
@@ -146,5 +154,5 @@ class PAMIntTestHelperViews(unittest.TestCase):
             'href="http://nohost/plone/en/test-document/delete_confirmation" '  # noqa§
             'title="Delete translated item"',
             view,
-            'modify_translations contained delete link for the context'
+            "modify_translations contained delete link for the context",
         )

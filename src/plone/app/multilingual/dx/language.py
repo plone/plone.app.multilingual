@@ -11,7 +11,6 @@ from zope.interface import implementer
 
 @implementer(ILanguage)
 class Language(object):
-
     def __init__(self, context):
         self.context = context
 
@@ -20,4 +19,4 @@ class Language(object):
 
     def set_language(self, language):
         self.context.language = language
-        self.context.reindexObject(idxs=['Language'])
+        self.context.reindexObject(idxs=["Language"])

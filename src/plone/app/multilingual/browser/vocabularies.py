@@ -16,7 +16,7 @@ from zope.schema.vocabulary import SimpleVocabulary
 
 @provider(IContextSourceBinder)
 def untranslated_languages(context):
-    language_tool = getToolByName(context, 'portal_languages')
+    language_tool = getToolByName(context, "portal_languages")
     language_infos = language_tool.getAvailableLanguages()
     available_portal_languages = language_tool.supported_langs
     manager = ITranslationManager(context)
@@ -26,32 +26,30 @@ def untranslated_languages(context):
     languages = []
     for lang in available_portal_languages:
         if lang not in translated_languages:
-            native = language_infos[lang].get('native', None)
-            name = language_infos[lang].get('name', lang)
-            languages.append(
-                SimpleVocabulary.createTerm(lang, lang, native or name))
+            native = language_infos[lang].get("native", None)
+            name = language_infos[lang].get("name", lang)
+            languages.append(SimpleVocabulary.createTerm(lang, lang, native or name))
     return SimpleVocabulary(languages)
 
 
 @provider(IContextSourceBinder)
 def translated_languages(context):
-    language_tool = getToolByName(context, 'portal_languages')
+    language_tool = getToolByName(context, "portal_languages")
     language_infos = language_tool.getAvailableLanguages()
     manager = ITranslationManager(context)
     # take care to filter out translated contents
     # wich do no have supported language information
-    translated_languages = [a
-                            for a in manager.get_translated_languages()
-                            if a in language_infos]
+    translated_languages = [
+        a for a in manager.get_translated_languages() if a in language_infos
+    ]
     content_language = ILanguage(context).get_language()
     if content_language in translated_languages:
         translated_languages.remove(content_language)
     languages = []
     for lang in translated_languages:
-        native = language_infos[lang].get('native', None)
-        name = language_infos[lang].get('name', lang)
-        languages.append(
-            SimpleVocabulary.createTerm(lang, lang, native or name))
+        native = language_infos[lang].get("native", None)
+        name = language_infos[lang].get("name", lang)
+        languages.append(SimpleVocabulary.createTerm(lang, lang, native or name))
     return SimpleVocabulary(languages)
 
 
@@ -67,8 +65,8 @@ def translated_urls(context):
         translation = manager.get_restricted_translation(lang)
         if translation is not None:
             languages.append(
-                SimpleVocabulary.createTerm(
-                    lang, lang, translation.absolute_url()))
+                SimpleVocabulary.createTerm(lang, lang, translation.absolute_url())
+            )
     return SimpleVocabulary(languages)
 
 
@@ -76,16 +74,15 @@ def translated_urls(context):
 def deletable_languages(context):
     manager = ITranslationManager(context)
     translated_languages = manager.get_translated_languages()
-    language_tool = getToolByName(context, 'portal_languages')
+    language_tool = getToolByName(context, "portal_languages")
     language_infos = language_tool.getAvailableLanguages()
     content_language = ILanguage(context).get_language()
     languages = []
     for lang in translated_languages:
         if lang not in content_language:
-            native = language_infos[lang].get('native', None)
-            name = language_infos[lang].get('name', lang)
-            languages.append(
-                SimpleVocabulary.createTerm(lang, lang, native or name))
+            native = language_infos[lang].get("native", None)
+            name = language_infos[lang].get("name", lang)
+            languages.append(SimpleVocabulary.createTerm(lang, lang, native or name))
     return SimpleVocabulary(languages)
 
 
@@ -95,12 +92,11 @@ def sort_key(language):
 
 @implementer(IVocabularyFactory)
 class AllContentLanguageVocabulary(object):
-    """ Vocabulary factory for all content languages in the portal.
-    """
+    """Vocabulary factory for all content languages in the portal."""
 
     def __call__(self, context):
-        context = getattr(context, 'context', context)
-        ltool = getToolByName(context, 'portal_languages')
+        context = getattr(context, "context", context)
+        ltool = getToolByName(context, "portal_languages")
         gsm = getGlobalSiteManager()
         util = gsm.queryUtility(ILanguageAvailability)
         if ltool.use_combined_language_codes:
@@ -109,7 +105,7 @@ class AllContentLanguageVocabulary(object):
             languages = util.getLanguages()
 
         items = [
-            (l, languages[l].get('native', languages[l].get('name', l)))
+            (l, languages[l].get("native", languages[l].get("name", l)))
             for l in languages
         ]
         items.sort(key=sort_key)
@@ -122,12 +118,11 @@ AllContentLanguageVocabularyFactory = AllContentLanguageVocabulary()
 
 @implementer(IVocabularyFactory)
 class AllAvailableLanguageVocabulary(object):
-    """ Vocabulary factory for all enabled languages in the portal.
-    """
+    """Vocabulary factory for all enabled languages in the portal."""
 
     def __call__(self, context):
-        context = getattr(context, 'context', context)
-        ltool = getToolByName(context, 'portal_languages')
+        context = getattr(context, "context", context)
+        ltool = getToolByName(context, "portal_languages")
         gsm = getGlobalSiteManager()
         util = gsm.queryUtility(ILanguageAvailability)
         if ltool.use_combined_language_codes:
@@ -137,7 +132,7 @@ class AllAvailableLanguageVocabulary(object):
 
         supported_languages = ltool.supported_langs
         items = [
-            (l, languages[l].get('native', languages[l].get('name', l)))
+            (l, languages[l].get("native", languages[l].get("name", l)))
             for l in languages
             if l in supported_languages
         ]
@@ -154,6 +149,5 @@ class RootCatalogVocabularyFactory(CatalogVocabularyFactory):
     """Catalog Vocabulary which always uses the site root"""
 
     def __call__(self, context, query=None):
-        portal = getToolByName(context, 'portal_url').getPortalObject()
-        return super(RootCatalogVocabularyFactory, self).__call__(portal,
-                                                                  query)
+        portal = getToolByName(context, "portal_url").getPortalObject()
+        return super(RootCatalogVocabularyFactory, self).__call__(portal, query)

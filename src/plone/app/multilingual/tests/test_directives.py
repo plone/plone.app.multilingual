@@ -15,20 +15,20 @@ class TestDirectives(unittest.TestCase):
     layer = PAM_INTEGRATION_TESTING
 
     def test_schema_directives_store_tagged_values(self):
-        """Test, if the schema directive values are stored as tagged values.
-        """
+        """Test, if the schema directive values are stored as tagged values."""
 
         class IDummy(model.Schema):
-            """Dummy schema class.
-            """
-            languageindependent('foo')
-            foo = schema.TextLine(title=u'Foo')
+            """Dummy schema class."""
 
-        self.assertEqual([(Interface, 'foo', 'true')],
-                         mergedTaggedValueList(IDummy,
-                                               languageindependent.key))
+            languageindependent("foo")
+            foo = schema.TextLine(title="Foo")
 
-        self.assertTrue(ILanguageIndependentField.providedBy(IDummy['foo']))
+        self.assertEqual(
+            [(Interface, "foo", "true")],
+            mergedTaggedValueList(IDummy, languageindependent.key),
+        )
+
+        self.assertTrue(ILanguageIndependentField.providedBy(IDummy["foo"]))
 
     def test_inherited_schema_still_has_tagged_value(self):
         """An inherited schema should still have the tagged value information
@@ -36,19 +36,22 @@ class TestDirectives(unittest.TestCase):
         """
 
         class IFoo(model.Schema):
-            """Class with a searchable field
-            """
-            languageindependent('baz')
-            baz = schema.TextLine(title=u'baz')
+            """Class with a searchable field"""
+
+            languageindependent("baz")
+            baz = schema.TextLine(title="baz")
 
         class IBar(IFoo):
-            """Schema class which inherits a field from IFoo.
-            """
+            """Schema class which inherits a field from IFoo."""
 
-        self.assertEqual([(Interface, 'baz', 'true')],
-                         mergedTaggedValueList(IFoo, languageindependent.key))
-        self.assertTrue(ILanguageIndependentField.providedBy(IFoo['baz']))
+        self.assertEqual(
+            [(Interface, "baz", "true")],
+            mergedTaggedValueList(IFoo, languageindependent.key),
+        )
+        self.assertTrue(ILanguageIndependentField.providedBy(IFoo["baz"]))
 
-        self.assertEqual([(Interface, 'baz', 'true')],
-                         mergedTaggedValueList(IBar, languageindependent.key))
-        self.assertTrue(ILanguageIndependentField.providedBy(IBar['baz']))
+        self.assertEqual(
+            [(Interface, "baz", "true")],
+            mergedTaggedValueList(IBar, languageindependent.key),
+        )
+        self.assertTrue(ILanguageIndependentField.providedBy(IBar["baz"]))

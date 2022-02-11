@@ -73,8 +73,7 @@ class ObjectTranslatedEvent(object):
 
 @implementer(ITranslationRegisteredEvent)
 class TranslationRegisteredEvent(object):
-    """Sent after a new translation was registered.
-    """
+    """Sent after a new translation was registered."""
 
     def __init__(self, context, target, language):
         self.object = context
@@ -84,8 +83,7 @@ class TranslationRegisteredEvent(object):
 
 @implementer(ITranslationUpdatedEvent)
 class TranslationUpdatedEvent(object):
-    """Sent after an translation was moved to point to a different object
-    """
+    """Sent after an translation was moved to point to a different object"""
 
     def __init__(self, context, old_object, language):
         self.object = context
@@ -95,8 +93,7 @@ class TranslationUpdatedEvent(object):
 
 @implementer(ITranslationRemovedEvent)
 class TranslationRemovedEvent(object):
-    """Sent after an translation was moved to point to a different object
-    """
+    """Sent after an translation was moved to point to a different object"""
 
     def __init__(self, context, old_object, language):
         self.object = context

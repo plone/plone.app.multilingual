@@ -20,17 +20,17 @@ def addQuery(request, url, exclude=tuple(), **extras):
     for k, v in request.form.items():
         if k not in exclude:
             if six.PY2 and isinstance(v, six.text_type):
-                formvariables[k] = v.encode('utf-8')
+                formvariables[k] = v.encode("utf-8")
             else:
                 formvariables[k] = v
     for k, v in extras.items():
         if six.PY2 and isinstance(v, six.text_type):
-            formvariables[k] = v.encode('utf-8')
+            formvariables[k] = v.encode("utf-8")
         else:
             formvariables[k] = v
     try:
         if len(formvariables) > 0:
-            url += '?' + make_query(formvariables)
+            url += "?" + make_query(formvariables)
     # Again, LinguaPlone did this try/except here so I'm keeping it.
     except UnicodeError:
         pass
@@ -53,14 +53,14 @@ def getPostPath(context, request):
     # We need to find the actual translatable content object. As an
     # optimization we assume it is within the last three segments.
     path = context.getPhysicalPath()
-    path_info = request.get('PATH_INFO', '')
+    path_info = request.get("PATH_INFO", "")
     match = [p for p in path[-3:] if p]
-    current_path = [pi for pi in path_info.split('/') if pi]
+    current_path = [pi for pi in path_info.split("/") if pi]
     append_path = []
     stop = False
     while current_path and not stop:
         check = current_path.pop()
-        if check == 'VirtualHostRoot' or check.startswith('_vh_'):
+        if check == "VirtualHostRoot" or check.startswith("_vh_"):
             # Once we hit a VHM marker, we should stop
             break
         if check not in match:
@@ -68,16 +68,15 @@ def getPostPath(context, request):
         else:
             stop = True
     if append_path:
-        append_path.insert(0, '')
+        append_path.insert(0, "")
     return "/".join(append_path)
 
 
-NOT_TRANSLATED_YET_TEMPLATE = '/not_translated_yet'
+NOT_TRANSLATED_YET_TEMPLATE = "/not_translated_yet"
 
 
 class LanguageSelectorViewlet(LanguageSelector):
-    """Language selector for translatable content.
-    """
+    """Language selector for translatable content."""
 
     def languages(self):
         languages_info = super(LanguageSelectorViewlet, self).languages()
@@ -91,22 +90,24 @@ class LanguageSelectorViewlet(LanguageSelector):
         for lang_info in languages_info:
             # Avoid to modify the original language dict
             data = lang_info.copy()
-            data['translated'] = True
+            data["translated"] = True
             query_extras = {}
             if not settings.set_cookie_always:
-                query_extras.update({
-                    'set_language': data['code'],
-                })
+                query_extras.update(
+                    {
+                        "set_language": data["code"],
+                    }
+                )
             post_path = getPostPath(self.context, self.request)
             if post_path:
-                query_extras['post_path'] = post_path
+                query_extras["post_path"] = post_path
             site = getSite()
-            data['url'] = addQuery(self.request,
-                                   site.absolute_url().rstrip("/") +
-                                   "/@@multilingual-selector/%s/%s" % (
-                                       translation_group,
-                                       lang_info['code']
-                                   ),
-                                   **query_extras)
+            data["url"] = addQuery(
+                self.request,
+                site.absolute_url().rstrip("/")
+                + "/@@multilingual-selector/%s/%s"
+                % (translation_group, lang_info["code"]),
+                **query_extras
+            )
             results.append(data)
         return results

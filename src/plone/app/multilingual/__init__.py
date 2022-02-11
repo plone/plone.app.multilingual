@@ -6,11 +6,11 @@ import pkg_resources
 
 
 try:
-    pkg_resources.get_distribution('Products.LinguaPlone')
+    pkg_resources.get_distribution("Products.LinguaPlone")
 except pkg_resources.DistributionNotFound:
     isLPinstalled = False
 else:
     isLPinstalled = True
 
-logger = logging.getLogger('plone.app.multilingual')
-_ = MessageFactory('plone')
+logger = logging.getLogger("plone.app.multilingual")
+_ = MessageFactory("plone")

@@ -28,18 +28,18 @@ class TestLanguageIndependentFieldOnAddTranslationForm(unittest.TestCase):
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        self.request = self.layer['request']
+        self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
         alsoProvides(self.request, IDefaultBrowserLayer)
         alsoProvides(self.request, IPloneAppMultilingualInstalled)
 
-        fti = DexterityFTI('Feedback')
+        fti = DexterityFTI("Feedback")
         fti.behaviors = (
-            'plone.basic',
-            'plone.namefromtitle',
-            'plone.translatable',
+            "plone.basic",
+            "plone.namefromtitle",
+            "plone.translatable",
         )
-        fti.model_source = u"""\
+        fti.model_source = """\
 <model xmlns="http://namespaces.plone.org/supermodel/schema"
        xmlns:lingua="http://namespaces.plone.org/supermodel/lingua">
   <schema>
@@ -51,28 +51,31 @@ class TestLanguageIndependentFieldOnAddTranslationForm(unittest.TestCase):
     </field>
   </schema>
 </model>"""
-        portal_types = getToolByName(self.portal, 'portal_types')
-        portal_types._setObject('Feedback', fti)
+        portal_types = getToolByName(self.portal, "portal_types")
+        portal_types._setObject("Feedback", fti)
 
         self.document = createContentInContainer(
-            self.portal['en'], 'Feedback', checkConstraints=False,
-            title=u'Test feedback', mandatory_feedback=u'This is a test')
+            self.portal["en"],
+            "Feedback",
+            checkConstraints=False,
+            title="Test feedback",
+            mandatory_feedback="This is a test",
+        )
 
         # Call 'create_translation' to annotate request
-        self.request.form['language'] = 'ca'
+        self.request.form["language"] = "ca"
         self.redirect = getMultiAdapter(
-            (self.document, self.request),
-            name="create_translation"
+            (self.document, self.request), name="create_translation"
         )
         self.redirect()
 
         # Look up the ++addtranslation++ with annotated request in place
-        self.view = self.portal['ca'].restrictedTraverse(
-            '++addtranslation++' + IUUID(self.document)
+        self.view = self.portal["ca"].restrictedTraverse(
+            "++addtranslation++" + IUUID(self.document)
         )
         self.view.update()
-        self.field = self.view.form_instance.fields['mandatory_feedback'].field
-        self.widget = self.view.form_instance.widgets['mandatory_feedback']
+        self.field = self.view.form_instance.fields["mandatory_feedback"].field
+        self.widget = self.view.form_instance.widgets["mandatory_feedback"]
 
     def test_field_is_required(self):
         self.assertTrue(self.field.required)
@@ -85,29 +88,33 @@ class TestLanguageIndependentFieldOnAddTranslationForm(unittest.TestCase):
         noLongerProvides(self.request, IPloneAppMultilingualInstalled)
         ###
         validator = getMultiAdapter(
-            (self.view.context, self.view.request,
-             self.view.form_instance, self.field, self.widget),
-            IValidator
+            (
+                self.view.context,
+                self.view.request,
+                self.view.form_instance,
+                self.field,
+                self.widget,
+            ),
+            IValidator,
         )
         self.assertNotEqual(
-            str(validator.__class__.__name__),
-            'LanguageIndependentFieldValidator'
+            str(validator.__class__.__name__), "LanguageIndependentFieldValidator"
         )
-        self.assertRaises(
-            RequiredMissing,
-            validator.validate,
-            None
-        )
+        self.assertRaises(RequiredMissing, validator.validate, None)
 
     def test_validator_pass_on_required_independent_field(self):
         validator = getMultiAdapter(
-            (self.view.context, self.view.request,
-             self.view.form_instance, self.field, self.widget),
-            IValidator
+            (
+                self.view.context,
+                self.view.request,
+                self.view.form_instance,
+                self.field,
+                self.widget,
+            ),
+            IValidator,
         )
         self.assertEqual(
-            str(validator.__class__.__name__),
-            'LanguageIndependentFieldValidator'
+            str(validator.__class__.__name__), "LanguageIndependentFieldValidator"
         )
         self.assertIsNone(validator.validate(None))
 
@@ -116,21 +123,31 @@ class TestLanguageIndependentFieldOnAddTranslationForm(unittest.TestCase):
         noLongerProvides(self.request, IPloneAppMultilingualInstalled)
         ###
         widget_template = getMultiAdapter(
-            (self.view.context, self.view.request,
-             self.view.form_instance, self.field, self.widget),
+            (
+                self.view.context,
+                self.view.request,
+                self.view.form_instance,
+                self.field,
+                self.widget,
+            ),
             IPageTemplate,
-            name='input'
+            name="input",
         )
-        self.assertIn('<textarea', widget_template(self.widget))
+        self.assertIn("<textarea", widget_template(self.widget))
 
     def test_input_widget_does_not_render_textarea_but_span(self):
         widget_template = getMultiAdapter(
-            (self.view.context, self.view.request,
-             self.view.form_instance, self.field, self.widget),
+            (
+                self.view.context,
+                self.view.request,
+                self.view.form_instance,
+                self.field,
+                self.widget,
+            ),
             IPageTemplate,
-            name='input'
+            name="input",
         )
-        self.assertNotIn('<textarea', widget_template(self.widget))
+        self.assertNotIn("<textarea", widget_template(self.widget))
 
 
 class TestLanguageIndependentRelationField(unittest.TestCase):
@@ -138,110 +155,91 @@ class TestLanguageIndependentRelationField(unittest.TestCase):
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        self.request = self.layer['request']
+        self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
         alsoProvides(self.request, IDefaultBrowserLayer)
         alsoProvides(self.request, IPloneAppMultilingualInstalled)
 
         self.a_en = createContentInContainer(
-            self.portal['en'], 'Document', title=u'Test Document')
+            self.portal["en"], "Document", title="Test Document"
+        )
 
         self.b_en = createContentInContainer(
-            self.portal['en'], 'Document', title=u'Another Document')
+            self.portal["en"], "Document", title="Another Document"
+        )
 
         adapted = IRelatedItems(self.a_en)
-        dm = getMultiAdapter(
-            (adapted, IRelatedItems['relatedItems']),
-            IDataManager
-        )
+        dm = getMultiAdapter((adapted, IRelatedItems["relatedItems"]), IDataManager)
         dm.set([self.b_en])
 
     def test_has_relation_list(self):
         adapted = IRelatedItems(self.a_en)
 
-        bound = IRelatedItems['relatedItems'].bind(adapted)
+        bound = IRelatedItems["relatedItems"].bind(adapted)
         self.assertEqual(len(bound.get(adapted)), 1)
 
         value = bound.get(adapted)
         self.assertEqual(type(value[0]), RelationValue)
 
-        dm = getMultiAdapter(
-            (adapted, IRelatedItems['relatedItems']),
-            IDataManager
-        )
+        dm = getMultiAdapter((adapted, IRelatedItems["relatedItems"]), IDataManager)
         self.assertEqual(dm.get(), [self.b_en])
 
     def test_relation_list_gets_copied(self):
-        a_ca = api.translate(self.a_en, 'ca')
+        a_ca = api.translate(self.a_en, "ca")
 
         adapted = IRelatedItems(a_ca)
 
-        bound = IRelatedItems['relatedItems'].bind(adapted)
+        bound = IRelatedItems["relatedItems"].bind(adapted)
         self.assertEqual(len(bound.get(adapted)), 1)
 
         value = bound.get(adapted)
         self.assertEqual(type(value[0]), RelationValue)
 
-        dm = getMultiAdapter(
-            (adapted, IRelatedItems['relatedItems']),
-            IDataManager
-        )
+        dm = getMultiAdapter((adapted, IRelatedItems["relatedItems"]), IDataManager)
         self.assertEqual(dm.get(), [self.b_en])
 
     def test_relation_list_gets_translated(self):
-        b_ca = api.translate(self.b_en, 'ca')
-        a_ca = api.translate(self.a_en, 'ca')
+        b_ca = api.translate(self.b_en, "ca")
+        a_ca = api.translate(self.a_en, "ca")
 
         adapted = IRelatedItems(a_ca)
 
-        bound = IRelatedItems['relatedItems'].bind(adapted)
+        bound = IRelatedItems["relatedItems"].bind(adapted)
         self.assertEqual(len(bound.get(adapted)), 1)
 
         value = bound.get(adapted)
         self.assertEqual(type(value[0]), RelationValue)
 
-        dm = getMultiAdapter(
-            (adapted, IRelatedItems['relatedItems']),
-            IDataManager
-        )
+        dm = getMultiAdapter((adapted, IRelatedItems["relatedItems"]), IDataManager)
         self.assertEqual(dm.get(), [b_ca])
 
     def test_relation_list_gets_cleared(self):
-        a_ca = api.translate(self.a_en, 'ca')
+        a_ca = api.translate(self.a_en, "ca")
 
         adapted = IRelatedItems(self.a_en)
-        dm = getMultiAdapter(
-            (adapted, IRelatedItems['relatedItems']),
-            IDataManager
-        )
+        dm = getMultiAdapter((adapted, IRelatedItems["relatedItems"]), IDataManager)
         dm.set([])
 
         notify(ObjectModifiedEvent(self.a_en))
 
         adapted = IRelatedItems(a_ca)
-        dm = getMultiAdapter(
-            (adapted, IRelatedItems['relatedItems']),
-            IDataManager
-        )
+        dm = getMultiAdapter((adapted, IRelatedItems["relatedItems"]), IDataManager)
         self.assertEqual(dm.get(), [])
 
     def test_copied_relation_list_gets_translated(self):
-        a_ca = api.translate(self.a_en, 'ca')
-        b_ca = api.translate(self.b_en, 'ca')
+        a_ca = api.translate(self.a_en, "ca")
+        b_ca = api.translate(self.b_en, "ca")
 
         # But only after self.a_en is modified (this is a feature, not a bug):
         notify(ObjectModifiedEvent(self.a_en))
 
         adapted = IRelatedItems(a_ca)
 
-        bound = IRelatedItems['relatedItems'].bind(adapted)
+        bound = IRelatedItems["relatedItems"].bind(adapted)
         self.assertEqual(len(bound.get(adapted)), 1)
 
         value = bound.get(adapted)
         self.assertEqual(type(value[0]), RelationValue)
 
-        dm = getMultiAdapter(
-            (adapted, IRelatedItems['relatedItems']),
-            IDataManager
-        )
+        dm = getMultiAdapter((adapted, IRelatedItems["relatedItems"]), IDataManager)
         self.assertEqual(dm.get(), [b_ca])

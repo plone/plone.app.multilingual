@@ -18,11 +18,16 @@ class LanguageIndependentFieldMetadataHandler(object):
     prefix = "lingua"
 
     def read(self, fieldNode, schema, field):
-        independent = fieldNode.get(ns('independent', self.namespace))
-        if independent is not None and \
-           independent.lower() in ("true", "on", "yes", "y", "1"):
+        independent = fieldNode.get(ns("independent", self.namespace))
+        if independent is not None and independent.lower() in (
+            "true",
+            "on",
+            "yes",
+            "y",
+            "1",
+        ):
             alsoProvides(field, ILanguageIndependentField)
 
     def write(self, fieldNode, schema, field):
         if ILanguageIndependentField.providedBy(field):
-            fieldNode.set(ns('independent', self.namespace), "true")
+            fieldNode.set(ns("independent", self.namespace), "true")

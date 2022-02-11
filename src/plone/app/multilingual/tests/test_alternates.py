@@ -14,17 +14,18 @@ class TestAlternateLanguagesViewlet(unittest.TestCase):
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        self.request = self.layer['request']
-        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
+        self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
+        alsoProvides(self.layer["request"], IPloneAppMultilingualInstalled)
 
     def test_alternates(self):
         # Create
         a_ca = createContentInContainer(
-            self.portal['ca'], 'Document', title=u"Test document")
+            self.portal["ca"], "Document", title="Test document"
+        )
 
         # Translate
-        a_en = api.translate(a_ca, 'en')
+        a_en = api.translate(a_ca, "en")
 
         # Get the viewlet
         viewlet = AlternateLanguagesViewlet(a_en, self.request, None, None)
@@ -36,8 +37,5 @@ class TestAlternateLanguagesViewlet(unittest.TestCase):
         # Check translations
         self.assertEqual(len(viewlet.alternates), 2)
         for item in viewlet.alternates:
-            self.assertIn(item['lang'], translations)
-            self.assertEqual(
-                item['url'],
-                translations[item['lang']].absolute_url()
-            )
+            self.assertIn(item["lang"], translations)
+            self.assertEqual(item["url"], translations[item["lang"]].absolute_url())
