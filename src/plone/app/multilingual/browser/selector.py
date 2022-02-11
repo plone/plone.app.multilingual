@@ -28,6 +28,18 @@ def addQuery(request, url, exclude=tuple(), **extras):
     return url
 
 
+def get_root_request(request):
+    """If in a subrequest, go up to the root request and return it"""
+
+    def parent_request(current_request):
+        preq = current_request.get("PARENT_REQUEST", None)
+        if preq:
+            return parent_request(preq)
+        return current_request
+
+    return parent_request(request)
+
+
 def getPostPath(context, request):
     """Finds the path to be added at the end of a context.
 
@@ -44,7 +56,7 @@ def getPostPath(context, request):
     # We need to find the actual translatable content object. As an
     # optimization we assume it is within the last three segments.
     path = context.getPhysicalPath()
-    path_info = request.get("PATH_INFO", "")
+    path_info = get_root_request(request).get("PATH_INFO", "")
     match = [p for p in path[-3:] if p]
     current_path = [pi for pi in path_info.split("/") if pi]
     append_path = []

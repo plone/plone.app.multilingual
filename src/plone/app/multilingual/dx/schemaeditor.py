@@ -55,8 +55,8 @@ class FieldLanguageIndependentAdapter:
 def get_li_schema(schema_context, field):
     fti = getattr(schema_context, "fti", None)
     lang_behavior = {
-            "plone.app.multilingual.dx.interfaces.IDexterityTranslatable",
-            "plone.translatable",
+        "plone.app.multilingual.dx.interfaces.IDexterityTranslatable",
+        "plone.translatable",
     }
     fti_behaviors = set(getattr(fti, "behaviors", []))
     if lang_behavior.intersection(fti_behaviors):

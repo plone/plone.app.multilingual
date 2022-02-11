@@ -254,9 +254,7 @@ class SetupMultilingualSite:
         defaultPage = getattr(target, pageId)
         defaultPage.reindexObject()
 
-        logger.info(
-            f"Moved default page '{pageId}' to folder '{target.getId()}'."
-        )
+        logger.info(f"Moved default page '{pageId}' to folder '{target.getId()}'.")
 
         return True
 

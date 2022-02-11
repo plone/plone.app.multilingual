@@ -131,9 +131,7 @@ def migration_pam_1_to_2(context):
                 SHARED_NAME,
             ]
         )
-        logger.info(
-            f"{SHARED_NAME} - Phase 5: Removing it took {time() - s6:.2f}s."
-        )
+        logger.info(f"{SHARED_NAME} - Phase 5: Removing it took {time() - s6:.2f}s.")
 
     logger.info(f"All finished in {time() - s1}.")
 
