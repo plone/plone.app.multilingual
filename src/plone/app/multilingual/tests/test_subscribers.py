@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import unittest
 
 from plone.dexterity.utils import createContentInContainer

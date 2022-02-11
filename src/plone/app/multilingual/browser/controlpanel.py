@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import json
 
 from plone.app.registry.browser import controlpanel
@@ -66,7 +65,7 @@ class LanguageControlPanelFormPAM(LanguageControlPanelForm):
     def handleCancel(self, action):
         IStatusMessage(self.request).addStatusMessage(_("Changes canceled."), "info")
         self.request.response.redirect(
-            "%s/%s" % (self.context.absolute_url(), self.control_panel_view)
+            f"{self.context.absolute_url()}/{self.control_panel_view}"
         )
 
 

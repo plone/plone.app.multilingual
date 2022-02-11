@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_inner
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.dexterity.browser.edit import DefaultEditForm
@@ -26,7 +25,7 @@ class MultilingualEditForm(DefaultEditForm):
         results = ls.languages()
 
         supported_langs = [v["code"] for v in results]
-        missing = set([str(c) for c in supported_langs])
+        missing = {str(c) for c in supported_langs}
 
         lsv = LanguageSelectorViewlet(context, self.request, None, None)
         translations = lsv._translations(missing)
@@ -48,11 +47,11 @@ class MultilingualEditForm(DefaultEditForm):
                 trans, direct, has_view_permission = translations[code]
                 if not has_view_permission:
                     # shortcut if the user cannot see the item
-                    non_viewable.add((data["code"]))
+                    non_viewable.add(data["code"])
                     continue
                 data["url"] = trans.absolute_url() + appendtourl
             else:
-                non_viewable.add((data["code"]))
+                non_viewable.add(data["code"])
 
         # filter out non-viewable items
         results = [r for r in results if r["code"] not in non_viewable]
@@ -85,7 +84,7 @@ class MultilingualEditForm(DefaultEditForm):
                             schema[fieldname]
                         ):  # noqa
                             self.widgets[field].addClass("languageindependent")
-        self.babel_content = super(MultilingualEditForm, self).render()
+        self.babel_content = super().render()
         return self.babel()
 
     @property

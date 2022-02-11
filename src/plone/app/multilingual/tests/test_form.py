@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import unittest
 
 import transaction
@@ -22,7 +21,7 @@ class TestForm(unittest.TestCase):
         self.browser = Browser(self.layer["app"])
         self.browser.handleErrors = False
         self.browser.addHeader(
-            "Authorization", "Basic %s:%s" % (SITE_OWNER_NAME, SITE_OWNER_PASSWORD)
+            "Authorization", f"Basic {SITE_OWNER_NAME}:{SITE_OWNER_PASSWORD}"
         )
 
     def test_all_translation_links_are_shown(self):
@@ -110,7 +109,7 @@ class TestForm(unittest.TestCase):
         # Unregister translation
         self.browser.open(
             a_ca.absolute_url()
-            + "/disconnect_translation?came_from={0}&language=en".format(a_ca.UID())
+            + f"/disconnect_translation?came_from={a_ca.UID()}&language=en"
         )
         self.browser.getForm(index=1).submit()
 

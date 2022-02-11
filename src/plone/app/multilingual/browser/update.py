@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.z3cform.layout import wrap_form
 from z3c.form import button, field, form
 

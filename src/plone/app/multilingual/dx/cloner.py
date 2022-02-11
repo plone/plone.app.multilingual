@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import pkg_resources
 from plone.dexterity.utils import iterSchemata
 from Products.CMFPlone.interfaces import ILanguage
@@ -22,7 +21,7 @@ _marker = object()
 
 
 @implementer(ITranslationCloner)
-class Cloner(object):
+class Cloner:
     def __init__(self, context):
         self.context = context
 
@@ -31,7 +30,7 @@ class Cloner(object):
 
 
 @implementer(ILanguageIndependentFieldsManager)
-class LanguageIndependentFieldsManager(object):
+class LanguageIndependentFieldsManager:
     def __init__(self, context):
         self.context = context
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
@@ -19,7 +18,7 @@ class LanguageSwitcher(BrowserView):
         default = plt.getDefaultLanguage()
         ids = self.context.keys()
         target = (pref in ids) and pref or default
-        url = "%s/%s" % (context.absolute_url(), target)
+        url = f"{context.absolute_url()}/{target}"
 
         # We need to set the language cookie on the first response or it will
         # be set on the frontpage itself, making it uncachable

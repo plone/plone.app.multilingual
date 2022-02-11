@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.schemaeditor.interfaces import IFieldEditorExtender, ISchemaContext
 from zope import schema
 from zope.component import adapter, provideAdapter
@@ -26,7 +25,7 @@ class IFieldLanguageIndependent(Interface):
 
 @implementer(IFieldLanguageIndependent)
 @adapter(interfaces.IField)
-class FieldLanguageIndependentAdapter(object):
+class FieldLanguageIndependentAdapter:
     def __init__(self, field):
         self.field = field
 
@@ -51,12 +50,10 @@ class FieldLanguageIndependentAdapter(object):
 @adapter(ISchemaContext, IField)
 def get_li_schema(schema_context, field):
     fti = getattr(schema_context, "fti", None)
-    lang_behavior = set(
-        (
+    lang_behavior = {
             "plone.app.multilingual.dx.interfaces.IDexterityTranslatable",
             "plone.translatable",
-        ),
-    )
+    }
     fti_behaviors = set(getattr(fti, "behaviors", []))
     if lang_behavior.intersection(fti_behaviors):
         return IFieldLanguageIndependent

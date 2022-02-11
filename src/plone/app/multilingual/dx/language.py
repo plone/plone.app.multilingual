@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # from plone.app.dexterity.behaviors.metadata import ICategorization
 from Products.CMFPlone.interfaces import ILanguage
 from zope.interface import implementer
@@ -10,7 +9,7 @@ from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 
 
 @implementer(ILanguage)
-class Language(object):
+class Language:
     def __init__(self, context):
         self.context = context
 

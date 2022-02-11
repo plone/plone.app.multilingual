@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_base
 from plone.uuid.interfaces import IUUIDGenerator
 from zope.component import adapter, queryUtility
@@ -18,7 +17,7 @@ def attributeTG(context):
 
 @implementer(IMutableTG)
 @adapter(ITranslatable)
-class MutableAttributeTG(object):
+class MutableAttributeTG:
     def __init__(self, context):
         self.context = context
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from AccessControl.SecurityManagement import getSecurityManager
 from Acquisition import aq_chain, aq_inner, aq_parent
 from plone.app.i18n.locales.browser.selector import LanguageSelector
@@ -27,7 +26,7 @@ def is_language_independent(ob):
 
 class BabelUtils(BrowserView):
     def __init__(self, context, request):
-        super(BabelUtils, self).__init__(context, request)
+        super().__init__(context, request)
         portal_state = getMultiAdapter((context, request), name="plone_portal_state")
         self.portal_url = portal_state.portal_url()
         # If there is any translation_info lets use it
@@ -66,7 +65,7 @@ class BabelUtils(BrowserView):
         results = ls.languages()
 
         supported_langs = [v["code"] for v in results]
-        missing = set([str(c) for c in supported_langs])
+        missing = {str(c) for c in supported_langs}
 
         lsv = LanguageSelectorViewlet(context, self.request, None, None)
         translations = lsv._translations(missing)
@@ -87,11 +86,11 @@ class BabelUtils(BrowserView):
                 trans, direct, has_view_permission = translations[code]
                 if not has_view_permission:
                     # shortcut if the user cannot see the item
-                    non_viewable.add((data["code"]))
+                    non_viewable.add(data["code"])
                     continue
                 data["url"] = trans.absolute_url() + appendtourl
             else:
-                non_viewable.add((data["code"]))
+                non_viewable.add(data["code"])
 
         # filter out non-viewable items
         results = [r for r in results if r["code"] not in non_viewable]

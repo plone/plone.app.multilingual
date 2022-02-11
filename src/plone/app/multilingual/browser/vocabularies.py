@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.vocabularies.catalog import CatalogVocabularyFactory
 from plone.i18n.locales.interfaces import ILanguageAvailability
 from Products.CMFCore.utils import getToolByName
@@ -89,7 +88,7 @@ def sort_key(language):
 
 
 @implementer(IVocabularyFactory)
-class AllContentLanguageVocabulary(object):
+class AllContentLanguageVocabulary:
     """Vocabulary factory for all content languages in the portal."""
 
     def __call__(self, context):
@@ -115,7 +114,7 @@ AllContentLanguageVocabularyFactory = AllContentLanguageVocabulary()
 
 
 @implementer(IVocabularyFactory)
-class AllAvailableLanguageVocabulary(object):
+class AllAvailableLanguageVocabulary:
     """Vocabulary factory for all enabled languages in the portal."""
 
     def __call__(self, context):
@@ -148,4 +147,4 @@ class RootCatalogVocabularyFactory(CatalogVocabularyFactory):
 
     def __call__(self, context, query=None):
         portal = getToolByName(context, "portal_url").getPortalObject()
-        return super(RootCatalogVocabularyFactory, self).__call__(portal, query)
+        return super().__call__(portal, query)

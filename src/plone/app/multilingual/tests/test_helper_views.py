@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import unittest
 
 import transaction
@@ -29,7 +28,7 @@ class PAMFuncTestHelperViews(unittest.TestCase):
         self.browser = Browser(self.layer["app"])
         self.browser.handleErrors = False
         self.browser.addHeader(
-            "Authorization", "Basic %s:%s" % (TEST_USER_NAME, TEST_USER_PASSWORD)
+            "Authorization", f"Basic {TEST_USER_NAME}:{TEST_USER_PASSWORD}"
         )
         self.settings = getUtility(IRegistry).forInterface(
             ILanguageSchema, prefix="plone"

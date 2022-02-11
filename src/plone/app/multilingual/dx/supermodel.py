@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.supermodel.interfaces import IFieldMetadataHandler
 from plone.supermodel.utils import ns
 from zope.interface import alsoProvides, implementer
@@ -7,7 +6,7 @@ from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 
 
 @implementer(IFieldMetadataHandler)
-class LanguageIndependentFieldMetadataHandler(object):
+class LanguageIndependentFieldMetadataHandler:
     """Define the ``lingua`` namespace.
 
     This lets you write lingua:independent="true" on a field to mark it as

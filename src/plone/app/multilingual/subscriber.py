@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_parent
 from plone.dexterity.interfaces import IDexterityContent
 from plone.uuid.interfaces import IUUID

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.uuid.utils import uuidToObject
 from plone.protect.interfaces import IDisableCSRFProtection
 from plone.uuid.handlers import addAttributeUUID
@@ -23,7 +22,7 @@ from plone.app.multilingual.itg import addAttributeTG
 
 
 @implementer(ITranslationManager)
-class TranslationManager(object):
+class TranslationManager:
     def __init__(self, context):
         self.context = context
         if isinstance(context, str):

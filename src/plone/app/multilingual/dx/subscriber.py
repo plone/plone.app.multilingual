@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from AccessControl import getSecurityManager
 from AccessControl.SecurityManagement import (newSecurityManager,
                                               setSecurityManager)
@@ -19,7 +18,7 @@ from plone.app.multilingual.interfaces import (
     IPloneAppMultilingualInstalled, ITranslationManager)
 
 
-class LanguageIndependentModifier(object):
+class LanguageIndependentModifier:
     """Class to handle dexterity editions."""
 
     def __call__(self, content, event):

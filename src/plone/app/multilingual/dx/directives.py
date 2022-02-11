@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.supermodel.directives import CheckerPlugin, MetadataListDirective
 from zope.interface import Interface, alsoProvides
 from zope.interface.interfaces import IInterface

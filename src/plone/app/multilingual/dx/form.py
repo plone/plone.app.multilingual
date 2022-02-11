@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_base
 from Products.CMFCore.utils import getToolByName
 from z3c.form.interfaces import DISPLAY_MODE, NO_VALUE, IValue
@@ -32,7 +31,7 @@ class LanguageIndependentFieldValidator(StrictSimpleFieldValidator):
         pass
 
 
-class LanguageIndependentFieldInputTemplate(object):
+class LanguageIndependentFieldInputTemplate:
     """Override input template for language independent fields with
     display widget, because values will be automatically filled
     by later on by subscriber.createdEvent.
@@ -61,7 +60,7 @@ class LanguageIndependentFieldInputTemplate(object):
 
 
 @implementer(IValue)
-class ValueBase(object):
+class ValueBase:
     def __init__(self, context, request, form, field, widget):
         self.context = context
         self.request = request

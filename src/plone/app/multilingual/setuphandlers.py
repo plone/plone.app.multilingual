@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from logging import getLogger
 
 import pkg_resources
@@ -20,7 +19,7 @@ else:
 
 
 @implementer(INonInstallable)
-class HiddenProfiles(object):
+class HiddenProfiles:
     def getNonInstallableProfiles(self):
         """Prevents uninstall profile from showing up in the profile list
         when creating a Plone site.

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.content.namechooser import NormalizingNameChooser
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.dexterity.content import Container
@@ -23,7 +22,7 @@ class LRFNameChooser(NormalizingNameChooser):
     """
 
     def chooseName(self, name, object):
-        chosen = super(LRFNameChooser, self).chooseName(name, object)
+        chosen = super().chooseName(name, object)
         if chosen in self.context.objectIds():
             old_id = getattr(object, "id", None)
             object.id = chosen

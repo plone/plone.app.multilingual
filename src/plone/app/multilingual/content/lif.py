@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from BTrees.OOBTree import OOBTree
 from plone.dexterity.content import Container
 from Products.CMFCore.utils import getToolByName

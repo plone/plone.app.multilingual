@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.z3cform.interfaces import IPloneFormLayer
 from plone.i18n.interfaces import ILanguageSchema
 from plone.supermodel import model

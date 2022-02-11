@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import unittest
 
 from OFS.event import ObjectWillBeRemovedEvent
@@ -75,7 +74,7 @@ class TestLanguageRootFolder(unittest.TestCase):
         root_uuid = IUUID(self.portal.assets["test-document"])
         shared_uuid = IUUID(self.portal.ca.recursos["test-document"])
 
-        self.assertEqual("{0:s}-ca".format(root_uuid), shared_uuid)
+        self.assertEqual(f"{root_uuid:s}-ca", shared_uuid)
 
     def test_moving_shared_content_to_lrf(self):
         # Create shared document
@@ -95,11 +94,11 @@ class TestLanguageRootFolder(unittest.TestCase):
         self.assertEqual(len(brains), 1)
         self.assertEqual(brains[0].getPath(), "/plone/assets/test-document")
 
-        brains = self.portal.portal_catalog.searchResults(UID="{0:s}-ca".format(uuid))
+        brains = self.portal.portal_catalog.searchResults(UID=f"{uuid:s}-ca")
         self.assertEqual(len(brains), 1)
         self.assertEqual(brains[0].getPath(), "/plone/ca/recursos/test-document")
 
-        brains = self.portal.portal_catalog.searchResults(UID="{0:s}-es".format(uuid))
+        brains = self.portal.portal_catalog.searchResults(UID=f"{uuid:s}-es")
         self.assertEqual(len(brains), 1)
         self.assertEqual(brains[0].getPath(), "/plone/es/recursos/test-document")
 
@@ -117,10 +116,10 @@ class TestLanguageRootFolder(unittest.TestCase):
         self.assertEqual(len(brains), 1)
         self.assertEqual(brains[0].getPath(), "/plone/ca/test-document")
 
-        brains = self.portal.portal_catalog.searchResults(UID="{0:s}-ca".format(uuid))
+        brains = self.portal.portal_catalog.searchResults(UID=f"{uuid:s}-ca")
         self.assertEqual(len(brains), 0)
 
-        brains = self.portal.portal_catalog.searchResults(UID="{0:s}-es".format(uuid))
+        brains = self.portal.portal_catalog.searchResults(UID=f"{uuid:s}-es")
         self.assertEqual(len(brains), 0)
 
         # Check which translations it have

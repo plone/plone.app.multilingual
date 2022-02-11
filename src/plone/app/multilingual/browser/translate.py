@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import json
 
 from Acquisition import aq_inner
@@ -89,5 +88,5 @@ class TranslationForm(BrowserView):
             translation_manager = ITranslationManager(context)
             new_parent = translation_manager.add_translation_delegated(language)  # noqa
             baseUrl = new_parent.absolute_url()
-            url = "%s/++addtranslation++%s" % (baseUrl, IUUID(context))
+            url = f"{baseUrl}/++addtranslation++{IUUID(context)}"
             return self.request.response.redirect(url)

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from logging import getLogger
 
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
@@ -28,14 +27,14 @@ logger = getLogger("plone.app.multilingual")
 # Setup view imported from LinguaPlone
 class SetupView(BrowserView):
     def __init__(self, context, request):
-        super(SetupView, self).__init__(context, request)
+        super().__init__(context, request)
 
     def __call__(self, forceOneLanguage=False, forceMovingAndSetting=True):
         setupTool = SetupMultilingualSite()
         return setupTool.setupSite(self.context, forceOneLanguage)
 
 
-class SetupMultilingualSite(object):
+class SetupMultilingualSite:
 
     # portal_type that is added as root language folder
     folder_type = "LRF"
@@ -194,7 +193,7 @@ class SetupMultilingualSite(object):
             notify(modified(folder[assets_folder_id]))
 
             doneSomething = True
-            logger.info("Added '%s' folder: %s" % (code, folderId))
+            logger.info(f"Added '{code}' folder: {folderId}")
 
         self.folders[code] = folder
         if not INavigationRoot.providedBy(folder):
@@ -245,7 +244,7 @@ class SetupMultilingualSite(object):
             # fatal, so we only log a warning.
             logger.warn(
                 (
-                    "Could not move default page '{0:s}' j" "to folder '{1:s}': {2:s}"
+                    "Could not move default page '{:s}' j" "to folder '{:s}': {:s}"
                 ).format(pageId, target.getId(), exc)
             )
             return False
@@ -256,7 +255,7 @@ class SetupMultilingualSite(object):
         defaultPage.reindexObject()
 
         logger.info(
-            "Moved default page '{0}' to folder '{1}'.".format(pageId, target.getId())
+            f"Moved default page '{pageId}' to folder '{target.getId()}'."
         )
 
         return True

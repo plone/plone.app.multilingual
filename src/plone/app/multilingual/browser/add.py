@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import logging
 
 from plone.app.uuid.utils import uuidToObject
@@ -26,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 @adapter(IFolderish, Interface)
 @implementer(ITraversable)
-class AddViewTraverser(object):
+class AddViewTraverser:
     """Add view traverser."""
 
     def __init__(self, context, request):
@@ -62,7 +61,7 @@ class AddViewTraverser(object):
         if not IDexterityContent.providedBy(source):
             # we are not on DX content, assume AT
             baseUrl = self.context.absolute_url()
-            url = "%s/@@add_at_translation?type=%s" % (baseUrl, source.portal_type)
+            url = f"{baseUrl}/@@add_at_translation?type={source.portal_type}"
             return self.request.response.redirect(url)
 
         # set the self.context to the place where it should be stored
@@ -75,7 +74,7 @@ class AddViewTraverser(object):
 
         if ti is None:
             logger.error(
-                "No type information found for {0}".format(self.info["portal_type"])
+                "No type information found for {}".format(self.info["portal_type"])
             )
             raise TraversalError(self.context, name)
 
@@ -121,11 +120,11 @@ class MultilingualAddForm(DefaultAddForm):
         self.request["disable_border"] = True
         self.request["disable_plone.leftcolumn"] = True
         self.request["disable_plone.rightcolumn"] = True
-        self.babel_content = super(MultilingualAddForm, self).render()
+        self.babel_content = super().render()
         return self.babel()
 
     def add(self, object):
-        super(MultilingualAddForm, self).add(object)
+        super().add(object)
         language = ILanguage(object).get_language()
         # extract UID from URL to get source object
         # probably there is a better way to do that!?
@@ -164,7 +163,7 @@ class MultilingualAddForm(DefaultAddForm):
                 widgets[field_key].addClass("languageindependent")
 
     def update(self):
-        super(MultilingualAddForm, self).update()
+        super().update()
         # process widgets to be shown as language independent
         self._process_language_independent(self.fields, self.widgets)
         for group in self.groups:

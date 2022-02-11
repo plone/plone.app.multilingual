@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import unittest
 
 from plone.dexterity.utils import createContentInContainer
@@ -31,7 +30,7 @@ class TestIndependentLanguageFolder(unittest.TestCase):
     def test_query_with_all(self):
         catalog = getToolByName(self.portal, "portal_catalog")
 
-        used_langs = set([x.Language for x in catalog.searchResults(self.request)])
+        used_langs = {x.Language for x in catalog.searchResults(self.request)}
 
         self.assertIn(LANGUAGE_INDEPENDENT, used_langs)
         self.assertIn("es", used_langs)

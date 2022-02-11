@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import six
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.i18n.interfaces import ILanguageSchema
@@ -17,12 +16,12 @@ def addQuery(request, url, exclude=tuple(), **extras):
     formvariables = {}
     for k, v in request.form.items():
         if k not in exclude:
-            if six.PY2 and isinstance(v, six.text_type):
+            if six.PY2 and isinstance(v, str):
                 formvariables[k] = v.encode("utf-8")
             else:
                 formvariables[k] = v
     for k, v in extras.items():
-        if six.PY2 and isinstance(v, six.text_type):
+        if six.PY2 and isinstance(v, str):
             formvariables[k] = v.encode("utf-8")
         else:
             formvariables[k] = v
@@ -77,7 +76,7 @@ class LanguageSelectorViewlet(LanguageSelector):
     """Language selector for translatable content."""
 
     def languages(self):
-        languages_info = super(LanguageSelectorViewlet, self).languages()
+        languages_info = super().languages()
         results = []
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ILanguageSchema, prefix="plone")

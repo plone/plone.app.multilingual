@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_parent
 from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
 from zope.interface import implementer
@@ -10,7 +9,7 @@ from plone.app.multilingual.interfaces import (
 
 
 @implementer(ILanguageIndependentFieldsManager)
-class DefaultLanguageIndependentFieldsManager(object):
+class DefaultLanguageIndependentFieldsManager:
     """Default language independent fields manager."""
 
     def __init__(self, context):
@@ -24,7 +23,7 @@ class DefaultLanguageIndependentFieldsManager(object):
 
 
 @implementer(ITranslationLocator)
-class DefaultTranslationLocator(object):
+class DefaultTranslationLocator:
     def __init__(self, context):
         self.context = context
 
@@ -51,7 +50,7 @@ class DefaultTranslationLocator(object):
 
 
 @implementer(ITranslationCloner)
-class DefaultTranslationCloner(object):
+class DefaultTranslationCloner:
     def __init__(self, context):
         self.context = context
 
@@ -60,7 +59,7 @@ class DefaultTranslationCloner(object):
 
 
 @implementer(ITranslationIdChooser)
-class DefaultTranslationIdChooser(object):
+class DefaultTranslationIdChooser:
     def __init__(self, context):
         self.context = context
 
@@ -71,12 +70,12 @@ class DefaultTranslationIdChooser(object):
         if len(splitted) > 1 and len(splitted[-1]) == 2:
             content_id = "-".join(splitted[:-1])
         while content_id in parent.objectIds():
-            content_id = "%s-%s" % (content_id, language)
+            content_id = f"{content_id}-{language}"
         return content_id
 
 
 @implementer(ITranslationFactory)
-class DefaultTranslationFactory(object):
+class DefaultTranslationFactory:
     def __init__(self, context):
         self.context = context
 

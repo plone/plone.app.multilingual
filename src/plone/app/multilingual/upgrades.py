@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from time import time
 
 import transaction
@@ -52,16 +51,16 @@ def migration_pam_1_to_2(context):
         older = portal[code]
 
         if older.portal_type == type_name:
-            logger.info("'{0}' is alredy a {1}, skipping.".format(code, type_name))
+            logger.info(f"'{code}' is alredy a {type_name}, skipping.")
             continue
 
         # PHASE 1: rename old language folders
         s2 = time()
         old_id = OLD_PREFIX + older.id
-        logger.info("{0} - Phase 1: Renaming to '{1}' ...".format(code, old_id))
+        logger.info(f"{code} - Phase 1: Renaming to '{old_id}' ...")
         portal.manage_renameObject(older.id, old_id)
         logger.info(
-            "{0} - Phase 1: Renaming to '{1}' took {2:.2f}s.".format(
+            "{} - Phase 1: Renaming to '{}' took {:.2f}s.".format(
                 code, old_id, time() - s2
             )
         )
@@ -70,7 +69,7 @@ def migration_pam_1_to_2(context):
         # PHASE 2: move content to new LRF
         s3 = time()
         old = portal[old_id]
-        logger.info("{0} - Phase 2: Moving objects into new LRF...".format(code))
+        logger.info(f"{code} - Phase 2: Moving objects into new LRF...")
 
         _createObjectByType(type_name, portal, code)
         new = portal[code]
@@ -87,7 +86,7 @@ def migration_pam_1_to_2(context):
         new.manage_pasteObjects(old.manage_cutObjects(ids=old.objectIds()))
 
         logger.info(
-            "{0} - Phase 2: Moving objects to LRF took in {1:.2f}s.".format(
+            "{} - Phase 2: Moving objects to LRF took in {:.2f}s.".format(
                 code, time() - s3
             )
         )
@@ -102,7 +101,7 @@ def migration_pam_1_to_2(context):
             ]
         )
         logger.info(
-            "{0} - Phase 3: Removing '{1}' took {2:.2f}s.".format(
+            "{} - Phase 3: Removing '{}' took {:.2f}s.".format(
                 code, old_id, time() - s4
             )
         )
@@ -114,12 +113,12 @@ def migration_pam_1_to_2(context):
 
         s5 = time()
         shared = portal[SHARED_NAME]
-        logger.info("{0} - Phase 4: Moving content to root...".format(SHARED_NAME))
+        logger.info(f"{SHARED_NAME} - Phase 4: Moving content to root...")
 
         portal.manage_pasteObjects(shared.manage_cutObjects(ids=shared.objectIds()))
 
         logger.info(
-            "{0} - Phase 4: Moving objects into root took {1:.2f}s.".format(
+            "{} - Phase 4: Moving objects into root took {:.2f}s.".format(
                 SHARED_NAME, time() - s5
             )
         )
@@ -133,10 +132,10 @@ def migration_pam_1_to_2(context):
             ]
         )
         logger.info(
-            "{0} - Phase 5: Removing it took {1:.2f}s.".format(SHARED_NAME, time() - s6)
+            f"{SHARED_NAME} - Phase 5: Removing it took {time() - s6:.2f}s."
         )
 
-    logger.info("All finished in {0}.".format(time() - s1))
+    logger.info(f"All finished in {time() - s1}.")
 
 
 def upgrade_to_3(context):

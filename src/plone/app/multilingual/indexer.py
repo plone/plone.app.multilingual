@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.indexer import indexer
 from Products.CMFPlone.interfaces import ILanguage
 

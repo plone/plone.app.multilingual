@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_base, aq_chain
 from plone.uuid.interfaces import ATTRIBUTE_NAME, IUUID, IAttributeUUID
 from zope.component import adapter

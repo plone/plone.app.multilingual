@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.layout.viewlets.common import ViewletBase
 from plone.memoize import ram
 from Products.CMFCore.utils import getToolByName
@@ -95,7 +94,7 @@ class AddFormIsATranslationViewlet(ViewletBase):
             category="folder/add",
         )
 
-        addActionsById = dict([(a["id"], a) for a in actions])
+        addActionsById = {a["id"]: a for a in actions}
 
         typeId = source.portal_type
 
@@ -105,7 +104,7 @@ class AddFormIsATranslationViewlet(ViewletBase):
         else:
             url = addAction["url"]
         if not url:
-            url = "%s/createObject?type_name=%s" % (
+            url = "{}/createObject?type_name={}".format(
                 source.absolute_url(),
                 quote_plus(typeId),
             )
@@ -169,7 +168,7 @@ class AlternateLanguagesViewlet(ViewletBase):
         return alternates
 
     def update(self):
-        super(AlternateLanguagesViewlet, self).update()
+        super().update()
         self.alternates = self.get_alternate_languages()
 
     @property

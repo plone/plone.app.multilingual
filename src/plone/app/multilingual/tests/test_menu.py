@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import unittest
 
 import transaction
@@ -23,7 +22,7 @@ class TestMenu(unittest.TestCase):
         self.browser.handleErrors = False
         self.browser.addHeader(
             "Authorization",
-            "Basic {0:s}:{1:s}".format(SITE_OWNER_NAME, SITE_OWNER_PASSWORD),
+            f"Basic {SITE_OWNER_NAME:s}:{SITE_OWNER_PASSWORD:s}",
         )
 
         # Create sample document in 'en' and index it into catalog

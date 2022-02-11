@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from AccessControl.SecurityManagement import getSecurityManager
 from Acquisition import aq_chain
 from borg.localrole.interfaces import IFactoryTempFolder
@@ -41,7 +40,7 @@ class universal_link(BrowserView):
     """
 
     def __init__(self, context, request):
-        super(universal_link, self).__init__(context, request)
+        super().__init__(context, request)
         self.tg = None
         self.lang = None
 
@@ -236,7 +235,7 @@ class not_translated_yet(BrowserView):
     __call__ = ViewPageTemplateFile("templates/not_translated_yet.pt")
 
     def __init__(self, context, request):
-        super(not_translated_yet, self).__init__(context, request)
+        super().__init__(context, request)
         self.tg = None
 
     def publishTraverse(self, request, name):

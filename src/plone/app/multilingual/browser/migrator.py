@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import logging
 import warnings
 
@@ -222,7 +221,7 @@ class moveContentToProperRLF(BrowserView):
                         cutted = parent.manage_cutObjects(content.getId())
                     try:
                         target_folder.manage_pasteObjects(cutted)
-                        info_str = "Step 2: Moved object %s to folder %s" % (
+                        info_str = "Step 2: Moved object {} to folder {}".format(
                             "/".join(content.getPhysicalPath()),
                             "/".join(target_folder.getPhysicalPath()),
                         )
