@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from AccessControl import getSecurityManager
 from AccessControl.SecurityManagement import newSecurityManager
 from AccessControl.SecurityManagement import setSecurityManager
@@ -21,28 +20,30 @@ from zope.lifecycleevent import ObjectModifiedEvent
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 
 
-class LanguageIndependentModifier(object):
+class LanguageIndependentModifier:
     """Class to handle dexterity editions."""
 
     def __call__(self, content, event):
         """Called by the event system."""
-        request = getattr(event.object, 'REQUEST', getRequest())
+        request = getattr(event.object, "REQUEST", getRequest())
 
         if not IPloneAppMultilingualInstalled.providedBy(request):
             return
 
-        translation_info = getattr(request, 'translation_info', {})
+        translation_info = getattr(request, "translation_info", {})
 
-        if 'tg' in translation_info.keys():
+        if "tg" in translation_info.keys():
             # In case it's a on the fly translation avoid
             return
 
         if IDexterityTranslatable.providedBy(content):
             self.canonical = ITranslationManager(content).query_canonical()
 
-            if event.descriptions \
-               and len(event.descriptions) > 1 \
-               and event.descriptions[1] == self.canonical:
+            if (
+                event.descriptions
+                and len(event.descriptions) > 1
+                and event.descriptions[1] == self.canonical
+            ):
                 return
 
             if IObjectModifiedEvent.providedBy(event):
@@ -53,8 +54,9 @@ class LanguageIndependentModifier(object):
 
         # BBB for lrf-branch
         field = registry.records.get(
-            IMultiLanguageExtraOptionsSchema.__identifier__ +
-            '.bypass_languageindependent_field_permission_check')
+            IMultiLanguageExtraOptionsSchema.__identifier__
+            + ".bypass_languageindependent_field_permission_check"
+        )
 
         return field and field.value or False
 
@@ -72,11 +74,17 @@ class LanguageIndependentModifier(object):
                 # allow edition of all translated objects even if the
                 # current user whould not have permission to do that.
                 tmp_user = UnrestrictedUser(
-                    sm.getUser().getId(), '', ['Editor', ], '')
+                    sm.getUser().getId(),
+                    "",
+                    [
+                        "Editor",
+                    ],
+                    "",
+                )
 
                 # Wrap the user in the acquisition context of the portal
                 # and finally switch the user to our new editor
-                acl_users = getToolByName(content, 'acl_users')
+                acl_users = getToolByName(content, "acl_users")
                 tmp_user = tmp_user.__of__(acl_users)
                 newSecurityManager(None, tmp_user)
 

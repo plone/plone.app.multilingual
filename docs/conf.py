@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # plone.app.multilingual documentation build configuration file, created by
 # sphinx-quickstart on Mon Sep  3 22:04:18 2012.
@@ -42,8 +41,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'plone.app.multilingual'
-copyright = u'2013, Plone Foundation'
+project = 'plone.app.multilingual'
+copyright = '2013, Plone Foundation'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -185,8 +184,8 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'ploneappmultilingual.tex', u'plone.app.multilingual Documentation',
-   u'Plone Foundation', 'manual'),
+  ('index', 'ploneappmultilingual.tex', 'plone.app.multilingual Documentation',
+   'Plone Foundation', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -215,8 +214,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'ploneappmultilingual', u'plone.app.multilingual Documentation',
-     [u'Plone Foundation'], 1)
+    ('index', 'ploneappmultilingual', 'plone.app.multilingual Documentation',
+     ['Plone Foundation'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -229,8 +228,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'ploneappmultilingual', u'plone.app.multilingual Documentation',
-   u'Plone Foundation', 'ploneappmultilingual', 'One line description of project.',
+  ('index', 'ploneappmultilingual', 'plone.app.multilingual Documentation',
+   'Plone Foundation', 'ploneappmultilingual', 'One line description of project.',
    'Miscellaneous'),
 ]
 

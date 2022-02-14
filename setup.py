@@ -5,23 +5,22 @@ from setuptools import setup
 
 setup(
     # metadata in setup.cfg
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
-    namespace_packages=['plone', 'plone.app'],
+    packages=find_packages("src"),
+    package_dir={"": "src"},
+    namespace_packages=["plone", "plone.app"],
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'plone.i18n>=4.0.4',
-        'setuptools',
-        'six',
+        "plone.i18n>=4.0.4",
+        "setuptools",
     ],
     extras_require={
-        'archetypes': [
-            'archetypes.multilingual',
+        "archetypes": [
+            "archetypes.multilingual",
         ],
-        'test': [
-            'plone.app.testing[robot]',
-            'plone.app.robotframework',
+        "test": [
+            "plone.app.testing[robot]",
+            "plone.app.robotframework",
         ],
     },
     entry_points="""

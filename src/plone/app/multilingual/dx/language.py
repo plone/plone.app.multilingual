@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # from plone.app.dexterity.behaviors.metadata import ICategorization
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from Products.CMFPlone.interfaces import ILanguage
@@ -10,8 +9,7 @@ from zope.interface import implementer
 
 
 @implementer(ILanguage)
-class Language(object):
-
+class Language:
     def __init__(self, context):
         self.context = context
 
@@ -20,4 +18,4 @@ class Language(object):
 
     def set_language(self, language):
         self.context.language = language
-        self.context.reindexObject(idxs=['Language'])
+        self.context.reindexObject(idxs=["Language"])

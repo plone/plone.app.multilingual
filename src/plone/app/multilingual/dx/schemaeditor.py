@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.schemaeditor.interfaces import IFieldEditorExtender
 from plone.schemaeditor.interfaces import ISchemaContext
@@ -14,22 +13,23 @@ from zope.schema import interfaces
 from zope.schema.interfaces import IField
 
 
-PMF = MessageFactory('plone.app.multilingual')
+PMF = MessageFactory("plone.app.multilingual")
 
 
 class IFieldLanguageIndependent(Interface):
     languageindependent = schema.Bool(
-        title=PMF(u'Language independent field'),
+        title=PMF("Language independent field"),
         description=PMF(
-            u'The field is going to be copied on all '
-            u'translations when you edit the content'),
-        required=False)
+            "The field is going to be copied on all "
+            "translations when you edit the content"
+        ),
+        required=False,
+    )
 
 
 @implementer(IFieldLanguageIndependent)
 @adapter(interfaces.IField)
-class FieldLanguageIndependentAdapter(object):
-
+class FieldLanguageIndependentAdapter:
     def __init__(self, field):
         self.field = field
 
@@ -43,7 +43,8 @@ class FieldLanguageIndependentAdapter(object):
             noLongerProvides(self.field, ILanguageIndependentField)
 
     languageindependent = property(
-        _read_languageindependent, _write_languageindependent)
+        _read_languageindependent, _write_languageindependent
+    )
 
 
 # IFieldLanguageIndependent could be registered directly as a named adapter
@@ -52,14 +53,12 @@ class FieldLanguageIndependentAdapter(object):
 # additional conditions pass:
 @adapter(ISchemaContext, IField)
 def get_li_schema(schema_context, field):
-    fti = getattr(schema_context, 'fti', None)
-    lang_behavior = set(
-        (
-            'plone.app.multilingual.dx.interfaces.IDexterityTranslatable',
-            'plone.translatable',
-        ),
-    )
-    fti_behaviors = set(getattr(fti, 'behaviors', []))
+    fti = getattr(schema_context, "fti", None)
+    lang_behavior = {
+        "plone.app.multilingual.dx.interfaces.IDexterityTranslatable",
+        "plone.translatable",
+    }
+    fti_behaviors = set(getattr(fti, "behaviors", []))
     if lang_behavior.intersection(fti_behaviors):
         return IFieldLanguageIndependent
 
@@ -69,10 +68,9 @@ def get_li_schema(schema_context, field):
 provideAdapter(
     get_li_schema,
     provides=IFieldEditorExtender,
-    name='plone.schemaeditor.languageindependent')
+    name="plone.schemaeditor.languageindependent",
+)
 
 
 # And the adapter for getting/setting the value.
-provideAdapter(
-    FieldLanguageIndependentAdapter,
-    provides=IFieldLanguageIndependent)
+provideAdapter(FieldLanguageIndependentAdapter, provides=IFieldLanguageIndependent)

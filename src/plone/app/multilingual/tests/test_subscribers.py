@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.dexterity.utils import createContentInContainer
@@ -17,27 +16,28 @@ class TestSubscribers(unittest.TestCase):
     to change the language of the object from the container where
     it has been created, moved or copied
     """
+
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
-        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
-        self.portal = self.layer['portal']
+        alsoProvides(self.layer["request"], IPloneAppMultilingualInstalled)
+        self.portal = self.layer["portal"]
 
     def test_created_event(self):
         """When an object is created in a folder it takes its language from the
         folder itself
         """
         a_ca = createContentInContainer(
-            self.portal['ca'], 'Document', title=u"Test document")
-        self.assertEqual(ILanguage(a_ca).get_language(), 'ca')
+            self.portal["ca"], "Document", title="Test document"
+        )
+        self.assertEqual(ILanguage(a_ca).get_language(), "ca")
 
     def test_created_event_on_portal(self):
         """When an object is created on portal it should be language
         independent
         """
-        a_ca = createContentInContainer(
-            self.portal, 'Document', title=u"Test document")
-        self.assertEqual(ILanguage(a_ca).get_language(), '')
+        a_ca = createContentInContainer(self.portal, "Document", title="Test document")
+        self.assertEqual(ILanguage(a_ca).get_language(), "")
 
     def test_moved_event(self):
         """When an object is moved from within one Language Root Folder into
@@ -45,12 +45,13 @@ class TestSubscribers(unittest.TestCase):
         folder it is copied into
         """
         a_ca = createContentInContainer(
-            self.portal['ca'], 'Document', title=u"Test document")
+            self.portal["ca"], "Document", title="Test document"
+        )
 
-        id_ = self.portal['ca'].manage_cutObjects(a_ca.id)
-        self.portal['en'].manage_pasteObjects(id_)
-        a_ca_copied = self.portal['en'][a_ca.id]
-        self.assertEqual(ILanguage(a_ca_copied).get_language(), 'en')
+        id_ = self.portal["ca"].manage_cutObjects(a_ca.id)
+        self.portal["en"].manage_pasteObjects(id_)
+        a_ca_copied = self.portal["en"][a_ca.id]
+        self.assertEqual(ILanguage(a_ca_copied).get_language(), "en")
 
     def test_copied_event(self):
         """When an object is copied from within one Language Root Folder into
@@ -58,12 +59,13 @@ class TestSubscribers(unittest.TestCase):
         folder it is copied into
         """
         a_ca = createContentInContainer(
-            self.portal['ca'], 'Document', title=u"Test document")
+            self.portal["ca"], "Document", title="Test document"
+        )
 
-        id_ = self.portal['ca'].manage_copyObjects(a_ca.id)
-        self.portal['en'].manage_pasteObjects(id_)
-        a_ca_copied = self.portal['en'][a_ca.id]
-        self.assertEqual(ILanguage(a_ca_copied).get_language(), 'en')
+        id_ = self.portal["ca"].manage_copyObjects(a_ca.id)
+        self.portal["en"].manage_pasteObjects(id_)
+        a_ca_copied = self.portal["en"][a_ca.id]
+        self.assertEqual(ILanguage(a_ca_copied).get_language(), "en")
 
     def test_moved_to_assets_folder(self):
         """When an object is moved from within one Language Root Folder into
@@ -72,20 +74,22 @@ class TestSubscribers(unittest.TestCase):
         from within other Language Root Folders
         """
         a_ca = createContentInContainer(
-            self.portal['ca'], 'Document', title=u"Test document")
+            self.portal["ca"], "Document", title="Test document"
+        )
 
         # Test a paste into a subfolder to be ultra cautious
         ca_assets_subfolder = createContentInContainer(
-            self.portal['ca']['recursos'], 'Folder', title=u"A Folder")
+            self.portal["ca"]["recursos"], "Folder", title="A Folder"
+        )
 
         subfolder_name = ca_assets_subfolder.id
 
-        id_ = self.portal['ca'].manage_cutObjects(a_ca.id)
+        id_ = self.portal["ca"].manage_cutObjects(a_ca.id)
         ca_assets_subfolder.manage_pasteObjects(id_)
 
         # Get both assets folders afresh
-        ca_assets_subfolder = self.portal['ca']['recursos'][subfolder_name]
-        en_assets_subfolder = self.portal['en']['assets'][subfolder_name]
+        ca_assets_subfolder = self.portal["ca"]["recursos"][subfolder_name]
+        en_assets_subfolder = self.portal["en"]["assets"][subfolder_name]
 
         # Check it is in both folder listings
         self.assertTrue(a_ca.id in ca_assets_subfolder)
@@ -93,18 +97,18 @@ class TestSubscribers(unittest.TestCase):
 
         # Check it is language independent
         copy_in_en = en_assets_subfolder[a_ca.id]
-        self.assertEqual(ILanguage(copy_in_en).get_language(), '')
+        self.assertEqual(ILanguage(copy_in_en).get_language(), "")
         copy_in_ca = ca_assets_subfolder[a_ca.id]
-        self.assertEqual(ILanguage(copy_in_ca).get_language(), '')
+        self.assertEqual(ILanguage(copy_in_ca).get_language(), "")
 
         # Check it is returned in catalog search
-        catalog = getToolByName(self.portal, 'portal_catalog')
+        catalog = getToolByName(self.portal, "portal_catalog")
 
-        ca_subfolder_path = '/'.join(ca_assets_subfolder.getPhysicalPath())
+        ca_subfolder_path = "/".join(ca_assets_subfolder.getPhysicalPath())
         ca_folder_contents = [r.id for r in catalog(path=ca_subfolder_path)]
         self.assertTrue(a_ca.id in ca_folder_contents)
 
-        en_subfolder_path = '/'.join(en_assets_subfolder.getPhysicalPath())
+        en_subfolder_path = "/".join(en_assets_subfolder.getPhysicalPath())
         en_folder_contents = [r.id for r in catalog(path=en_subfolder_path)]
         self.assertTrue(a_ca.id in en_folder_contents)
 
@@ -115,19 +119,21 @@ class TestSubscribers(unittest.TestCase):
         from within other Language Root Folders
         """
         a_ca = createContentInContainer(
-            self.portal['ca'], 'Document', title=u"Test document")
+            self.portal["ca"], "Document", title="Test document"
+        )
 
         # Test a paste into a subfolder to be ultra cautious
         ca_assets_subfolder = createContentInContainer(
-            self.portal['ca']['recursos'], 'Folder', title=u"A Folder")
+            self.portal["ca"]["recursos"], "Folder", title="A Folder"
+        )
 
         subfolder_name = ca_assets_subfolder.id
-        id_ = self.portal['ca'].manage_copyObjects(a_ca.id)
+        id_ = self.portal["ca"].manage_copyObjects(a_ca.id)
         ca_assets_subfolder.manage_pasteObjects(id_)
 
         # Get both assets folders afresh
-        ca_assets_subfolder = self.portal['ca']['recursos'][subfolder_name]
-        en_assets_subfolder = self.portal['en']['assets'][subfolder_name]
+        ca_assets_subfolder = self.portal["ca"]["recursos"][subfolder_name]
+        en_assets_subfolder = self.portal["en"]["assets"][subfolder_name]
 
         # Check it is in both folder listings
         self.assertTrue(a_ca.id in ca_assets_subfolder)
@@ -135,17 +141,17 @@ class TestSubscribers(unittest.TestCase):
 
         # Check it is language independent
         copy_in_en = en_assets_subfolder[a_ca.id]
-        self.assertEqual(ILanguage(copy_in_en).get_language(), '')
+        self.assertEqual(ILanguage(copy_in_en).get_language(), "")
         copy_in_ca = ca_assets_subfolder[a_ca.id]
-        self.assertEqual(ILanguage(copy_in_ca).get_language(), '')
+        self.assertEqual(ILanguage(copy_in_ca).get_language(), "")
 
         # Check it is returned in catalog search
-        catalog = getToolByName(self.portal, 'portal_catalog')
+        catalog = getToolByName(self.portal, "portal_catalog")
 
-        ca_subfolder_path = '/'.join(ca_assets_subfolder.getPhysicalPath())
+        ca_subfolder_path = "/".join(ca_assets_subfolder.getPhysicalPath())
         ca_folder_contents = [r.id for r in catalog(path=ca_subfolder_path)]
         self.assertTrue(a_ca.id in ca_folder_contents)
 
-        en_subfolder_path = '/'.join(en_assets_subfolder.getPhysicalPath())
+        en_subfolder_path = "/".join(en_assets_subfolder.getPhysicalPath())
         en_folder_contents = [r.id for r in catalog(path=en_subfolder_path)]
         self.assertTrue(a_ca.id in en_folder_contents)

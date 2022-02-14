@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.app.multilingual.dx.interfaces import MULTILINGUAL_KEY
 from plone.supermodel.directives import CheckerPlugin
@@ -12,19 +11,19 @@ LANGUAGE_INDEPENDENT_KEY = MULTILINGUAL_KEY
 
 
 class languageindependent(MetadataListDirective):
-    """Directive used to mark one or more fields as 'languageindependent'
-    """
+    """Directive used to mark one or more fields as 'languageindependent'"""
 
     key = LANGUAGE_INDEPENDENT_KEY
-    value = 'true'
+    value = "true"
 
     def factory(self, *args):
         """The languageindependent directive accepts as arguments one or more
         fieldnames (string) of fields which should be searchable.
         """
         if not args:
-            raise TypeError('The languageindependent directive expects at '
-                            'least one argument.')
+            raise TypeError(
+                "The languageindependent directive expects at " "least one argument."
+            )
 
         form_interface = Interface
         if IInterface.providedBy(args[0]):
@@ -49,4 +48,4 @@ class LanguageIndependentFieldsPlugin(CheckerPlugin):
             yield taggedValue[1]
 
 
-__all__ = ('languageindependent', 'LanguageIndependentFieldsPlugin')
+__all__ = ("languageindependent", "LanguageIndependentFieldsPlugin")

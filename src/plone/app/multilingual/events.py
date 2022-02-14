@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from zope.interface import Attribute
 from zope.interface import implementer
 from zope.interface.interfaces import IObjectEvent
@@ -53,7 +52,7 @@ class ITranslationRemovedEvent(IObjectEvent):
 
 
 @implementer(IObjectWillBeTranslatedEvent)
-class ObjectWillBeTranslatedEvent(object):
+class ObjectWillBeTranslatedEvent:
     """Sent before an object is translated."""
 
     def __init__(self, context, language):
@@ -62,7 +61,7 @@ class ObjectWillBeTranslatedEvent(object):
 
 
 @implementer(IObjectTranslatedEvent)
-class ObjectTranslatedEvent(object):
+class ObjectTranslatedEvent:
     """Sent after an object was translated."""
 
     def __init__(self, context, target, language):
@@ -72,9 +71,8 @@ class ObjectTranslatedEvent(object):
 
 
 @implementer(ITranslationRegisteredEvent)
-class TranslationRegisteredEvent(object):
-    """Sent after a new translation was registered.
-    """
+class TranslationRegisteredEvent:
+    """Sent after a new translation was registered."""
 
     def __init__(self, context, target, language):
         self.object = context
@@ -83,9 +81,8 @@ class TranslationRegisteredEvent(object):
 
 
 @implementer(ITranslationUpdatedEvent)
-class TranslationUpdatedEvent(object):
-    """Sent after an translation was moved to point to a different object
-    """
+class TranslationUpdatedEvent:
+    """Sent after an translation was moved to point to a different object"""
 
     def __init__(self, context, old_object, language):
         self.object = context
@@ -94,9 +91,8 @@ class TranslationUpdatedEvent(object):
 
 
 @implementer(ITranslationRemovedEvent)
-class TranslationRemovedEvent(object):
-    """Sent after an translation was moved to point to a different object
-    """
+class TranslationRemovedEvent:
+    """Sent after an translation was moved to point to a different object"""
 
     def __init__(self, context, old_object, language):
         self.object = context

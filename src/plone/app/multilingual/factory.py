@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_parent
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
 from plone.app.multilingual.interfaces import ILanguageRootFolder
@@ -12,9 +11,8 @@ from zope.interface import implementer
 
 
 @implementer(ILanguageIndependentFieldsManager)
-class DefaultLanguageIndependentFieldsManager(object):
-    """ Default language independent fields manager.
-    """
+class DefaultLanguageIndependentFieldsManager:
+    """Default language independent fields manager."""
 
     def __init__(self, context):
         self.context = context
@@ -27,8 +25,7 @@ class DefaultLanguageIndependentFieldsManager(object):
 
 
 @implementer(ITranslationLocator)
-class DefaultTranslationLocator(object):
-
+class DefaultTranslationLocator:
     def __init__(self, context):
         self.context = context
 
@@ -39,21 +36,23 @@ class DefaultTranslationLocator(object):
         parent = aq_parent(self.context)
         translated_parent = parent
         found = False
-        while not (IPloneSiteRoot.providedBy(parent) and
-                   not ILanguageRootFolder.providedBy(parent))\
-                and not found:
+        while (
+            not (
+                IPloneSiteRoot.providedBy(parent)
+                and not ILanguageRootFolder.providedBy(parent)
+            )
+            and not found
+        ):
             parent_translation = ITranslationManager(parent)
             if parent_translation.has_translation(language):
-                translated_parent =\
-                    parent_translation.get_translation(language)
+                translated_parent = parent_translation.get_translation(language)
                 found = True
             parent = aq_parent(parent)
         return translated_parent
 
 
 @implementer(ITranslationCloner)
-class DefaultTranslationCloner(object):
-
+class DefaultTranslationCloner:
     def __init__(self, context):
         self.context = context
 
@@ -62,25 +61,23 @@ class DefaultTranslationCloner(object):
 
 
 @implementer(ITranslationIdChooser)
-class DefaultTranslationIdChooser(object):
-
+class DefaultTranslationIdChooser:
     def __init__(self, context):
         self.context = context
 
     def __call__(self, parent, language):
         content_id = self.context.getId()
-        splitted = content_id.split('-')
+        splitted = content_id.split("-")
         # ugly heuristic (searching for something like 'de', 'en' etc.)
         if len(splitted) > 1 and len(splitted[-1]) == 2:
-            content_id = '-'.join(splitted[:-1])
+            content_id = "-".join(splitted[:-1])
         while content_id in parent.objectIds():
-            content_id = "%s-%s" % (content_id, language)
+            content_id = f"{content_id}-{language}"
         return content_id
 
 
 @implementer(ITranslationFactory)
-class DefaultTranslationFactory(object):
-
+class DefaultTranslationFactory:
     def __init__(self, context):
         self.context = context
 
@@ -94,9 +91,8 @@ class DefaultTranslationFactory(object):
         content_id = name_chooser(parent, language)
         # creating the translation
         new_id = parent.invokeFactory(
-            type_name=content_type,
-            id=content_id,
-            language=language)
+            type_name=content_type, id=content_id, language=language
+        )
         new_content = getattr(parent, new_id)
         # clone language-independent content
         cloner = ITranslationCloner(self.context)

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
@@ -15,7 +14,7 @@ def get_translation_group(content):
     """
     tg = ITG(content)
     if tg is None:
-        raise ValueError('No translation group found.')
+        raise ValueError("No translation group found.")
     return tg
 
 
@@ -30,11 +29,11 @@ def get_translation_manager(content):
     """
     tm = ITranslationManager(content)
     if tm is None:
-        raise ValueError('No translation manager available for this content.')
+        raise ValueError("No translation manager available for this content.")
     return tm
 
 
-def translate(content, target_language='en'):
+def translate(content, target_language="en"):
     """Translate content into target language.
 
     :param content: Content to be translated.
