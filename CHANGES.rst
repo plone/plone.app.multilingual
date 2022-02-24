@@ -8,6 +8,18 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0a8 (2022-02-24)
+--------------------
+
+Bug fixes:
+
+
+- Fix issue with wrong redirection URL if a language selector viewlet was rendered in a subrequest, like with Mosaic. 
+  [jensens] (397-2)
+- isort, black, pyupgrade, remove six usages.
+  [jensens] (#397)
+
+
 6.0.0a7 (2022-01-19)
 --------------------
 

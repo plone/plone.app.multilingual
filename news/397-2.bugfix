@@ -1,2 +1,0 @@
-Fix issue with wrong redirection URL if a language selector viewlet was rendered in a subrequest, like with Mosaic. 
-[jensens]

@@ -1,2 +1,0 @@
-isort, black, pyupgrade, remove six usages.
-[jensens]
