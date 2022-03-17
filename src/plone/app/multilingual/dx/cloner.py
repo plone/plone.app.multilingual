@@ -11,15 +11,8 @@ from z3c.relationfield.interfaces import IRelationValue
 from zope.component import getUtility
 from zope.component import queryAdapter
 from zope.interface import implementer
+from zope.intid.interfaces import IIntIds
 
-import pkg_resources
-
-
-try:
-    # pkg_resources.get_distribution('zope.initd')
-    from zope.intid.interfaces import IIntIds
-except pkg_resources.DistributionNotFound:
-    from zope.app.intid.interfaces import IIntIds
 
 _marker = object()
 
@@ -54,8 +47,7 @@ class LanguageIndependentFieldsManager:
         translation = ITranslationManager(obj).get_translation(target_language)
         if translation:
             return RelationValue(intids.getId(translation))
-        else:
-            return RelationValue(intids.getId(obj))
+        return RelationValue(intids.getId(obj))
 
     def copy_fields(self, translation):
         doomed = False

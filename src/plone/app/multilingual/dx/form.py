@@ -12,13 +12,7 @@ from zope.pagetemplate.interfaces import IPageTemplate
 
 
 def isLanguageIndependent(field):
-    if field.interface is None:
-        return False
-
-    if ILanguageIndependentField.providedBy(field):
-        return True
-    else:
-        return False
+    return field.interface is not None and ILanguageIndependentField.providedBy(field)
 
 
 class LanguageIndependentFieldValidator(StrictSimpleFieldValidator):
