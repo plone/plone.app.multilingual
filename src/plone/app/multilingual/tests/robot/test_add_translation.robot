@@ -67,6 +67,7 @@ I link the document in English as a translation
   Click Element  css=#translations-overview .connectTranslationAction
   Wait until page contains element  css=.select2-choices
   Wait until element is visible  css=.select2-choices
+  Click Element  css=#formfield-form-widgets-content .pat-relateditems-container button.mode.search
   Input Text  css=#formfield-form-widgets-content .select2-input  en
   Wait until page contains element  xpath=(//span[contains(., 'An English Document')])
   Wait until element is visible  xpath=(//span[contains(., 'An English Document')])
