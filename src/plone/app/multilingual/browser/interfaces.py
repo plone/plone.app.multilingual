@@ -15,18 +15,6 @@ from zope.component.hooks import getSite
 from zope.interface import provider
 from zope.schema.interfaces import IContextAwareDefaultFactory
 
-import pkg_resources
-
-
-HAS_MOCKUP_240 = False
-try:
-    pkg_mockup = pkg_resources.get_distribution("mockup")
-    HAS_MOCKUP_240 = pkg_mockup.parsed_version >= pkg_resources.parse_version(
-        "2.4.0"
-    )  # noqa
-except pkg_resources.DistributionNotFound:
-    pass
-
 
 def make_relation_root_path(context):
     ctx = getSite()
@@ -86,15 +74,13 @@ class IConnectTranslation(model.Schema):
         vocabulary="plone.app.multilingual.RootCatalog",
         required=True,
     )
-
-    if HAS_MOCKUP_240:
-        directives.widget(
-            "content",
-            RelatedItemsFieldWidget,
-            pattern_options={
-                "basePath": make_relation_root_path,
-            },
-        )
+    directives.widget(
+        'content',
+        RelatedItemsFieldWidget,
+        pattern_options={
+            'basePath': make_relation_root_path,
+        }
+    )
 
 
 interface.alsoProvides(IUpdateLanguage, IFormFieldProvider)
