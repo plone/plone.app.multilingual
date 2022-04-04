@@ -8,6 +8,17 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0a9 (2022-04-04)
+--------------------
+
+Bug fixes:
+
+
+- Connect translations: always set basePath pattern option.
+  In the supported Plone versions this always works.
+  [maurits] (#6)
+
+
 6.0.0a8 (2022-02-24)
 --------------------
 
