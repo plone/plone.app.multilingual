@@ -80,7 +80,7 @@ I link the document in English as a translation
   Wait until page contains element  xpath=(//h3[@class="translationTitle"])
   Sleep  5
   Wait until element is visible  xpath=(//h3[@class="translationTitle"])
-  Focus  xpath=(//*[@id="translations-overview"]//a[contains(@href,"a-catalan-document")])
+  Set Focus To Element  xpath=(//*[@id="translations-overview"]//a[contains(@href,"a-catalan-document")])
   Click Element  xpath=(//*[@id="translations-overview"]//a[contains(text(),'/plone/ca/a-catalan-document')])
   Wait until page contains  A Catalan Document
 
