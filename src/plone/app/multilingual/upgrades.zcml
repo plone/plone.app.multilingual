@@ -52,4 +52,22 @@
       handler=".upgrades.upgrade_to_4"
       />
 
+  <genericsetup:registerProfile
+      name="to_1000"
+      title="Update to 1000"
+      directory="profiles/upgrades/to_1000"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:upgradeSteps source="4"
+      destination="1000"
+      profile="plone.app.multilingual:default">
+
+      <genericsetup:upgradeDepends
+        title="Add icon expressions"
+        import_profile="plone.app.multilingual:to_1000" />
+
+  </genericsetup:upgradeSteps>
+
 </configure>
