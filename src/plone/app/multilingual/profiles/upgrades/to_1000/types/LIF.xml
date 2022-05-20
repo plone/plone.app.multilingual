@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<object name="LIF" meta_type="Dexterity FTI" i18n:domain="plone" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+  <property name="title" i18n:translate="">Language Independent Folder</property>
+  <property name="icon_expr">string:contenttype/folder</property>
+  <action title="View" action_id="view" category="object" condition_expr=""
+      icon_expr="string:toolbar-action/view" link_target="" url_expr="string:${object_url}"
+      visible="True" i18n:attributes="title">
+    <permission value="View"/>
+  </action>
+  <action title="Edit" action_id="edit" category="object" condition_expr=""
+      icon_expr="string:toolbar-action/edit" link_target="" url_expr="string:${object_url}/edit"
+      visible="True" i18n:attributes="title">
+    <permission value="Modify portal content"/>
+  </action>
+</object>

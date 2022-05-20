@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.interfaces import IConnectTranslation
 from plone.app.multilingual.interfaces import ITranslationManager
@@ -22,10 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class ModifyTranslationsForm(BrowserView):
-
     def available_languages(self):
         registry = getUtility(IRegistry)
-        return registry['plone.available_languages']
+        return registry["plone.available_languages"]
 
     def get_translation(self, language):
 
@@ -37,22 +35,21 @@ class ConnectTranslation(AutoExtensibleForm, Form):
 
     schema = IFormFieldProvider(IConnectTranslation)
     ignoreContext = True
-    label = _(u"label_connect_translation", default=u"Connect translation")
+    label = _("label_connect_translation", default="Connect translation")
     description = _(
-        u"long_description_connect_translation",
-        default=u"This form allows you to connect a currently existing "
-                u"translations of the current object."
+        "long_description_connect_translation",
+        default="This form allows you to connect a currently existing "
+        "translations of the current object.",
     )
 
-    @button.buttonAndHandler(_(u"connect_translation",
-                               default=u"Connect translation"))
+    @button.buttonAndHandler(_("connect_translation", default="Connect translation"))
     def handle_add(self, action):
         data, errors = self.extractData()
         if errors:
             self.status = self.formErrorsMessage
             return
-        content = data['content']
-        language = data['language']
+        content = data["content"]
+        language = data["language"]
         ILanguage(content).set_language(language)
         itm = ITranslationManager(self.context)
         # the 'register_translation'-method takes content OR
@@ -61,20 +58,22 @@ class ConnectTranslation(AutoExtensibleForm, Form):
         # and the translation index is not updated
         itm.register_translation(language, IUUID(content))
         return self.request.response.redirect(
-            self.context.absolute_url() + '/modify_translations')
+            self.context.absolute_url() + "/modify_translations"
+        )
 
 
 class DisconnectTranslation(BrowserView):
 
-    tpl = ViewPageTemplateFile('templates/disconnect_translation.pt')
+    tpl = ViewPageTemplateFile("templates/disconnect_translation.pt")
 
     def __call__(self):
 
-        if self.request.form.get('submitted'):
-            language = self.request.form['language']
-            catalog = getToolByName(self.context, 'portal_catalog')
+        if self.request.form.get("submitted"):
+            language = self.request.form["language"]
+            catalog = getToolByName(self.context, "portal_catalog")
             context = catalog.unrestrictedSearchResults(
-                UID=self.request.form['came_from'])
+                UID=self.request.form["came_from"]
+            )
             if context:
                 context = context[0].getObject()
             if language and context:
@@ -83,9 +82,10 @@ class DisconnectTranslation(BrowserView):
                     manager.remove_translation(language)
                 except Exception as e:
                     messages = IStatusMessage(self.request)
-                    messages.addStatusMessage(e, type='error')
+                    messages.addStatusMessage(e, type="error")
 
                 return self.request.response.redirect(
-                    context.absolute_url() + '/modify_translations')
+                    context.absolute_url() + "/modify_translations"
+                )
 
         return self.tpl()

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.content.namechooser import NormalizingNameChooser
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.multilingual.interfaces import ILanguageRootFolder
@@ -21,10 +20,11 @@ class LRFNameChooser(NormalizingNameChooser):
     in the parent folder.
 
     """
+
     def chooseName(self, name, object):
-        chosen = super(LRFNameChooser, self).chooseName(name, object)
+        chosen = super().chooseName(name, object)
         if chosen in self.context.objectIds():
-            old_id = getattr(object, 'id', None)
+            old_id = getattr(object, "id", None)
             object.id = chosen
             chooser = ITranslationIdChooser(object)
             chosen = chooser(self.context, self.context.getId())
@@ -37,5 +37,6 @@ class LanguageRootFolder(Container):
     """Deprecated LanguageRootFolder custom base class"""
 
 
-deprecated('LanguageRootFolder',
-           'LanguageRootFolders should be migrate to DexterityContainers')
+deprecated(
+    "LanguageRootFolder", "LanguageRootFolders should be migrate to DexterityContainers"
+)

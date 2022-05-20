@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from logging import getLogger
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.layout.navigation.interfaces import INavigationRoot
@@ -22,27 +21,26 @@ from zope.interface import alsoProvides
 from zope.lifecycleevent import modified
 
 
-logger = getLogger('plone.app.multilingual')
+logger = getLogger("plone.app.multilingual")
 
 
 # Setup view imported from LinguaPlone
 class SetupView(BrowserView):
-
     def __init__(self, context, request):
-        super(SetupView, self).__init__(context, request)
+        super().__init__(context, request)
 
     def __call__(self, forceOneLanguage=False, forceMovingAndSetting=True):
         setupTool = SetupMultilingualSite()
         return setupTool.setupSite(self.context, forceOneLanguage)
 
 
-class SetupMultilingualSite(object):
+class SetupMultilingualSite:
 
     # portal_type that is added as root language folder
-    folder_type = 'LRF'
+    folder_type = "LRF"
 
     # portal_type that is added as language independent asset folder
-    folder_type_language_independent = 'LIF'
+    folder_type_language_independent = "LIF"
 
     def __init__(self, context=None):
         self.context = context
@@ -64,18 +62,18 @@ class SetupMultilingualSite(object):
         self.ensure_translatable(self.folder_type)
         self.ensure_translatable(self.folder_type_language_independent)
 
-        language_tool = getToolByName(self.context, 'portal_languages')
+        language_tool = getToolByName(self.context, "portal_languages")
         self.languages = languages = language_tool.getSupportedLanguages()
         self.defaultLanguage = language_tool.getDefaultLanguage()
 
         if len(languages) == 1 and not forceOneLanguage:
-            return u'Only one supported language configured.'
+            return "Only one supported language configured."
 
         doneSomething = False
         available = language_tool.getAvailableLanguages()
         for language in languages:
             info = available[language]
-            name = info.get('native', info.get('name'))
+            name = info.get("native", info.get("name"))
             doneSomething += self.setUpLanguage(language, name)
 
         doneSomething += self.linkTranslations()
@@ -84,20 +82,20 @@ class SetupMultilingualSite(object):
         self.set_default_language_content()
 
         if not doneSomething:
-            return u'Nothing done.'
+            return "Nothing done."
         else:
-            return u"Setup of language root folders on Plone site '%s'" % (
-                self.context.getId())
+            return "Setup of language root folders on Plone site '%s'" % (
+                self.context.getId()
+            )
 
     def linkTranslations(self):
-        """Links the translations of the default language Folders
-        """
+        """Links the translations of the default language Folders"""
         doneSomething = False
 
         try:
             canonical = ITranslationManager(self.folders[self.defaultLanguage])
         except TypeError as e:
-            raise TypeError(str(e) + u' Are your folders ITranslatable?')
+            raise TypeError(str(e) + " Are your folders ITranslatable?")
 
         for language in self.languages:
             if language == self.defaultLanguage:
@@ -108,48 +106,55 @@ class SetupMultilingualSite(object):
                 doneSomething = True
 
         if doneSomething:
-            logger.info(u'Translations linked.')
+            logger.info("Translations linked.")
 
         return doneSomething
 
     def set_default_language_content(self):
-        """Set default language on root to language independent
-        """
+        """Set default language on root to language independent"""
         portal = getSite()
         defaultLanguage = LANGUAGE_INDEPENDENT
 
         for id_ in portal.objectIds():
-            if all([id_ not in _languagelist,
+            if all(
+                [
+                    id_ not in _languagelist,
                     id_ not in _combinedlanguagelist,
-                    ITranslatable.providedBy(portal[id_])]):
+                    ITranslatable.providedBy(portal[id_]),
+                ]
+            ):
                 set_recursive_language(portal[id_], defaultLanguage)
 
     def setUpLanguage(self, code, name):
-        """Create the language folders on top of the site
-        """
+        """Create the language folders on top of the site"""
         doneSomething = False
 
-        if code == 'id':
-            folderId = 'id-id'
+        if code == "id":
+            folderId = "id-id"
         else:
             folderId = str(code)
 
         folder = getattr(self.context, folderId, None)
-        wftool = getToolByName(self.context, 'portal_workflow')
+        wftool = getToolByName(self.context, "portal_workflow")
 
-        assets_folder_id = translate(_('assets_folder_id',
-                                       default='assets'),
-                                     domain='plone',
-                                     target_language=folderId)
-        assets_folder_title = translate(_('assets_folder_title',
-                                          default=u'Assets'),
-                                        domain='plone',
-                                        target_language=folderId)
+        assets_folder_id = translate(
+            _("assets_folder_id", default="assets"),
+            domain="plone",
+            target_language=folderId,
+        )
+        assets_folder_title = translate(
+            _("assets_folder_title", default="Assets"),
+            domain="plone",
+            target_language=folderId,
+        )
 
         if folder is None:
             _createObjectByType(self.folder_type, self.context, folderId)
-            _createObjectByType(self.folder_type_language_independent,
-                                self.context[folderId], assets_folder_id)
+            _createObjectByType(
+                self.folder_type_language_independent,
+                self.context[folderId],
+                assets_folder_id,
+            )
 
             folder = self.context[folderId]
 
@@ -162,18 +167,17 @@ class SetupMultilingualSite(object):
             # This assumes a direct 'publish' transition from the initial state
             # We are going to check if its private and has publish action for
             # the out of the box case otherwise don't do anything
-            state = wftool.getInfoFor(folder, 'review_state', None)
-            available_transitions = [t['id'] for t in
-                                     wftool.getTransitionsFor(folder)]
-            if state != 'published' and 'publish' in available_transitions:
-                wftool.doActionFor(folder, 'publish')
+            state = wftool.getInfoFor(folder, "review_state", None)
+            available_transitions = [t["id"] for t in wftool.getTransitionsFor(folder)]
+            if state != "published" and "publish" in available_transitions:
+                wftool.doActionFor(folder, "publish")
 
-            state = wftool.getInfoFor(folder[assets_folder_id],
-                                      'review_state', None)
-            available_transitions = [t['id'] for t in
-                                     wftool.getTransitionsFor(folder[assets_folder_id])]  # noqa
-            if state != 'published' and 'publish' in available_transitions:
-                wftool.doActionFor(folder[assets_folder_id], 'publish')
+            state = wftool.getInfoFor(folder[assets_folder_id], "review_state", None)
+            available_transitions = [
+                t["id"] for t in wftool.getTransitionsFor(folder[assets_folder_id])
+            ]  # noqa
+            if state != "published" and "publish" in available_transitions:
+                wftool.doActionFor(folder[assets_folder_id], "publish")
 
             # Exclude folder from navigation (if applicable)
             adapter = IExcludeFromNavigation(folder, None)
@@ -189,20 +193,19 @@ class SetupMultilingualSite(object):
             notify(modified(folder[assets_folder_id]))
 
             doneSomething = True
-            logger.info(u"Added '%s' folder: %s" % (code, folderId))
+            logger.info(f"Added '{code}' folder: {folderId}")
 
         self.folders[code] = folder
         if not INavigationRoot.providedBy(folder):
             alsoProvides(folder, INavigationRoot)
 
             doneSomething = True
-            logger.info(u"INavigationRoot setup on folder '%s'" % code)
+            logger.info("INavigationRoot setup on folder '%s'" % code)
 
         return doneSomething
 
     def removePortalDefaultPage(self):
-        """Remove the default page of the site
-        """
+        """Remove the default page of the site"""
 
         defaultPageId = self.context.getDefaultPage()
         if not defaultPageId:
@@ -212,12 +215,11 @@ class SetupMultilingualSite(object):
         self.context.setDefaultPage(None)
         self.context.reindexObject()
 
-        logger.info(u'Portal default page removed.')
+        logger.info("Portal default page removed.")
         return True
 
     def resetDefaultPage(self):
-        """Maintain the default page of the site on the language it was defined
-        """
+        """Maintain the default page of the site on the language it was defined"""
         previousDefaultPage = getattr(self.context, self.previousDefaultPageId)
         languageWrapped = ILanguage(previousDefaultPage, None)
 
@@ -230,7 +232,7 @@ class SetupMultilingualSite(object):
         pageId = self.previousDefaultPageId
 
         # test language neutral
-        if language == '':
+        if language == "":
             language = self.defaultLanguage
         target = self.folders[language]
         objects = self.context.manage_cutObjects(pageId)
@@ -240,9 +242,11 @@ class SetupMultilingualSite(object):
         except ValueError as exc:
             # This portal_type may not be allowed.  This should not be
             # fatal, so we only log a warning.
-            logger.warn((u"Could not move default page '{0:s}' j"
-                         u"to folder '{1:s}': {2:s}").format(
-                pageId, target.getId(), exc))
+            logger.warn(
+                (
+                    "Could not move default page '{:s}' j" "to folder '{:s}': {:s}"
+                ).format(pageId, target.getId(), exc)
+            )
             return False
 
         target.setDefaultPage(pageId)
@@ -250,8 +254,7 @@ class SetupMultilingualSite(object):
         defaultPage = getattr(target, pageId)
         defaultPage.reindexObject()
 
-        logger.info(u"Moved default page '{0}' to folder '{1}'.".format(
-            pageId, target.getId()))
+        logger.info(f"Moved default page '{pageId}' to folder '{target.getId()}'.")
 
         return True
 
@@ -261,26 +264,26 @@ class SetupMultilingualSite(object):
         """
         doneSomething = False
 
-        tt = getToolByName(self.context, 'portal_types')
-        site = tt['Plone Site']
+        tt = getToolByName(self.context, "portal_types")
+        site = tt["Plone Site"]
 
-        if 'language-switcher' not in site.view_methods:
-            methods = tuple(site.view_methods)
-            site.view_methods = methods + ('language-switcher', )
-            site.default_view = 'language-switcher'
+        methods = tuple(site.view_methods)
+        if "language-switcher" not in methods:
+            site.view_methods = methods + ("language-switcher",)
+            site.default_view = "language-switcher"
             self.context.reindexObject()
 
             doneSomething = True
-            logger.info(u'Root language switcher set up.')
+            logger.info("Root language switcher set up.")
 
         return doneSomething
 
     def ensure_translatable(self, type_):
-        types_tool = getToolByName(self.context, 'portal_types')
+        types_tool = getToolByName(self.context, "portal_types")
         fti = getattr(types_tool, type_)
 
         if IDexterityFTI.providedBy(fti):
             behaviors = list(fti.behaviors)
-            behaviors.append('plone.translatable')
+            behaviors.append("plone.translatable")
             behaviors = tuple(set(behaviors))
-            fti._updateProperty('behaviors', behaviors)
+            fti._updateProperty("behaviors", behaviors)

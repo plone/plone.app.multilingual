@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_base
 from Acquisition import aq_chain
 from plone.app.multilingual.content.lrf import ILanguageRootFolder
@@ -30,6 +29,6 @@ def attributeUUID(context):
         if ILanguageIndependentFolder.providedBy(element):
             is_language_independent = True
         if ILanguageRootFolder.providedBy(element) and is_language_independent:
-            uid = getattr(aq_base(context), ATTRIBUTE_NAME, None) or ''
-            return uid + '-' + element.id if uid is not None else None
+            uid = getattr(aq_base(context), ATTRIBUTE_NAME, None) or ""
+            return uid + "-" + element.id if uid is not None else None
     return getattr(context, ATTRIBUTE_NAME, None)

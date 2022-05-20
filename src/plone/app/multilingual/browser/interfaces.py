@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_parent
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.vocabularies import untranslated_languages
@@ -16,42 +15,30 @@ from zope.component.hooks import getSite
 from zope.interface import provider
 from zope.schema.interfaces import IContextAwareDefaultFactory
 
-import pkg_resources
-
-
-HAS_MOCKUP_240 = False
-try:
-    pkg_mockup = pkg_resources.get_distribution('mockup')
-    HAS_MOCKUP_240 = pkg_mockup.parsed_version >= pkg_resources.parse_version('2.4.0')  # noqa
-except pkg_resources.DistributionNotFound:
-    pass
-
 
 def make_relation_root_path(context):
     ctx = getSite()
     if not IPloneSiteRoot.providedBy(ctx):
         ctx = aq_parent(ctx)
-    return u'/'.join(ctx.getPhysicalPath())
+    return "/".join(ctx.getPhysicalPath())
 
 
 class IMultilingualLayer(interface.Interface):
-    """ browser layer """
+    """browser layer"""
 
 
 class ITranslateSubMenuItem(IBrowserSubMenuItem):
-    """The menu item linking to the translate menu.
-    """
+    """The menu item linking to the translate menu."""
 
 
 class ITranslateMenu(IBrowserMenu):
-    """The translate menu.
-    """
+    """The translate menu."""
 
 
 class ICreateTranslation(interface.Interface):
 
     language = schema.Choice(
-        title=_(u"title_language", default=u"Language"),
+        title=_("title_language", default="Language"),
         source=untranslated_languages,
     )
 
@@ -59,10 +46,10 @@ class ICreateTranslation(interface.Interface):
 class IUpdateLanguage(interface.Interface):
 
     language = schema.Choice(
-        title=_(u"title_available_languages", default=u"Available languages"),
+        title=_("title_available_languages", default="Available languages"),
         description=_(
-            u"description_update_language",
-            default=u"Untranslated languages from the current content"
+            "description_update_language",
+            default="Untranslated languages from the current content",
         ),
         source=untranslated_languages,
         required=True,
@@ -71,31 +58,29 @@ class IUpdateLanguage(interface.Interface):
 
 @provider(IContextAwareDefaultFactory)
 def request_language(context):
-    return context.REQUEST.form.get('language')
+    return context.REQUEST.form.get("language")
 
 
 class IConnectTranslation(model.Schema):
 
     language = schema.Choice(
-        title=_(u"title_language", default=u"Language"),
+        title=_("title_language", default="Language"),
         source=untranslated_languages,
         defaultFactory=request_language,
         required=True,
     )
     content = RelationChoice(
-        title=_(u"content"),
+        title=_("content"),
         vocabulary="plone.app.multilingual.RootCatalog",
         required=True,
     )
-
-    if HAS_MOCKUP_240:
-        directives.widget(
-            'content',
-            RelatedItemsFieldWidget,
-            pattern_options={
-                'basePath': make_relation_root_path,
-            }
-        )
+    directives.widget(
+        'content',
+        RelatedItemsFieldWidget,
+        pattern_options={
+            'basePath': make_relation_root_path,
+        }
+    )
 
 
 interface.alsoProvides(IUpdateLanguage, IFormFieldProvider)

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.multilingual.events import ObjectTranslatedEvent
 from plone.app.multilingual.events import ObjectWillBeTranslatedEvent
 from plone.app.multilingual.events import TranslationRegisteredEvent
@@ -12,18 +11,20 @@ from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import NOTG
 from plone.app.multilingual.itg import addAttributeTG
 from plone.app.uuid.utils import uuidToObject
+from plone.protect.interfaces import IDisableCSRFProtection
 from plone.uuid.handlers import addAttributeUUID
 from plone.uuid.interfaces import IUUID
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ILanguage
 from zope.component.hooks import getSite
 from zope.event import notify
+from zope.globalrequest import getRequest
+from zope.interface import alsoProvides
 from zope.interface import implementer
 
 
 @implementer(ITranslationManager)
-class TranslationManager(object):
-
+class TranslationManager:
     def __init__(self, context):
         self.context = context
         if isinstance(context, str):
@@ -31,36 +32,37 @@ class TranslationManager(object):
         else:
             self.tg = self.get_tg(context)
         site = getSite()
-        self.pcatalog = getToolByName(site, 'portal_catalog', None)
+        self.pcatalog = getToolByName(site, "portal_catalog", None)
 
     def get_id(self, context):
         """If an object is created via portal factory we don't get a id, we
-           have to wait till the object is really created.
-           TODO: a better check if we are in the portal factory!
+        have to wait till the object is really created.
+        TODO: a better check if we are in the portal factory!
         """
         try:
             context_id = IUUID(context)
         # We must ensure that this case can't happen, any object translatable
         # will have an UUID (in any case we can be at the portal factory!)
         except KeyError:
-            context._v_safe_write = True
+            alsoProvides(getRequest(), IDisableCSRFProtection)
             addAttributeUUID(context, None)
-            context.reindexObject(idxs=['UID'])
+            context.reindexObject(idxs=["UID"])
             context_id = IUUID(context)
         return context_id
 
     def get_tg(self, context):
         """If an object is created via portal factory we don't get a id, we
-           have to wait till the object is really created.
-           TODO: a better check if we are in the portal factory!
+        have to wait till the object is really created.
+        TODO: a better check if we are in the portal factory!
         """
         try:
             context_id = ITG(context)
         # We must ensure that this case can't happen, any object translatable
-        # will have an UUID (in any case we can be at the portal factory!)
+        # will have an TG (in any case we can be at the portal factory!)
         except TypeError:
+            alsoProvides(getRequest(), IDisableCSRFProtection)
             addAttributeTG(context, None)
-            context.reindexObject(idxs=['TranslationGroup'])
+            context.reindexObject(idxs=["TranslationGroup"])
             context_id = ITG(context)
         return context_id
 
@@ -68,26 +70,27 @@ class TranslationManager(object):
         return self.tg
 
     def register_translation(self, language, content):
-        """ register a translation for an existing content """
-        if not language and language != '':
-            raise KeyError('There is no target language')
+        """register a translation for an existing content"""
+        if not language and language != "":
+            raise KeyError("There is no target language")
 
         if type(content) == str:
             content = uuidToObject(content)
 
         # Check if exists and is not myself
         brains = self.pcatalog.unrestrictedSearchResults(
-            TranslationGroup=self.tg, Language=language)
+            TranslationGroup=self.tg, Language=language
+        )
         if len(brains) > 0 and brains[0].UID != self.get_id(content):
             raise KeyError("Translation already exists")
 
         # register the new translation in the canonical
         IMutableTG(content).set(self.tg)
-        content.reindexObject(idxs=('Language', 'TranslationGroup'))
+        content.reindexObject(idxs=("Language", "TranslationGroup"))
         notify(TranslationRegisteredEvent(self.context, content, language))
 
     def update(self):
-        """ Update the adapted item.
+        """Update the adapted item.
 
         If unregistered, register a Translation-Grouup (TG) for it and exit.
 
@@ -122,9 +125,9 @@ class TranslationManager(object):
         notify(TranslationUpdatedEvent(self.context, old_object, language))
 
     def add_translation(self, language):
-        """ see interfaces """
-        if not language and language != '':
-            raise KeyError('There is no target language')
+        """see interfaces"""
+        if not language and language != "":
+            raise KeyError("There is no target language")
         # event
         notify(ObjectWillBeTranslatedEvent(self.context, language))
         # create the translated object
@@ -143,8 +146,8 @@ class TranslationManager(object):
         Creation is delegated to factory/++add++
         Lets return the url where we are going to create the translation
         """
-        if not language and language != '':
-            raise KeyError('There is no target language')
+        if not language and language != "":
+            raise KeyError("There is no target language")
         # event
         notify(ObjectWillBeTranslatedEvent(self.context, language))
         # localize where we need to store the new object
@@ -153,30 +156,32 @@ class TranslationManager(object):
         return parent
 
     def remove_translation(self, language):
-        """ see interfaces """
+        """see interfaces"""
         translation = self.get_translation(language)
         IMutableTG(translation).set(NOTG)
         translation.reindexObject(idxs=("TranslationGroup",))
         notify(TranslationRemovedEvent(self.context, translation, language))
 
     def get_translation(self, language):
-        """ see interfaces """
+        """see interfaces"""
         brains = self.pcatalog.unrestrictedSearchResults(
-            TranslationGroup=self.tg, Language=language)
+            TranslationGroup=self.tg, Language=language
+        )
         if len(brains) != 1:
             return None
         return brains[0].getObject()
 
     def get_restricted_translation(self, language):
-        """ see interfaces """
-        brains = self.pcatalog.searchResults(TranslationGroup=self.tg,
-                                             Language=language)
+        """see interfaces"""
+        brains = self.pcatalog.searchResults(
+            TranslationGroup=self.tg, Language=language
+        )
         if len(brains) != 1:
             return None
         return brains[0].getObject()
 
     def get_translations(self):
-        """ see interfaces """
+        """see interfaces"""
         translations = {}
         brains = self.pcatalog.unrestrictedSearchResults(
             TranslationGroup=self.tg,
@@ -186,7 +191,7 @@ class TranslationManager(object):
         return translations
 
     def get_restricted_translations(self):
-        """ see interfaces """
+        """see interfaces"""
         translations = {}
         brains = self.pcatalog.searchResults(TranslationGroup=self.tg)
         for brain in brains:
@@ -194,15 +199,14 @@ class TranslationManager(object):
         return translations
 
     def get_translated_languages(self):
-        """ see interfaces """
+        """see interfaces"""
         languages = []
-        brains = self.pcatalog.unrestrictedSearchResults(
-            TranslationGroup=self.tg)
+        brains = self.pcatalog.unrestrictedSearchResults(TranslationGroup=self.tg)
         for brain in brains:
             if brain.Language not in languages:
                 languages.append(brain.Language)
         return languages
 
     def has_translation(self, language):
-        """ see interfaces """
+        """see interfaces"""
         return language in self.get_translated_languages()

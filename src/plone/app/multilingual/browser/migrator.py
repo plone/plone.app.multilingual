@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_base
 from Acquisition import aq_inner
 from Acquisition import aq_parent
@@ -14,8 +13,8 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zc.relation.interfaces import ICatalog
 from zope.component import getUtility
 from zope.component.hooks import getSite
-from zope.interface.interfaces import ComponentLookupError
 from zope.interface import Interface
+from zope.interface.interfaces import ComponentLookupError
 
 import logging
 import warnings
@@ -29,43 +28,47 @@ except ImportError:
 try:
     from plone.dexterity.interfaces import IDexterityContent
 except ImportError:
+
     class IDexterityContent(Interface):
         pass
+
+
 try:
     from Products.Archetypes.interfaces import IBaseObject
 except ImportError:
+
     class IBaseObject(Interface):
         pass
 
+
 with warnings.catch_warnings():
     warnings.filterwarnings(
-        "ignore", 
+        "ignore",
         message="LanguageRootFolder: LanguageRootFolders should be migrate "
-                "to DexterityContainers",
+        "to DexterityContainers",
     )
     from plone.app.multilingual.content.lrf import LanguageRootFolder
 
 
-LP_TRANSLATABLE = 'Products.LinguaPlone.interfaces.ITranslatable'
-portal_types_blacklist = ['Collage', 'FormFolder', 'Ploneboard']
+LP_TRANSLATABLE = "Products.LinguaPlone.interfaces.ITranslatable"
+portal_types_blacklist = ["Collage", "FormFolder", "Ploneboard"]
 logger = logging.getLogger(__name__)
 
 
 class LP2PAMView(BrowserView):
-    """View for migrating multilingual catalog from LP to PAM.
-    """
+    """View for migrating multilingual catalog from LP to PAM."""
 
-    template = ViewPageTemplateFile('templates/migrator-results.pt')
-    stepinfo = _(u"Transfer multilingual catalog information")
+    template = ViewPageTemplateFile("templates/migrator-results.pt")
+    stepinfo = _("Transfer multilingual catalog information")
 
     def __call__(self):
-        pc = getToolByName(self.context, 'portal_catalog')
-        pl = getToolByName(self.context, 'portal_languages')
+        pc = getToolByName(self.context, "portal_catalog")
+        pl = getToolByName(self.context, "portal_languages")
         self.results = []
         for language_supported in pl.getSupportedLanguages():
             translated_objects = pc.searchResults(
-                object_provides=LP_TRANSLATABLE,
-                Language=language_supported)
+                object_provides=LP_TRANSLATABLE, Language=language_supported
+            )
             for brain in translated_objects:
                 obj = brain.getObject()
                 if obj.isCanonical():
@@ -75,23 +78,28 @@ class LP2PAMView(BrowserView):
                         for language in translations.keys():
                             try:
                                 manager.register_translation(
-                                    language, translations[language][0])
+                                    language, translations[language][0]
+                                )
                             except KeyError:
                                 logger.info(
-                                    '%s already translated to %s: %s' %
-                                    (obj.id, language,
-                                        str(manager.get_translations())))
+                                    "%s already translated to %s: %s"
+                                    % (
+                                        obj.id,
+                                        language,
+                                        str(manager.get_translations()),
+                                    )
+                                )
 
                         self.results.append(str(manager.get_translations()))
 
-        logger.info('Finished with transferring catalog information')
+        logger.info("Finished with transferring catalog information")
         return self.template()
 
 
 class LP2PAMAfterView(BrowserView):
 
-    template = ViewPageTemplateFile('templates/cleanup_results.pt')
-    stepinfo = _(u"After migration relation cleanup")
+    template = ViewPageTemplateFile("templates/cleanup_results.pt")
+    stepinfo = _("After migration relation cleanup")
 
     def reset_relation_catalog(self):
         """Sometimes there are dependencies to the ITranslatable interface
@@ -101,7 +109,7 @@ class LP2PAMAfterView(BrowserView):
         try:
             catalog = getUtility(ICatalog)
         except ComponentLookupError:
-            return 0, ['A zc.relation catalog is not present.']
+            return 0, ["A zc.relation catalog is not present."]
         relations = catalog.findRelations()
         catalog.clear()
         total = 0
@@ -114,8 +122,8 @@ class LP2PAMAfterView(BrowserView):
                 # If you read this because you wonder why you have many
                 # missing relations, please inform do3cc
                 logger.warning(
-                    "A relation could not be recreated. You have "
-                    "lost relations")
+                    "A relation could not be recreated. You have " "lost relations"
+                )
                 bad.append(str(relation.__dict__))
         return total, bad
 
@@ -132,40 +140,48 @@ class moveContentToProperRLF(BrowserView):
     the site's content tree and moves them to its nearest translated parent.
     """
 
-    template = ViewPageTemplateFile('templates/relocate-results.pt')
-    stepinfo = _(u"Relocate content to the proper root language folder")
+    template = ViewPageTemplateFile("templates/relocate-results.pt")
+    stepinfo = _("Relocate content to the proper root language folder")
     blacklist = list()
 
     def findContent(self, content, depth):
         # only handle portal content
-        if not IDexterityContent.providedBy(content)\
-                and not IBaseObject.providedBy(content):
-            logger.warning('SKIP non-portal content %s (%s)' % (
-                content.absolute_url(), content.meta_type))
+        if not IDexterityContent.providedBy(content) and not IBaseObject.providedBy(
+            content
+        ):
+            logger.warning(
+                "SKIP non-portal content %s (%s)"
+                % (content.absolute_url(), content.meta_type)
+            )
             return
-        if hasattr(aq_base(content), 'objectIds')\
-                and aq_base(content).portal_type not in self.blacklist:
+        if (
+            hasattr(aq_base(content), "objectIds")
+            and aq_base(content).portal_type not in self.blacklist
+        ):
             for id in content.objectIds():
                 self.findContent(getattr(content, id), depth + 1)
         while len(self.content_tree) < depth + 1:
             self.content_tree.append([])
         if ITranslatable.providedBy(content):
             # The content parent has the same language?
-            if not IPloneSiteRoot.providedBy(aq_parent(content)) \
-               and aq_parent(content).Language() != content.Language():
+            if (
+                not IPloneSiteRoot.providedBy(aq_parent(content))
+                and aq_parent(content).Language() != content.Language()
+            ):
                 self.content_tree[depth].append(content)
 
     def searchNearestTranslatedParent(self, content):
         parent = aq_parent(content)
-        while parent.Language() != content.Language()\
-                and not IPloneSiteRoot.providedBy(parent):
+        while parent.Language() != content.Language() and not IPloneSiteRoot.providedBy(
+            parent
+        ):
             parent = aq_parent(parent)
         return parent
 
     def __call__(self):
-        """ Note: Steps names don't correspond with the control panel ones """
-        blacklist = self.request.form.get('blacklist', '').split()
-        self.blacklist = [x.strip() for x in blacklist if x.strip() != '']
+        """Note: Steps names don't correspond with the control panel ones"""
+        blacklist = self.request.form.get("blacklist", "").split()
+        self.blacklist = [x.strip() for x in blacklist if x.strip() != ""]
         self.results = self.step1andstep2()
         self.results += self.step3()
         return self.template()
@@ -208,26 +224,30 @@ class moveContentToProperRLF(BrowserView):
                         cutted = parent.manage_cutObjects(content.getId())
                     try:
                         target_folder.manage_pasteObjects(cutted)
-                        info_str = "Step 2: Moved object %s to folder %s" % (
-                                   '/'.join(content.getPhysicalPath()),
-                                   '/'.join(target_folder.getPhysicalPath()))
+                        info_str = "Step 2: Moved object {} to folder {}".format(
+                            "/".join(content.getPhysicalPath()),
+                            "/".join(target_folder.getPhysicalPath()),
+                        )
                         log = logger.info
                     except Exception as err:
-                        info_str = "ERROR. Step 2: not possible to move " \
-                            "object %s to folder %s. Error: %s" % (
-                                '/'.join(content.getPhysicalPath()),
-                                '/'.join(target_folder.getPhysicalPath()),
-                                err)
+                        info_str = (
+                            "ERROR. Step 2: not possible to move "
+                            "object %s to folder %s. Error: %s"
+                            % (
+                                "/".join(content.getPhysicalPath()),
+                                "/".join(target_folder.getPhysicalPath()),
+                                err,
+                            )
+                        )
                         log = logger.error
                     log(info_str)
                     output.append(info_str)
 
-        logger.info('Finished step 2')
+        logger.info("Finished step 2")
         return output
 
     def step3(self):
-        """Move the existing site content to its correspondent RLF.
-        """
+        """Move the existing site content to its correspondent RLF."""
         portal = getSite()
         pc = getToolByName(portal, "portal_catalog")
         pl = getToolByName(portal, "portal_languages")
@@ -240,14 +260,18 @@ class moveContentToProperRLF(BrowserView):
             RLF_id = "%s" % lang
             folder = getattr(portal, RLF_id, None)
             if not folder:
-                raise AttributeError("One of the root language folder are \
+                raise AttributeError(
+                    "One of the root language folder are \
                                       missing. Check the site's language \
-                                      setup.")
+                                      setup."
+                )
 
-            path = '/'.join(portal.getPhysicalPath())
-            objects = pc.searchResults(path={'query': path, 'depth': 1},
-                                       sort_on='getObjPositionInParent',
-                                       Language=lang)
+            path = "/".join(portal.getPhysicalPath())
+            objects = pc.searchResults(
+                path={"query": path, "depth": 1},
+                sort_on="getObjPositionInParent",
+                Language=lang,
+            )
 
             for brain in objects:
                 if brain.id != lang:
@@ -262,38 +286,41 @@ class moveContentToProperRLF(BrowserView):
                         cutted = self.context.manage_cutObjects(brain.id)
                     try:
                         folder.manage_pasteObjects(cutted)
-                        info_str = "Moved object %s to language root folder "\
-                            "%s" % (old_path, lang)
+                        info_str = "Moved object %s to language root folder " "%s" % (
+                            old_path,
+                            lang,
+                        )
                         log = logger.info
                     except Exception as err:
-                        info_str = "ERROR. Step 3: not possible to move "\
-                            "object %s to root language folder %s. Error: %s"\
+                        info_str = (
+                            "ERROR. Step 3: not possible to move "
+                            "object %s to root language folder %s. Error: %s"
                             % (old_path, lang, err)
+                        )
                         log = logger.error
                     log(info_str)
                     output.append(info_str)
 
-        logger.info('Finished step 3')
+        logger.info("Finished step 3")
         return output
 
 
 class LP2PAMReindexLanguageIndex(BrowserView):
 
-    template = ViewPageTemplateFile('templates/reindex-results.pt')
-    stepinfo = u"Reindex the LanguageIndex"
+    template = ViewPageTemplateFile("templates/reindex-results.pt")
+    stepinfo = "Reindex the LanguageIndex"
 
     def __call__(self):
-        pc = getToolByName(self.context, 'portal_catalog')
-        index = pc._catalog.getIndex('Language')
+        pc = getToolByName(self.context, "portal_catalog")
+        index = pc._catalog.getIndex("Language")
         self.items_before = index.numObjects()
-        pc.manage_reindexIndex(ids=['Language'])
+        pc.manage_reindexIndex(ids=["Language"])
         self.items_after = index.numObjects()
 
         return self.template()
 
 
 class MigrateFolderToLRFView(BrowserView):
-
     def __call__(self):
         plone_utils = getToolByName(self.context, "plone_utils")
 
@@ -303,9 +330,10 @@ class MigrateFolderToLRFView(BrowserView):
 
         if not IPloneSiteRoot.providedBy(aq_parent(aq_inner(self.context))):
             plone_utils.addPortalMessage(
-                _(u"folder_to_lrf_not_next_to_root",
-                  default=u"Only folders just below the root "
-                          u"can be transformed")
+                _(
+                    "folder_to_lrf_not_next_to_root",
+                    default="Only folders just below the root " "can be transformed",
+                )
             )
             self.request.response.redirect(self.context.absolute_url())
             return
@@ -314,8 +342,10 @@ class MigrateFolderToLRFView(BrowserView):
         available_languages = portal_languages.getAvailableLanguages()
         if self.context.id not in available_languages.keys():
             plone_utils.addPortalMessage(
-                _(u"folder_to_lrf_id_not_language",
-                  default=u"Folder's id is not a valid language code")
+                _(
+                    "folder_to_lrf_id_not_language",
+                    default="Folder's id is not a valid language code",
+                )
             )
             self.request.response.redirect(self.context.absolute_url())
             return
@@ -323,22 +353,25 @@ class MigrateFolderToLRFView(BrowserView):
         # Do the transform
         self.context.__class__ = LanguageRootFolder
         self.context._p_changed = aq_parent(self.context).p_changed = True
-        self.context.portal_type = 'LRF'
+        self.context.portal_type = "LRF"
 
         # Update content language
         portal_catalog = getToolByName(self.context, "portal_catalog")
         search_results = portal_catalog.unrestrictedSearchResults(
-            path='/'.join(self.context.getPhysicalPath()))
+            path="/".join(self.context.getPhysicalPath())
+        )
         for brain in search_results:
             ob = brain._unrestrictedGetObject()
             language_aware = ILanguage(ob, None)
             if language_aware is not None:
                 language_aware.set_language(self.context.id)
-                ob.reindexObject(idxs=['Language', 'TranslationGroup'])
+                ob.reindexObject(idxs=["Language", "TranslationGroup"])
 
         plone_utils.addPortalMessage(
-            _(u"folder_to_lrf_success",
-              default=u"Folder has been successfully transformed to "
-                      u"a language root folder")
+            _(
+                "folder_to_lrf_success",
+                default="Folder has been successfully transformed to "
+                "a language root folder",
+            )
         )
         self.request.response.redirect(self.context.absolute_url())

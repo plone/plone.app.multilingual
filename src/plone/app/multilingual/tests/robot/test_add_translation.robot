@@ -67,17 +67,20 @@ I link the document in English as a translation
   Click Element  css=#translations-overview .connectTranslationAction
   Wait until page contains element  css=.select2-choices
   Wait until element is visible  css=.select2-choices
+  Click Element  css=#formfield-form-widgets-content .pat-relateditems-container button.mode.search
   Input Text  css=#formfield-form-widgets-content .select2-input  en
   Wait until page contains element  xpath=(//span[contains(., 'An English Document')])
   Wait until element is visible  xpath=(//span[contains(., 'An English Document')])
   Click Element  xpath=(//span[contains(., 'An English Document')])
   Wait until page contains  An English Document
-  
-  Click Element  xpath=(//*[contains(@class, 'plone-modal-footer')]//button[@id='form-buttons-connect_translation'])
+
+  # We need a complicated xpath, because for some reason a button with this id is there twice.
+  # The first one is hidden.
+  Click Element  xpath=(//*[contains(@class, 'modal-footer')]//button[@id='form-buttons-connect_translation'])
   Wait until page contains element  xpath=(//h3[@class="translationTitle"])
   Sleep  5
   Wait until element is visible  xpath=(//h3[@class="translationTitle"])
-  Focus  xpath=(//*[@id="translations-overview"]//a[contains(@href,"a-catalan-document")])
+  Set Focus To Element  xpath=(//*[@id="translations-overview"]//a[contains(@href,"a-catalan-document")])
   Click Element  xpath=(//*[@id="translations-overview"]//a[contains(text(),'/plone/ca/a-catalan-document')])
   Wait until page contains  A Catalan Document
 

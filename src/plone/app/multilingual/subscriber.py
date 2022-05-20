@@ -1,13 +1,14 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_parent
 from plone.app.multilingual.browser.utils import is_language_independent
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
 from plone.app.multilingual.interfaces import ILanguageIndependentFolder
 from plone.app.multilingual.interfaces import IMutableTG
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
+from plone.app.multilingual.itg import addAttributeTG
 from plone.dexterity.interfaces import IDexterityContent
 from plone.uuid.interfaces import IUUID
 from Products.CMFCore.interfaces import IFolderish
@@ -42,26 +43,26 @@ def reindex_language_independent(ob, event):
     if IObjectRemovedEvent.providedBy(event):
         return
 
-    pc = getToolByName(ob, 'portal_catalog')
+    pc = getToolByName(ob, "portal_catalog")
     parent = aq_parent(ob)
 
     # Re-index objects just below the language independent folder
     if ILanguageIndependentFolder.providedBy(parent):
-        brains = pc.unrestrictedSearchResults(portal_type='LIF')
+        brains = pc.unrestrictedSearchResults(portal_type="LIF")
         for brain in brains:
             lif = brain._unrestrictedGetObject()
             if lif != parent:
                 lif[ob.id].indexObject()
     # Re-index objects deeper inside language independent folder
     else:
-        language_tool = getToolByName(ob, 'portal_languages')
+        language_tool = getToolByName(ob, "portal_languages")
         language_codes = language_tool.supported_langs
-        parent_uuid = IUUID(parent).split('-')[0] + '-'
+        parent_uuid = IUUID(parent).split("-")[0] + "-"
         for code in language_codes:
             results = pc.unrestrictedSearchResults(UID=parent_uuid + code)
             # When we have results, parent has been indexed and we can reindex:
             for brain in results:
-                tmp = ob.unrestrictedTraverse(brain.getPath() + '/' + ob.id)
+                tmp = ob.unrestrictedTraverse(brain.getPath() + "/" + ob.id)
                 tmp.reindexObject()
 
 
@@ -82,18 +83,18 @@ def unindex_language_independent(ob, event):
         return
 
     try:
-        pc = getToolByName(ob, 'portal_catalog')
+        pc = getToolByName(ob, "portal_catalog")
     except AttributeError:
         # When we are removing the site, there is no portal_catalog:
         return
 
-    language_tool = getToolByName(ob, 'portal_languages')
+    language_tool = getToolByName(ob, "portal_languages")
     language_codes = language_tool.supported_langs
     portal = getSite()
-    uuid = IUUID(ob).split('-')[0]
+    uuid = IUUID(ob).split("-")[0]
 
     for code in language_codes:
-        for brain in pc.unrestrictedSearchResults(UID=uuid + '-' + code):
+        for brain in pc.unrestrictedSearchResults(UID=uuid + "-" + code):
             portal.unrestrictedTraverse(brain.getPath()).unindexObject()
         for brain in pc.unrestrictedSearchResults(UID=uuid):
             portal.unrestrictedTraverse(brain.getPath()).unindexObject()
@@ -116,16 +117,19 @@ def set_recursive_language(ob, language):
 
     elif ILanguage(ob).get_language() != language:
         ILanguage(ob).set_language(language)
+        if ITG(ob, None) is None:
+            addAttributeTG(ob, None)
+            ob.reindexObject(idxs=["TranslationGroup"])
         ITranslationManager(ob).update()
         reindex_object(ob)
 
-    for child in (IFolderish.providedBy(ob) and ob.items() or ()):
+    for child in IFolderish.providedBy(ob) and ob.items() or ():
         if ITranslatable.providedBy(child):
             set_recursive_language(child, language)
 
 
 def createdEvent(obj, event):
-    """ Subscriber to set language on the child folder
+    """Subscriber to set language on the child folder
 
     It can be a
     - IObjectRemovedEvent - don't do anything
@@ -136,7 +140,7 @@ def createdEvent(obj, event):
     if IObjectRemovedEvent.providedBy(event):
         return
 
-    request = getattr(event.object, 'REQUEST', getRequest())
+    request = getattr(event.object, "REQUEST", getRequest())
     if not IPloneAppMultilingualInstalled.providedBy(request):
         return
 
@@ -154,7 +158,7 @@ def createdEvent(obj, event):
     language = ILanguage(parent).get_language()
     set_recursive_language(obj, language)
 
-    request = getattr(event.object, 'REQUEST', getRequest())
+    request = getattr(event.object, "REQUEST", getRequest())
     try:
         ti = request.translation_info
     except AttributeError:
@@ -162,14 +166,16 @@ def createdEvent(obj, event):
 
     # AT check
     portal = getSite()
-    portal_factory = getToolByName(portal, 'portal_factory', None)
-    if (not IDexterityContent.providedBy(obj) and
-            portal_factory is not None and
-            not portal_factory.isTemporary(obj)):
+    portal_factory = getToolByName(portal, "portal_factory", None)
+    if (
+        not IDexterityContent.providedBy(obj)
+        and portal_factory is not None
+        and not portal_factory.isTemporary(obj)
+    ):
         return
 
-    IMutableTG(obj).set(ti['tg'])
+    IMutableTG(obj).set(ti["tg"])
     modified(obj)
     tm = ITranslationManager(obj)
-    old_obj = tm.get_translation(ti['source_language'])
+    old_obj = tm.get_translation(ti["source_language"])
     ILanguageIndependentFieldsManager(old_obj).copy_fields(obj)

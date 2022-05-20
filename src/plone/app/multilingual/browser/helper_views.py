@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from AccessControl.SecurityManagement import getSecurityManager
 from Acquisition import aq_chain
 from borg.localrole.interfaces import IFactoryTempFolder
@@ -41,12 +40,12 @@ except ImportError:
 
 @implementer(IPublishTraverse)
 class universal_link(BrowserView):
-    """ Redirects the user to the negotiated translated page
-        based on the user preferences in the user's browser.
+    """Redirects the user to the negotiated translated page
+    based on the user preferences in the user's browser.
     """
 
     def __init__(self, context, request):
-        super(universal_link, self).__init__(context, request)
+        super().__init__(context, request)
         self.tg = None
         self.lang = None
 
@@ -65,41 +64,43 @@ class universal_link(BrowserView):
         # Look for the element
         url = None
         # We check if it's shared content
-        query = {'TranslationGroup': self.tg}
-        ptool = getToolByName(self.context, 'portal_catalog')
+        query = {"TranslationGroup": self.tg}
+        ptool = getToolByName(self.context, "portal_catalog")
         brains = ptool.searchResults(query)
         is_shared = False
         for brain in brains:
-            if '-' in brain.UID:
+            if "-" in brain.UID:
                 is_shared = True
                 brain_to_use = brain
                 break
         if is_shared:
-            target_uid = brain_to_use.UID.split('-')[0]
+            target_uid = brain_to_use.UID.split("-")[0]
             if self.lang:
-                target_uid += '-' + self.lang
+                target_uid += "-" + self.lang
             else:
                 # The negotiated language
-                language = getMultiAdapter((self.context, self.request),
-                                           INegotiateLanguage).language
-                target_uid += '-' + language
+                language = getMultiAdapter(
+                    (self.context, self.request), INegotiateLanguage
+                ).language
+                target_uid += "-" + language
             results = ptool.searchResults(UID=target_uid)
             if len(results) > 0:
                 url = results[0].getURL()
             return url
         # Normal content
-        query = {'TranslationGroup': self.tg}
+        query = {"TranslationGroup": self.tg}
         if self.lang:
-            query = {'TranslationGroup': self.tg, 'Language': self.lang}
+            query = {"TranslationGroup": self.tg, "Language": self.lang}
         else:
             # The negotiated language
-            language = getMultiAdapter((self.context, self.request),
-                                       INegotiateLanguage).language
-            query = {'TranslationGroup': self.tg, 'Language': language}
+            language = getMultiAdapter(
+                (self.context, self.request), INegotiateLanguage
+            ).language
+            query = {"TranslationGroup": self.tg, "Language": language}
 
         # Comparison to plone/app/multilingual/browser/setup.py#L129
-        if query.get('Language') == 'id-id':
-            query['Language'] = 'id'
+        if query.get("Language") == "id-id":
+            query["Language"] = "id"
 
         results = ptool.searchResults(query)
         if len(results) > 0:
@@ -109,13 +110,12 @@ class universal_link(BrowserView):
     def __call__(self):
         url = self.getDestination()
         if not url:
-            root = getToolByName(self.context, 'portal_url')
+            root = getToolByName(self.context, "portal_url")
             url = root()
         self.request.RESPONSE.redirect(url)
 
 
 class selector_view(universal_link):
-
     def getDialogDestination(self):
         """Get the "not translated yet" dialog URL.
         It's located on the root and shows the translated objects of that TG
@@ -127,8 +127,8 @@ class selector_view(universal_link):
         # And since we are mapping the root on itself,
         # we also do postpath insertion (@@search case)
 
-        root = getToolByName(self.context, 'portal_url')
-        url = root() + dialog_view + '/' + self.tg
+        root = getToolByName(self.context, "portal_url")
+        url = root() + dialog_view + "/" + self.tg
         return self.wrapDestination(url, postpath=postpath)
 
     def getParentChain(self, context):
@@ -136,8 +136,7 @@ class selector_view(universal_link):
         return aq_chain(context)
 
     def getClosestDestination(self):
-        """Get the "closest translated object" URL.
-        """
+        """Get the "closest translated object" URL."""
         # We should travel the parent chain using the catalog here,
         # but I think using the acquisition chain is faster
         # (or well, __parent__ pointers) because the catalog
@@ -149,8 +148,8 @@ class selector_view(universal_link):
         # for the best option
 
         site = getSite()
-        root = getToolByName(site, 'portal_url')
-        ltool = getToolByName(site, 'portal_languages')
+        root = getToolByName(site, "portal_url")
+        ltool = getToolByName(site, "portal_languages")
 
         # We are using TranslationManager to get the translations of a
         # string tg
@@ -175,15 +174,13 @@ class selector_view(universal_link):
         checkPermission = getSecurityManager().checkPermission
         chain = self.getParentChain(context)
         for item in chain:
-            if ISiteRoot.providedBy(item) \
-               and not ILanguageRootFolder.providedBy(item):
+            if ISiteRoot.providedBy(item) and not ILanguageRootFolder.providedBy(item):
                 # We do not care to get a permission error
                 # if the whole of the portal cannot be viewed.
                 # Having a permission issue on the root is fine;
                 # not so much for everything else so that is checked there
                 return self.wrapDestination(item.absolute_url())
-            elif IFactoryTempFolder.providedBy(item) or \
-                    IFactoryTool.providedBy(item):
+            elif IFactoryTempFolder.providedBy(item) or IFactoryTool.providedBy(item):
                 # TempFolder or portal_factory, can't have a translation
                 continue
             try:
@@ -198,13 +195,12 @@ class selector_view(universal_link):
                     raise
             translation = canonical.get_translation(self.lang)
             if translation and (
-                INavigationRoot.providedBy(translation) or
-                bool(checkPermission('View', translation))
+                INavigationRoot.providedBy(translation)
+                or bool(checkPermission("View", translation))
             ):
                 # Not a direct translation, therefore no postpath
                 # (the view might not exist on a different context)
-                return self.wrapDestination(translation.absolute_url(),
-                                            postpath=False)
+                return self.wrapDestination(translation.absolute_url(), postpath=False)
         # Site root's the fallback
         return self.wrapDestination(root(), postpath=False)
 
@@ -213,12 +209,8 @@ class selector_view(universal_link):
         and the eventual append path.
         """
         if postpath:
-            url += self.request.form.get('post_path', '')
-        return addQuery(
-            self.request,
-            url,
-            exclude=('post_path')
-        )
+            url += self.request.form.get("post_path", "")
+        return addQuery(self.request, url, exclude=("post_path"))
 
     def __call__(self):
         url = self.getDestination()
@@ -227,9 +219,10 @@ class selector_view(universal_link):
             url = self.wrapDestination(url)
         else:
             registry = getUtility(IRegistry)
-            policies = registry.forInterface(IMultiLanguageExtraOptionsSchema,
-                                             prefix="plone")
-            if policies.selector_lookup_translations_policy == 'closest':
+            policies = registry.forInterface(
+                IMultiLanguageExtraOptionsSchema, prefix="plone"
+            )
+            if policies.selector_lookup_translations_policy == "closest":
                 url = self.getClosestDestination()
             else:
                 url = self.getDialogDestination()
@@ -240,13 +233,14 @@ class selector_view(universal_link):
 
 @implementer(IPublishTraverse)
 class not_translated_yet(BrowserView):
-    """ View to inform user that the view requested is not translated yet,
-        and shows the already translated related content.
+    """View to inform user that the view requested is not translated yet,
+    and shows the already translated related content.
     """
-    __call__ = ViewPageTemplateFile('templates/not_translated_yet.pt')
+
+    __call__ = ViewPageTemplateFile("templates/not_translated_yet.pt")
 
     def __init__(self, context, request):
-        super(not_translated_yet, self).__init__(context, request)
+        super().__init__(context, request)
         self.tg = None
 
     def publishTraverse(self, request, name):
@@ -271,9 +265,9 @@ class not_translated_yet(BrowserView):
             return 0
 
     def language_name(self, lang=None):
-        """ Get the current language native name """
+        """Get the current language native name"""
         if lang is None:
-            lang_code = self.request.get('set_language')
+            lang_code = self.request.get("set_language")
         else:
             lang_code = lang
         util = getUtility(IContentLanguageAvailability)
@@ -281,12 +275,11 @@ class not_translated_yet(BrowserView):
         lang_info = data.get(lang_code)
         if lang_info is None:
             return None
-        return lang_info.get('native', None) or lang_info.get('name')
+        return lang_info.get("native", None) or lang_info.get("name")
 
 
 class TGView(BrowserView):
-    """A simple browser view that renders the TG of its context
-    """
+    """A simple browser view that renders the TG of its context"""
 
     def __call__(self):
-        return str(ITG(self.context, u""))
+        return str(ITG(self.context, ""))

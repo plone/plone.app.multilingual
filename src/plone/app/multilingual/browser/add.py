@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.app.multilingual.dx.interfaces import IMultilingualAddForm
 from plone.app.multilingual.events import ObjectTranslatedEvent
@@ -31,9 +30,8 @@ logger = logging.getLogger(__name__)
 
 @adapter(IFolderish, Interface)
 @implementer(ITraversable)
-class AddViewTraverser(object):
-    """Add view traverser.
-    """
+class AddViewTraverser:
+    """Add view traverser."""
 
     def __init__(self, context, request):
         self.context = context
@@ -43,9 +41,9 @@ class AddViewTraverser(object):
 
     def traverse(self, name, ignored):
         # Populate translation info
-        self.info['target_language'] = ILanguage(self.context).get_language()
+        self.info["target_language"] = ILanguage(self.context).get_language()
 
-        catalog = getToolByName(self.context, 'portal_catalog')
+        catalog = getToolByName(self.context, "portal_catalog")
         # Search source object using unrestricted API,
         # because user may be anonymous during traverse.
         brains = catalog.unrestrictedSearchResults(UID=name)
@@ -53,23 +51,22 @@ class AddViewTraverser(object):
             raise TraversalError(self.context, name)
         source = brains[0]._unrestrictedGetObject()
 
-        self.info['source_language'] = ILanguage(source).get_language()
-        self.info['portal_type'] = source.portal_type
-        self.info['tg'] = ITG(source)
+        self.info["source_language"] = ILanguage(source).get_language()
+        self.info["portal_type"] = source.portal_type
+        self.info["tg"] = ITG(source)
 
         # If source has already been translated to this language, just redirect
         for brain in catalog.unrestrictedSearchResults(
-                TranslationGroup=self.info['tg'],
-                Language=self.info['target_language']):
+            TranslationGroup=self.info["tg"], Language=self.info["target_language"]
+        ):
             self.request.response.redirect(brain.getURL())
-            return u''
+            return ""
 
         # XXX: register this adapter on dx container and a second one for AT
         if not IDexterityContent.providedBy(source):
             # we are not on DX content, assume AT
             baseUrl = self.context.absolute_url()
-            url = '%s/@@add_at_translation?type=%s' % (baseUrl,
-                                                       source.portal_type)
+            url = f"{baseUrl}/@@add_at_translation?type={source.portal_type}"
             return self.request.response.redirect(url)
 
         # set the self.context to the place where it should be stored
@@ -77,25 +74,25 @@ class AddViewTraverser(object):
             self.context = self.context.__parent__
 
         # get the type information
-        ttool = getToolByName(self.context, 'portal_types')
-        ti = ttool.getTypeInfo(self.info['portal_type'])
+        ttool = getToolByName(self.context, "portal_types")
+        ti = ttool.getTypeInfo(self.info["portal_type"])
 
         if ti is None:
-            logger.error('No type information found for {0}'.format(
-                self.info['portal_type'])
+            logger.error(
+                "No type information found for {}".format(self.info["portal_type"])
             )
             raise TraversalError(self.context, name)
 
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema,
-                                         prefix="plone")
+        settings = registry.forInterface(
+            IMultiLanguageExtraOptionsSchema, prefix="plone"
+        )
 
         if not settings.redirect_babel_view:
             add_view = None
         else:
             add_view = queryMultiAdapter(
-                (self.context, self.request, ti),
-                name='babel_view'
+                (self.context, self.request, ti), name="babel_view"
             )
         if add_view is None:
             add_view = queryMultiAdapter((self.context, self.request, ti))
@@ -108,8 +105,7 @@ class AddViewTraverser(object):
 
 @implementer(IMultilingualAddForm)
 class MultilingualAddFormGroup(Group):
-    """Multilingual marked group
-    """
+    """Multilingual marked group"""
 
 
 @implementer(IMultilingualAddForm)
@@ -120,24 +116,24 @@ class MultilingualAddForm(DefaultAddForm):
     group_class = MultilingualAddFormGroup
 
     def portal_url(self):
-        portal_tool = getToolByName(self.context, 'portal_url', None)
+        portal_tool = getToolByName(self.context, "portal_url", None)
         if portal_tool is not None:
             return portal_tool()
         return None
 
     def render(self):
-        self.request['disable_border'] = True
-        self.request['disable_plone.leftcolumn'] = True
-        self.request['disable_plone.rightcolumn'] = True
-        self.babel_content = super(MultilingualAddForm, self).render()
+        self.request["disable_border"] = True
+        self.request["disable_plone.leftcolumn"] = True
+        self.request["disable_plone.rightcolumn"] = True
+        self.babel_content = super().render()
         return self.babel()
 
     def add(self, object):
-        super(MultilingualAddForm, self).add(object)
+        super().add(object)
         language = ILanguage(object).get_language()
         # extract UID from URL to get source object
         # probably there is a better way to do that!?
-        parts = self.request.getURL().split('++')
+        parts = self.request.getURL().split("++")
         if not parts:
             return
         source = uuidToObject(parts[-1])
@@ -146,8 +142,9 @@ class MultilingualAddForm(DefaultAddForm):
     @property
     def max_nr_of_buttons(self):
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(IMultiLanguageExtraOptionsSchema,
-                                         prefix="plone")
+        settings = registry.forInterface(
+            IMultiLanguageExtraOptionsSchema, prefix="plone"
+        )
         return settings.buttons_babel_view_up_to_nr_translations
 
     def _process_language_independent(self, fields, widgets):
@@ -159,20 +156,19 @@ class MultilingualAddForm(DefaultAddForm):
                 # reference their schema by prefixing their fieldname
                 # with schema.__identifier__ and then a dot as a separator
                 # See autoform.txt in the autoform package
-                if '.' not in field_key:
+                if "." not in field_key:
                     continue
-                schema_name, field_name = field_key.split('.')
+                schema_name, field_name = field_key.split(".")
                 for aschema in self.additionalSchemata:
-                    if schema_name == aschema.__name__ \
-                       and field_name in aschema:
+                    if schema_name == aschema.__name__ and field_name in aschema:
                         schema_field = aschema[field_name]
                         break
 
             if ILanguageIndependentField.providedBy(schema_field):
-                widgets[field_key].addClass('languageindependent')
+                widgets[field_key].addClass("languageindependent")
 
     def update(self):
-        super(MultilingualAddForm, self).update()
+        super().update()
         # process widgets to be shown as language independent
         self._process_language_independent(self.fields, self.widgets)
         for group in self.groups:

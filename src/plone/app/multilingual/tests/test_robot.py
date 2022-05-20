@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.multilingual.testing import PAM_ROBOT_TESTING
 from plone.testing import layered
 
@@ -15,9 +14,12 @@ ROBOT_TEST_LEVEL = 5
 def test_suite():
     suite = unittest.TestSuite()
     suite.level = ROBOT_TEST_LEVEL
-    suite.addTests([
-        layered(
-            robotsuite.RobotTestSuite('robot', noncritical=['unstable']),
-            layer=PAM_ROBOT_TESTING),
-    ])
+    suite.addTests(
+        [
+            layered(
+                robotsuite.RobotTestSuite("robot", noncritical=["unstable"]),
+                layer=PAM_ROBOT_TESTING,
+            ),
+        ]
+    )
     return suite
