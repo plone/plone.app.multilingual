@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0a11 (2022-05-24)
+---------------------
+
+Bug fixes:
+
+
+- Add icon expressions to types.
+  [agitator] (#401)
+
+
 6.0.0a10 (2022-05-15)
 ---------------------
 
