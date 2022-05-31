@@ -24,6 +24,8 @@ from zope.event import notify
 from zope.interface import alsoProvides
 from zope.lifecycleevent import ObjectModifiedEvent
 
+import json
+import lxml
 import transaction
 import unittest
 
@@ -106,12 +108,10 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         selector_viewlet.update()
         selector_viewlet_languages = selector_viewlet.languages()
 
-        self.assertEqual(
-            selector_viewlet_languages,
-            [
+        expected_languages = [
                 {
                     "code": "en",
-                    "flag": "/++resource++country-flags/gb.gif",
+                    "flag": "countryflag/gb",
                     "name": "English",
                     "native": "English",
                     "url": SELECTOR_VIEW_TEMPLATE
@@ -126,7 +126,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 },
                 {
                     "code": "ca",
-                    "flag": "/++resource++language-flags/ca.gif",
+                    "flag": "languageflag/ca",
                     "name": "Catalan",
                     "native": "Catal\xe0",
                     "url": SELECTOR_VIEW_TEMPLATE
@@ -141,7 +141,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 },
                 {
                     "code": "es",
-                    "flag": "/++resource++country-flags/es.gif",
+                    "flag": "countryflag/es",
                     "name": "Spanish",
                     "native": "Espa\xf1ol",
                     "url": SELECTOR_VIEW_TEMPLATE
@@ -154,7 +154,11 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                     "selected": False,
                     "translated": True,
                 },
-            ],
+            ]
+
+        self.assertEqual(
+            json.dumps(selector_viewlet_languages, sort_keys=True),
+            json.dumps(expected_languages, sort_keys=True),
         )
 
         transaction.commit()
@@ -426,55 +430,57 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         selector_languages = self.selector_viewlet.languages()
         tg = ITG(self.portal["en"])
 
+        expected_languages = [
+            {
+                "code": "en",
+                "flag": "countryflag/gb",
+                "name": "English",
+                "native": "English",
+                "url": SELECTOR_VIEW_TEMPLATE
+                % {
+                    "url": self.portal.absolute_url(),
+                    "tg": tg,
+                    "lang": "en",
+                    "query": "?set_language=en",
+                },
+                "selected": True,
+                "translated": True,
+            },
+            {
+                "code": "ca",
+                "flag": "languageflag/ca",
+                "name": "Catalan",
+                "native": "Catal\xe0",
+                "url": SELECTOR_VIEW_TEMPLATE
+                % {
+                    "url": self.portal.absolute_url(),
+                    "tg": tg,
+                    "lang": "ca",
+                    "query": "?set_language=ca",
+                },
+                "selected": False,
+                "translated": True,
+            },
+            {
+                "code": "es",
+                "flag": "countryflag/es",
+                "name": "Spanish",
+                "native": "Espa\xf1ol",
+                "url": SELECTOR_VIEW_TEMPLATE
+                % {
+                    "url": self.portal.absolute_url(),
+                    "tg": tg,
+                    "lang": "es",
+                    "query": "?set_language=es",
+                },
+                "selected": False,
+                "translated": True,
+            },
+        ]
+
         self.assertEqual(
-            selector_languages,
-            [
-                {
-                    "code": "en",
-                    "flag": "/++resource++country-flags/gb.gif",
-                    "name": "English",
-                    "native": "English",
-                    "url": SELECTOR_VIEW_TEMPLATE
-                    % {
-                        "url": self.portal.absolute_url(),
-                        "tg": tg,
-                        "lang": "en",
-                        "query": "?set_language=en",
-                    },
-                    "selected": True,
-                    "translated": True,
-                },
-                {
-                    "code": "ca",
-                    "flag": "/++resource++language-flags/ca.gif",
-                    "name": "Catalan",
-                    "native": "Catal\xe0",
-                    "url": SELECTOR_VIEW_TEMPLATE
-                    % {
-                        "url": self.portal.absolute_url(),
-                        "tg": tg,
-                        "lang": "ca",
-                        "query": "?set_language=ca",
-                    },
-                    "selected": False,
-                    "translated": True,
-                },
-                {
-                    "code": "es",
-                    "flag": "/++resource++country-flags/es.gif",
-                    "name": "Spanish",
-                    "native": "Espa\xf1ol",
-                    "url": SELECTOR_VIEW_TEMPLATE
-                    % {
-                        "url": self.portal.absolute_url(),
-                        "tg": tg,
-                        "lang": "es",
-                        "query": "?set_language=es",
-                    },
-                    "selected": False,
-                    "translated": True,
-                },
-            ],
+            json.dumps(selector_languages, sort_keys=True),
+            json.dumps(expected_languages, sort_keys=True),
         )
 
         # Check EN
@@ -927,55 +933,56 @@ class TestLanguageSelectorSetLanguage(unittest.TestCase):
         selector_languages = self.selector_viewlet.languages()
         tg = ITG(self.portal["en"])
 
-        self.assertListEqual(
-            selector_languages,
-            [
-                {
-                    "code": "en",
-                    "flag": "/++resource++country-flags/gb.gif",
-                    "name": "English",
-                    "native": "English",
-                    "url": SELECTOR_VIEW_TEMPLATE
-                    % {
-                        "url": self.portal.absolute_url(),
-                        "tg": tg,
-                        "lang": "en",
-                        "query": "?set_language=en",
-                    },
-                    "selected": True,
-                    "translated": True,
+        expected_languages = [
+            {
+                "code": "en",
+                "flag": "countryflag/gb",
+                "name": "English",
+                "native": "English",
+                "url": SELECTOR_VIEW_TEMPLATE
+                % {
+                    "url": self.portal.absolute_url(),
+                    "tg": tg,
+                    "lang": "en",
+                    "query": "?set_language=en",
                 },
-                {
-                    "code": "ca",
-                    "flag": "/++resource++language-flags/ca.gif",
-                    "name": "Catalan",
-                    "native": "Catal\xe0",
-                    "url": SELECTOR_VIEW_TEMPLATE
-                    % {
-                        "url": self.portal.absolute_url(),
-                        "tg": tg,
-                        "lang": "ca",
-                        "query": "?set_language=ca",
-                    },
-                    "selected": False,
-                    "translated": True,
+                "selected": True,
+                "translated": True,
+            },
+            {
+                "code": "ca",
+                "flag": "languageflag/ca",
+                "name": "Catalan",
+                "native": "Catal\xe0",
+                "url": SELECTOR_VIEW_TEMPLATE
+                % {
+                    "url": self.portal.absolute_url(),
+                    "tg": tg,
+                    "lang": "ca",
+                    "query": "?set_language=ca",
                 },
-                {
-                    "code": "es",
-                    "flag": "/++resource++country-flags/es.gif",
-                    "name": "Spanish",
-                    "native": "Espa\xf1ol",
-                    "url": SELECTOR_VIEW_TEMPLATE
-                    % {
-                        "url": self.portal.absolute_url(),
-                        "tg": tg,
-                        "lang": "es",
-                        "query": "?set_language=es",
-                    },
-                    "selected": False,
-                    "translated": True,
+                "selected": False,
+                "translated": True,
+            },
+            {
+                "code": "es",
+                "flag": "countryflag/es",
+                "name": "Spanish",
+                "native": "Espa\xf1ol",
+                "url": SELECTOR_VIEW_TEMPLATE
+                % {
+                    "url": self.portal.absolute_url(),
+                    "tg": tg,
+                    "lang": "es",
+                    "query": "?set_language=es",
                 },
-            ],
+                "selected": False,
+                "translated": True,
+            },
+        ]
+        self.assertEqual(
+            json.dumps(selector_languages, sort_keys=True),
+            json.dumps(expected_languages, sort_keys=True),
         )
 
     def test_set_language_is_not_present_when_always_set_cookie_is_set(self):
@@ -989,53 +996,85 @@ class TestLanguageSelectorSetLanguage(unittest.TestCase):
         selector_languages = self.selector_viewlet.languages()
         tg = ITG(self.portal["en"])
 
-        self.assertListEqual(
-            selector_languages,
-            [
-                {
-                    "code": "en",
-                    "flag": "/++resource++country-flags/gb.gif",
-                    "name": "English",
-                    "native": "English",
-                    "url": SELECTOR_VIEW_TEMPLATE
-                    % {
-                        "url": self.portal.absolute_url(),
-                        "tg": tg,
-                        "lang": "en",
-                        "query": "",
-                    },
-                    "selected": True,
-                    "translated": True,
+        expected_languages = [
+            {
+                "code": "en",
+                "flag": "countryflag/gb",
+                "name": "English",
+                "native": "English",
+                "url": SELECTOR_VIEW_TEMPLATE
+                % {
+                    "url": self.portal.absolute_url(),
+                    "tg": tg,
+                    "lang": "en",
+                    "query": "",
                 },
-                {
-                    "code": "ca",
-                    "flag": "/++resource++language-flags/ca.gif",
-                    "name": "Catalan",
-                    "native": "Catal\xe0",
-                    "url": SELECTOR_VIEW_TEMPLATE
-                    % {
-                        "url": self.portal.absolute_url(),
-                        "tg": tg,
-                        "lang": "ca",
-                        "query": "",
-                    },
-                    "selected": False,
-                    "translated": True,
+                "selected": True,
+                "translated": True,
+            },
+            {
+                "code": "ca",
+                "flag": "languageflag/ca",
+                "name": "Catalan",
+                "native": "Catal\xe0",
+                "url": SELECTOR_VIEW_TEMPLATE
+                % {
+                    "url": self.portal.absolute_url(),
+                    "tg": tg,
+                    "lang": "ca",
+                    "query": "",
                 },
-                {
-                    "code": "es",
-                    "flag": "/++resource++country-flags/es.gif",
-                    "name": "Spanish",
-                    "native": "Espa\xf1ol",
-                    "url": SELECTOR_VIEW_TEMPLATE
-                    % {
-                        "url": self.portal.absolute_url(),
-                        "tg": tg,
-                        "lang": "es",
-                        "query": "",
-                    },
-                    "selected": False,
-                    "translated": True,
+                "selected": False,
+                "translated": True,
+            },
+            {
+                "code": "es",
+                "flag": "countryflag/es",
+                "name": "Spanish",
+                "native": "Espa\xf1ol",
+                "url": SELECTOR_VIEW_TEMPLATE
+                % {
+                    "url": self.portal.absolute_url(),
+                    "tg": tg,
+                    "lang": "es",
+                    "query": "",
                 },
-            ],
+                "selected": False,
+                "translated": True,
+            },
+        ]
+
+        self.assertEqual(
+            json.dumps(selector_languages, sort_keys=True),
+            json.dumps(expected_languages, sort_keys=True),
         )
+
+
+class TestLanguageSelectorDisplayOptions(unittest.TestCase):
+
+    layer = PAM_FUNCTIONAL_TESTING
+
+    def setUp(self):
+        # Set test variables
+        self.portal = self.layer['portal']
+        self.portal_url = self.portal.absolute_url()
+        self.request = self.layer['request']
+        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
+
+        # Setup testbrowser
+        self.browser = Browser(self.layer['app'])
+        self.browser.handleErrors = False
+
+    def test_language_selector_flag_is_a_svg(self):
+
+        registry = getUtility(IRegistry)
+        self.settings = registry.forInterface(ILanguageSchema, prefix='plone')
+        self.settings.display_flags = True
+        self.settings.always_show_selector = True
+
+        transaction.commit()
+
+        self.browser.open(self.portal_url)
+        output = lxml.html.fromstring(self.browser.contents)
+        svgs = output.xpath('//svg[contains(@class, "plone-icon-flag")]')
+        self.assertGreater(len(svgs), 0)
