@@ -8,6 +8,18 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0a12 (2022-06-07)
+---------------------
+
+New features:
+
+
+- Use SVG Flags in Language Selector
+  Update Markup in Language Selector
+  Prepare of use the Icon Resolver in Plone 6
+  [1letter] (#387)
+
+
 6.0.0a11 (2022-05-24)
 ---------------------
 
