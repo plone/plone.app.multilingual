@@ -5,7 +5,7 @@ var labelType, useGradients, nativeTextSupport, animate;
       iStuff = ua.match(/iPhone/i) || ua.match(/iPad/i),
       typeOfCanvas = typeof HTMLCanvasElement,
       nativeCanvasSupport = (typeOfCanvas == 'object' || typeOfCanvas == 'function'),
-      textSupport = nativeCanvasSupport 
+      textSupport = nativeCanvasSupport
         && (typeof document.createElement('canvas').getContext('2d').fillText == 'function');
   //I'm setting this based on the fact that ExCanvas provides text support for IE
   //and that as of today iPhone/iPad current text support is lame
@@ -18,7 +18,7 @@ var labelType, useGradients, nativeTextSupport, animate;
 var Log = {
   elem: false,
   write: function(text){
-    if (!this.elem) 
+    if (!this.elem)
       this.elem = document.getElementById('log');
     this.elem.innerHTML = text;
     this.elem.style.left = (500 - this.elem.offsetWidth / 2) + 'px';
@@ -29,7 +29,7 @@ var Log = {
 
 
 var load = function init(json){
-    
+
     var lang = '';
 
     //A client-side tree generator
@@ -58,7 +58,7 @@ var load = function init(json){
               'children': new_json.children
         };
     };
-    
+
     //Implement a node rendering function called 'nodeline' that plots a straight line
     //when contracting or expanding a subtree.
     $jit.ST.Plot.NodeTypes.implement({
@@ -81,7 +81,7 @@ var load = function init(json){
               }
           }
         }
-          
+
     });
 
     //init Spacetree
@@ -89,7 +89,7 @@ var load = function init(json){
     var st = new $jit.ST({
         'injectInto': 'translation_map_canvas',
         //set duration for the animation
-        duration: 800,
+        duration: 100,
         //set animation transition type
         transition: $jit.Trans.Quart.easeInOut,
         //set distance between node and its children
@@ -102,20 +102,20 @@ var load = function init(json){
         //nodes or edges
         Node: {
             height: 25,
-            width: 60,
+            width: 80,
             //use a custom
             //node rendering function
             type: 'nodeline',
-            color:'#23A4FF',
+            color:'#eed',
             lineWidth: 2,
             align:"center",
             overridable: true
         },
-        
+
         Edge: {
             type: 'bezier',
             lineWidth: 2,
-            color:'#23A4FF',
+            color:'#ccc',
             overridable: true
         },
 
@@ -131,15 +131,15 @@ var load = function init(json){
           var ans = getTree(nodeId, level);
           onComplete.onComplete(nodeId, ans);
         },
-        
+
         onBeforeCompute: function(node){
             Log.write("loading " + node.name);
         },
-        
+
         onAfterCompute: function(){
             Log.write("done");
         },
-        
+
         //This method is called on DOM label creation.
         //Use this method to add event handlers and styles to
         //your node.
@@ -171,8 +171,9 @@ var load = function init(json){
             style.textAlign= 'center';
             style.textDecoration = 'underline';
             style.paddingTop = '3px';
+            style.lineHeight = '1';
         },
-        
+
         //This method is called right before plotting
         //a node. It's useful for changing an individual node
         //style properties before plotting it.
@@ -188,7 +189,7 @@ var load = function init(json){
                 delete node.data.$color;
             }
         },
-        
+
         //This method is called right before plotting
         //an edge. It's useful for changing an individual edge
         //style properties before plotting it.
@@ -196,7 +197,7 @@ var load = function init(json){
         //override the Edge global style properties.
         onBeforePlotLine: function(adj){
             if (adj.nodeFrom.selected && adj.nodeTo.selected) {
-                adj.data.$color = "#eed";
+                adj.data.$color = "#23A4FF";
                 adj.data.$lineWidth = 3;
             }
             else {
@@ -229,11 +230,11 @@ var load = function init(json){
 
     });
 /*
-    var top = get('r-top'), 
-    left = get('r-left'), 
-    bottom = get('r-bottom'), 
+    var top = get('r-top'),
+    left = get('r-left'),
+    bottom = get('r-bottom'),
     right = get('r-right');
-    
+
     function changeHandler() {
         if(this.checked) {
             top.disabled = bottom.disabled = right.disabled = left.disabled = true;
@@ -244,7 +245,7 @@ var load = function init(json){
             });
         }
     };
-    
+
     top.onchange = left.onchange = bottom.onchange = right.onchange = changeHandler;
     //end
 */
