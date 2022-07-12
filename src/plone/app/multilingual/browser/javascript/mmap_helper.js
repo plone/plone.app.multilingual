@@ -152,7 +152,7 @@ var load = function init(json){
                 html += "<ul>";
                 for (var key in data) {
                    html += "<li><b>" + key + " :</b>";
-                   html += "<a href='" + data[key].url + "''>";
+                   html += "<a target='_blank' href='" + data[key].url + "''>";
                    html += data[key].title;
                    html += "</a></li>";
                 }
