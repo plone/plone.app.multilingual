@@ -110,7 +110,7 @@
                   <li>
                     <span i18n:translate="missing_languages">Missing languages: </span>
                     <tal:block2 repeat="missing canonical/missing">
-                      <a href="" tal:attributes="href string:$last_url/@@create_translation?form.widgets.language=$missing&form.buttons.create=1" tal:content="missing">
+                      <a href="" tal:attributes="href string:$last_url/@@create_translation?language=$missing" tal:content="missing">
                         lang
                       </a>
                     </tal:block2>
