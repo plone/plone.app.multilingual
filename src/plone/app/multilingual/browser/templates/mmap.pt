@@ -16,6 +16,7 @@
   #pam_mmap_toolbar {
     border: 1px solid #000;
     padding: 20px;
+    position: relative;
   }
 
   #pam_mmap_language_toolbar {
@@ -33,7 +34,7 @@
       padding: 20px;
       position: absolute;
       right: 72px;
-      top: 200px;
+      top: 5px;
       width: 40%;
   }
 
