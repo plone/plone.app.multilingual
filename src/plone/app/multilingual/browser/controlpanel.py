@@ -166,10 +166,7 @@ class multilingualMapViewJSON(BrowserView):
                             "title": translated_obj.getId(),
                         }
                     else:
-                        url_to_create = (
-                            sr.getURL() + "/@@create_translation?form.widgets.language"
-                            "=%s&form.buttons.create=1" % lang
-                        )
+                        url_to_create = f"{sr.getURL()}/@@create_translation?language={lang}"
                         translations[lang] = {
                             "url": url_to_create,
                             "title": _("Not translated"),
