@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0b1 (2022-07-21)
+--------------------
+
+Bug fixes:
+
+
+- Improve usability of multilingual-map: Fix links to create_translation and open in new tab, speed up animation.
+  [pbauer] (#402)
+
+
 6.0.0a12 (2022-06-07)
 ---------------------
 
