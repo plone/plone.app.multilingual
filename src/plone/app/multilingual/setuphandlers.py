@@ -58,14 +58,10 @@ def enable_translatable_behavior(portal):
     )
     for fti in dx_ftis:
         # Enable translatable behavior for all types
-        behaviors = list(fti.behaviors)
-        behaviors.extend(
-            [
-                "plone.translatable",
-            ]
-        )
-        behaviors = tuple(set(behaviors))
-        fti._updateProperty("behaviors", behaviors)
+        if "plone.translatable" not in fti.behaviors:
+            behaviors = list(fti.behaviors)
+            behaviors.append("plone.translatable")
+            fti._updateProperty("behaviors", tuple(behaviors))
 
 
 def step_uninstall_various(context):
