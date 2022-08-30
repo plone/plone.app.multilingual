@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0b2 (2022-08-30)
+--------------------
+
+Bug fixes:
+
+
+- Fix installation to preserve existing order of behaviors. [davisagli] (#403)
+
+
 6.0.0b1 (2022-07-21)
 --------------------
 
