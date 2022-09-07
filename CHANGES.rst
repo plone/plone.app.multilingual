@@ -8,6 +8,18 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0b3 (2022-09-07)
+--------------------
+
+Bug fixes:
+
+
+- Grant the "plone.app.multilingual: Manage Translations" permission to the Site Administrator role.
+  This change is not applied automatically to existing sites. You can apply it manually using
+  the /manage_access view of the Plone site, or using rolemap.xml in a GenericSetup profile.
+  [davisagli] (#405)
+
+
 6.0.0b2 (2022-08-30)
 --------------------
 
