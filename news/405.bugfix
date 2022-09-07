@@ -1,4 +1,4 @@
-- Grant the "plone.app.multilingual: Manage Translations" permission to the Site Administrator role.
-  This change is not applied automatically to existing sites. You can apply it manually using
-  the /manage_access view of the Plone site, or using rolemap.xml in a GenericSetup profile.
-  [davisagli]
+Grant the "plone.app.multilingual: Manage Translations" permission to the Site Administrator role.
+This change is not applied automatically to existing sites. You can apply it manually using
+the /manage_access view of the Plone site, or using rolemap.xml in a GenericSetup profile.
+[davisagli]
