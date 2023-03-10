@@ -14,11 +14,13 @@ from zope.component import getMultiAdapter
 from zope.event import notify
 from zope.interface import alsoProvides
 from zope.interface import noLongerProvides
+from zope.lifecycleevent import modified
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.pagetemplate.interfaces import IPageTemplate
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.schema._bootstrapinterfaces import RequiredMissing
 
+import transaction
 import unittest
 
 
@@ -147,6 +149,26 @@ class TestLanguageIndependentFieldOnAddTranslationForm(unittest.TestCase):
             name="input",
         )
         self.assertNotIn("<textarea", widget_template(self.widget))
+
+    def test_field_copied_to_translation_when_modified(self):
+        en_feedback = self.portal.en["test-feedback"]
+        ca_feedback = api.translate(en_feedback, "ca")
+        del en_feedback.REQUEST.translation_info
+
+        en_feedback.mandatory_feedback = "modified"
+        modified(en_feedback)
+        self.assertEqual(ca_feedback.mandatory_feedback, "modified")
+
+    def test_field_not_copied_if_not_modified(self):
+        en_feedback = self.portal.en["test-feedback"]
+        ca_feedback = api.translate(en_feedback, "ca")
+        del en_feedback.REQUEST.translation_info
+
+        # commit changes so far, so that we can check to see
+        # if the translation was updated
+        transaction.commit()
+        modified(en_feedback)
+        self.assertNotIn(ca_feedback, self.portal._p_jar._registered_objects)
 
 
 class TestLanguageIndependentRelationField(unittest.TestCase):
