@@ -55,9 +55,9 @@ class LanguageIndependentFieldsManager:
         target_language = queryAdapter(translation, ILanguage).get_language()
 
         for schema in iterSchemata(self.context):
+            context_adapter = None
+            translation_adapter = None
             for field_name in schema:
-                context_adapter = None
-                translation_adapter = None
                 if ILanguageIndependentField.providedBy(schema[field_name]):
                     if context_adapter is None:
                         context_adapter = schema(self.context)
