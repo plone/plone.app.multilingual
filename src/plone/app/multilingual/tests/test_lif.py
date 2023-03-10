@@ -14,7 +14,8 @@ from zope.component import getMultiAdapter
 from zope.event import notify
 from zope.interface import alsoProvides
 from zope.interface import noLongerProvides
-from zope.lifecycleevent import ObjectModifiedEvent, modified
+from zope.lifecycleevent import modified
+from zope.lifecycleevent import ObjectModifiedEvent
 from zope.pagetemplate.interfaces import IPageTemplate
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.schema._bootstrapinterfaces import RequiredMissing
