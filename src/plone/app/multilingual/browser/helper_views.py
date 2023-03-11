@@ -21,21 +21,8 @@ from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component.hooks import getSite
 from zope.interface import implementer
-from zope.interface import Interface
 from zope.publisher.interfaces import IPublishTraverse
 from zope.publisher.interfaces import NotFound
-
-
-try:
-    from Products.ATContentTypes.interfaces.factory import IFactoryTool
-except ImportError:
-    try:
-        from plone.base.interfaces.factory import IFactoryTool
-    except ImportError:
-        # gone in Plone 5.1 w/o ATCT
-
-        class IFactoryTool(Interface):
-            pass
 
 
 @implementer(IPublishTraverse)
@@ -180,9 +167,6 @@ class selector_view(universal_link):
                 # Having a permission issue on the root is fine;
                 # not so much for everything else so that is checked there
                 return self.wrapDestination(item.absolute_url())
-            elif IFactoryTempFolder.providedBy(item) or IFactoryTool.providedBy(item):
-                # TempFolder or portal_factory, can't have a translation
-                continue
             try:
                 canonical = ITranslationManager(item)
             except TypeError:
