@@ -13,7 +13,7 @@ from plone.dexterity.interfaces import IDexterityContent
 from plone.uuid.interfaces import IUUID
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ILanguage
+from plone.base.interfaces import ILanguage
 from zope.component.hooks import getSite
 from zope.globalrequest import getRequest
 from zope.lifecycleevent import modified

@@ -11,7 +11,7 @@ from plone.registry.interfaces import IRegistry
 from plone.z3cform.fieldsets.group import Group
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ILanguage
+from plone.base.interfaces import ILanguage
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component import adapter
 from zope.component import getUtility

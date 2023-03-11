@@ -12,7 +12,7 @@ from plone.app.multilingual.manager import TranslationManager
 from plone.i18n.locales.interfaces import IContentLanguageAvailability
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ILanguage
+from plone.base.interfaces import ILanguage
 from Products.Five import BrowserView
 from zope.component import getMultiAdapter
 from zope.component import getUtility

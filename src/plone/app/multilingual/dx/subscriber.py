@@ -10,7 +10,7 @@ from plone.app.multilingual.interfaces import ITranslationManager
 from plone.dexterity.interfaces import IDexterityFTI
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ILanguage
+from plone.base.interfaces import ILanguage
 from zope.component import getUtility
 from zope.component import queryAdapter
 from zope.event import notify

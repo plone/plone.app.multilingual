@@ -6,8 +6,8 @@ from plone.app.multilingual.interfaces import ITranslationManager
 from plone.locking.interfaces import ILockable
 from Products.CMFCore.exceptions import ResourceLockedError
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ILanguage
-from Products.CMFPlone.interfaces import IPloneSiteRoot
+from plone.base.interfaces import ILanguage
+from plone.base.interfaces import IPloneSiteRoot
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zc.relation.interfaces import ICatalog

@@ -30,7 +30,7 @@ try:
     from Products.ATContentTypes.interfaces.factory import IFactoryTool
 except ImportError:
     try:
-        from Products.CMFPlone.interfaces.factory import IFactoryTool
+        from plone.base.interfaces.factory import IFactoryTool
     except ImportError:
         # gone in Plone 5.1 w/o ATCT
 

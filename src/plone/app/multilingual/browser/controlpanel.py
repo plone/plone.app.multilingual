@@ -8,7 +8,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.controlpanel.browser.language import (  # noqa
     LanguageControlPanelForm,
 )
-from Products.CMFPlone.interfaces import ILanguage
+from plone.base.interfaces import ILanguage
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage

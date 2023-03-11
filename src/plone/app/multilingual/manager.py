@@ -15,7 +15,7 @@ from plone.protect.interfaces import IDisableCSRFProtection
 from plone.uuid.handlers import addAttributeUUID
 from plone.uuid.interfaces import IUUID
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ILanguage
+from plone.base.interfaces import ILanguage
 from zope.component.hooks import getSite
 from zope.event import notify
 from zope.globalrequest import getRequest

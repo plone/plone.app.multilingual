@@ -19,7 +19,7 @@ from plone.memoize import view
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.defaultpage import is_default_page
-from Products.CMFPlone.interfaces import ILanguage
+from plone.base.interfaces import ILanguage
 from Products.CMFPlone.utils import safe_unicode
 from zope.browsermenu.menu import BrowserMenu
 from zope.browsermenu.menu import BrowserSubMenuItem

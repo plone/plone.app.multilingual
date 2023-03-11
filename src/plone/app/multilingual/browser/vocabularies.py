@@ -3,7 +3,7 @@ from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.vocabularies.catalog import CatalogVocabularyFactory
 from plone.i18n.locales.interfaces import ILanguageAvailability
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ILanguage
+from plone.base.interfaces import ILanguage
 from zope.component import getGlobalSiteManager
 from zope.interface import implementer
 from zope.interface import provider

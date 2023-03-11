@@ -11,7 +11,7 @@ from plone.dexterity.interfaces import IDexterityFTI
 from plone.i18n.locales.languages import _combinedlanguagelist
 from plone.i18n.locales.languages import _languagelist
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ILanguage
+from plone.base.interfaces import ILanguage
 from Products.CMFPlone.utils import _createObjectByType
 from Products.Five import BrowserView
 from zope.component.hooks import getSite

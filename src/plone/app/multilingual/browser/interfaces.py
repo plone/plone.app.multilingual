@@ -5,7 +5,7 @@ from plone.app.z3cform.widget import RelatedItemsFieldWidget
 from plone.autoform import directives
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.supermodel import model
-from Products.CMFPlone.interfaces import IPloneSiteRoot
+from plone.base.interfaces import IPloneSiteRoot
 from z3c.relationfield.schema import RelationChoice
 from zope import interface
 from zope import schema
