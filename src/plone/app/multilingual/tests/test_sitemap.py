@@ -2,9 +2,9 @@ from gzip import GzipFile
 from io import BytesIO
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
+from plone.base.interfaces import ISiteSchema
 from plone.dexterity.utils import createContentInContainer
 from plone.registry.interfaces import IRegistry
-from plone.base.interfaces import ISiteSchema
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.interface import alsoProvides

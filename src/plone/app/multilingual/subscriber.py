@@ -9,11 +9,11 @@ from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.app.multilingual.itg import addAttributeTG
+from plone.base.interfaces import ILanguage
 from plone.dexterity.interfaces import IDexterityContent
 from plone.uuid.interfaces import IUUID
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
-from plone.base.interfaces import ILanguage
 from zope.component.hooks import getSite
 from zope.globalrequest import getRequest
 from zope.lifecycleevent import modified

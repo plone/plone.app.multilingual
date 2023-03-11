@@ -4,6 +4,7 @@ from plone.app.multilingual.events import ObjectTranslatedEvent
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITG
 from plone.app.uuid.utils import uuidToObject
+from plone.base.interfaces import ILanguage
 from plone.dexterity.browser.add import DefaultAddForm
 from plone.dexterity.browser.add import DefaultAddView
 from plone.dexterity.interfaces import IDexterityContent
@@ -11,7 +12,6 @@ from plone.registry.interfaces import IRegistry
 from plone.z3cform.fieldsets.group import Group
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
-from plone.base.interfaces import ILanguage
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component import adapter
 from zope.component import getUtility

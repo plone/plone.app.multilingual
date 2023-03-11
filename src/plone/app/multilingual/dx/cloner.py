@@ -2,8 +2,8 @@ from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
 from plone.app.multilingual.interfaces import ITranslationCloner
 from plone.app.multilingual.interfaces import ITranslationManager
-from plone.dexterity.utils import iterSchemata
 from plone.base.interfaces import ILanguage
+from plone.dexterity.utils import iterSchemata
 from Products.CMFPlone.utils import safe_unicode
 from z3c.relationfield import RelationValue
 from z3c.relationfield.interfaces import IRelationList

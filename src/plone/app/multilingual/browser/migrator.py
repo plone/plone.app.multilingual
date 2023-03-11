@@ -3,11 +3,11 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from plone.app.multilingual import _
 from plone.app.multilingual.interfaces import ITranslationManager
+from plone.base.interfaces import ILanguage
+from plone.base.interfaces import IPloneSiteRoot
 from plone.locking.interfaces import ILockable
 from Products.CMFCore.exceptions import ResourceLockedError
 from Products.CMFCore.utils import getToolByName
-from plone.base.interfaces import ILanguage
-from plone.base.interfaces import IPloneSiteRoot
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zc.relation.interfaces import ICatalog

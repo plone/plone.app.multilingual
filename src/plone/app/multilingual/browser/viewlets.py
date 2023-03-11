@@ -1,9 +1,9 @@
 from plone.app.layout.viewlets.common import ViewletBase
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
+from plone.base.interfaces import ILanguage
 from plone.memoize import ram
 from Products.CMFCore.utils import getToolByName
-from plone.base.interfaces import ILanguage
 from urllib.parse import quote_plus
 
 

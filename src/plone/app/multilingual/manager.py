@@ -11,11 +11,11 @@ from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import NOTG
 from plone.app.multilingual.itg import addAttributeTG
 from plone.app.uuid.utils import uuidToObject
+from plone.base.interfaces import ILanguage
 from plone.protect.interfaces import IDisableCSRFProtection
 from plone.uuid.handlers import addAttributeUUID
 from plone.uuid.interfaces import IUUID
 from Products.CMFCore.utils import getToolByName
-from plone.base.interfaces import ILanguage
 from zope.component.hooks import getSite
 from zope.event import notify
 from zope.globalrequest import getRequest
