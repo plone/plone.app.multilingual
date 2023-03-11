@@ -10,7 +10,6 @@ import unittest
 
 
 class TestUninstall(unittest.TestCase):
-
     layer = PLONE_APP_MULTILINGUAL_INTEGRATION_TESTING
 
     def setUp(self):

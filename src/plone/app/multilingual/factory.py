@@ -6,7 +6,7 @@ from plone.app.multilingual.interfaces import ITranslationFactory
 from plone.app.multilingual.interfaces import ITranslationIdChooser
 from plone.app.multilingual.interfaces import ITranslationLocator
 from plone.app.multilingual.interfaces import ITranslationManager
-from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
+from plone.base.interfaces.siteroot import IPloneSiteRoot
 from zope.interface import implementer
 
 

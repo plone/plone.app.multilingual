@@ -1,6 +1,6 @@
 # from plone.app.dexterity.behaviors.metadata import ICategorization
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
-from Products.CMFPlone.interfaces import ILanguage
+from plone.base.interfaces import ILanguage
 from zope.interface import implementer
 
 

@@ -4,8 +4,8 @@ from plone.app.multilingual.browser.vocabularies import untranslated_languages
 from plone.app.z3cform.widget import RelatedItemsFieldWidget
 from plone.autoform import directives
 from plone.autoform.interfaces import IFormFieldProvider
+from plone.base.interfaces import IPloneSiteRoot
 from plone.supermodel import model
-from Products.CMFPlone.interfaces import IPloneSiteRoot
 from z3c.relationfield.schema import RelationChoice
 from zope import interface
 from zope import schema
@@ -36,7 +36,6 @@ class ITranslateMenu(IBrowserMenu):
 
 
 class ICreateTranslation(interface.Interface):
-
     language = schema.Choice(
         title=_("title_language", default="Language"),
         source=untranslated_languages,
@@ -44,7 +43,6 @@ class ICreateTranslation(interface.Interface):
 
 
 class IUpdateLanguage(interface.Interface):
-
     language = schema.Choice(
         title=_("title_available_languages", default="Available languages"),
         description=_(
@@ -62,7 +60,6 @@ def request_language(context):
 
 
 class IConnectTranslation(model.Schema):
-
     language = schema.Choice(
         title=_("title_language", default="Language"),
         source=untranslated_languages,
@@ -75,11 +72,11 @@ class IConnectTranslation(model.Schema):
         required=True,
     )
     directives.widget(
-        'content',
+        "content",
         RelatedItemsFieldWidget,
         pattern_options={
-            'basePath': make_relation_root_path,
-        }
+            "basePath": make_relation_root_path,
+        },
     )
 
 

@@ -37,7 +37,6 @@ class MutableAttributeTG:
 
 @adapter(ITranslatable, IObjectCreatedEvent)
 def addAttributeTG(obj, event):
-
     if not IObjectCopiedEvent.providedBy(event) and getattr(
         aq_base(obj), ATTRIBUTE_NAME, None
     ):

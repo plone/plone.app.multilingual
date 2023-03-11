@@ -3,10 +3,10 @@ from plone.app.multilingual.browser.interfaces import IConnectTranslation
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.autoform.form import AutoExtensibleForm
 from plone.autoform.interfaces import IFormFieldProvider
+from plone.base.interfaces import ILanguage
 from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import IUUID
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ILanguage
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
@@ -26,13 +26,11 @@ class ModifyTranslationsForm(BrowserView):
         return registry["plone.available_languages"]
 
     def get_translation(self, language):
-
         manager = ITranslationManager(self.context)
         return manager.get_translation(language)
 
 
 class ConnectTranslation(AutoExtensibleForm, Form):
-
     schema = IFormFieldProvider(IConnectTranslation)
     ignoreContext = True
     label = _("label_connect_translation", default="Connect translation")
@@ -63,11 +61,9 @@ class ConnectTranslation(AutoExtensibleForm, Form):
 
 
 class DisconnectTranslation(BrowserView):
-
     tpl = ViewPageTemplateFile("templates/disconnect_translation.pt")
 
     def __call__(self):
-
         if self.request.form.get("submitted"):
             language = self.request.form["language"]
             catalog = getToolByName(self.context, "portal_catalog")

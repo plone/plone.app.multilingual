@@ -10,7 +10,6 @@ import unittest
 
 
 class TestDirectives(unittest.TestCase):
-
     layer = PAM_INTEGRATION_TESTING
 
     def test_schema_directives_store_tagged_values(self):

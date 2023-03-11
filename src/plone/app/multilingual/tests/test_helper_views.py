@@ -5,11 +5,11 @@ from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import TEST_USER_PASSWORD
+from plone.base.interfaces import ILanguage
 from plone.dexterity.utils import createContentInContainer
 from plone.i18n.interfaces import ILanguageSchema
 from plone.registry.interfaces import IRegistry
 from plone.testing.z2 import Browser
-from Products.CMFPlone.interfaces import ILanguage
 from zope.component import getUtility
 from zope.interface import alsoProvides
 
@@ -18,7 +18,6 @@ import unittest
 
 
 class PAMFuncTestHelperViews(unittest.TestCase):
-
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
@@ -52,7 +51,6 @@ class PAMFuncTestHelperViews(unittest.TestCase):
 
 
 class PAMIntTestHelperViews(unittest.TestCase):
-
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):

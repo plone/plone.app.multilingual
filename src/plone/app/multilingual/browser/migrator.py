@@ -3,11 +3,11 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from plone.app.multilingual import _
 from plone.app.multilingual.interfaces import ITranslationManager
+from plone.base.interfaces import ILanguage
+from plone.base.interfaces import IPloneSiteRoot
 from plone.locking.interfaces import ILockable
 from Products.CMFCore.exceptions import ResourceLockedError
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ILanguage
-from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zc.relation.interfaces import ICatalog
@@ -97,7 +97,6 @@ class LP2PAMView(BrowserView):
 
 
 class LP2PAMAfterView(BrowserView):
-
     template = ViewPageTemplateFile("templates/cleanup_results.pt")
     stepinfo = _("After migration relation cleanup")
 
@@ -306,7 +305,6 @@ class moveContentToProperRLF(BrowserView):
 
 
 class LP2PAMReindexLanguageIndex(BrowserView):
-
     template = ViewPageTemplateFile("templates/reindex-results.pt")
     stepinfo = "Reindex the LanguageIndex"
 

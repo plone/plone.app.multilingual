@@ -2,8 +2,8 @@ from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
 from plone.app.multilingual.interfaces import ILanguageIndependentFieldsManager
 from plone.app.multilingual.interfaces import ITranslationCloner
 from plone.app.multilingual.interfaces import ITranslationManager
+from plone.base.interfaces import ILanguage
 from plone.dexterity.utils import iterSchemata
-from Products.CMFPlone.interfaces import ILanguage
 from Products.CMFPlone.utils import safe_unicode
 from z3c.relationfield import RelationValue
 from z3c.relationfield.interfaces import IRelationList
@@ -90,7 +90,9 @@ class LanguageIndependentFieldsManager:
                     # But RelationValue.__eq__ is broken if the relation doesn't have a from_object,
                     # so for now we force field_changed to True for relations above.
                     if field_changed is None:
-                        translation_value = getattr(translation_adapter, field_name, _marker)
+                        translation_value = getattr(
+                            translation_adapter, field_name, _marker
+                        )
                         field_changed = value != translation_value
                     if field_changed:
                         changed = True

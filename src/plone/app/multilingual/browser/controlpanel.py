@@ -4,11 +4,11 @@ from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.registry.browser import controlpanel
 from plone.app.uuid.utils import uuidToObject
+from plone.base.interfaces import ILanguage
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.controlpanel.browser.language import (  # noqa
     LanguageControlPanelForm,
 )
-from Products.CMFPlone.interfaces import ILanguage
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
@@ -166,7 +166,9 @@ class multilingualMapViewJSON(BrowserView):
                             "title": translated_obj.getId(),
                         }
                     else:
-                        url_to_create = f"{sr.getURL()}/@@create_translation?language={lang}"
+                        url_to_create = (
+                            f"{sr.getURL()}/@@create_translation?language={lang}"
+                        )
                         translations[lang] = {
                             "url": url_to_create,
                             "title": _("Not translated"),

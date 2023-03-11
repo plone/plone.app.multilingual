@@ -1,7 +1,7 @@
 from plone.app.multilingual import logger
+from plone.base.interfaces import ILanguage
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ILanguage
 from Products.CMFPlone.utils import _createObjectByType
 from time import time
 from zope.component import getUtility
@@ -44,7 +44,6 @@ def migration_pam_1_to_2(context):
     logger.info("Starting migration of language folders.")
 
     for code, name in ltool.listSupportedLanguages():
-
         if code not in portal:
             continue
 
@@ -110,7 +109,6 @@ def migration_pam_1_to_2(context):
 
     # PHASE 4: Old shared folder
     if SHARED_NAME in portal:
-
         s5 = time()
         shared = portal[SHARED_NAME]
         logger.info(f"{SHARED_NAME} - Phase 4: Moving content to root...")
