@@ -61,7 +61,6 @@ class LanguageIndependentModifier:
         return field and field.value or False
 
     def handle_modified(self, content):
-
         fieldmanager = ILanguageIndependentFieldsManager(content)
         if not fieldmanager.has_independent_fields():
             return

@@ -18,7 +18,6 @@ import unittest
 
 
 class PAMFuncTestHelperViews(unittest.TestCase):
-
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
@@ -52,7 +51,6 @@ class PAMFuncTestHelperViews(unittest.TestCase):
 
 
 class PAMIntTestHelperViews(unittest.TestCase):
-
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):

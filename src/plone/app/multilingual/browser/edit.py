@@ -12,7 +12,6 @@ from zope.component import getUtility
 
 
 class MultilingualEditForm(DefaultEditForm):
-
     babel = ViewPageTemplateFile("templates/dexterity_edit.pt")
 
     def languages(self):

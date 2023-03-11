@@ -44,7 +44,6 @@ def migration_pam_1_to_2(context):
     logger.info("Starting migration of language folders.")
 
     for code, name in ltool.listSupportedLanguages():
-
         if code not in portal:
             continue
 
@@ -110,7 +109,6 @@ def migration_pam_1_to_2(context):
 
     # PHASE 4: Old shared folder
     if SHARED_NAME in portal:
-
         s5 = time()
         shared = portal[SHARED_NAME]
         logger.info(f"{SHARED_NAME} - Phase 4: Moving content to root...")

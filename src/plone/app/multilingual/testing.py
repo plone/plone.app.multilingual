@@ -40,7 +40,6 @@ except ImportError:
 
 
 class PloneAppMultilingualLayer(PloneSandboxLayer):
-
     defaultBases = (PLONE_APP_CONTENTTYPES_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
@@ -158,7 +157,6 @@ PLONE_APP_MULTILINGUAL_PRESET_INTEGRATION_TESTING = IntegrationTesting(
 
 
 class MultipleLanguagesLayer(z2.Layer):
-
     defaultBases = (PLONE_APP_MULTILINGUAL_PRESET_FIXTURE,)
 
 

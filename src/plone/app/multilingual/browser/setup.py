@@ -35,7 +35,6 @@ class SetupView(BrowserView):
 
 
 class SetupMultilingualSite:
-
     # portal_type that is added as root language folder
     folder_type = "LRF"
 

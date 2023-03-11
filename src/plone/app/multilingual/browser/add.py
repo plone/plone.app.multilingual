@@ -110,7 +110,6 @@ class MultilingualAddFormGroup(Group):
 
 @implementer(IMultilingualAddForm)
 class MultilingualAddForm(DefaultAddForm):
-
     babel = ViewPageTemplateFile("templates/dexterity_edit.pt")
 
     group_class = MultilingualAddFormGroup

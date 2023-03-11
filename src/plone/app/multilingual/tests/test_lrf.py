@@ -13,7 +13,6 @@ import unittest
 
 
 class TestLanguageRootFolder(unittest.TestCase):
-
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):

@@ -42,7 +42,6 @@ SELECTOR_VIEW_TEMPLATE = "%(url)s/@@multilingual-selector/%(tg)s/%(lang)s%(query
 
 
 class TestLanguageSelectorBasics(unittest.TestCase):
-
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
@@ -109,52 +108,52 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         selector_viewlet_languages = selector_viewlet.languages()
 
         expected_languages = [
-                {
-                    "code": "en",
-                    "flag": "countryflag/gb",
-                    "name": "English",
-                    "native": "English",
-                    "url": SELECTOR_VIEW_TEMPLATE
-                    % {
-                        "url": self.portal_url,
-                        "tg": ITG(a),
-                        "lang": "en",
-                        "query": "?set_language=en",
-                    },
-                    "selected": True,
-                    "translated": True,
+            {
+                "code": "en",
+                "flag": "countryflag/gb",
+                "name": "English",
+                "native": "English",
+                "url": SELECTOR_VIEW_TEMPLATE
+                % {
+                    "url": self.portal_url,
+                    "tg": ITG(a),
+                    "lang": "en",
+                    "query": "?set_language=en",
                 },
-                {
-                    "code": "ca",
-                    "flag": "languageflag/ca",
-                    "name": "Catalan",
-                    "native": "Catal\xe0",
-                    "url": SELECTOR_VIEW_TEMPLATE
-                    % {
-                        "url": self.portal_url,
-                        "tg": ITG(a),
-                        "lang": "ca",
-                        "query": "?set_language=ca",
-                    },
-                    "selected": False,
-                    "translated": True,
+                "selected": True,
+                "translated": True,
+            },
+            {
+                "code": "ca",
+                "flag": "languageflag/ca",
+                "name": "Catalan",
+                "native": "Catal\xe0",
+                "url": SELECTOR_VIEW_TEMPLATE
+                % {
+                    "url": self.portal_url,
+                    "tg": ITG(a),
+                    "lang": "ca",
+                    "query": "?set_language=ca",
                 },
-                {
-                    "code": "es",
-                    "flag": "countryflag/es",
-                    "name": "Spanish",
-                    "native": "Espa\xf1ol",
-                    "url": SELECTOR_VIEW_TEMPLATE
-                    % {
-                        "url": self.portal_url,
-                        "tg": ITG(a),
-                        "lang": "es",
-                        "query": "?set_language=es",
-                    },
-                    "selected": False,
-                    "translated": True,
+                "selected": False,
+                "translated": True,
+            },
+            {
+                "code": "es",
+                "flag": "countryflag/es",
+                "name": "Spanish",
+                "native": "Espa\xf1ol",
+                "url": SELECTOR_VIEW_TEMPLATE
+                % {
+                    "url": self.portal_url,
+                    "tg": ITG(a),
+                    "lang": "es",
+                    "query": "?set_language=es",
                 },
-            ]
+                "selected": False,
+                "translated": True,
+            },
+        ]
 
         self.assertEqual(
             json.dumps(selector_viewlet_languages, sort_keys=True),
@@ -618,7 +617,6 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.assertIn('lang="es"', self.browser.contents)
 
     def assertLanguagesPreserveQuery(self, policy):
-
         self.setUpPartiallyTranslatedContent()
         self.request["PATH_INFO"] = "/plone/en/test-folder/contact-info"
         self.request.form["uni"] = "pres\xd8rved"
@@ -773,7 +771,6 @@ class TestLanguageSelectorBasics(unittest.TestCase):
 
 
 class TestLanguageSelectorPostPath(unittest.TestCase):
-
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
@@ -833,7 +830,6 @@ class TestLanguageSelectorPostPath(unittest.TestCase):
 
 
 class TestLanguageSelectorAddQuery(unittest.TestCase):
-
     layer = PAM_INTEGRATION_TESTING
 
     def setUp(self):
@@ -1051,24 +1047,22 @@ class TestLanguageSelectorSetLanguage(unittest.TestCase):
 
 
 class TestLanguageSelectorDisplayOptions(unittest.TestCase):
-
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
         # Set test variables
-        self.portal = self.layer['portal']
+        self.portal = self.layer["portal"]
         self.portal_url = self.portal.absolute_url()
-        self.request = self.layer['request']
-        alsoProvides(self.layer['request'], IPloneAppMultilingualInstalled)
+        self.request = self.layer["request"]
+        alsoProvides(self.layer["request"], IPloneAppMultilingualInstalled)
 
         # Setup testbrowser
-        self.browser = Browser(self.layer['app'])
+        self.browser = Browser(self.layer["app"])
         self.browser.handleErrors = False
 
     def test_language_selector_flag_is_a_svg(self):
-
         registry = getUtility(IRegistry)
-        self.settings = registry.forInterface(ILanguageSchema, prefix='plone')
+        self.settings = registry.forInterface(ILanguageSchema, prefix="plone")
         self.settings.display_flags = True
         self.settings.always_show_selector = True
 

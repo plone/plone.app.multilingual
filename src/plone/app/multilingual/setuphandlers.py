@@ -80,7 +80,6 @@ def disable_translatable_behavior(portal):
     all_ftis = types_tool.listTypeInfo()
     dx_ftis = [x for x in all_ftis if getattr(x, "behaviors", False)]
     for fti in dx_ftis:
-
         # Disable translatable behavior from all types
         behaviors = [i for i in fti.behaviors if i != "plone.translatable"]
         fti._updateProperty("behaviors", behaviors)

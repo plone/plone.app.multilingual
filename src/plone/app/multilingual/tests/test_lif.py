@@ -25,7 +25,6 @@ import unittest
 
 
 class TestLanguageIndependentFieldOnAddTranslationForm(unittest.TestCase):
-
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
@@ -172,7 +171,6 @@ class TestLanguageIndependentFieldOnAddTranslationForm(unittest.TestCase):
 
 
 class TestLanguageIndependentRelationField(unittest.TestCase):
-
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):

@@ -37,7 +37,6 @@ class universal_link(BrowserView):
         self.lang = None
 
     def publishTraverse(self, request, name):
-
         if self.tg is None:  # ../@@universal-link/translationgroup
             self.tg = name
         elif self.lang is None:  # ../@@universal-link/translationgroup/lang
@@ -242,7 +241,6 @@ class not_translated_yet(BrowserView):
             return []
 
     def has_any_translation(self):
-
         if self.tg is not None:
             return len(self.tg.get_restricted_translations().items()) > 0
         else:

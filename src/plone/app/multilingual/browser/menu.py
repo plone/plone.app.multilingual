@@ -526,7 +526,6 @@ class TranslateMenu(BrowserMenu):
 
 @implementer(ITranslateSubMenuItem)
 class TranslateSubMenuItem(BrowserSubMenuItem):
-
     title = _("label_translate_menu", default="Translate")
     description = _(
         "title_translate_menu", default="Manage translations for your content."

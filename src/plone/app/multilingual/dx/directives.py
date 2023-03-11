@@ -33,7 +33,6 @@ class languageindependent(MetadataListDirective):
 
 
 class LanguageIndependentFieldsPlugin(CheckerPlugin):
-
     key = LANGUAGE_INDEPENDENT_KEY
 
     def __call__(self):

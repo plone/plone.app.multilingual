@@ -90,7 +90,9 @@ class LanguageIndependentFieldsManager:
                     # But RelationValue.__eq__ is broken if the relation doesn't have a from_object,
                     # so for now we force field_changed to True for relations above.
                     if field_changed is None:
-                        translation_value = getattr(translation_adapter, field_name, _marker)
+                        translation_value = getattr(
+                            translation_adapter, field_name, _marker
+                        )
                         field_changed = value != translation_value
                     if field_changed:
                         changed = True

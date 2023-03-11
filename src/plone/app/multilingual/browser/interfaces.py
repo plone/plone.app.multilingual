@@ -36,7 +36,6 @@ class ITranslateMenu(IBrowserMenu):
 
 
 class ICreateTranslation(interface.Interface):
-
     language = schema.Choice(
         title=_("title_language", default="Language"),
         source=untranslated_languages,
@@ -44,7 +43,6 @@ class ICreateTranslation(interface.Interface):
 
 
 class IUpdateLanguage(interface.Interface):
-
     language = schema.Choice(
         title=_("title_available_languages", default="Available languages"),
         description=_(
@@ -62,7 +60,6 @@ def request_language(context):
 
 
 class IConnectTranslation(model.Schema):
-
     language = schema.Choice(
         title=_("title_language", default="Language"),
         source=untranslated_languages,
@@ -75,11 +72,11 @@ class IConnectTranslation(model.Schema):
         required=True,
     )
     directives.widget(
-        'content',
+        "content",
         RelatedItemsFieldWidget,
         pattern_options={
-            'basePath': make_relation_root_path,
-        }
+            "basePath": make_relation_root_path,
+        },
     )
 
 

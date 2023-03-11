@@ -97,7 +97,6 @@ class LP2PAMView(BrowserView):
 
 
 class LP2PAMAfterView(BrowserView):
-
     template = ViewPageTemplateFile("templates/cleanup_results.pt")
     stepinfo = _("After migration relation cleanup")
 
@@ -306,7 +305,6 @@ class moveContentToProperRLF(BrowserView):
 
 
 class LP2PAMReindexLanguageIndex(BrowserView):
-
     template = ViewPageTemplateFile("templates/reindex-results.pt")
     stepinfo = "Reindex the LanguageIndex"
 
