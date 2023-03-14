@@ -8,6 +8,18 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.1 (2023-03-14)
+------------------
+
+Bug fixes:
+
+
+- When an item is modified, only copy language-independent field values to translations if they have changed. [davisagli] (#408)
+- Resolve deprecation warnings (plone.base).
+  Get rid of a Archetypes leftover.
+  [jensens] (#410)
+
+
 6.0.0 (2022-12-02)
 ------------------
 

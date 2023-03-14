@@ -1,1 +1,0 @@
-When an item is modified, only copy language-independent field values to translations if they have changed. [davisagli]
