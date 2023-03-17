@@ -81,7 +81,7 @@
   <!-- Control panel -->
   <browser:page
     name="language-controlpanel"
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    for="plone.base.interfaces.IPloneSiteRoot"
     class=".controlpanel.LanguageControlPanel"
     permission="plone.app.controlpanel.Language"
     layer="..interfaces.IPloneAppMultilingualInstalled"
@@ -90,14 +90,14 @@
   <!-- Migration Tab -->
   <browser:page
       name="lp-migration"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="plone.base.interfaces.IPloneSiteRoot"
       class=".controlpanel.MigrationView"
       permission="plone.app.multilingual.ManageTranslations"
       layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
   <browser:page
       name="multilingual-map"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="plone.base.interfaces.IPloneSiteRoot"
       class=".controlpanel.multilingualMapView"
       permission="plone.app.multilingual.ManageTranslations"
       layer="..interfaces.IPloneAppMultilingualInstalled"/>
@@ -106,7 +106,7 @@
   <browser:viewlet
       zcml:condition="installed plone.app.controlpanel"
       name="plone.app.multilingual.supported-languages-notice"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="plone.base.interfaces.IPloneSiteRoot"
       view="plone.app.controlpanel.interfaces.IPloneControlPanelView"
       manager="plone.app.layout.viewlets.interfaces.IAboveContent"
       class=".viewlets.OneLanguageConfiguredNoticeViewlet"
@@ -116,8 +116,8 @@
   <browser:viewlet
       zcml:condition="not-installed plone.app.controlpanel"
       name="plone.app.multilingual.supported-languages-notice"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      view="Products.CMFPlone.interfaces.controlpanel.IPloneControlPanelView"
+      for="plone.base.interfaces.IPloneSiteRoot"
+      view="plone.base.interfaces.controlpanel.IPloneControlPanelView"
       manager="plone.app.layout.viewlets.interfaces.IAboveContent"
       class=".viewlets.OneLanguageConfiguredNoticeViewlet"
       template="templates/languages-notice.pt"
@@ -172,7 +172,7 @@
   <!-- Not Translated Yet -->
   <browser:page
       name="not_translated_yet"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="plone.base.interfaces.IPloneSiteRoot"
       class=".helper_views.not_translated_yet"
       permission="zope.Public"
       layer="..interfaces.IPloneAppMultilingualInstalled"/>
@@ -180,14 +180,14 @@
   <!-- Multilingual Map ajax helper -->
   <browser:page
       name="multilingual-map-ajax"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="plone.base.interfaces.IPloneSiteRoot"
       class=".controlpanel.multilingualMapViewJSON"
       permission="plone.app.multilingual.ManageTranslations"
       layer="..interfaces.IPloneAppMultilingualInstalled"/>
 
   <!-- Default browser view -->
   <browser:view
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="plone.base.interfaces.IPloneSiteRoot"
       class=".switcher.LanguageSwitcher"
       name="language-switcher"
       permission="zope.Public"
@@ -258,7 +258,7 @@
   <!-- Optional initial step - reindex Language index -->
   <browser:page
       name="reindex-language-index"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="plone.base.interfaces.IPloneSiteRoot"
       class=".migrator.LP2PAMReindexLanguageIndex"
       permission="cmf.ManagePortal"
       layer="..interfaces.IPloneAppMultilingualInstalled"/>
@@ -266,7 +266,7 @@
   <!-- Step 1 - Relocates the content if needed -->
   <browser:page
       name="relocate-content"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="plone.base.interfaces.IPloneSiteRoot"
       class=".migrator.moveContentToProperRLF"
       permission="cmf.ManagePortal"
       layer="..interfaces.IPloneAppMultilingualInstalled"/>
@@ -274,7 +274,7 @@
   <!-- Step 2 - Migrate multilingual catalog info -->
   <browser:page
       name="transfer-lp-catalog"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="plone.base.interfaces.IPloneSiteRoot"
       class=".migrator.LP2PAMView"
       permission="cmf.ManagePortal"
       layer="..interfaces.IPloneAppMultilingualInstalled"/>
@@ -282,7 +282,7 @@
   <!-- Step 3  - Cleanup tasks after migration -->
   <browser:page
       name="after-migration-cleanup"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="plone.base.interfaces.IPloneSiteRoot"
       class=".migrator.LP2PAMAfterView"
       permission="cmf.ManagePortal"
       layer="..interfaces.IPloneAppMultilingualInstalled"/>
@@ -299,7 +299,7 @@
   <!-- To delete -->
   <browser:page
       name="lp-migration-after"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="plone.base.interfaces.IPloneSiteRoot"
       class=".controlpanel.MigrationViewAfter"
       permission="plone.app.multilingual.ManageTranslations"
       layer="..interfaces.IPloneAppMultilingualInstalled"/>

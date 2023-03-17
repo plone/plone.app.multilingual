@@ -4,7 +4,7 @@ from plone.app.multilingual.interfaces import ITranslationCloner
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.base.interfaces import ILanguage
 from plone.dexterity.utils import iterSchemata
-from Products.CMFPlone.utils import safe_unicode
+from plone.base.utils import safe_text
 from z3c.relationfield import RelationValue
 from z3c.relationfield.interfaces import IRelationList
 from z3c.relationfield.interfaces import IRelationValue
@@ -96,7 +96,7 @@ class LanguageIndependentFieldsManager:
                         field_changed = value != translation_value
                     if field_changed:
                         changed = True
-                        setattr(translation_adapter, field_name, safe_unicode(value))
+                        setattr(translation_adapter, field_name, safe_text(value))
 
         # If at least one field has been copied over to the translation
         # we need to inform subscriber to trigger an ObjectModifiedEvent

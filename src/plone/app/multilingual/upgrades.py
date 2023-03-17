@@ -2,7 +2,7 @@ from plone.app.multilingual import logger
 from plone.base.interfaces import ILanguage
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import _createObjectByType
+from plone.base.utils import unrestricted_construct_instance
 from time import time
 from zope.component import getUtility
 
@@ -70,7 +70,7 @@ def migration_pam_1_to_2(context):
         old = portal[old_id]
         logger.info(f"{code} - Phase 2: Moving objects into new LRF...")
 
-        _createObjectByType(type_name, portal, code)
+        unrestricted_construct_instance(type_name, portal, code)
         new = portal[code]
         new.setTitle(name)
         ILanguage(new).set_language(code)

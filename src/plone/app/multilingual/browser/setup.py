@@ -2,7 +2,6 @@ from logging import getLogger
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.multilingual import _
-from plone.app.multilingual.dx.interfaces import IDexterityTranslatable
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
@@ -12,7 +11,7 @@ from plone.dexterity.interfaces import IDexterityFTI
 from plone.i18n.locales.languages import _combinedlanguagelist
 from plone.i18n.locales.languages import _languagelist
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import _createObjectByType
+from plone.base.utils import unrestricted_construct_instance
 from Products.Five import BrowserView
 from zope.component.hooks import getSite
 from zope.event import notify
@@ -148,8 +147,8 @@ class SetupMultilingualSite:
         )
 
         if folder is None:
-            _createObjectByType(self.folder_type, self.context, folderId)
-            _createObjectByType(
+            unrestricted_construct_instance(self.folder_type, self.context, folderId)
+            unrestricted_construct_instance(
                 self.folder_type_language_independent,
                 self.context[folderId],
                 assets_folder_id,

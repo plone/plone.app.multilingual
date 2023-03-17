@@ -6,9 +6,7 @@ from plone.app.registry.browser import controlpanel
 from plone.app.uuid.utils import uuidToObject
 from plone.base.interfaces import ILanguage
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.controlpanel.browser.language import (  # noqa
-    LanguageControlPanelForm,
-)
+from Products.CMFPlone.controlpanel.browser.language import LanguageControlPanelForm
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage

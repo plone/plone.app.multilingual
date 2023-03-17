@@ -24,7 +24,7 @@
       name="to_3"
       title="Update new registry key"
       directory="profiles/upgrades/to_3"
-      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
@@ -40,7 +40,7 @@
       name="to_4"
       title="Update bundle registration"
       directory="profiles/upgrades/to_4"
-      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
@@ -56,7 +56,7 @@
       name="to_1000"
       title="Update to 1000"
       directory="profiles/upgrades/to_1000"
-      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 

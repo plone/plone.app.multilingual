@@ -1,10 +1,8 @@
 from plone import api
-from plone.app.multilingual.testing import (  # noqa
-    PLONE_APP_MULTILINGUAL_INTEGRATION_TESTING,
-)
+from plone.app.multilingual.testing import PLONE_APP_MULTILINGUAL_INTEGRATION_TESTING
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
-from Products.CMFPlone.utils import get_installer
+from plone.base.utils import get_installer
 
 import unittest
 
