@@ -288,13 +288,13 @@ The different aspects involved on a translation are adapted, so it's possible to
 Language get/set via an unified adapter
 ---------------------------------------
 
-In order to access and modify the language of a content type regardless the type (Archetypes/Dexterity) there is a interface/adapter::
+In order to access and modify the language of a content type there is a interface/adapter::
 
-    Products.CMFPlone.interfaces.ILanguage
+    plone.base.interfaces.ILanguage
 
 You can use::
 
-    from Products.CMFPlone.interfaces import ILanguage
+    from plone.base.interfaces import ILanguage
     language = ILanguage(context).get_language()
 
 or in case you want to set the language of a content::

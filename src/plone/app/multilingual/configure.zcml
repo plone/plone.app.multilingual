@@ -137,7 +137,7 @@
   <utility
       factory=".setuphandlers.HiddenProfiles"
       name="plone.app.multilingual"
-      provides="Products.CMFPlone.interfaces.INonInstallable"/>
+      provides="plone.base.interfaces.INonInstallable"/>
 
   <genericsetup:registerProfile
       name="default"
@@ -145,7 +145,7 @@
       description="Install to enable multilingual content support with plone.app.multilingual"
       directory="profiles/default"
       provides="Products.GenericSetup.interfaces.EXTENSION"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="plone.base.interfaces.IPloneSiteRoot"
       post_handler=".setuphandlers.init_pam"/>
 
   <genericsetup:registerProfile
@@ -154,7 +154,7 @@
       description="Uninstall, removes multilingual content support with plone.app.multilingual"
       directory="profiles/uninstall"
       provides="Products.GenericSetup.interfaces.EXTENSION"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+      for="plone.base.interfaces.IPloneSiteRoot"/>
 
   <genericsetup:importStep
       name="plone.app.multilingual_default"

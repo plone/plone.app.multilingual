@@ -1,21 +1,10 @@
 from logging import getLogger
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
-from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.itg import addAttributeTG
 from plone.base.interfaces import INonInstallable
-from Products.CMFPlone.utils import getToolByName
+from Products.CMFCore.utils import getToolByName
 from zope.component.hooks import getSite
 from zope.interface import implementer
-
-import pkg_resources
-
-
-try:
-    pkg_resources.get_distribution("plone.app.contenttypes")
-except pkg_resources.DistributionNotFound:
-    HAS_PLONE_APP_CONTENTTYPES = False
-else:
-    HAS_PLONE_APP_CONTENTTYPES = True
 
 
 @implementer(INonInstallable)

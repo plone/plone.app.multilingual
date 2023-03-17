@@ -2,12 +2,12 @@
 <registry>
 
   <records prefix="plone.bundles/multilingual"
-            interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+            interface='plone.base.interfaces.IBundleRegistry'>
     <value key="enabled">True</value>
     <value key="csscompilation">++resource++plone.app.multilingual.stylesheet/multilingual.css</value>
   </records>
 
-  <records interface="Products.CMFPlone.interfaces.ITinyMCEResourceTypesSchema" prefix="plone">
+  <records interface="plone.base.interfaces.ITinyMCEResourceTypesSchema" prefix="plone">
     <value key="contains_objects" purge="false"><element>LIF</element></value>
   </records>
 

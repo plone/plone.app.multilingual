@@ -43,7 +43,7 @@
 
   <adapter
       for="plone.dexterity.interfaces.IDexterityContent"
-      provides="Products.CMFPlone.interfaces.ILanguage"
+      provides="plone.base.interfaces.ILanguage"
       factory=".language.Language"/>
 
   <adapter

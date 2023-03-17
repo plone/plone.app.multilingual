@@ -12,15 +12,14 @@ from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import ITranslatable
-from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.app.multilingual.permissions import ManageTranslations
 from plone.base.interfaces import ILanguage
 from plone.memoize import view
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.defaultpage import is_default_page
-from Products.CMFPlone.utils import safe_unicode
+from plone.base.defaultpage import is_default_page
+from plone.base.utils import safe_text
 from zope.browsermenu.menu import BrowserMenu
 from zope.browsermenu.menu import BrowserSubMenuItem
 from zope.component import getUtility
@@ -97,9 +96,8 @@ class TranslateMenu(BrowserMenu):
         )
         for brain in results:
             assets_folder_url = brain.getURL() + "/folder_contents"
-            assets_folder_title = safe_unicode(brain.Title)
+            assets_folder_title = safe_text(brain.Title)
             break
-
         # Menu items
         results = []
         results_folder = []
