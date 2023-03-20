@@ -1,5 +1,7 @@
+from Acquisition import aq_base
 from plone.app.multilingual import logger
 from plone.base.interfaces import ILanguage
+from plone.dexterity.interfaces import IDexterityFTI
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from plone.base.utils import unrestricted_construct_instance
@@ -156,3 +158,63 @@ def upgrade_to_4(context):
         PROFILE_ID.replace("default", "to_4"),
         "plone.app.registry",
     )
+
+
+def update_old_layouts(context):
+    """We may have no longer existing layouts layouts set."""
+    DEFAULT = "folder_listing"
+    MAPPING = {
+        "folder_summary_view": "summary_view",
+        "folder_full_view": "full_view",
+        "folder_tabular_view": "tabular_view",
+        "atct_album_view": "album_view",
+    }
+    types_tool = getToolByName(context, "portal_types")
+    catalog = getToolByName(context, "portal_catalog")
+    our_types = ["LIF", "LRF"]
+    for type_name in our_types:
+        fti = types_tool.get(type_name)
+        if fti is None:
+            # Should not happen, but I like upgrade steps to be forgiving.
+            logger.warning("Could not find portal_type %s.", type_name)
+            continue
+
+        # First update the FTI.
+        old_view_methods = fti.view_methods
+        view_methods = []
+        for name in fti.view_methods:
+            name = MAPPING.get(name, name)
+            view_methods.append(name)
+        if DEFAULT not in view_methods:
+            view_methods.append(DEFAULT)
+        view_methods = tuple(view_methods)
+        if old_view_methods != view_methods:
+            fti.view_methods = view_methods
+            logger.info("Updated old view methods in FTI %s.", type_name)
+        if fti.default_view not in view_methods:
+            default_view = MAPPING.get(fti.default_view, DEFAULT)
+            logger.info("Set default_view of FTI %s to %s.", type_name, default_view)
+            fti.default_view = default_view
+
+        # Now update all instances of this FTI.
+        for brain in catalog.unrestrictedSearchResults(portal_type=type_name):
+            obj = brain.getObject()
+            layout = obj.getProperty("layout", None)
+            if layout is None or layout in view_methods:
+                continue
+            new_layout = MAPPING.get(layout)
+            if not new_layout:
+                # Use the default view: remove the explicit layout.
+                obj._delProperty("layout")
+                logger.info(
+                    "Removed property 'layout' with value %r at %s",
+                    layout,
+                    "/".join(obj.getPhysicalPath()),
+                )
+                continue
+            obj._updateProperty("layout", new_layout)
+            logger.info(
+                "Updated property 'layout' to %r at %s",
+                new_layout,
+                "/".join(obj.getPhysicalPath()),
+            )

@@ -70,4 +70,11 @@
 
   </genericsetup:upgradeSteps>
 
+  <genericsetup:upgradeStep
+      source="1000"
+      destination="1001"
+      profile="plone.app.multilingual:default"
+      title="Update old layouts"
+      handler=".upgrades.update_old_layouts" />
+
 </configure>
