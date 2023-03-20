@@ -1,0 +1,3 @@
+Update old view methods and layouts from LIF/LRF type definitions and instances.
+For example, in Plone 6 ``folder_summary_view`` is no longer available: use ``summary_view`` instead.
+[maurits]

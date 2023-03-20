@@ -13,10 +13,10 @@
   <property name="allow_discussion">False</property>
   <property name="default_view">folder_listing</property>
   <property name="view_methods">
-    <element value="folder_summary_view"/>
-    <element value="folder_full_view"/>
-    <element value="folder_tabular_view"/>
-    <element value="atct_album_view"/>
+    <element value="summary_view"/>
+    <element value="full_view"/>
+    <element value="tabular_view"/>
+    <element value="album_view"/>
     <element value="folder_listing"/>
   </property>
   <property name="default_view_fallback">False</property>
