@@ -8,6 +8,19 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.2 (2023-03-22)
+------------------
+
+Bug fixes:
+
+
+- Use plone.base imports. Removes deprecation warnings.
+  [jensens] (#411)
+- Update old view methods and layouts from LIF/LRF type definitions and instances.
+  For example, in Plone 6 ``folder_summary_view`` is no longer available: use ``summary_view`` instead.
+  [maurits] (#1001)
+
+
 6.0.1 (2023-03-14)
 ------------------
 
