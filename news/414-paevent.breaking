@@ -1,0 +1,3 @@
+Move language independent field declarations from plone.app.event to this package.
+This prepares this package to be used as a real core addon.
+[jensens]
