@@ -8,6 +8,17 @@ Changelog
 
 .. towncrier release notes start
 
+7.0.0 (2023-04-06)
+------------------
+
+Breaking changes:
+
+
+- Move language independent field declarations from plone.app.event to this package.
+  This prepares this package to be used as a real core addon.
+  [jensens] (414-paevent)
+
+
 6.0.2 (2023-03-22)
 ------------------
 
