@@ -60,3 +60,6 @@ Zope = [
   'Products.CMFDynamicViewFTI', 'zope.deprecation',
 ]
 python-dateutil = ['dateutil']
+
+[tool.codespell]
+ignore-words-list = "discreet,pres"
