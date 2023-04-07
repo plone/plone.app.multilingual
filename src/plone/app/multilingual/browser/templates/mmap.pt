@@ -1,18 +1,24 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-    lang="en"
-    metal:use-macro="context/prefs_main_template/macros/master"
-    i18n:domain="plone">
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      lang="en"
+      metal:use-macro="context/prefs_main_template/macros/master"
+      xml:lang="en"
+      i18n:domain="plone"
+>
 
-<body>
+  <body>
 
-<metal:block metal:fill-slot="prefs_configlet_main">
+    <metal:block metal:fill-slot="prefs_configlet_main">
 
-  <script type="text/javascript" src="++resource++plone.app.multilingual.javascript/jit-yc.js"></script>
-  <script type="text/javascript" src="++resource++plone.app.multilingual.javascript/mmap_helper.js"></script>
-  <style>
+      <script src="++resource++plone.app.multilingual.javascript/jit-yc.js"
+              type="text/javascript"
+      ></script>
+      <script src="++resource++plone.app.multilingual.javascript/mmap_helper.js"
+              type="text/javascript"
+      ></script>
+      <style>
   #pam_mmap_toolbar {
     border: 1px solid #000;
     padding: 20px;
@@ -51,90 +57,127 @@
     background-color: #777;
     color: white;
   }
-  </style>
+      </style>
 
-        <a id="setup-link" class="link-parent"
-           tal:attributes="href string:$portal_url/@@overview-controlpanel"
-           i18n:translate="">
+      <a class="link-parent"
+         id="setup-link"
+         tal:attributes="
+           href string:$portal_url/@@overview-controlpanel;
+         "
+         i18n:translate=""
+      >
             Site Setup
-        </a>
+      </a>
 
-        <h1 class="documentFirstHeading"
-            i18n:translate="heading_translation_map">plone.app.multilingual translation map</h1>
+      <h1 class="documentFirstHeading"
+          i18n:translate="heading_translation_map"
+      >plone.app.multilingual translation map</h1>
 
-        <div metal:use-macro="context/global_statusmessage/macros/portal_message">
+      <div metal:use-macro="context/global_statusmessage/macros/portal_message">
         Portal status message
+      </div>
+
+      <div id="content-core">
+
+        <p i18n:translate="description_translation_map">
+                Translation map.
+        </p>
+        <div id="pam_ajax_buttons">
+          <button id="call_missing_translations"
+                  i18n:translate="label_missing_translations"
+          >Missing translations</button>
+          <button class="down"
+                  id="call_all_translations"
+                  i18n:translate="label_all_translations"
+          >All translations</button>
         </div>
 
-        <div id="content-core">
+        <div id="all_translations">
 
-            <p i18n:translate="description_translation_map">
-                Translation map.
-            </p>
-            <div id="pam_ajax_buttons">
-              <button id="call_missing_translations" i18n:translate="label_missing_translations">Missing translations</button>
-              <button id="call_all_translations" class="down" i18n:translate="label_all_translations">All translations</button>
-            </div>
-
-            <div id="all_translations">
-
-            <div id="pam_mmap_toolbar">
-              <div id="pam_mmap_language_toolbar">
-                <div id="pam_language_buttons" tal:define="data view/languages">
+          <div id="pam_mmap_toolbar">
+            <div id="pam_mmap_language_toolbar">
+              <div id="pam_language_buttons"
+                   tal:define="
+                     data view/languages;
+                   "
+              >
                 <tal:block repeat="languages data/languages">
-                  <button id="" tal:attributes="id languages/value;
-                                                class python: languages.value==data['default'] and 'down' or ''" tal:content="languages/title">Lang</button>
+                  <button id=""
+                          tal:content="languages/title"
+                          tal:attributes="
+                            id languages/value;
+                            class python: languages.value==data['default'] and 'down' or '';
+                          "
+                  >Lang</button>
                 </tal:block>
-                </div>
-
-                <div id="actual_language">
-                </div>
               </div>
+
+              <div id="actual_language">
+              </div>
+            </div>
 
             <div id="data_translation">
             </div>
           </div>
-            <div id="translation_map_canvas" style="height: 400px; width: 600px;">
-
-            </div>
-            <div id="log">
-            </div>
+          <div id="translation_map_canvas"
+               style="height: 400px; width: 600px;"
+          >
 
           </div>
-          <div id="missing_translations">
-            <div tal:define="not_full_translated view/canonicals">
-              <ul>
-              <tal:block repeat="canonical not_full_translated">
-                <li>
-                <span tal:content="canonical/id">Id</span>
-                <ul tal:define="last_url canonical/last_url">
-                  <li>
-                    <span i18n:translate="missing_languages">Missing languages: </span>
-                    <tal:block2 repeat="missing canonical/missing">
-                      <a href="" target="_blank" tal:attributes="href string:$last_url/@@create_translation?language=$missing" tal:content="missing">
-                        lang
-                      </a>
-                    </tal:block2>
-                  </li>
-                  <li>
-                    <span i18n:translate="translation">Translations: </span>
-                    <tal:block2 repeat="missing canonical/translated">
-                      <a href="" tal:attributes="href missing/url">
-                        <span tal:content="missing/path">Path</span>
-                        <span tal:content="missing/lang">Lang</span>
-                      </a>
-                    </tal:block2>
-                  </li>
-                </ul>
-                </li>
-              </tal:block>
-              </ul>
-            </div>
+          <div id="log">
           </div>
 
         </div>
+        <div id="missing_translations">
+          <div tal:define="
+                 not_full_translated view/canonicals;
+               ">
+            <ul>
+              <tal:block repeat="canonical not_full_translated">
+                <li>
+                  <span tal:content="canonical/id">Id</span>
+                  <ul tal:define="
+                        last_url canonical/last_url;
+                      ">
+                    <li>
+                      <span i18n:translate="missing_languages">Missing languages:
+                      </span>
+                      <tal:block2 repeat="missing canonical/missing">
+                        <a href=""
+                           target="_blank"
+                           tal:content="missing"
+                           tal:attributes="
+                             href string:$last_url/@@create_translation?language=$missing;
+                           "
+                        >
+                        lang
+                        </a>
+                      </tal:block2>
+                    </li>
+                    <li>
+                      <span i18n:translate="translation">Translations:
+                      </span>
+                      <tal:block2 repeat="missing canonical/translated">
+                        <a href=""
+                           tal:attributes="
+                             href missing/url;
+                           "
+                        >
+                          <span tal:content="missing/path">Path</span>
+                          <span tal:content="missing/lang">Lang</span>
+                        </a>
+                      </tal:block2>
+                    </li>
+                  </ul>
+                </li>
+              </tal:block>
+            </ul>
+          </div>
+        </div>
 
-</metal:block>
+      </div>
 
-</body>
+    </metal:block>
+
+  </body>
 </html>

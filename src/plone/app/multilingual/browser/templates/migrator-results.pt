@@ -1,35 +1,43 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-    lang="en"
-    metal:use-macro="context/prefs_main_template/macros/master"
-    i18n:domain="plone">
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      lang="en"
+      metal:use-macro="context/prefs_main_template/macros/master"
+      xml:lang="en"
+      i18n:domain="plone"
+>
 
-<body>
+  <body>
 
-<metal:prefs fill-slot="prefs_configlet_main">
+    <metal:prefs fill-slot="prefs_configlet_main">
 
-<div id="results">
+      <div id="results">
 
-<div class="resultInfo" i18n:domain="plone">
-    <h2 i18n:translate=""
-        tal:content="view/stepinfo">
+        <div class="resultInfo"
+             i18n:domain="plone"
+        >
+          <h2 tal:content="view/stepinfo"
+              i18n:translate=""
+          >
         Transfer multilingual catalog information
-    </h2>
-    <span i18n:translate="label_total_objects_translated">
+          </h2>
+          <span i18n:translate="label_total_objects_translated">
         Total objects handled:
-    </span>
-    <span tal:content="python: len(view.results)">Number of objects</span>
-</div>
+          </span>
+          <span tal:content="python: len(view.results)">Number of objects</span>
+        </div>
 
-<tal:block repeat="result view/results">
-    <div class="result"
-    tal:attributes="class python:result.startswith('ERROR') and 'result error' or 'result'"
-    tal:content="result"></div>
-</tal:block>
+        <tal:block repeat="result view/results">
+          <div class="result"
+               tal:content="result"
+               tal:attributes="
+                 class python:result.startswith('ERROR') and 'result error' or 'result';
+               "
+          ></div>
+        </tal:block>
 
-</div>
-</metal:prefs>
-</body>
+      </div>
+    </metal:prefs>
+  </body>
 </html>

@@ -1,16 +1,18 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-    lang="en"
-    metal:use-macro="context/prefs_main_template/macros/master"
-    i18n:domain="plone">
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      lang="en"
+      metal:use-macro="context/prefs_main_template/macros/master"
+      xml:lang="en"
+      i18n:domain="plone"
+>
 
-<body>
+  <body>
 
-<metal:block metal:fill-slot="prefs_configlet_main">
+    <metal:block metal:fill-slot="prefs_configlet_main">
 
-<script type="text/javascript">
+      <script type="text/javascript">
 (function($) {
 
     $().ready(function() {
@@ -29,83 +31,101 @@
     });
 
 })(jQuery);
-</script>
+      </script>
 
 
-    <div i18n:domain="plone">
-        <ul class="contentViews" id="content-views">
+      <div i18n:domain="plone">
+        <ul class="contentViews"
+            id="content-views"
+        >
           <li>
             <a href=""
-               tal:attributes="href string:${portal_url}/@@language-controlpanel"
-               i18n:translate="label_general">General</a>
+               tal:attributes="
+                 href string:${portal_url}/@@language-controlpanel;
+               "
+               i18n:translate="label_general"
+            >General</a>
           </li>
           <li>
             <a href=""
-               tal:attributes="href string:${portal_url}/@@multilingual-map"
-               i18n:translate="label_translation_map">Translation Map</a>
+               tal:attributes="
+                 href string:${portal_url}/@@multilingual-map;
+               "
+               i18n:translate="label_translation_map"
+            >Translation Map</a>
           </li>
           <li class="selected">
             <a href=""
-              tal:attributes="href string:${portal_url}/@@lp-migration-after"
-              i18n:translate="label_cleanup">Cleanup actions</a>
+               tal:attributes="
+                 href string:${portal_url}/@@lp-migration-after;
+               "
+               i18n:translate="label_cleanup"
+            >Cleanup actions</a>
           </li>
         </ul>
-    </div>
+      </div>
 
 
-        <div metal:use-macro="context/global_statusmessage/macros/portal_message">
+      <div metal:use-macro="context/global_statusmessage/macros/portal_message">
         Portal status message
-        </div>
+      </div>
 
-        <div class="content-core">
+      <div class="content-core">
 
-            <h1 class="documentFirstHeading"
-                i18n:domain="plone"
-                i18n:translate="heading_migration_after">Products.LinguaPlone After Migration</h1>
+        <h1 class="documentFirstHeading"
+            i18n:domain="plone"
+            i18n:translate="heading_migration_after"
+        >Products.LinguaPlone After Migration</h1>
 
-            <p i18n:translate="description_migrate_after"
-              i18n:domain="plone">
+        <p i18n:domain="plone"
+           i18n:translate="description_migrate_after"
+        >
                 It can happen that there are relations left that contain
                 LinguaPlone relations. By executing this step, the catalog
                 gets reset and rebuilt. It CAN happen that things go bad.
                 In that case relations get lost. It is therefor important that
                 you have a backup!
-            </p>
+        </p>
 
-            <form name="cleanup" tal:attributes="action request/URL" method="post">
+        <form method="post"
+              name="cleanup"
+              tal:attributes="
+                action request/URL;
+              "
+        >
 
-                <div class="formControls">
+          <div class="formControls">
 
-                  <input
-                        id="resetrelations"
-                        type="submit"
-                        name="form.button.Cleanup"
-                        class="destructive"
-                        value="Cleanup"
-                        i18n:attributes="value" />
-                  <label i18n:translate="label_catalog_reload">Catalog reload</label>
+            <input class="destructive"
+                   id="resetrelations"
+                   name="form.button.Cleanup"
+                   type="submit"
+                   value="Cleanup"
+                   i18n:attributes="value"
+            />
+            <label i18n:translate="label_catalog_reload">Catalog reload</label>
 
-                  <span class="clearfix" />
-                  <input
-                        id="move"
-                        type="submit"
-                        name="form.button.Move"
-                        class="destructive"
-                        value="Move"
-                        i18n:attributes="value" />
-                  <label i18n:translate="label_move_content_to_languages">Move content to its corresponding language root folder</label>
-                </div>
+            <span class="clearfix"></span>
+            <input class="destructive"
+                   id="move"
+                   name="form.button.Move"
+                   type="submit"
+                   value="Move"
+                   i18n:attributes="value"
+            />
+            <label i18n:translate="label_move_content_to_languages">Move content to its corresponding language root folder</label>
+          </div>
 
-                <input tal:replace="structure context/@@authenticator/authenticator" />
+          <input tal:replace="structure context/@@authenticator/authenticator" />
 
-            </form>
+        </form>
 
-            <div class="results">
-              <!-- The migration results -->
-            </div>
+        <div class="results">
+          <!-- The migration results -->
         </div>
+      </div>
 
-</metal:block>
+    </metal:block>
 
-</body>
+  </body>
 </html>

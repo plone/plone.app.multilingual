@@ -1,27 +1,46 @@
 <div class="container">
-    <div class="row">
-        <div class="alert alert-info col-12" role="alert">
-            <strong i18n:translate="" i18n:domain="plone">
+  <div class="row">
+    <div class="alert alert-info col-12"
+         role="alert"
+    >
+      <strong i18n:domain="plone"
+              i18n:translate=""
+      >
                 Info
-            </strong>
-            <tal:block i18n:domain="plone"
-                     i18n:translate="add-form-is-translation">
+      </strong>
+      <tal:block i18n:domain="plone"
+                 i18n:translate="add-form-is-translation"
+      >
                 This object is going to be a translation to
-                <span i18n:name="language" tal:replace="python:view.language_name(view.language())"></span>
+        <span tal:replace="python:view.language_name(view.language())"
+              i18n:name="language"
+        ></span>
                 from:
-            </tal:block>
-            <ul>
-                <li tal:repeat="origin view/origin">
-                    <span tal:content="python:view.language_name(origin.Language)"></span>:
-                    <a href="#"
-                       class="link-overlay" tal:attributes="href origin/getURL">
-                        <span tal:content="origin/Title"></span></a></li>
-            </ul>
-            <span i18n:domain="plone" i18n:translate="create-object-without-translation">
+      </tal:block>
+      <ul>
+        <li tal:repeat="origin view/origin">
+          <span tal:content="python:view.language_name(origin.Language)"></span>:
+          <a class="link-overlay"
+             href="#"
+             tal:attributes="
+               href origin/getURL;
+             "
+          >
+            <span tal:content="origin/Title"></span></a></li>
+      </ul>
+      <span i18n:domain="plone"
+            i18n:translate="create-object-without-translation"
+      >
       If you want to create this object without being a translation press
-      <a href="#"
-         class="link-overlay" i18n:name="url" tal:attributes="href view/returnURL" i18n:translate="">here</a>
-    </span>
-        </div>
+        <a class="link-overlay"
+           href="#"
+           tal:attributes="
+             href view/returnURL;
+           "
+           i18n:name="url"
+           i18n:translate=""
+        >here</a>
+      </span>
     </div>
+  </div>
 </div>
