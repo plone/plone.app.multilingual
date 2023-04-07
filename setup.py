@@ -15,9 +15,6 @@ setup(
         "setuptools",
     ],
     extras_require={
-        "archetypes": [
-            "archetypes.multilingual",
-        ],
         "test": [
             "plone.app.testing[robot]",
             "plone.app.robotframework",

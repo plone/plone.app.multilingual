@@ -33,14 +33,6 @@ except ImportError:
         pass
 
 
-try:
-    from Products.Archetypes.interfaces import IBaseObject
-except ImportError:
-
-    class IBaseObject(Interface):
-        pass
-
-
 with warnings.catch_warnings():
     warnings.filterwarnings(
         "ignore",
@@ -145,9 +137,7 @@ class moveContentToProperRLF(BrowserView):
 
     def findContent(self, content, depth):
         # only handle portal content
-        if not IDexterityContent.providedBy(content) and not IBaseObject.providedBy(
-            content
-        ):
+        if not IDexterityContent.providedBy(content):
             logger.warning(
                 "SKIP non-portal content %s (%s)"
                 % (content.absolute_url(), content.meta_type)
