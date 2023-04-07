@@ -1,3 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <layers>
-  <layer remove="True" name="plone.app.multilingual" interface="plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled"/>
+  <layer interface="plone.app.multilingual.interfaces.IPloneAppMultilingualInstalled"
+         name="plone.app.multilingual"
+         remove="True"
+  />
 </layers>

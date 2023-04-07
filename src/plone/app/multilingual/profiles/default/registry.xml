@@ -1,29 +1,38 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <registry>
 
-  <records prefix="plone.bundles/multilingual"
-            interface='plone.base.interfaces.IBundleRegistry'>
+  <records interface="plone.base.interfaces.IBundleRegistry"
+           prefix="plone.bundles/multilingual"
+  >
     <value key="enabled">True</value>
     <value key="csscompilation">++resource++plone.app.multilingual.stylesheet/multilingual.css</value>
   </records>
 
-  <records interface="plone.base.interfaces.ITinyMCEResourceTypesSchema" prefix="plone">
-    <value key="contains_objects" purge="false"><element>LIF</element></value>
+  <records interface="plone.base.interfaces.ITinyMCEResourceTypesSchema"
+           prefix="plone"
+  >
+    <value key="contains_objects"
+           purge="false"
+    ><element>LIF</element></value>
   </records>
 
-  <records interface="plone.i18n.interfaces.ILanguageSchema" prefix="plone">
+  <records interface="plone.i18n.interfaces.ILanguageSchema"
+           prefix="plone"
+  >
     <value key="use_cookie_negotiation">True</value>
     <value key="use_request_negotiation">False</value>
     <value key="use_content_negotiation">True</value>
     <value key="display_flags">False</value>
   </records>
 
-  <records interface="plone.app.multilingual.interfaces.IMultiLanguageExtraOptionsSchema" prefix="plone">
+  <records interface="plone.app.multilingual.interfaces.IMultiLanguageExtraOptionsSchema"
+           prefix="plone"
+  >
     <value key="filter_content">True</value>
     <value key="redirect_babel_view">True</value>
     <value key="bypass_languageindependent_field_permission_check">False</value>
     <value key="buttons_babel_view_up_to_nr_translations">7</value>
-    <value key="google_translation_key"></value>
+    <value key="google_translation_key" />
     <value key="selector_lookup_translations_policy">closest</value>
   </records>
 

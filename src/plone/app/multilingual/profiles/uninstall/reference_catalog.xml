@@ -1,5 +1,6 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <object name="reference_catalog">
-  <column remove="True" value="Language" />
+  <column remove="True"
+          value="Language"
+  />
 </object>
-

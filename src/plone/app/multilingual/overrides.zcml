@@ -1,6 +1,8 @@
-<configure xmlns="http://namespaces.zope.org/zope"
-    i18n_domain="plone">
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    i18n_domain="plone"
+    >
 
-  <adapter factory=".shared_uuid.attributeUUID"/>
+  <adapter factory=".shared_uuid.attributeUUID" />
 
 </configure>

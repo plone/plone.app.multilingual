@@ -1,4 +1,6 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <object name="portal_css">
-  <stylesheet remove="True" id="++resource++plone.app.multilingual.stylesheet/multilingual.css"/>
+  <stylesheet id="++resource++plone.app.multilingual.stylesheet/multilingual.css"
+              remove="True"
+  />
 </object>

@@ -1,4 +1,9 @@
-<?xml version="1.0"?>
-<object meta_type="Plone Types Tool" name="portal_types">
-  <object remove="True" meta_type="Dexterity FTI" name="LRF" />
+<?xml version="1.0" encoding="utf-8"?>
+<object meta_type="Plone Types Tool"
+        name="portal_types"
+>
+  <object meta_type="Dexterity FTI"
+          name="LRF"
+          remove="True"
+  />
 </object>
