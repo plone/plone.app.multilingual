@@ -1,6 +1,5 @@
 from AccessControl.SecurityManagement import getSecurityManager
 from Acquisition import aq_chain
-from borg.localrole.interfaces import IFactoryTempFolder
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.multilingual.browser.selector import addQuery
 from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
