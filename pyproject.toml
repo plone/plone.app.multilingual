@@ -1,3 +1,5 @@
+# Generated from:
+# https://github.com/plone/meta/tree/master/config/default
 [tool.towncrier]
 filename = "CHANGES.rst"
 directory = "news/"
@@ -18,3 +20,43 @@ showcontent = true
 directory = "bugfix"
 name = "Bug fixes:"
 showcontent = true
+
+[[tool.towncrier.type]]
+directory = "internal"
+name = "Internal:"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "documentation"
+name = "Documentation:"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "tests"
+name = "Tests"
+showcontent = true
+
+[tool.isort]
+profile = "plone"
+
+[tool.black]
+target-version = ["py38"]
+
+[tool.dependencychecker]
+Zope = [
+  # Zope own provided namespaces
+  'App', 'OFS', 'Products.Five', 'Products.OFSP', 'Products.PageTemplates',
+  'Products.SiteAccess', 'Shared', 'Testing', 'ZPublisher', 'ZTUtils',
+  'Zope2', 'webdav', 'zmi',
+  # Zope dependencies
+  'Acquisition', 'DateTime', 'transaction', 'zExceptions', 'ZODB', 'zope.component',
+  'zope.configuration', 'zope.container', 'zope.deferredimport', 'zope.event',
+  'zope.exceptions', 'zope.globalrequest', 'zope.i18n', 'zope.i18nmessageid',
+  'zope.interface', 'zope.lifecycleevent', 'zope.location', 'zope.publisher',
+  'zope.schema', 'zope.security', 'zope.site', 'zope.traversing', 'AccessControl',
+]
+'plone.base' = [
+  'AccessControl', 'Products.BTreeFolder2', 'Products.CMFCore',
+  'Products.CMFDynamicViewFTI', 'zope.deprecation',
+]
+python-dateutil = ['dateutil']
