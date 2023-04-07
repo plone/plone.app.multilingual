@@ -50,7 +50,7 @@ def migration_pam_1_to_2(context):
         older = portal[code]
 
         if older.portal_type == type_name:
-            logger.info(f"'{code}' is alredy a {type_name}, skipping.")
+            logger.info(f"'{code}' is already a {type_name}, skipping.")
             continue
 
         # PHASE 1: rename old language folders

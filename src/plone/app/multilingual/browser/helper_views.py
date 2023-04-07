@@ -150,9 +150,9 @@ class selector_view(universal_link):
 
         # We are going to see if there is the preferred language translation
         # Otherwise we get the first as context to look for translation
-        prefered = ltool.getPreferredLanguage(self.request)
-        if prefered in languages:
-            context = languages[prefered]
+        preferred = ltool.getPreferredLanguage(self.request)
+        if preferred in languages:
+            context = languages[preferred]
         else:
             context = languages[list(languages.keys())[0]]
 

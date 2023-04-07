@@ -83,7 +83,7 @@
                 It can happen that there are relations left that contain
                 LinguaPlone relations. By executing this step, the catalog
                 gets reset and rebuilt. It CAN happen that things go bad.
-                In that case relations get lost. It is therefor important that
+                In that case relations get lost. It is therefore important that
                 you have a backup!
         </p>
 

@@ -26,7 +26,7 @@ class ITranslationRegisteredEvent(IObjectEvent):
 
     object = Attribute("The base object.")
     target = Attribute("The translated object.")
-    language = Attribute("The language of the translated obejct.")
+    language = Attribute("The language of the translated object.")
 
 
 class ITranslationUpdatedEvent(IObjectEvent):

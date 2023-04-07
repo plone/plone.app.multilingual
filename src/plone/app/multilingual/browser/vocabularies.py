@@ -37,7 +37,7 @@ def translated_languages(context):
     language_infos = language_tool.getAvailableLanguages()
     manager = ITranslationManager(context)
     # take care to filter out translated contents
-    # wich do no have supported language information
+    # which do no have supported language information
     translated_languages = [
         a for a in manager.get_translated_languages() if a in language_infos
     ]

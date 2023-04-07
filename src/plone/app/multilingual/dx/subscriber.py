@@ -71,7 +71,7 @@ class LanguageIndependentModifier:
             if self.bypass_security_checks():
                 # Clone the current user and assign a new editor role to
                 # allow edition of all translated objects even if the
-                # current user whould not have permission to do that.
+                # current user would not have permission to do that.
                 tmp_user = UnrestrictedUser(
                     sm.getUser().getId(),
                     "",
@@ -106,7 +106,7 @@ class LanguageIndependentModifier:
         descriptions = Attributes(schema)
         # where is this information needed?
         # XXX behaviors need to be considered here
-        # use plone.dexterity.utils.iterSchemata or similiar
+        # use plone.dexterity.utils.iterSchemata or similar
 
         # Pass the canonical object as a event description
         notify(ObjectModifiedEvent(translation, descriptions, self.canonical))

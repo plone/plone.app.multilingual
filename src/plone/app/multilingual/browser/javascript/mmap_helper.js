@@ -128,8 +128,8 @@ var load = function init(json){
         //subtree and then handle it to the onComplete callback.
         //Here we just use a client-side tree generator (the getTree function).
         request: function(nodeId, level, onComplete) {
-          var ans = getTree(nodeId, level);
-          onComplete.onComplete(nodeId, ans);
+          var answer = getTree(nodeId, level);
+          onComplete.onComplete(nodeId, answer);
         },
 
         onBeforeCompute: function(node){
@@ -193,7 +193,7 @@ var load = function init(json){
         //This method is called right before plotting
         //an edge. It's useful for changing an individual edge
         //style properties before plotting it.
-        //Edge data proprties prefixed with a dollar sign will
+        //Edge data properties prefixed with a dollar sign will
         //override the Edge global style properties.
         onBeforePlotLine: function(adj){
             if (adj.nodeFrom.selected && adj.nodeTo.selected) {

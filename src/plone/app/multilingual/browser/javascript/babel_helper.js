@@ -53,7 +53,7 @@
             // The next calculation of padding is necessary if both elements
             // have to be shifted down.
             if (!first && original.prev().is(":visible")) {
-                // Calulate distance between bottom of prev element and top
+                // Calculate distance between bottom of prev element and top
                 // of current element. add Padding. If > 0, add to more_padding
                 new_distance = distance(original.prev(), original);
                 new_distance += original_padding;
