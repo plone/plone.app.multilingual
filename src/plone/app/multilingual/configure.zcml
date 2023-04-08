@@ -53,22 +53,11 @@
       />
 
   <!-- Generic plone.app.multilingual subscribers and adapters -->
-
-  <configure zcml:condition="not-installed zope.container">
-    <subscriber
-        for="plone.app.multilingual.interfaces.ITranslatable
-             zope.app.container.interfaces.IObjectAddedEvent"
-        handler="plone.app.multilingual.subscriber.createdEvent"
-        />
-  </configure>
-
-  <configure zcml:condition="installed zope.container">
-    <subscriber
-        for="plone.app.multilingual.interfaces.ITranslatable
-             zope.container.interfaces.IObjectAddedEvent"
-        handler="plone.app.multilingual.subscriber.createdEvent"
-        />
-  </configure>
+  <subscriber
+      for="plone.app.multilingual.interfaces.ITranslatable
+           zope.lifecycleevent.interfaces.IObjectAddedEvent"
+      handler="plone.app.multilingual.subscriber.createdEvent"
+      />
 
   <subscriber
       for="plone.app.multilingual.interfaces.ITranslatable

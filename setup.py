@@ -43,7 +43,6 @@ setup(
         "z3c.form",
         "z3c.relationfield",
         "zc.relation",
-        "zope.app.container",
         "zope.browsermenu",
         "zope.intid",
         "zope.pagetemplate",
