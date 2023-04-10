@@ -110,7 +110,7 @@ class LanguageSelectorViewlet(LanguageSelector):
                 site.absolute_url().rstrip("/")
                 + "/@@multilingual-selector/%s/%s"
                 % (translation_group, lang_info["code"]),
-                **query_extras
+                **query_extras,
             )
             results.append(data)
         return results

@@ -67,10 +67,10 @@ class DefaultTranslationIdChooser:
 
     def __call__(self, parent, language):
         content_id = self.context.getId()
-        splitted = content_id.split("-")
+        parts = content_id.split("-")
         # ugly heuristic (searching for something like 'de', 'en' etc.)
-        if len(splitted) > 1 and len(splitted[-1]) == 2:
-            content_id = "-".join(splitted[:-1])
+        if len(parts) > 1 and len(parts[-1]) == 2:
+            content_id = "-".join(parts[:-1])
         while content_id in parent.objectIds():
             content_id = f"{content_id}-{language}"
         return content_id

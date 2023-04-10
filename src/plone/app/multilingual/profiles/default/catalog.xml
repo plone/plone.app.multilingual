@@ -1,14 +1,20 @@
-<?xml version="1.0"?>
-<object name="portal_catalog" meta_type="Plone Catalog Tool">
+<?xml version="1.0" encoding="utf-8"?>
+<object meta_type="Plone Catalog Tool"
+        name="portal_catalog"
+>
 
-  <index name="Language" meta_type="FieldIndex">
-    <indexed_attr value="Language"/>
+  <index meta_type="FieldIndex"
+         name="Language"
+  >
+    <indexed_attr value="Language" />
   </index>
-  <column value="Language"/>
+  <column value="Language" />
 
-  <index name="TranslationGroup" meta_type="FieldIndex">
-    <indexed_attr value="TranslationGroup"/>
+  <index meta_type="FieldIndex"
+         name="TranslationGroup"
+  >
+    <indexed_attr value="TranslationGroup" />
   </index>
-  <column value="TranslationGroup"/>
+  <column value="TranslationGroup" />
 
 </object>

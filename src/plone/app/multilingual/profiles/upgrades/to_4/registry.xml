@@ -1,21 +1,25 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <registry>
 
   <!-- remove old resource and bundle registration -->
-  <record name="plone.bundles/plone-legacy.resources"
-          interface="plone.base.interfaces.resources.IBundleRegistry" field="resources">
+  <record field="resources"
+          interface="plone.base.interfaces.resources.IBundleRegistry"
+          name="plone.bundles/plone-legacy.resources"
+  >
     <value purge="false">
       <element remove="true">multilingual</element>
     </value>
   </record>
-  <records prefix="plone.resources/multilingual"
-           interface='plone.base.interfaces.IResourceRegistry'
-           remove="true">
-  </records>
+  <records interface="plone.base.interfaces.IResourceRegistry"
+           prefix="plone.resources/multilingual"
+           remove="true"
+  >
+</records>
 
   <!-- register new bundle -->
-  <records prefix="plone.bundles/multilingual"
-            interface='plone.base.interfaces.IBundleRegistry'>
+  <records interface="plone.base.interfaces.IBundleRegistry"
+           prefix="plone.bundles/multilingual"
+  >
     <value key="enabled">True</value>
     <value key="compile">False</value>
     <value key="merge_with">logged-in</value>

@@ -1,5 +1,11 @@
-<?xml version="1.0"?>
-<object meta_type="Plone Types Tool" name="portal_types">
-  <object meta_type="Dexterity FTI" name="LRF" />
-  <object meta_type="Dexterity FTI" name="LIF" />
+<?xml version="1.0" encoding="utf-8"?>
+<object meta_type="Plone Types Tool"
+        name="portal_types"
+>
+  <object meta_type="Dexterity FTI"
+          name="LRF"
+  />
+  <object meta_type="Dexterity FTI"
+          name="LIF"
+  />
 </object>

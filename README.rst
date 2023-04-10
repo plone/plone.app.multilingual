@@ -168,7 +168,7 @@ Dexterity
 Users should mark a dexterity content type as translatable by assigning a the multilingual behavior to the definition of the content type either via file system, supermodel or through the web.
 
 
-Marking fields as language independant
+Marking fields as language independent
 ======================================
 
 Archetypes
@@ -186,7 +186,7 @@ The language independent fields on Archetype-based content are marked the same w
 
 .. note::
 
-    If you want to completely remove LinguaPlone of your installation, you should make sure that your code are dependant in any way of LP.
+    If you want to completely remove LinguaPlone of your installation, you should make sure that your code are dependent in any way of LP.
 
 
 Dexterity

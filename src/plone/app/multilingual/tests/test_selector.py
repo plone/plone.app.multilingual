@@ -11,12 +11,12 @@ from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.multilingual.testing import PAM_INTEGRATION_PRESET_TESTING
 from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
+from plone.base.utils import safe_text
 from plone.dexterity.utils import createContentInContainer
 from plone.i18n.interfaces import ILanguageSchema
 from plone.registry.interfaces import IRegistry
 from plone.testing.z2 import Browser
 from Products.CMFCore.utils import getToolByName
-from plone.base.utils import safe_text
 from urllib.parse import parse_qs
 from urllib.parse import urlparse
 from zope.component import getUtility

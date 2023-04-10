@@ -14,12 +14,12 @@ from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.app.multilingual.permissions import ManageTranslations
+from plone.base.defaultpage import is_default_page
 from plone.base.interfaces import ILanguage
+from plone.base.utils import safe_text
 from plone.memoize import view
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from plone.base.defaultpage import is_default_page
-from plone.base.utils import safe_text
 from zope.browsermenu.menu import BrowserMenu
 from zope.browsermenu.menu import BrowserSubMenuItem
 from zope.component import getUtility

@@ -124,19 +124,6 @@ class AddFormIsATranslationViewlet(ViewletBase):
         self.origin = catalog.searchResults(query)
 
 
-class AddFormATIsATranslationViewlet(AddFormIsATranslationViewlet):
-    # XXX move this class to archetypes multilingual!
-    # btw., it is not used in here.
-    """Notice the user that this AT add form is a translation"""
-
-    def update(self):
-        """It's only for AT on factory so we check"""
-        factory = getToolByName(self.context, "portal_factory", None)
-        if factory is None or not factory.isTemporary(self.context):
-            return
-        super(AddFormIsATranslationViewlet, self).update()
-
-
 class AlternateLanguagesViewlet(ViewletBase):
     """Notice search engines about alternates languages of current
     content item

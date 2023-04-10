@@ -1,9 +1,15 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <object>
-  <hidden manager="plone.portalheader" skinname="Plone Default">
+  <hidden manager="plone.portalheader"
+          skinname="Plone Default"
+  >
     <viewlet name="plone.app.i18n.locales.languageselector" />
   </hidden>
-  <order manager="plone.portalheader" skinname="Plone Default">
-    <viewlet name="plone.app.multilingual.languageselector" insert-after="plone.personal_bar" />
+  <order manager="plone.portalheader"
+         skinname="Plone Default"
+  >
+    <viewlet insert-after="plone.personal_bar"
+             name="plone.app.multilingual.languageselector"
+    />
   </order>
 </object>

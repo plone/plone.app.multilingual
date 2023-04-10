@@ -33,14 +33,6 @@ except ImportError:
         pass
 
 
-try:
-    from Products.Archetypes.interfaces import IBaseObject
-except ImportError:
-
-    class IBaseObject(Interface):
-        pass
-
-
 with warnings.catch_warnings():
     warnings.filterwarnings(
         "ignore",
@@ -145,9 +137,7 @@ class moveContentToProperRLF(BrowserView):
 
     def findContent(self, content, depth):
         # only handle portal content
-        if not IDexterityContent.providedBy(content) and not IBaseObject.providedBy(
-            content
-        ):
+        if not IDexterityContent.providedBy(content):
             logger.warning(
                 "SKIP non-portal content %s (%s)"
                 % (content.absolute_url(), content.meta_type)
@@ -216,13 +206,13 @@ class moveContentToProperRLF(BrowserView):
                     # Test if the id already exist previously
 
                     try:
-                        cutted = parent.manage_cutObjects(content.getId())
+                        obj_cut = parent.manage_cutObjects(content.getId())
                     except ResourceLockedError:
                         lockable = ILockable(content)
                         lockable.unlock()
-                        cutted = parent.manage_cutObjects(content.getId())
+                        obj_cut = parent.manage_cutObjects(content.getId())
                     try:
-                        target_folder.manage_pasteObjects(cutted)
+                        target_folder.manage_pasteObjects(obj_cut)
                         info_str = "Step 2: Moved object {} to folder {}".format(
                             "/".join(content.getPhysicalPath()),
                             "/".join(target_folder.getPhysicalPath()),
@@ -277,14 +267,14 @@ class moveContentToProperRLF(BrowserView):
                     old_path = brain.getPath()
 
                     try:
-                        cutted = self.context.manage_cutObjects(brain.id)
+                        obj_cut = self.context.manage_cutObjects(brain.id)
                     except ResourceLockedError:
                         content = brain.getObject()
                         lockable = ILockable(content)
                         lockable.unlock()
-                        cutted = self.context.manage_cutObjects(brain.id)
+                        obj_cut = self.context.manage_cutObjects(brain.id)
                     try:
-                        folder.manage_pasteObjects(cutted)
+                        folder.manage_pasteObjects(obj_cut)
                         info_str = "Moved object %s to language root folder " "%s" % (
                             old_path,
                             lang,

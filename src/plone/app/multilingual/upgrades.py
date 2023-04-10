@@ -1,10 +1,8 @@
-from Acquisition import aq_base
 from plone.app.multilingual import logger
 from plone.base.interfaces import ILanguage
-from plone.dexterity.interfaces import IDexterityFTI
+from plone.base.utils import unrestricted_construct_instance
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from plone.base.utils import unrestricted_construct_instance
 from time import time
 from zope.component import getUtility
 
@@ -52,7 +50,7 @@ def migration_pam_1_to_2(context):
         older = portal[code]
 
         if older.portal_type == type_name:
-            logger.info(f"'{code}' is alredy a {type_name}, skipping.")
+            logger.info(f"'{code}' is already a {type_name}, skipping.")
             continue
 
         # PHASE 1: rename old language folders

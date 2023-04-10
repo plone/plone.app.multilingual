@@ -339,7 +339,7 @@ Bug fixes:
 - Remove deprecation warnings in tests.
   Increase readability
   Add code comments.
-  Remove superfluos reindex of "Language" in manager.
+  Remove superfluous reindex of "Language" in manager.
   [jensens] (#256)
 - wrong check for default addview in addtranslation traverser
   [mauro] (#355)
@@ -617,7 +617,7 @@ Bug fixes:
 Bug fixes:
 
 - Remove travis integration because plone.app.mutlilingual is part of plonecore and should be tested there.
-- Fix bug where formcontrols were overlaped by fields.
+- Fix bug where form controls were overlapped by fields.
   [agitator]
 
 - Fix robot tests to work with improved related items widget.
@@ -630,7 +630,7 @@ Bug fixes:
 New features:
 
 - Add a new view ``@@tg`` for translatable content. It will return the
-  current translation group of the content, matching the bahavior of ``@@uuid``
+  current translation group of the content, matching the behavior of ``@@uuid``
   of ``plone.app.uuid`` returning UUID of the content.  [datakurre]
 
 
@@ -662,7 +662,7 @@ Bug fixes:
 
 Bug fixes:
 
-- Allow to work in an Archtypes free Plone 5.1.
+- Allow to work in an Archetypes free Plone 5.1.
   [jensens]
 
 - Replace unittest2 with unittest.
@@ -760,7 +760,7 @@ Fixes:
 - Wait for visibility of select2 result, instead of time.
   [jensens]
 
-- Workaroud in robot test for TinyMCE overlap bug see
+- Workaround in robot test for TinyMCE overlap bug see
   https://github.com/plone/plone.app.multilingual/issues/227
   for details
   [jensens]
@@ -954,10 +954,10 @@ Fixes:
 - Refactor locations of code in dx to bundle stuff at a sane place.
   [jensens]
 
-- Remove BLACKLIST_IDS, with LIF this is superfluos.
+- Remove BLACKLIST_IDS, with LIF this is superfluous.
   [jensens]
 
-- Remove LanguageTool patch, meanwhile superfluos.
+- Remove LanguageTool patch, meanwhile superfluous.
   [jensens]
 
 - Add new ``bootstrap.py`` to support new parameter ``--setuptools-version``.
@@ -1054,7 +1054,7 @@ Fixes:
   [saily]
 
 - Huge PEP8 and Flake8 cleanup. Please run ``bin/code-analysis`` before
-  commiting. A git pre-commit hook should be added automatically through
+  committing. A git pre-commit hook should be added automatically through
   buildout.
   [saily]
 
@@ -1114,7 +1114,7 @@ Fixes:
   [jensens]
 
 - Added ++add++ and factory support using session var to store where it comes
-  from. It maintains the old programatic way so it's possible to create
+  from. It maintains the old programmatic way so it's possible to create
   translations using code.
   [ramon]
 
@@ -1132,7 +1132,7 @@ Fixes:
   [bouchardsyl]
 
 - take care to filter out translated contents
-  wich do no have supported language information
+  which do no have supported language information
   [kiorky]
 
 - added support for language neutral objects with country specific language codes
@@ -1203,7 +1203,7 @@ Fixes:
 - Multilingual Map
   [ramon]
 
-- Univeral link
+- Universal link
   [ramon]
 
 - Catalog patch bug solving
@@ -1237,7 +1237,7 @@ Fixes:
 1.0b2 - 2012-07-08
 ------------------
 
-- change language index to Language to LinguaPlone coexistance
+- change language index to Language to LinguaPlone coexistence
   [ramon]
 
 - don't rebuild the complete catalog on installing

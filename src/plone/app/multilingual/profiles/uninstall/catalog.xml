@@ -1,7 +1,19 @@
-<?xml version="1.0"?>
-<object name="portal_catalog" meta_type="Plone Catalog Tool">
-  <index remove="True" name="Language" meta_type="FieldIndex"/>
-  <column remove="True" value="Language"/>
-  <index remove="True" name="TranslationGroup" meta_type="FieldIndex"/>
-  <column remove="True" value="TranslationGroup"/>
+<?xml version="1.0" encoding="utf-8"?>
+<object meta_type="Plone Catalog Tool"
+        name="portal_catalog"
+>
+  <index meta_type="FieldIndex"
+         name="Language"
+         remove="True"
+  />
+  <column remove="True"
+          value="Language"
+  />
+  <index meta_type="FieldIndex"
+         name="TranslationGroup"
+         remove="True"
+  />
+  <column remove="True"
+          value="TranslationGroup"
+  />
 </object>

@@ -1,5 +1,4 @@
 from BTrees.OOBTree import OOBTree
-from plone.dexterity.content import Container
 from Products.CMFCore.utils import getToolByName
 from zope.component.hooks import getSite
 

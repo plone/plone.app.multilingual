@@ -1,57 +1,84 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
       lang="en"
       metal:use-macro="context/main_template/macros/master"
-      i18n:domain="plone">
-<body>
+      xml:lang="en"
+      i18n:domain="plone"
+>
+  <body>
 
-<metal:head fill-slot="top_slot"
-            tal:define="dummy python:request.set('disable_border',1);
-                        disable_column_one python:request.set('disable_plone.leftcolumn',1);
-                        disable_column_two python:request.set('disable_plone.rightcolumn',1);">
-</metal:head>
+    <metal:head fill-slot="top_slot"
+                tal:define="
+                  dummy python:request.set('disable_border',1);
+                  disable_column_one python:request.set('disable_plone.leftcolumn',1);
+                  disable_column_two python:request.set('disable_plone.rightcolumn',1);
+                "
+    >
+    </metal:head>
 
-<metal:main fill-slot="main">
-    <metal:main define-macro="main">
+    <metal:main fill-slot="main">
+      <metal:main define-macro="main">
 
-    <h1 class="documentFirstHeading" i18n:translate="heading_not_available_in_language">
-      Not available in <span i18n:name="language" tal:content="view/language_name" tal:omit-tag="">es</span>
-    </h1>
+        <h1 class="documentFirstHeading"
+            i18n:translate="heading_not_available_in_language"
+        >
+      Not available in
+          <span tal:content="view/language_name"
+                tal:omit-tag=""
+                i18n:name="language"
+          >es</span>
+        </h1>
 
-      <div class="documentDescription" id="parent-fieldname-description" i18n:translate="">
+        <div class="documentDescription"
+             id="parent-fieldname-description"
+             i18n:translate=""
+        >
         This content is not translated yet to the language requested.
-      </div>
-      <section>
-        <tal:anytranslation condition="view/has_any_translation">
-          <p i18n:translate="">However, this is the list of the already translated languages for the requested content.</p>
-          <ul>
-            <tal:list repeat="trans_content view/already_translated">
-              <tal:defines define="code python: trans_content[0];
-                              trans_obj python: trans_content[1]">
-              <li tal:condition="python:trans_obj.Title()">
-                <span tal:replace="python:view.language_name(code)" /> - <span tal:replace="code"/>:
-                <a tal:attributes="href python:trans_obj.absolute_url() + '?set_language=' + code"
-                   tal:content="python:trans_obj.Title()">Translation Link</a></li>
-              <li tal:condition="python:not trans_obj.Title()">
-                <span tal:content="python:trans_obj"></span>
-                <a tal:attributes="href python:trans_obj.absolute_url() + '?set_language=' + code"
-                    i18n:translate="label_no_title">
-                  (No Title)</a></li>
-              </tal:defines>
-            </tal:list>
-          </ul>
-        </tal:anytranslation>
-        <tal:anytranslation condition="not: view/has_any_translation">
-          <p i18n:translate="">This item doesn't have any translation yet. You can return to the portal site:</p>
+        </div>
+        <section>
+          <tal:anytranslation condition="view/has_any_translation">
+            <p i18n:translate="">However, this is the list of the already translated languages for the requested content.</p>
             <ul>
-              <li><a tal:attributes="href python:context.absolute_url()"
-                     tal:content="python:context.Title()">Content Link</a></li>
+              <tal:list repeat="trans_content view/already_translated">
+                <tal:defines define="
+                               code python: trans_content[0];
+                               trans_obj python: trans_content[1];
+                             ">
+                  <li tal:condition="python:trans_obj.Title()">
+                    <span tal:replace="python:view.language_name(code)"></span>
+                    -
+                    <span tal:replace="code"></span>:
+                    <a tal:content="python:trans_obj.Title()"
+                       tal:attributes="
+                         href python:trans_obj.absolute_url() + '?set_language=' + code;
+                       "
+                    >Translation Link</a></li>
+                  <li tal:condition="python:not trans_obj.Title()">
+                    <span tal:content="python:trans_obj"></span>
+                    <a tal:attributes="
+                         href python:trans_obj.absolute_url() + '?set_language=' + code;
+                       "
+                       i18n:translate="label_no_title"
+                    >
+                      (No Title)</a></li>
+                </tal:defines>
+              </tal:list>
             </ul>
-        </tal:anytranslation>
-      </section>
+          </tal:anytranslation>
+          <tal:anytranslation condition="not: view/has_any_translation">
+            <p i18n:translate="">This item doesn't have any translation yet. You can return to the portal site:</p>
+            <ul>
+              <li><a tal:content="python:context.Title()"
+                   tal:attributes="
+                     href python:context.absolute_url();
+                   "
+                >Content Link</a></li>
+            </ul>
+          </tal:anytranslation>
+        </section>
+      </metal:main>
     </metal:main>
-  </metal:main>
-</body>
+  </body>
 </html>

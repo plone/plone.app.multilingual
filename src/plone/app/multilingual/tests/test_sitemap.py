@@ -42,9 +42,9 @@ class TestSitemap(unittest.TestCase):
 
     def uncompress(self, sitemapdata):
         sio = BytesIO(sitemapdata)
-        unziped = GzipFile(fileobj=sio)
-        xml = unziped.read()
-        unziped.close()
+        unzipped = GzipFile(fileobj=sio)
+        xml = unzipped.read()
+        unzipped.close()
         return xml
 
     def test_portalroot_sitemap(self):

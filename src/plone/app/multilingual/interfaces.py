@@ -239,7 +239,7 @@ class IMultiLanguageExtraOptionsSchema(ILanguageSchema):
     buttons_babel_view_up_to_nr_translations = schema.Int(
         title=_(
             "heading_buttons_babel_view_up_to_nr_translations",
-            default="Use buttons in the bable view for up to how many " "translations?",
+            default="Use buttons in the babel view for up to how many translations?",
         ),
         description=_(
             "description_buttons_babel_view_up_to_nr_translations",

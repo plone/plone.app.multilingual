@@ -21,7 +21,7 @@ def get_translation_group(content):
 def get_translation_manager(content):
     """Get the translation manager.
 
-    :param content: Content for which the tranlation manager is needed.
+    :param content: Content for which the translation manager is needed.
     :type content: Content object
     :returns: translation manager instance.
     :raises:
