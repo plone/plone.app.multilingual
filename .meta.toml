@@ -7,3 +7,4 @@ commit-id = "cfffba8c"
 
 [pyproject]
 codespell_ignores = "pres"
+dependencies_ignores = "['Products.LinguaPlone']"

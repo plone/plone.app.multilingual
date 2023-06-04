@@ -14,6 +14,7 @@ setup(
         "plone.i18n>=4.0.4",
         "setuptools",
         "BTrees",
+        "Products.CMFPlone",
         "Products.CMFCore",
         "Products.CMFPlone",
         "Products.GenericSetup",
