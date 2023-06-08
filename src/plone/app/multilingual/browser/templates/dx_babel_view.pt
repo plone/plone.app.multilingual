@@ -23,9 +23,11 @@
       >
         <label tal:content="widget/label"></label>
         <br />
+        <div class="richtext-field" tal:omit-tag="python:widget.__name__!='IRichTextBehavior.text'">
         <div class="value"
              tal:content="structure widget/render"
         ></div>
+        </div>
       </div>
     </tal:block>
 
@@ -47,7 +49,9 @@
         >
           <label tal:content="widget/label"></label>
           <br />
+          <div class="richtext-field" tal:omit-tag="python:widget.__name__!='IRichTextBehavior.text'">
           <div tal:content="structure widget/render"></div>
+          </div>
         </div>
       </tal:block>
     </fieldset>

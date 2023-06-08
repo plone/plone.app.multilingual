@@ -134,16 +134,29 @@
 
             // Add the google translation field
             if ($('#gtranslate_service_available').attr('value') === "True" && ((original_field.find('.richtext-field, .textline-field, .text-field, .localstatic-field, .ArchetypesField-TextField').length > 0) || ($('#at-babel-edit').length > 0))) {
-                original_field.prepend("<div class='translator-widget' id='item_translation_" + order + "'></div>");
-                original_field.children('.translator-widget').click(function () {
+                // original_field.prepend("<div class='></div>");
+                var bs_button = (
+                    "<button class=\"btn btn-primary translator-button\" id=\"item_translation_" + order + "\" type=\"button\">"+
+                    "<span class=\"spinner\" role=\"status\" aria-hidden=\"true\"></span>"+
+                    "<span class=\"translator-widget\"></span>"+
+                    "</button>"
+                )
+                original_field.prepend(bs_button);
+
+                original_field.children('.translator-button').click(function () {
+                    var translate_button = $(this);
+                    var translate_button_spinner = $("span.spinner", translate_button);
+                    translate_button_spinner.addClass("spinner-border spinner-border-sm");
                     var field = $(value).attr("rel");
+                    var uid = $('#trans-selector button.active').data('uid');
                         // Fetch source of text to translate.
                     var jsondata = {
                             'field': field,
+                            'uid': uid,
                             'lang_source': langSource
                         };
                     var targetelement = destination_field.find('textarea');
-                    var tiny_editor = destination_field.find("textarea.mce_editable");
+                    var tiny_editor = destination_field.find("textarea.form-control[name='form.widgets.IRichTextBehavior.text']");
                     if (!targetelement.length) {
                         targetelement = destination_field.find("input");
                     }
@@ -154,16 +167,29 @@
                         dataType: 'json',
                         type: 'POST',
                         success: function (data) {
-                            var text_target = data.data;
-                            if (tiny_editor.length > 0) {
-                                tinyMCE.get(tiny_editor.attr('id')).setContent(text_target);
+                            translate_button_spinner.removeClass("spinner-border spinner-border-sm");
+                            if ('error' in data){
+                                translate_button.removeClass("btn-primary");
+                                translate_button.addClass("btn-danger");
+                                translate_button.tooltip({
+                                    'title': data.error,
+                                    'trigger': 'hover'
+                                });
+                                translate_button.tooltip('show');
+
                             } else {
-                                targetelement.val(text_target); // Inserts translated text.
+                                var text_target = data.data;
+                                if (tiny_editor.length > 0) {
+                                    tinyMCE.get(tiny_editor.attr('id')).setContent(text_target);
+                                } else {
+                                    targetelement.val(text_target); // Inserts translated text.
+                                    targetelement.focus();
+                                }
                             }
                         }
                     });
                 });
-                original_field.children('.translator-widget').hide();
+                original_field.children('.translator-button').hide();
                 order += 1;
             }
         });
@@ -206,13 +232,13 @@
                 $(babel_selected).addClass('selected');
                 $(babel_selected).toggleClass("selected");
                 $(orig_babel_select).toggleClass("selected");
-                $(orig_babel_select).children('.translator-widget').hide();
+                $(orig_babel_select).children('.translator-button').hide();
             }
             babel_selected = this;
             $(this).toggleClass("selected");
             orig_babel_select = $('#frame-content .field')[index];
             $(orig_babel_select).toggleClass("selected");
-            $(orig_babel_select).children('.translator-widget').show();
+            $(orig_babel_select).children('.translator-button').show();
         });
 
         // Fetch default content

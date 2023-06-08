@@ -51,12 +51,20 @@
     display: none;
 }
 
-.translator-widget {
+.translator-button {
     position: relative;
     float: right;
-    background: url('++resource++plone.app.multilingual.images/gtranslate.png');
     min-height: 50px;
     min-width: 50px;
+}
+
+.translator-widget {
+    display: block;
+    float: right;
+    background: url('++resource++plone.app.multilingual.images/gtranslate.png');
+    background-size: 30px;
+    width: 30px;
+    height: 30px;
 }
 
 .currentLanguage {

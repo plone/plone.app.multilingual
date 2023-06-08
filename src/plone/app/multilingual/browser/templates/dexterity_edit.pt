@@ -60,6 +60,7 @@
                   tal:content="lang/info/native|lang/info/name"
                   tal:attributes="
                     data-url string:${lang/obj/absolute_url}/babel_view;
+                    data-uid lang/obj/UID | nothing;
                     class python:lang['isDefault'] and 'btn active' or 'btn';
                     name string:button-${lang/info/name};
                   "
