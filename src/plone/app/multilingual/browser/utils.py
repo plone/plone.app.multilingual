@@ -57,7 +57,10 @@ class BabelUtils(BrowserView):
             IMultiLanguageExtraOptionsSchema, prefix="plone"
         )
         key = settings.google_translation_key
-        return key is not None and len(key.strip()) > 0
+        v2_enabled = key is not None and len(key.strip()) > 0
+        v3_enabled = settings.gcloud_use_v3
+
+        return v2_enabled or v3_enabled
 
     def languages(self):
         """Deprecated"""

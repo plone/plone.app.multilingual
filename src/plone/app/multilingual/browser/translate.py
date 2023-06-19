@@ -11,10 +11,20 @@ from zope.component import getUtility
 
 import json
 import logging
+import os
 import requests
 
 
 logger = logging.getLogger(__name__)
+
+
+try:
+    from google.cloud import translate_v3 as translate
+    from google.oauth2 import service_account
+    HAS_GCLOUD_V3 = True
+except:
+    HAS_GCLOUD_V3 = False
+    logger.info("Cloud Translation V3 is not available.")
 
 
 def safe_get_chunk(text, length):
@@ -32,7 +42,7 @@ def safe_get_chunk(text, length):
         return length
 
 
-def google_translate(question, key, lang_target, lang_source):
+def google_translate_v2(question, key, lang_target, lang_source):
     translated = ""
     url = "https://translation.googleapis.com/language/translate/v2"
     temp_question = []
@@ -92,6 +102,87 @@ def google_translate(question, key, lang_target, lang_source):
     return json.dumps({"data": translated})
 
 
+def google_translate_v3(question, lang_target, lang_source):
+    credentials_file = os.getenv("GCLOUD_V3_JSON", None)
+    if not credentials_file:
+        logger.warning("GCLOUD_V3_JSON environment variable is not defined")
+        return json.dumps({"error": "Google Cloud translation is misconfigured, please refer to package README."})
+
+    credentials = service_account.Credentials.from_service_account_file(credentials_file)
+    client = translate.TranslationServiceClient(credentials=credentials)
+    project_id = credentials.project_id
+    location = 'global'
+    parent = f'projects/{project_id}/locations/{location}'
+    translated = ""
+    temp_question = []
+    aux = question
+    size_per_chunk = 400  #  XXX:Cannot find doc about this, is this value ok?
+    max_chunks = 128
+    # XXX: Cannot find doc for this, will leave it at the same limit as we have for basic.
+    while len(aux):
+        if len(temp_question) < max_chunks:
+            if len(aux) > size_per_chunk:
+                idx = safe_get_chunk(aux, size_per_chunk)
+                temp_question.append(aux[:idx])
+                aux = aux[idx:]
+            else:
+                temp_question.append(aux)
+                aux = ""
+
+            if not aux or len(temp_question) == max_chunks:
+                data = {
+                    "parent": parent,
+                    "target_language_code": lang_target,
+                    "source_language_code": lang_source,
+                    "contents": temp_question,
+                }
+                try:
+                    response = client.translate_text(request=data)
+                except Exception as e:
+                    logger.error("Received an error from Google")
+                    logger.error(e.message)
+                    return json.dumps({"error": "Received error from Google, check logs"})
+
+                for translation in response.translations:
+                    translated += translation.translated_text
+
+                temp_question = []
+
+    if len(temp_question):
+        data = {
+            "parent": parent,
+            "target_language_code": lang_target,
+            "source_language_code": lang_source,
+            "contents": temp_question,
+        }
+
+        try:
+            response = client.translate_text(request=data)
+        except Exception as e:
+            logger.error("Received an error from Google")
+            logger.error(e.message)
+            return json.dumps({"error": "Received error from Google, check logs"})
+
+        for translation in response.translations:
+            translated += translation.translated_text
+
+        temp_question = []
+
+    return json.dumps({"data": translated})
+
+
+def google_translate(question, settings, lang_target, lang_source):
+    use_v3 = settings.gcloud_use_v3
+    results = ""
+    if HAS_GCLOUD_V3 and use_v3:
+        results = google_translate_v3(question, lang_target, lang_source)
+    else:
+        key = settings.google_translation_key
+        results = google_translate_v2(question, key, lang_target, lang_source)
+
+    return results
+
+
 class gtranslation_service_dexterity(BrowserView):
     def __call__(self):
         if self.request.method != "POST" and not (
@@ -122,7 +213,7 @@ class gtranslation_service_dexterity(BrowserView):
             else:
                 return _("Invalid field")
             return google_translate(
-                question, settings.google_translation_key, lang_target, lang_source
+                question, settings, lang_target, lang_source
             )
 
 

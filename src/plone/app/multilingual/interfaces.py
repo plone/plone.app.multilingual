@@ -190,6 +190,7 @@ class IMultiLanguageExtraOptionsSchema(ILanguageSchema):
             "bypass_languageindependent_field_permission_check",
             "buttons_babel_view_up_to_nr_translations",
             "google_translation_key",
+            "gcloud_use_v3",
             "selector_lookup_translations_policy",
         ],
     )
@@ -258,9 +259,19 @@ class IMultiLanguageExtraOptionsSchema(ILanguageSchema):
         title=_("heading_google_translation_key", default="Google Translation API Key"),
         description=_(
             "description_google_translation_key",
-            default="Is a paying API in order to use google translation " "service",
+            default="API Key for Google Cloud Translate (Basic edition or V2, not needed for V3)",
         ),
         required=False,
+    )
+
+    gcloud_use_v3 = schema.Bool(
+        title=_("heading_gcloud_use_v3", default="Use the Advanced edition (V3)"),
+        description=_(
+            "description_gcloud_use_v3",
+            default="Mark this checkbox to use the Google Cloud Translate Advanced edition (V3). Refer to the README for more information.",
+        ),
+        required=False,
+        default=False,
     )
 
     selector_lookup_translations_policy = schema.Choice(

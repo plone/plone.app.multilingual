@@ -136,7 +136,8 @@ class MultilingualAddForm(DefaultAddForm):
         if not parts:
             return
         source = uuidToObject(parts[-1])
-        notify(ObjectTranslatedEvent(source, object, language))
+        new_object = self.container.get(object.id)  # Use the object with aq set
+        notify(ObjectTranslatedEvent(source, new_object, language))
 
     @property
     def max_nr_of_buttons(self):

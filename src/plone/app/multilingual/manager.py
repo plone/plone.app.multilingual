@@ -21,6 +21,7 @@ from zope.event import notify
 from zope.globalrequest import getRequest
 from zope.interface import alsoProvides
 from zope.interface import implementer
+from google.cloud import translate_v3
 
 
 @implementer(ITranslationManager)
