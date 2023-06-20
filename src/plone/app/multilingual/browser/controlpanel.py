@@ -55,6 +55,7 @@ class LanguageControlPanelFormPAM(LanguageControlPanelForm):
             return
 
         self.applyChanges(data)
+        self.status = "Changes saved. Multilingual tasks: "
 
         setupTool = SetupMultilingualSite()
         output = setupTool.setupSite(self.context)
