@@ -32,14 +32,20 @@ def safe_get_chunk(text, length):
     # the cut when splitting HTML in chunks, so to not get a tag half-way
     # through (Like ['<a href="http://www.goog', 'le.com">Google</a>'])
     # Up to length size
+    returned_length = length
     aux = text[:length]
     open_tag = aux.rfind("<")
     close_tag = aux.rfind(">")
-    if close_tag < open_tag:
+    if close_tag == -1 and open_tag >= 0:
+        returned_length = open_tag
+    elif close_tag < open_tag:
         # we have an opened tag
-        return open_tag
+        returned_length = open_tag
     else:
-        return length
+        # Don't cut a word in the middle. Look for the last space
+        returned_length = aux.rfind(" ")
+
+    return returned_length
 
 
 def google_translate_v2(question, key, lang_target, lang_source):
@@ -47,7 +53,7 @@ def google_translate_v2(question, key, lang_target, lang_source):
     url = "https://translation.googleapis.com/language/translate/v2"
     temp_question = []
     aux = question
-    size_per_chunk = 400  #  XXX:Cannot find doc about this, is this value ok?
+    size_per_chunk = 800  #  XXX:Cannot find doc about this, is this value ok?
     max_chunks = 128
     # You can provide up to 128 text chunks for translating
     # https://cloud.google.com/translate/docs/basic/translating-text
