@@ -18,6 +18,7 @@ from zope.event import notify
 from zope.i18n import translate
 from zope.interface import alsoProvides
 from zope.lifecycleevent import modified
+import os
 
 
 logger = getLogger("plone.app.multilingual")
@@ -135,16 +136,24 @@ class SetupMultilingualSite:
         folder = getattr(self.context, folderId, None)
         wftool = getToolByName(self.context, "portal_workflow")
 
-        assets_folder_id = translate(
-            _("assets_folder_id", default="assets"),
-            domain="plone",
-            target_language=folderId,
-        )
-        assets_folder_title = translate(
-            _("assets_folder_title", default="Assets"),
-            domain="plone",
-            target_language=folderId,
-        )
+        # Allow the ability to set the assets folder id and title
+        # from environmental variables. If they are not set,
+        # fallback to defaults.
+        assets_folder_id = os.getenv(('multilingual_assets_id_'+code).upper(), None)
+        assets_folder_title = os.getenv(('multilingual_assets_title_'+code).upper(), None)
+
+        if not assets_folder_id:
+            assets_folder_id = translate(
+                _("assets_folder_id", default="assets"),
+                domain="plone",
+                target_language=folderId,
+            )
+        if not assets_folder_title:
+            assets_folder_title = translate(
+                _("assets_folder_title", default="Assets"),
+                domain="plone",
+                target_language=folderId,
+            )
 
         if folder is None:
             unrestricted_construct_instance(self.folder_type, self.context, folderId)
