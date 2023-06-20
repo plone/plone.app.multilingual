@@ -108,7 +108,7 @@ def google_translate_v2(question, key, lang_target, lang_source):
     return json.dumps({"data": translated})
 
 
-def google_translate_v3(question, lang_target, lang_source):
+def google_translate_v3(question, settings, lang_target, lang_source):
     credentials_file = os.getenv("GCLOUD_V3_JSON", None)
     if not credentials_file:
         logger.warning("GCLOUD_V3_JSON environment variable is not defined")
@@ -117,13 +117,24 @@ def google_translate_v3(question, lang_target, lang_source):
     credentials = service_account.Credentials.from_service_account_file(credentials_file)
     client = translate.TranslationServiceClient(credentials=credentials)
     project_id = credentials.project_id
-    location = 'global'
+    location = settings.gcloud_v3_location
     parent = f'projects/{project_id}/locations/{location}'
     translated = ""
     temp_question = []
     aux = question
-    size_per_chunk = 400  #  XXX:Cannot find doc about this, is this value ok?
+    size_per_chunk = 800  #  XXX:Cannot find doc about this, is this value ok?
     max_chunks = 128
+    glossary_id = settings.gcloud_v3_glossary
+    glossary_config = None
+    if glossary_id:
+        logger.info(f"Will use glossary {glossary_id} for translating")
+        glossary = client.glossary_path(
+            project_id, location, glossary_id  # The location of the glossary
+        )
+        glossary_config = translate.TranslateTextGlossaryConfig(glossary=glossary)
+    else:
+        logger.info(f"Will not use a glossary for translating")
+
     # XXX: Cannot find doc for this, will leave it at the same limit as we have for basic.
     while len(aux):
         if len(temp_question) < max_chunks:
@@ -142,6 +153,8 @@ def google_translate_v3(question, lang_target, lang_source):
                     "source_language_code": lang_source,
                     "contents": temp_question,
                 }
+                if glossary_config:
+                    data['glossary_config'] = glossary_config
                 try:
                     response = client.translate_text(request=data)
                 except Exception as e:
@@ -149,8 +162,12 @@ def google_translate_v3(question, lang_target, lang_source):
                     logger.error(e.message)
                     return json.dumps({"error": "Received error from Google, check logs"})
 
-                for translation in response.translations:
-                    translated += translation.translated_text
+                if glossary_config:
+                    for translation in response.glossary_translations:
+                        translated += translation.translated_text
+                else:
+                    for translation in response.translations:
+                        translated += translation.translated_text
 
                 temp_question = []
 
@@ -161,6 +178,8 @@ def google_translate_v3(question, lang_target, lang_source):
             "source_language_code": lang_source,
             "contents": temp_question,
         }
+        if glossary_config:
+            data['glossary_config'] = glossary_config
 
         try:
             response = client.translate_text(request=data)
@@ -169,8 +188,12 @@ def google_translate_v3(question, lang_target, lang_source):
             logger.error(e.message)
             return json.dumps({"error": "Received error from Google, check logs"})
 
-        for translation in response.translations:
-            translated += translation.translated_text
+        if glossary_config:
+            for translation in response.glossary_translations:
+                translated += translation.translated_text
+        else:
+            for translation in response.translations:
+                translated += translation.translated_text
 
         temp_question = []
 
@@ -181,7 +204,7 @@ def google_translate(question, settings, lang_target, lang_source):
     use_v3 = settings.gcloud_use_v3
     results = ""
     if HAS_GCLOUD_V3 and use_v3:
-        results = google_translate_v3(question, lang_target, lang_source)
+        results = google_translate_v3(question, settings, lang_target, lang_source)
     else:
         key = settings.google_translation_key
         results = google_translate_v2(question, key, lang_target, lang_source)

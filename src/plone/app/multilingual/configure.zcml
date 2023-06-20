@@ -169,6 +169,11 @@
       post_handler=".setuphandlers.init_pam"
       />
 
+  <utility
+      name="plone.app.multilingual.GcloudGlossaries"
+      component=".vocabularies.GcloudGlossariesVocabularyFactory"
+      />
+
   <genericsetup:registerProfile
       name="uninstall"
       title="Multilingual Support [uninstall]"

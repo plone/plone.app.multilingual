@@ -191,6 +191,8 @@ class IMultiLanguageExtraOptionsSchema(ILanguageSchema):
             "buttons_babel_view_up_to_nr_translations",
             "google_translation_key",
             "gcloud_use_v3",
+            "gcloud_v3_location",
+            "gcloud_v3_glossary",
             "selector_lookup_translations_policy",
         ],
     )
@@ -272,6 +274,29 @@ class IMultiLanguageExtraOptionsSchema(ILanguageSchema):
         ),
         required=False,
         default=False,
+    )
+
+    gcloud_v3_location = schema.TextLine(
+        title=_("gcloud_v3_location", default="Specify location endpoint for V3"),
+        description=_(
+            "gcloud_v3_location",
+            default="(Only used by V3) Specify which location to use when using the Advanced edition (V3). Defaults to us-central1",
+        ),
+        required=True,
+        default='us-central1',
+    )
+
+    gcloud_v3_glossary = schema.Choice(
+        title=_(
+            "heading_gcloud_v3_glossary",
+            default="Glossary to use when translating (V3 only).",
+        ),
+        description=_(
+            "description_gcloud_v3_glossary",
+            default="(Only used by V3) When V3 is properly configured, this drop down will list available glossaries. Choose one if you want to use when translating",
+        ),
+        required=False,
+        vocabulary="plone.app.multilingual.GcloudGlossaries",
     )
 
     selector_lookup_translations_policy = schema.Choice(
