@@ -54,7 +54,7 @@ def google_translate_v2(question, key, lang_target, lang_source):
     temp_question = []
     aux = question
     size_per_chunk = 800  #  XXX:Cannot find doc about this, is this value ok?
-    max_chunks = 128
+    max_chunks = 6
     # You can provide up to 128 text chunks for translating
     # https://cloud.google.com/translate/docs/basic/translating-text
     while len(aux):
@@ -123,7 +123,7 @@ def google_translate_v3(question, settings, lang_target, lang_source):
     temp_question = []
     aux = question
     size_per_chunk = 800  #  XXX:Cannot find doc about this, is this value ok?
-    max_chunks = 128
+    max_chunks = 6
     glossary_id = settings.gcloud_v3_glossary
     glossary_config = None
     if glossary_id:
