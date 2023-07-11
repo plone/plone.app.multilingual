@@ -123,7 +123,7 @@ def set_recursive_language(ob, language):
         ITranslationManager(ob).update()
         reindex_object(ob)
 
-    for child in IFolderish.providedBy(ob) and ob.items() or ():
+    for child in IFolderish.providedBy(ob) and ob.values() or ():
         if ITranslatable.providedBy(child):
             set_recursive_language(child, language)
 
