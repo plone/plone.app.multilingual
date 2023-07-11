@@ -53,7 +53,7 @@ class TestSubscribers(unittest.TestCase):
         a_ca_copied = self.portal["en"][a_ca.id]
         self.assertEqual(ILanguage(a_ca_copied).get_language(), "en")
 
-    def test_copied_event(self):
+    def test_copied_event_doc(self):
         """When an object is copied from within one Language Root Folder into
         a different Language Root Folder it changes its language to that of the
         folder it is copied into
@@ -66,6 +66,43 @@ class TestSubscribers(unittest.TestCase):
         self.portal["en"].manage_pasteObjects(id_)
         a_ca_copied = self.portal["en"][a_ca.id]
         self.assertEqual(ILanguage(a_ca_copied).get_language(), "en")
+
+    def test_copied_event_folder(self):
+        """When an object is copied from within one Language Root Folder into
+        a different Language Root Folder it changes its language to that of the
+        folder it is copied into.  This recursively includes all its content.
+        """
+        folder_ca = createContentInContainer(
+            self.portal["ca"], "Folder", title="Test folder"
+        )
+        doc_ca = createContentInContainer(folder_ca, "Document", title="Test document")
+
+        id_ = self.portal["ca"].manage_copyObjects(folder_ca.id)
+        self.portal["en"].manage_pasteObjects(id_)
+        folder_ca_copied = self.portal["en"][folder_ca.id]
+        self.assertEqual(ILanguage(folder_ca_copied).get_language(), "en")
+        doc_ca_copied = folder_ca_copied[doc_ca.id]
+        self.assertEqual(ILanguage(doc_ca_copied).get_language(), "en")
+
+    def test_set_recursive_language(self):
+        """Directly test the set_recursive_language function.
+
+        There was a problem due to 'items' versus 'values',
+        which meant the recursive part did not work at all.
+        """
+        from plone.app.multilingual.subscriber import set_recursive_language
+
+        folder_ca = createContentInContainer(
+            self.portal["ca"], "Folder", title="Test folder"
+        )
+        doc_ca = createContentInContainer(folder_ca, "Document", title="Test document")
+        self.assertEqual(ILanguage(folder_ca).get_language(), "ca")
+        self.assertEqual(ILanguage(doc_ca).get_language(), "ca")
+
+        # Recursively set the language.
+        set_recursive_language(folder_ca, "en")
+        self.assertEqual(ILanguage(folder_ca).get_language(), "en")
+        self.assertEqual(ILanguage(doc_ca).get_language(), "en")
 
     def test_moved_to_assets_folder(self):
         """When an object is moved from within one Language Root Folder into
