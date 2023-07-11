@@ -1,4 +1,5 @@
 Do not unset the language on the Indonesian root language folder when saving the control panel.
 This language has ``id`` as code.  This is not allowed as an id in Plone, so it is created as ``id-id`` instead.
 This needs some special handling.
+Added upgrade to recursively fix this language folder to set the Indonesian language.  This is only done when the folder itself has the wrong language.
 [maurits]
