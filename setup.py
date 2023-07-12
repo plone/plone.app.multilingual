@@ -15,6 +15,7 @@ setup(
         "setuptools",
         "BTrees",
         "Products.CMFCore",
+        "Products.CMFPlone",
         "Products.GenericSetup",
         "Products.statusmessages",
         "plone.app.content",
