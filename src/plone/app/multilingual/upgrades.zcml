@@ -83,4 +83,12 @@
       handler=".upgrades.update_old_layouts"
       />
 
+  <genericsetup:upgradeStep
+      title="Fix Indonesian language"
+      profile="plone.app.multilingual:default"
+      source="1001"
+      destination="1002"
+      handler=".upgrades.fix_indonesian_language"
+      />
+
 </configure>
