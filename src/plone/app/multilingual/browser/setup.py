@@ -118,6 +118,7 @@ class SetupMultilingualSite:
                 [
                     id_ not in _languagelist,
                     id_ not in _combinedlanguagelist,
+                    id_ != "id-id",
                     ITranslatable.providedBy(portal[id_]),
                 ]
             ):
