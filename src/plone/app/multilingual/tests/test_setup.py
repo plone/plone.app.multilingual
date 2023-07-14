@@ -9,6 +9,7 @@ from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.testing import PAM_INTEGRATION_PRESET_TESTING
 from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
+from plone.base.interfaces import ILanguage
 from Products.CMFCore.utils import getToolByName
 from zope.interface import alsoProvides
 
@@ -44,9 +45,12 @@ class TestSetupMultilingualSite(unittest.TestCase):
             self.assertNotIn(lang, portal_objects)
 
     def test_all_supported_languages(self):
-        """There was a language which code is 'id'.
+        """There is a language which code is 'id'.
+
+        This is Indonesian, or Bahasa Indonesia in that language.
         This broke the root language folder setup process.
         To get rid of that the folder is 'id-id'.
+        Here we test all languages, to be sure we catch such a corner case.
         """
         all_langs = AllContentLanguageVocabulary()(self.portal)
         for lang in all_langs:
@@ -61,10 +65,11 @@ class TestSetupMultilingualSite(unittest.TestCase):
         portal_objects = self.portal.objectIds()
 
         for lang in all_langs.by_value.keys():
-            if lang == "id":
-                self.assertIn("id-id", portal_objects)
-            else:
-                self.assertIn(lang, portal_objects)
+            # Special handling for Indonesian.
+            folder_id = "id-id" if lang == "id" else lang
+            self.assertIn(folder_id, portal_objects)
+            folder = self.portal[folder_id]
+            self.assertEqual(ILanguage(folder).get_language(), lang)
 
     def test_type_of_language_folders(self):
         """The created objects have to be 'Language Root Folder'."""
@@ -79,10 +84,10 @@ class TestSetupMultilingualSite(unittest.TestCase):
         setup_tool.setupSite(self.portal)
 
         for lang in all_langs.by_value.keys():
-            if lang == "id":
-                self.assertEqual(self.portal.get("id-id").portal_type, "LRF")
-            else:
-                self.assertEqual(self.portal.get(lang).portal_type, "LRF")
+            # Special handling for Indonesian.
+            folder_id = "id-id" if lang == "id" else lang
+            folder = self.portal[folder_id]
+            self.assertEqual(folder.portal_type, "LRF")
 
 
 class TestSetupMultilingualPresetSite(unittest.TestCase):
