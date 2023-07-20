@@ -8,6 +8,23 @@ Changelog
 
 .. towncrier release notes start
 
+5.6.5 (2023-07-20)
+------------------
+
+Bug fixes:
+
+
+- Fix ``set_recursive_language`` to actually find child objects.
+  [maurits] (#304)
+- Root language switcher: redirect to ``id-id`` if the Indonesian language is preferred.
+  [maurits] (#304)
+- Do not unset the language on the Indonesian root language folder when saving the control panel.
+  This language has ``id`` as code.  This is not allowed as an id in Plone, so it is created as ``id-id`` instead.
+  This needs some special handling.
+  Added upgrade to recursively fix this language folder to set the Indonesian language.  This is only done when the folder itself has the wrong language.
+  [maurits] (#304)
+
+
 5.6.4 (2021-10-16)
 ------------------
 
