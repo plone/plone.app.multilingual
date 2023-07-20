@@ -121,6 +121,7 @@ class SetupMultilingualSite(object):
         for id_ in portal.objectIds():
             if all([id_ not in _languagelist,
                     id_ not in _combinedlanguagelist,
+                    id_ != "id-id",
                     ITranslatable.providedBy(portal[id_])]):
                 set_recursive_language(portal[id_], defaultLanguage)
 

@@ -18,6 +18,10 @@ class LanguageSwitcher(BrowserView):
         plt = getToolByName(context, 'portal_languages')
         pref = plt.getPreferredLanguage(self.request)
         default = plt.getDefaultLanguage()
+        # Handle Indonesian: its language code "id" is not allowed in Plone as
+        # content id, so its LRF is called "id-id".
+        pref = "id-id" if pref == "id" else pref
+        default = "id-id" if default == "id" else default
         ids = self.context.keys()
         target = (pref in ids) and pref or default
         url = "%s/%s" % (context.absolute_url(), target)

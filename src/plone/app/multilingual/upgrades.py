@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone.app.multilingual import logger
+from plone.app.multilingual.subscriber import set_recursive_language
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ILanguage
@@ -143,3 +144,24 @@ def upgrade_to_4(context):
         PROFILE_ID.replace('default', 'to_4'),
         'plone.app.registry',
     )
+
+
+def fix_indonesian_language(context):
+    """Fix the Indonesian language root folder, if it is there.
+
+    Indonesian needs special handling: its language code "id" is not allowed in
+    Plone as content id, so its LRF is called "id-id".
+    Not all parts of the code were always aware of this.
+    Result is that this LRF may have English (or nothing) as language.
+    """
+    utool = getToolByName(context, "portal_url")
+    portal = utool.getPortalObject()
+    if "id-id" not in portal.objectIds():
+        logger.info("Indonesian folder not available, so no need to fix.")
+        return
+    folder = portal["id-id"]
+    if ILanguage(folder).get_language() == "id":
+        logger.info("Indonesian folder 'id-id' already has language 'id'.")
+        return
+    logger.info("Recursively setting language of 'id-id' folder to Bahasa Indonesia.")
+    set_recursive_language(folder, "id")

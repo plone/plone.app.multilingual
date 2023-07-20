@@ -52,4 +52,12 @@
       handler=".upgrades.upgrade_to_4"
       />
 
+  <genericsetup:upgradeStep
+      title="Fix Indonesian language"
+      profile="plone.app.multilingual:default"
+      source="4"
+      destination="5"
+      handler=".upgrades.fix_indonesian_language"
+      />
+
 </configure>
