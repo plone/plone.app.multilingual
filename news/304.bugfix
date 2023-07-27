@@ -1,0 +1,2 @@
+Fix setting Indonesian language cookie on site root: must be ``id``, not ``id-id``.
+[maurits]
