@@ -34,12 +34,14 @@ class TestLanguageSwitcher(unittest.TestCase):
     def test_switcher_redirects_to_default_english(self):
         self.browser.open(self.portal_url)
         self.assertEqual(self.browser.url, self.portal_url + "/en")
+        self.assertEqual(self.browser.cookies["I18N_LANGUAGE"], "en")
 
     def test_switcher_redirects_to_default_indonesian(self):
         self.language_tool.setDefaultLanguage("id")
         transaction.commit()
         self.browser.open(self.portal_url)
         self.assertEqual(self.browser.url, self.portal_url + "/id-id")
+        self.assertEqual(self.browser.cookies["I18N_LANGUAGE"], "id")
 
     def test_switcher_redirects_to_preferred_catalan(self):
         # Tell Plone that we prefer Catalan.
@@ -48,6 +50,7 @@ class TestLanguageSwitcher(unittest.TestCase):
         self.browser.open(self.portal_url)
         # We get redirected to our preferred language root folder.
         self.assertEqual(self.browser.url, self.portal_url + "/ca")
+        self.assertEqual(self.browser.cookies["I18N_LANGUAGE"], "ca")
 
     def test_switcher_redirects_to_preferred_indonesian(self):
         # Tell Plone that we prefer Indonesian.
@@ -56,3 +59,4 @@ class TestLanguageSwitcher(unittest.TestCase):
         self.browser.open(self.portal_url)
         # We get redirected to our preferred language root folder.
         self.assertEqual(self.browser.url, self.portal_url + "/id-id")
+        self.assertEqual(self.browser.cookies["I18N_LANGUAGE"], "id")
