@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_inner
+from plone.i18n.interfaces import ILanguageUtility
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
+from zope.component import getUtility
 
 
 class LanguageSwitcher(BrowserView):
@@ -28,8 +30,10 @@ class LanguageSwitcher(BrowserView):
 
         # We need to set the language cookie on the first response or it will
         # be set on the frontpage itself, making it uncachable
-        langCookie = self.request.cookies.get('I18N_LANGUAGE')
-        if not langCookie or langCookie != target:
-            self.request.response.setCookie('I18N_LANGUAGE', target, path='/')
+        # In case of Indonesian, we need to use 'id', not 'id-id'.
+        target = "id" if target == "id-id" else target
+        tool = getUtility(ILanguageUtility)
+        # setLanguageCookie calls getLanguageCookie, and only sets a cookie when needed.
+        tool.setLanguageCookie(target, request=self.request)
 
         self.request.response.redirect(url, status=302)
