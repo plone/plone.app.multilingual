@@ -103,16 +103,6 @@
         });
     }
 
-    function sync_elements_vertically() {
-        // We do NOT calculate padding here again, because we might get
-        // to high padding because fields might have been shifted, increasing
-        // the padding.
-        var i = 0;
-        $.each(original_fields, function (i) {
-            sync_element_vertically($(original_fields[i]), $(destination_fields[i]), padding, i === 0);
-        });
-    }
-
     function update_view() {
         var order = 1,
             url_translate = $('input#url_translate').val(),
@@ -137,11 +127,11 @@
                 original_field.prepend("<div class='translator-widget' id='item_translation_" + order + "'></div>");
                 original_field.children('.translator-widget').click(function () {
                     var field = $(value).attr("rel");
-                        // Fetch source of text to translate.
+                    // Fetch source of text to translate.
                     var jsondata = {
-                            'field': field,
-                            'lang_source': langSource
-                        };
+                        'field': field,
+                        'lang_source': langSource
+                    };
                     var targetelement = destination_field.find('textarea');
                     var tiny_editor = destination_field.find("textarea.mce_editable");
                     if (!targetelement.length) {
@@ -226,6 +216,5 @@
             update_view();
         });
 
-        $(".formTabs, .pat-autotoc a").click(sync_elements_vertically);
     });
 }(jQuery));
