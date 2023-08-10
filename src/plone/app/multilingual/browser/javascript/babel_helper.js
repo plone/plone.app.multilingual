@@ -216,5 +216,9 @@
             update_view();
         });
 
+        var intervalId = window.setInterval(function () {
+            update_view();
+        }, 1000);
+
     });
 }(jQuery));
