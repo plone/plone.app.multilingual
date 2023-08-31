@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.4 (2023-08-31)
+------------------
+
+Bug fixes:
+
+
+- Fix setting Indonesian language cookie on site root: must be ``id``, not ``id-id``.
+  [maurits] (#304)
+
+
 6.0.3 (2023-07-14)
 ------------------
 
