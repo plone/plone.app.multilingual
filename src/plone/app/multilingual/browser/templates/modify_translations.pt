@@ -74,7 +74,7 @@
                      href="#"
                      title="Disconnect translation"
                      tal:attributes="
-                       href string:${context/absolute_url}/disconnect_translation?came_from=${context/UID}&language=${lang};;;
+                       href python:context.absolute_url() + '/disconnect_translation?came_from=' + context.UID() + '&language=' + lang;
                      "
                      i18n:attributes="title disconnect_translation"
                   >
