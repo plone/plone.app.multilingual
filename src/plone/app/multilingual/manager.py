@@ -74,7 +74,7 @@ class TranslationManager:
         if not language and language != "":
             raise KeyError("There is no target language")
 
-        if type(content) == str:
+        if isinstance(content, str):
             content = uuidToObject(content)
 
         # Check if exists and is not myself
