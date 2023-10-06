@@ -5,7 +5,6 @@ from plone.app.multilingual.interfaces import ITranslationIdChooser
 from plone.dexterity.content import Container
 from zope.component import adapter
 from zope.container.interfaces import INameChooser
-from zope.deprecation import deprecated
 from zope.interface import implementer
 
 
@@ -34,9 +33,4 @@ class LRFNameChooser(NormalizingNameChooser):
 
 @implementer(ILanguageRootFolder, INavigationRoot)
 class LanguageRootFolder(Container):
-    """Deprecated LanguageRootFolder custom base class"""
-
-
-deprecated(
-    "LanguageRootFolder", "LanguageRootFolders should be migrate to DexterityContainers"
-)
+    """LanguageRootFolder custom base class"""
