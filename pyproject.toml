@@ -1,6 +1,9 @@
 # Generated from:
 # https://github.com/plone/meta/tree/main/config/default
 # See the inline comments on how to expand/tweak this configuration file
+[build-system]
+requires = ["setuptools>=68.2"]
+
 [tool.towncrier]
 directory = "news/"
 filename = "CHANGES.rst"
@@ -126,7 +129,6 @@ ignore-packages = ['Products.LinguaPlone']
 #    "gitpython = ['git']",
 #    "pygithub = ['github']",
 #  ]
-#  """
 ##
 
 [tool.check-manifest]
@@ -137,6 +139,7 @@ ignore = [
     "tox.ini",
     ".flake8",
     "mx.ini",
+    "requirements.txt",
 
 ]
 ##

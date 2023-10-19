@@ -3,8 +3,17 @@
 # See the inline comments on how to expand/tweak this configuration file
 [meta]
 template = "default"
-commit-id = "cfffba8c"
+commit-id = "6a477508"
+
+[gitignore]
+extra_lines = """
+/robot/
+/robot_*
+"""
 
 [pyproject]
+check_manifest_ignores = """
+    "requirements.txt",
+"""
 codespell_ignores = "pres"
 dependencies_ignores = "['Products.LinguaPlone']"

@@ -71,9 +71,19 @@ repos:
     -   id: check-python-versions
         args: ['--only', 'setup.py,pyproject.toml']
 -   repo: https://github.com/collective/i18ndude
-    rev: "6.0.0"
+    rev: "6.1.0"
     hooks:
     -   id: i18ndude
+
+
+##
+# Add extra configuration options in .meta.toml:
+#  [pre_commit]
+#  i18ndude_extra_lines = """
+#  _your own configuration lines_
+#  """
+##
+
 
 ##
 # Add extra configuration options in .meta.toml:
