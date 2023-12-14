@@ -8,6 +8,22 @@ Changelog
 
 .. towncrier release notes start
 
+8.0.2 (2023-12-14)
+------------------
+
+Bug fixes:
+
+
+- Fixing placement of save and cancel buttons by not having javascript screw up their position (#435)
+- Fixing disconnection of translations [gogobd] (#437)
+
+
+Internal:
+
+
+- Removed obsolete deprecation warning. (#440)
+
+
 8.0.1 (2023-08-31)
 ------------------
 
