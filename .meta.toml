@@ -1,5 +1,19 @@
 # Generated from:
-# https://github.com/plone/meta/tree/master/config/default
+# https://github.com/plone/meta/tree/main/config/default
+# See the inline comments on how to expand/tweak this configuration file
 [meta]
 template = "default"
-commit-id = "11f0db91"
+commit-id = "6a477508"
+
+[gitignore]
+extra_lines = """
+/robot/
+/robot_*
+"""
+
+[pyproject]
+check_manifest_ignores = """
+    "requirements.txt",
+"""
+codespell_ignores = "pres"
+dependencies_ignores = "['Products.LinguaPlone']"
