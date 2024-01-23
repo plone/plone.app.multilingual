@@ -1,6 +1,7 @@
 from Acquisition import aq_parent
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.vocabularies import untranslated_languages
+from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.z3cform.widget import RelatedItemsFieldWidget
 from plone.autoform import directives
 from plone.autoform.interfaces import IFormFieldProvider
@@ -17,11 +18,14 @@ from zope.schema.interfaces import IContextAwareDefaultFactory
 
 
 def make_relation_root_path(context):
-    ctx = getSite()
-    if not IPloneSiteRoot.providedBy(ctx):
-        ctx = aq_parent(ctx)
-    return "/".join(ctx.getPhysicalPath())
-
+    current_object = context
+    target_language = context.REQUEST.get('language')
+    closest_translation = None
+    while closest_translation is None:
+        current_object = current_object.aq_parent
+        tm = ITranslationManager(current_object)
+        closest_translation = tm.get_translation(target_language)
+    return "/".join(closest_translation.getPhysicalPath())
 
 class IMultilingualLayer(interface.Interface):
     """browser layer"""
