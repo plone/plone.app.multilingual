@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+8.1.0 (2024-01-31)
+------------------
+
+New features:
+
+
+- Implement a more reasonable default for "connect translations" dialog.
+  [gogobd] (#445)
+
+
 8.0.3 (2024-01-18)
 ------------------
 
