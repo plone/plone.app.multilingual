@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+8.1.1 (2024-02-27)
+------------------
+
+Bug fixes:
+
+
+- Add missing translate icon for the menu. [szakitibi] (#447)
+
+
 8.1.0 (2024-01-31)
 ------------------
 
