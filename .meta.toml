@@ -20,3 +20,4 @@ dependencies_ignores = "['Products.LinguaPlone']"
 
 [tox]
 use_mxdev = true
+constrain_package_deps = "true"
