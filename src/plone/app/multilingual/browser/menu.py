@@ -530,7 +530,6 @@ class TranslateSubMenuItem(BrowserSubMenuItem):
     )
     submenuId = "plone_contentmenu_multilingual"
     order = 5
-    extra = {"id": "plone-contentmenu-multilingual"}
 
     @property
     def action(self):
