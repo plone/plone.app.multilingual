@@ -119,6 +119,7 @@ Zope = [
   'Products.CMFCore', 'Products.CMFDynamicViewFTI',
 ]
 python-dateutil = ['dateutil']
+ignore-packages = ['Products.CMFPlone', 'Products.LinguaPlone']
 
 ##
 # Add extra configuration options in .meta.toml:

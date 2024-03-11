@@ -6,7 +6,6 @@ from plone.app.registry.browser import controlpanel
 from plone.app.uuid.utils import uuidToObject
 from plone.base.interfaces import ILanguage
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.controlpanel.browser.language import LanguageControlPanelForm
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
@@ -18,6 +17,13 @@ from zope.interface.interfaces import ComponentLookupError
 from zope.schema.interfaces import IVocabularyFactory
 
 import json
+
+
+try:
+    # In Plone 6.0 we try not to depend on Products.CMFPlone.
+    from Products.CMFPlone.controlpanel.browser.language import LanguageControlPanelForm
+except ImportError:
+    LanguageControlPanelForm = controlpanel.RegistryEditForm
 
 
 _ = MessageFactory("plone.app.multilingual")

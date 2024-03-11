@@ -18,6 +18,7 @@ setup(
         "Products.CMFCore",
         "Products.GenericSetup",
         "Products.statusmessages",
+        "Zope",
         "plone.app.content",
         "plone.app.contentmenu",
         "plone.app.dexterity",
