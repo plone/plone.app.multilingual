@@ -1,4 +1,5 @@
 """Setup plone.app.multilingual."""
+
 from setuptools import find_packages
 from setuptools import setup
 
@@ -17,6 +18,7 @@ setup(
         "Products.CMFCore",
         "Products.GenericSetup",
         "Products.statusmessages",
+        "Zope",
         "plone.app.content",
         "plone.app.contentmenu",
         "plone.app.dexterity",

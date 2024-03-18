@@ -47,9 +47,9 @@ class TestForm(unittest.TestCase):
         self.browser.open(a_ca.absolute_url() + "/@@create_translation?language=en")
 
         # Fill in translation details
-        self.browser.getControl(
-            name="form.widgets.IDublinCore.title"
-        ).value = "Test document"
+        self.browser.getControl(name="form.widgets.IDublinCore.title").value = (
+            "Test document"
+        )
         self.browser.getControl(name="form.buttons.save").click()
 
         self.portal._p_jar.sync()
@@ -75,9 +75,9 @@ class TestForm(unittest.TestCase):
         add_translation_url = self.browser.url
 
         # Fill in translation details
-        self.browser.getControl(
-            name="form.widgets.IDublinCore.title"
-        ).value = "Test document"
+        self.browser.getControl(name="form.widgets.IDublinCore.title").value = (
+            "Test document"
+        )
         self.browser.getControl(name="form.buttons.save").click()
 
         self.portal._p_jar.sync()
@@ -101,9 +101,9 @@ class TestForm(unittest.TestCase):
         self.browser.open(a_ca.absolute_url() + "/@@create_translation?language=en")
 
         # Fill in translation details
-        self.browser.getControl(
-            name="form.widgets.IDublinCore.title"
-        ).value = "Test document"
+        self.browser.getControl(name="form.widgets.IDublinCore.title").value = (
+            "Test document"
+        )
         self.browser.getControl(name="form.buttons.save").click()
 
         # Unregister translation
@@ -185,9 +185,9 @@ class TestForm(unittest.TestCase):
         self.browser.open(a_ca.absolute_url() + "/@@create_translation?language=en")
 
         # Fill in translation details
-        self.browser.getControl(
-            name="form.widgets.IDublinCore.title"
-        ).value = "Test document"
+        self.browser.getControl(name="form.widgets.IDublinCore.title").value = (
+            "Test document"
+        )
         self.browser.getControl(name="form.buttons.save").click()
 
         # Remove translation
@@ -210,9 +210,9 @@ class TestForm(unittest.TestCase):
             + "/ca/test-folder/@@create_translation?language=en"
         )
 
-        self.browser.getControl(
-            name="form.widgets.IDublinCore.title"
-        ).value = "Test folder"
+        self.browser.getControl(name="form.widgets.IDublinCore.title").value = (
+            "Test folder"
+        )
         self.browser.getControl(name="form.buttons.save").click()
 
         self.portal._p_jar.sync()
@@ -234,9 +234,9 @@ class TestForm(unittest.TestCase):
             af_ca.absolute_url() + "/" + b_ca.id + "/@@create_translation?language=en"
         )
 
-        self.browser.getControl(
-            name="form.widgets.IDublinCore.title"
-        ).value = "Test folder"
+        self.browser.getControl(name="form.widgets.IDublinCore.title").value = (
+            "Test folder"
+        )
         self.browser.getControl(name="form.buttons.save").click()
 
         self.portal._p_jar.sync()
