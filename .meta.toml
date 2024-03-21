@@ -3,7 +3,7 @@
 # See the inline comments on how to expand/tweak this configuration file
 [meta]
 template = "default"
-commit-id = "6a477508"
+commit-id = "a950ca82"
 
 [gitignore]
 extra_lines = """
@@ -17,3 +17,7 @@ check_manifest_ignores = """
 """
 codespell_ignores = "pres"
 dependencies_ignores = "['Products.LinguaPlone']"
+
+[tox]
+use_mxdev = true
+constrain_package_deps = "true"
