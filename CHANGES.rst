@@ -8,6 +8,22 @@ Changelog
 
 .. towncrier release notes start
 
+7.0.4 (2024-03-22)
+------------------
+
+Bug fixes:
+
+
+- Fixing disconnection of translations [gogobd] (#449)
+
+
+Internal:
+
+
+- Update configuration files.
+  [plone devs]
+
+
 7.0.3 (2023-08-31)
 ------------------
 
