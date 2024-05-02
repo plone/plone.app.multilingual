@@ -1,6 +1,6 @@
 from plone.app.multilingual.browser.utils import is_language_independent
 from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.vocabularies.catalog import CatalogVocabularyFactory
+from plone.app.querystring.vocabularies import CatalogVocabularyFactory
 from plone.base.interfaces import ILanguage
 from plone.i18n.locales.interfaces import ILanguageAvailability
 from Products.CMFCore.utils import getToolByName
