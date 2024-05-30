@@ -8,6 +8,22 @@ Changelog
 
 .. towncrier release notes start
 
+8.1.2 (2024-05-30)
+------------------
+
+Bug fixes:
+
+
+- Removed DeprecationWarning from CatalogVocabularyFactory import. [@jensens] (#454)
+
+
+Internal:
+
+
+- Update configuration files.
+  [plone devs]
+
+
 8.1.1 (2024-02-27)
 ------------------
 
