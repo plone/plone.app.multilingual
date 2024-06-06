@@ -71,7 +71,7 @@ target-version = ["py38"]
 ##
 
 [tool.codespell]
-ignore-words-list = "discreet,pres"
+ignore-words-list = "discreet,assertin,pres"
 skip = "*.po,"
 ##
 # Add extra configuration options in .meta.toml:
@@ -139,8 +139,8 @@ ignore = [
     ".pre-commit-config.yaml",
     "dependabot.yml",
     "mx.ini",
-    "requirements.txt",
     "tox.ini",
+    "requirements.txt",
 
 ]
 
