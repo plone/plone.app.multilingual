@@ -23,13 +23,6 @@ Scenario: As a visitor I can view the translation
 
 *** Keywords ***
 
-Pause
-    [Documentation]  Visually pause test execution with interactive dialog by
-    ...              importing **Dialogs**-library and calling its
-    ...              **Pause Execution**-keyword.
-    Import library  Dialogs
-    Pause execution
-
 # Given
 
 a site owner
