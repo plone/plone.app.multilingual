@@ -123,7 +123,7 @@
             sync_element_vertically(original_field, destination_field, padding, index === 0);
 
             // Add the google translation field
-            if ($('#gtranslate_service_available').attr('value') === "True" && ((original_field.find('.richtext-field, .textline-field, .text-field, .localstatic-field, .ArchetypesField-TextField').length > 0) || ($('#at-babel-edit').length > 0))) {
+            if ($('#gtranslate_service_available').attr('value') === "True" && ((original_field.find('.richtext-field, .textline-field, .text-field, .localstatic-field').length > 0) || (original_field.attr('id') == 'IRichTextBehavior.text'))) {
                 original_field.prepend("<div class='translator-widget' id='item_translation_" + order + "'></div>");
                 original_field.children('.translator-widget').click(function () {
                     var field = $(value).attr("rel");
@@ -133,7 +133,9 @@
                         'lang_source': langSource
                     };
                     var targetelement = destination_field.find('textarea');
-                    var tiny_editor = destination_field.find("textarea.mce_editable");
+                    // look for .tox-tinymce because it signals that
+                    // a TinyMCE editor is present
+                    var tiny_editor = destination_field.find(".tox-tinymce");
                     if (!targetelement.length) {
                         targetelement = destination_field.find("input");
                     }
@@ -146,7 +148,9 @@
                         success: function (data) {
                             var text_target = data.data;
                             if (tiny_editor.length > 0) {
-                                tinyMCE.get(tiny_editor.attr('id')).setContent(text_target);
+                                // use target element's id as the TinyMCE item id
+                                // to set the content in there
+                                tinyMCE.get(targetelement.attr('id')).setContent(text_target);
                             } else {
                                 targetelement.val(text_target); // Inserts translated text.
                             }
