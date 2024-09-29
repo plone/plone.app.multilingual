@@ -278,3 +278,19 @@ class IMultiLanguageExtraOptionsSchema(ILanguageSchema):
         required=True,
         vocabulary=selector_policies,
     )
+
+
+class IExternalTranslationService(Interface):
+    """This interface is provided to allow external translation services
+    to be plugged-in in Plone to use them to translate content
+    """
+
+    def available_languages():
+        """return the list of tuples that represents language pairs this adapter is enabled for.
+        An empty list means that all languages are supported
+        """
+
+    def translate_content(content, source_language, target_language):
+        """translate the given content from the source to the target language.
+        It should return the translated string
+        """

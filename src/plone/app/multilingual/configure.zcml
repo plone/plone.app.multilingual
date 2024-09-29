@@ -192,4 +192,10 @@
       handler=".setuphandlers.step_uninstall_various"
       />
 
+
+  <adapter
+    factory=".google_translate.GoogleCloudTranslationAPI"
+    name="google_translate"
+    />
+
 </configure>

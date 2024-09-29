@@ -1,53 +1,23 @@
+import json
+
 from Acquisition import aq_inner
 from plone.app.multilingual import _
+<<<<<<< HEAD
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.uuid.utils import uuidToObject
+=======
+from plone.app.multilingual.interfaces import (
+    IExternalTranslationService,
+    ITranslationManager,
+)
+>>>>>>> 3fcea08 (convert the function that uses google translate to an adapter based lookup, so that extra services can be registered)
 from plone.base.interfaces import ILanguage
-from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import IUUID
 from Products.Five import BrowserView
-from zope.component import getUtility
+from zope.component import getAdapters, getMultiAdapter
 
-import json
-import urllib
-
-
-def google_translate(question, key, lang_target, lang_source):
-    length = len(question)
-    translated = ""
-    url = "https://www.googleapis.com/language/translate/v2"
-    temp_question = question
-    while length > 400:
-        temp_question = question[:399]
-        index = temp_question.rfind(" ")
-        temp_question = temp_question[:index]
-        question = question[index:]
-        length = len(question)
-        data = {
-            "key": key,
-            "target": lang_target,
-            "source": lang_source,
-            "q": temp_question,
-        }
-        params = urllib.parse.urlencode(data)
-
-        retorn = urllib.request.urlopen(url + "?" + params)
-        translated += json.loads(retorn.read())["data"]["translations"][0][
-            "translatedText"
-        ]
-
-    data = {
-        "key": key,
-        "target": lang_target,
-        "source": lang_source,
-        "q": temp_question,
-    }
-    params = urllib.parse.urlencode(data)
-
-    retorn = urllib.request.urlopen(url + "?" + params)
-    translated += json.loads(retorn.read())["data"]["translations"][0]["translatedText"]
-    return json.dumps({"data": translated})
+from plone.app.multilingual import logger
 
 
 class gtranslation_service_dexterity(BrowserView):
@@ -83,9 +53,27 @@ class gtranslation_service_dexterity(BrowserView):
                     question = question.raw
             else:
                 return _("Invalid field")
-            return google_translate(
-                question, settings.google_translation_key, lang_target, lang_source
+
+            portal_state_view = getMultiAdapter(
+                (self.context, self.request), name="plone_portal_state"
             )
+            portal = portal_state_view.portal()
+            adapters = getAdapters((portal,), IExternalTranslationService)
+
+            for adapter_name, adapter in adapters:
+                logger.debug("Checking adapter named %s", adapter_name)
+                available_languages = adapter.available_languages()
+                if (
+                    not available_languages
+                    or (lang_source, lang_target) in available_languages
+                ):
+                    translation = adapter.translate_content(
+                        question, lang_source, lang_target
+                    )
+
+                    return json.dumps({"data": translation})
+
+            return json.dumps({"data": ""})
 
 
 class TranslationForm(BrowserView):
