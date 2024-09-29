@@ -1,21 +1,20 @@
-import json
-
 from Acquisition import aq_inner
 from plone.app.multilingual import _
-<<<<<<< HEAD
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.uuid.utils import uuidToObject
-=======
 from plone.app.multilingual.interfaces import (
     IExternalTranslationService,
     ITranslationManager,
 )
->>>>>>> 3fcea08 (convert the function that uses google translate to an adapter based lookup, so that extra services can be registered)
+from plone.app.multilingual.interfaces import IExternalTranslationService
+from plone.app.multilingual.interfaces import ITranslationManager
 from plone.base.interfaces import ILanguage
 from plone.uuid.interfaces import IUUID
 from Products.Five import BrowserView
 from zope.component import getAdapters
+
+import json
 
 
 class gtranslation_service_dexterity(BrowserView):
