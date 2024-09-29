@@ -1,13 +1,13 @@
+from plone.app.multilingual.interfaces import IExternalTranslationService
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.registry.interfaces import IRegistry
+from zope.component import adapter
+from zope.component import getUtility
+from zope.interface import implementer
+from zope.interface import Interface
+
 import json
 import urllib
-
-from plone.app.multilingual.interfaces import (
-    IExternalTranslationService,
-    IMultiLanguageExtraOptionsSchema,
-)
-from plone.registry.interfaces import IRegistry
-from zope.component import getUtility, adapter
-from zope.interface import implementer, Interface
 
 
 @implementer(IExternalTranslationService)
