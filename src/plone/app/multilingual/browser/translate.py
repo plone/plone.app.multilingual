@@ -57,6 +57,7 @@ class gtranslation_service_dexterity(BrowserView):
                 for _, adapter in getAdapters(
                     (self.context,), IExternalTranslationService
                 )
+                if adapter.is_available()
             ]
 
             sorted_adapters = sorted(adapters, key=lambda x: x.order)
