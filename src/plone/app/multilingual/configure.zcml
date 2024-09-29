@@ -199,4 +199,9 @@
       />
 
 
+  <adapter
+      factory=".google_translate.GoogleCloudTranslationAPI"
+      name="google_translate"
+      />
+
 </configure>
