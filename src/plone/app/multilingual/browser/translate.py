@@ -58,7 +58,7 @@ class gtranslation_service_dexterity(BrowserView):
         ):
             return _("Need a field")
         else:
-            context_uid = self.request.form.get('context_uid', None)
+            context_uid = self.request.form.get("context_uid", None)
             if context_uid is None:
                 # try with context if no translation uid is present
                 manager = ITranslationManager(self.context)
