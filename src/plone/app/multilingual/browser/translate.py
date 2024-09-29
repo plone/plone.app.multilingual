@@ -5,6 +5,7 @@ from plone.app.multilingual.interfaces import ITranslationManager
 from plone.base.interfaces import ILanguage
 from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import IUUID
+from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from zope.component import getUtility
 
@@ -57,7 +58,19 @@ class gtranslation_service_dexterity(BrowserView):
         ):
             return _("Need a field")
         else:
-            manager = ITranslationManager(self.context)
+            context_uid = self.request.form.get('context_uid', None)
+            if context_uid is None:
+                # try with context if no translation uid is present
+                manager = ITranslationManager(self.context)
+            else:
+                catalog = getToolByName(self.context, "portal_catalog")
+                brains = catalog(UID=context_uid)
+                if len(brains):
+                    context = brains[0].getObject()
+                    manager = ITranslationManager(context)
+                else:
+                    manager = ITranslationManager(self.context)
+
             registry = getUtility(IRegistry)
             settings = registry.forInterface(
                 IMultiLanguageExtraOptionsSchema, prefix="plone"

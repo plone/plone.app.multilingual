@@ -128,10 +128,16 @@
                 original_field.children('.translator-widget').click(function () {
                     var field = $(value).attr("rel");
                     // Fetch source of text to translate.
+
+                    // we use the current URL to get the context's UID
+                    var url_parts = document.location.pathname.split('++addtranslation++')
+
                     var jsondata = {
                         'field': field,
-                        'lang_source': langSource
-                    };
+                        'lang_source': langSource,
+                        // we use the second part of the url_parts, the uid itself
+                        'context_uid': url_parts[1]
+                      };
                     var targetelement = destination_field.find('textarea');
                     var tiny_editor = destination_field.find("textarea.mce_editable");
                     if (!targetelement.length) {
