@@ -296,6 +296,9 @@ class IExternalTranslationService(Interface):
 
     order = schema.Int(title="Order")
 
+    def is_available():
+        """return whether this service is available"""
+
     def available_languages():
         """return the list of tuples that represents language pairs this adapter is enabled for.
         An empty list means that all languages are supported

@@ -22,6 +22,14 @@ class GoogleCloudTranslationAPI:
     def __init__(self, context):
         self.context = context
 
+    def is_available(self):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(
+            IMultiLanguageExtraOptionsSchema, prefix="plone"
+        )
+        key = settings.google_translation_key
+        return key is not None and len(key.strip()) > 0
+
     def available_languages(self):
         # All languages are supported
         return []
