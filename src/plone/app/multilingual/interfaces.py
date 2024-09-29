@@ -283,7 +283,19 @@ class IMultiLanguageExtraOptionsSchema(ILanguageSchema):
 class IExternalTranslationService(Interface):
     """This interface is provided to allow external translation services
     to be plugged-in in Plone to use them to translate content
+
+    Register a named adapter from (context,) to this interface to install
+    a new external translation service.
+
+    To control the order of the services, user the 'order' attribute. The lower
+    the sooner this service will be used.
+
+    The available_languages method can also be used to register the adapter
+    just to some language pairs.
+
     """
+
+    order = schema.Int(title="Order")
 
     def available_languages():
         """return the list of tuples that represents language pairs this adapter is enabled for.
