@@ -7,16 +7,17 @@ from plone.app.multilingual.interfaces import (
     IExternalTranslationService,
     IMultiLanguageExtraOptionsSchema,
 )
-from plone.base.interfaces import IPloneSiteRoot
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility, adapter
-from zope.interface import implementer
+from zope.interface import implementer, Interface
 
 
 @implementer(IExternalTranslationService)
-@adapter(IPloneSiteRoot)
+@adapter(Interface)
 class GoogleCloudTranslationAPI:
     """implement the external translation using Google Cloud Translation API"""
+
+    order = 999
 
     def __init__(self, context):
         self.context = context

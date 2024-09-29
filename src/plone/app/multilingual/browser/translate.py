@@ -15,9 +15,7 @@ from plone.app.multilingual.interfaces import (
 from plone.base.interfaces import ILanguage
 from plone.uuid.interfaces import IUUID
 from Products.Five import BrowserView
-from zope.component import getAdapters, getMultiAdapter
-
-from plone.app.multilingual import logger
+from zope.component import getAdapters
 
 
 class gtranslation_service_dexterity(BrowserView):
@@ -54,14 +52,16 @@ class gtranslation_service_dexterity(BrowserView):
             else:
                 return _("Invalid field")
 
-            portal_state_view = getMultiAdapter(
-                (self.context, self.request), name="plone_portal_state"
-            )
-            portal = portal_state_view.portal()
-            adapters = getAdapters((portal,), IExternalTranslationService)
+            adapters = [
+                adapter
+                for _, adapter in getAdapters(
+                    (self.context,), IExternalTranslationService
+                )
+            ]
 
-            for adapter_name, adapter in adapters:
-                logger.debug("Checking adapter named %s", adapter_name)
+            sorted_adapters = sorted(adapters, key=lambda x: x.order)
+
+            for adapter in sorted_adapters:
                 available_languages = adapter.available_languages()
                 if (
                     not available_languages
@@ -71,7 +71,8 @@ class gtranslation_service_dexterity(BrowserView):
                         question, lang_source, lang_target
                     )
 
-                    return json.dumps({"data": translation})
+                    if translation:
+                        return json.dumps({"data": translation})
 
             return json.dumps({"data": ""})
 
