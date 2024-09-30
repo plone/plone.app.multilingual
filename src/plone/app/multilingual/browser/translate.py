@@ -2,10 +2,10 @@ from Acquisition import aq_inner
 from plone.app.multilingual import _
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.uuid import uuidToObject
 from plone.base.interfaces import ILanguage
 from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import IUUID
-from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from zope.component import getUtility
 
@@ -63,10 +63,8 @@ class gtranslation_service_dexterity(BrowserView):
                 # try with context if no translation uid is present
                 manager = ITranslationManager(self.context)
             else:
-                catalog = getToolByName(self.context, "portal_catalog")
-                brains = catalog(UID=context_uid)
-                if len(brains):
-                    context = brains[0].getObject()
+                context = uuidToObject(context_uid)
+                if context is not None:
                     manager = ITranslationManager(context)
                 else:
                     manager = ITranslationManager(self.context)
