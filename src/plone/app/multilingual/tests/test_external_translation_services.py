@@ -1,20 +1,20 @@
-import unittest
-from plone.app.multilingual.interfaces import (
-    IExternalTranslationService,
-    IPloneAppMultilingualInstalled,
-    ITranslationManager,
-)
-
-from zope.component import provideAdapter, adapter
-from zope.interface import implementer, Interface, alsoProvides
+from plone.app.multilingual.interfaces import IExternalTranslationService
+from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
-from plone.testing._z2_testbrowser import Browser
-from plone.dexterity.utils import createContentInContainer
 from plone.app.testing import SITE_OWNER_NAME
 from plone.app.testing import SITE_OWNER_PASSWORD
+from plone.dexterity.utils import createContentInContainer
+from plone.testing._z2_testbrowser import Browser
+from zope.component import adapter
+from zope.component import provideAdapter
+from zope.interface import alsoProvides
+from zope.interface import implementer
+from zope.interface import Interface
 
 import json
 import transaction
+import unittest
 
 
 @implementer(IExternalTranslationService)
