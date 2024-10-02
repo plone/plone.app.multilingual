@@ -2,6 +2,7 @@ from Acquisition import aq_inner
 from plone.app.multilingual import _
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.uuid.utils import uuidToObject
 from plone.base.interfaces import ILanguage
 from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import IUUID
@@ -57,7 +58,17 @@ class gtranslation_service_dexterity(BrowserView):
         ):
             return _("Need a field")
         else:
-            manager = ITranslationManager(self.context)
+            context_uid = self.request.form.get("context_uid", None)
+            if context_uid is None:
+                # try with context if no translation uid is present
+                manager = ITranslationManager(self.context)
+            else:
+                context = uuidToObject(context_uid)
+                if context is not None:
+                    manager = ITranslationManager(context)
+                else:
+                    manager = ITranslationManager(self.context)
+
             registry = getUtility(IRegistry)
             settings = registry.forInterface(
                 IMultiLanguageExtraOptionsSchema, prefix="plone"
