@@ -1,7 +1,6 @@
 from Acquisition import aq_inner
 from plone.app.multilingual import _
 from plone.app.multilingual.interfaces import IExternalTranslationService
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.uuid.utils import uuidToObject
 from plone.base.interfaces import ILanguage
