@@ -2,182 +2,181 @@
 (function ($) {
     "use strict";
 
-    var original_fields = [],
-        destination_fields = [],
-        padding = 0;
+    function sync_element_vertically(original, destination) {
+        // sync vertical position
+        const orig_rect = original.getBoundingClientRect()
+        const dest_rect = destination.getBoundingClientRect()
 
-    function sync_element_vertically(original, destination, padding, first) {
-        var default_props = {
-            position: "",
-            top: ""
-        },
-            original_top = 0,
-            original_padding = 0,
-            destination_top = 0,
-            destination_padding = 0,
-            shift = 0,
-            more_padding = 0,
-            images, new_distance;
+        // make the wrapper heights equally
+        var max_height = Math.max(orig_rect.height, dest_rect.height);
 
-        function distance(a, b) {
-            return b.position().top - a.position().top - a.height();
-        }
-        if (destination.is(":visible")) {
-            original.show();
-            // reset fields
-            if (original.css("position") === "relative") {
-                original.css(default_props);
-            }
-            if (destination.css("position") === "relative") {
-                destination.css(default_props);
-            }
-            original_top = original.position().top;
-
-            // Make images smaller
-            images = original.find('img');
-            images.each(function (index, img) {
-                var qimg = $(img);
-                if (qimg.width() > original.width()) {
-                    qimg.width(original.width() * 0.8);
-                }
-            });
-
-            destination_top = destination.position().top;
-            shift = Math.abs(original_top - destination_top);
-            if (original_top > destination_top) {
-                destination_padding = shift;
-            } else {
-                original_padding = shift;
-            }
-
-            // The next calculation of padding is necessary if both elements
-            // have to be shifted down.
-            if (!first && original.prev().is(":visible")) {
-                // Calculate distance between bottom of prev element and top
-                // of current element. add Padding. If > 0, add to more_padding
-                new_distance = distance(original.prev(), original);
-                new_distance += original_padding;
-                if (new_distance < padding) {
-                    more_padding += padding - new_distance;
-                }
-                new_distance = distance(destination.prev(), destination);
-                new_distance += destination_padding + more_padding;
-                if (new_distance < padding) {
-                    more_padding += padding - new_distance;
-                }
-            }
-            original_padding += more_padding;
-            destination_padding += more_padding;
-            if (original_padding) {
-                original.css({
-                    position: 'relative',
-                    top: original_padding
-                });
-            } else {
-                original.css(default_props);
-            }
-            if (destination_padding) {
-                destination.css({
-                    position: 'relative',
-                    top: destination_padding
-                });
-            } else {
-                destination.css(default_props);
-            }
-
-        } else {
-            original.hide();
-            destination.css(default_props);
-            original.css(default_props);
-        }
-        // With all that padding, the form might need to be pushed down in
-        // some cases.
-        $([original, destination]).each(function (index, item) {
-            var $item = $(item),
-                outer_padding = 0,
-                parent = $item.parent();
-            outer_padding = Math.max($item.position().top + $item.height() - (parent.position().top + parent.height()) + padding, 0);
-            if (outer_padding) {
-                parent.height(parent.height() + outer_padding);
-            }
-        });
+        original.style.height = `${max_height}px`;
+        destination.style.height = `${max_height}px`;
     }
 
     function update_view() {
-        var order = 1,
-            url_translate = $('input#url_translate').val(),
-            langSource = $('#frame-content #view_language')[0].innerHTML;
+        let order = 1;
+        const url_translate = document.querySelector('input#url_translate')?.value;
+        const langSource = document.querySelector('#frame-content #view_language').innerHTML;
 
+        // unwrap(document.querySelectorAll('#form-target fieldset > div > .field'));
         $('#form-target fieldset > div > .field').unwrap();
 
-        original_fields = $('#frame-content .field');
-        destination_fields = $('#form-target fieldset > .field');
+        const original_fields = document.querySelectorAll('#frame-content .field');
+        const destination_fields = document.querySelectorAll('#form-target fieldset > .field');
+        const visible_destination_fields = [...destination_fields].filter(it => it.closest("fieldset.active") != null);
 
-        // Calculate the padding between fields as intended by css
-        if (original_fields.length > 1) {
-            padding = ($(original_fields[1]).position().top - $(original_fields[0]).position().top - $(original_fields[0]).height());
-        }
-        $.each(original_fields, function (index, value) {
-            var original_field = $(value);
-            var destination_field = $(destination_fields[index]);
-            sync_element_vertically(original_field, destination_field, padding, index === 0);
+        // show only fields of current tab
+        original_fields.forEach((field) => {
+            field.style.display = "none";
+            visible_destination_fields.forEach((dst_fld) => {
+                if (dst_fld.dataset.fieldname.endsWith(field.id)) {
+                    field.style.display = "block";
+                    return;
+                }
+            })
+        });
+
+        visible_destination_fields.forEach(dest_field => {
+            var orig_field = [...original_fields].filter(it => dest_field.dataset.fieldname.endsWith(it.id));
+
+            if (!orig_field.length) {
+                // field not found
+                return;
+            } else {
+                orig_field = orig_field[0];
+            }
+
+            sync_element_vertically(orig_field, dest_field);
+
+            const gtranslate_enabled = document.getElementById("gtranslate_service_available");
 
             // Add the google translation field
-            if ($('#gtranslate_service_available').attr('value') === "True" && ((original_field.find('.richtext-field, .textline-field, .text-field, .localstatic-field').length > 0) || (original_field.attr('id') == 'IRichTextBehavior.text'))) {
-                original_field.prepend("<div class='translator-widget' id='item_translation_" + order + "'></div>");
-                original_field.children('.translator-widget').click(function () {
-                    var field = $(value).attr("rel");
-                    // Fetch source of text to translate.
+            if (
+                gtranslate_enabled.value === "True" &&
+                dest_field.querySelectorAll('.text-widget, .textarea-widget, .richTextWidget').length &&
+                !orig_field.querySelector(".translator-widget")
+            ) {
+                const translator_widget = document.createElement("div");
+
+                translator_widget.classList.add("translator-widget");
+                translator_widget.id = `item_translation_${order}`;
+
+                translator_widget.addEventListener("click", async function () {
+                    var field = orig_field.getAttribute("rel");
 
                     // we use the current URL to get the context's UID
-                    var url_parts = document.location.pathname.split('++addtranslation++')
+                    var url_parts = document.location.pathname.split('++addtranslation++');
 
-                    var jsondata = {
+                    var postdata = new URLSearchParams({
                         'field': field,
                         'lang_source': langSource,
                         // we use the second part of the url_parts, the uid itself
                         'context_uid': url_parts[1]
-                      };
-                    var targetelement = destination_field.find('textarea');
-                    // look for .tox-tinymce because it signals that
-                    // a TinyMCE editor is present
-                    var tiny_editor = destination_field.find(".tox-tinymce");
-                    if (!targetelement.length) {
-                        targetelement = destination_field.find("input");
-                    }
-                    // Now we call the data
-                    $.ajax({
-                        url: url_translate + '/gtranslation_service',
-                        data: jsondata,
-                        dataType: 'json',
-                        type: 'POST',
-                        success: function (data) {
-                            var text_target = data.data;
-                            if (tiny_editor.length > 0) {
-                                // use target element's id as the TinyMCE item id
-                                // to set the content in there
-                                tinyMCE.get(targetelement.attr('id')).setContent(text_target);
-                            } else {
-                                targetelement.val(text_target); // Inserts translated text.
-                            }
-                        }
                     });
+
+                    const translate_service_url = url_translate + '/gtranslation_service';
+
+                    // Now we call the data
+                    const response = await fetch(translate_service_url, {
+                        method: "POST",
+                        headers: {
+                            "Content-type": "application/x-www-form-urlencoded; charset: utf-8",
+                        },
+                        body: postdata,
+                    });
+
+                    if (!response.ok) {
+                        console.log(`Could not load ${translate_service_url}: ${response.statusText}`);
+                        return;
+                    }
+
+                    const json = await response.json();
+                    var text_target = json.data;
+
+                    var target_el = dest_field.querySelector('textarea,input');
+                    const target_tiny = tinymce.get(target_el.id);
+
+                    if (target_tiny) {
+                        // a TinyMCE editor is present
+                        await target_tiny.setContent(text_target);
+                    } else {
+                        // set value of textarea
+                        target_el.value = text_target;
+                    }
                 });
-                original_field.children('.translator-widget').hide();
+
+                orig_field.prepend(translator_widget);
                 order += 1;
             }
         });
     }
 
-    $(window).on("load", function () {
-
-        /* alert about language independent field */
-        $('.languageindependent').click(function () {
-            $(this).css('opacity', '1');
+    function init_tab_switch() {
+        // init fieldset switch
+        document.querySelector("#form-target form").querySelectorAll(".autotoc-nav a").forEach((item) => {
+            // NOTE: the "clicked" event is triggered in pat-autotoc
+            $(item).on("clicked", (e) => {
+                update_view();
+            });
         });
+    }
+
+    function init_sync_active_click() {
+        /* select a field on both sides and change the color */
+        let babel_selected = null;
+        let orig_babel_selected = null;
+
+        document.querySelectorAll('#form-target fieldset .field').forEach((field) => {
+            field.addEventListener("click", () => {
+                const original_fields = document.querySelectorAll('#frame-content .field');
+
+                if (babel_selected) {
+                    babel_selected.classList.remove("selected");
+                    orig_babel_selected.classList.remove("selected");
+                }
+                babel_selected = field;
+                babel_selected.classList.add("selected");
+                const orig_field = [...original_fields].filter(it => babel_selected.dataset.fieldname.endsWith(it.id));
+                if(!orig_field.length) {
+                    return;
+                }
+                orig_babel_selected = orig_field[0];
+                orig_babel_selected.classList.add("selected");
+            });
+        });
+    }
+
+    function load_default_language() {
+        // Fetch default language content
+        const trans_buttons = document.querySelectorAll("#trans-selector button");
+        const active_buttons = [...trans_buttons].filter(it => it.classList.contains("active"));
+        const trans_select = document.querySelector("#trans-selector select");
+
+        let initialFetchUrl = "";
+
+        if (active_buttons.length) {
+            initialFetchUrl = active_buttons[0].dataset.url;
+        } else if (trans_buttons.length) {
+            trans_buttons[0].classList.add("active");
+            initialFetchUrl = trans_buttons[0].dataset.url;
+        } else if (trans_select) {
+            initialFetchUrl = trans_select.value;
+        } else {
+            // no chance to get original language content
+            return;
+        }
+
+        $('#frame-content').load(initialFetchUrl, function () {
+            $("#frame-content fieldset legend").unwrap().remove();
+            update_view();
+        });
+    }
+
+    function init_babel_view() {
 
         /* change the language trigger */
-        $('#trans-selector button').click(function () {
+        $('#trans-selector button').on("click", function () {
             var url = $(this).data('url');
             $('#frame-content').load(url, function () {
                 $("#frame-content fieldset legend").unwrap().remove();
@@ -186,9 +185,10 @@
             $('#trans-selector button.active').removeClass('active');
             $(this).addClass('active');
         });
+
         /* change the language trigger, this time for the drop-down, which is
         used when too many translations are present to fit into buttons */
-        $('#trans-selector select').change(function () {
+        $('#trans-selector select').on("change", function () {
             var selected_elem = $(this).children('option').eq(this.selectedIndex);
             var url = selected_elem.val();
             $('#frame-content').load(url, function () {
@@ -197,38 +197,25 @@
             });
         });
 
-        /* select a field on both sides and change the color */
-        var babel_selected = null,
-            orig_babel_select = null;
-        $('#babel-edit *[id^=fieldset] .field').click(function () {
-            var index = $('#form-target .field').index($(this));
-            if (babel_selected) {
-                $(babel_selected).addClass('selected');
-                $(babel_selected).toggleClass("selected");
-                $(orig_babel_select).toggleClass("selected");
-                $(orig_babel_select).children('.translator-widget').hide();
-            }
-            babel_selected = this;
-            $(this).toggleClass("selected");
-            orig_babel_select = $('#frame-content .field')[index];
-            $(orig_babel_select).toggleClass("selected");
-            $(orig_babel_select).children('.translator-widget').show();
-        });
+        // initialize tab change
+        init_tab_switch();
 
-        // Fetch default content
-        var initialFetch = $('#trans-selector button.active').data('url');
-        // Can be null if not buttons, but the drop-down is present
-        if (initialFetch === null) {
-            initialFetch = $('#trans-selector select option:selected').val();
+        // initialize synchron active fields when clicked
+        init_sync_active_click();
+
+        // load original language
+        load_default_language();
+    };
+
+    let initInterval = null;
+    initInterval = setInterval(() => {
+        if (!document.querySelector("body.patterns-loaded")) {
+            // wait for loaded patterns
+            return;
         }
-        $('#frame-content').load(initialFetch, function () {
-            $("#frame-content fieldset legend").unwrap().remove();
-            update_view();
-        });
+        clearInterval(initInterval);
+        init_babel_view();
+    }, 500);
 
-        var intervalId = window.setInterval(function () {
-            update_view();
-        }, 1000);
 
-    });
 }(jQuery));

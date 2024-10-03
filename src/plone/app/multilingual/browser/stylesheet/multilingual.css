@@ -22,6 +22,7 @@
 #babel-edit .field, #babel-edit #frame-content .field  {
     background-color: #f1f1f1;
     padding: 20px;
+    margin-bottom: 1rem;
 }
 
 #babel-edit .selected, #babel-edit #frame-content .selected{
@@ -31,6 +32,10 @@
 
 #babel-edit .selected .formHelp {
     color: white;
+}
+
+#babel-edit #frame-content .selected .translator-widget {
+    display:block;
 }
 
 #babel-edit .richtext-field {
@@ -57,6 +62,7 @@
     background: url('++resource++plone.app.multilingual.images/gtranslate.png');
     min-height: 50px;
     min-width: 50px;
+    display: none;
 }
 
 .currentLanguage {
