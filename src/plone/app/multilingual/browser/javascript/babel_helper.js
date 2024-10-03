@@ -104,6 +104,8 @@
                         // set value of textarea
                         target_el.value = text_target;
                     }
+                    // need to trigger "change" event to make validation (and tiny) happy
+                    $(target_el).trigger("change");
                 });
 
                 orig_field.prepend(translator_widget);

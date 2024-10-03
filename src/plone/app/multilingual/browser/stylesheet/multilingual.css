@@ -36,6 +36,7 @@
 
 #babel-edit #frame-content .selected .translator-widget {
     display:block;
+    cursor: pointer;
 }
 
 #babel-edit .richtext-field {
