@@ -51,10 +51,17 @@
 
             const gtranslate_enabled = document.getElementById("gtranslate_service_available");
 
+            var target_el = dest_field.querySelector('textarea,input');
+            const target_tiny = tinymce.get(target_el.id);
+
             // Add the google translation field
             if (
-                gtranslate_enabled.value === "True" &&
-                dest_field.querySelectorAll('.text-widget, .textarea-widget, .richTextWidget').length &&
+                gtranslate_enabled.value === "True" && (
+                // it is either a text widget, a text area or rich widget
+                dest_field.querySelectorAll('.text-widget, .textarea-widget, .richTextWidget').length ||
+                // or it is a tinymce richtextfield without wrapping CSS class
+                target_tiny !== null
+                ) &&
                 !orig_field.querySelector(".translator-widget")
             ) {
                 const translator_widget = document.createElement("div");
@@ -93,9 +100,6 @@
 
                     const json = await response.json();
                     var text_target = json.data;
-
-                    var target_el = dest_field.querySelector('textarea,input');
-                    const target_tiny = tinymce.get(target_el.id);
 
                     if (target_tiny) {
                         // a TinyMCE editor is present
