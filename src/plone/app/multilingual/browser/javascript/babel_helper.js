@@ -200,7 +200,7 @@
 
         $('#frame-content').load(initialFetchUrl, function () {
             $("#frame-content fieldset legend").unwrap().remove();
-            // defer updateing
+            // defer updating
             setTimeout(update_view, 500);
         });
     }
