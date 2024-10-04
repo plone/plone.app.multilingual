@@ -2,16 +2,35 @@
 (function ($) {
     "use strict";
 
-    function sync_element_vertically(original, destination) {
-        // sync vertical position
-        const orig_rect = original.getBoundingClientRect()
-        const dest_rect = destination.getBoundingClientRect()
+    function sync_heights(el1, el2) {
+        if(el1.style.height != "auto") {
+            // reset if previously set
+            el1.style.height = "auto";
+        }
+        if(el2.style.height != "auto") {
+            // reset if previously set
+            el2.style.height = "auto";
+        }
+        const max_height = Math.max(
+            el1.getBoundingClientRect().height,
+            el2.getBoundingClientRect().height,
+        );
+        el1.style.height = `${max_height}px`;
+        el2.style.height = `${max_height}px`;
+    }
 
-        // make the wrapper heights equally
-        var max_height = Math.max(orig_rect.height, dest_rect.height);
+    function sync_header_height() {
+        // sync header and tab/button heights to ensure the fields are aligned synchronous
+        sync_heights(
+            document.querySelector("#babel-edit > div > h2"),
+            document.querySelector("#header-translation h2"),
+        )
 
-        original.style.height = `${max_height}px`;
-        destination.style.height = `${max_height}px`;
+        // sync translation button and tab heights
+        sync_heights(
+            document.querySelector("#babel-edit #trans-selector"),
+            document.querySelector("#form-target .autotoc-nav"),
+        )
     }
 
     function update_view() {
@@ -19,7 +38,9 @@
         const url_translate = document.querySelector('input#url_translate')?.value;
         const langSource = document.querySelector('#frame-content #view_language').innerHTML;
 
-        // unwrap(document.querySelectorAll('#form-target fieldset > div > .field'));
+        sync_header_height();
+
+        // unwrap .field
         $('#form-target fieldset > div > .field').unwrap();
 
         const original_fields = document.querySelectorAll('#frame-content .field');
@@ -47,7 +68,7 @@
                 orig_field = orig_field[0];
             }
 
-            sync_element_vertically(orig_field, dest_field);
+            sync_heights(orig_field, dest_field);
 
             const gtranslate_enabled = document.getElementById("gtranslate_service_available");
 
@@ -57,10 +78,10 @@
             // Add the google translation field
             if (
                 gtranslate_enabled.value === "True" && (
-                // it is either a text widget, a text area or rich widget
-                dest_field.querySelectorAll('.text-widget, .textarea-widget, .richTextWidget').length ||
-                // or it is a tinymce richtextfield without wrapping CSS class
-                target_tiny !== null
+                    // it is either a text widget, a text area or rich widget
+                    dest_field.querySelectorAll('.text-widget, .textarea-widget, .richTextWidget').length ||
+                    // or it is a tinymce richtextfield without wrapping CSS class
+                    target_tiny !== null
                 ) &&
                 !orig_field.querySelector(".translator-widget")
             ) {
@@ -100,6 +121,10 @@
 
                     const json = await response.json();
                     var text_target = json.data;
+
+                    if(!text_target) {
+                        return;
+                    }
 
                     if (target_tiny) {
                         // a TinyMCE editor is present
@@ -144,7 +169,7 @@
                 babel_selected = field;
                 babel_selected.classList.add("selected");
                 const orig_field = [...original_fields].filter(it => babel_selected.dataset.fieldname.endsWith(it.id));
-                if(!orig_field.length) {
+                if (!orig_field.length) {
                     return;
                 }
                 orig_babel_selected = orig_field[0];
@@ -175,7 +200,8 @@
 
         $('#frame-content').load(initialFetchUrl, function () {
             $("#frame-content fieldset legend").unwrap().remove();
-            update_view();
+            // defer updateing
+            setTimeout(update_view, 500);
         });
     }
 
@@ -209,7 +235,7 @@
         // initialize synchron active fields when clicked
         init_sync_active_click();
 
-        // load original language
+        // load original language and update the view
         load_default_language();
     };
 
@@ -223,5 +249,13 @@
         init_babel_view();
     }, 500);
 
+    // fix field alignment on window resize
+    let deferResize = null;
+    window.addEventListener("resize", () => {
+        if (deferResize) {
+            clearTimeout(deferResize);
+        }
+        deferResize = setTimeout(update_view, 500);
+    });
 
 }(jQuery));
