@@ -37,8 +37,6 @@
 
     function sync_focus(orig_field, focus_field, focus_tinymce) {
         const click_field = (field) => {
-            console.log("clicked");
-
             if (babel_selected) {
                 babel_selected.classList.remove("selected");
                 orig_babel_selected.classList.remove("selected");
