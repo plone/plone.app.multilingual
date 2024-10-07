@@ -2,6 +2,14 @@
     text-align: center;
 }
 
+#babel-edit fieldset legend {
+    display: none;
+}
+
+#babel-edit fieldset .row {
+    --bs-gutter-x: 0;
+}
+
 #babel-edit #trans-selector {
     margin-top: 3px;
     min-height: 26px;

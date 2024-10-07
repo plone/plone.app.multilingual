@@ -1,13 +1,15 @@
-/*global tinyMCE: false, document: false, window: false, jQuery: false */
 (function ($) {
     "use strict";
 
+    let babel_selected = null;
+    let orig_babel_selected = null;
+
     function sync_heights(el1, el2) {
-        if(el1.style.height != "auto") {
+        if (el1.style.height != "auto") {
             // reset if previously set
             el1.style.height = "auto";
         }
-        if(el2.style.height != "auto") {
+        if (el2.style.height != "auto") {
             // reset if previously set
             el2.style.height = "auto";
         }
@@ -33,6 +35,28 @@
         )
     }
 
+    function sync_focus(orig_field, focus_field, focus_tinymce) {
+        const click_field = (field) => {
+            console.log("clicked");
+
+            if (babel_selected) {
+                babel_selected.classList.remove("selected");
+                orig_babel_selected.classList.remove("selected");
+            }
+            babel_selected = focus_field;
+            babel_selected.classList.add("selected");
+            orig_babel_selected = orig_field;
+            orig_babel_selected.classList.add("selected");
+        };
+
+        /* select a field on both sides and change the color */
+        focus_field.addEventListener("click", click_field);
+
+        if(focus_tinymce) {
+            focus_tinymce.on("focus", click_field);
+        }
+    }
+
     function update_view() {
         let order = 1;
         const url_translate = document.querySelector('input#url_translate')?.value;
@@ -40,11 +64,8 @@
 
         sync_header_height();
 
-        // unwrap .field
-        $('#form-target fieldset > div > .field').unwrap();
-
         const original_fields = document.querySelectorAll('#frame-content .field');
-        const destination_fields = document.querySelectorAll('#form-target fieldset > .field');
+        const destination_fields = document.querySelectorAll('#form-target fieldset .field');
         const visible_destination_fields = [...destination_fields].filter(it => it.closest("fieldset.active") != null);
 
         // show only fields of current tab
@@ -68,12 +89,12 @@
                 orig_field = orig_field[0];
             }
 
-            sync_heights(orig_field, dest_field);
-
             const gtranslate_enabled = document.getElementById("gtranslate_service_available");
-
-            var target_el = dest_field.querySelector('textarea,input');
+            const target_el = dest_field.querySelector('textarea,input');
             const target_tiny = tinymce.get(target_el.id);
+
+            sync_focus(orig_field, dest_field, target_tiny);
+            sync_heights(orig_field, dest_field);
 
             // Add the google translation field
             if (
@@ -122,7 +143,7 @@
                     const json = await response.json();
                     var text_target = json.data;
 
-                    if(!text_target) {
+                    if (!text_target) {
                         return;
                     }
 
@@ -153,31 +174,6 @@
         });
     }
 
-    function init_sync_active_click() {
-        /* select a field on both sides and change the color */
-        let babel_selected = null;
-        let orig_babel_selected = null;
-
-        document.querySelectorAll('#form-target fieldset .field').forEach((field) => {
-            field.addEventListener("click", () => {
-                const original_fields = document.querySelectorAll('#frame-content .field');
-
-                if (babel_selected) {
-                    babel_selected.classList.remove("selected");
-                    orig_babel_selected.classList.remove("selected");
-                }
-                babel_selected = field;
-                babel_selected.classList.add("selected");
-                const orig_field = [...original_fields].filter(it => babel_selected.dataset.fieldname.endsWith(it.id));
-                if (!orig_field.length) {
-                    return;
-                }
-                orig_babel_selected = orig_field[0];
-                orig_babel_selected.classList.add("selected");
-            });
-        });
-    }
-
     function load_default_language() {
         // Fetch default language content
         const trans_buttons = document.querySelectorAll("#trans-selector button");
@@ -199,7 +195,6 @@
         }
 
         $('#frame-content').load(initialFetchUrl, function () {
-            $("#frame-content fieldset legend").unwrap().remove();
             // defer updating
             setTimeout(update_view, 500);
         });
@@ -231,9 +226,6 @@
 
         // initialize tab change
         init_tab_switch();
-
-        // initialize synchron active fields when clicked
-        init_sync_active_click();
 
         // load original language and update the view
         load_default_language();
