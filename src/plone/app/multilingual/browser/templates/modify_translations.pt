@@ -141,6 +141,9 @@
                   <a class="pat-plone-modal addTranslationAction"
                      href="#"
                      title="Add translation"
+                     data-pat-plone-modal='{
+                      "modalSizeClass": "modal-xl"
+                     }'
                      tal:attributes="
                        href string:${context/absolute_url}/@@create_translation?language=${lang};
                      "
