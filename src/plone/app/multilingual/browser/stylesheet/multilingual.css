@@ -19,15 +19,17 @@
     margin-right: 20px;
 }
 
-#babel-edit .field, #babel-edit #frame-content .field  {
+#babel-edit .field,
+#babel-edit #frame-content .field {
     background-color: #f1f1f1;
     padding: 20px;
     margin-bottom: 1rem;
 }
 
-#babel-edit .selected, #babel-edit #frame-content .selected{
-    background-color: #99B0C4;
-    color: #0A0909;
+#babel-edit .selected,
+#babel-edit #frame-content .selected {
+    background-color: #99b0c4;
+    color: #0a0909;
 }
 
 #babel-edit .selected .formHelp {
@@ -35,7 +37,7 @@
 }
 
 #babel-edit #frame-content .selected .translator-widget {
-    display:block;
+    display: block;
     cursor: pointer;
 }
 
@@ -60,7 +62,8 @@
 .translator-widget {
     position: relative;
     float: right;
-    background: url('++resource++plone.app.multilingual.images/gtranslate.png');
+    background: url("++resource++plone.app.multilingual.images/gtranslate.png") no-repeat;
+    background-size: contain;
     min-height: 50px;
     min-width: 50px;
     display: none;
@@ -70,15 +73,17 @@
     font-weight: bold;
 }
 /* Specific rule needed to fix a js error (position null in a field) */
-#archetypes-fieldname-contributors{
-    display:block;
+#archetypes-fieldname-contributors {
+    display: block;
 }
 
 a.contentmenuflags img {
     margin-bottom: 2pt;
 }
 
-.toolbar-menu-icon.icon-plone-contentmenu-multilingual:before { content: '\E81A'; } /* '' */
+.toolbar-menu-icon.icon-plone-contentmenu-multilingual:before {
+    content: "\E81A";
+} /* '' */
 
 #translations-overview td {
     line-height: 1;
@@ -119,9 +124,9 @@ a.contentmenuflags img {
 #edit-zone nav > ul ul li.plonetoolbar-multilingual.actionSeparator {
     margin: 0;
     padding: 5px 0 0;
-    border-top: 1px solid rgba(255,255,255,0.17);
+    border-top: 1px solid rgba(255, 255, 255, 0.17);
 }
-#edit-zone nav>ul ul li.plonetoolbar-multilingual.actionSeparator>span {
+#edit-zone nav > ul ul li.plonetoolbar-multilingual.actionSeparator > span {
     font-weight: 400;
     color: #ccc;
 }
