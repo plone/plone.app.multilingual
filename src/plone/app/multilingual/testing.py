@@ -18,7 +18,8 @@ from plone.dexterity.utils import iterSchemata
 from plone.dexterity.utils import iterSchemataForType
 from plone.rfc822 import constructMessageFromSchemata
 from plone.rfc822 import initializeObjectFromSchemata
-from plone.testing import z2
+from plone.testing.layer import Layer
+from plone.testing.zope import WSGI_SERVER_FIXTURE
 from plone.uuid.interfaces import IUUID
 from Products.CMFCore.utils import getToolByName
 from zope.configuration import xmlconfig
@@ -156,7 +157,7 @@ PLONE_APP_MULTILINGUAL_PRESET_INTEGRATION_TESTING = IntegrationTesting(
 )
 
 
-class MultipleLanguagesLayer(z2.Layer):
+class MultipleLanguagesLayer(Layer):
     defaultBases = (PLONE_APP_MULTILINGUAL_PRESET_FIXTURE,)
 
 
@@ -257,7 +258,11 @@ REMOTE_LIBRARY_BUNDLE_FIXTURE = RemoteLibraryLayer(
 )
 
 PLONE_APP_MULTILINGUAL_ROBOT_TESTING = FunctionalTesting(
-    bases=(MULTIPLE_LANGUAGES_LAYER, REMOTE_LIBRARY_BUNDLE_FIXTURE, z2.ZSERVER_FIXTURE),
+    bases=(
+        MULTIPLE_LANGUAGES_LAYER,
+        REMOTE_LIBRARY_BUNDLE_FIXTURE,
+        WSGI_SERVER_FIXTURE,
+    ),
     name="plone.app.multilingual:Robot",
 )
 

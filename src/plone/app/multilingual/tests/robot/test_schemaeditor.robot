@@ -1,16 +1,13 @@
 *** Settings ***
 
-Resource  plone/app/robotframework/keywords.robot
-Resource  plone/app/robotframework/saucelabs.robot
-Resource  plone/app/robotframework/selenium.robot
+Resource    plone/app/robotframework/browser.robot
 
-Library  Remote  ${PLONE_URL}/RobotRemote
+Library    Remote    ${PLONE_URL}/RobotRemote
 
-Test Setup  Run Keywords  Plone test setup
-Test Teardown  Run keywords  Plone test teardown
+Test Setup    Run Keywords    Plone test setup
+Test Teardown    Run keywords    Plone test teardown
 
-
-*** Test Cases ***
+*** Test cases ***
 
 Scenario: As a site owner I can see language independent field setting
     Given a site owner
@@ -42,54 +39,54 @@ Scenario: As a site owner I can unset field from being language independent
 # Given
 
 a site owner
-  Enable autologin as  Manager
+    Enable autologin as    Manager
 
 a dexterity content type with a TTW field
-  Create content type  Custom
-  Go to  ${PLONE_URL}/dexterity-types/Custom/@@fields
-  Wait until page contains element  css=body.template-fields
+    Create content type    Custom
+    Go to    ${PLONE_URL}/dexterity-types/Custom/@@fields
+    Get Element    //body[contains(@class, "template-fields")]
 
 a dexterity content type field settings form
-  Go to  ${PLONE_URL}/dexterity-types/Custom/@@fields
-  Go to  ${PLONE_URL}/dexterity-types/Custom/custom
-  Wait until page contains  Language independent field
+    Go to    ${PLONE_URL}/dexterity-types/Custom/@@fields
+    Go to    ${PLONE_URL}/dexterity-types/Custom/custom
+    Get Text    //div[@id="form-widgets-IFieldLanguageIndependent-languageindependent"]    contains    Language independent field
 
 a dexterity content type with a language independent TTW field
-  Create content type  Custom
-  Set field language independent  Custom  custom  on
-  Go to  ${PLONE_URL}/dexterity-types/Custom/@@fields
-  Wait until page contains element  css=body.template-fields
+    Create content type    Custom
+    Set field language independent    Custom    custom    on
+    Go to    ${PLONE_URL}/dexterity-types/Custom/@@fields
+    Get Element    //body[contains(@class, "template-fields")]
 
 # When
 
 I open the field settings
-  Go to  ${PLONE_URL}/dexterity-types/Custom/custom
-  Page should contain  Language independent field
+    Go to    ${PLONE_URL}/dexterity-types/Custom/custom
+    Get Text    //div[@id="form-widgets-IFieldLanguageIndependent-languageindependent"]    contains    Language independent field
 
 I select the language independent field setting
-  Select checkbox  form-widgets-IFieldLanguageIndependent-languageindependent-0
-  Checkbox should be selected  form-widgets-IFieldLanguageIndependent-languageindependent-0
+    Check Checkbox    //input[@id="form-widgets-IFieldLanguageIndependent-languageindependent-0"]
+    Get Checkbox State    //input[@id="form-widgets-IFieldLanguageIndependent-languageindependent-0"]    ==    checked
 
 I save the form
-  Wait until page contains element  css=#form-buttons-save
-  Click button  css=#form-buttons-save
-  Wait until keyword succeeds  1  10  Element should not be visible  .plone-modal-wrapper
+    Get Element    //*[@id="form-buttons-save"]
+    Click    //*[@id="form-buttons-save"]
+    Get Element Count    //div[contains(@class,"plone-modal-wrapper")]    should be    0
 
 I open the form again
-  Go to  ${PLONE_URL}/dexterity-types/Custom/custom
-  Wait until page contains  Language independent field
+    Go to  ${PLONE_URL}/dexterity-types/Custom/custom
+    Get Text    //div[@id="form-widgets-IFieldLanguageIndependent-languageindependent"]    contains    Language independent field
 
 I unselect the language independent field setting
-  Unselect checkbox  form-widgets-IFieldLanguageIndependent-languageindependent-0
-  Checkbox should not be selected  form-widgets-IFieldLanguageIndependent-languageindependent-0
+    Uncheck Checkbox    //input[@id="form-widgets-IFieldLanguageIndependent-languageindependent-0"]
+    Get Checkbox State    //input[@id="form-widgets-IFieldLanguageIndependent-languageindependent-0"]    ==    unchecked
 
 # Then
 
 I can see the language independent field setting
-  Wait until page contains element  id=form-widgets-IFieldLanguageIndependent-languageindependent-0
+    Get Element    //*[@id="form-widgets-IFieldLanguageIndependent-languageindependent-0"]
 
 the language independent field setting is selected
-  Checkbox should be selected  form-widgets-IFieldLanguageIndependent-languageindependent-0
+    Get Checkbox State    //input[@id="form-widgets-IFieldLanguageIndependent-languageindependent-0"]    ==    checked
 
 the language independent field setting is not selected
-  Checkbox should not be selected  form-widgets-IFieldLanguageIndependent-languageindependent-0
+    Get Checkbox State    //input[@id="form-widgets-IFieldLanguageIndependent-languageindependent-0"]    ==    unchecked
