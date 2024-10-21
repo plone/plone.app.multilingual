@@ -46,10 +46,10 @@ I link the document in English as a translation
     Get Element States    //a[@id="_modify_translations"]     contains    visible
     Click    //a[@id="_modify_translations"]
     Click    //table[@id="translations-overview"]/tbody/tr[1]/td[3]/a[contains(@class,"connectTranslationAction")]
-    Click    //div[@id="formfield-form-widgets-content"]//div[contains(@class,"pat-relateditems-container")]//button[contains(@class,"mode") and contains(@class,"search")]
-    Type Text    //div[@id="formfield-form-widgets-content"]//input[contains(@class,"select2-input")]    en
-    Click    //span[contains(., 'An English Document')]
-    Click    //*[contains(@class, 'modal-footer')]//button[@id='form-buttons-connect_translation']
+    Click    //div[@id="formfield-form-widgets-content"]//div[@class="content-browser-wrapper"]//button[contains(text(),"Select")]
+    Click item in column    2   2
+    Click    //div[contains(@class, "content-browser-wrapper")]//div[contains(@class, "levelColumns")]/div[contains(@class, "preview")]/div[contains(@class, "levelToolbar")]/button
+    Click    //*[contains(@class, 'modal-footer')]//button[@name='form.buttons.connect_translation']
     Get Text    //table[@id="translations-overview"]/tbody/tr[1]/td[2]/h3[@class="translationTitle"]    should be    An English Document
     Click    //table[@id="translations-overview"]//a[contains(text(),'/plone/ca/a-catalan-document')]
     Get Text    //*[@id="content"]/header/h1    should be    A Catalan Document
@@ -63,3 +63,14 @@ I switch to English
 I can view the document in English
     Get Element    //h1[1][contains(text(),'English Document')]
     Get Element    //ul[@id='portal-languageselector']/li[contains(@class, 'currentLanguage')]/a[@title='English']
+
+
+# DRY
+
+Click item in column
+    [arguments]  ${colnumber}    ${itemposition}
+    Click    //div[contains(@class, "content-browser-wrapper")]//div[contains(@class, "levelColumns")]/div[${colnumber}]/div[contains(@class, "levelItems")]/div[${itemposition}]
+
+Pause
+   Import library    Dialogs
+   Pause execution
