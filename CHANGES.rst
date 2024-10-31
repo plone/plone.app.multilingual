@@ -8,6 +8,31 @@ Changelog
 
 .. towncrier release notes start
 
+8.1.3 (2024-10-31)
+------------------
+
+Bug fixes:
+
+
+- Get the object to be translated correctly
+  [erral] (#303)
+- Take RichTextBehavior fields into account
+  [erral] (#464)
+
+
+Internal:
+
+
+- Update configuration files.
+  [plone devs]
+
+
+Tests
+
+
+- port robot tests to use the browser library [@1letter] (#459)
+
+
 8.1.2 (2024-05-30)
 ------------------
 
