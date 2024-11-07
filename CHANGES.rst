@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+8.1.4 (2024-11-07)
+------------------
+
+Bug fixes:
+
+
+- [yurj] missing comma lead to unexpected variable remove from url (#472)
+
+
 8.1.3 (2024-10-31)
 ------------------
 
