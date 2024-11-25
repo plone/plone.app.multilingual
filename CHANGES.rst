@@ -8,6 +8,21 @@ Changelog
 
 .. towncrier release notes start
 
+8.2.0 (2024-11-25)
+------------------
+
+New features:
+
+
+- use pat-contentbrowser as default widget for add translation form [@1letter] (#461)
+
+
+Bug fixes:
+
+
+- [yurj] missing comma lead to unexpected variable remove from url (#472)
+
+
 8.1.3 (2024-10-31)
 ------------------
 
