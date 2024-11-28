@@ -192,7 +192,7 @@ class selector_view(universal_link):
         """
         if postpath:
             url += self.request.form.get("post_path", "")
-        return addQuery(self.request, url, exclude=("post_path"))
+        return addQuery(self.request, url, exclude=("post_path",))
 
     def __call__(self):
         url = self.getDestination()

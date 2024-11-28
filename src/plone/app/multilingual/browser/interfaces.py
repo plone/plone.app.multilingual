@@ -2,7 +2,7 @@ from AccessControl import getSecurityManager
 from plone.app.multilingual import _
 from plone.app.multilingual.browser.vocabularies import untranslated_languages
 from plone.app.multilingual.interfaces import ITranslationManager
-from plone.app.z3cform.widget import RelatedItemsFieldWidget
+from plone.app.z3cform.widgets.contentbrowser import ContentBrowserFieldWidget
 from plone.autoform import directives
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.base.interfaces import IPloneSiteRoot
@@ -98,7 +98,7 @@ class IConnectTranslation(model.Schema):
     )
     directives.widget(
         "content",
-        RelatedItemsFieldWidget,
+        ContentBrowserFieldWidget,
         pattern_options={
             "basePath": make_relation_root_path,
         },

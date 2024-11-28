@@ -35,7 +35,7 @@ class gtranslation_service_dexterity(BrowserView):
             orig_object = manager.get_translation(lang_source)
             field = self.request.form["field"].split(".")[-1]
             if hasattr(orig_object, field):
-                question = getattr(orig_object, field, "")
+                question = getattr(orig_object, field, "") or ""
                 if hasattr(question, "raw"):
                     question = question.raw
             else:
