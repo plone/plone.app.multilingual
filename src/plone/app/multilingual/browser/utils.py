@@ -4,6 +4,7 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.app.multilingual.browser.selector import LanguageSelectorViewlet
+from plone.app.multilingual.interfaces import IExternalTranslationService
 from plone.app.multilingual.interfaces import ILanguageIndependentFolder
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITranslationLocator
@@ -14,6 +15,7 @@ from plone.i18n.locales.interfaces import IContentLanguageAvailability
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
+from zope.component import getAdapters
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component.hooks import getSite
@@ -52,12 +54,13 @@ class BabelUtils(BrowserView):
         return self.context
 
     def gtenabled(self):
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(
-            IMultiLanguageExtraOptionsSchema, prefix="plone"
-        )
-        key = settings.google_translation_key
-        return key is not None and len(key.strip()) > 0
+        adapters = [
+            adapter
+            for _, adapter in getAdapters((self.context,), IExternalTranslationService)
+            if adapter.is_available()
+        ]
+
+        return len(adapters) > 0
 
     def languages(self):
         """Deprecated"""
