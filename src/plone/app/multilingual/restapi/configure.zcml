@@ -1,0 +1,26 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="plone"
+    >
+
+  <include package="plone.restapi" />
+
+
+  <plone:service
+      method="GET"
+      factory=".translation_services.TranslationServices"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      permission="cmf.ModifyPortalContent"
+      name="@translation-services"
+      />
+
+  <plone:service
+      method="POST"
+      factory=".translate_text.TranslateTextService"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      permission="cmf.ModifyPortalContent"
+      name="@translate-text"
+      />
+
+</configure>

@@ -284,13 +284,12 @@ class IExternalTranslationService(Interface):
     """This interface is provided to allow external translation services
     to be plugged-in in Plone to use them to translate content
 
-    Register a named adapter from (context,) to this interface to install
-    a new external translation service.
+    Register a utility to install a new external translation service.
 
     To control the order of the services, user the 'order' attribute. The lower
     the sooner this service will be used.
 
-    The available_languages method can also be used to register the adapter
+    The available_languages method can also be used to register the utility
     just to some language pairs.
 
     """
@@ -301,7 +300,7 @@ class IExternalTranslationService(Interface):
         """return whether this service is available"""
 
     def available_languages():
-        """return the list of tuples that represents language pairs this adapter is enabled for.
+        """return the list of tuples that represents language pairs this utility is enabled for.
         An empty list means that all languages are supported
         """
 

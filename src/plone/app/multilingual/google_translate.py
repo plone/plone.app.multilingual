@@ -1,24 +1,15 @@
-from plone.app.multilingual.interfaces import IExternalTranslationService
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.registry.interfaces import IRegistry
-from zope.component import adapter
 from zope.component import getUtility
-from zope.interface import implementer
-from zope.interface import Interface
 
 import json
 import urllib
 
 
-@implementer(IExternalTranslationService)
-@adapter(Interface)
-class GoogleCloudTranslationAPI:
+class GoogleCloudTranslationAPIFactory:
     """implement the external translation using Google Cloud Translation API"""
 
     order = 999
-
-    def __init__(self, context):
-        self.context = context
 
     def is_available(self):
         registry = getUtility(IRegistry)
@@ -75,3 +66,6 @@ class GoogleCloudTranslationAPI:
             "translatedText"
         ]
         return translated
+
+
+GoogleCloudTranslationAPI = GoogleCloudTranslationAPIFactory()
