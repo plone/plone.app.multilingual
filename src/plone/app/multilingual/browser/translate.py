@@ -6,9 +6,48 @@ from plone.app.uuid.utils import uuidToObject
 from plone.base.interfaces import ILanguage
 from plone.uuid.interfaces import IUUID
 from Products.Five import BrowserView
-from zope.component import getAdapters
+from zope.component import getUtilitiesFor
+from zope.component import getUtility
 
 import json
+
+
+def translate_text(original_text, source_language, target_language, service=None):
+    """translate the text"""
+
+    if service is not None:
+        # if an specific adapter is requested, use it if available
+
+        adapter = getUtility(IExternalTranslationService, name=service)
+        if not adapter.is_available():
+            return None
+
+        adapters = [adapter]
+
+    else:
+
+        adapters = [
+            adapter
+            for _, adapter in getUtilitiesFor(IExternalTranslationService)
+            if adapter.is_available()
+        ]
+
+    sorted_adapters = sorted(adapters, key=lambda x: x.order)
+
+    for adapter in sorted_adapters:
+        available_languages = adapter.available_languages()
+        if (
+            not available_languages
+            or (source_language, target_language) in available_languages
+        ):
+            translation = adapter.translate_content(
+                original_text, source_language, target_language
+            )
+
+            if translation:
+                return translation
+
+    return None
 
 
 class gtranslation_service_dexterity(BrowserView):
@@ -41,30 +80,11 @@ class gtranslation_service_dexterity(BrowserView):
             else:
                 return _("Invalid field")
 
-            adapters = [
-                adapter
-                for _, adapter in getAdapters(
-                    (self.context,), IExternalTranslationService
-                )
-                if adapter.is_available()
-            ]
+            translation = translate_text(question, lang_source, lang_target)
+            if translation is None:
+                return json.dumps({"data": ""})
 
-            sorted_adapters = sorted(adapters, key=lambda x: x.order)
-
-            for adapter in sorted_adapters:
-                available_languages = adapter.available_languages()
-                if (
-                    not available_languages
-                    or (lang_source, lang_target) in available_languages
-                ):
-                    translation = adapter.translate_content(
-                        question, lang_source, lang_target
-                    )
-
-                    if translation:
-                        return json.dumps({"data": translation})
-
-            return json.dumps({"data": ""})
+            return json.dumps({"data": translation})
 
 
 class TranslationForm(BrowserView):

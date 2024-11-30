@@ -28,6 +28,7 @@ setup(
         "plone.memoize",
         "plone.protect",
         "plone.registry",
+        "plone.restapi",
         "plone.schemaeditor",
         "plone.supermodel",
         "plone.uuid",
@@ -57,6 +58,8 @@ setup(
             "plone.testing",
             "plone.volto",
             "robotsuite",
+            "Products.CMFPlacefulWorkflow",
+            "plone.restapi",
         ],
     },
     entry_points="""

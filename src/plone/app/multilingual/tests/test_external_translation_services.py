@@ -1,75 +1,20 @@
 from plone.app.multilingual.interfaces import IExternalTranslationService
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.testing import CaEsTranslator
+from plone.app.multilingual.testing import DisabledTranslator
+from plone.app.multilingual.testing import NiTranslator
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.testing import SITE_OWNER_NAME
 from plone.app.testing import SITE_OWNER_PASSWORD
 from plone.dexterity.utils import createContentInContainer
 from plone.testing._z2_testbrowser import Browser
-from zope.component import adapter
-from zope.component import provideAdapter
+from zope.component import provideUtility
 from zope.interface import alsoProvides
-from zope.interface import implementer
-from zope.interface import Interface
 
 import json
 import transaction
 import unittest
-
-
-@implementer(IExternalTranslationService)
-@adapter(Interface)
-class NiTranslator:
-    order = 30
-
-    def __init__(self, context):
-        self.context = context
-
-    def is_available(self):
-        return True
-
-    def available_languages(self):
-        # All
-        return []
-
-    def translate_content(self, content, source_language, target_language):
-        return f"{content} NI!"
-
-
-@implementer(IExternalTranslationService)
-@adapter(Interface)
-class DisabledTranslator:
-    order = 20
-
-    def __init__(self, context):
-        self.context = context
-
-    def is_available(self):
-        return False
-
-    def available_languages(self):
-        return []
-
-    def translate_content(self, content, source_language, target_language):
-        return "translation"
-
-
-@implementer(IExternalTranslationService)
-@adapter(Interface)
-class CaEsTranslator:
-    order = 5
-
-    def __init__(self, context):
-        self.context = context
-
-    def is_available(self):
-        return True
-
-    def available_languages(self):
-        return [("ca", "es")]
-
-    def translate_content(self, content, source_language, target_language):
-        return "text español"
 
 
 class TestExternalServices(unittest.TestCase):
@@ -95,9 +40,17 @@ class TestExternalServices(unittest.TestCase):
         manager = ITranslationManager(self.a_ca)
         manager.register_translation("es", self.a_es)
 
-        provideAdapter(NiTranslator, name="ni_translator")
-        provideAdapter(DisabledTranslator, name="disabled_translator")
-        provideAdapter(CaEsTranslator, name="ca_es_translator")
+        provideUtility(
+            NiTranslator(), IExternalTranslationService, name="ni_translator"
+        )
+        provideUtility(
+            DisabledTranslator(),
+            IExternalTranslationService,
+            name="disabled_translator",
+        )
+        provideUtility(
+            CaEsTranslator(), IExternalTranslationService, name="ca_es_translator"
+        )
 
         transaction.commit()
 
