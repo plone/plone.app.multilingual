@@ -1,8 +1,21 @@
+from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+
+from zope.component import getMultiAdapter
+from plone.i18n.interfaces import INegotiateLanguage
+from AccessControl.SecurityManagement import getSecurityManager
+from Acquisition import aq_chain
 from plone.app.i18n.locales.browser.selector import LanguageSelector
+from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.app.multilingual.interfaces import ILanguageRootFolder
 from plone.app.multilingual.interfaces import ITG
+from plone.app.multilingual.interfaces import ITranslatable
+from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import NOTG
+from plone.app.multilingual.manager import TranslationManager
 from plone.i18n.interfaces import ILanguageSchema
 from plone.registry.interfaces import IRegistry
+from Products.CMFCore.interfaces import ISiteRoot
+from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
 from zope.component import queryAdapter
 from zope.component.hooks import getSite
@@ -105,6 +118,9 @@ class LanguageSelectorViewlet(LanguageSelector):
             if post_path:
                 query_extras["post_path"] = post_path
             site = getSite()
+
+            url = self.build_multilingual_url(translation_group, lang_info["code"])
+
             data["url"] = addQuery(
                 self.request,
                 site.absolute_url().rstrip("/")
@@ -114,3 +130,162 @@ class LanguageSelectorViewlet(LanguageSelector):
             )
             results.append(data)
         return results
+
+    def build_multilingual_url(self, tg, lang):
+        url = self.getDestination(tg, lang)
+        if url:
+            # We have a direct translation, full wrapping
+            url = self.wrapDestination(url)
+        else:
+            registry = getUtility(IRegistry)
+            policies = registry.forInterface(
+                IMultiLanguageExtraOptionsSchema, prefix="plone"
+            )
+            if policies.selector_lookup_translations_policy == "closest":
+                url = self.getClosestDestination(tg, lang)
+            else:
+                url = self.getDialogDestination(tg, lang)
+            # No wrapping cause that's up to the policies
+            # (they should already have done that)
+
+        return url
+
+    def wrapDestination(self, url, postpath=True):
+        """Fix the translation url appending the query
+        and the eventual append path.
+        """
+        if postpath:
+            url += self.request.form.get("post_path", "")
+        return addQuery(self.request, url, exclude=("post_path",))
+
+    def getDialogDestination(self, tg, lang):
+        """Get the "not translated yet" dialog URL.
+        It's located on the root and shows the translated objects of that TG
+        """
+        dialog_view = NOT_TRANSLATED_YET_TEMPLATE
+        postpath = False
+        # The dialog view shouldn't appear on the site root
+        # because that is untraslatable by default.
+        # And since we are mapping the root on itself,
+        # we also do postpath insertion (@@search case)
+
+        root = getToolByName(self.context, "portal_url")
+        url = root() + dialog_view + "/" + tg
+        return self.wrapDestination(url, postpath=postpath)
+
+    def getParentChain(self, context):
+        # XXX: switch it over to parent pointers if needed
+        return aq_chain(context)
+
+    def getClosestDestination(self, tg, lang):
+        """Get the "closest translated object" URL."""
+        # We should travel the parent chain using the catalog here,
+        # but I think using the acquisition chain is faster
+        # (or well, __parent__ pointers) because the catalog
+        # would require a lot of queries, while technically,
+        # having done traversal up to this point you should
+        # have the objects in memory already
+
+        # As we don't have any content object we are going to look
+        # for the best option
+
+        site = getSite()
+        root = getToolByName(site, "portal_url")
+        ltool = getToolByName(site, "portal_languages")
+
+        # We are using TranslationManager to get the translations of a
+        # string tg
+        try:
+            manager = TranslationManager(tg)
+            languages = manager.get_translations()
+        except AttributeError:
+            languages = []
+        if len(languages) == 0:
+            # If there is no results there are no translations
+            # we move to portal root
+            return self.wrapDestination(root(), postpath=False)
+
+        # We are going to see if there is the preferred language translation
+        # Otherwise we get the first as context to look for translation
+        preferred = ltool.getPreferredLanguage(self.request)
+        if preferred in languages:
+            context = languages[preferred]
+        else:
+            context = languages[list(languages.keys())[0]]
+
+        checkPermission = getSecurityManager().checkPermission
+        chain = self.getParentChain(context)
+        for item in chain:
+            if ISiteRoot.providedBy(item) and not ILanguageRootFolder.providedBy(item):
+                # We do not care to get a permission error
+                # if the whole of the portal cannot be viewed.
+                # Having a permission issue on the root is fine;
+                # not so much for everything else so that is checked there
+                return self.wrapDestination(item.absolute_url())
+            try:
+                canonical = ITranslationManager(item)
+            except TypeError:
+                if not ITranslatable.providedBy(item):
+                    # In case there it's not translatable go to parent
+                    # This solves the problem when a parent is not
+                    # ITranslatable
+                    continue
+                else:
+                    raise
+            translation = canonical.get_translation(lang)
+            if translation and (
+                INavigationRoot.providedBy(translation)
+                or bool(checkPermission("View", translation))
+            ):
+                # Not a direct translation, therefore no postpath
+                # (the view might not exist on a different context)
+                return self.wrapDestination(translation.absolute_url(), postpath=False)
+        # Site root's the fallback
+        return self.wrapDestination(root(), postpath=False)
+
+    def getDestination(self, tg, lang):
+        # Look for the element
+        url = None
+        # We check if it's shared content
+        query = {"TranslationGroup": tg}
+        ptool = getToolByName(self.context, "portal_catalog")
+        brains = ptool.searchResults(query)
+        is_shared = False
+        for brain in brains:
+            if "-" in brain.UID:
+                is_shared = True
+                brain_to_use = brain
+                break
+        if is_shared:
+            target_uid = brain_to_use.UID.split("-")[0]
+            if lang:
+                target_uid += "-" + lang
+            else:
+                # The negotiated language
+                language = getMultiAdapter(
+                    (self.context, self.request), INegotiateLanguage
+                ).language
+                target_uid += "-" + language
+            results = ptool.searchResults(UID=target_uid)
+            if len(results) > 0:
+                url = results[0].getURL()
+            return url
+        # Normal content
+        query = {"TranslationGroup": tg}
+        if lang:
+            query = {"TranslationGroup": tg, "Language": lang}
+        else:
+            # The negotiated language
+            language = getMultiAdapter(
+                (self.context, self.request), INegotiateLanguage
+            ).language
+            query = {"TranslationGroup": self.tg, "Language": language}
+
+        # Comparison to plone/app/multilingual/browser/setup.py#L129
+        if query.get("Language") == "id-id":
+            query["Language"] = "id"
+
+        results = ptool.searchResults(query)
+        if len(results) > 0:
+            url = results[0].getURL()
+        return url
