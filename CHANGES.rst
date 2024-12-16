@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+7.0.5 (2024-12-16)
+------------------
+
+Tests
+
+
+- Port robot tests to playwright based test, us browser library [@1letter] (#475)
+
+
 7.0.4 (2024-03-22)
 ------------------
 
