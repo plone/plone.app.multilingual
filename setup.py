@@ -59,7 +59,7 @@ setup(
             "plone.volto",
             "robotsuite",
             "Products.CMFPlacefulWorkflow",
-            "plone.restapi",
+            "plone.restapi[test]",
         ],
     },
     entry_points="""
