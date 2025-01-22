@@ -1,6 +1,5 @@
 from AccessControl.SecurityManagement import getSecurityManager
 from Acquisition import aq_chain
-from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.multilingual.browser.selector import addQuery
 from plone.app.multilingual.browser.selector import NOT_TRANSLATED_YET_TEMPLATE
 from plone.app.multilingual.interfaces import ILanguageRootFolder
@@ -9,6 +8,7 @@ from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.manager import TranslationManager
+from plone.base.interfaces import INavigationRoot
 from plone.i18n.interfaces import INegotiateLanguage
 from plone.i18n.locales.interfaces import IContentLanguageAvailability
 from plone.registry.interfaces import IRegistry

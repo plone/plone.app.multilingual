@@ -1,7 +1,7 @@
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
-from plone.testing.z2 import Browser
+from plone.testing.zope import Browser
 from Products.CMFCore.utils import getToolByName
 from zope.interface import alsoProvides
 
