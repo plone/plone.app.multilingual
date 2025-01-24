@@ -1,53 +1,56 @@
 from Acquisition import aq_inner
 from plone.app.multilingual import _
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.app.multilingual.interfaces import IExternalTranslationService
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.uuid.utils import uuidToObject
 from plone.base.interfaces import ILanguage
-from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import IUUID
 from Products.Five import BrowserView
+from zope.component import getUtilitiesFor
 from zope.component import getUtility
 
 import json
-import urllib
 
 
-def google_translate(question, key, lang_target, lang_source):
-    length = len(question)
-    translated = ""
-    url = "https://www.googleapis.com/language/translate/v2"
-    temp_question = question
-    while length > 400:
-        temp_question = question[:399]
-        index = temp_question.rfind(" ")
-        temp_question = temp_question[:index]
-        question = question[index:]
-        length = len(question)
-        data = {
-            "key": key,
-            "target": lang_target,
-            "source": lang_source,
-            "q": temp_question,
-        }
-        params = urllib.parse.urlencode(data)
+def translate_text(original_text, source_language, target_language, service=None):
+    """translate the text"""
 
-        retorn = urllib.request.urlopen(url + "?" + params)
-        translated += json.loads(retorn.read())["data"]["translations"][0][
-            "translatedText"
-        ]
+    if original_text:
+        # Initial shortcut: translate only non-empty values
 
-    data = {
-        "key": key,
-        "target": lang_target,
-        "source": lang_source,
-        "q": temp_question,
-    }
-    params = urllib.parse.urlencode(data)
+        if service is not None:
+            # if an specific adapter is requested, use it if available
 
-    retorn = urllib.request.urlopen(url + "?" + params)
-    translated += json.loads(retorn.read())["data"]["translations"][0]["translatedText"]
-    return json.dumps({"data": translated})
+            adapter = getUtility(IExternalTranslationService, name=service)
+            if not adapter.is_available():
+                return None
+
+            adapters = [adapter]
+
+        else:
+            # Get all available adapters
+            adapters = [
+                adapter
+                for _, adapter in getUtilitiesFor(IExternalTranslationService)
+                if adapter.is_available()
+            ]
+
+        sorted_adapters = sorted(adapters, key=lambda x: x.order)
+
+        for adapter in sorted_adapters:
+            available_languages = adapter.available_languages()
+            if (
+                not available_languages
+                or (source_language, target_language) in available_languages
+            ):
+                translation = adapter.translate_content(
+                    original_text, source_language, target_language
+                )
+
+                if translation:
+                    return translation
+
+    return None
 
 
 class gtranslation_service_dexterity(BrowserView):
@@ -69,10 +72,6 @@ class gtranslation_service_dexterity(BrowserView):
                 else:
                     manager = ITranslationManager(self.context)
 
-            registry = getUtility(IRegistry)
-            settings = registry.forInterface(
-                IMultiLanguageExtraOptionsSchema, prefix="plone"
-            )
             lang_target = ILanguage(self.context).get_language()
             lang_source = self.request.form["lang_source"]
             orig_object = manager.get_translation(lang_source)
@@ -83,9 +82,12 @@ class gtranslation_service_dexterity(BrowserView):
                     question = question.raw
             else:
                 return _("Invalid field")
-            return google_translate(
-                question, settings.google_translation_key, lang_target, lang_source
-            )
+
+            translation = translate_text(question, lang_source, lang_target)
+            if translation is None:
+                return json.dumps({"data": ""})
+
+            return json.dumps({"data": translation})
 
 
 class TranslationForm(BrowserView):
