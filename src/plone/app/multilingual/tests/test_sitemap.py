@@ -52,7 +52,7 @@ class TestSitemap(unittest.TestCase):
         Requests for the sitemap on portalroot return all languages
         """
 
-        self.portal.REQUEST['page'] = 1
+        self.portal.REQUEST["page"] = 1
         xml = self.uncompress(self.sitemap())
         self.assertIn(b"<loc>http://nohost/plone/ca/test-document</loc>", xml)
         self.assertIn(b"<loc>http://nohost/plone/en/test-document</loc>", xml)
