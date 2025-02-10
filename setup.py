@@ -62,7 +62,6 @@ setup(
             "plone.rfc822",
             "plone.testing",
             "robotsuite",
-            "Products.CMFPlacefulWorkflow",
         ],
     },
     entry_points="""
