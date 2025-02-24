@@ -18,6 +18,7 @@ from Products.Five import BrowserView
 from zope.component import getAdapters
 from zope.component import getMultiAdapter
 from zope.component import getUtility
+from zope.component import queryUtility
 from zope.component.hooks import getSite
 
 
@@ -53,14 +54,10 @@ class BabelUtils(BrowserView):
     def objToTranslate(self):
         return self.context
 
+    # BBB
     def gtenabled(self):
-        adapters = [
-            adapter
-            for _, adapter in getAdapters((self.context,), IExternalTranslationService)
-            if adapter.is_available()
-        ]
-
-        return len(adapters) > 0
+        utility = queryUtility(IExternalTranslationService, name="google_translate")
+        return utility and utility.is_available()
 
     def languages(self):
         """Deprecated"""

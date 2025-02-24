@@ -32,7 +32,7 @@ class GoogleCloudTranslationAPIFactory:
         question = content
         length = len(question)
         translated = ""
-        url = "https://www.googleapis.com/language/translate/v2"
+        url = "https://translate.googleapis.com/language/translate/v2"
         temp_question = question
         while length > 400:
             temp_question = question[:399]

@@ -53,7 +53,9 @@ def translate_text(original_text, source_language, target_language, service=None
     return None
 
 
-class gtranslation_service_dexterity(BrowserView):
+class TranslationServiceView(BrowserView):
+    service = None
+
     def __call__(self):
         if self.request.method != "POST" and not (
             "field" in self.request.form.keys()
@@ -82,12 +84,16 @@ class gtranslation_service_dexterity(BrowserView):
                     question = question.raw
             else:
                 return _("Invalid field")
-
-            translation = translate_text(question, lang_source, lang_target)
+            translation = translate_text(question, lang_source, lang_target, self.service)
             if translation is None:
                 return json.dumps({"data": ""})
 
             return json.dumps({"data": translation})
+
+# BBB
+class gtranslation_service_dexterity(TranslationServiceView):
+    # service = "google_translate"
+    pass
 
 
 class TranslationForm(BrowserView):
