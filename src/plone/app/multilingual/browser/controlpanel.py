@@ -1,5 +1,3 @@
-from plone.app.multilingual import isLPinstalled
-from plone.app.multilingual.browser.migrator import portal_types_blacklist
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.registry.browser import controlpanel
@@ -10,10 +8,8 @@ from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from z3c.form import button
-from zc.relation.interfaces import ICatalog as IRelationCatalog
 from zope.component import getUtility
 from zope.i18nmessageid import MessageFactory
-from zope.interface.interfaces import ComponentLookupError
 from zope.schema.interfaces import IVocabularyFactory
 
 import json
@@ -77,29 +73,6 @@ class LanguageControlPanelFormPAM(LanguageControlPanelForm):
 class LanguageControlPanel(controlpanel.ControlPanelFormWrapper):
     form = LanguageControlPanelFormPAM
     index = ViewPageTemplateFile("templates/controlpanel.pt")
-    isLPinstalled = isLPinstalled
-
-
-class MigrationView(BrowserView):
-    """The view for display the migration information, actions and results"""
-
-    __call__ = ViewPageTemplateFile("templates/migration.pt")
-
-    isLPinstalled = isLPinstalled
-    portal_types_blacklist = portal_types_blacklist
-    try:
-        catalog = getUtility(IRelationCatalog)
-        hasRelationCatalog = True
-    except ComponentLookupError:
-        hasRelationCatalog = False
-
-
-class MigrationViewAfter(BrowserView):
-    """The view for display the migration information, actions and results"""
-
-    __call__ = ViewPageTemplateFile("templates/cleanup.pt")
-
-    isLPinstalled = isLPinstalled
 
 
 class multilingualMapViewJSON(BrowserView):
@@ -270,5 +243,3 @@ class multilingualMapView(BrowserView):
                     )
                 already_added_canonicals.append(tg)
         return not_full_translations
-
-    isLPinstalled = isLPinstalled
