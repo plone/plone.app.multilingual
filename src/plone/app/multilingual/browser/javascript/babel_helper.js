@@ -107,6 +107,8 @@
                 const translator_widget = document.createElement("div");
 
                 translator_widget.classList.add("translator-widget");
+                // TODO: are there conditions for show?
+                translator_widget.style.display = "block";
                 translator_widget.id = `item_translation_${order}`;
                 translator_widget.innerText = 'translate';
                 translator_widget.addEventListener("click", async function () {
@@ -155,7 +157,6 @@
                     // need to trigger "change" event to make validation (and tiny) happy
                     $(target_el).trigger("change");
                 });
-
                 orig_field.prepend(translator_widget);
                 order += 1;
             }
