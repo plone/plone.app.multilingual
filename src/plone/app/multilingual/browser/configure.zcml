@@ -42,6 +42,13 @@
       />
 
   <browser:page
+      name="get_translation_service_options"
+      for="*"
+      class=".translate.TranslationServiceOptionsView"
+      permission="cmf.ModifyPortalContent"
+      />
+
+  <browser:page
       name="modify_translations"
       for="plone.app.multilingual.interfaces.ITranslatable"
       class=".modify.ModifyTranslationsForm"

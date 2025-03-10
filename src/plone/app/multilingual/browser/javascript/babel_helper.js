@@ -1,8 +1,19 @@
-(function ($) {
+(function ($) {   
     "use strict";
 
     let babel_selected = null;
     let orig_babel_selected = null;
+
+    async function getTranslationServiceOptions() {          
+        const response = await fetch('./get_translation_service_options'); 
+        const adapters = await response.json();
+    
+        return adapters.map(adapter => ({
+            text: adapter.text,
+            value: adapter.value          
+        }));
+    }
+
 
     function sync_heights(el1, el2) {
         if (el1.style.height != "auto") {
@@ -50,12 +61,12 @@
         /* select a field on both sides and change the color */
         focus_field.addEventListener("click", click_field);
 
-        if(focus_tinymce) {
+        if (focus_tinymce) {
             focus_tinymce.on("focus", click_field);
         }
     }
 
-    function update_view() {
+    async function update_view() {
         let order = 1;
         const url_translate = document.querySelector('input#url_translate')?.value;
         const langSource = document.querySelector('#frame-content #view_language').innerHTML;
@@ -77,6 +88,10 @@
             })
         });
 
+        //let langTarget_pieces = document.location.pathname.split('++addtranslation++');
+        //let langTarget = langTarget_pieces[1];
+        const options = await getTranslationServiceOptions();
+
         visible_destination_fields.forEach(dest_field => {
             var orig_field = [...original_fields].filter(it => dest_field.dataset.fieldname.endsWith(it.id));
 
@@ -87,7 +102,6 @@
                 orig_field = orig_field[0];
             }
 
-            const gtranslate_enabled = document.getElementById("gtranslate_service_available");
             const target_el = dest_field.querySelector('textarea,input');
             const target_tiny = window.tinymce && window.tinymce.get(target_el.id);
 
@@ -96,7 +110,7 @@
 
             // Add the google translation field
             if (
-                gtranslate_enabled.value === "True" && (
+                 (
                     // it is either a text widget, a text area or rich widget
                     dest_field.querySelectorAll('.text-widget, .textarea-widget, .richTextWidget').length ||
                     // or it is a tinymce richtextfield without wrapping CSS class
@@ -104,24 +118,38 @@
                 ) &&
                 !orig_field.querySelector(".translator-widget")
             ) {
-                const translator_widget = document.createElement("div");
+                const translator_widget_container = document.createElement("div");
+                translator_widget_container.classList.add("translator-widget-container");
+                translator_widget_container.style.display = "block";
+                translator_widget_container.id = `item_translation_${order}`;
 
-                translator_widget.classList.add("translator-widget");
-                // TODO: are there conditions for show?
-                translator_widget.style.display = "block";
-                translator_widget.id = `item_translation_${order}`;
-                translator_widget.innerText = 'translate';
-                translator_widget.addEventListener("click", async function () {
+                const select = document.createElement("select");
+                select.classList.add("translator-widget");
+
+
+                options.forEach(optionData => {
+                    const option = document.createElement("option");
+                    option.value = optionData.value;
+                    option.innerText = optionData.text;
+                    select.appendChild(option);
+                });
+
+                const button = document.createElement("button");
+                button.innerText = "Translate";
+                button.classList.add("translator-button");
+
+                button.addEventListener("click", async function () {
                     var field = orig_field.getAttribute("rel");
 
                     // we use the current URL to get the context's UID
-                    var url_parts = document.location.pathname.split('++addtranslation++');
+                    var url_parts = document.location.pathname.split('++addtranslation++');                 
 
                     var postdata = new URLSearchParams({
                         'field': field,
                         'lang_source': langSource,
                         // we use the second part of the url_parts, the uid itself
-                        'context_uid': url_parts[1]
+                        'context_uid': url_parts[1],
+                        'service': select.value
                     });
 
                     const translate_service_url = url_translate + '/gtranslation_service';
@@ -157,7 +185,10 @@
                     // need to trigger "change" event to make validation (and tiny) happy
                     $(target_el).trigger("change");
                 });
-                orig_field.prepend(translator_widget);
+
+                translator_widget_container.appendChild(select);
+                translator_widget_container.appendChild(button);
+                orig_field.prepend(translator_widget_container);
                 order += 1;
             }
         });

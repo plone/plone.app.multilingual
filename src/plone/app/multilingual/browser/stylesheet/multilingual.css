@@ -67,14 +67,45 @@
     display: none;
 }
 
-.translator-widget {
-    position: relative;
+label{
+   width:60%; /*Necessary, if the text inside is too long, it doesn't float around this container:
+                translator-widget-container*/
+}
+
+.translator-widget-container {
     float: right;
-    background: url("++resource++plone.app.multilingual.images/gtranslate.png") no-repeat;
-    background-size: contain;
-    min-height: 50px;
-    min-width: 50px;
-    display: none;
+    margin-top: 5px;
+    display: flex;
+    justify-content: flex-end;
+    width: 40%;
+}
+
+.translator-widget {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    font-size: 14px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.translator-widget option {
+    padding: 10px;
+}
+
+.translator-button {
+    display: block;
+    padding: 5px;
+    background: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+    margin-top: 5%;
 }
 
 .currentLanguage {

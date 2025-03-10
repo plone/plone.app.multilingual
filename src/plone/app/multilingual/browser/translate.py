@@ -8,7 +8,6 @@ from plone.uuid.interfaces import IUUID
 from Products.Five import BrowserView
 from zope.component import getUtilitiesFor
 from zope.component import getUtility
-
 import json
 
 
@@ -54,8 +53,6 @@ def translate_text(original_text, source_language, target_language, service=None
 
 
 class TranslationServiceView(BrowserView):
-    service = None
-
     def __call__(self):
         if self.request.method != "POST" and not (
             "field" in self.request.form.keys()
@@ -78,13 +75,14 @@ class TranslationServiceView(BrowserView):
             lang_source = self.request.form["lang_source"]
             orig_object = manager.get_translation(lang_source)
             field = self.request.form["field"].split(".")[-1]
+            service = self.request.form["service"]
             if hasattr(orig_object, field):
                 question = getattr(orig_object, field, "") or ""
                 if hasattr(question, "raw"):
                     question = question.raw
             else:
                 return _("Invalid field")
-            translation = translate_text(question, lang_source, lang_target, self.service)
+            translation = translate_text(question, lang_source, lang_target, service)
             if translation is None:
                 return json.dumps({"data": ""})
 
@@ -108,3 +106,26 @@ class TranslationForm(BrowserView):
             baseUrl = new_parent.absolute_url()
             url = f"{baseUrl}/++addtranslation++{IUUID(context)}"
             return self.request.response.redirect(url)
+
+
+class TranslationServiceOptionsView(BrowserView):  
+    def get_translation_service_options(self):
+        adapters = [
+            (name, adapter)
+            for name, adapter in getUtilitiesFor(IExternalTranslationService)
+            if adapter.is_available()
+        ]
+
+        options = []
+        for name, adapter in adapters:
+            options.append({
+                "text": " ".join(word.capitalize() for word in name.replace("_", " ").replace("-", " ").split()),
+                "value": name, 
+            })
+
+        return options
+
+    def __call__(self):      
+        options = self.get_translation_service_options()
+        self.request.response.setHeader('Content-Type', 'application/json')
+        return json.dumps(options)
