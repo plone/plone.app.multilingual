@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+8.2.3 (2025-03-11)
+------------------
+
+Bug fixes:
+
+
+- Replace `pkg_resources` with `importlib.metadata` @gforcada (#4126)
+- Remove last traces of LinguaPlone @gforcada
+
+
 8.2.2 (2025-02-19)
 ------------------
 
