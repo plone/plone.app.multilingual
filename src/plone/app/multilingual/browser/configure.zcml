@@ -101,15 +101,6 @@
       layer="..interfaces.IPloneAppMultilingualInstalled"
       />
 
-  <!-- Migration Tab -->
-  <browser:page
-      name="lp-migration"
-      for="plone.base.interfaces.IPloneSiteRoot"
-      class=".controlpanel.MigrationView"
-      permission="plone.app.multilingual.ManageTranslations"
-      layer="..interfaces.IPloneAppMultilingualInstalled"
-      />
-
   <browser:page
       name="multilingual-map"
       for="plone.base.interfaces.IPloneSiteRoot"
@@ -330,15 +321,6 @@
       for="plone.dexterity.interfaces.IDexterityContainer"
       class=".migrator.MigrateFolderToLRFView"
       permission="cmf.ManagePortal"
-      layer="..interfaces.IPloneAppMultilingualInstalled"
-      />
-
-  <!-- To delete -->
-  <browser:page
-      name="lp-migration-after"
-      for="plone.base.interfaces.IPloneSiteRoot"
-      class=".controlpanel.MigrationViewAfter"
-      permission="plone.app.multilingual.ManageTranslations"
       layer="..interfaces.IPloneAppMultilingualInstalled"
       />
 
