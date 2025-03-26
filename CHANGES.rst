@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+7.0.6 (2025-03-26)
+------------------
+
+Bug fixes:
+
+
+- Remove last traces of ``LinguaPlone`` and ``pkg_resources``. [gforcada] (#4126)
+
+
 7.0.5 (2024-12-16)
 ------------------
 
