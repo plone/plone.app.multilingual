@@ -95,12 +95,7 @@ class LanguageSelectorViewlet(LanguageSelector):
             data = lang_info.copy()
             data["translated"] = True
             query_extras = {}
-            if not settings.set_cookie_always:
-                query_extras.update(
-                    {
-                        "set_language": data["code"],
-                    }
-                )
+
             post_path = getPostPath(self.context, self.request)
             if post_path:
                 query_extras["post_path"] = post_path
