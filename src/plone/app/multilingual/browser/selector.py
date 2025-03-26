@@ -1,9 +1,6 @@
 from plone.app.i18n.locales.browser.selector import LanguageSelector
 from plone.app.multilingual.interfaces import ITG
 from plone.app.multilingual.interfaces import NOTG
-from plone.i18n.interfaces import ILanguageSchema
-from plone.registry.interfaces import IRegistry
-from zope.component import getUtility
 from zope.component import queryAdapter
 from zope.component.hooks import getSite
 from ZTUtils import make_query
@@ -84,8 +81,6 @@ class LanguageSelectorViewlet(LanguageSelector):
     def languages(self):
         languages_info = super().languages()
         results = []
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ILanguageSchema, prefix="plone")
         translation_group = queryAdapter(self.context, ITG)
         if translation_group is None:
             translation_group = NOTG
