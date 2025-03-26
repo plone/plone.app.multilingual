@@ -336,10 +336,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[1]["url"])
         self.assertEqual(
             self.browser.url,
-            self.portal.absolute_url()
-            + NOT_TRANSLATED_YET_TEMPLATE
-            + "/"
-            + tgid
+            self.portal.absolute_url() + NOT_TRANSLATED_YET_TEMPLATE + "/" + tgid,
         )
         self.assertIn('lang="ca"', self.browser.contents)
 
@@ -347,10 +344,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[2]["url"])
         self.assertEqual(
             self.browser.url,
-            self.portal.absolute_url()
-            + NOT_TRANSLATED_YET_TEMPLATE
-            + "/"
-            + tgid
+            self.portal.absolute_url() + NOT_TRANSLATED_YET_TEMPLATE + "/" + tgid,
         )
         self.assertIn('lang="es"', self.browser.contents)
 
@@ -366,10 +360,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         # Check EN root
         self.assertEqual(
             selector_languages[0]["url"],
-            (
-                self.portal.absolute_url()
-                + "/@@multilingual-selector/notg/en"
-            ),
+            (self.portal.absolute_url() + "/@@multilingual-selector/notg/en"),
         )
         self.browser.open(selector_languages[0]["url"])
         self.assertIn('lang="en"', self.browser.contents)
@@ -378,10 +369,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         # Check CA root
         self.assertEqual(
             selector_languages[1]["url"],
-            (
-                self.portal.absolute_url()
-                + "/@@multilingual-selector/notg/ca"
-            ),
+            (self.portal.absolute_url() + "/@@multilingual-selector/notg/ca"),
         )
         self.browser.open(selector_languages[1]["url"])
         self.assertIn('lang="ca"', self.browser.contents)
@@ -390,10 +378,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[2]["url"])
         self.assertEqual(
             selector_languages[2]["url"],
-            (
-                self.portal.absolute_url()
-                + "/@@multilingual-selector/notg/es"
-            ),
+            (self.portal.absolute_url() + "/@@multilingual-selector/notg/es"),
         )
         self.assertIn('lang="es"', self.browser.contents)
 
@@ -600,10 +585,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         tgid = selector_languages[2]["url"].split("/")[-3]
         self.assertEqual(
             self.browser.url,
-            self.portal.absolute_url()
-            + NOT_TRANSLATED_YET_TEMPLATE
-            + "/"
-            + tgid
+            self.portal.absolute_url() + NOT_TRANSLATED_YET_TEMPLATE + "/" + tgid,
         )
         self.assertIn('lang="es"', self.browser.contents)
 
@@ -622,10 +604,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
 
         tgid = selector_languages[2]["url"].split("/")[-3]
         untranslated_url = {
-            "closest": (
-                self.portal["es"].absolute_url()
-                + "?int=1&uni=pres%C3%98rved"
-            ),
+            "closest": (self.portal["es"].absolute_url() + "?int=1&uni=pres%C3%98rved"),
             "dialog": (
                 self.portal.absolute_url()
                 + NOT_TRANSLATED_YET_TEMPLATE
@@ -641,10 +620,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[0]["url"])
         self.assertUrlsEqual(
             self.browser.url,
-            (
-                f_en.absolute_url()
-                + "/contact-info?int=1&uni=pres%C3%98rved"
-            ),
+            (f_en.absolute_url() + "/contact-info?int=1&uni=pres%C3%98rved"),
         )
         self.assertIn('lang="en"', self.browser.contents)
         self.assertRegex(self.browser.contents, r"Distributed under the")
@@ -653,10 +629,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[1]["url"])
         self.assertUrlsEqual(
             self.browser.url,
-            (
-                f_ca.absolute_url()
-                + "/contact-info?int=1&uni=pres%C3%98rved"
-            ),
+            (f_ca.absolute_url() + "/contact-info?int=1&uni=pres%C3%98rved"),
         )
         self.assertIn('lang="ca"', self.browser.contents)
 
