@@ -118,6 +118,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                     "url": self.portal_url,
                     "tg": ITG(a),
                     "lang": "en",
+                    "query": ""
                 },
                 "selected": True,
                 "translated": True,
@@ -132,6 +133,8 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                     "url": self.portal_url,
                     "tg": ITG(a),
                     "lang": "ca",
+                    "query": ""
+
                 },
                 "selected": False,
                 "translated": True,
@@ -146,6 +149,8 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                     "url": self.portal_url,
                     "tg": ITG(a),
                     "lang": "es",
+                    "query": ""
+
                 },
                 "selected": False,
                 "translated": True,
