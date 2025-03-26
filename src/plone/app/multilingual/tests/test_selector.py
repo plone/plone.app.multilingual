@@ -114,12 +114,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 "name": "English",
                 "native": "English",
                 "url": SELECTOR_VIEW_TEMPLATE
-                % {
-                    "url": self.portal_url,
-                    "tg": ITG(a),
-                    "lang": "en",
-                    "query": ""
-                },
+                % {"url": self.portal_url, "tg": ITG(a), "lang": "en", "query": ""},
                 "selected": True,
                 "translated": True,
             },
@@ -129,13 +124,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 "name": "Catalan",
                 "native": "Catal\xe0",
                 "url": SELECTOR_VIEW_TEMPLATE
-                % {
-                    "url": self.portal_url,
-                    "tg": ITG(a),
-                    "lang": "ca",
-                    "query": ""
-
-                },
+                % {"url": self.portal_url, "tg": ITG(a), "lang": "ca", "query": ""},
                 "selected": False,
                 "translated": True,
             },
@@ -145,13 +134,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 "name": "Spanish",
                 "native": "Espa\xf1ol",
                 "url": SELECTOR_VIEW_TEMPLATE
-                % {
-                    "url": self.portal_url,
-                    "tg": ITG(a),
-                    "lang": "es",
-                    "query": ""
-
-                },
+                % {"url": self.portal_url, "tg": ITG(a), "lang": "es", "query": ""},
                 "selected": False,
                 "translated": True,
             },
