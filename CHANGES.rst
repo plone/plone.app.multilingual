@@ -8,7 +8,6 @@ Changelog
 
 .. towncrier release notes start
 
-
 8.2.3 (2025-03-11)
 ------------------
 
