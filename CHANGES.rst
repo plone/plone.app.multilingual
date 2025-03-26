@@ -8,14 +8,6 @@ Changelog
 
 .. towncrier release notes start
 
-100.0.0 (2025-03-26)
---------------------
-
-New features:
-
-
-- Remove the set_language parameter from the language change URLs @erral (#491)
-
 
 8.2.3 (2025-03-11)
 ------------------
