@@ -34,8 +34,8 @@ class PAMFuncTestHelperViews(unittest.TestCase):
         )
 
     def test_universal_link_view(self):
-        """ when cookie is not set, the universal link should
-            redirect to the language negotiated with the browser
+        """when cookie is not set, the universal link should
+        redirect to the language negotiated with the browser
         """
         self.settings.use_request_negotiation = True
         self.settings.set_cookie_always = False
@@ -54,8 +54,8 @@ class PAMFuncTestHelperViews(unittest.TestCase):
         self.assertEqual(self.browser.url, a_ca.absolute_url())
 
     def test_universal_link_view_cookie_true(self):
-        """ when cookie is set, the universal link should
-            redirect to the language said in the cookie
+        """when cookie is set, the universal link should
+        redirect to the language said in the cookie
         """
         self.settings.use_request_negotiation = True
         self.settings.set_cookie_always = True

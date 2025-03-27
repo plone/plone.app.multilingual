@@ -333,7 +333,6 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.assertEqual(
             self.browser.url,
             f"{self.portal.absolute_url()}/es{NOT_TRANSLATED_YET_TEMPLATE}/{tgid}",
-
         )
         self.assertIn('lang="es"', self.browser.contents)
 
