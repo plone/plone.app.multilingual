@@ -324,7 +324,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[1]["url"])
         self.assertEqual(
             self.browser.url,
-            self.portal.absolute_url() + NOT_TRANSLATED_YET_TEMPLATE + "/" + tgid + "?set_language=ca",
+            f"{self.portal.absolute_url()}/ca{NOT_TRANSLATED_YET_TEMPLATE}/{tgid}",
         )
         self.assertIn('lang="ca"', self.browser.contents)
 
@@ -332,7 +332,8 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[2]["url"])
         self.assertEqual(
             self.browser.url,
-            self.portal.absolute_url() + NOT_TRANSLATED_YET_TEMPLATE + "/" + tgid,
+            f"{self.portal.absolute_url()}/es{NOT_TRANSLATED_YET_TEMPLATE}/{tgid}",
+
         )
         self.assertIn('lang="es"', self.browser.contents)
 
@@ -576,7 +577,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         tgid = selector_languages[2]["url"].split("/")[-3]
         self.assertEqual(
             self.browser.url,
-            addQuery(self.portal.absolute_url() + NOT_TRANSLATED_YET_TEMPLATE + "/" + tgid,
+            f"{self.portal.absolute_url()}/es{NOT_TRANSLATED_YET_TEMPLATE}/{tgid}",
         )
         self.assertIn('lang="es"', self.browser.contents)
 
@@ -598,6 +599,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
             "closest": (self.portal["es"].absolute_url() + "?int=1&uni=pres%C3%98rved"),
             "dialog": (
                 self.portal.absolute_url()
+                + "/es"
                 + NOT_TRANSLATED_YET_TEMPLATE
                 + "/"
                 + tgid

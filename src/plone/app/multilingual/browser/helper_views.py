@@ -114,7 +114,7 @@ class selector_view(universal_link):
         # we also do postpath insertion (@@search case)
 
         root = getToolByName(self.context, "portal_url")
-        url = root() + dialog_view + "/" + self.tg
+        url = f"{root()}/{self.lang}{dialog_view}/{self.tg}"
         return self.wrapDestination(url, postpath=postpath)
 
     def getParentChain(self, context):
@@ -209,16 +209,6 @@ class selector_view(universal_link):
                 url = self.getClosestDestination()
             else:
                 url = self.getDialogDestination()
-                # Here we force to add the set_language parameter
-                # because this URL is the not_translated_yet view
-                # This URL is rendered on the root of the Plone site
-                # where there is no language indication
-                # So we force the language in which the template should be
-                # rendered in passing the set_language paramter
-                #
-                # Another option would be to render the view in the LRF
-                #
-                url = addQuery(self.request, url, set_language=self.lang)
 
             # No wrapping cause that's up to the policies
             # (they should already have done that)
@@ -261,8 +251,12 @@ class not_translated_yet(BrowserView):
         """Get the current language native name"""
         if lang is None:
             lang_code = self.request.get("set_language")
+            if lang_code is None:
+                # Try with the context language
+                lang_code = self.context.Language()
         else:
             lang_code = lang
+
         util = getUtility(IContentLanguageAvailability)
         data = util.getLanguages(True)
         lang_info = data.get(lang_code)
