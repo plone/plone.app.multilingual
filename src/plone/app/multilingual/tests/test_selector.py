@@ -324,7 +324,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[1]["url"])
         self.assertEqual(
             self.browser.url,
-            self.portal.absolute_url() + NOT_TRANSLATED_YET_TEMPLATE + "/" + tgid,
+            self.portal.absolute_url() + NOT_TRANSLATED_YET_TEMPLATE + "/" + tgid + "?set_language=ca",
         )
         self.assertIn('lang="ca"', self.browser.contents)
 
@@ -408,6 +408,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                     "url": self.portal.absolute_url(),
                     "tg": tg,
                     "lang": "en",
+                    "query": "",
                 },
                 "selected": True,
                 "translated": True,
@@ -422,6 +423,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                     "url": self.portal.absolute_url(),
                     "tg": tg,
                     "lang": "ca",
+                    "query": "",
                 },
                 "selected": False,
                 "translated": True,
@@ -436,6 +438,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                     "url": self.portal.absolute_url(),
                     "tg": tg,
                     "lang": "es",
+                    "query": "",
                 },
                 "selected": False,
                 "translated": True,
@@ -573,7 +576,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         tgid = selector_languages[2]["url"].split("/")[-3]
         self.assertEqual(
             self.browser.url,
-            self.portal.absolute_url() + NOT_TRANSLATED_YET_TEMPLATE + "/" + tgid,
+            addQuery(self.portal.absolute_url() + NOT_TRANSLATED_YET_TEMPLATE + "/" + tgid,
         )
         self.assertIn('lang="es"', self.browser.contents)
 

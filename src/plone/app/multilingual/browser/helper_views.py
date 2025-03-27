@@ -9,6 +9,7 @@ from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.manager import TranslationManager
 from plone.base.interfaces import INavigationRoot
+from plone.i18n.interfaces import ILanguageSchema
 from plone.i18n.interfaces import INegotiateLanguage
 from plone.i18n.locales.interfaces import IContentLanguageAvailability
 from plone.registry.interfaces import IRegistry
@@ -208,6 +209,17 @@ class selector_view(universal_link):
                 url = self.getClosestDestination()
             else:
                 url = self.getDialogDestination()
+                # Here we force to add the set_language parameter
+                # because this URL is the not_translated_yet view
+                # This URL is rendered on the root of the Plone site
+                # where there is no language indication
+                # So we force the language in which the template should be
+                # rendered in passing the set_language paramter
+                #
+                # Another option would be to render the view in the LRF
+                #
+                url = addQuery(self.request, url, set_language=self.lang)
+
             # No wrapping cause that's up to the policies
             # (they should already have done that)
         self.request.response.redirect(url)
