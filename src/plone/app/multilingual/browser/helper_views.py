@@ -9,7 +9,6 @@ from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.manager import TranslationManager
 from plone.base.interfaces import INavigationRoot
-from plone.i18n.interfaces import ILanguageSchema
 from plone.i18n.interfaces import INegotiateLanguage
 from plone.i18n.locales.interfaces import IContentLanguageAvailability
 from plone.registry.interfaces import IRegistry
