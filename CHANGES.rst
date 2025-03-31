@@ -8,6 +8,42 @@ Changelog
 
 .. towncrier release notes start
 
+8.2.3 (2025-03-11)
+------------------
+
+Bug fixes:
+
+
+- Replace `pkg_resources` with `importlib.metadata` @gforcada (#4126)
+- Remove last traces of LinguaPlone @gforcada
+
+
+8.2.2 (2025-02-19)
+------------------
+
+Bug fixes:
+
+
+- Test sitemap with page number
+  [erral] (#481)
+
+
+Tests
+
+
+- fix robottest for new contentbrowser version
+  [@1letter] (#483)
+
+
+8.2.1 (2025-01-24)
+------------------
+
+Bug fixes:
+
+
+- Fix DeprecationWarnings. [maurits] (#4090)
+
+
 8.2.0 (2024-11-25)
 ------------------
 

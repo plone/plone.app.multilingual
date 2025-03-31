@@ -15,7 +15,7 @@ from plone.base.utils import safe_text
 from plone.dexterity.utils import createContentInContainer
 from plone.i18n.interfaces import ILanguageSchema
 from plone.registry.interfaces import IRegistry
-from plone.testing.z2 import Browser
+from plone.testing.zope import Browser
 from Products.CMFCore.utils import getToolByName
 from urllib.parse import parse_qs
 from urllib.parse import urlparse

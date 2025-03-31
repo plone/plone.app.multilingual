@@ -1,5 +1,5 @@
 # Generated from:
-# https://github.com/plone/meta/tree/main/config/default
+# https://github.com/plone/meta/tree/main/src/plone/meta/default
 # See the inline comments on how to expand/tweak this configuration file
 [build-system]
 requires = ["setuptools>=68.2"]
@@ -71,7 +71,7 @@ target-version = ["py38"]
 ##
 
 [tool.codespell]
-ignore-words-list = "discreet,assertin,pres"
+ignore-words-list = "discreet,assertin,thet,pres"
 skip = "*.po,"
 ##
 # Add extra configuration options in .meta.toml:
@@ -120,7 +120,7 @@ Zope = [
 ]
 python-dateutil = ['dateutil']
 pytest-plone = ['pytest', 'zope.pytestlayer', 'plone.testing', 'plone.app.testing']
-ignore-packages = ['Products.LinguaPlone', 'Products.CMFPlacefulWorkflow']
+ignore-packages = ['Products.LinguaPlone']
 
 ##
 # Add extra configuration options in .meta.toml:

@@ -9,7 +9,7 @@ from plone.base.interfaces import ILanguage
 from plone.dexterity.utils import createContentInContainer
 from plone.i18n.interfaces import ILanguageSchema
 from plone.registry.interfaces import IRegistry
-from plone.testing.z2 import Browser
+from plone.testing.zope import Browser
 from zope.component import getUtility
 from zope.interface import alsoProvides
 
