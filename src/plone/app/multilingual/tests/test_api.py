@@ -96,9 +96,19 @@ class TestBasicAPI(unittest.TestCase):
         translations = ITranslationManager(self.a_ca).get_translations()
         self.assertEqual(translations, {"ca": self.a_ca})
 
+    def test_get_translations_for_anonymous(self):
+        logout()
+        # get_translations() works also for anonymous
+        self.test_get_translations()
+
     def test_get_translation(self):
         a_ca = ITranslationManager(self.a_ca).get_translation("ca")
         self.assertEqual(a_ca, self.a_ca)
+
+    def test_get_translation_for_anonymous(self):
+        logout()
+        # also anonymous should be able to use get_translation()
+        self.test_get_translation()
 
     def test_get_translated_languages(self):
         translated_languages = ITranslationManager(self.a_ca).get_translated_languages()
@@ -127,10 +137,13 @@ class TestBasicAPI(unittest.TestCase):
         self.assertNotIn("test-document", self.portal["es"].objectIds())
 
         # Create es translation
-        ITranslationManager(self.a_ca).add_translation("es")
+        a_es = ITranslationManager(self.a_ca).add_translation("es")
 
         # Check if it exists
         self.assertIn("test-document", self.portal["es"].objectIds())
+
+        # Check if this is the returned translation object
+        self.assertEqual(a_es, self.portal["es"]["test-document"])
 
         # Check language
         language = ILanguage(self.portal["es"]["test-document"]).get_language()
@@ -176,8 +189,11 @@ class TestLanguageRootFolderAPI(unittest.TestCase):
         )
 
         # Translate
-        ITranslationManager(a_ca).add_translation("es")
-        a_es = ITranslationManager(a_ca).get_translation("es")
+        a_es = ITranslationManager(a_ca).add_translation("es")
+
+        # Check that add_translation("es") and get_translation("es") return the
+        # identical object
+        self.assertEqual(a_es, ITranslationManager(a_ca).get_translation("es"))
 
         # Check that translation is registered
         self.assertEqual(
