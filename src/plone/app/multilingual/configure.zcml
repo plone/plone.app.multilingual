@@ -27,6 +27,11 @@
   <include package=".browser" />
   <include package=".dx" />
 
+  <include
+      package=".restapi"
+      zcml:condition="installed plone.restapi"
+      />
+
   <!--<adapter factory=".content.lrf.LRFOrdering"/>-->
   <adapter factory=".shared_uuid.lrfUUID" />
   <adapter factory=".shared_uuid.lifUUID" />
@@ -190,6 +195,13 @@
       title="plone.app.multilingual uninstall"
       description=""
       handler=".setuphandlers.step_uninstall_various"
+      />
+
+
+  <utility
+      provides=".interfaces.IExternalTranslationService"
+      name="google_translate"
+      component=".google_translate.GoogleCloudTranslationAPI"
       />
 
 </configure>
