@@ -27,7 +27,8 @@ def make_relation_root_path(context):
 
     # Try to find the "closest" object in the target language
     current_object = context
-    target_language = context.REQUEST.get("language", None)
+    request = context.REQUEST if hasattr(context, 'REQUEST') else getRequest()
+    target_language = request.get("language", None)
 
     if target_language is None:
         return "/".join(site.getPhysicalPath())
