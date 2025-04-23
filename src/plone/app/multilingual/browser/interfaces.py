@@ -3,6 +3,7 @@ from plone.app.multilingual import _
 from plone.app.multilingual.browser.vocabularies import untranslated_languages
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.z3cform.widgets.contentbrowser import ContentBrowserFieldWidget
+from plone import api
 from plone.autoform import directives
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.base.interfaces import IPloneSiteRoot
@@ -28,8 +29,8 @@ def make_relation_root_path(context):
 
     # Try to find the "closest" object in the target language
     current_object = context
-    request = context.REQUEST if hasattr(context, "REQUEST") else getRequest()
-    target_language = request.get("language", None)
+    request = getRequest()
+    target_language = request.get("LANGUAGE", None)
 
     if target_language is None:
         return "/".join(site.getPhysicalPath())
