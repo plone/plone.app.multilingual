@@ -13,6 +13,7 @@ from zope import schema
 from zope.browsermenu.interfaces import IBrowserMenu
 from zope.browsermenu.interfaces import IBrowserSubMenuItem
 from zope.component.hooks import getSite
+from zope.globalrequest import getRequest
 from zope.interface import provider
 from zope.schema.interfaces import IContextAwareDefaultFactory
 
