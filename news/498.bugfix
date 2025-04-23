@@ -1,1 +1,1 @@
-[yurj] In control panels, it can happen that context can be None or context.REQUEST is missing and this function is usedas basepath for widget queries.
+[yurj] It can happen that widgets used in the control panel have context as None or that context.REQUEST is missing. This function is used as basepath for widget queries.
