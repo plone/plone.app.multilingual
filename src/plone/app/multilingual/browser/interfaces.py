@@ -23,7 +23,7 @@ def make_relation_root_path(context):
 
     # Use the old behavior if context is None or REQUEST is missing, otherwise
     # the code below will fail because REQUEST or aq_parent are missing
-    if context is None or not getattr(context, "REQUEST"):
+    if context is None or not getattr(context, "REQUEST", None):
         return "/".join(site.getPhysicalPath())
 
     # This should not happen, there's no View permission for the current object
