@@ -1,0 +1,1 @@
+Fix the default path for the relation widget if the current context or request are unknown. [yurj]
