@@ -1,1 +1,1 @@
-[yurj] It can happen that widgets used in the control panel have context as None or that context.REQUEST is missing. This function is used as basepath for widget queries.
+Fix the default path for the relation widget if the current context or request are unknown. [yurj]
