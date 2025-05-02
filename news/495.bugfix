@@ -1,2 +1,0 @@
-The methods `get_translation(s)` are safely callable for anonymous access. The method `add_translation` returns now the created translation. [pgrunewald]
-

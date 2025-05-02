@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+8.2.4 (2025-05-02)
+------------------
+
+Bug fixes:
+
+
+- The methods `get_translation(s)` are safely callable for anonymous access. The method `add_translation` returns now the created translation. [pgrunewald] (#495)
+- Fix the default path for the relation widget if the current context or request are unknown. [yurj] (#498)
+
+
 8.2.3 (2025-03-11)
 ------------------
 
