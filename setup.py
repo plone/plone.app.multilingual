@@ -33,6 +33,7 @@ setup(
         "plone.memoize",
         "plone.protect",
         "plone.registry",
+        "plone.restapi",
         "plone.schemaeditor",
         "plone.supermodel",
         "plone.uuid",
@@ -62,6 +63,8 @@ setup(
             "plone.rfc822",
             "plone.testing",
             "robotsuite",
+            "Products.CMFPlacefulWorkflow",
+            "plone.restapi[test]",
         ],
     },
     entry_points="""
