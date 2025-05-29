@@ -1,4 +1,3 @@
-from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.registry.browser import controlpanel
 from plone.app.uuid.utils import uuidToObject
