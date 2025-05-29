@@ -52,10 +52,6 @@ class LanguageControlPanelFormPAM(LanguageControlPanelForm):
 
         self.applyChanges(data)
 
-        setupTool = SetupMultilingualSite()
-        output = setupTool.setupSite(self.context)
-        self.status += output
-
     @button.buttonAndHandler(_("Cancel"), name="cancel")
     def handleCancel(self, action):
         IStatusMessage(self.request).addStatusMessage(_("Changes canceled."), "info")

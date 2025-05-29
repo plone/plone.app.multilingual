@@ -192,4 +192,10 @@
       handler=".setuphandlers.step_uninstall_various"
       />
 
+  <subscriber
+    for="plone.i18n.interfaces.ILanguageSchema
+         plone.registry.interfaces.IRecordModifiedEvent"
+    handler=".subscriber.change_language_settings" />
+
+
 </configure>
