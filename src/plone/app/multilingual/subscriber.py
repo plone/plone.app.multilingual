@@ -186,7 +186,9 @@ def change_language_settings(proxy, settings):
     if IPloneAppMultilingualInstalled.providedBy(request):
         # We can't restrict subscribers to be run when some browser layer
         # is provided, so we check it here
-        from plone.app.multilingual.browser.controlpanel import SetupMultilingualSite
+        #
+        # The import is added here to avoid circular import errors
+        from plone.app.multilingual.browser.setup import SetupMultilingualSite
 
         setupTool = SetupMultilingualSite()
         portal = getSite()
