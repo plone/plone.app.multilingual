@@ -8,6 +8,28 @@ Changelog
 
 .. towncrier release notes start
 
+8.3.0 (2025-06-18)
+------------------
+
+New features:
+
+
+- Run the SetupMultilingualSite actions with an event subscriber @erral (#501)
+
+
+Bug fixes:
+
+
+- Fix css class for button. @petschki
+
+
+Internal:
+
+
+- Update configuration files, test on Plone 6.1 and 6.2, require Python 3.10+.
+  [plone devs]
+
+
 8.2.4 (2025-05-02)
 ------------------
 
