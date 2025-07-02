@@ -37,6 +37,7 @@
     <element value="plone.translatable" />
     <element value="plone.excludefromnavigation" />
     <element value="plone.navigationroot" />
+    <element value="plone.locking" />
   </property>
   <property name="schema">plone.app.multilingual.interfaces.ILanguageRootFolder</property>
   <property name="model_source" />
