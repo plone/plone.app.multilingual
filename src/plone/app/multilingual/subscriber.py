@@ -182,7 +182,7 @@ def createdEvent(obj, event):
 
 
 def change_language_settings(proxy, settings):
-    if not settings.record.__name__ == 'plone.available_languages':
+    if settings.record.__name__ != 'plone.available_languages':
         return
     request = getRequest()
     if IPloneAppMultilingualInstalled.providedBy(request):
