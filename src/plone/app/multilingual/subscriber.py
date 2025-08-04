@@ -182,6 +182,8 @@ def createdEvent(obj, event):
 
 
 def change_language_settings(proxy, settings):
+    if settings.record.__name__ != "plone.available_languages":
+        return
     request = getRequest()
     if IPloneAppMultilingualInstalled.providedBy(request):
         # We can't restrict subscribers to be run when some browser layer
