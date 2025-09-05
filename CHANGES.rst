@@ -8,6 +8,22 @@ Changelog
 
 .. towncrier release notes start
 
+8.3.1 (2025-09-05)
+------------------
+
+New features:
+
+
+- Add `plone.locking` behavior to `LRF` type. This is required for the working copy to work in `LRF`. @wesleybl (#506)
+
+
+Bug fixes:
+
+
+- Fix create language settings handler bug. @szakitibi (#508)
+- Don't show the edit button for the Language Root Folder if it is locked. @davisagli
+
+
 8.3.0 (2025-06-18)
 ------------------
 
