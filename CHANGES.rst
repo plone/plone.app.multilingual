@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+8.3.2 (2025-11-19)
+------------------
+
+Tests:
+
+
+- Fix robottests for latest `pat-contentbrowser` updates. @petschki
+
+
 8.3.1 (2025-09-05)
 ------------------
 
