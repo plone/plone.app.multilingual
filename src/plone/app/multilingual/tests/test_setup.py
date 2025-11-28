@@ -15,6 +15,14 @@ from zope.interface import alsoProvides
 
 import unittest
 
+# Check if plone.volto is available and import layer if so
+try:
+    from plone.app.multilingual.testing import HAS_PLONE_VOLTO
+    from plone.app.multilingual.testing import VOLTO_MULTILINGUAL_INTEGRATION_TESTING
+except ImportError:
+    HAS_PLONE_VOLTO = False
+    VOLTO_MULTILINGUAL_INTEGRATION_TESTING = None
+
 
 class TestSetupMultilingualSite(unittest.TestCase):
     """Testing multilingual site without predefined languages."""
@@ -142,54 +150,6 @@ class TestSetupMultilingualPresetSite(unittest.TestCase):
             self.assertEqual(self.portal.get(lang).portal_type, "LRF")
 
 
-class TestSetupWithVolto(unittest.TestCase):
-    """Testing multilingual site with plone.volto installed first.
-
-    This test verifies that installing plone.app.multilingual:default
-    after plone.volto:default works correctly.
-    """
-
-    layer = VOLTO_MULTILINGUAL_INTEGRATION_TESTING
-
-    def setUp(self):
-        """Setting up the test."""
-        from plone.app.testing import applyProfile
-
-        self.portal = self.layer["portal"]
-        self.request = self.layer["request"]
-        alsoProvides(self.layer["request"], IPloneAppMultilingualInstalled)
-
-        # Install plone.app.multilingual after plone.volto is already installed
-        applyProfile(self.portal, "plone.app.multilingual:default")
-
-    def test_volto_is_installed(self):
-        """plone.volto should be installed."""
-        # Check if volto browserlayer is registered
-        from plone.browserlayer.utils import registered_layers
-        from plone.volto.interfaces import IPloneVoltoCoreLayer
-
-        self.assertIn(IPloneVoltoCoreLayer, registered_layers())
-
-    def test_pam_is_installed(self):
-        """plone.app.multilingual should be installed after volto."""
-        portal_types = getToolByName(self.portal, "portal_types")
-        # LRF type should exist
-        self.assertIn("LRF", portal_types.objectIds())
-
-    def test_lrf_has_volto_blocks_behavior(self):
-        """LRF type should have volto.blocks behavior when Volto is installed first."""
-        portal_types = getToolByName(self.portal, "portal_types")
-        lrf_type = portal_types.get("LRF")
-
-        behaviors = getattr(lrf_type, "behaviors", ())
-
-        self.assertIn(
-            "volto.blocks",
-            behaviors,
-            "LRF type should have volto.blocks behavior when Volto is installed first",
-        )
-
-
 class TestSetupMultilingualFunctional(unittest.TestCase):
     """Testing multilingual site functional."""
 
@@ -229,3 +189,55 @@ class TestSetupMultilingualFunctional(unittest.TestCase):
         )
         self.assertEqual(self.portal["it"].portal_type, "LRF")
         self.assertEqual(ILanguage(self.portal["it"]).get_language(), "it")
+
+
+# Tests with plone.volto installed first
+# Only define if plone.volto is available
+if HAS_PLONE_VOLTO:
+
+    class TestSetupWithVolto(unittest.TestCase):
+        """Testing multilingual site with plone.volto installed first.
+
+        This test verifies that installing plone.app.multilingual:default
+        after plone.volto:default works correctly.
+        """
+
+        layer = VOLTO_MULTILINGUAL_INTEGRATION_TESTING
+
+        def setUp(self):
+            """Setting up the test."""
+            from plone.app.testing import applyProfile
+
+            self.portal = self.layer["portal"]
+            self.request = self.layer["request"]
+            alsoProvides(self.layer["request"], IPloneAppMultilingualInstalled)
+
+            # Install plone.app.multilingual after plone.volto is already installed
+            applyProfile(self.portal, "plone.app.multilingual:default")
+
+        def test_volto_is_installed(self):
+            """plone.volto should be installed."""
+            # Check if volto browserlayer is registered
+            from plone.browserlayer.utils import registered_layers
+            from plone.volto.interfaces import IPloneVoltoCoreLayer
+
+            self.assertIn(IPloneVoltoCoreLayer, registered_layers())
+
+        def test_pam_is_installed(self):
+            """plone.app.multilingual should be installed after volto."""
+            portal_types = getToolByName(self.portal, "portal_types")
+            # LRF type should exist
+            self.assertIn("LRF", portal_types.objectIds())
+
+        def test_lrf_has_volto_blocks_behavior(self):
+            """LRF type should have volto.blocks behavior when Volto is installed first."""
+            portal_types = getToolByName(self.portal, "portal_types")
+            lrf_type = portal_types.get("LRF")
+
+            behaviors = getattr(lrf_type, "behaviors", ())
+
+            self.assertIn(
+                "volto.blocks",
+                behaviors,
+                "LRF type should have volto.blocks behavior when Volto is installed first",
+            )

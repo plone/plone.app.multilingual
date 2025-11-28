@@ -313,39 +313,49 @@ PAM_FUNCTIONAL_TESTING = PLONE_APP_MULTILINGUAL_FUNCTIONAL_TESTING
 PAM_ROBOT_TESTING = PLONE_APP_MULTILINGUAL_ROBOT_TESTING
 
 
-class VoltoMultilingualLayer(PloneSandboxLayer):
-    """Test layer that installs plone.volto before plone.app.multilingual.
+# Layer for testing with plone.volto installed first
+# Only define if plone.volto is available
+try:
+    import plone.volto
 
-    This layer only installs plone.volto. Tests using this layer should
-    install plone.app.multilingual:default themselves to test the
-    installation order behavior.
-    """
+    HAS_PLONE_VOLTO = True
+except ImportError:
+    HAS_PLONE_VOLTO = False
 
-    defaultBases = (PLONE_APP_CONTENTTYPES_FIXTURE,)
+if HAS_PLONE_VOLTO:
 
-    def setUpZope(self, app, configurationContext):
-        import plone.volto
+    class VoltoMultilingualLayer(PloneSandboxLayer):
+        """Test layer that installs plone.volto before plone.app.multilingual.
 
-        xmlconfig.file("configure.zcml", plone.volto, context=configurationContext)
-        xmlconfig.file(
-            "testing.zcml", plone.app.multilingual, context=configurationContext
-        )
-        xmlconfig.file(
-            "overrides.zcml", plone.app.multilingual, context=configurationContext
-        )
+        This layer only installs plone.volto. Tests using this layer should
+        install plone.app.multilingual:default themselves to test the
+        installation order behavior.
+        """
 
-    def setUpPloneSite(self, portal):
-        # Only install plone.volto - tests should install plone.app.multilingual
+        defaultBases = (PLONE_APP_CONTENTTYPES_FIXTURE,)
 
-        applyProfile(portal, "plone.volto:default")
+        def setUpZope(self, app, configurationContext):
+            import plone.volto
 
-        # Empower test user
-        setRoles(portal, TEST_USER_ID, ["Manager"])
+            xmlconfig.file("configure.zcml", plone.volto, context=configurationContext)
+            xmlconfig.file(
+                "testing.zcml", plone.app.multilingual, context=configurationContext
+            )
+            xmlconfig.file(
+                "overrides.zcml", plone.app.multilingual, context=configurationContext
+            )
 
+        def setUpPloneSite(self, portal):
+            # Only install plone.volto - tests should install plone.app.multilingual
 
-VOLTO_MULTILINGUAL_FIXTURE = VoltoMultilingualLayer()
+            applyProfile(portal, "plone.volto:default")
 
-VOLTO_MULTILINGUAL_INTEGRATION_TESTING = IntegrationTesting(
-    bases=(VOLTO_MULTILINGUAL_FIXTURE,),
-    name="plone.app.multilingual:VoltoIntegration",
-)
+            # Empower test user
+            setRoles(portal, TEST_USER_ID, ["Manager"])
+
+    VOLTO_MULTILINGUAL_FIXTURE = VoltoMultilingualLayer()
+
+    VOLTO_MULTILINGUAL_INTEGRATION_TESTING = IntegrationTesting(
+        bases=(VOLTO_MULTILINGUAL_FIXTURE,),
+        name="plone.app.multilingual:VoltoIntegration",
+    )
