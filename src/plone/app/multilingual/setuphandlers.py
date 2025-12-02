@@ -2,7 +2,6 @@ from plone.app.multilingual import logger
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.itg import addAttributeTG
 from plone.base.interfaces import INonInstallable
-from plone.base.utils import get_installer
 from Products.CMFCore.utils import getToolByName
 from zope.component.hooks import getSite
 from zope.interface import implementer
@@ -20,35 +19,10 @@ class HiddenProfiles:
         ]
 
 
-def add_volto_blocks_behavior_to_lrf(portal):
-    """Add volto.blocks behavior to LRF if plone.volto is installed.
-
-    When plone.volto is installed before plone.app.multilingual, the LRF type
-    should have the volto.blocks behavior to support Volto's block-based editing.
-    """
-    installer = get_installer(portal)
-
-    if not installer.is_product_installed("plone.volto"):
-        return
-
-    types_tool = portal.portal_types
-    lrf_fti = types_tool.get("LRF")
-    if lrf_fti is None:
-        return
-
-    behaviors = list(getattr(lrf_fti, "behaviors", ()))
-    if "volto.blocks" not in behaviors:
-        behaviors.append("volto.blocks")
-        lrf_fti.behaviors = tuple(behaviors)
-        logger.info("Added volto.blocks behavior to LRF type")
-
-
 def init_pam(tool):
     """After installation run setup to create LRF and LIF."""
-    site = getSite()
     setup_tool = SetupMultilingualSite()
-    setup_tool.setupSite(site)
-    add_volto_blocks_behavior_to_lrf(site)
+    setup_tool.setupSite(getSite())
 
 
 def step_default_various(context):
