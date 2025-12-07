@@ -85,6 +85,21 @@ class TestSetupMultilingualSite(unittest.TestCase):
             folder = self.portal[folder_id]
             self.assertEqual(folder.portal_type, "LRF")
 
+    def test_lrf_has_locking_behavior(self):
+        """LRF type should have plone.locking behavior enabled."""
+        portal_types = getToolByName(self.portal, "portal_types")
+        lrf_type = portal_types.get("LRF")
+
+        # Get the behaviors for LRF type
+        behaviors = getattr(lrf_type, "behaviors", ())
+
+        # Check if plone.locking behavior is present
+        self.assertIn(
+            "plone.locking",
+            behaviors,
+            "LRF type should have plone.locking behavior enabled",
+        )
+
 
 class TestSetupMultilingualPresetSite(unittest.TestCase):
     """Testing multilingual site with predefined languages."""

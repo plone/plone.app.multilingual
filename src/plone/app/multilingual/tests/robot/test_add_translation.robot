@@ -47,7 +47,7 @@ I link the document in English as a translation
     Click    //a[@id="_modify_translations"]
     Click    //table[@id="translations-overview"]/tbody/tr[1]/td[3]/a[contains(@class,"connectTranslationAction")]
     Click    //div[@id="formfield-form-widgets-content"]//div[@class="content-browser-wrapper"]//a[contains(text(),"Select")]
-    Click item in column    2   2
+    Click item in column    2   1
     Click    //div[contains(@class, "content-browser-wrapper")]//div[contains(@class, "levelColumns")]/div[contains(@class, "preview")]/div[contains(@class, "levelToolbar")]//button
     Click    //*[contains(@class, 'modal-footer')]//button[@name='form.buttons.connect_translation']
     Get Text    //table[@id="translations-overview"]/tbody/tr[1]/td[2]/h3[@class="translationTitle"]    should be    An English Document
