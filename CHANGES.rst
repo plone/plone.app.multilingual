@@ -8,6 +8,73 @@ Changelog
 
 .. towncrier release notes start
 
+9.0.0a1 (2025-11-26)
+--------------------
+
+Breaking changes:
+
+
+- Replace ``pkg_resources`` namespace with PEP 420 native namespace.
+  Support only Plone 6.2 and Python 3.10+. (#3928)
+
+
+8.3.2 (2025-11-19)
+------------------
+
+Tests:
+
+
+- Fix robottests for latest `pat-contentbrowser` updates. @petschki
+
+
+8.3.1 (2025-09-05)
+------------------
+
+New features:
+
+
+- Add `plone.locking` behavior to `LRF` type. This is required for the working copy to work in `LRF`. @wesleybl (#506)
+
+
+Bug fixes:
+
+
+- Fix create language settings handler bug. @szakitibi (#508)
+- Don't show the edit button for the Language Root Folder if it is locked. @davisagli
+
+
+8.3.0 (2025-06-18)
+------------------
+
+New features:
+
+
+- Run the SetupMultilingualSite actions with an event subscriber @erral (#501)
+
+
+Bug fixes:
+
+
+- Fix css class for button. @petschki
+
+
+Internal:
+
+
+- Update configuration files, test on Plone 6.1 and 6.2, require Python 3.10+.
+  [plone devs]
+
+
+8.2.4 (2025-05-02)
+------------------
+
+Bug fixes:
+
+
+- The methods `get_translation(s)` are safely callable for anonymous access. The method `add_translation` returns now the created translation. [pgrunewald] (#495)
+- Fix the default path for the relation widget if the current context or request are unknown. [yurj] (#498)
+
+
 8.2.3 (2025-03-11)
 ------------------
 

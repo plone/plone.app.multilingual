@@ -49,7 +49,8 @@
                  value="1"
           />
           <span tal:replace="structure context/@@authenticator/authenticator"></span>
-          <button type="submit"
+          <button class="btn btn-danger"
+                  type="submit"
                   i18n:translate="label_disconnect"
           >Disconnect</button>
         </form>

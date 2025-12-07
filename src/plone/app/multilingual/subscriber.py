@@ -179,3 +179,19 @@ def createdEvent(obj, event):
     tm = ITranslationManager(obj)
     old_obj = tm.get_translation(ti["source_language"])
     ILanguageIndependentFieldsManager(old_obj).copy_fields(obj)
+
+
+def change_language_settings(proxy, settings):
+    if settings.record.__name__ != "plone.available_languages":
+        return
+    request = getRequest()
+    if IPloneAppMultilingualInstalled.providedBy(request):
+        # We can't restrict subscribers to be run when some browser layer
+        # is provided, so we check it here
+        #
+        # The import is added here to avoid circular import errors
+        from plone.app.multilingual.browser.setup import SetupMultilingualSite
+
+        setupTool = SetupMultilingualSite()
+        portal = getSite()
+        setupTool.setupSite(portal)

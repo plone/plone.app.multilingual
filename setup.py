@@ -1,14 +1,10 @@
 """Setup plone.app.multilingual."""
 
-from setuptools import find_packages
 from setuptools import setup
 
 
 setup(
     # metadata in setup.cfg
-    packages=find_packages("src"),
-    package_dir={"": "src"},
-    namespace_packages=["plone", "plone.app"],
     include_package_data=True,
     zip_safe=False,
     install_requires=[
@@ -41,7 +37,6 @@ setup(
         "Products.CMFPlone",
         "Products.GenericSetup",
         "Products.statusmessages",
-        "setuptools",
         "z3c.form",
         "z3c.relationfield",
         "zc.relation",

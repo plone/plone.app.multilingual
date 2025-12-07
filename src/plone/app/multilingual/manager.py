@@ -140,6 +140,7 @@ class TranslationManager:
         self.register_translation(language, translated_object)
         # event
         notify(ObjectTranslatedEvent(self.context, translated_object, language))
+        return translated_object
 
     def add_translation_delegated(self, language):
         """
@@ -169,7 +170,7 @@ class TranslationManager:
         )
         if len(brains) != 1:
             return None
-        return brains[0].getObject()
+        return brains[0]._unrestrictedGetObject()
 
     def get_restricted_translation(self, language):
         """see interfaces"""
@@ -187,7 +188,7 @@ class TranslationManager:
             TranslationGroup=self.tg,
         )
         for brain in brains:
-            translations[brain.Language] = brain.getObject()
+            translations[brain.Language] = brain._unrestrictedGetObject()
         return translations
 
     def get_restricted_translations(self):
