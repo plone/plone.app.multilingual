@@ -58,7 +58,6 @@ setup(
             "plone.testing",
             "plone.volto",
             "robotsuite",
-            "Products.CMFPlacefulWorkflow",
             "plone.restapi[test]",
         ],
     },
