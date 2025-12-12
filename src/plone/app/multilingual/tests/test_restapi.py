@@ -1,4 +1,3 @@
-from plone import api
 from plone.app.multilingual.interfaces import IExternalTranslationService
 from plone.app.multilingual.testing import CaEsTranslator
 from plone.app.multilingual.testing import DisabledTranslator
