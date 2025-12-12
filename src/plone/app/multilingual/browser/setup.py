@@ -7,7 +7,6 @@ from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.app.multilingual.subscriber import set_recursive_language
 from plone.base.interfaces import ILanguage
 from plone.base.interfaces import INavigationRoot
-from plone.base.utils import get_installer
 from plone.base.utils import unrestricted_construct_instance
 from plone.dexterity.interfaces import IDexterityFTI
 from plone.i18n.locales.languages import _combinedlanguagelist
@@ -60,7 +59,6 @@ class SetupMultilingualSite:
 
         self.ensure_translatable(self.folder_type)
         self.ensure_translatable(self.folder_type_language_independent)
-        self.add_volto_blocks_behavior_to_lrf()
 
         language_tool = getToolByName(self.context, "portal_languages")
         self.languages = languages = language_tool.getSupportedLanguages()
@@ -288,25 +286,3 @@ class SetupMultilingualSite:
             if "plone.translatable" not in behaviors:
                 behaviors.append("plone.translatable")
             fti._updateProperty("behaviors", tuple(behaviors))
-
-    def add_volto_blocks_behavior_to_lrf(self):
-        """Add volto.blocks behavior to LRF if plone.volto is installed.
-
-        When plone.volto is installed before plone.app.multilingual, the LRF type
-        should have the volto.blocks behavior to support Volto's block-based editing.
-        """
-        installer = get_installer(self.context)
-
-        if not installer.is_product_installed("plone.volto"):
-            return
-
-        types_tool = self.context.portal_types
-        lrf_fti = types_tool.get("LRF")
-        if lrf_fti is None:
-            return
-
-        behaviors = list(getattr(lrf_fti, "behaviors", ()))
-        if "volto.blocks" not in behaviors:
-            behaviors.append("volto.blocks")
-            lrf_fti.behaviors = tuple(behaviors)
-            logger.info("Added volto.blocks behavior to LRF type")
