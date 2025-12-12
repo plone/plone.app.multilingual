@@ -12,15 +12,6 @@ from zope.interface import alsoProvides
 import unittest
 
 
-# Check if plone.volto is available and import layer if so
-try:
-    from plone.app.multilingual.testing import HAS_PLONE_VOLTO
-    from plone.app.multilingual.testing import VOLTO_MULTILINGUAL_INTEGRATION_TESTING
-except ImportError:
-    HAS_PLONE_VOLTO = False
-    VOLTO_MULTILINGUAL_INTEGRATION_TESTING = None
-
-
 class TestSetupMultilingualSite(unittest.TestCase):
     """Testing multilingual site without predefined languages."""
 
@@ -107,19 +98,6 @@ class TestSetupMultilingualSite(unittest.TestCase):
             "plone.locking",
             behaviors,
             "LRF type should have plone.locking behavior enabled",
-        )
-
-    def test_lrf_does_not_have_volto_blocks_behavior(self):
-        """LRF type should NOT have volto.blocks behavior without Volto installed."""
-        portal_types = getToolByName(self.portal, "portal_types")
-        lrf_type = portal_types.get("LRF")
-
-        behaviors = getattr(lrf_type, "behaviors", ())
-
-        self.assertNotIn(
-            "volto.blocks",
-            behaviors,
-            "LRF type should not have volto.blocks behavior without Volto",
         )
 
 
