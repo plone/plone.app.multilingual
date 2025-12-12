@@ -59,6 +59,7 @@ setup(
             "plone.testing",
             "robotsuite",
             "plone.restapi[test]",
+            "plone.volto",
         ],
     },
     entry_points="""
