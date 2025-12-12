@@ -4,31 +4,26 @@ from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.testing import CaEsTranslator
 from plone.app.multilingual.testing import DisabledTranslator
 from plone.app.multilingual.testing import NiTranslator
+from plone.app.multilingual.testing import PAM_INTEGRATION_PRESET_TESTING
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
-from plone.app.testing import SITE_OWNER_NAME
-from plone.app.testing import SITE_OWNER_PASSWORD
 from plone.dexterity.utils import createContentInContainer
-from plone.testing._z2_testbrowser import Browser
 from zope.component import provideUtility
 from zope.interface import alsoProvides
+from plone.app.multilingual.translation_utils import translate_text
 
 import json
 import transaction
 import unittest
 
 
-class TestExternalServices(unittest.TestCase):
+class TestExternalServicesUtilities(unittest.TestCase):
     layer = PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
         alsoProvides(self.layer["request"], IPloneAppMultilingualInstalled)
-        # Setup test browser
-        self.browser = Browser(self.layer["app"])
-        self.browser.handleErrors = False
-        self.browser.addHeader(
-            "Authorization", f"Basic {SITE_OWNER_NAME}:{SITE_OWNER_PASSWORD}"
-        )
+
         self.a_ca = createContentInContainer(
             self.portal["ca"], "Document", title="Test document CA"
         )
@@ -60,26 +55,13 @@ class TestExternalServices(unittest.TestCase):
         and it has the ca-es language pair translation
         availability
         """
-        self.browser.open(
-            f"{self.a_es.absolute_url()}/gtranslation_service",
-            data={"field": "IDublinCore.title", "lang_source": "ca"},
-        )
-
-        result = json.loads(self.browser.contents)
-
-        self.assertEqual(result.get("data"), "text español")
+        result = translate_text(self.a_ca.Title(), "ca", "es")
+        self.assertEqual(result, "text español")
 
     def test_translation_es_ca(self):
         """In this case the NiTranslator should be applied
         because the previous translators have not this language
         pair available or are disabled
         """
-
-        self.browser.open(
-            f"{self.a_ca.absolute_url()}/gtranslation_service",
-            data={"field": "IDublinCore.title", "lang_source": "es"},
-        )
-
-        result = json.loads(self.browser.contents)
-
-        self.assertEqual(result.get("data"), "Test document ES NI!")
+        result = translate_text(self.a_es.Title(), "es", "ca")
+        self.assertEqual(result, "Test document ES NI!")
