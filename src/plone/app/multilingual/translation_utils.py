@@ -12,21 +12,21 @@ def translate_text(original_text, source_language, target_language, service=None
         if service is not None:
             # if an specific adapter is requested, use it if available
 
-            adapter = getUtility(IExternalTranslationService, name=service)
-            if not adapter.is_available():
+            utility = getUtility(IExternalTranslationService, name=service)
+            if not utility.is_available():
                 return None
 
-            adapters = [adapter]
+            utilities = [utility]
 
         else:
             # Get all available adapters
-            adapters = [
-                adapter
-                for _, adapter in getUtilitiesFor(IExternalTranslationService)
-                if adapter.is_available()
+            utilities = [
+                utility
+                for name, utility in getUtilitiesFor(IExternalTranslationService)
+                if utility.is_available()
             ]
 
-        sorted_adapters = sorted(adapters, key=lambda x: x.order)
+        sorted_adapters = sorted(utilities, key=lambda x: int(x.order))
 
         for adapter in sorted_adapters:
             available_languages = adapter.available_languages()

@@ -47,9 +47,20 @@ class TranslationService(Service):
                 manager = ITranslationManager(self.context)
 
         lang_target = ILanguage(self.context).get_language()
-        lang_source = self.request.form["lang_source"]
+        lang_source = body.get("lang_source")
         orig_object = manager.get_translation(lang_source)
-        field = self.request.form["field"].split(".")[-1]
+        if orig_object is None:
+            return {
+                "error": {
+                    "type": _("Invalid content object"),
+                    "message": _(
+                        "The referenced content object is not available in ${language} language.",
+                        mapping={"language": lang_source},
+                    ),
+                }
+            }
+
+        field = body.get("field", "").split(".")[-1]
         if hasattr(orig_object, field):
             question = getattr(orig_object, field, "") or ""
             if hasattr(question, "raw"):

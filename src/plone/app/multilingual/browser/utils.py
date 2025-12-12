@@ -15,7 +15,7 @@ from plone.i18n.locales.interfaces import IContentLanguageAvailability
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
-from zope.component import getAdapters
+from zope.component import getUtilitiesFor
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component.hooks import getSite
@@ -54,13 +54,12 @@ class BabelUtils(BrowserView):
         return self.context
 
     def translations_enabled(self):
-        adapters = [
-            adapter
-            for _, adapter in getAdapters((self.context,), IExternalTranslationService)
-            if adapter.is_available()
+        utilities = [
+            name
+            for name, utility in getUtilitiesFor(IExternalTranslationService)
+            if utility.is_available()
         ]
-
-        return len(adapters) > 0
+        return len(utilities) > 0
 
     def languages(self):
         """Deprecated"""
