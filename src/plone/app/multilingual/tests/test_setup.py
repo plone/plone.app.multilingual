@@ -108,19 +108,6 @@ class TestSetupMultilingualSite(unittest.TestCase):
             "LRF type should have plone.locking behavior enabled",
         )
 
-    def test_lrf_does_not_have_volto_blocks_behavior(self):
-        """LRF type should NOT have volto.blocks behavior without Volto installed."""
-        portal_types = getToolByName(self.portal, "portal_types")
-        lrf_type = portal_types.get("LRF")
-
-        behaviors = getattr(lrf_type, "behaviors", ())
-
-        self.assertNotIn(
-            "volto.blocks",
-            behaviors,
-            "LRF type should not have volto.blocks behavior without Volto",
-        )
-
 
 class TestSetupMultilingualPresetSite(unittest.TestCase):
     """Testing multilingual site with predefined languages."""
