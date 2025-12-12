@@ -6,7 +6,6 @@
 
   <include package="plone.restapi" />
 
-
   <plone:service
       method="GET"
       factory=".translation_services.TranslationServices"
@@ -21,6 +20,14 @@
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       permission="cmf.ModifyPortalContent"
       name="@translate-text"
+      />
+
+  <plone:service
+      method="POST"
+      factory=".translation_service.TranslationService"
+      for="plone.dexterity.interfaces.IDexterityContent"
+      permission="cmf.ModifyPortalContent"
+      name="@translation-service"
       />
 
 </configure>

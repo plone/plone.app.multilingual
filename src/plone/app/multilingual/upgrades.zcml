@@ -91,4 +91,25 @@
       handler=".upgrades.fix_indonesian_language"
       />
 
+  <genericsetup:registerProfile
+      name="to_1003"
+      title="Remove registry setting for google translate key"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/upgrades/to_1003"
+      />
+
+  <genericsetup:upgradeSteps
+      profile="plone.app.multilingual:default"
+      source="1002"
+      destination="1003"
+      >
+
+    <genericsetup:upgradeDepends
+        title="Remove registry setting for google translate key"
+        import_profile="plone.app.multilingual:to_1003"
+        />
+
+  </genericsetup:upgradeSteps>
+
 </configure>

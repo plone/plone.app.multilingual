@@ -87,7 +87,9 @@
                 orig_field = orig_field[0];
             }
 
-            const gtranslate_enabled = document.getElementById("gtranslate_service_available");
+            const translations_enabled = document.getElementById(
+              "translation_service_available"
+            );
             const target_el = dest_field.querySelector('textarea,input');
             const target_tiny = tinymce.get(target_el.id);
 
@@ -96,7 +98,7 @@
 
             // Add the google translation field
             if (
-                gtranslate_enabled.value === "True" && (
+                translations_enabled.value === "True" && (
                     // it is either a text widget, a text area or rich widget
                     dest_field.querySelectorAll('.text-widget, .textarea-widget, .richTextWidget').length ||
                     // or it is a tinymce richtextfield without wrapping CSS class
@@ -115,22 +117,22 @@
                     // we use the current URL to get the context's UID
                     var url_parts = document.location.pathname.split('++addtranslation++');
 
-                    var postdata = new URLSearchParams({
+                    var postdata = {
                         'field': field,
                         'lang_source': langSource,
                         // we use the second part of the url_parts, the uid itself
                         'context_uid': url_parts[1]
-                    });
+                    };
 
-                    const translate_service_url = url_translate + '/gtranslation_service';
+                    const translate_service_url = url_translate + '/@translation-service';
 
                     // Now we call the data
                     const response = await fetch(translate_service_url, {
                         method: "POST",
                         headers: {
-                            "Content-type": "application/x-www-form-urlencoded; charset: utf-8",
+                            "Content-type": "application/json; charset: utf-8",
                         },
-                        body: postdata,
+                        body: JSON.stringify(postdata),
                     });
 
                     if (!response.ok) {

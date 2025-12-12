@@ -203,11 +203,4 @@
       handler=".subscriber.change_language_settings"
       />
 
-  <utility
-      provides=".interfaces.IExternalTranslationService"
-      name="google_translate"
-      component=".google_translate.GoogleCloudTranslationAPI"
-      />
-
-
 </configure>

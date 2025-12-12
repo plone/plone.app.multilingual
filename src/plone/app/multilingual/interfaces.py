@@ -254,15 +254,6 @@ class IMultiLanguageExtraOptionsSchema(ILanguageSchema):
         required=False,
     )
 
-    google_translation_key = schema.TextLine(
-        title=_("heading_google_translation_key", default="Google Translation API Key"),
-        description=_(
-            "description_google_translation_key",
-            default="Is a paying API in order to use google translation " "service",
-        ),
-        required=False,
-    )
-
     selector_lookup_translations_policy = schema.Choice(
         title=_(
             "heading_selector_lookup_translations_policy",

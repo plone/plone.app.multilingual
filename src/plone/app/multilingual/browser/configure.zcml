@@ -226,14 +226,6 @@
   <!-- DEXTERITY -->
   <configure zcml:condition="installed plone.dexterity">
 
-    <!-- GTranslate Service -->
-    <browser:page
-        name="gtranslation_service"
-        for="plone.dexterity.interfaces.IDexterityContent"
-        class=".translate.gtranslation_service_dexterity"
-        permission="cmf.ModifyPortalContent"
-        />
-
     <!-- Standard add view and form - invoked from ++addtranslation++ traverser -->
     <adapter
         factory=".add.DefaultMultilingualAddView"

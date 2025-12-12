@@ -1,4 +1,5 @@
-from plone.app.multilingual.browser.translate import translate_text
+from plone.app.multilingual import _
+from plone.app.multilingual.translation_utils import translate_text
 from plone.restapi.deserializer import json_body
 from plone.restapi.services import Service
 
@@ -21,8 +22,8 @@ class TranslateTextService(Service):
             self.request.response.setStatus(400)
             return dict(
                 error=dict(
-                    type="Translation service not available",
-                    message="The requested translation service is not available.",
+                    type=_("Translation service not available"),
+                    message=_("The requested translation service is not available."),
                 )
             )
 
