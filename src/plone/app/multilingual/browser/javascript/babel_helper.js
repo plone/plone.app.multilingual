@@ -91,7 +91,8 @@
               "translation_service_available"
             );
             const target_el = dest_field.querySelector('textarea,input');
-            const target_tiny = tinymce.get(target_el.id);
+            // const target_tiny = tinymce.get(target_el.id);
+            const target_tiny = null;
 
             sync_focus(orig_field, dest_field, target_tiny);
             sync_heights(orig_field, dest_field);
@@ -110,6 +111,7 @@
 
                 translator_widget.classList.add("translator-widget");
                 translator_widget.id = `item_translation_${order}`;
+                translator_widget.style.display = 'block';
 
                 translator_widget.addEventListener("click", async function () {
                     var field = orig_field.getAttribute("rel");
@@ -131,6 +133,7 @@
                         method: "POST",
                         headers: {
                             "Content-type": "application/json; charset: utf-8",
+                            "Accept": "application/json"
                         },
                         body: JSON.stringify(postdata),
                     });
