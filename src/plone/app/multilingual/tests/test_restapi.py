@@ -7,6 +7,7 @@ from plone.app.testing import setRoles
 from plone.app.testing import SITE_OWNER_NAME
 from plone.app.testing import SITE_OWNER_PASSWORD
 from plone.app.testing import TEST_USER_ID
+from plone.restapi.testing import PLONE_RESTAPI_DX_PAM_FUNCTIONAL_TESTING
 from plone.restapi.testing import RelativeSession
 from zope.component import provideUtility
 
@@ -17,7 +18,7 @@ import unittest
 class TestDefaultTranslationServices(unittest.TestCase):
     """Test the default translation services provided by plone.app.multilingual"""
 
-    layer = PAM_ROBOT_TESTING
+    layer = PLONE_RESTAPI_DX_PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.app = self.layer["app"]
@@ -41,7 +42,7 @@ class TestSeveralTranslationServices(unittest.TestCase):
     in the REST API
     """
 
-    layer = PAM_ROBOT_TESTING
+    layer = PLONE_RESTAPI_DX_PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.app = self.layer["app"]
@@ -87,7 +88,7 @@ class TestSeveralTranslationServices(unittest.TestCase):
 
 
 class TestTranslateTextServices(unittest.TestCase):
-    layer = PAM_ROBOT_TESTING
+    layer = PLONE_RESTAPI_DX_PAM_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.app = self.layer["app"]

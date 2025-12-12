@@ -56,7 +56,6 @@ setup(
             "plone.browserlayer",
             "plone.rfc822",
             "plone.testing",
-            "plone.volto",
             "robotsuite",
             "plone.restapi[test]",
         ],
