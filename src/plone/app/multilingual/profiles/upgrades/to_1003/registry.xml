@@ -5,7 +5,9 @@
            prefix="plone"
            purge="false"
   >
-    <value key="google_translation_key" remove="true"/>
+    <value key="google_translation_key"
+           remove="true"
+    />
   </records>
 
 </registry>

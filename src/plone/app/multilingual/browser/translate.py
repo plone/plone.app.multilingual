@@ -1,7 +1,5 @@
 from Acquisition import aq_inner
-from plone.app.multilingual import _
 from plone.app.multilingual.interfaces import ITranslationManager
-
 from plone.uuid.interfaces import IUUID
 from Products.Five import BrowserView
 

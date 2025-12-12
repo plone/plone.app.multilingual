@@ -15,8 +15,8 @@ from plone.i18n.locales.interfaces import IContentLanguageAvailability
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
-from zope.component import getUtilitiesFor
 from zope.component import getMultiAdapter
+from zope.component import getUtilitiesFor
 from zope.component import getUtility
 from zope.component.hooks import getSite
 
