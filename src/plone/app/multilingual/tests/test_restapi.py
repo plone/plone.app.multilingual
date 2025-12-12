@@ -7,10 +7,10 @@ from plone.app.testing import setRoles
 from plone.app.testing import SITE_OWNER_NAME
 from plone.app.testing import SITE_OWNER_PASSWORD
 from plone.app.testing import TEST_USER_ID
-from plone.restapi.testing import PLONE_RESTAPI_DX_PAM_FUNCTIONAL_TESTING
 from plone.restapi.testing import RelativeSession
 from zope.component import provideUtility
-
+from plone.dexterity.utils import createContentInContainer
+from plone.app.multilingual.interfaces import ITranslationManager
 import transaction
 import unittest
 
@@ -18,7 +18,7 @@ import unittest
 class TestDefaultTranslationServices(unittest.TestCase):
     """Test the default translation services provided by plone.app.multilingual"""
 
-    layer = PLONE_RESTAPI_DX_PAM_FUNCTIONAL_TESTING
+    layer = PAM_ROBOT_TESTING
 
     def setUp(self):
         self.app = self.layer["app"]
@@ -42,7 +42,7 @@ class TestSeveralTranslationServices(unittest.TestCase):
     in the REST API
     """
 
-    layer = PLONE_RESTAPI_DX_PAM_FUNCTIONAL_TESTING
+    layer = PAM_ROBOT_TESTING
 
     def setUp(self):
         self.app = self.layer["app"]
@@ -88,7 +88,7 @@ class TestSeveralTranslationServices(unittest.TestCase):
 
 
 class TestTranslateTextServices(unittest.TestCase):
-    layer = PLONE_RESTAPI_DX_PAM_FUNCTIONAL_TESTING
+    layer = PAM_ROBOT_TESTING
 
     def setUp(self):
         self.app = self.layer["app"]
@@ -166,3 +166,87 @@ class TestTranslateTextServices(unittest.TestCase):
         result = api_result.json()
 
         self.assertEqual(result.get("data"), "Some other text NI!")
+
+
+class TestTranslationsForBabelEdit(unittest.TestCase):
+    """Here we test the endpoint that is used in the babel_edit view"""
+
+    layer = PAM_ROBOT_TESTING
+
+    def setUp(self):
+        # alsoProvides(self.layer["request"], IPloneAppMultilingualInstalled)
+
+        self.app = self.layer["app"]
+        self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
+        self.portal_url = self.portal.absolute_url()
+        setRoles(self.portal, TEST_USER_ID, ["Manager"])
+
+        self.api_session = RelativeSession(self.portal_url)
+        self.api_session.headers.update({"Accept": "application/json"})
+        self.api_session.auth = (SITE_OWNER_NAME, SITE_OWNER_PASSWORD)
+        provideUtility(
+            NiTranslator(), IExternalTranslationService, name="ni_translator"
+        )
+        provideUtility(
+            DisabledTranslator(),
+            IExternalTranslationService,
+            name="disabled_translator",
+        )
+        provideUtility(
+            CaEsTranslator(), IExternalTranslationService, name="ca_es_translator"
+        )
+
+        self.a_ca = createContentInContainer(
+            self.portal["ca"], "Document", title="Test document CA"
+        )
+
+        self.a_es = createContentInContainer(
+            self.portal["es"], "Document", title="Test document ES"
+        )
+
+        manager = ITranslationManager(self.a_ca)
+        manager.register_translation("es", self.a_es)
+
+        provideUtility(
+            NiTranslator(), IExternalTranslationService, name="ni_translator"
+        )
+        provideUtility(
+            DisabledTranslator(),
+            IExternalTranslationService,
+            name="disabled_translator",
+        )
+        provideUtility(
+            CaEsTranslator(), IExternalTranslationService, name="ca_es_translator"
+        )
+
+        transaction.commit()
+
+    def test_translation_ca_es(self):
+        """In this case the CaEsTranslator should be applied
+        because it has a smaller number in the order
+        and it has the ca-es language pair translation
+        availability
+        """
+        api_result = self.api_session.post(
+            f"{self.a_es.absolute_url()}/@translation-service",
+            json={"field": "IDublinCore.title", "lang_source": "ca"},
+        )
+        self.assertTrue(api_result.ok)
+        result = api_result.json()
+
+        self.assertEqual(result.get("data"), "text español")
+
+    def test_translation_es_ca(self):
+        """In this case the NiTranslator should be applied
+        because the previous translators have not this language
+        pair available or are disabled
+        """
+
+        api_result = self.api_session.post(
+            f"{self.a_es.absolute_url()}/@translation-service",
+            json={"field": "IDublinCore.title", "lang_source": "es"},
+        )
+        self.assertTrue(api_result.ok)
+        result = api_result.json()
+        self.assertEqual(result.get("data"), "Test document ES NI!")
