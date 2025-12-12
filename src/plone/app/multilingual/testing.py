@@ -30,6 +30,7 @@ from zope.lifecycleevent import ObjectModifiedEvent
 
 import plone.app.dexterity
 import plone.app.multilingual
+import plone.volto
 
 
 try:
@@ -271,10 +272,6 @@ PAM_INTEGRATION_TESTING = PLONE_APP_MULTILINGUAL_INTEGRATION_TESTING
 PAM_INTEGRATION_PRESET_TESTING = PLONE_APP_MULTILINGUAL_PRESET_INTEGRATION_TESTING
 PAM_FUNCTIONAL_TESTING = PLONE_APP_MULTILINGUAL_FUNCTIONAL_TESTING
 PAM_ROBOT_TESTING = PLONE_APP_MULTILINGUAL_ROBOT_TESTING
-
-
-# Layer for testing with plone.volto installed first
-import plone.volto
 
 
 class VoltoMultilingualLayer(PloneSandboxLayer):

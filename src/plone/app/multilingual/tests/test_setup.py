@@ -5,6 +5,7 @@ from plone.app.multilingual.interfaces import ATTRIBUTE_NAME
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.testing import PAM_INTEGRATION_PRESET_TESTING
 from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
+from plone.app.multilingual.testing import VOLTO_MULTILINGUAL_INTEGRATION_TESTING
 from plone.base.interfaces import ILanguage
 from Products.CMFCore.utils import getToolByName
 from zope.interface import alsoProvides
@@ -140,10 +141,6 @@ class TestSetupMultilingualPresetSite(unittest.TestCase):
         """The created objects have to be 'Language Root Folder'."""
         for lang in self.languages:
             self.assertEqual(self.portal.get(lang).portal_type, "LRF")
-
-
-# Tests with plone.volto installed first
-from plone.app.multilingual.testing import VOLTO_MULTILINGUAL_INTEGRATION_TESTING
 
 
 class TestSetupWithVolto(unittest.TestCase):
