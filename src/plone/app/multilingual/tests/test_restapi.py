@@ -81,26 +81,10 @@ class TestSeveralTranslationServices(unittest.TestCase):
         disabled_adapters = [
             adapter for adapter in results if not adapter["is_available"]
         ]
-        # There are 2 disabled adapters: the default provided one, Google Translate, and ours
-        self.assertEqual(len(disabled_adapters), 2)
+        self.assertEqual(len(disabled_adapters), 1)
 
         disabled_adapter_names = [adapter["name"] for adapter in disabled_adapters]
         self.assertIn("disabled_translator", disabled_adapter_names)
-        self.assertIn("google_translate", disabled_adapter_names)
-
-    def test_that_one_is_disabled(self):
-        """enter a dummy Google Translation key, to have this service enabled"""
-        api.portal.set_registry_record("plone.google_translation_key", "DUMMY KEY")
-        transaction.commit()
-        api_result = self.api_session.get("/@translation-services")
-        results = api_result.json()
-
-        disabled_adapters = [
-            adapter for adapter in results if not adapter["is_available"]
-        ]
-        # There are 1 disabled adapters: only ours
-        self.assertEqual(len(disabled_adapters), 1)
-        self.assertEqual(disabled_adapters[0]["name"], "disabled_translator")
 
 
 class TestTranslateTextServices(unittest.TestCase):

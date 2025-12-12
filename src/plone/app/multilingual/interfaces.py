@@ -189,7 +189,6 @@ class IMultiLanguageExtraOptionsSchema(ILanguageSchema):
             "redirect_babel_view",
             "bypass_languageindependent_field_permission_check",
             "buttons_babel_view_up_to_nr_translations",
-            "google_translation_key",
             "selector_lookup_translations_policy",
         ],
     )
