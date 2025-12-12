@@ -53,7 +53,7 @@ class BabelUtils(BrowserView):
     def objToTranslate(self):
         return self.context
 
-    def gtenabled(self):
+    def translations_enabled(self):
         adapters = [
             adapter
             for _, adapter in getAdapters((self.context,), IExternalTranslationService)
