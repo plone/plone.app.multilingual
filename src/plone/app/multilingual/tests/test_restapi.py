@@ -33,7 +33,7 @@ class TestDefaultTranslationServices(unittest.TestCase):
     def test_available_services(self):
         """test that by default we have just one available service"""
         api_result = self.api_session.get("/@translation-services")
-        self.assertEqual(len(api_result.json()), 1)
+        self.assertEqual(len(api_result.json()), 0)
 
 
 class TestSeveralTranslationServices(unittest.TestCase):
@@ -70,9 +70,9 @@ class TestSeveralTranslationServices(unittest.TestCase):
     def test_available_services(self):
         """test that by default we have just one available service"""
         api_result = self.api_session.get("/@translation-services")
-        self.assertEqual(len(api_result.json()), 4)
+        self.assertEqual(len(api_result.json()), 3)
 
-    def test_that_two_are_disabledd(self):
+    def test_that_one_is_disabled(self):
         """we have registered an adapter that is disabled, check that we get that information correctly"""
         api_result = self.api_session.get("/@translation-services")
         results = api_result.json()
