@@ -4,14 +4,12 @@ from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.testing import CaEsTranslator
 from plone.app.multilingual.testing import DisabledTranslator
 from plone.app.multilingual.testing import NiTranslator
-from plone.app.multilingual.testing import PAM_INTEGRATION_PRESET_TESTING
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
+from plone.app.multilingual.translation_utils import translate_text
 from plone.dexterity.utils import createContentInContainer
 from zope.component import provideUtility
 from zope.interface import alsoProvides
-from plone.app.multilingual.translation_utils import translate_text
 
-import json
 import transaction
 import unittest
 
