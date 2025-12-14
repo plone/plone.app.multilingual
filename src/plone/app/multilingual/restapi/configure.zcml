@@ -4,7 +4,10 @@
     i18n_domain="plone"
     >
 
-  <include package="plone.restapi" />
+  <include
+      package="plone.rest"
+      file="meta.zcml"
+      />
 
   <plone:service
       method="GET"
