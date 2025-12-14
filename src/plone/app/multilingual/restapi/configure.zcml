@@ -14,6 +14,7 @@
       factory=".translation_services.TranslationServices"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       permission="cmf.ModifyPortalContent"
+      layer="..interfaces.IPloneAppMultilingualInstalled"
       name="@translation-services"
       />
 
@@ -22,6 +23,7 @@
       factory=".translate_text.TranslateTextService"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       permission="cmf.ModifyPortalContent"
+      layer="..interfaces.IPloneAppMultilingualInstalled"
       name="@translate-text"
       />
 
@@ -30,6 +32,7 @@
       factory=".translation_service.TranslationService"
       for="plone.dexterity.interfaces.IDexterityContent"
       permission="cmf.ModifyPortalContent"
+      layer="..interfaces.IPloneAppMultilingualInstalled"
       name="@translation-service"
       />
 
