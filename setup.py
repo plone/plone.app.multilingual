@@ -29,6 +29,7 @@ setup(
         "plone.memoize",
         "plone.protect",
         "plone.registry",
+        "plone.rest",
         "plone.restapi",
         "plone.schemaeditor",
         "plone.supermodel",
