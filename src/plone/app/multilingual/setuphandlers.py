@@ -1,4 +1,4 @@
-from logging import getLogger
+from plone.app.multilingual import logger
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.itg import addAttributeTG
 from plone.base.interfaces import INonInstallable
@@ -84,5 +84,4 @@ def disable_language_switcher(portal):
     if site.default_view == "language-switcher":
         site.default_view = "listing_view"
 
-    log = getLogger("setuphandlers.disable_language_switcher")
-    log.info("Language switcher disabled")
+    logger.info("Language switcher disabled")
