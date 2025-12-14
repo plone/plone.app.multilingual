@@ -175,8 +175,6 @@ class TestTranslationsForBabelEdit(unittest.TestCase):
     layer = PAM_ROBOT_TESTING
 
     def setUp(self):
-        # alsoProvides(self.layer["request"], IPloneAppMultilingualInstalled)
-
         self.app = self.layer["app"]
         self.portal = self.layer["portal"]
         self.request = self.layer["request"]
