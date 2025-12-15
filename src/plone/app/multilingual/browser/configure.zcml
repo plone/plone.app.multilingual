@@ -5,7 +5,10 @@
     >
 
   <include package="plone.app.contentmenu" />
-  <include package="Products.CMFPlone.controlpanel" file="permissions.zcml" />
+  <include
+      package="Products.CMFPlone.controlpanel"
+      file="permissions.zcml"
+      />
 
   <!-- Resource Directories -->
   <browser:resourceDirectory
