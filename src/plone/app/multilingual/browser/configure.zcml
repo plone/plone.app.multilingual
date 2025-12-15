@@ -16,10 +16,6 @@
       name="plone.app.multilingual.stylesheet"
       directory="stylesheet"
       />
-  <browser:resourceDirectory
-      name="plone.app.multilingual.images"
-      directory="images"
-      />
 
   <!-- Vocabulary all languages -->
   <utility
