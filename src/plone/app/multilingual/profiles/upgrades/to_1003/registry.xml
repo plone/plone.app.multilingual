@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<registry>
+
+  <records interface="plone.app.multilingual.interfaces.IMultiLanguageExtraOptionsSchema"
+           prefix="plone"
+           purge="false"
+  >
+    <value key="google_translation_key"
+           remove="true"
+    />
+  </records>
+
+</registry>

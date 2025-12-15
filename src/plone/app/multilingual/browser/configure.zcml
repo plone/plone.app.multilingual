@@ -5,6 +5,10 @@
     >
 
   <include package="plone.app.contentmenu" />
+  <include
+      package="Products.CMFPlone.controlpanel"
+      file="permissions.zcml"
+      />
 
   <!-- Resource Directories -->
   <browser:resourceDirectory
@@ -14,10 +18,6 @@
   <browser:resourceDirectory
       name="plone.app.multilingual.stylesheet"
       directory="stylesheet"
-      />
-  <browser:resourceDirectory
-      name="plone.app.multilingual.images"
-      directory="images"
       />
 
   <!-- Vocabulary all languages -->
@@ -225,14 +225,6 @@
 
   <!-- DEXTERITY -->
   <configure zcml:condition="installed plone.dexterity">
-
-    <!-- GTranslate Service -->
-    <browser:page
-        name="gtranslation_service"
-        for="plone.dexterity.interfaces.IDexterityContent"
-        class=".translate.gtranslation_service_dexterity"
-        permission="cmf.ModifyPortalContent"
-        />
 
     <!-- Standard add view and form - invoked from ++addtranslation++ traverser -->
     <adapter

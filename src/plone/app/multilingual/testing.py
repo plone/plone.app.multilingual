@@ -41,6 +41,46 @@ except ImportError:
         pass
 
 
+class NiTranslator:
+    order = 30
+
+    def is_available(self):
+        return True
+
+    def available_languages(self):
+        # All
+        return []
+
+    def translate_content(self, content, source_language, target_language):
+        return f"{content} NI!"
+
+
+class DisabledTranslator:
+    order = 20
+
+    def is_available(self):
+        return False
+
+    def available_languages(self):
+        return []
+
+    def translate_content(self, content, source_language, target_language):
+        return "translation"
+
+
+class CaEsTranslator:
+    order = 5
+
+    def is_available(self):
+        return True
+
+    def available_languages(self):
+        return [("ca", "es")]
+
+    def translate_content(self, content, source_language, target_language):
+        return "text español"
+
+
 class PloneAppMultilingualLayer(PloneSandboxLayer):
     defaultBases = (PLONE_APP_CONTENTTYPES_FIXTURE,)
 
