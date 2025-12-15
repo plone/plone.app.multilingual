@@ -91,8 +91,7 @@
               "translation_service_available"
             );
             const target_el = dest_field.querySelector('textarea,input');
-            // const target_tiny = tinymce.get(target_el.id);
-            const target_tiny = null;
+            const target_tiny = tinymce.get(target_el.id);
 
             sync_focus(orig_field, dest_field, target_tiny);
             sync_heights(orig_field, dest_field);
