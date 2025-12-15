@@ -47,15 +47,16 @@ setup(
     ],
     extras_require={
         "test": [
-            "plone.app.testing[robot]",
-            "plone.app.robotframework",
             "lxml",
             "plone.api",
             "plone.app.contenttypes",
             "plone.app.relationfield",
+            "plone.app.robotframework",
+            "plone.app.testing[robot]",
             "plone.browserlayer",
             "plone.rfc822",
             "plone.testing",
+            "plone.volto",
             "robotsuite",
         ],
     },
