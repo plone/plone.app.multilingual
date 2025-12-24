@@ -45,7 +45,7 @@ class TestLanguageSwitcher(unittest.TestCase):
 
     def test_switcher_redirects_to_preferred_catalan(self):
         # Tell Plone that we prefer Catalan.
-        self.browser.open(self.portal_url + "/ca?set_language=ca")
+        self.browser.open(self.portal_url + "/ca")
         # Go to the site root.
         self.browser.open(self.portal_url)
         # We get redirected to our preferred language root folder.
@@ -54,7 +54,7 @@ class TestLanguageSwitcher(unittest.TestCase):
 
     def test_switcher_redirects_to_preferred_indonesian(self):
         # Tell Plone that we prefer Indonesian.
-        self.browser.open(self.portal_url + "/id-id?set_language=id")
+        self.browser.open(self.portal_url + "/id-id")
         # Go to the site root.
         self.browser.open(self.portal_url)
         # We get redirected to our preferred language root folder.

@@ -186,7 +186,7 @@
   <!-- Not Translated Yet -->
   <browser:page
       name="not_translated_yet"
-      for="plone.base.interfaces.IPloneSiteRoot"
+      for="plone.base.interfaces.INavigationRoot"
       class=".helper_views.not_translated_yet"
       permission="zope.Public"
       layer="..interfaces.IPloneAppMultilingualInstalled"
