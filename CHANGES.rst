@@ -8,6 +8,22 @@ Changelog
 
 .. towncrier release notes start
 
+8.4.0 (2026-01-12)
+------------------
+
+New features:
+
+
+- Adds the volto.blocks behavior to LRF if `plone.volto` is installed. @wesleybl (#518)
+
+
+Internal:
+
+
+- Update configuration files.
+  [plone devs]
+
+
 8.3.2 (2025-11-19)
 ------------------
 
