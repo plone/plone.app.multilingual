@@ -48,15 +48,28 @@ class TestSetupMultilingualSite(unittest.TestCase):
         This broke the root language folder setup process.
         To get rid of that the folder is 'id-id'.
         Here we test all languages, to be sure we catch such a corner case.
+
+        Also, the created objects have to be 'Language Root Folder'.
         """
         all_langs = AllContentLanguageVocabulary()(self.portal)
+        # We used to call self.language_tool.addSupportedLanguage for each
+        # language value, but that would make over 400 registry modifications,
+        # each of which resulting in an event notification that triggers
+        # our `change_language_settings` subscriber, which calls
+        # SetupMultilingualSite.setupSite.  Doing this 400 times takes
+        # several minutes.  So instead we compile the list and set the record
+        # once.
+        alist = self.language_tool.settings.available_languages[:]
         for lang in all_langs:
-            self.language_tool.addSupportedLanguage(lang.value)
+            alist.append(lang.value)
+        self.language_tool.settings.available_languages = alist
 
         workflow_tool = getToolByName(self.portal, "portal_workflow")
         workflow_tool.setDefaultChain("simple_publication_workflow")
 
         setup_tool = SetupMultilingualSite()
+        # Note: since we have 400 languages, the next call can take 10
+        # seconds or more.
         setup_tool.setupSite(self.portal)
 
         portal_objects = self.portal.objectIds()
@@ -66,25 +79,8 @@ class TestSetupMultilingualSite(unittest.TestCase):
             folder_id = "id-id" if lang == "id" else lang
             self.assertIn(folder_id, portal_objects)
             folder = self.portal[folder_id]
-            self.assertEqual(ILanguage(folder).get_language(), lang)
-
-    def test_type_of_language_folders(self):
-        """The created objects have to be 'Language Root Folder'."""
-        all_langs = AllContentLanguageVocabulary()(self.portal)
-        for lang in all_langs:
-            self.language_tool.addSupportedLanguage(lang.value)
-
-        workflow_tool = getToolByName(self.portal, "portal_workflow")
-        workflow_tool.setDefaultChain("simple_publication_workflow")
-
-        setup_tool = SetupMultilingualSite()
-        setup_tool.setupSite(self.portal)
-
-        for lang in all_langs.by_value.keys():
-            # Special handling for Indonesian.
-            folder_id = "id-id" if lang == "id" else lang
-            folder = self.portal[folder_id]
             self.assertEqual(folder.portal_type, "LRF")
+            self.assertEqual(ILanguage(folder).get_language(), lang)
 
     def test_lrf_has_locking_behavior(self):
         """LRF type should have plone.locking behavior enabled."""
