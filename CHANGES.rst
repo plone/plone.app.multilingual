@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+9.0.0a3 (2026-02-26)
+--------------------
+
+Tests:
+
+
+- Fix two tests that took way too long.  [maurits] (#525)
+
+
 9.0.0a2 (2025-12-18)
 --------------------
 
