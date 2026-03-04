@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+8.4.1 (2026-03-04)
+------------------
+
+Tests:
+
+
+- Fix two tests that took way too long.  [maurits] (#525)
+
+
 8.4.0 (2026-01-12)
 ------------------
 
