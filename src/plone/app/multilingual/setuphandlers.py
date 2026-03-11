@@ -2,9 +2,11 @@ from plone.app.multilingual import logger
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.itg import addAttributeTG
 from plone.base.interfaces import INonInstallable
+from plone.volto.interfaces import IPloneVoltoCoreLayer
 from Products.CMFCore.utils import getToolByName
 from zope.component.hooks import getSite
 from zope.interface import implementer
+from zope.globalrequest import getRequest
 
 
 @implementer(INonInstallable)
@@ -82,6 +84,10 @@ def disable_language_switcher(portal):
         method for method in site.view_methods if method != "language-switcher"
     )
     if site.default_view == "language-switcher":
-        site.default_view = "listing_view"
+        request = getRequest()
+        if IPloneVoltoCoreLayer.providedBy(request):
+            site.default_view = "document_view"
+        else:
+            site.default_view = "listing_view"
 
     logger.info("Language switcher disabled")
