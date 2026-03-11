@@ -1,1 +1,1 @@
-Fixed uninstall profile @sneridagh
+Fixed uninstall profile to restore the default `document_view` for the `Plone Site` content type. @sneridagh
