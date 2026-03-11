@@ -13,7 +13,6 @@ from zope.component import queryAdapter
 from zope.interface import implementer
 from zope.intid.interfaces import IIntIds
 
-
 _marker = object()
 
 

@@ -3,7 +3,6 @@ from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.base.interfaces import ILanguage
 from zope.interface import implementer
 
-
 # Patch for hiding 'language' field from the edit form
 # ICategorization['language'].readonly = True
 

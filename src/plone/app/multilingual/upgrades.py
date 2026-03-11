@@ -9,7 +9,6 @@ from zope.component import getUtility
 
 import transaction
 
-
 SHARED_NAME = "shared"  # old shared folder name
 OLD_PREFIX = "old_"  # temporary prefix while migrating
 PROFILE_ID = "profile-plone.app.multilingual:default"

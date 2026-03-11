@@ -19,7 +19,6 @@ from zope.interface.interfaces import ComponentLookupError
 import logging
 import warnings
 
-
 try:
     from Products.LinguaPlone.interfaces import ITranslatable
 except ImportError:

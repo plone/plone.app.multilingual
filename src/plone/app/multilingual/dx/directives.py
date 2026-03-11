@@ -6,7 +6,6 @@ from zope.interface import alsoProvides
 from zope.interface import Interface
 from zope.interface.interfaces import IInterface
 
-
 LANGUAGE_INDEPENDENT_KEY = MULTILINGUAL_KEY
 
 
