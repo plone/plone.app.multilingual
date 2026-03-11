@@ -7,7 +7,6 @@ from zope.component import adapter
 from zope.container.interfaces import INameChooser
 from zope.interface import implementer
 
-
 _marker = object()
 
 

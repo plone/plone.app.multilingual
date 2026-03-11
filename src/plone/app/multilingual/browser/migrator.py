@@ -19,7 +19,6 @@ from zope.interface.interfaces import ComponentLookupError
 import logging
 import warnings
 
-
 try:
     from Products.LinguaPlone.interfaces import ITranslatable
 except ImportError:
@@ -249,11 +248,9 @@ class moveContentToProperRLF(BrowserView):
             RLF_id = "%s" % lang
             folder = getattr(portal, RLF_id, None)
             if not folder:
-                raise AttributeError(
-                    "One of the root language folder are \
+                raise AttributeError("One of the root language folder are \
                                       missing. Check the site's language \
-                                      setup."
-                )
+                                      setup.")
 
             path = "/".join(portal.getPhysicalPath())
             objects = pc.searchResults(
