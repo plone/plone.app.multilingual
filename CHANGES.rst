@@ -8,6 +8,22 @@ Changelog
 
 .. towncrier release notes start
 
+9.0.0a4 (2026-03-16)
+--------------------
+
+Bug fixes:
+
+
+- Fixed uninstall profile to restore the default `document_view` for the `Plone Site` content type. @sneridagh (#529)
+
+
+Internal:
+
+
+- Update configuration files.
+  [plone devs]
+
+
 9.0.0a3 (2026-02-26)
 --------------------
 
