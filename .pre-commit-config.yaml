@@ -69,7 +69,7 @@ repos:
     rev: "0.24.0"
     hooks:
     -   id: check-python-versions
-        args: ['--only', 'setup.py,tox.ini']
+        args: ['--only', 'setup.cfg,tox.ini']
 -   repo: https://github.com/collective/i18ndude
     rev: "6.3.0"
     hooks:
