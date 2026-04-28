@@ -22,6 +22,7 @@
     <value key="use_cookie_negotiation">True</value>
     <value key="use_request_negotiation">False</value>
     <value key="use_content_negotiation">True</value>
+    <value key="set_cookie_always">True</value>
     <value key="display_flags">False</value>
   </records>
 
