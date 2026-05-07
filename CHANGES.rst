@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+9.0.0 (2026-05-07)
+------------------
+
+Bug fixes:
+
+
+- Explicitly load configuration for permissions. @1letter (#537)
+
+
 9.0.0a4 (2026-03-16)
 --------------------
 
