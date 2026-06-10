@@ -4,7 +4,6 @@ from plone.testing import layered
 import robotsuite
 import unittest
 
-
 UNIT_TEST_LEVEL = 1
 INTEGRATION_TEST_LEVEL = 2
 FUNCTIONAL_TEST_LEVEL = 3

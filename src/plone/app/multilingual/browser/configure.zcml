@@ -10,6 +10,11 @@
       file="permissions.zcml"
       />
 
+  <include
+      package="Products.CMFPlone.controlpanel"
+      file="permissions.zcml"
+      />
+
   <!-- Resource Directories -->
   <browser:resourceDirectory
       name="plone.app.multilingual.javascript"

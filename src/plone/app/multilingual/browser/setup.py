@@ -20,7 +20,6 @@ from zope.i18n import translate
 from zope.interface import alsoProvides
 from zope.lifecycleevent import modified
 
-
 logger = getLogger("plone.app.multilingual")
 
 

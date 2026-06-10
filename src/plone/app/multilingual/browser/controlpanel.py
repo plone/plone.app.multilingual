@@ -14,7 +14,6 @@ from zope.schema.interfaces import IVocabularyFactory
 
 import json
 
-
 _ = MessageFactory("plone.app.multilingual")
 
 

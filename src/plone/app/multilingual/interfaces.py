@@ -8,7 +8,6 @@ from zope.interface import Interface
 from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
 
-
 # CONSTANTS
 SHARED_NAME = "shared"
 

@@ -12,7 +12,6 @@ from zope.interface import noLongerProvides
 from zope.schema import interfaces
 from zope.schema.interfaces import IField
 
-
 PMF = MessageFactory("plone.app.multilingual")
 
 

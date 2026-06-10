@@ -82,6 +82,6 @@ def disable_language_switcher(portal):
         method for method in site.view_methods if method != "language-switcher"
     )
     if site.default_view == "language-switcher":
-        site.default_view = "listing_view"
+        site.default_view = "document_view"
 
     logger.info("Language switcher disabled")

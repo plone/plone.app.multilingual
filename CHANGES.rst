@@ -8,6 +8,49 @@ Changelog
 
 .. towncrier release notes start
 
+9.0.0 (2026-05-07)
+------------------
+
+Bug fixes:
+
+
+- Explicitly load configuration for permissions. @1letter (#537)
+
+
+9.0.0a4 (2026-03-16)
+--------------------
+
+Bug fixes:
+
+
+- Fixed uninstall profile to restore the default `document_view` for the `Plone Site` content type. @sneridagh (#529)
+
+
+Internal:
+
+
+- Update configuration files.
+  [plone devs]
+
+
+9.0.0a3 (2026-02-26)
+--------------------
+
+Tests:
+
+
+- Fix two tests that took way too long.  [maurits] (#525)
+
+
+9.0.0a2 (2025-12-18)
+--------------------
+
+New features:
+
+
+- Adds the volto.blocks behavior to LRF if `plone.volto` is installed. @wesleybl (#518)
+
+
 9.0.0a1 (2025-11-26)
 --------------------
 

@@ -32,7 +32,6 @@ import plone.app.dexterity
 import plone.app.multilingual
 import plone.volto
 
-
 try:
     from plone.app.robotframework.utils import disableCSRFProtection
 except ImportError:

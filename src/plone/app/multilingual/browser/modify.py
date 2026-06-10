@@ -16,7 +16,6 @@ from zope.component import getUtility
 
 import logging
 
-
 logger = logging.getLogger(__name__)
 
 

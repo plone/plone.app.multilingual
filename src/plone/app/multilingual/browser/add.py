@@ -24,7 +24,6 @@ from zope.traversing.interfaces import TraversalError
 
 import logging
 
-
 logger = logging.getLogger(__name__)
 
 
