@@ -110,6 +110,81 @@ class TestSetupMultilingualSite(unittest.TestCase):
             "LRF type should not have volto.blocks behavior without Volto",
         )
 
+    def test_call_setupsite_single_language(self):
+        """
+        When calling setupSite in a site with a single language
+        nothing is created
+        """
+        self.assertEqual(len(self.languages), 1)
+        setup_tool = SetupMultilingualSite()
+        setup_tool.setupSite(self.portal)
+        self.assertNotIn(self.languages[0], self.portal)
+
+    def test_call_setupsite_multiple_language(self):
+        """
+        When calling setupSite in a site with a multiple languages
+        the corresponding LRFs are created
+        """
+        self.language_tool.addSupportedLanguage("en")
+        self.language_tool.addSupportedLanguage("es")
+        languages = self.language_tool.getSupportedLanguages()
+
+        # Check that the newly created folder has no items in it
+        for language in languages:
+            self.assertNotIn(language, self.portal)
+
+        setup_tool = SetupMultilingualSite()
+        setup_tool.setupSite(self.portal)
+
+        for language in languages:
+            # Check that the folder has been created properly and
+            # its portal_type and language are correct
+            self.assertIn(language, self.portal)
+            lang_folder = self.portal[language]
+            self.assertEqual(lang_folder.portal_type, "LRF")
+
+    def test_call_setupsite_single_language_subfolder(self):
+        """
+        When calling setupSite in a site with a single language
+        nothing is created
+        """
+        self.assertEqual(len(self.languages), 1)
+
+        self.portal.invokeFactory(id="folder", type_name="Folder")
+        folder = self.portal["folder"]
+
+        self.assertNotIn(self.languages[0], folder)
+
+        setup_tool = SetupMultilingualSite()
+        setup_tool.setupSite(folder)
+        self.assertNotIn(self.languages[0], folder)
+
+    def test_call_setupsite_in_subfolder_multiple_languages(self):
+        """when calling setup site in a subfolder
+        recreates all the languages in that subfolder
+        """
+
+        self.language_tool.addSupportedLanguage("en")
+        self.language_tool.addSupportedLanguage("es")
+        languages = self.language_tool.getSupportedLanguages()
+
+        self.portal.invokeFactory(id="folder", type_name="Folder")
+        folder = self.portal["folder"]
+
+        # Check that the newly created folder has no items in it
+        for language in languages:
+            self.assertNotIn(language, folder)
+
+        setup_tool = SetupMultilingualSite()
+        setup_tool.setupSite(folder)
+
+        for language in languages:
+            # Check that the folder has been created properly and
+            # its portal_type and language are correct
+            self.assertIn(language, folder)
+            lang_folder = folder[language]
+            self.assertEqual(lang_folder.portal_type, "LRF")
+
 
 class TestSetupMultilingualPresetSite(unittest.TestCase):
     """Testing multilingual site with predefined languages."""
