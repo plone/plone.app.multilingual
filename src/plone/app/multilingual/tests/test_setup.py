@@ -145,7 +145,7 @@ class TestSetupMultilingualSite(unittest.TestCase):
 
     def test_call_setupsite_single_language_subfolder(self):
         """
-        When calling setupSite in a site with a single language
+        When calling setupSite in a folder of a site with a single language
         nothing is created
         """
         self.assertEqual(len(self.languages), 1)
