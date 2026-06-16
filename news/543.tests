@@ -1,0 +1,2 @@
+Add functional test to ensure that adding a new language to the list of supported languages correctly creates the corresponding Language Root Folder immediately.
+[erral]

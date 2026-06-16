@@ -3,11 +3,14 @@ from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.multilingual.browser.vocabularies import AllContentLanguageVocabulary
 from plone.app.multilingual.interfaces import ATTRIBUTE_NAME
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
+from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.multilingual.testing import PAM_INTEGRATION_PRESET_TESTING
 from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
 from plone.app.multilingual.testing import VOLTO_MULTILINGUAL_INTEGRATION_TESTING
 from plone.base.interfaces import ILanguage
+from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
+from zope.component import getUtility
 from zope.interface import alsoProvides
 
 import unittest
@@ -185,3 +188,44 @@ class TestSetupWithVolto(unittest.TestCase):
             behaviors,
             "LRF type should have volto.blocks behavior when Volto is installed first",
         )
+
+
+class TestSetupMultilingualFunctional(unittest.TestCase):
+    """Testing multilingual site functional."""
+
+    layer = PAM_FUNCTIONAL_TESTING
+
+    def setUp(self):
+        """Setting up the test."""
+        self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
+        self.language_tool = getToolByName(self.portal, "portal_languages")
+        self.registry = getUtility(IRegistry)
+        alsoProvides(self.layer["request"], IPloneAppMultilingualInstalled)
+
+    def test_adding_language_immediately_creates_lrf(self):
+        """Test that adding a language in the registry immediately creates the LRF.
+        This is what fails currently as described in issue #543.
+        """
+        # Initially we have en, ca, es (from PAM_FUNCTIONAL_TESTING which uses MULTIPLE_LANGUAGES_LAYER)
+        self.assertEqual(
+            self.language_tool.getSupportedLanguages(),
+            ["en", "ca", "es"],
+        )
+        self.assertNotIn("it", self.portal.objectIds())
+
+        # Now we add 'it' to the supported languages via registry
+        # This should trigger the change_language_settings subscriber
+        languages = self.registry["plone.available_languages"]
+        if "it" not in languages:
+            new_languages = list(languages) + ["it"]
+            self.registry["plone.available_languages"] = new_languages
+
+        # Check if the 'it' LRF was created
+        self.assertIn(
+            "it",
+            self.portal.objectIds(),
+            "The 'it' LRF should have been created immediately",
+        )
+        self.assertEqual(self.portal["it"].portal_type, "LRF")
+        self.assertEqual(ILanguage(self.portal["it"]).get_language(), "it")
