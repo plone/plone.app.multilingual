@@ -114,12 +114,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 "name": "English",
                 "native": "English",
                 "url": SELECTOR_VIEW_TEMPLATE
-                % {
-                    "url": self.portal_url,
-                    "tg": ITG(a),
-                    "lang": "en",
-                    "query": "?set_language=en",
-                },
+                % {"url": self.portal_url, "tg": ITG(a), "lang": "en", "query": ""},
                 "selected": True,
                 "translated": True,
             },
@@ -129,12 +124,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 "name": "Catalan",
                 "native": "Catal\xe0",
                 "url": SELECTOR_VIEW_TEMPLATE
-                % {
-                    "url": self.portal_url,
-                    "tg": ITG(a),
-                    "lang": "ca",
-                    "query": "?set_language=ca",
-                },
+                % {"url": self.portal_url, "tg": ITG(a), "lang": "ca", "query": ""},
                 "selected": False,
                 "translated": True,
             },
@@ -144,12 +134,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                 "name": "Spanish",
                 "native": "Espa\xf1ol",
                 "url": SELECTOR_VIEW_TEMPLATE
-                % {
-                    "url": self.portal_url,
-                    "tg": ITG(a),
-                    "lang": "es",
-                    "query": "?set_language=es",
-                },
+                % {"url": self.portal_url, "tg": ITG(a), "lang": "es", "query": ""},
                 "selected": False,
                 "translated": True,
             },
@@ -163,16 +148,16 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         transaction.commit()
 
         self.browser.open(selector_viewlet_languages[0]["url"])
-        self.assertEqual(self.browser.url, a.absolute_url() + "?set_language=en")
+        self.assertEqual(self.browser.url, a.absolute_url())
         self.assertRegex(self.browser.contents, r"Distributed under the")
 
         self.browser.open(selector_viewlet_languages[1]["url"])
-        self.assertEqual(self.browser.url, a_ca.absolute_url() + "?set_language=ca")
+        self.assertEqual(self.browser.url, a_ca.absolute_url())
 
         self.assertIn('lang="ca"', self.browser.contents)
 
         self.browser.open(selector_viewlet_languages[2]["url"])
-        self.assertEqual(self.browser.url, a_es.absolute_url() + "?set_language=es")
+        self.assertEqual(self.browser.url, a_es.absolute_url())
         self.assertIn('lang="es"', self.browser.contents)
 
     def test_languages_fully_translated_by_closest(self):
@@ -291,7 +276,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
 
         # Check that EN translation is found
         self.browser.open(selector_languages[0]["url"])
-        self.assertEqual(self.browser.url, a_en.absolute_url() + "?set_language=en")
+        self.assertEqual(self.browser.url, a_en.absolute_url())
         self.assertIn('lang="en"', self.browser.contents)
         # But extra check, because English is the default?
         self.assertRegex(self.browser.contents, r"Distributed under the")
@@ -299,14 +284,14 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         # Check that CA translation is only partial and a parent folder
         # is found
         self.browser.open(selector_languages[1]["url"])
-        self.assertEqual(self.browser.url, f_ca.absolute_url() + "?set_language=ca")
+        self.assertEqual(self.browser.url, f_ca.absolute_url())
         self.assertIn('lang="ca"', self.browser.contents)
 
         # Check that ES translation is missing and only the LRF is found
         self.browser.open(selector_languages[2]["url"])
         self.assertEqual(
             self.browser.url,
-            self.portal["es"].absolute_url() + "?set_language=es",
+            self.portal["es"].absolute_url(),
         )
         self.assertIn('lang="es"', self.browser.contents)
 
@@ -328,7 +313,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
 
         # Check that EN translation is found
         self.browser.open(selector_languages[0]["url"])
-        self.assertEqual(self.browser.url, a_en.absolute_url() + "?set_language=en")
+        self.assertEqual(self.browser.url, a_en.absolute_url())
         # But extra check, because English is the default?
         self.assertIn('lang="en"', self.browser.contents)
         self.assertRegex(self.browser.contents, r"Distributed under the")
@@ -339,11 +324,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[1]["url"])
         self.assertEqual(
             self.browser.url,
-            self.portal.absolute_url()
-            + NOT_TRANSLATED_YET_TEMPLATE
-            + "/"
-            + tgid
-            + "?set_language=ca",
+            f"{self.portal.absolute_url()}/ca{NOT_TRANSLATED_YET_TEMPLATE}/{tgid}",
         )
         self.assertIn('lang="ca"', self.browser.contents)
 
@@ -351,11 +332,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[2]["url"])
         self.assertEqual(
             self.browser.url,
-            self.portal.absolute_url()
-            + NOT_TRANSLATED_YET_TEMPLATE
-            + "/"
-            + tgid
-            + "?set_language=es",
+            f"{self.portal.absolute_url()}/es{NOT_TRANSLATED_YET_TEMPLATE}/{tgid}",
         )
         self.assertIn('lang="es"', self.browser.contents)
 
@@ -371,10 +348,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         # Check EN root
         self.assertEqual(
             selector_languages[0]["url"],
-            (
-                self.portal.absolute_url()
-                + "/@@multilingual-selector/notg/en?set_language=en"
-            ),
+            (self.portal.absolute_url() + "/@@multilingual-selector/notg/en"),
         )
         self.browser.open(selector_languages[0]["url"])
         self.assertIn('lang="en"', self.browser.contents)
@@ -383,10 +357,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         # Check CA root
         self.assertEqual(
             selector_languages[1]["url"],
-            (
-                self.portal.absolute_url()
-                + "/@@multilingual-selector/notg/ca?set_language=ca"
-            ),
+            (self.portal.absolute_url() + "/@@multilingual-selector/notg/ca"),
         )
         self.browser.open(selector_languages[1]["url"])
         self.assertIn('lang="ca"', self.browser.contents)
@@ -395,10 +366,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[2]["url"])
         self.assertEqual(
             selector_languages[2]["url"],
-            (
-                self.portal.absolute_url()
-                + "/@@multilingual-selector/notg/es?set_language=es"
-            ),
+            (self.portal.absolute_url() + "/@@multilingual-selector/notg/es"),
         )
         self.assertIn('lang="es"', self.browser.contents)
 
@@ -440,7 +408,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                     "url": self.portal.absolute_url(),
                     "tg": tg,
                     "lang": "en",
-                    "query": "?set_language=en",
+                    "query": "",
                 },
                 "selected": True,
                 "translated": True,
@@ -455,7 +423,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                     "url": self.portal.absolute_url(),
                     "tg": tg,
                     "lang": "ca",
-                    "query": "?set_language=ca",
+                    "query": "",
                 },
                 "selected": False,
                 "translated": True,
@@ -470,7 +438,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
                     "url": self.portal.absolute_url(),
                     "tg": tg,
                     "lang": "es",
-                    "query": "?set_language=es",
+                    "query": "",
                 },
                 "selected": False,
                 "translated": True,
@@ -486,7 +454,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[0]["url"])
         self.assertEqual(
             self.browser.url,
-            self.portal["en"].absolute_url() + "?set_language=en",
+            self.portal["en"].absolute_url(),
         )
         self.assertIn('lang="en"', self.browser.contents)
         self.assertRegex(self.browser.contents, r"Distributed under the")
@@ -495,7 +463,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[1]["url"])
         self.assertEqual(
             self.browser.url,
-            self.portal.ca.absolute_url() + "?set_language=ca",
+            self.portal.ca.absolute_url(),
         )
         self.assertIn('lang="ca"', self.browser.contents)
 
@@ -503,7 +471,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[2]["url"])
         self.assertEqual(
             self.browser.url,
-            self.portal.es.absolute_url() + "?set_language=es",
+            self.portal.es.absolute_url(),
         )
         self.assertIn('lang="es"', self.browser.contents)
 
@@ -550,7 +518,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[0]["url"])
         self.assertEqual(
             self.browser.url,
-            f_en.absolute_url() + "/contact-info?set_language=en",
+            f_en.absolute_url() + "/contact-info",
         )
         self.assertIn('lang="en"', self.browser.contents)
         self.assertRegex(self.browser.contents, r"Distributed under the")
@@ -559,7 +527,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[1]["url"])
         self.assertEqual(
             self.browser.url,
-            f_ca.absolute_url() + "/contact-info?set_language=ca",
+            f_ca.absolute_url() + "/contact-info",
         )
         self.assertIn('lang="ca"', self.browser.contents)
 
@@ -568,7 +536,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         # Here @@search isn't preserved because we've gone up a level
         self.assertEqual(
             self.browser.url,
-            self.portal.es.absolute_url() + "?set_language=es",
+            self.portal.es.absolute_url(),
         )
         self.assertIn('lang="es"', self.browser.contents)
 
@@ -589,7 +557,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[0]["url"])
         self.assertEqual(
             self.browser.url,
-            f_en.absolute_url() + "/contact-info?set_language=en",
+            f_en.absolute_url() + "/contact-info",
         )
         self.assertIn('lang="en"', self.browser.contents)
         self.assertRegex(self.browser.contents, r"Distributed under the")
@@ -598,7 +566,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[1]["url"])
         self.assertEqual(
             self.browser.url,
-            f_ca.absolute_url() + "/contact-info?set_language=ca",
+            f_ca.absolute_url() + "/contact-info",
         )
         self.assertIn('lang="ca"', self.browser.contents)
 
@@ -608,11 +576,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         tgid = selector_languages[2]["url"].split("/")[-3]
         self.assertEqual(
             self.browser.url,
-            self.portal.absolute_url()
-            + NOT_TRANSLATED_YET_TEMPLATE
-            + "/"
-            + tgid
-            + "?set_language=es",
+            f"{self.portal.absolute_url()}/es{NOT_TRANSLATED_YET_TEMPLATE}/{tgid}",
         )
         self.assertIn('lang="es"', self.browser.contents)
 
@@ -631,16 +595,14 @@ class TestLanguageSelectorBasics(unittest.TestCase):
 
         tgid = selector_languages[2]["url"].split("/")[-3]
         untranslated_url = {
-            "closest": (
-                self.portal["es"].absolute_url()
-                + "?int=1&uni=pres%C3%98rved&set_language=es"
-            ),
+            "closest": (self.portal["es"].absolute_url() + "?int=1&uni=pres%C3%98rved"),
             "dialog": (
                 self.portal.absolute_url()
+                + "/es"
                 + NOT_TRANSLATED_YET_TEMPLATE
                 + "/"
                 + tgid
-                + "?int=1&uni=pres%C3%98rved&set_language=es"
+                + "?int=1&uni=pres%C3%98rved"
             ),
         }
 
@@ -650,10 +612,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[0]["url"])
         self.assertUrlsEqual(
             self.browser.url,
-            (
-                f_en.absolute_url()
-                + "/contact-info?int=1&uni=pres%C3%98rved&set_language=en"
-            ),
+            (f_en.absolute_url() + "/contact-info?int=1&uni=pres%C3%98rved"),
         )
         self.assertIn('lang="en"', self.browser.contents)
         self.assertRegex(self.browser.contents, r"Distributed under the")
@@ -662,10 +621,7 @@ class TestLanguageSelectorBasics(unittest.TestCase):
         self.browser.open(selector_languages[1]["url"])
         self.assertUrlsEqual(
             self.browser.url,
-            (
-                f_ca.absolute_url()
-                + "/contact-info?int=1&uni=pres%C3%98rved&set_language=ca"
-            ),
+            (f_ca.absolute_url() + "/contact-info?int=1&uni=pres%C3%98rved"),
         )
         self.assertIn('lang="ca"', self.browser.contents)
 
@@ -744,15 +700,15 @@ class TestLanguageSelectorBasics(unittest.TestCase):
     #         {'code': 'nl',
     #          'translated': True,
     #          'selected': False,
-    #          'url': base + 'pres%C3%98rved&set_language=nl'},
+    #          'url': base + 'pres%C3%98rved'},
     #         {'code': 'en',
     #          'translated': True,
     #          'selected': True,
-    #          'url': base + 'pres%C3%98rved&set_language=en'},
+    #          'url': base + 'pres%C3%98rved'},
     #         {'code': 'no',
     #          'translated': False,
     #          'selected': False,
-    #          'url': base + 'pres%C3%98rved&set_language=no'}]
+    #          'url': base + 'pres%C3%98rved'}]
     #     self.assertEqual(selector.languages(), expected)
 
     def assertUrlsEqual(self, url1, url2):
@@ -916,134 +872,6 @@ class TestLanguageSelectorSetLanguage(unittest.TestCase):
 
         registry = getUtility(IRegistry)
         self.settings = registry.forInterface(ILanguageSchema, prefix="plone")
-
-    def test_set_language_is_present(self):
-        """test the presence of set_language parameter in the urls created in the language selector"""
-
-        self.settings.set_cookie_always = False
-        self.selector_viewlet = LanguageSelectorViewlet(
-            self.portal["en"], self.request, None, None
-        )
-        self.selector_viewlet.update()
-
-        selector_languages = self.selector_viewlet.languages()
-        tg = ITG(self.portal["en"])
-
-        expected_languages = [
-            {
-                "code": "en",
-                "flag": "countryflag/gb",
-                "name": "English",
-                "native": "English",
-                "url": SELECTOR_VIEW_TEMPLATE
-                % {
-                    "url": self.portal.absolute_url(),
-                    "tg": tg,
-                    "lang": "en",
-                    "query": "?set_language=en",
-                },
-                "selected": True,
-                "translated": True,
-            },
-            {
-                "code": "ca",
-                "flag": "languageflag/ca",
-                "name": "Catalan",
-                "native": "Catal\xe0",
-                "url": SELECTOR_VIEW_TEMPLATE
-                % {
-                    "url": self.portal.absolute_url(),
-                    "tg": tg,
-                    "lang": "ca",
-                    "query": "?set_language=ca",
-                },
-                "selected": False,
-                "translated": True,
-            },
-            {
-                "code": "es",
-                "flag": "countryflag/es",
-                "name": "Spanish",
-                "native": "Espa\xf1ol",
-                "url": SELECTOR_VIEW_TEMPLATE
-                % {
-                    "url": self.portal.absolute_url(),
-                    "tg": tg,
-                    "lang": "es",
-                    "query": "?set_language=es",
-                },
-                "selected": False,
-                "translated": True,
-            },
-        ]
-        self.assertEqual(
-            json.dumps(selector_languages, sort_keys=True),
-            json.dumps(expected_languages, sort_keys=True),
-        )
-
-    def test_set_language_is_not_present_when_always_set_cookie_is_set(self):
-        """test the absence of set_language parameter in the urls created in the language selector"""
-        self.settings.set_cookie_always = True
-        self.selector_viewlet = LanguageSelectorViewlet(
-            self.portal["en"], self.request, None, None
-        )
-        self.selector_viewlet.update()
-
-        selector_languages = self.selector_viewlet.languages()
-        tg = ITG(self.portal["en"])
-
-        expected_languages = [
-            {
-                "code": "en",
-                "flag": "countryflag/gb",
-                "name": "English",
-                "native": "English",
-                "url": SELECTOR_VIEW_TEMPLATE
-                % {
-                    "url": self.portal.absolute_url(),
-                    "tg": tg,
-                    "lang": "en",
-                    "query": "",
-                },
-                "selected": True,
-                "translated": True,
-            },
-            {
-                "code": "ca",
-                "flag": "languageflag/ca",
-                "name": "Catalan",
-                "native": "Catal\xe0",
-                "url": SELECTOR_VIEW_TEMPLATE
-                % {
-                    "url": self.portal.absolute_url(),
-                    "tg": tg,
-                    "lang": "ca",
-                    "query": "",
-                },
-                "selected": False,
-                "translated": True,
-            },
-            {
-                "code": "es",
-                "flag": "countryflag/es",
-                "name": "Spanish",
-                "native": "Espa\xf1ol",
-                "url": SELECTOR_VIEW_TEMPLATE
-                % {
-                    "url": self.portal.absolute_url(),
-                    "tg": tg,
-                    "lang": "es",
-                    "query": "",
-                },
-                "selected": False,
-                "translated": True,
-            },
-        ]
-
-        self.assertEqual(
-            json.dumps(selector_languages, sort_keys=True),
-            json.dumps(expected_languages, sort_keys=True),
-        )
 
 
 class TestLanguageSelectorDisplayOptions(unittest.TestCase):
