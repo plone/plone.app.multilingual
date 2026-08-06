@@ -37,8 +37,8 @@
   <adapter factory=".shared_uuid.lifUUID" />
 
   <utility
-      name="google"
       factory=".translation_utils.GoogleTranslator"
+      name="google"
       />
 
   <!-- ITranslationGroup and indexer -->
