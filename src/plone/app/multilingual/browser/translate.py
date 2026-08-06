@@ -1,7 +1,50 @@
 from Acquisition import aq_inner
+from plone.app.multilingual import _
 from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.translation_utils import translate_text
+from plone.app.uuid.utils import uuidToObject
+from plone.base.interfaces import ILanguage
 from plone.uuid.interfaces import IUUID
 from Products.Five import BrowserView
+
+import json
+
+
+class gtranslation_service_dexterity(BrowserView):
+    def __call__(self):
+        if self.request.method != "POST" and not (
+            "field" in self.request.form.keys()
+            and "lang_source" in self.request.form.keys()
+        ):
+            return _("Need a field")
+        else:
+            context_uid = self.request.form.get("context_uid", None)
+            if context_uid is None:
+                # try with context if no translation uid is present
+                manager = ITranslationManager(self.context)
+            else:
+                context = uuidToObject(context_uid)
+                if context is not None:
+                    manager = ITranslationManager(context)
+                else:
+                    manager = ITranslationManager(self.context)
+
+            lang_target = ILanguage(self.context).get_language()
+            lang_source = self.request.form["lang_source"]
+            orig_object = manager.get_translation(lang_source)
+            field = self.request.form["field"].split(".")[-1]
+            if hasattr(orig_object, field):
+                question = getattr(orig_object, field, "") or ""
+                if hasattr(question, "raw"):
+                    question = question.raw
+            else:
+                return _("Invalid field")
+
+            # We use specifically the google service for backward compatibility
+            translation = translate_text(
+                question, lang_source, lang_target, service="google"
+            )
+            return json.dumps({"data": translation or ""})
 
 
 class TranslationForm(BrowserView):

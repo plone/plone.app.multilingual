@@ -27,6 +27,13 @@
            value pamutils/translations_enabled;
          "
   />
+  <input id="gtranslate_service_available"
+         type="hidden"
+         value=""
+         tal:attributes="
+           value pamutils/translations_enabled;
+         "
+  />
 
   <div class="col-md-6">
     <h2 i18n:translate="heading_available_translations">Available translations for this content</h2>

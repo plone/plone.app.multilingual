@@ -188,6 +188,7 @@ class IMultiLanguageExtraOptionsSchema(ILanguageSchema):
             "redirect_babel_view",
             "bypass_languageindependent_field_permission_check",
             "buttons_babel_view_up_to_nr_translations",
+            "google_translation_key",
             "selector_lookup_translations_policy",
         ],
     )
@@ -249,6 +250,15 @@ class IMultiLanguageExtraOptionsSchema(ILanguageSchema):
             "be used.",
         ),
         default=7,
+        required=False,
+    )
+
+    google_translation_key = schema.TextLine(
+        title=_("heading_google_translation_key", default="Google Translation API Key"),
+        description=_(
+            "description_google_translation_key",
+            default="Is a paying API in order to use google translation " "service",
+        ),
         required=False,
     )
 
