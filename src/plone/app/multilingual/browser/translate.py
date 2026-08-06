@@ -40,10 +40,7 @@ class gtranslation_service_dexterity(BrowserView):
             else:
                 return _("Invalid field")
 
-            # We use specifically the google service for backward compatibility
-            translation = translate_text(
-                question, lang_source, lang_target, service="google"
-            )
+            translation = translate_text(question, lang_source, lang_target)
             return json.dumps({"data": translation or ""})
 
 
