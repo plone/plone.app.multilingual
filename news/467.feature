@@ -1,1 +1,1 @@
-Reimplement usage of translators as pluggable utilities and remove Google Translate service @erral
+Reimplement usage of translators as pluggable utilities and reimplement Google Translation functionality into a utility @erral
