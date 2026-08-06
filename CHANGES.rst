@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+9.0.1 (2026-06-23)
+------------------
+
+Tests:
+
+
+- Add functional test to ensure that adding a new language to the list of supported languages correctly creates the corresponding Language Root Folder immediately.
+  [erral] (#543)
+
+
 9.0.0 (2026-05-07)
 ------------------
 
