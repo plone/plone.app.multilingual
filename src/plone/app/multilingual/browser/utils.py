@@ -61,6 +61,9 @@ class BabelUtils(BrowserView):
         ]
         return len(utilities) > 0
 
+    def gtenabled(self):
+        return self.translations_enabled()
+
     def languages(self):
         """Deprecated"""
         context = aq_inner(self.context)
