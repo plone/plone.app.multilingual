@@ -7,7 +7,6 @@ from plone.app.multilingual.testing import NiTranslator
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.multilingual.translation_utils import translate_text
 from plone.dexterity.utils import createContentInContainer
-from zope.component import provideUtility
 from zope.interface import alsoProvides
 
 import transaction
@@ -32,18 +31,6 @@ class TestExternalServicesUtilities(unittest.TestCase):
 
         manager = ITranslationManager(self.a_ca)
         manager.register_translation("es", self.a_es)
-
-        provideUtility(
-            NiTranslator(), IExternalTranslationService, name="ni_translator"
-        )
-        provideUtility(
-            DisabledTranslator(),
-            IExternalTranslationService,
-            name="disabled_translator",
-        )
-        provideUtility(
-            CaEsTranslator(), IExternalTranslationService, name="ca_es_translator"
-        )
 
         transaction.commit()
 

@@ -1,6 +1,7 @@
 from email.header import Header
 from plone.app.contenttypes.testing import PLONE_APP_CONTENTTYPES_FIXTURE
 from plone.app.multilingual.dx.interfaces import ILanguageIndependentField
+from plone.app.multilingual.interfaces import IExternalTranslationService
 from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.robotframework import AutoLogin
 from plone.app.robotframework import Content
@@ -22,6 +23,7 @@ from plone.testing.layer import Layer
 from plone.testing.zope import WSGI_SERVER_FIXTURE
 from plone.uuid.interfaces import IUUID
 from Products.CMFCore.utils import getToolByName
+from zope.component import provideUtility
 from zope.configuration import xmlconfig
 from zope.event import notify
 from zope.interface import alsoProvides
@@ -102,6 +104,19 @@ class PloneAppMultilingualLayer(PloneSandboxLayer):
         # Activate product
         applyProfile(portal, "plone.app.multilingual:default")
 
+        # Dummy translation services
+        provideUtility(
+            NiTranslator(), IExternalTranslationService, name="ni_translator"
+        )
+        provideUtility(
+            DisabledTranslator(),
+            IExternalTranslationService,
+            name="disabled_translator",
+        )
+        provideUtility(
+            CaEsTranslator(), IExternalTranslationService, name="ca_es_translator"
+        )
+
         # Empower test user
         setRoles(portal, TEST_USER_ID, ["Manager"])
 
@@ -158,6 +173,19 @@ class PloneAppMultiLingualPresetLayer(PloneSandboxLayer):
 
         # Activate product
         applyProfile(portal, "plone.app.multilingual:default")
+
+        # Dummy translation services
+        provideUtility(
+            NiTranslator(), IExternalTranslationService, name="ni_translator"
+        )
+        provideUtility(
+            DisabledTranslator(),
+            IExternalTranslationService,
+            name="disabled_translator",
+        )
+        provideUtility(
+            CaEsTranslator(), IExternalTranslationService, name="ca_es_translator"
+        )
 
         # Empower test user
         setRoles(portal, TEST_USER_ID, ["Manager"])
