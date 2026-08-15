@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<registry>
+
+  <records interface="plone.i18n.interfaces.ILanguageSchema"
+           prefix="plone"
+  >
+    <value key="set_cookie_always">True</value>
+  </records>
+
+</registry>
