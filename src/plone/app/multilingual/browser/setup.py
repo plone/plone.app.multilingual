@@ -1,3 +1,4 @@
+from Acquisition import aq_base
 from logging import getLogger
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.multilingual import _
@@ -134,7 +135,7 @@ class SetupMultilingualSite:
         else:
             folderId = str(code)
 
-        folder = getattr(self.context, folderId, None)
+        folder = getattr(aq_base(self.context), folderId, None)
         wftool = getToolByName(self.context, "portal_workflow")
 
         assets_folder_id = translate(
@@ -294,7 +295,7 @@ class SetupMultilingualSite:
         When plone.volto is installed before plone.app.multilingual, the LRF type
         should have the volto.blocks behavior to support Volto's block-based editing.
         """
-        installer = get_installer(self.context)
+        installer = get_installer(getSite())
 
         if not installer.is_product_installed("plone.volto"):
             return
