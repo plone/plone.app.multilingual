@@ -1,53 +1,13 @@
 from Acquisition import aq_inner
 from plone.app.multilingual import _
-from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.multilingual.translation_utils import translate_text
 from plone.app.uuid.utils import uuidToObject
 from plone.base.interfaces import ILanguage
-from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import IUUID
 from Products.Five import BrowserView
-from zope.component import getUtility
 
 import json
-import urllib
-
-
-def google_translate(question, key, lang_target, lang_source):
-    length = len(question)
-    translated = ""
-    url = "https://www.googleapis.com/language/translate/v2"
-    temp_question = question
-    while length > 400:
-        temp_question = question[:399]
-        index = temp_question.rfind(" ")
-        temp_question = temp_question[:index]
-        question = question[index:]
-        length = len(question)
-        data = {
-            "key": key,
-            "target": lang_target,
-            "source": lang_source,
-            "q": temp_question,
-        }
-        params = urllib.parse.urlencode(data)
-
-        retorn = urllib.request.urlopen(url + "?" + params)
-        translated += json.loads(retorn.read())["data"]["translations"][0][
-            "translatedText"
-        ]
-
-    data = {
-        "key": key,
-        "target": lang_target,
-        "source": lang_source,
-        "q": temp_question,
-    }
-    params = urllib.parse.urlencode(data)
-
-    retorn = urllib.request.urlopen(url + "?" + params)
-    translated += json.loads(retorn.read())["data"]["translations"][0]["translatedText"]
-    return json.dumps({"data": translated})
 
 
 class gtranslation_service_dexterity(BrowserView):
@@ -69,10 +29,6 @@ class gtranslation_service_dexterity(BrowserView):
                 else:
                     manager = ITranslationManager(self.context)
 
-            registry = getUtility(IRegistry)
-            settings = registry.forInterface(
-                IMultiLanguageExtraOptionsSchema, prefix="plone"
-            )
             lang_target = ILanguage(self.context).get_language()
             lang_source = self.request.form["lang_source"]
             orig_object = manager.get_translation(lang_source)
@@ -83,9 +39,9 @@ class gtranslation_service_dexterity(BrowserView):
                     question = question.raw
             else:
                 return _("Invalid field")
-            return google_translate(
-                question, settings.google_translation_key, lang_target, lang_source
-            )
+
+            translation = translate_text(question, lang_source, lang_target)
+            return json.dumps({"data": translation or ""})
 
 
 class TranslationForm(BrowserView):

@@ -20,11 +20,18 @@
            value context/absolute_url;
          "
   />
+  <input id="translation_service_available"
+         type="hidden"
+         value=""
+         tal:attributes="
+           value pamutils/translations_enabled;
+         "
+  />
   <input id="gtranslate_service_available"
          type="hidden"
          value=""
          tal:attributes="
-           value pamutils/gtenabled;
+           value pamutils/translations_enabled;
          "
   />
 

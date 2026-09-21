@@ -27,9 +27,19 @@
   <include package=".browser" />
   <include package=".dx" />
 
+  <include
+      package=".restapi"
+      zcml:condition="installed plone.restapi"
+      />
+
   <!--<adapter factory=".content.lrf.LRFOrdering"/>-->
   <adapter factory=".shared_uuid.lrfUUID" />
   <adapter factory=".shared_uuid.lifUUID" />
+
+  <utility
+      factory=".translation_utils.GoogleTranslator"
+      name="google"
+      />
 
   <!-- ITranslationGroup and indexer -->
 
@@ -197,6 +207,5 @@
            plone.registry.interfaces.IRecordModifiedEvent"
       handler=".subscriber.change_language_settings"
       />
-
 
 </configure>
