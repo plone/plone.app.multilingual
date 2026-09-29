@@ -6,7 +6,7 @@ from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.multilingual.interfaces import LANGUAGE_INDEPENDENT
 from plone.app.multilingual.subscriber import set_recursive_language
 from plone.base.interfaces import ILanguage
-from plone.base.interfaces import
+from plone.base.interfaces import INavigationRoot
 from plone.base.utils import get_installer
 from plone.base.utils import unrestricted_construct_instance
 from plone.dexterity.interfaces import IDexterityFTI
