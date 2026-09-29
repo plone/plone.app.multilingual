@@ -36,11 +36,6 @@
   <adapter factory=".shared_uuid.lrfUUID" />
   <adapter factory=".shared_uuid.lifUUID" />
 
-  <utility
-      factory=".translation_utils.GoogleTranslator"
-      name="google"
-      />
-
   <!-- ITranslationGroup and indexer -->
 
   <adapter factory=".itg.attributeTG" />
@@ -211,7 +206,7 @@
   <utility
       provides=".interfaces.IExternalTranslationService"
       name="google_translate"
-      component=".google_translate.GoogleCloudTranslationAPI"
+      component=".translation_utils.GoogleTranslator"
       />
 
 

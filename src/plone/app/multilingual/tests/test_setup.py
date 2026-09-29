@@ -6,7 +6,6 @@ from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
 from plone.app.multilingual.testing import PAM_INTEGRATION_PRESET_TESTING
 from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
-from plone.app.multilingual.testing import VOLTO_MULTILINGUAL_INTEGRATION_TESTING
 from plone.base.interfaces import ILanguage
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName

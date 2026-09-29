@@ -3,7 +3,6 @@ from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtilitiesFor
 from zope.component import getUtility
-from zope.interface import implementer
 
 import json
 import urllib
@@ -46,8 +45,7 @@ def google_translate(question, key, lang_target, lang_source):
     return translated
 
 
-@implementer(IExternalTranslationService)
-class GoogleTranslator:
+class GoogleTranslatorFactory:
     order = 100
 
     def is_available(self):
@@ -68,6 +66,9 @@ class GoogleTranslator:
         )
         key = settings.google_translation_key
         return google_translate(content, key, target_language, source_language)
+
+
+GoogleTranslator = GoogleTranslatorFactory()
 
 
 def translate_text(original_text, source_language, target_language, service=None):
