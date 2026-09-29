@@ -51,7 +51,10 @@ class LanguageIndependentFieldsManager:
     def copy_fields(self, translation):
         changed = False
 
-        target_language = queryAdapter(translation, ILanguage).get_language()
+        language_adapter = queryAdapter(translation, ILanguage)
+        target_language = (
+            language_adapter.get_language() if language_adapter is not None else None
+        )
 
         for schema in iterSchemata(self.context):
             context_adapter = None
