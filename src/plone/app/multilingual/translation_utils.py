@@ -1,5 +1,6 @@
 from plone.app.multilingual.interfaces import IExternalTranslationService
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
+from plone.app.multilingual import logger
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtilitiesFor
 from zope.component import getUtility
@@ -34,7 +35,7 @@ def google_translate(question, key, lang_target, lang_source):
             result = json.loads(response.read().decode("utf-8"))
             return result["data"]["translations"][0]["translatedText"]
     except urllib.error.URLError as e:
-        print(f"Translation API Error: {e}")
+        logger.error("Translation API Error: %s", str(e))
         return ""
 
 
