@@ -9,40 +9,28 @@ import urllib
 
 
 def google_translate(question, key, lang_target, lang_source):
-    length = len(question)
-    translated = ""
-    url = "https://www.googleapis.com/language/translate/v2"
-    temp_question = question
-    while length > 400:
-        temp_question = question[:399]
-        index = temp_question.rfind(" ")
-        temp_question = temp_question[:index]
-        question = question[index:]
-        length = len(question)
-        data = {
-            "key": key,
-            "target": lang_target,
-            "source": lang_source,
-            "q": temp_question,
-        }
-        params = urllib.parse.urlencode(data)
-
-        retorn = urllib.request.urlopen(url + "?" + params)
-        translated += json.loads(retorn.read())["data"]["translations"][0][
-            "translatedText"
-        ]
+    # Put the API key in the URL, but the text payload in the body
+    url = f"https://translation.googleapis.com/language/translate/v2?key={key}"
 
     data = {
-        "key": key,
+        "q": question,
         "target": lang_target,
         "source": lang_source,
-        "q": temp_question,
     }
-    params = urllib.parse.urlencode(data)
 
-    retorn = urllib.request.urlopen(url + "?" + params)
-    translated += json.loads(retorn.read())["data"]["translations"][0]["translatedText"]
-    return translated
+    # URL encode the payload and convert to bytes for the POST request body
+    encoded_data = urllib.parse.urlencode(data).encode("utf-8")
+
+    # Supplying 'data' forces a POST request, bypassing URL length limits
+    req = urllib.request.Request(url, data=encoded_data)
+
+    try:
+        with urllib.request.urlopen(req) as response:
+            result = json.loads(response.read().decode("utf-8"))
+            return result["data"]["translations"][0]["translatedText"]
+    except urllib.error.URLError as e:
+        print(f"Translation API Error: {e}")
+        return ""
 
 
 class GoogleTranslatorFactory:
