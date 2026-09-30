@@ -205,7 +205,7 @@
 
   <utility
       provides=".interfaces.IExternalTranslationService"
-      name="google_translate"
+      name="google_translate_pam_default"
       component=".translation_utils.GoogleTranslator"
       />
 
