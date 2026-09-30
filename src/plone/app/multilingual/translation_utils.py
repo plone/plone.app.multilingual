@@ -1,6 +1,6 @@
+from plone.app.multilingual import logger
 from plone.app.multilingual.interfaces import IExternalTranslationService
 from plone.app.multilingual.interfaces import IMultiLanguageExtraOptionsSchema
-from plone.app.multilingual import logger
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtilitiesFor
 from zope.component import getUtility
@@ -23,9 +23,7 @@ def google_translate(question, key, lang_target, lang_source):
     encoded_data = urllib.parse.urlencode(data).encode("utf-8")
 
     # Pass the API key using the X-Goog-Api-Key header
-    headers = {
-        "X-Goog-Api-Key": key
-    }
+    headers = {"X-Goog-Api-Key": key}
 
     # Supplying 'data' forces a POST request, bypassing URL length limits
     req = urllib.request.Request(url, data=encoded_data, headers=headers)
