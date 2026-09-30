@@ -1,0 +1,39 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="plone"
+    >
+
+  <include
+      package="plone.rest"
+      file="meta.zcml"
+      />
+
+  <plone:service
+      method="GET"
+      factory=".translation_services.TranslationServices"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      permission="cmf.ModifyPortalContent"
+      layer="..interfaces.IPloneAppMultilingualInstalled"
+      name="@translation-services"
+      />
+
+  <plone:service
+      method="POST"
+      factory=".translate_text.TranslateTextService"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      permission="cmf.ModifyPortalContent"
+      layer="..interfaces.IPloneAppMultilingualInstalled"
+      name="@translate-text"
+      />
+
+  <plone:service
+      method="POST"
+      factory=".translation_service.TranslationService"
+      for="plone.dexterity.interfaces.IDexterityContent"
+      permission="cmf.ModifyPortalContent"
+      layer="..interfaces.IPloneAppMultilingualInstalled"
+      name="@translation-service"
+      />
+
+</configure>
