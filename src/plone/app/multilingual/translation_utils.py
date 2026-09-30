@@ -25,7 +25,7 @@ def google_translate(question, key, lang_target, lang_source):
     req = urllib.request.Request(url, data=encoded_data)
 
     try:
-        with urllib.request.urlopen(req) as response:
+        with urllib.request.urlopen(req, timeout=5) as response:
             result = json.loads(response.read().decode("utf-8"))
             return result["data"]["translations"][0]["translatedText"]
     except urllib.error.URLError as e:
