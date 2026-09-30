@@ -10,7 +10,7 @@ import urllib
 
 def google_translate(question, key, lang_target, lang_source):
     # Put the API key in the URL, but the text payload in the body
-    url = f"https://translation.googleapis.com/language/translate/v2?key={key}"
+    url = "https://translation.googleapis.com/language/translate/v2"
 
     data = {
         "q": question,
@@ -21,8 +21,13 @@ def google_translate(question, key, lang_target, lang_source):
     # URL encode the payload and convert to bytes for the POST request body
     encoded_data = urllib.parse.urlencode(data).encode("utf-8")
 
+    # Pass the API key using the X-Goog-Api-Key header
+    headers = {
+        "X-Goog-Api-Key": key
+    }
+
     # Supplying 'data' forces a POST request, bypassing URL length limits
-    req = urllib.request.Request(url, data=encoded_data)
+    req = urllib.request.Request(url, data=encoded_data, headers=headers)
 
     try:
         with urllib.request.urlopen(req, timeout=5) as response:
