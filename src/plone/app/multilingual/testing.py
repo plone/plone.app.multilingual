@@ -85,6 +85,62 @@ PLONE_APP_MULTILINGUAL_INTEGRATION_TESTING = IntegrationTesting(
 )
 
 
+class PloneAppMultilingualEmptyLayer(PloneSandboxLayer):
+    """Test layer with plone.app.multilingual installed and no languages
+    configured, so that tests can set up the languages themselves and exercise
+    SetupMultilingualSite from a clean state.
+    """
+
+    defaultBases = (PLONE_APP_CONTENTTYPES_FIXTURE,)
+
+    def setUpZope(self, app, configurationContext):
+        # Configure ZCML
+        xmlconfig.file(
+            "testing.zcml", plone.app.multilingual, context=configurationContext
+        )
+
+        xmlconfig.file(
+            "overrides.zcml", plone.app.multilingual, context=configurationContext
+        )
+
+        # Enable languageindependent-field on IRelatedItems-behavior
+        from plone.app.relationfield.behavior import IRelatedItems
+
+        alsoProvides(IRelatedItems["relatedItems"], ILanguageIndependentField)
+
+    def setUpPloneSite(self, portal):
+        # Activate product
+        applyProfile(portal, "plone.app.multilingual:default")
+
+        # Empower test user
+        setRoles(portal, TEST_USER_ID, ["Manager"])
+
+        # Enable all errors
+        error_log = getToolByName(portal, "error_log")
+        error_log._ignored_exceptions = ()
+
+        # Set default workflow
+        wftool = getToolByName(portal, "portal_workflow")
+        wftool.setDefaultChain("simple_publication_workflow")
+
+        # Cleanup p.a.contenttypes stuff
+        if "robot-test-folder" in portal.objectIds():
+            portal.manage_delObjects("robot-test-folder")
+
+        # Remove the default language so the site starts without any language
+        # configured. Tests are expected to add the languages they need.
+        language_tool = getToolByName(portal, "portal_languages")
+        language_tool.removeSupportedLanguages(language_tool.getSupportedLanguages())
+
+
+PLONE_APP_MULTILINGUAL_EMPTY_FIXTURE = PloneAppMultilingualEmptyLayer()
+
+PLONE_APP_MULTILINGUAL_EMPTY_INTEGRATION_TESTING = IntegrationTesting(
+    bases=(PLONE_APP_MULTILINGUAL_EMPTY_FIXTURE,),
+    name="plone.app.multilingual:EmptyIntegration",
+)
+
+
 class PloneAppMultiLingualPresetLayer(PloneSandboxLayer):
     """Test installation with preset languages."""
 
@@ -268,6 +324,7 @@ PLONE_APP_MULTILINGUAL_ROBOT_TESTING = FunctionalTesting(
 
 
 PAM_INTEGRATION_TESTING = PLONE_APP_MULTILINGUAL_INTEGRATION_TESTING
+PAM_INTEGRATION_EMPTY_TESTING = PLONE_APP_MULTILINGUAL_EMPTY_INTEGRATION_TESTING
 PAM_INTEGRATION_PRESET_TESTING = PLONE_APP_MULTILINGUAL_PRESET_INTEGRATION_TESTING
 PAM_FUNCTIONAL_TESTING = PLONE_APP_MULTILINGUAL_FUNCTIONAL_TESTING
 PAM_ROBOT_TESTING = PLONE_APP_MULTILINGUAL_ROBOT_TESTING
