@@ -4,6 +4,7 @@ from plone.app.multilingual.browser.vocabularies import AllContentLanguageVocabu
 from plone.app.multilingual.interfaces import ATTRIBUTE_NAME
 from plone.app.multilingual.interfaces import IPloneAppMultilingualInstalled
 from plone.app.multilingual.testing import PAM_FUNCTIONAL_TESTING
+from plone.app.multilingual.testing import PAM_INTEGRATION_EMPTY_TESTING
 from plone.app.multilingual.testing import PAM_INTEGRATION_PRESET_TESTING
 from plone.app.multilingual.testing import PAM_INTEGRATION_TESTING
 from plone.app.multilingual.testing import VOLTO_MULTILINGUAL_INTEGRATION_TESTING
@@ -113,15 +114,32 @@ class TestSetupMultilingualSite(unittest.TestCase):
             "LRF type should not have volto.blocks behavior without Volto",
         )
 
+
+class TestSetupMultilingualSiteEmpty(unittest.TestCase):
+    """Testing SetupMultilingualSite on an empty site without languages."""
+
+    layer = PAM_INTEGRATION_EMPTY_TESTING
+
+    def setUp(self):
+        """Setting up the test."""
+        self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
+        self.language_tool = getToolByName(self.portal, "portal_languages")
+        alsoProvides(self.layer["request"], IPloneAppMultilingualInstalled)
+
+        self.assertEqual(self.language_tool.getSupportedLanguages(), [])
+
     def test_call_setupsite_single_language(self):
         """
         When calling setupSite in a site with a single language
         nothing is created
         """
-        self.assertEqual(len(self.languages), 1)
+        self.language_tool.addSupportedLanguage("en")
+        self.assertEqual(len(self.language_tool.getSupportedLanguages()), 1)
+
         setup_tool = SetupMultilingualSite()
         setup_tool.setupSite(self.portal)
-        self.assertNotIn(self.languages[0], self.portal)
+        self.assertNotIn("en", self.portal)
 
     def test_call_setupsite_multiple_language(self):
         """
@@ -131,10 +149,6 @@ class TestSetupMultilingualSite(unittest.TestCase):
         self.language_tool.addSupportedLanguage("en")
         self.language_tool.addSupportedLanguage("es")
         languages = self.language_tool.getSupportedLanguages()
-
-        # Check that the newly created folder has no items in it
-        for language in languages:
-            self.assertNotIn(language, self.portal)
 
         setup_tool = SetupMultilingualSite()
         setup_tool.setupSite(self.portal)
@@ -151,32 +165,26 @@ class TestSetupMultilingualSite(unittest.TestCase):
         When calling setupSite in a folder of a site with a single language
         nothing is created
         """
-        self.assertEqual(len(self.languages), 1)
+        self.language_tool.addSupportedLanguage("en")
+        self.assertEqual(len(self.language_tool.getSupportedLanguages()), 1)
 
         self.portal.invokeFactory(id="folder", type_name="Folder")
         folder = self.portal["folder"]
 
-        self.assertNotIn(self.languages[0], folder)
-
         setup_tool = SetupMultilingualSite()
         setup_tool.setupSite(folder)
-        self.assertNotIn(self.languages[0], folder)
+        self.assertNotIn("en", folder)
 
     def test_call_setupsite_in_subfolder_multiple_languages(self):
         """when calling setup site in a subfolder
         recreates all the languages in that subfolder
         """
-
         self.language_tool.addSupportedLanguage("en")
         self.language_tool.addSupportedLanguage("es")
         languages = self.language_tool.getSupportedLanguages()
 
         self.portal.invokeFactory(id="folder", type_name="Folder")
         folder = self.portal["folder"]
-
-        # Check that the newly created folder has no items in it
-        for language in languages:
-            self.assertNotIn(language, folder)
 
         setup_tool = SetupMultilingualSite()
         setup_tool.setupSite(folder)
