@@ -12,7 +12,7 @@ repos:
     -   id: pyupgrade
         args: [--py310-plus]
 -   repo: https://github.com/pycqa/isort
-    rev: 9.0.1
+    rev: 9.0.0b1
     hooks:
     -   id: isort
 -   repo: https://github.com/psf/black-pre-commit-mirror
@@ -69,7 +69,7 @@ repos:
     rev: "0.24.2"
     hooks:
     -   id: check-python-versions
-        args: ['--only', 'setup.cfg,tox.ini']
+        args: ['--only', 'setup.py,tox.ini']
 -   repo: https://github.com/collective/i18ndude
     rev: "6.3.0"
     hooks:
