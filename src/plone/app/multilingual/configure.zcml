@@ -26,6 +26,10 @@
   <include file="upgrades.zcml" />
   <include package=".browser" />
   <include package=".dx" />
+  <include
+      package=".restapi"
+      zcml:condition="installed plone.restapi"
+      />
 
   <!--<adapter factory=".content.lrf.LRFOrdering"/>-->
   <adapter factory=".shared_uuid.lrfUUID" />
@@ -196,6 +200,12 @@
       for="plone.i18n.interfaces.ILanguageSchema
            plone.registry.interfaces.IRecordModifiedEvent"
       handler=".subscriber.change_language_settings"
+      />
+
+  <utility
+      provides=".interfaces.IExternalTranslationService"
+      name="google_translate_pam_default"
+      component=".translation_utils.GoogleTranslator"
       />
 
 

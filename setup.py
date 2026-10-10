@@ -55,8 +55,9 @@ setup(
             "plone.browserlayer",
             "plone.rfc822",
             "plone.testing",
-            "plone.volto",
             "robotsuite",
+            "plone.restapi[test]",
+            "plone.volto",
         ],
     },
     entry_points="""

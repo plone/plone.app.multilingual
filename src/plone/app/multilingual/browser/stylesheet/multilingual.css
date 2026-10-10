@@ -70,11 +70,19 @@
 .translator-widget {
     position: relative;
     float: right;
-    background: url("++resource++plone.app.multilingual.images/gtranslate.png") no-repeat;
-    background-size: contain;
+    mask-image: url("++plone++bootstrap-icons/translate.svg");
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: calc(var(--bs-body-font-size) * 2);
+    background-color: var(--plone-link-color);
     min-height: 50px;
     min-width: 50px;
     display: none;
+    cursor: pointer;
+}
+
+.translator-widget:hover {
+    background-color: var(--plone-link-color-on-grey);
 }
 
 .currentLanguage {
