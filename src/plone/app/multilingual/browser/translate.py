@@ -10,6 +10,13 @@ from Products.Five import BrowserView
 import json
 
 
+def google_translate(question, key, lang_target, lang_source):
+    translated = translate_text(
+        question, lang_source, lang_target, service="google_translate_pam_default"
+    )
+    return json.dumps({"data": translated})
+
+
 class gtranslation_service_dexterity(BrowserView):
     def __call__(self):
         if self.request.method != "POST" and not (
