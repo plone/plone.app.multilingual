@@ -26,7 +26,10 @@
   <include file="upgrades.zcml" />
   <include package=".browser" />
   <include package=".dx" />
-  <include package=".restapi" />
+  <include
+      package=".restapi"
+      zcml:condition="installed plone.restapi"
+      />
 
   <!--<adapter factory=".content.lrf.LRFOrdering"/>-->
   <adapter factory=".shared_uuid.lrfUUID" />
