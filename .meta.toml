@@ -16,10 +16,10 @@ check_manifest_ignores = """
     "requirements.txt",
 """
 codespell_ignores = "pres"
-dependencies_ignores = "['Products.LinguaPlone']"
+dependencies_ignores = "['Products.LinguaPlone', 'plone.rest', 'plone.restapi']"
 
 [tox]
-test_matrix = {"6.2" = ["*"]}
+test_matrix = { "6.2" = ["*"] }
 
 [github]
 py_versions = "[\"3.10\",\"3.11\",\"3.12\"]"
