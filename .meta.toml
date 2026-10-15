@@ -19,4 +19,4 @@ codespell_ignores = "pres"
 dependencies_ignores = "['Products.LinguaPlone', 'plone.rest', 'plone.restapi']"
 
 [tox]
-test_matrix = { "6.2" = ["*"] }
+test_matrix = { "6.3" = ["*"] }
