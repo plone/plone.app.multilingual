@@ -8,6 +8,28 @@ Changelog
 
 .. towncrier release notes start
 
+10.0.0a1 (2026-11-03)
+---------------------
+
+New features:
+
+
+- Reimplement usage of translators as pluggable utilities and reimplement Google Translation functionality into a utility @erral (#467)
+
+
+Bug fixes:
+
+
+- Remove plone.restapi and plone.rest as hard dependencies @erral (#560)
+
+
+Internal:
+
+
+- Update configuration files.
+  [plone devs]
+
+
 9.0.2 (2026-08-21)
 ------------------
 
