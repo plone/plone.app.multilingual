@@ -91,4 +91,16 @@
       handler=".upgrades.fix_indonesian_language"
       />
 
+  <genericsetup:upgradeSteps
+      profile="plone.app.multilingual:default"
+      source="1002"
+      destination="1003"
+      >
+
+    <genericsetup:upgradeDepends
+        title="Set set_cookie_always as true"
+        import_profile="plone.app.multilingual:to_1003"
+        />
+
+  </genericsetup:upgradeSteps>
 </configure>
