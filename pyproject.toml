@@ -4,7 +4,106 @@
 [build-system]
 requires = ["setuptools>=68.2,<83", "wheel"]
 
+# START-MARKER-MANUAL-CONFIG
+# Anything from here until END-MARKER-MANUAL-CONFIG
+# will be kept by plone.meta
 
+[project]
+name = "plone.app.multilingual"
+version = "10.0.0a2.dev0"
+description = "Multilingual Plone Content package"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Framework :: Plone",
+    "Framework :: Plone :: 6.1",
+    "Framework :: Plone :: 6.2",
+    "Framework :: Plone :: Core",
+    "Framework :: Zope :: 5",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+]
+license = "GPL-2.0-only"
+dynamic = ["readme"]
+requires-python = ">=3.11"
+authors = [
+    {name = "Ramon Navarro, Victor Fernandez de Alba, awello et al",email = "r.navarro@iskra.cat"},
+]
+maintainers = [
+    {name = "Plone Foundation and contributors",email = "plone-developers@lists.sourceforge.net"},
+]
+dependencies = [
+        "BTrees",
+        "plone.app.content",
+        "plone.app.contentmenu",
+        "plone.app.dexterity",
+        "plone.app.event",
+        "plone.app.i18n",
+        "plone.app.layout",
+        "plone.app.querystring",
+        "plone.app.registry",
+        "plone.app.uuid",
+        "plone.app.z3cform",
+        "plone.autoform",
+        "plone.base",
+        "plone.behavior",
+        "plone.dexterity",
+        "plone.i18n>=4.0.4",
+        "plone.indexer",
+        "plone.locking",
+        "plone.memoize",
+        "plone.protect",
+        "plone.registry",
+        "plone.schemaeditor",
+        "plone.supermodel",
+        "plone.uuid",
+        "plone.z3cform",
+        "Products.CMFCore",
+        "Products.CMFPlone",
+        "Products.GenericSetup",
+        "Products.statusmessages",
+        "z3c.form",
+        "z3c.relationfield",
+        "zc.relation",
+        "zope.browsermenu",
+        "zope.intid",
+        "zope.pagetemplate",
+        "Zope",
+]
+keywords = ["plone", "language", "multilingual", "content"]
+
+[project.optional-dependencies]
+test = [
+    "lxml",
+    "plone.api",
+    "plone.app.contenttypes",
+    "plone.app.relationfield",
+    "plone.app.robotframework",
+    "plone.app.testing[robot]",
+    "plone.browserlayer",
+    "plone.rfc822",
+    "plone.testing",
+    "robotsuite",
+    "plone.restapi[test]",
+    "plone.volto",
+]
+
+[project.entry-points."plone.autoinclude.plugin"]
+target = "plone"
+
+[project.urls]
+Source = "https://github.com/plone/plone.app.multilingual"
+Issues = "https://github.com/plone/Products.CMFPlone/issues"
+Changelog = "https://github.com/plone/plone.app.multilingual/blob/master/CHANGES.rst"
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.rst", "CREDITS.rst", "CHANGES.rst"]}
+# END-MARKER-MANUAL-CONFIG
 
 [tool.towncrier]
 directory = "news/"
@@ -62,7 +161,7 @@ profile = "plone"
 ##
 
 [tool.black]
-target-version = ["py310"]
+target-version = ["py311"]
 
 ##
 # Add extra configuration options in .meta.toml:
